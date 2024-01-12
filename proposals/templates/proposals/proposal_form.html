@@ -4,11 +4,13 @@
 {% load i18n %}
 
 {% block header_title %}
-  {% trans "Algemene informatie over de aanvraag" %} - {{ block.super }}
+    {% trans "Algemene informatie over de aanvraag" %} - {{ block.super }}
 {% endblock %}
 
 {% block html_head %}
-  <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/word_counter.js' %}"></script>
+    <script type="text/javascript"
+            charset="utf8"
+            src="{% static 'proposals/js/word_counter.js' %}"></script>
     <script>
         $(function () {
             check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
@@ -57,45 +59,48 @@
     wordCounter("summary", translated_string)
     wordCounter("self_assessment", translated_string)
   });
-  </script>
+    </script>
 {% endblock %}
 
 {% block content %}
-  <div class="uu-inner-container">
-    <div class="col-12">
-      {% if not create %}
-        {% with nav_items=proposal.available_urls active=1 %}
-          {% include 'base/navigation.html' %}
-        {% endwith %}
-      {% endif %}
-      {% if is_practice %}
-        <div class="info">
-          {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% if not create %}
+                {% with nav_items=proposal.available_urls active=1 %}
+                    {% include 'base/navigation.html' %}
+                {% endwith %}
+            {% endif %}
+            {% if is_practice %}
+                <div class="info">
+                    {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
+                </div>
+            {% endif %}
+            <h2>{% trans "Algemene informatie over de aanvraag" %}</h2>
+            {% if not create and is_supervisor %}
+                {% blocktrans trimmed %}
+                    Je past nu een aanvraag aan van een student/PhD kandidaat onder jouw supervisie. Let er op dat je het
+                    formulier
+                    invult alsof jij die student/PhD kandidaat bent.
+                {% endblocktrans %}
+                <br />
+                <br />
+            {% endif %}
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                {% include "base/form_buttons.html" %}
+            </form>
         </div>
-      {% endif %}
-      <h2>{% trans "Algemene informatie over de aanvraag" %}</h2>
-      {% if not create and is_supervisor %}
-        {% blocktrans trimmed %}
-          Je past nu een aanvraag aan van een student/PhD kandidaat onder jouw supervisie. Let er op dat je het
-          formulier
-          invult alsof jij die student/PhD kandidaat bent.
-        {% endblocktrans %}
-        <br/>
-        <br/>
-      {% endif %}
-      <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-        <table>{{ form.as_table }}</table>
-        {% include "base/form_buttons.html" %}
-      </form>
     </div>
-  </div>
-  <!-- Code for intended start date warning -->
-  <style>
-  #date_start_warning {
-    line-height: 1.5;
-  }
-  </style>
-  <script>
+    <!-- Code for intended start date warning -->
+    <style>
+        #date_start_warning {
+            line-height: 1.5;
+        }
+    </style>
+    <script>
   /* Find date start input */
   let date_start_input = $("#id_date_start")
 
@@ -137,7 +142,5 @@
   /* Give the update function a warmup run */
   updateWarning();
 
-  </script>
-
-
+    </script>
 {% endblock %}

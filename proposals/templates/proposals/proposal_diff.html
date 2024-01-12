@@ -36,7 +36,7 @@
         <div class="col-12">
             <h2>
                 {% trans "Overzicht van wijzigingen bij aanmelding " %}
-                <em>{{proposal.title}}</em> - {{proposal.reference_number}}
+                <em>{{ proposal.title }}</em> - {{ proposal.reference_number }}
             </h2>
             <p>
                 {% trans "Dit overzicht toont de gemaakte wijzigingen in de revisie/het amendement ten opzichte van de originele aanvraag." %}
@@ -46,19 +46,14 @@
     <div class="uu-inner-container">
         <div class="col-12 compare document-compare">
             <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
-                <img src="{% static 'main/images/loading.gif' %}"/>
+                <img src="{% static 'main/images/loading.gif' %}" />
             </div>
-
-                {% for section in sections %}
-                    {% include section %}
-                {% endfor %}
-
+            {% for section in sections %}
+                {% include section %}
+            {% endfor %}
             <p class="mt-5 float-right">
-                <button class="button" onclick="window.history.back();">
-                    {% trans "Terug naar de vorige pagina" %}
-                </button>
+                <button class="button" onclick="window.history.back();">{% trans "Terug naar de vorige pagina" %}</button>
             </p>
-
         </div>
     </div>
 {% endblock %}

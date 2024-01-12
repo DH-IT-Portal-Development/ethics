@@ -11,74 +11,72 @@
     <div class="uu-inner-container">
         <div class="col-12">
             <h2>{% trans "Een nieuwe aanvraag aanmelden" %}</h2>
-
-                <ul>
-                <li>{% trans "Check voor het indienen:" %}
-                    <ul>
-                    <li>
-                        {% blocktrans trimmed %}
-                            De
-                            <a href="https://fetc-gw.wp.hum.uu.nl/" target="_blank">
-                            UU-webpagina van de FETC-GW</a> voor nieuws en de agenda.
-                        {% endblocktrans %}
-                    </li>
-                    <li>
-                        {% blocktrans trimmed %}
-                            Het reglement van de
-                            <a href="https://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/">Algemene Kamer (AK)</a>
-                            of dat van de
-                            <a href="https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/">Linguïstiek Kamer (LK)</a>.
-                        {% endblocktrans %}
-                    </li>
-                    </ul>
+            <ul>
                 <li>
-                {% blocktrans trimmed %}
-                    Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw">voorbeelddocumenten</a> voor de <em>informed consent</em>.
-                {% endblocktrans %}
+                    {% trans "Check voor het indienen:" %}
+                    <ul>
+                        <li>
+                            {% blocktrans trimmed %}
+                                De
+                                <a href="https://fetc-gw.wp.hum.uu.nl/" target="_blank">UU-webpagina van de FETC-GW</a> voor nieuws en de agenda.
+                            {% endblocktrans %}
+                        </li>
+                        <li>
+                            {% blocktrans trimmed %}
+                                Het reglement van de
+                                <a href="https://fetc-gw.wp.hum.uu.nl/reglement-algemene-kamer/">Algemene Kamer (AK)</a>
+                                of dat van de
+                                <a href="https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/">Linguïstiek Kamer (LK)</a>.
+                            {% endblocktrans %}
+                        </li>
+                    </ul>
+                    <li>
+                        {% blocktrans trimmed %}
+                            Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw">voorbeelddocumenten</a> voor de <em>informed consent</em>.
+                        {% endblocktrans %}
+                    </li>
+                    <p>
+                        {% blocktrans trimmed %}
+                            Studenten moeten hun begeleider vragen om deze formulieren; dezelfde voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
+                        {% endblocktrans %}
+                    </p>
                 </li>
-                <p>
-                {% blocktrans trimmed %}
-                Studenten moeten hun begeleider vragen om deze formulieren; dezelfde voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
-                {% endblocktrans %}
-                </p>
-                </li>
-                </ul>
+            </ul>
             <p>
-                {% blocktrans %}
+                {% blocktrans trimmed %}
                     Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) sessies, (iii) taken.
                 {% endblocktrans %}
             </p>
             <ul>
-            <p>
-                <li><strong>{% trans "Traject" %}</strong>:
+                <li>
+                    <strong>{% trans "Traject" %}</strong>:
                     {% blocktrans trimmed %}
-                    Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende informed consent documenten nodig zijn.{% endblocktrans %}
-                    <p>{% blocktrans trimmed %}
-                        <u>Bijvoorbeeld</u>: ouders van leerlingen 15 jaar en jonger, docenten, een controlegroep en een experimentele groep die verschillende taken krijgen.
+                        Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende informed consent documenten nodig zijn.
+                    {% endblocktrans %}
+                    <p>
+                        {% blocktrans trimmed %}
+                            <u>Bijvoorbeeld</u>: ouders van leerlingen 15 jaar en jonger, docenten, een controlegroep en een experimentele groep die verschillende taken krijgen.
                         {% endblocktrans %}
-                </p>
-            </p>
-            <p>
-            <li><strong>{% trans "Sessie" %}</strong>:
-                {% blocktrans trimmed %}
-                    Alle taken/onderdelen die iemand op één dag uitvoert.
-                {% endblocktrans %}
-            </li>
-            </p>
-            <p>
-            <li><strong>{% trans "Taak" %}</strong>:
-                {% blocktrans trimmed %}
-                    Een taak of onderdeel van je onderzoek.
-                <p>
-                    <u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of een taaltest.
-                </p>
-                {% endblocktrans %}
-            </li>
-            </p>
+                    </p>
+                </li>
+                <li>
+                    <strong>{% trans "Sessie" %}</strong>:
+                    {% blocktrans trimmed %}
+                        Alle taken/onderdelen die iemand op één dag uitvoert.
+                    {% endblocktrans %}
+                </li>
+                <li>
+                    <strong>{% trans "Taak" %}</strong>:
+                    {% blocktrans trimmed %}
+                        Een taak of onderdeel van je onderzoek.
+                        <p>
+                            <u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of een taaltest.
+                        </p>
+                    {% endblocktrans %}
+                </li>
             </ul>
-            <a class="button button-colored float-right mb-4" href="{% url 'proposals:create' %}">
-                {% trans "Volgende stap >>" %}
-            </a>
+            <a class="button button-colored float-right mb-4"
+               href="{% url 'proposals:create' %}">{% trans "Volgende stap >>" %}</a>
         </div>
     </div>
 {% endblock %}

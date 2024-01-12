@@ -43,7 +43,7 @@
                 <p>
                     {% blocktrans trimmed %}
                         Let op! Er kan maar één revisie tegelijk bestaan. Mocht je jouw aanvraag hier niet zien
-                        als optie om te reviseren, bekijk dan of je aanvraag niet al tussen je concept aanvragen 
+                        als optie om te reviseren, bekijk dan of je aanvraag niet al tussen je concept aanvragen
                         staat.
                     {% endblocktrans %}
                 </p>
@@ -57,16 +57,14 @@
                 <p>
                     {% blocktrans trimmed %}
                         Let op! Er kan maar één amendement tegelijk bestaan. Mocht je jouw aanvraag hier niet zien
-                        als optie om te reviseren, bekijk dan of je aanvraag niet al tussen je concept aanvragen 
+                        als optie om te reviseren, bekijk dan of je aanvraag niet al tussen je concept aanvragen
                         staat.
                     {% endblocktrans %}
                 </p>
             {% else %}
                 {% url 'proposals:copy_revision' as revision_url %}
                 {% url 'proposals:copy_amendment' as amendment_url %}
-                <p>
-                    {% trans "Je kan hier een aanvraag kopiëren. Alle velden kunnen na het kopiëren aangepast worden." %}
-                </p>
+                <p>{% trans "Je kan hier een aanvraag kopiëren. Alle velden kunnen na het kopiëren aangepast worden." %}</p>
                 <p>
                     {% blocktrans trimmed %}
                         Deze pagina is alleen bedoeld voor het geval je een geheel nieuwe aanvraag gaat doen op basis van
@@ -86,17 +84,16 @@
                     {% endblocktrans %}
                 </p>
             {% endif %}
-            <form action="" method="post">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
+            <form action="" method="post">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
                 <div class="float-right mt-2 mb-3">
-                    <a class="button" href="javascript:history.go(-1)">
-                        {% trans "Annuleren" %}
-                    </a>
-                    <input class="button" type="submit" value="{% trans 'Kopiëren' %}"/>
+                    <a class="button" href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
+                    <input class="button" type="submit" value="{% trans 'Kopiëren' %}" />
                 </div>
-
             </form>
         </div>
     </div>
-
 {% endblock %}
