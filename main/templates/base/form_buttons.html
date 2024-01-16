@@ -31,15 +31,11 @@
             {% endif %}
         {% endif %}
         {% if not no_forward %}
+            {% trans 'Opslaan en volgende stap >>' as default_next_text %}
             <input class="button button-colored continue-button"
                    type="submit"
                    name="save_continue"
-                   value="{{ next_text|default:_("
-                   Opslaan
-                   en
-                   volgende
-                   stap>
-            >") }}" />
+                   value="{{ next_text|default:default_next_text }}" />
         {% endif %}
     </div>
 </div>

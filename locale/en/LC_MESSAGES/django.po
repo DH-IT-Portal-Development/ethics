@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-12 15:35+0100\n"
+"POT-Creation-Date: 2024-01-16 17:20+0100\n"
 "PO-Revision-Date: 2023-11-07 10:36+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -398,6 +398,10 @@ msgstr "Back to the beginning of the trajectory"
 #: main/templates/base/form_buttons.html:30
 msgid "Terug naar begin sessie"
 msgstr "Back to the beginning of the session"
+
+#: main/templates/base/form_buttons.html:34
+msgid "Opslaan en volgende stap >>"
+msgstr "Save and go to next step >>"
 
 #: main/templates/base/login_header.html:6
 msgid "Welkom {}"
@@ -3628,9 +3632,8 @@ msgid ""
 "target=\"_blank\">hier</a> in te zien (downloadt als PDF)."
 msgstr ""
 "    You can now give a go or no-go for the application <em>%(title)s</em>, "
-"%(refnum)s in %(chamber)s."
-"    You can see the details of this application <a href=\"%(pdf_url)s\" "
-"target=\"_blank\">here</a> (downloads as PDF)."
+"%(refnum)s in %(chamber)s.    You can see the details of this application <a "
+"href=\"%(pdf_url)s\" target=\"_blank\">here</a> (downloads as PDF)."
 
 #: reviews/templates/reviews/decision_form.html:30
 #, python-format
