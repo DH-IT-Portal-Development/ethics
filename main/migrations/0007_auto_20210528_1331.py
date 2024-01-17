@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('main', '0006_systemmessage'),
+        ("main", "0006_systemmessage"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='systemmessage',
-            name='message_en',
+            model_name="systemmessage",
+            name="message_en",
             field=models.CharField(max_length=200, null=True),
         ),
         migrations.AddField(
-            model_name='systemmessage',
-            name='message_nl',
+            model_name="systemmessage",
+            name="message_nl",
             field=models.CharField(max_length=200, null=True),
         ),
     ]

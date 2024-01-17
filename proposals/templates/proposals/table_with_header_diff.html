@@ -2,50 +2,47 @@
 {% load i18n %}
 
 {% if section_title %}
-    <h2 class="mt-5 mb-1"> {% trans section_title %} </h2>
+    <h2 class="mt-5 mb-1">{% trans section_title %}</h2>
 {% endif %}
-{% if sub_title %}
-    <h3 class='mt-3'> {{ sub_title }} </h3>
-{% endif %}
+{% if sub_title %}<h3 class='mt-3'>{{ sub_title }}</h3>{% endif %}
 <table class="proposals-diff ">
     <tr>
         <th class="proposals-diff-question"></th>
         <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
         <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
     </tr>
-{% if warning %}
-    {% for row in rows|slice:":1"%}
-    <tr class="diff-ignore">
-        <th>{{ row.verbose_name }}</th>
-        {# If the first object is missing, place a warning on the first TD #}
-        {% if missing_object == 'old' %}
-            <td rowspan='{{rows|length}}'>
-                <div class='warning'>
-                    {{ warning }}
-                </div>
-            </td>
-            <td>{{ row.value }}</td>
-        {# Otherwise, we're missing the second one, thus we place the warning on the second #}
-        {% elif missing_object == 'new' %}
-            <td>{{ row.value }}</td>
-            <td rowspan='{{rows|length}}'>
-                <div class='warning'>
-                    {{ warning }}
-                </div>
-            </td>
-        {% endif %}
-    </tr>
-    {% endfor %}
-    {%for row in rows|slice:"1:"%}
-    <tr class="diff-ignore">
-        <th>{{row.verbose_name}}</th><td>{{row.value}}</td>
-    </tr>
-    {% endfor %}
-{% else %}
-    {% for row in rows %}
-        <tr>
-            <th>{{ row.verbose_name }}</th><td>{{ row.old_value }}</td><td>{{ row.new_value }}</td>
-        </tr>
-    {% endfor %}
-{% endif %}
+    {% if warning %}
+        {% for row in rows|slice:":1" %}
+            <tr class="diff-ignore">
+                <th>{{ row.verbose_name }}</th>
+                {# If the first object is missing, place a warning on the first TD #}
+                {% if missing_object == 'old' %}
+                    <td rowspan='{{ rows|length }}'>
+                        <div class='warning'>{{ warning }}</div>
+                    </td>
+                    <td>{{ row.value }}</td>
+                    {# Otherwise, we're missing the second one, thus we place the warning on the second #}
+                {% elif missing_object == 'new' %}
+                    <td>{{ row.value }}</td>
+                    <td rowspan='{{ rows|length }}'>
+                        <div class='warning'>{{ warning }}</div>
+                    </td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        {% for row in rows|slice:"1:" %}
+            <tr class="diff-ignore">
+                <th>{{ row.verbose_name }}</th>
+                <td>{{ row.value }}</td>
+            </tr>
+        {% endfor %}
+    {% else %}
+        {% for row in rows %}
+            <tr>
+                <th>{{ row.verbose_name }}</th>
+                <td>{{ row.old_value }}</td>
+                <td>{{ row.new_value }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
 </table>

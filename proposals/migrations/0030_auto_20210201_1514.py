@@ -5,15 +5,21 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0029_auto_20210129_1717'),
+        ("proposals", "0029_auto_20210129_1717"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='proposal',
-            name='parent',
-            field=models.ForeignKey(help_text='Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='children', to='proposals.Proposal', verbose_name='Te kopiëren studie'),
+            model_name="proposal",
+            name="parent",
+            field=models.ForeignKey(
+                help_text="Dit veld toont enkel studies waar u zelf een medeuitvoerende bent.",
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="children",
+                to="proposals.Proposal",
+                verbose_name="Te kopiëren studie",
+            ),
         ),
     ]

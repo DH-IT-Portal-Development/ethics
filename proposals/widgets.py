@@ -6,7 +6,6 @@ try:
 except ImportError:
     # Define a dummy class if we can't import LDAPBackend for some reason
     class LDAPBackend(object):
-
         def populate_user(self, uid):
             pass
 
@@ -16,14 +15,14 @@ class SelectUser(forms.Select):
     Custom widget to allow a LDAP user to be entered through Select2.
     Used in combination with an ajax call to main:user_search
     """
+
     allow_multiple_selected = False
     ldap = LDAPBackend()
 
     def value_from_datadict(self, data, files, name):
-
         value = data.get(name, None)
 
-        if value and value.startswith('ldap_'):
+        if value and value.startswith("ldap_"):
             # Strip the ldap_ from the string
             uid = value[5:]
 
@@ -31,9 +30,12 @@ class SelectUser(forms.Select):
             user_object = self.ldap.populate_user(uid)
 
             # Add the user as a valid option
-            self.choices.append((user_object.pk,
-                                 u'{}: {}'.format(user_object.username,
-                                                  user_object.get_full_name())))
+            self.choices.append(
+                (
+                    user_object.pk,
+                    "{}: {}".format(user_object.username, user_object.get_full_name()),
+                )
+            )
 
             # Redefine the chosen option to the pk of the new user object
             value = str(user_object.pk)
@@ -46,6 +48,7 @@ class SelectMultipleUser(forms.Select):
     Custom widget to allow multiple LDAP users to be entered through Select2.
     Used in combination with an ajax call to main:user_search
     """
+
     allow_multiple_selected = True
     ldap = LDAPBackend()
 
@@ -58,7 +61,7 @@ class SelectMultipleUser(forms.Select):
 
         for i, user in enumerate(values):
             # if the user id starts with ldap_, we need to add that user to our local cache
-            if user.startswith('ldap_'):
+            if user.startswith("ldap_"):
                 # Strip the ldap_ from the string
                 uid = user[5:]
 
@@ -66,7 +69,14 @@ class SelectMultipleUser(forms.Select):
                 user_object = self.ldap.populate_user(uid)
 
                 # Add the user as a valid option
-                self.choices.append((user_object.pk, u'{}: {}'.format(user_object.username, user_object.get_full_name())))
+                self.choices.append(
+                    (
+                        user_object.pk,
+                        "{}: {}".format(
+                            user_object.username, user_object.get_full_name()
+                        ),
+                    )
+                )
 
                 # Redefine the chosen option to the pk of the new user object
                 values[i] = str(user_object.pk)

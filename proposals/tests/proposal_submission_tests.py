@@ -56,22 +56,12 @@ class BaseProposalTestCase(TestCase):
         )
 
         self.secretary.groups.add(
-            Group.objects.get(
-                name=settings.GROUP_PRIMARY_SECRETARY
-            )
+            Group.objects.get(name=settings.GROUP_PRIMARY_SECRETARY)
         )
-        self.secretary.groups.add(
-            Group.objects.get(
-                name=settings.GROUP_SECRETARY
-            )
-        )
+        self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
 
-        self.c1.groups.add(
-            Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER)
-        )
-        self.c2.groups.add(
-            Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER)
-        )
+        self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
+        self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
 
     def setup_proposal(self):
         """
@@ -99,8 +89,8 @@ class BaseProposalTestCase(TestCase):
 
 
 class ProposalSubmitTestCase(
-        BaseViewTestCase,
-        BaseProposalTestCase,
+    BaseViewTestCase,
+    BaseProposalTestCase,
 ):
     view_class = ProposalSubmit
 
@@ -119,20 +109,22 @@ class ProposalSubmitTestCase(
             "embargo_end_date": "2025-01-01",
         }
 
-    def test_access(self,):
+    def test_access(
+        self,
+    ):
         # NB: The proposal creator does not have access by default
         # Be sure to add them to the applicants list as well.
         self.assertEqual(
             self.check_access(
                 self.proposal.created_by,
             ),
-            True
+            True,
         )
         self.assertEqual(
             self.check_access(
                 AnonymousUser,
             ),
-            False
+            False,
         )
 
     def test_submission_unsupervised(self):
@@ -158,10 +150,7 @@ class ProposalSubmitTestCase(
             self.get_post_data(),
             user=self.user,
         )
-        self.assertIn(
-            page.status_code,
-            [302, 200]
-        )
+        self.assertIn(page.status_code, [302, 200])
         self.refresh()
         # Post-submission tests
         self.assertNotEqual(
@@ -205,10 +194,7 @@ class ProposalSubmitTestCase(
             self.get_post_data(),
             user=self.user,
         )
-        self.assertIn(
-            page.status_code,
-            [302, 200]
-        )
+        self.assertIn(page.status_code, [302, 200])
         self.refresh()
         # Post-submission tests
         self.assertNotEqual(
@@ -226,7 +212,7 @@ class ProposalSubmitTestCase(
 
 
 class PreassessmentSubmitTestCase(
-        ProposalSubmitTestCase,
+    ProposalSubmitTestCase,
 ):
     view_class = ProposalSubmitPreAssessment
 
@@ -236,7 +222,7 @@ class PreassessmentSubmitTestCase(
 
 
 class PreapprovedSubmitTestCase(
-        ProposalSubmitTestCase,
+    ProposalSubmitTestCase,
 ):
     view_class = ProposalSubmitPreApproved
 

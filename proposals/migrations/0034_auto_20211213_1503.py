@@ -6,122 +6,227 @@ import django.db.models.deletion
 import main.validators
 import proposals.utils.proposal_utils
 
+
 def AVGUnderstoodValidator():
-    '''This was formerly a validator, imported from proposals.validators,
+    """This was formerly a validator, imported from proposals.validators,
     but it is currently no longer required, so it has been removed.
-    To prevent an error, it has been replaced with this stub.'''
+    To prevent an error, it has been replaced with this stub."""
     pass
 
-class Migration(migrations.Migration):
 
+class Migration(migrations.Migration):
     dependencies = [
-        ('proposals', '0033_auto_20210521_1154'),
+        ("proposals", "0033_auto_20210521_1154"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='proposal',
-            name='avg_understood',
-            field=models.BooleanField(default=False, validators=[AVGUnderstoodValidator], verbose_name='Ik heb kennis genomen van het bovenstaande en begrijp mijn verantwoordelijkheden ten opzichte van de AVG.'),
+            model_name="proposal",
+            name="avg_understood",
+            field=models.BooleanField(
+                default=False,
+                validators=[AVGUnderstoodValidator],
+                verbose_name="Ik heb kennis genomen van het bovenstaande en begrijp mijn verantwoordelijkheden ten opzichte van de AVG.",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='date_start',
-            field=models.DateField(blank=True, null=True, verbose_name='Wat is de beoogde startdatum van het onderzoek waarvoor deze aanvraag wordt ingediend?'),
+            model_name="proposal",
+            name="date_start",
+            field=models.DateField(
+                blank=True,
+                null=True,
+                verbose_name="Wat is de beoogde startdatum van het onderzoek waarvoor deze aanvraag wordt ingediend?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='dmp_file',
-            field=models.FileField(blank=True, storage=proposals.utils.proposal_utils.OverwriteStorage(), upload_to=proposals.utils.proposal_utils.FilenameFactory('DMP'), validators=[main.validators.validate_pdf_or_doc], verbose_name='Als je een Data Management Plan hebt voor deze aanvraag, kan je kiezen om deze hier bij te voegen. Het aanleveren van een DMP vergemakkelijkt het toetsingsproces aanzienlijk.'),
+            model_name="proposal",
+            name="dmp_file",
+            field=models.FileField(
+                blank=True,
+                storage=proposals.utils.proposal_utils.OverwriteStorage(),
+                upload_to=proposals.utils.proposal_utils.FilenameFactory("DMP"),
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Als je een Data Management Plan hebt voor deze aanvraag, kan je kiezen om deze hier bij te voegen. Het aanleveren van een DMP vergemakkelijkt het toetsingsproces aanzienlijk.",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='funding_name',
-            field=models.CharField(blank=True, help_text='De titel die je hier opgeeft zal in de formele toestemmingsbrief gebruikt worden.', max_length=200, verbose_name='Wat is de naam van het gefinancierde project?'),
+            model_name="proposal",
+            name="funding_name",
+            field=models.CharField(
+                blank=True,
+                help_text="De titel die je hier opgeeft zal in de formele toestemmingsbrief gebruikt worden.",
+                max_length=200,
+                verbose_name="Wat is de naam van het gefinancierde project?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='has_minor_revision',
-            field=models.BooleanField(default=False, verbose_name='Is er een revisie geweest na het indienen van deze aanvraag?'),
+            model_name="proposal",
+            name="has_minor_revision",
+            field=models.BooleanField(
+                default=False,
+                verbose_name="Is er een revisie geweest na het indienen van deze aanvraag?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='inform_local_staff',
-            field=models.BooleanField(blank=True, default=None, null=True, verbose_name='<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één van de faciliteiten van het UiL OTS, namelijk de database, Zep software en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op de hoogte willen worden gesteld van aankomende onderzoeken. Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.</p> <p>Vind je het goed dat de volgende delen uit de aanvraag worden doorgestuurd:</p> - Jouw naam en de namen van de andere betrokkenen <br/> - De eindverantwoordelijke van het onderzoek <br/> - De titel van het onderzoek <br/> - De beoogde startdatum <br/> - Van welke faciliteiten je gebruik wil maken (database, lab, Zep software)'),
+            model_name="proposal",
+            name="inform_local_staff",
+            field=models.BooleanField(
+                blank=True,
+                default=None,
+                null=True,
+                verbose_name="<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één van de faciliteiten van het UiL OTS, namelijk de database, Zep software en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op de hoogte willen worden gesteld van aankomende onderzoeken. Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.</p> <p>Vind je het goed dat de volgende delen uit de aanvraag worden doorgestuurd:</p> - Jouw naam en de namen van de andere betrokkenen <br/> - De eindverantwoordelijke van het onderzoek <br/> - De titel van het onderzoek <br/> - De beoogde startdatum <br/> - Van welke faciliteiten je gebruik wil maken (database, lab, Zep software)",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='institution',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='proposals.Institution', verbose_name='Aan welk onderzoeksinstituut ben je verbonden?'),
+            model_name="proposal",
+            name="institution",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                to="proposals.Institution",
+                verbose_name="Aan welk onderzoeksinstituut ben je verbonden?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='is_pre_approved',
-            field=models.BooleanField(blank=True, default=None, null=True, verbose_name='Heb je formele toestemming van een ethische toetsingcommissie, uitgezonderd deze FETC-GW commissie?'),
+            model_name="proposal",
+            name="is_pre_approved",
+            field=models.BooleanField(
+                blank=True,
+                default=None,
+                null=True,
+                verbose_name="Heb je formele toestemming van een ethische toetsingcommissie, uitgezonderd deze FETC-GW commissie?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='is_revision',
-            field=models.BooleanField(default=False, verbose_name='Is deze aanvraag een revisie van of amendement op een ingediende aanvraag?'),
+            model_name="proposal",
+            name="is_revision",
+            field=models.BooleanField(
+                default=False,
+                verbose_name="Is deze aanvraag een revisie van of amendement op een ingediende aanvraag?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='other_applicants',
-            field=models.BooleanField(default=False, verbose_name='Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of UiL OTS?'),
+            model_name="proposal",
+            name="other_applicants",
+            field=models.BooleanField(
+                default=False,
+                verbose_name="Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of UiL OTS?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='other_stakeholders',
-            field=models.BooleanField(default=False, verbose_name='Zijn er nog andere onderzoekers bij deze aanvraag betrokken die <strong>niet</strong> geaffilieerd zijn aan een van de onderzoeksinstituten van de Faculteit Geestwetenschappen van de UU? '),
+            model_name="proposal",
+            name="other_stakeholders",
+            field=models.BooleanField(
+                default=False,
+                verbose_name="Zijn er nog andere onderzoekers bij deze aanvraag betrokken die <strong>niet</strong> geaffilieerd zijn aan een van de onderzoeksinstituten van de Faculteit Geestwetenschappen van de UU? ",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='parent',
-            field=models.ForeignKey(help_text='Dit veld toont enkel aanvragen waar je zelf een medeuitvoerende bent.', null=True, on_delete=django.db.models.deletion.CASCADE, related_name='children', to='proposals.Proposal', verbose_name='Te kopiëren aanvraag'),
+            model_name="proposal",
+            name="parent",
+            field=models.ForeignKey(
+                help_text="Dit veld toont enkel aanvragen waar je zelf een medeuitvoerende bent.",
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="children",
+                to="proposals.Proposal",
+                verbose_name="Te kopiëren aanvraag",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='pre_approval_institute',
-            field=models.CharField(blank=True, max_length=200, null=True, verbose_name='Welk instituut heeft de aanvraag goedgekeurd?'),
+            model_name="proposal",
+            name="pre_approval_institute",
+            field=models.CharField(
+                blank=True,
+                max_length=200,
+                null=True,
+                verbose_name="Welk instituut heeft de aanvraag goedgekeurd?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='pre_approval_pdf',
-            field=models.FileField(blank=True, upload_to=proposals.utils.proposal_utils.FilenameFactory('Pre_Approval'), validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier je formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)'),
+            model_name="proposal",
+            name="pre_approval_pdf",
+            field=models.FileField(
+                blank=True,
+                upload_to=proposals.utils.proposal_utils.FilenameFactory(
+                    "Pre_Approval"
+                ),
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier je formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='pre_assessment_pdf',
-            field=models.FileField(blank=True, upload_to=proposals.utils.proposal_utils.FilenameFactory('Preassessment'), validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier je aanvraag (in .pdf of .doc(x)-formaat)'),
+            model_name="proposal",
+            name="pre_assessment_pdf",
+            field=models.FileField(
+                blank=True,
+                upload_to=proposals.utils.proposal_utils.FilenameFactory(
+                    "Preassessment"
+                ),
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier je aanvraag (in .pdf of .doc(x)-formaat)",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='relation',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='proposals.Relation', verbose_name='In welke hoedanigheid ben je betrokken bij dit onderzoek?'),
+            model_name="proposal",
+            name="relation",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="proposals.Relation",
+                verbose_name="In welke hoedanigheid ben je betrokken bij dit onderzoek?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='reviewing_committee',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='auth.Group', verbose_name='Door welke comissie dient deze aanvraag te worden beoordeeld?'),
+            model_name="proposal",
+            name="reviewing_committee",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                to="auth.Group",
+                verbose_name="Door welke comissie dient deze aanvraag te worden beoordeeld?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='status',
-            field=models.PositiveIntegerField(choices=[(1, 'Concept'), (40, 'Opgestuurd ter beoordeling door eindverantwoordelijke'), (50, 'Opgestuurd ter beoordeling door FETC-GW'), (55, 'Aanvraag is beoordeeld door FETC-GW'), (60, 'Aanvraag is beoordeeld door FETC-GW')], default=1),
+            model_name="proposal",
+            name="status",
+            field=models.PositiveIntegerField(
+                choices=[
+                    (1, "Concept"),
+                    (40, "Opgestuurd ter beoordeling door eindverantwoordelijke"),
+                    (50, "Opgestuurd ter beoordeling door FETC-GW"),
+                    (55, "Aanvraag is beoordeeld door FETC-GW"),
+                    (60, "Aanvraag is beoordeeld door FETC-GW"),
+                ],
+                default=1,
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='supervisor',
-            field=models.ForeignKey(blank=True, help_text='Aan het einde van de procedure kan je deze aanvraag ter\n        verificatie naar je eindverantwoordelijke sturen. De\n        eindverantwoordelijke zal de aanvraag vervolgens kunnen aanpassen en\n        indienen bij de FETC-GW. <br><br><strong>Tip</strong>: Type een\n        aantal letters van de voornaam, achternaam, of Solis ID van het\n        persoon die je toe wilt voegen in de zoekbalk hiernaast.\n        Merk op dat het laden even kan duren.', null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Eindverantwoordelijke onderzoeker'),
+            model_name="proposal",
+            name="supervisor",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="Aan het einde van de procedure kan je deze aanvraag ter\n        verificatie naar je eindverantwoordelijke sturen. De\n        eindverantwoordelijke zal de aanvraag vervolgens kunnen aanpassen en\n        indienen bij de FETC-GW. <br><br><strong>Tip</strong>: Type een\n        aantal letters van de voornaam, achternaam, of Solis ID van het\n        persoon die je toe wilt voegen in de zoekbalk hiernaast.\n        Merk op dat het laden even kan duren.",
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Eindverantwoordelijke onderzoeker",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='title',
-            field=models.CharField(help_text='De titel die je hier opgeeft is zichtbaar voor de FETC-GW-leden en, wanneer de aanvraag is goedgekeurd, ook voor alle medewerkers die in het archief van deze portal kijken. De titel mag niet identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.', max_length=200, verbose_name='Wat is de titel van je aanvraag? Deze titel zal worden gebruikt in alle formele correspondentie.'),
+            model_name="proposal",
+            name="title",
+            field=models.CharField(
+                help_text="De titel die je hier opgeeft is zichtbaar voor de FETC-GW-leden en, wanneer de aanvraag is goedgekeurd, ook voor alle medewerkers die in het archief van deze portal kijken. De titel mag niet identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.",
+                max_length=200,
+                verbose_name="Wat is de titel van je aanvraag? Deze titel zal worden gebruikt in alle formele correspondentie.",
+            ),
         ),
         migrations.AlterField(
-            model_name='wmo',
-            name='metc_application',
-            field=models.BooleanField(default=False, verbose_name='Je onderzoek moet beoordeeld worden door een METC, maar dient nog wel bij de FETC-GW te worden geregistreerd. Is dit onderzoek al aangemeld bij een METC?'),
+            model_name="wmo",
+            name="metc_application",
+            field=models.BooleanField(
+                default=False,
+                verbose_name="Je onderzoek moet beoordeeld worden door een METC, maar dient nog wel bij de FETC-GW te worden geregistreerd. Is dit onderzoek al aangemeld bij een METC?",
+            ),
         ),
     ]

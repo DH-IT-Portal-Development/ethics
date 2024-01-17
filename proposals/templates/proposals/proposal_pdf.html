@@ -8,7 +8,6 @@
 
 {% block extra_style %}
     <style type="text/css">
-
         @font-face {
             font-family: "Open Sans";
             src: url('proposals/static/proposals/pdf_font/OpenSans-Regular.ttf');
@@ -54,7 +53,8 @@
             border-left-color: #cbcbcb;
         }
 
-        .question, .answer {
+        .question,
+        .answer {
             display: block;
             width: 500px !important;
             font-weight: normal;
@@ -78,51 +78,48 @@
             margin-top: 2rem;
             font-size: 150%;
         }
-
     </style>
 {% endblock %}
 
 {% block page_header %}
-  <div id="page-header">
-    {% blocktrans with title=proposal.title reference_number=proposal.reference_number submitter=proposal.created_by.get_full_name reviewing_committee=proposal.reviewing_committee.name trimmed %}
-      FETC-GW - <em>{{ title }}</em> (referentienummer {{reviewing_committee}}-{{ reference_number }}, ingediend door {{ submitter }})
-    {% endblocktrans %}
-    {% if proposal.is_revision %}
-      <br>
-      <strong>
-        {% blocktrans with type=proposal.type reference_number=proposal.parent.reference_number trimmed %}
-          {{ type }} van referentienummer {{ reference_number }}
+    <div id="page-header">
+        {% blocktrans with title=proposal.title reference_number=proposal.reference_number submitter=proposal.created_by.get_full_name reviewing_committee=proposal.reviewing_committee.name trimmed %}
+            FETC-GW - <em>{{ title }}</em> (referentienummer {{ reviewing_committee }}-{{ reference_number }}, ingediend door {{ submitter }})
         {% endblocktrans %}
-      </strong>
-    {% endif %}
-  </div>
+        {% if proposal.is_revision %}
+            <br>
+            <strong>
+                {% blocktrans with type=proposal.type reference_number=proposal.parent.reference_number trimmed %}
+                    {{ type }} van referentienummer {{ reference_number }}
+                {% endblocktrans %}
+            </strong>
+        {% endif %}
+    </div>
 {% endblock %}
 
-{% block page_foot %}
-  Page <pdf:pagenumber /> of <pdf:pagecount />
-{% endblock %}
+{% block page_foot %}Page <pdf:pagenumber /> of <pdf:pagecount />{% endblock %}
 
 {% block content %}
-  <div id="content">
-    <div class="main">
-      <h1>
-        {% blocktrans with reference_number=proposal.reference_number trimmed %}
-          Referentienummer {{ reference_number }}
-        {% endblocktrans %}
-      </h1>
-      <p>{% trans 'Huidige staat van de aanvraag' %}: <em>{{proposal.get_status_display}}</em>
-      </p>
-
-      <h2>{% trans 'Indiener' %}</h2>
-      <div class="table">
-        <div class="question">{% trans 'Naam' %}</div><div class="answer">{{ proposal.created_by.get_full_name }}</div>
-        <div class="question">{% trans 'E-mail' %}</div><div class="answer">{{ proposal.created_by.email }}</div>
-      </div>
-
-        {% for section in sections %}
-          {% include section %}
-        {% endfor %}
-
+    <div id="content">
+        <div class="main">
+            <h1>
+                {% blocktrans with reference_number=proposal.reference_number trimmed %}
+                    Referentienummer {{ reference_number }}
+                {% endblocktrans %}
+            </h1>
+            <p>
+                {% trans 'Huidige staat van de aanvraag' %}: <em>{{ proposal.get_status_display }}</em>
+            </p>
+            <h2>{% trans 'Indiener' %}</h2>
+            <div class="table">
+                <div class="question">{% trans 'Naam' %}</div>
+                <div class="answer">{{ proposal.created_by.get_full_name }}</div>
+                <div class="question">{% trans 'E-mail' %}</div>
+                <div class="answer">{{ proposal.created_by.email }}</div>
+            </div>
+            {% for section in sections %}
+                {% include section %}
+            {% endfor %}
+        </div>
     </div>
-  </div>
 {% endblock %}

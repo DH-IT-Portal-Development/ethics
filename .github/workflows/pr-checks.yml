@@ -1,0 +1,55 @@
+name: PR checks
+
+on:
+  pull_request:
+jobs:
+  check-migrations:
+    name: Check if there are any missing migrations
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install OS dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install libldap2-dev libsasl2-dev libssl-dev gettext poppler-utils poppler-data libpoppler-cpp-dev
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Check for missing migrations
+        run: |
+          python manage.py makemigrations --check --dry-run
+  check-djlint:
+    name: Check if DJLint thinks everything is correctly formatted
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install OS dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install libldap2-dev libsasl2-dev libssl-dev gettext poppler-utils poppler-data libpoppler-cpp-dev
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run DJLint
+        # This exclude flag is needed because Github downloads dependencies there, which causes djlint to judge those
+        run: |
+          djlint . --check --exclude src
+  black-check: # Rhymes with blackjack :D
+    name: Check if Black thinks everything is correctly formatted
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: psf/black@stable
+        with:
+          src: .
+

@@ -7,15 +7,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('observations', '0003_observation_leader_has_coc'),
+        ("observations", "0003_observation_leader_has_coc"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='observation',
-            name='approval_document',
-            field=models.FileField(blank=True, upload_to='', validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)'),
+            model_name="observation",
+            name="approval_document",
+            field=models.FileField(
+                blank=True,
+                upload_to="",
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)",
+            ),
         ),
     ]

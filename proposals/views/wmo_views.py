@@ -24,7 +24,7 @@ class WmoMixin(AllowErrorsOnBackbuttonMixin, object):
     def get_context_data(self, **kwargs):
         """Setting the Proposal on the context"""
         context = super(WmoMixin, self).get_context_data(**kwargs)
-        context['proposal'] = self.get_proposal()
+        context["proposal"] = self.get_proposal()
         return context
 
     def get_next_url(self):
@@ -34,14 +34,18 @@ class WmoMixin(AllowErrorsOnBackbuttonMixin, object):
         """
         wmo = self.object
         if wmo.status == Wmo.WMOStatuses.NO_WMO:
-            return reverse('proposals:study_start', args=(wmo.proposal.pk,))
+            return reverse("proposals:study_start", args=(wmo.proposal.pk,))
         else:
-            return reverse('proposals:wmo_application', args=(wmo.pk,))
+            return reverse("proposals:wmo_application", args=(wmo.pk,))
 
     def get_back_url(self):
         """Return to the Proposal overview, or practice overview if we are in practice mode"""
         proposal = self.get_proposal()
-        url = 'proposals:update_practice' if proposal.is_practice() else 'proposals:update'
+        url = (
+            "proposals:update_practice"
+            if proposal.is_practice()
+            else "proposals:update"
+        )
         return reverse(url, args=(proposal.pk,))
 
     def get_proposal(self):
@@ -49,7 +53,7 @@ class WmoMixin(AllowErrorsOnBackbuttonMixin, object):
 
 
 class WmoCreate(WmoMixin, CreateView):
-    success_message = _('WMO-gegevens opgeslagen')
+    success_message = _("WMO-gegevens opgeslagen")
 
     def form_valid(self, form):
         """Saves the Proposal on the WMO instance"""
@@ -58,11 +62,11 @@ class WmoCreate(WmoMixin, CreateView):
 
     def get_proposal(self):
         """Retrieves the Proposal from the pk kwarg"""
-        return Proposal.objects.get(pk=self.kwargs['pk'])
+        return Proposal.objects.get(pk=self.kwargs["pk"])
 
 
 class WmoUpdate(WmoMixin, UpdateView):
-    success_message = _('WMO-gegevens bewerkt')
+    success_message = _("WMO-gegevens bewerkt")
 
     def get_proposal(self):
         """Retrieves the Proposal from the form object"""
@@ -75,30 +79,30 @@ class WmoUpdate(WmoMixin, UpdateView):
 class WmoApplication(UpdateView):
     model = Wmo
     form_class = WmoApplicationForm
-    template_name = 'proposals/wmo_application.html'
+    template_name = "proposals/wmo_application.html"
 
     def get_context_data(self, **kwargs):
         """Setting the Proposal on the context"""
         context = super(WmoApplication, self).get_context_data(**kwargs)
-        context['proposal'] = self.object.proposal
+        context["proposal"] = self.object.proposal
         return context
 
     def get_next_url(self):
         """Continue to the definition of a Study if we have completed the Wmo application"""
         wmo = self.object
         if wmo.status == Wmo.WMOStatuses.WAITING:
-            return reverse('proposals:wmo_application', args=(wmo.pk,))
+            return reverse("proposals:wmo_application", args=(wmo.pk,))
         else:
-            return reverse('proposals:study_start', args=(wmo.proposal.pk,))
+            return reverse("proposals:study_start", args=(wmo.proposal.pk,))
 
     def get_back_url(self):
         """Return to the Wmo overview"""
-        return reverse('proposals:wmo_update', args=(self.object.pk,))
+        return reverse("proposals:wmo_update", args=(self.object.pk,))
 
 
 class WmoCheck(generic.FormView):
     form_class = WmoCheckForm
-    template_name = 'proposals/wmo_check.html'
+    template_name = "proposals/wmo_check.html"
 
 
 ########################
@@ -109,26 +113,27 @@ class PreAssessmentMixin(object):
         """Different continue URL for pre-assessment Proposals"""
         wmo = self.object
         if wmo.status == Wmo.WMOStatuses.NO_WMO:
-            return reverse('proposals:submit_pre', args=(self.object.proposal.pk,))
+            return reverse("proposals:submit_pre", args=(self.object.proposal.pk,))
         else:
-            return reverse('proposals:wmo_application_pre', args=(wmo.pk,))
+            return reverse("proposals:wmo_application_pre", args=(wmo.pk,))
 
     def get_back_url(self):
         """Different return URL for pre-assessment Proposals"""
-        return reverse('proposals:update_pre', args=(self.object.proposal.pk,))
+        return reverse("proposals:update_pre", args=(self.object.proposal.pk,))
 
 
 class WmoCreatePreAssessment(PreAssessmentMixin, WmoCreate):
     pass
 
+
 class WmoUpdatePreAssessment(PreAssessmentMixin, WmoUpdate):
     pass
 
-class WmoApplicationPreAssessment(PreAssessmentMixin, WmoApplication):
 
+class WmoApplicationPreAssessment(PreAssessmentMixin, WmoApplication):
     def get_next_url(self):
         """Different continue URL for pre-assessment Proposals"""
-        return reverse('proposals:submit_pre', args=(self.object.proposal.pk,))
+        return reverse("proposals:submit_pre", args=(self.object.proposal.pk,))
 
 
 ################
@@ -139,27 +144,34 @@ def check_wmo(request):
     """
     This call checks which WMO message should be generated.
     """
-    is_metc = request.POST.get('metc') == YesNoDoubt.YES
-    is_medical = request.POST.get('medical') == YesNoDoubt.YES
+    is_metc = request.POST.get("metc") == YesNoDoubt.YES
+    is_medical = request.POST.get("medical") == YesNoDoubt.YES
 
-    doubt = request.POST.get('metc') == YesNoDoubt.DOUBT or request.POST.get('medical') == YesNoDoubt.DOUBT
+    doubt = (
+        request.POST.get("metc") == YesNoDoubt.DOUBT
+        or request.POST.get("medical") == YesNoDoubt.DOUBT
+    )
 
     # Default message: OK.
-    message = _('Je onderzoek hoeft niet te worden beoordeeld door de METC.')
-    message_class = 'info'
+    message = _("Je onderzoek hoeft niet te worden beoordeeld door de METC.")
+    message_class = "info"
     needs_metc = False
 
     # On doubt, contact secretary.
     if doubt:
         secretary = get_secretary()
-        message = _('Neem contact op met <a href="{link}">{secretary}</a> om de twijfels weg te nemen.').format(link='mailto:'+ secretary.email , secretary=secretary.get_full_name())
-        message_class = 'warning'
+        message = _(
+            'Neem contact op met <a href="{link}">{secretary}</a> om de twijfels weg te nemen.'
+        ).format(link="mailto:" + secretary.email, secretary=secretary.get_full_name())
+        message_class = "warning"
         needs_metc = True
     # Otherwise, METC review is necessary for METC studies (obviously) and
     # studies that have medical research questions or define user behavior
     elif is_metc or is_medical:
-        message = _('Je onderzoek zal moeten worden beoordeeld door de METC.')
-        message_class = 'warning'
+        message = _("Je onderzoek zal moeten worden beoordeeld door de METC.")
+        message_class = "warning"
         needs_metc = True
 
-    return JsonResponse({'needs_metc': needs_metc, 'message': message, 'message_class': message_class})
+    return JsonResponse(
+        {"needs_metc": needs_metc, "message": message, "message_class": message_class}
+    )

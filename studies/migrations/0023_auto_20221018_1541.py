@@ -4,20 +4,27 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('studies', '0022_alter_study_recruitment_details'),
+        ("studies", "0022_alter_study_recruitment_details"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='study',
-            name='hierarchy',
-            field=models.BooleanField(blank=True, null=True, verbose_name='Bestaat een hiërarchische relatie tussen onderzoeker(s) en deelnemer(s)?'),
+            model_name="study",
+            name="hierarchy",
+            field=models.BooleanField(
+                blank=True,
+                null=True,
+                verbose_name="Bestaat een hiërarchische relatie tussen onderzoeker(s) en deelnemer(s)?",
+            ),
         ),
         migrations.AddField(
-            model_name='study',
-            name='hierarchy_details',
-            field=models.TextField(blank=True, max_length=500, verbose_name='Zo ja, wat is de relatie (bijv. docent-student)?'),
+            model_name="study",
+            name="hierarchy_details",
+            field=models.TextField(
+                blank=True,
+                max_length=500,
+                verbose_name="Zo ja, wat is de relatie (bijv. docent-student)?",
+            ),
         ),
     ]

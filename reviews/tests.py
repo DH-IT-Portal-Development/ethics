@@ -7,7 +7,13 @@ from django.contrib.auth.models import User, Group, AnonymousUser
 from django.test import TestCase, Client, RequestFactory
 
 from .models import Review, Decision
-from .utils import start_review, auto_review, auto_review_observation, auto_review_task, notify_secretary
+from .utils import (
+    start_review,
+    auto_review,
+    auto_review_observation,
+    auto_review_task,
+    notify_secretary,
+)
 from main.tests import BaseViewTestCase
 from main.models import YesNoDoubt
 from proposals.models import Proposal, Relation, Wmo
@@ -21,9 +27,15 @@ from .views import ReviewCloseView
 
 
 class BaseReviewTestCase(TestCase):
-
-    fixtures = ['relations', 'compensations', 'registrations',
-                'registrationkinds', 'agegroups', 'groups', 'institutions']
+    fixtures = [
+        "relations",
+        "compensations",
+        "registrations",
+        "registrationkinds",
+        "agegroups",
+        "groups",
+        "institutions",
+    ]
     relation_pk = 1
 
     def setUp(self):
@@ -35,9 +47,9 @@ class BaseReviewTestCase(TestCase):
         super().setUp()
 
     def setup_proposal(self):
-
         self.proposal = Proposal.objects.create(
-            title='p1', reference_number=generate_ref_number(),
+            title="p1",
+            reference_number=generate_ref_number(),
             date_start=date.today(),
             created_by=self.user,
             supervisor=self.supervisor,
@@ -56,19 +68,30 @@ class BaseReviewTestCase(TestCase):
             order=1,
             compensation=Compensation.objects.get(
                 pk=2,
-            )
+            ),
         )
         self.proposal.generate_pdf()
 
     def setup_users(self):
+        self.secretary = User.objects.create_user(
+            "secretary",
+            "test@test.com",
+            "secret",
+            first_name="The",
+            last_name="Secretary",
+        )
+        self.c1 = User.objects.create_user("c1", "test@test.com", "secret")
+        self.c2 = User.objects.create_user("c2", "test@test.com", "secret")
+        self.user = User.objects.create_user(
+            "user", "test@test.com", "secret", first_name="John", last_name="Doe"
+        )
+        self.supervisor = User.objects.create_user(
+            "supervisor", "test@test.com", "secret", first_name="Jane", last_name="Roe"
+        )
 
-        self.secretary = User.objects.create_user('secretary', 'test@test.com', 'secret', first_name='The', last_name='Secretary')
-        self.c1 = User.objects.create_user('c1', 'test@test.com', 'secret')
-        self.c2 = User.objects.create_user('c2', 'test@test.com', 'secret')
-        self.user = User.objects.create_user('user', 'test@test.com', 'secret', first_name='John', last_name='Doe')
-        self.supervisor = User.objects.create_user('supervisor', 'test@test.com', 'secret', first_name='Jane', last_name='Roe')
-
-        self.secretary.groups.add(Group.objects.get(name=settings.GROUP_PRIMARY_SECRETARY))
+        self.secretary.groups.add(
+            Group.objects.get(name=settings.GROUP_PRIMARY_SECRETARY)
+        )
         self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
         self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
         self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
@@ -87,7 +110,7 @@ class BaseReviewTestCase(TestCase):
         """
         for message in outbox:
             subject = message.subject
-            self.assertTrue('FETC-GW' in subject)
+            self.assertTrue("FETC-GW" in subject)
             self.assertTrue(self.proposal.reference_number in subject)
 
 
@@ -104,10 +127,9 @@ class ReviewTestCase(BaseReviewTestCase):
         self.assertEqual(Decision.objects.filter(review=review).count(), 1)
         self.assertEqual(review.decision_set.count(), 1)
 
-        self.assertEqual(len(mail.outbox), 2) # check we sent 2 emails
+        self.assertEqual(len(mail.outbox), 2)  # check we sent 2 emails
         self.check_subject_lines(mail.outbox)
         mail.outbox = []
-
 
     def test_start_review(self):
         # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
@@ -120,7 +142,7 @@ class ReviewTestCase(BaseReviewTestCase):
         self.assertEqual(Decision.objects.filter(reviewer=self.secretary).count(), 1)
         self.assertEqual(Decision.objects.filter(review=review).count(), 1)
         self.assertEqual(review.decision_set.count(), 1)
-        
+
         self.assertEqual(len(mail.outbox), 2)
         self.check_subject_lines(mail.outbox)
         mail.outbox = []
@@ -302,17 +324,18 @@ class AutoReviewTests(BaseReviewTestCase):
 
         s1 = Session.objects.create(study=self.study, order=1, tasks_number=1)
         s1_t1 = Task.objects.create(session=s1, order=1)
-        s1_t1.registrations.set(Registration.objects.filter(pk=6))  # psychofysiological measurements
+        s1_t1.registrations.set(
+            Registration.objects.filter(pk=6)
+        )  # psychofysiological measurements
 
         reasons = auto_review_task(self.study, s1_t1)
         self.assertEqual(len(reasons), 1)
 
 
 class ReviewCloseTestCase(
-        BaseViewTestCase,
-        BaseReviewTestCase,
+    BaseViewTestCase,
+    BaseReviewTestCase,
 ):
-
     view_class = ReviewCloseView
 
     def setUp(self):

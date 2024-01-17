@@ -4,34 +4,50 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('studies', '0023_auto_20221018_1541'),
+        ("studies", "0023_auto_20221018_1541"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='SpecialDetail',
+            name="SpecialDetail",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('order', models.PositiveIntegerField(unique=True)),
-                ('description', models.CharField(max_length=200)),
-                ('description_nl', models.CharField(max_length=200, null=True)),
-                ('description_en', models.CharField(max_length=200, null=True)),
-                ('medical_traits', models.BooleanField(default=False)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("order", models.PositiveIntegerField(unique=True)),
+                ("description", models.CharField(max_length=200)),
+                ("description_nl", models.CharField(max_length=200, null=True)),
+                ("description_en", models.CharField(max_length=200, null=True)),
+                ("medical_traits", models.BooleanField(default=False)),
             ],
             options={
-                'ordering': ['order'],
+                "ordering": ["order"],
             },
         ),
         migrations.AddField(
-            model_name='study',
-            name='has_special_details',
-            field=models.BooleanField(blank=True, help_text="zie de <a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw'             target='_blank'>Richtlijnen</a>", null=True, verbose_name='Worden er bijzondere persoonsgegevens verzameld?'),
+            model_name="study",
+            name="has_special_details",
+            field=models.BooleanField(
+                blank=True,
+                help_text="zie de <a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw'             target='_blank'>Richtlijnen</a>",
+                null=True,
+                verbose_name="Worden er bijzondere persoonsgegevens verzameld?",
+            ),
         ),
         migrations.AddField(
-            model_name='study',
-            name='special_details',
-            field=models.ManyToManyField(blank=True, to='studies.SpecialDetail', verbose_name='Geef aan welke bijzondere persoonsgegevens worden verzameld:'),
+            model_name="study",
+            name="special_details",
+            field=models.ManyToManyField(
+                blank=True,
+                to="studies.SpecialDetail",
+                verbose_name="Geef aan welke bijzondere persoonsgegevens worden verzameld:",
+            ),
         ),
     ]

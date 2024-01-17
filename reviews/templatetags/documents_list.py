@@ -16,24 +16,24 @@ from proposals.utils.proposal_utils import FilenameFactory
 register = template.Library()
 
 
-@register.inclusion_tag('reviews/simple_compare_link.html')
+@register.inclusion_tag("reviews/simple_compare_link.html")
 def simple_compare_link(obj, file):
     """Generates a compare icon"""
 
     if type(obj) == Proposal:
         proposal = obj
-        obj_type = 'proposal'
+        obj_type = "proposal"
 
     elif type(obj) == Wmo:
-        obj_type = 'wmo'
+        obj_type = "wmo"
         proposal = obj.proposal
 
     elif type(obj) == Documents:
-        obj_type = 'documents'
+        obj_type = "documents"
         proposal = obj.proposal
 
     elif type(obj) == Observation:
-        obj_type = 'observation'
+        obj_type = "observation"
         proposal = obj.study.proposal
 
     else:
@@ -54,16 +54,12 @@ def simple_compare_link(obj, file):
     # incorrect documents with each other.
     # Same if the order of trajectories changes.
 
-    if obj_type in ['documents', 'observation']:
-
+    if obj_type in ["documents", "observation"]:
         if obj.study:
-
             try:
-                parent_study = parent_proposal.study_set.get(
-                    order=obj.study.order
-                )
+                parent_study = parent_proposal.study_set.get(order=obj.study.order)
 
-                if obj_type == 'observation':
+                if obj_type == "observation":
                     parent_obj = parent_study.observation
                     parent_pk = parent_obj.pk
                 else:
@@ -75,14 +71,11 @@ def simple_compare_link(obj, file):
 
         # "Extra" documents
         else:
-            for n, d in enumerate(
-                proposal.documents_set.filter(study=None)
-            ):
+            for n, d in enumerate(proposal.documents_set.filter(study=None)):
                 if obj == d:
                     extra_index = n
             try:
-                old_set = parent_proposal.documents_set.filter(
-                    study=None)
+                old_set = parent_proposal.documents_set.filter(study=None)
                 # Same index, different proposal
                 parent_obj = old_set[extra_index]
                 parent_pk = parent_obj.pk
@@ -90,12 +83,12 @@ def simple_compare_link(obj, file):
                 return {}
 
     # Get parent wmo pk:
-    if obj_type == 'wmo':
+    if obj_type == "wmo":
         parent_obj = parent_proposal.wmo
         parent_pk = parent_obj.pk
 
     # Set parent object in case of Proposal PDF or DMP
-    if obj_type == 'proposal':
+    if obj_type == "proposal":
         parent_obj = parent_proposal
 
     # Check that the parent has a comparable object
@@ -103,10 +96,11 @@ def simple_compare_link(obj, file):
         return {}
 
     # We now have pk's for the old and new object
-    compare_kwargs = {'old': parent_pk,
-                      'new': pk,
-                      'attribute': file.field.name,
-                      }
+    compare_kwargs = {
+        "old": parent_pk,
+        "new": pk,
+        "attribute": file.field.name,
+    }
 
     # CompareDocumentsView expects the following args:
     # - old pk
@@ -115,20 +109,19 @@ def simple_compare_link(obj, file):
     #   > This is hard-coded into the URL, so we handle it here
     # - attribute (none for Proposal PDF)
 
-    if obj_type == 'proposal':
-        url = reverse('proposals:compare_proposal_docs', kwargs=compare_kwargs)
+    if obj_type == "proposal":
+        url = reverse("proposals:compare_proposal_docs", kwargs=compare_kwargs)
 
-    if obj_type == 'wmo':
-        url = reverse('proposals:compare_wmo_decision', kwargs=compare_kwargs)
+    if obj_type == "wmo":
+        url = reverse("proposals:compare_wmo_decision", kwargs=compare_kwargs)
 
-    if obj_type == 'documents':
-        url = reverse('proposals:compare_documents', kwargs=compare_kwargs)
+    if obj_type == "documents":
+        url = reverse("proposals:compare_documents", kwargs=compare_kwargs)
 
-    if obj_type == 'observation':
-        url = reverse('proposals:compare_observation_approval', kwargs=compare_kwargs)
+    if obj_type == "observation":
+        url = reverse("proposals:compare_observation_approval", kwargs=compare_kwargs)
 
-    return {'compare_url': url}
-
+    return {"compare_url": url}
 
 
 def give_name(doc):
@@ -147,22 +140,18 @@ def give_name(doc):
             _("Traject {}: <i>{}</i>").format(
                 doc.study.order,
                 escape(doc.study.name),
-                )
             )
+        )
 
-    for n, d in enumerate(Documents.objects.filter(
-        proposal=proposal).filter(
-            study=None)):
-
-            if doc == d:
-                return _("Extra documenten {}").format(n+1)
-
+    for n, d in enumerate(
+        Documents.objects.filter(proposal=proposal).filter(study=None)
+    ):
+        if doc == d:
+            return _("Extra documenten {}").format(n + 1)
 
 
 class Container:
-
     def __init__(self, header, **kwargs):
-
         self.edit_link = False
         self.dmp_edit_link = False
         self.header = header
@@ -171,11 +160,8 @@ class Container:
         self.__dict__.update(kwargs)
 
 
-
 class DocItem:
-
     def __init__(self, name, **kwargs):
-
         self.name = name
         self.comparable = False
         self.filename = None
@@ -185,22 +171,19 @@ class DocItem:
         self.__dict__.update(kwargs)
 
     def get_filename(self):
-
         if self.filename:
             return self.filename
 
         return self.field.name
 
     def get_link_url(self):
-
         if self.link_url:
             return self.link_url
 
         return self.field.url
 
 
-
-@register.inclusion_tag('reviews/documents_list.html')
+@register.inclusion_tag("reviews/documents_list.html")
 def documents_list(review, user):
     """This retrieves all files associated with
     a certain review and its proposal and returns them as a
@@ -210,10 +193,10 @@ def documents_list(review, user):
     containers = []
 
     # Get the proposal PDF
-    pdf_container = Container(_('Aanmelding'))
+    pdf_container = Container(_("Aanmelding"))
 
-    proposal_pdf = DocItem(_('Aanvraag in PDF-vorm'))
-    proposal_pdf.link_url = reverse('proposals:pdf', args=(proposal.pk,))
+    proposal_pdf = DocItem(_("Aanvraag in PDF-vorm"))
+    proposal_pdf.link_url = reverse("proposals:pdf", args=(proposal.pk,))
 
     # The proposals:pdf view sets an attachment and filename
     # HTTP header (Content-disposition:) which does not interact well with
@@ -224,37 +207,37 @@ def documents_list(review, user):
 
     # Pre-approval
     if proposal.pre_approval_pdf:
-
-        pre_approval = DocItem(_('Eerdere goedkeuring'))
+        pre_approval = DocItem(_("Eerdere goedkeuring"))
         pre_approval.field = proposal.pre_approval_pdf
 
         pdf_container.items.append(pre_approval)
 
     # Pre-assessment
     if proposal.pre_assessment_pdf:
-
-        pre_assessment = DocItem(_('Aanvraag bij voortoetsing'))
+        pre_assessment = DocItem(_("Aanvraag bij voortoetsing"))
         pre_assessment.field = proposal.pre_assessment_pdf
 
         pdf_container.items.append(pre_assessment)
 
-
     # Data management plan
     if proposal.dmp_file:
-
-        dmp_file = DocItem(_('Data Management Plan'))
+        dmp_file = DocItem(_("Data Management Plan"))
         dmp_file.field = proposal.dmp_file
         dmp_file.comparable = True
         dmp_file.object = proposal
         if is_secretary(user):
-            pdf_container.dmp_edit_link = reverse('proposals:update_data_management', args=[proposal.pk])
+            pdf_container.dmp_edit_link = reverse(
+                "proposals:update_data_management", args=[proposal.pk]
+            )
 
         pdf_container.items.append(dmp_file)
 
     # WMO
-    if hasattr(proposal, 'wmo') and proposal.wmo.status == proposal.wmo.WMOStatuses.JUDGED:
-
-        metc_decision = DocItem(_('Beslissing METC'))
+    if (
+        hasattr(proposal, "wmo")
+        and proposal.wmo.status == proposal.wmo.WMOStatuses.JUDGED
+    ):
+        metc_decision = DocItem(_("Beslissing METC"))
         metc_decision.field = proposal.wmo.metc_decision_pdf
 
         pdf_container.items.append(metc_decision)
@@ -265,27 +248,30 @@ def documents_list(review, user):
     # Now get all trajectories / extra documents
     # First we get all objects attached to a study, then we append those
     # without. This way we get the ordering we want.
-    qs = Documents.objects.filter(
-        proposal=proposal
-    ).exclude(study=None) | Documents.objects.filter(
-        proposal=proposal, study=None
-    )
+    qs = Documents.objects.filter(proposal=proposal).exclude(
+        study=None
+    ) | Documents.objects.filter(proposal=proposal, study=None)
 
     for d in qs:
-
         # Get a humanized name and create container item
         documents_container = Container(give_name(d))
 
         # We create a list of possible files
         # with the format [(Name, FileField, Containing object)...]
         potential_files = [
-            (_('Informed consent'), d.informed_consent, d),
-            (_('Informatiebrief'), d.briefing, d),
-            (_('Consent declaratie directeur/departementshoofd'),
-                d.director_consent_declaration, d),
-            (_('Informatiebrief directeur/departementshoofd'),
-                d.director_consent_information, d),
-            (_('Informatiebrief ouders'), d.parents_information, d),
+            (_("Informed consent"), d.informed_consent, d),
+            (_("Informatiebrief"), d.briefing, d),
+            (
+                _("Consent declaratie directeur/departementshoofd"),
+                d.director_consent_declaration,
+                d,
+            ),
+            (
+                _("Informatiebrief directeur/departementshoofd"),
+                d.director_consent_information,
+                d,
+            ),
+            (_("Informatiebrief ouders"), d.parents_information, d),
         ]
 
         # Search for old-style observations (deprecated)
@@ -293,14 +279,14 @@ def documents_list(review, user):
             if d.study.observation.needs_approval:
                 potential_files.append(
                     (
-                    _('Toestemmingsdocument observatie'),
-                    d.study.observation.approval_document,
-                    d.study.observation
+                        _("Toestemmingsdocument observatie"),
+                        d.study.observation.approval_document,
+                        d.study.observation,
                     )
                 )
 
         # We then iterate over potential files for every Documents object in the QS
-        for (name, field, obj) in potential_files:
+        for name, field, obj in potential_files:
             # If it's got a file in it, add an item to this container
             if field:
                 item = DocItem(name)
@@ -311,11 +297,9 @@ def documents_list(review, user):
 
         # Only the secretary gets an edit link
         if is_secretary(user):
-            documents_container.edit_link = reverse('studies:attachments', args=[d.pk])
+            documents_container.edit_link = reverse("studies:attachments", args=[d.pk])
 
         containers.append(documents_container)
 
     # Finally, return template context
-    return {'review': review,
-            'containers': containers,
-            'proposal': proposal}
+    return {"review": review, "containers": containers, "proposal": proposal}

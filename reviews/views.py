@@ -104,8 +104,8 @@ class CommitteeMembersWorkloadView(
     def post(self, request, *args, **kwargs):
         form = self.get_form()
         if form.is_valid():
-            self.start_date = form.cleaned_data['start_date']
-            self.end_date = form.cleaned_data['end_date']
+            self.start_date = form.cleaned_data["start_date"]
+            self.end_date = form.cleaned_data["end_date"]
         else:
             return self.form_invalid(form)
 
@@ -435,7 +435,9 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         review = self.get_object()
 
         initial = super(ReviewCloseView, self).get_initial()
-        initial["continuation"] = Review.Continuations.GO if review.go else Review.Continuations.NO_GO
+        initial["continuation"] = (
+            Review.Continuations.GO if review.go else Review.Continuations.NO_GO
+        )
 
         if review.proposal.date_start and review.proposal.date_start < date.today():
             initial["continuation"] = (
@@ -525,7 +527,9 @@ class CreateDecisionRedirectView(
         return reverse("reviews:decide", args=[decision_pk])
 
 
-class DecisionUpdateView(LoginRequiredMixin, UserAllowedToDecisionMixin, generic.UpdateView):
+class DecisionUpdateView(
+    LoginRequiredMixin, UserAllowedToDecisionMixin, generic.UpdateView
+):
     """
     Allows a User to make a Decision on a Review.
     """
@@ -555,8 +559,7 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedToDecisionMixin, generic
     def handle_review_closed(self, request, exception):
         # Redirect to our 'this review is closed' page for supervisor reviews
         redirect_url = reverse(
-            "reviews:review-closed-decision",
-            args=[self.get_object().pk]
+            "reviews:review-closed-decision", args=[self.get_object().pk]
         )
         # And go to the details page for committee reviews
         if self.get_object().review.is_committee_review:
@@ -564,27 +567,29 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedToDecisionMixin, generic
             messages.warning(
                 request,
                 _(
-                    'Deze aanvraag is al beoordeeld, dus je kan je beoordeling '
-                    'niet meer toevoegen/aanpassen'
-                )
+                    "Deze aanvraag is al beoordeeld, dus je kan je beoordeling "
+                    "niet meer toevoegen/aanpassen"
+                ),
             )
             redirect_url = self.get_success_url()
 
         return HttpResponseRedirect(redirect_url)
 
 
-class ReviewClosedDecisionView(LoginRequiredMixin, UserAllowedToDecisionMixin,
-                       generic.DetailView):
+class ReviewClosedDecisionView(
+    LoginRequiredMixin, UserAllowedToDecisionMixin, generic.DetailView
+):
     """Custom page for supervisors visiting links to already concluded
     supervisor reviews
     """
+
     template_name = "reviews/review_closed.html"
     model = Decision
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['review'] = self.object.review
+        context["review"] = self.object.review
 
         return context
 

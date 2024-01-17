@@ -24,29 +24,27 @@
             {% with nav_items=study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>
-                {% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}
-            </h2>
+            <h2>{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
             {% include "studies/study_title.html" %}
             <p>
-                {% blocktrans with age_groups=study.age_groups.all|join:', ' %}
+                {% blocktrans trimmed with age_groups=study.age_groups.all|join:', ' %}
                     Deelnemers uit de leeftijdscategorieën <em>{{ age_groups }}</em>
                 {% endblocktrans %}
                 {% if study.has_traits %}
-                    {% blocktrans with traits=study.traits.all|join:', ' %}
+                    {% blocktrans trimmed with traits=study.traits.all|join:', ' %}
                         en met de bijzondere kenmerken <em>{{ traits }}</em>
                     {% endblocktrans %}
                 {% else %}
-                    {% blocktrans %}
+                    {% blocktrans trimmed %}
                         zonder bijzondere kenmerken
                     {% endblocktrans %}
                 {% endif %}
                 {% if study.legally_incapable %}
-                    {% blocktrans %}
+                    {% blocktrans trimmed %}
                         en zijnde <em>wilsonbekwaam</em>
                     {% endblocktrans %}
                 {% endif %}
-                {% blocktrans %}
+                {% blocktrans trimmed %}
                     zullen aan de volgende onderdelen meedoen:
                 {% endblocktrans %}
             </p>
@@ -63,20 +61,20 @@
                             </h4>
                             <table class="mb-3">
                                 <thead>
-                                <tr>
-                                    <th>{% trans "Setting" %}</th>
-                                    <th>{% trans "Aantal sessies (per week)" %}</th>
-                                    <th>{% trans "Duur per sessie (in minuten)" %}</th>
-                                    <th>{% trans "Controlegroep?" %}</th>
-                                </tr>
+                                    <tr>
+                                        <th>{% trans "Setting" %}</th>
+                                        <th>{% trans "Aantal sessies (per week)" %}</th>
+                                        <th>{% trans "Duur per sessie (in minuten)" %}</th>
+                                        <th>{% trans "Controlegroep?" %}</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>{{ intervention.setting.all|unordered_list }}</td>
-                                    <td>{{ intervention.amount_per_week }}</td>
-                                    <td>{{ intervention.duration }}</td>
-                                    <td>{{ intervention.has_controls|yesno:_("ja, nee") }}</td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ intervention.setting.all|unordered_list }}</td>
+                                        <td>{{ intervention.amount_per_week }}</td>
+                                        <td>{{ intervention.duration }}</td>
+                                        <td>{{ intervention.has_controls|yesno:_("ja, nee") }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </li>
@@ -94,34 +92,32 @@
                             </h4>
                             <table class="mb-3">
                                 <thead>
-                                <tr>
-                                    <th>{% trans "Setting" %}</th>
-                                    <th>{% trans "Aantal dagen" %}</th>
-                                    <th>{% trans "Duur per sessie (in uren)" %}</th>
-                                    <th>{% trans "Anoniem?" %}</th>
-                                    <th>{% trans "Doelgroep?" %}</th>
-                                    <th>{% trans "Niet openbaar?" %}</th>
-                                    <th>{% trans "Toestemming nodig?" %}</th>
-                                    {% if observation.needs_approval %}
-                                        <th>{% trans "Instantie" %}</th>
-                                    {% endif %}
-                                    <th>{% trans "Registratie via" %}</th>
-                                </tr>
+                                    <tr>
+                                        <th>{% trans "Setting" %}</th>
+                                        <th>{% trans "Aantal dagen" %}</th>
+                                        <th>{% trans "Duur per sessie (in uren)" %}</th>
+                                        <th>{% trans "Anoniem?" %}</th>
+                                        <th>{% trans "Doelgroep?" %}</th>
+                                        <th>{% trans "Niet openbaar?" %}</th>
+                                        <th>{% trans "Toestemming nodig?" %}</th>
+                                        {% if observation.needs_approval %}
+                                            <th>{% trans "Instantie" %}</th>
+                                        {% endif %}
+                                        <th>{% trans "Registratie via" %}</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>{{ observation.setting.all|unordered_list }}</td>
-                                    <td>{{ observation.days }}</td>
-                                    <td>{{ observation.mean_hours }}</td>
-                                    <td>{{ observation.is_anonymous|yesno:_("ja, nee") }}</td>
-                                    <td>{{ observation.is_in_target_group|yesno:_("ja, nee") }}</td>
-                                    <td>{{ observation.is_nonpublic_space|yesno:_("ja, nee") }}</td>
-                                    <td>{{ observation.needs_approval|yesno:_("ja, nee") }}</td>
-                                    {% if observation.needs_approval %}
-                                        <td>{{ observation.approval_institution }}</td>
-                                    {% endif %}
-                                    <td>{{ observation.registrations.all|unordered_list }}</td>
-                                </tr>
+                                    <tr>
+                                        <td>{{ observation.setting.all|unordered_list }}</td>
+                                        <td>{{ observation.days }}</td>
+                                        <td>{{ observation.mean_hours }}</td>
+                                        <td>{{ observation.is_anonymous|yesno:_("ja, nee") }}</td>
+                                        <td>{{ observation.is_in_target_group|yesno:_("ja, nee") }}</td>
+                                        <td>{{ observation.is_nonpublic_space|yesno:_("ja, nee") }}</td>
+                                        <td>{{ observation.needs_approval|yesno:_("ja, nee") }}</td>
+                                        {% if observation.needs_approval %}<td>{{ observation.approval_institution }}</td>{% endif %}
+                                        <td>{{ observation.registrations.all|unordered_list }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </li>
@@ -137,9 +133,10 @@
                                         Sessie {{ session.order }} (totale brutoduur: {{ session.tasks_duration }}
                                         minuten)
                                         {% if study.sessions_number > 1 %}
-                                            <a href="{% url 'tasks:session_delete' session.pk %}"><img
-                                                    src="{% static 'proposals/images/delete.png' %}"
-                                                    title="{% trans 'Sessie verwijderen' %}"></a>
+                                            <a href="{% url 'tasks:session_delete' session.pk %}">
+                                                <img src="{% static 'proposals/images/delete.png' %}"
+                                                     title="{% trans 'Sessie verwijderen' %}">
+                                            </a>
                                         {% endif %}
                                     </h5>
                                     <p>
@@ -153,15 +150,18 @@
                 {% endif %}
             </ul>
             <p>
-                {% blocktrans %}
+                {% blocktrans trimmed %}
                     Beantwoord op basis van dit overzicht de volgende vragen,
                     en ga daarbij uit van het naar verwachting meest kwetsbare c.q.
                     minst belastbare (bijv. jongste) geselecteerde deelnemerstype
                     dat dit traject doorloopt.
                 {% endblocktrans %}
             </p>
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
                 {% with proposal=study.proposal %}
                     {% include "base/form_buttons.html" %}
                 {% endwith %}

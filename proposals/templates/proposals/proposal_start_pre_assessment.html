@@ -11,25 +11,36 @@
     <div class="uu-inner-container">
         <div class="col-12">
             <h2>{% trans "Nieuwe FETC-aanvraag voor (al dan niet goedgekeurde) subsidieaanvragen" %}</h2>
-
             <p>
-
-
                 <ul>
-                    <li>{% blocktrans trimmed %}Soms is bij het indienen van een aanvraag bij een subsidieverstrekker een ethische verklaring nodig.{% endblocktrans %}</li>
-                    <li>{% blocktrans trimmed %}Goedgekeurde NWO-aanvragen hebben ook een ethische verklaring nodig alvorens een startdatum vastgesteld kan worden.{% endblocktrans %}</li>
-                    </ul>
-
-                    <p>{% blocktrans trimmed %}In deze gevallen kunnen onderzoekers de FETC-GW verzoeken om de onderzoeksaanvraag te laten toetsen. Dit kan via deze route van de portal{% endblocktrans %}.</p>
-
-                    <p>{% blocktrans trimmed %}NB: De toetsing kan alleen op hoofdlijnen plaatsvinden en vervangt NIET de reguliere ethische toetsing van een onderzoek; elke mensgebonden studie die in het kader van de onderzoeksaanvraag zal worden uitgevoerd dient vóóraf goedgekeurd te zijn door de FETC-GW.{% endblocktrans %}
-            </p>
-
-            <p><img src="{% static 'proposals/images/fetc-flowchart-pre-2.png' %}" style="width: 100%;"></p>
-
-            <a class="button button-colored float-right mb-3" href="{% url 'proposals:create_pre' %}">
-                {% trans "Volgende stap >>" %}
-            </a>
+                    <li>
+                        {% blocktrans trimmed %}
+                            Soms is bij het indienen van een aanvraag bij een subsidieverstrekker een ethische verklaring nodig.
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans trimmed %}
+                            Goedgekeurde NWO-aanvragen hebben ook een ethische verklaring nodig alvorens een startdatum vastgesteld kan worden.
+                        {% endblocktrans %}
+                    </li>
+                </ul>
+                <p>
+                    {% blocktrans trimmed %}
+                        In deze gevallen kunnen onderzoekers de FETC-GW verzoeken om de onderzoeksaanvraag te laten toetsen. Dit kan via deze route van de portal
+                    {% endblocktrans %}
+                    .
+                </p>
+                <p>
+                    {% blocktrans trimmed %}
+                        NB: De toetsing kan alleen op hoofdlijnen plaatsvinden en vervangt NIET de reguliere ethische toetsing van een onderzoek; elke mensgebonden studie die in het kader van de onderzoeksaanvraag zal worden uitgevoerd dient vóóraf goedgekeurd te zijn door de FETC-GW.
+                    {% endblocktrans %}
+                </p>
+                <p>
+                    <img src="{% static 'proposals/images/fetc-flowchart-pre-2.png' %}"
+                         style="width: 100%">
+                </p>
+                <a class="button button-colored float-right mb-3"
+                   href="{% url 'proposals:create_pre' %}">{% trans "Volgende stap >>" %}</a>
+            </div>
         </div>
-    </div>
-{% endblock %}
+    {% endblock %}

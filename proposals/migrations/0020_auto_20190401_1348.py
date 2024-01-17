@@ -6,24 +6,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0019_auto_20190401_1343'),
+        ("proposals", "0019_auto_20190401_1343"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='institution',
-            options={'ordering': ['order']},
+            name="institution",
+            options={"ordering": ["order"]},
         ),
         migrations.AddField(
-            model_name='institution',
-            name='description_en',
+            model_name="institution",
+            name="description_en",
             field=models.CharField(max_length=200, null=True),
         ),
         migrations.AddField(
-            model_name='institution',
-            name='description_nl',
+            model_name="institution",
+            name="description_nl",
             field=models.CharField(max_length=200, null=True),
         ),
     ]

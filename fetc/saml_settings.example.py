@@ -32,11 +32,11 @@ _BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See also:
 # https://djangosaml2.readthedocs.io/contents/setup.html#users-attributes-and-account-linking
 SAML_ATTRIBUTE_MAPPING = {
-    'uuShortID':  ('username',),
-    'mail':     ('email',),
-    'givenName': ('first_name',),
-    'uuPrefixedSn':  ('last_name',),
-    'uuLegacyDepartment':  ('process_faculties', ),
+    "uuShortID": ("username",),
+    "mail": ("email",),
+    "givenName": ("first_name",),
+    "uuPrefixedSn": ("last_name",),
+    "uuLegacyDepartment": ("process_faculties",),
 }
 
 # Controls which mechanism is used to exchange SAML data with the IdP
@@ -51,39 +51,41 @@ SAML_CONFIG = create_saml_config(
     # localhost, port 8000. Please change if you run the app on a different
     # hostname/port
     # Note that localhost and 127.0.0.1 are not interchangeable here
-    base_url='http://localhost:8000/',
+    base_url="http://localhost:8000/",
     # The name of the app, does not _really_ matter
-    name='FEtC-H Portal',
+    name="FEtC-H Portal",
     # The full location of the private key of the cert, currently
     # <project_root>/certs/private.key
-    key_file=os.path.join(_BASE_DIR, 'certs/private.key'),
+    key_file=os.path.join(_BASE_DIR, "certs/private.key"),
     # The full location of the certificate, currently
     # <project_root>/certs/private.key
-    cert_file=os.path.join(_BASE_DIR, 'certs/public.cert'),
+    cert_file=os.path.join(_BASE_DIR, "certs/public.cert"),
     # The location of the IdP's metadata
     # The current value is valid for the Development IdP, if run at port 7000
     # If you run it in a different place/port, please update
     # If you use a different IdP, find its metadata URL and copy/paste it here
-    idp_metadata='http://localhost:7000/saml/idp/metadata/',
+    idp_metadata="http://localhost:7000/saml/idp/metadata/",
     # If set to True, the app will allow login attempts not requested by the app
     # This _can_ happen if a user logs in directly from the IdP. Currently set
     # to true, as the DevIdP can sometimes do funky stuff with the session ID
     allow_unsolicited=True,
     # A list of attributes the IdP needs to provide for the app to authenticate
     # Uses the naming of the IdP, not the internal names in Django
-    required_attributes=['uuShortID', 'mail', 'givenName', 'uuPrefixedSn'],
+    required_attributes=["uuShortID", "mail", "givenName", "uuPrefixedSn"],
     # A list of nice-to-have attributes from the IdP
     # Uses the naming of the IdP, not the internal names in Django
-    optional_attributes=['uuLegacyDepartment', ],
+    optional_attributes=[
+        "uuLegacyDepartment",
+    ],
     # Contact info for this app; will be added to the app's metadata and is
     # generally used by the IdP admins to contact all app-admins if they change
     # something.
-    contact_given_name='Humanities IT Portal Development',
-    contact_email='portaldev.gw@uu.nl',
+    contact_given_name="Humanities IT Portal Development",
+    contact_email="portaldev.gw@uu.nl",
 )
 
 # Add the SAML auth backend to the list of enabled backends.
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'djangosaml2.backends.Saml2Backend',
+    "django.contrib.auth.backends.ModelBackend",
+    "djangosaml2.backends.Saml2Backend",
 )

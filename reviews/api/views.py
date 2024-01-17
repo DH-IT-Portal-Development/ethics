@@ -17,7 +17,7 @@ from .serializers import DecisionSerializer, ReviewSerializer
 
 
 class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
-    authentication_classes = (SessionAuthentication, )
+    authentication_classes = (SessionAuthentication,)
     serializer_class = DecisionSerializer
     group_required = [
         settings.GROUP_SECRETARY,
@@ -28,59 +28,58 @@ class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
 
     filter_definitions = [
         FancyListApiView.FilterDefinition(
-            'review.get_stage_display',
+            "review.get_stage_display",
             _("Stadium"),
         ),
         FancyListApiView.FilterDefinition(
-            'review.route',
+            "review.route",
             _("Route"),
         ),
         FancyListApiView.FilterDefinition(
-            'proposal.is_revision',
+            "proposal.is_revision",
             _("Revisie"),
         ),
     ]
 
     sort_definitions = [
         FancyListApiView.SortDefinition(
-            label=_('Referentienummer'),
-            field='proposal.reference_number',
+            label=_("Referentienummer"),
+            field="proposal.reference_number",
         ),
         FancyListApiView.SortDefinition(
-            label=_('Datum ingediend'),
-            field='proposal.date_submitted',
+            label=_("Datum ingediend"),
+            field="proposal.date_submitted",
         ),
         FancyListApiView.SortDefinition(
-            label=_('Start datum'),
-            field='review.date_start',
+            label=_("Start datum"),
+            field="review.date_start",
         ),
     ]
-    default_sort = ('proposal.date_submitted', 'desc')
+    default_sort = ("proposal.date_submitted", "desc")
 
     def get_context(self):
         context = super().get_context()
 
-        context['is_secretary'] = is_secretary(self.request.user)
-        context['review'] = {
-            'ASSIGNMENT': Review.Stages.ASSIGNMENT,
-            'COMMISSION': Review.Stages.COMMISSION,
-            'CLOSING': Review.Stages.CLOSING,
-            'CLOSED': Review.Stages.CLOSED,
-            'GO': Review.Continuations.GO,
-            'GO_POST_HOC': Review.Continuations.GO_POST_HOC,
+        context["is_secretary"] = is_secretary(self.request.user)
+        context["review"] = {
+            "ASSIGNMENT": Review.Stages.ASSIGNMENT,
+            "COMMISSION": Review.Stages.COMMISSION,
+            "CLOSING": Review.Stages.CLOSING,
+            "CLOSED": Review.Stages.CLOSED,
+            "GO": Review.Continuations.GO,
+            "GO_POST_HOC": Review.Continuations.GO_POST_HOC,
         }
-        context['current_user_pk'] = self.request.user.pk
+        context["current_user_pk"] = self.request.user.pk
 
         return context
 
 
 class MyDecisionsApiView(BaseDecisionApiView):
-
     def get_default_sort(self) -> Tuple[str, str]:
         if is_secretary(self.request.user):
-            return 'review.date_start', "desc"
+            return "review.date_start", "desc"
 
-        return 'proposal.date_submitted', "desc"
+        return "proposal.date_submitted", "desc"
 
     def get_queryset(self):
         """Returns all open Decisions of the current User"""
@@ -128,8 +127,7 @@ class MyDecisionsApiView(BaseDecisionApiView):
 
             if proposal.pk not in dfse_cache:
                 dfse_cache[proposal.pk] = Decision.objects.filter(
-                    review__proposal=proposal,
-                    reviewer=self.request.user
+                    review__proposal=proposal, reviewer=self.request.user
                 ).exists()
 
             # If there is a decision for this user, but this decision isn't
@@ -149,12 +147,11 @@ class MyDecisionsApiView(BaseDecisionApiView):
 
 
 class MyOpenDecisionsApiView(BaseDecisionApiView):
-
     def get_default_sort(self) -> Tuple[str, str]:
         if is_secretary(self.request.user):
-            return 'review.date_start', "desc"
+            return "review.date_start", "desc"
 
-        return 'proposal.date_submitted', "desc"
+        return "proposal.date_submitted", "desc"
 
     def get_queryset(self):
         """Returns all open Decisions of the current User"""
@@ -164,14 +161,13 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
 
         return self.get_queryset_for_committee()
 
-
     def get_queryset_for_committee(self):
         """Returns all open Decisions of the current User"""
         decisions = OrderedDict()
 
         objects = Decision.objects.filter(
             reviewer=self.request.user,
-            go='',
+            go="",
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
         )
@@ -195,7 +191,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
 
         objects = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
-            go='',
+            go="",
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
         )
@@ -205,8 +201,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
 
             if proposal.pk not in dfse_cache:
                 dfse_cache[proposal.pk] = Decision.objects.filter(
-                    review__proposal=proposal,
-                    reviewer=self.request.user
+                    review__proposal=proposal, reviewer=self.request.user
                 ).exists()
 
             # If there is a decision for this user, but this decision isn't
@@ -238,7 +233,7 @@ class OpenDecisionsApiView(BaseDecisionApiView):
         dfse_cache = {}
 
         objects = Decision.objects.filter(
-            go='',
+            go="",
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
         ).exclude(review__stage=Review.Stages.SUPERVISOR)
@@ -248,8 +243,7 @@ class OpenDecisionsApiView(BaseDecisionApiView):
 
             if proposal.pk not in dfse_cache:
                 dfse_cache[proposal.pk] = Decision.objects.filter(
-                    review__proposal=proposal,
-                    reviewer=self.request.user
+                    review__proposal=proposal, reviewer=self.request.user
                 ).exists()
 
             # If there is a decision for this user, but this decision *is*
@@ -276,28 +270,27 @@ class OpenSupervisorDecisionApiView(BaseDecisionApiView):
 
     sort_definitions = [
         FancyListApiView.SortDefinition(
-            label=_('Referentienummer'),
-            field='proposal.reference_number',
+            label=_("Referentienummer"),
+            field="proposal.reference_number",
         ),
         FancyListApiView.SortDefinition(
-            label=_('Datum ingediend'),
-            field='proposal.date_submitted_supervisor',
+            label=_("Datum ingediend"),
+            field="proposal.date_submitted_supervisor",
         ),
         FancyListApiView.SortDefinition(
-            label=_('Start datum'),
-            field='review.date_start',
+            label=_("Start datum"),
+            field="review.date_start",
         ),
     ]
-    default_sort = ('proposal.date_submitted_supervisor', 'desc')
+    default_sort = ("proposal.date_submitted_supervisor", "desc")
 
     def get_queryset(self):
-        """Returns all proposals that still need to be reviewed by the secretary
-        """
+        """Returns all proposals that still need to be reviewed by the secretary"""
         objects = Decision.objects.filter(
-            go='',
+            go="",
             review__stage=Review.Stages.SUPERVISOR,
             review__proposal__status=Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
-            review__proposal__reviewing_committee=self.committee
+            review__proposal__reviewing_committee=self.committee,
         )
 
         decisions = OrderedDict()
@@ -314,59 +307,58 @@ class OpenSupervisorDecisionApiView(BaseDecisionApiView):
 
 
 class BaseReviewApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
-    authentication_classes = (SessionAuthentication, )
+    authentication_classes = (SessionAuthentication,)
     serializer_class = ReviewSerializer
 
     filter_definitions = [
         FancyListApiView.FilterDefinition(
-            'get_stage_display',
+            "get_stage_display",
             _("Stadium"),
         ),
         FancyListApiView.FilterDefinition(
-            'route',
+            "route",
             _("Route"),
         ),
         FancyListApiView.FilterDefinition(
-            'proposal.is_revision',
+            "proposal.is_revision",
             _("Revisie"),
         ),
         FancyListApiView.FilterDefinition(
-            'get_continuation_display',
-            _('Afhandeling'),
+            "get_continuation_display",
+            _("Afhandeling"),
         ),
     ]
 
     sort_definitions = [
         FancyListApiView.SortDefinition(
-            label=_('Referentienummer'),
-            field='proposal.reference_number',
+            label=_("Referentienummer"),
+            field="proposal.reference_number",
         ),
         FancyListApiView.SortDefinition(
-            label=_('Datum ingediend'),
-            field='proposal.date_submitted',
+            label=_("Datum ingediend"),
+            field="proposal.date_submitted",
         ),
         FancyListApiView.SortDefinition(
-            label=_('Start datum'),
-            field='date_start',
+            label=_("Start datum"),
+            field="date_start",
         ),
     ]
-    default_sort = ('proposal.date_submitted', 'desc')
+    default_sort = ("proposal.date_submitted", "desc")
 
     def get_context(self):
         context = super().get_context()
 
-        context['is_secretary'] = is_secretary(self.request.user)
-        context['review'] = {
-            'ASSIGNMENT': Review.Stages.ASSIGNMENT,
-            'COMMISSION': Review.Stages.COMMISSION,
-            'CLOSING': Review.Stages.CLOSING,
-            'CLOSED': Review.Stages.CLOSED,
-            'GO': Review.Continuations.GO,
-            'GO_POST_HOC': Review.Continuations.GO_POST_HOC,
-            'REVISION': Review.Continuations.REVISION,
-
+        context["is_secretary"] = is_secretary(self.request.user)
+        context["review"] = {
+            "ASSIGNMENT": Review.Stages.ASSIGNMENT,
+            "COMMISSION": Review.Stages.COMMISSION,
+            "CLOSING": Review.Stages.CLOSING,
+            "CLOSED": Review.Stages.CLOSED,
+            "GO": Review.Continuations.GO,
+            "GO_POST_HOC": Review.Continuations.GO_POST_HOC,
+            "REVISION": Review.Continuations.REVISION,
         }
-        context['current_user_pk'] = self.request.user.pk
+        context["current_user_pk"] = self.request.user.pk
 
         return context
 
@@ -380,26 +372,31 @@ class ToConcludeReviewApiView(BaseReviewApiView):
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
         reviews = {}
-        objects = Review.objects.filter(
-            stage__gte=Review.Stages.CLOSING,
-            proposal__status__gte=Proposal.Statuses.SUBMITTED,
-            proposal__date_confirmed=None,
-            proposal__reviewing_committee=self.committee,
-        ).filter(
-            Q(continuation=Review.Continuations.GO) |
-            Q(continuation=Review.Continuations.GO_POST_HOC) |
-            Q(continuation=None)
-        ).select_related(
-            'proposal',
-            "proposal__parent",
-            'proposal__created_by',
-            'proposal__supervisor',
-            'proposal__relation',
-        ).prefetch_related(
-            'proposal__review_set',
-            'proposal__applicants',
-            'decision_set',
-            'decision_set__reviewer'
+        objects = (
+            Review.objects.filter(
+                stage__gte=Review.Stages.CLOSING,
+                proposal__status__gte=Proposal.Statuses.SUBMITTED,
+                proposal__date_confirmed=None,
+                proposal__reviewing_committee=self.committee,
+            )
+            .filter(
+                Q(continuation=Review.Continuations.GO)
+                | Q(continuation=Review.Continuations.GO_POST_HOC)
+                | Q(continuation=None)
+            )
+            .select_related(
+                "proposal",
+                "proposal__parent",
+                "proposal__created_by",
+                "proposal__supervisor",
+                "proposal__relation",
+            )
+            .prefetch_related(
+                "proposal__review_set",
+                "proposal__applicants",
+                "decision_set",
+                "decision_set__reviewer",
+            )
         )
 
         for obj in objects:
@@ -417,7 +414,7 @@ class InRevisionApiView(BaseReviewApiView):
     """Return reviews for proposals which have been sent back for revision,
     but for which a revision has not yet been submitted"""
 
-    default_sort = ('date_start', 'desc')
+    default_sort = ("date_start", "desc")
     group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
 
     def get_queryset(self):
@@ -425,7 +422,7 @@ class InRevisionApiView(BaseReviewApiView):
         # A revision not having a review means
         # that the review of its parent is "in revision"
         revision_reviews = Review.objects.filter(
-            proposal__is_revision=True,    # Not a copy
+            proposal__is_revision=True,  # Not a copy
             stage__gte=Review.Stages.ASSIGNMENT,  # Not a supervisor review
         )
         # 2. Get candidate reviews:
@@ -439,26 +436,27 @@ class InRevisionApiView(BaseReviewApiView):
         # 3. Finally, exclude candidates whose proposal
         # has a child with a revision review
         in_revision = candidates.exclude(
-            Exists(revision_reviews.filter(
-                # OuterRef refers to the candidate being evaluated
-                proposal__parent__pk=OuterRef("proposal__pk")
+            Exists(
+                revision_reviews.filter(
+                    # OuterRef refers to the candidate being evaluated
+                    proposal__parent__pk=OuterRef("proposal__pk")
                 )
             )
         )
         return in_revision
-        
+
 
 class AllOpenReviewsApiView(BaseReviewApiView):
-    default_sort = ('date_start', 'desc')
+    default_sort = ("date_start", "desc")
 
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
 
         group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
 
-        if self.committee.name == 'AK':
+        if self.committee.name == "AK":
             group_required += [settings.GROUP_GENERAL_CHAMBER]
-        if self.committee.name == 'LK':
+        if self.committee.name == "LK":
             group_required += [settings.GROUP_LINGUISTICS_CHAMBER]
 
         return group_required
@@ -466,22 +464,26 @@ class AllOpenReviewsApiView(BaseReviewApiView):
     def get_queryset(self):
         """Returns all open Reviews"""
         reviews = OrderedDict()
-        objects = Review.objects.filter(
-            stage__gte=Review.Stages.ASSIGNMENT,
-            stage__lte=Review.Stages.CLOSING,
-            proposal__status__gte=Proposal.Statuses.SUBMITTED,
-            proposal__reviewing_committee=self.committee,
-        ).select_related(
-            'proposal',
-            "proposal__parent",
-            'proposal__created_by',
-            'proposal__supervisor',
-            'proposal__relation',
-        ).prefetch_related(
-            'proposal__review_set',
-            'proposal__applicants',
-            'decision_set',
-            'decision_set__reviewer'
+        objects = (
+            Review.objects.filter(
+                stage__gte=Review.Stages.ASSIGNMENT,
+                stage__lte=Review.Stages.CLOSING,
+                proposal__status__gte=Proposal.Statuses.SUBMITTED,
+                proposal__reviewing_committee=self.committee,
+            )
+            .select_related(
+                "proposal",
+                "proposal__parent",
+                "proposal__created_by",
+                "proposal__supervisor",
+                "proposal__relation",
+            )
+            .prefetch_related(
+                "proposal__review_set",
+                "proposal__applicants",
+                "decision_set",
+                "decision_set__reviewer",
+            )
         )
 
         for obj in objects:
@@ -496,16 +498,16 @@ class AllOpenReviewsApiView(BaseReviewApiView):
 
 
 class AllReviewsApiView(BaseReviewApiView):
-    default_sort = ('date_start', 'desc')
+    default_sort = ("date_start", "desc")
 
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
 
         group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
 
-        if self.committee.name == 'AK':
+        if self.committee.name == "AK":
             group_required += [settings.GROUP_GENERAL_CHAMBER]
-        if self.committee.name == 'LK':
+        if self.committee.name == "LK":
             group_required += [settings.GROUP_LINGUISTICS_CHAMBER]
 
         return group_required
@@ -513,21 +515,25 @@ class AllReviewsApiView(BaseReviewApiView):
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
         reviews = OrderedDict()
-        objects = Review.objects.filter(
-            stage__gte=Review.Stages.ASSIGNMENT,
-            proposal__status__gte=Proposal.Statuses.SUBMITTED,
-            proposal__reviewing_committee=self.committee,
-        ).select_related(
-            'proposal',
-            "proposal__parent",
-            'proposal__created_by',
-            'proposal__supervisor',
-            'proposal__relation',
-        ).prefetch_related(
-            'proposal__review_set',
-            'proposal__applicants',
-            'decision_set',
-            'decision_set__reviewer'
+        objects = (
+            Review.objects.filter(
+                stage__gte=Review.Stages.ASSIGNMENT,
+                proposal__status__gte=Proposal.Statuses.SUBMITTED,
+                proposal__reviewing_committee=self.committee,
+            )
+            .select_related(
+                "proposal",
+                "proposal__parent",
+                "proposal__created_by",
+                "proposal__supervisor",
+                "proposal__relation",
+            )
+            .prefetch_related(
+                "proposal__review_set",
+                "proposal__applicants",
+                "decision_set",
+                "decision_set__reviewer",
+            )
         )
 
         for obj in objects:

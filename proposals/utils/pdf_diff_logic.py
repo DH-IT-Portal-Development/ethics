@@ -42,7 +42,7 @@ class BaseSection:
     def make_rows(self):
         rows = [self.make_row_for_field(field) for field in self.get_row_fields()]
         return rows
-    
+
     def make_row_for_field(self, field):
         if field in self.get_row_fields():
             return Row(self.obj, field)
@@ -132,23 +132,32 @@ class DiffSection:
             new_section_dict = {row.field: row for row in new_rows}
 
             for field in all_fields:
-                #If a field does not appear in either section, no row will be created.
+                # If a field does not appear in either section, no row will be created.
                 if field in old_section_dict and field in new_section_dict:
-                    rows.append({'verbose_name':old_section_dict[field].verbose_name,
-                                 'old_value': old_section_dict[field].value, 
-                                 'new_value': new_section_dict[field].value}
+                    rows.append(
+                        {
+                            "verbose_name": old_section_dict[field].verbose_name,
+                            "old_value": old_section_dict[field].value,
+                            "new_value": new_section_dict[field].value,
+                        }
                     )
                 elif field in old_section_dict and not field in new_section_dict:
-                    rows.append({'verbose_name':old_section_dict[field].verbose_name,
-                                 'old_value': old_section_dict[field].value, 
-                                 'new_value': ''}
-                    )  
-                elif field in new_section_dict and not field in old_section_dict:
-                    rows.append({'verbose_name':new_section_dict[field].verbose_name,
-                                 'old_value': '', 
-                                 'new_value': new_section_dict[field].value}
+                    rows.append(
+                        {
+                            "verbose_name": old_section_dict[field].verbose_name,
+                            "old_value": old_section_dict[field].value,
+                            "new_value": "",
+                        }
                     )
-                                    
+                elif field in new_section_dict and not field in old_section_dict:
+                    rows.append(
+                        {
+                            "verbose_name": new_section_dict[field].verbose_name,
+                            "old_value": "",
+                            "new_value": new_section_dict[field].value,
+                        }
+                    )
+
             return rows
 
     def render(self, context):
@@ -176,6 +185,7 @@ class DiffSection:
         )
         return template.render(context)
 
+
 class Row:
     """This class creates rows for one objects, and gets initated
     in the make_rows method of Section classes. The classmethods of Rowclass
@@ -193,7 +203,7 @@ class Row:
 
     def value(self):
         return RowValue(self.obj, self.field).get_field_value()
-    
+
     def verbose_name(self):
         if self.field in self.verbose_name_diff_field_dict:
             verbose_name_field = self.verbose_name_diff_field_dict[self.field]
@@ -207,9 +217,9 @@ class Row:
             return mark_safe(self.obj._meta.get_field(field).verbose_name)
         else:
             return mark_safe(
-                self.obj._meta.get_field(field).verbose_name
-                % self.obj.net_duration()
-            )    
+                self.obj._meta.get_field(field).verbose_name % self.obj.net_duration()
+            )
+
 
 class RowValue:
     """The RowValue class manages the values of fields and correctly retrieves and/or formats
@@ -267,7 +277,7 @@ class RowValue:
         for index, item in enumerate(lst):
             html_output += format_html("- {}", item)
             if index != len(lst) - 1:
-                html_output += mark_safe('<br/>')
+                html_output += mark_safe("<br/>")
 
         html_output += mark_safe("</p>")
 
@@ -922,6 +932,7 @@ class InformedConsentFormsSection(BaseSection):
 
         return rows
 
+
 class ExtraDocumentsSection(BaseSection):
     """This class receives an Documents object.
     Overrides the __init__ to create a formatted section title"""
@@ -983,8 +994,7 @@ class EmbargoSection(BaseSection):
 
 
 class CommentsSection(BaseSection):
-    """Gets passed a proposal object. 
-    """
+    """Gets passed a proposal object."""
 
     section_title = _("Ruimte voor eventuele opmerkingen")
 
@@ -1010,7 +1020,7 @@ def create_context_pdf(context, model):
 
     sections.append(GeneralSection(model))
 
-    if hasattr(model, 'wmo'):
+    if hasattr(model, "wmo"):
         sections.append(WMOSection(model.wmo))
 
         if not model.is_pre_assessment:
@@ -1088,18 +1098,20 @@ def create_context_diff(context, old_proposal, new_proposal):
         DiffSection(GeneralSection(old_proposal), GeneralSection(new_proposal))
     )
 
-    if hasattr(new_proposal, 'wmo'):
+    if hasattr(new_proposal, "wmo"):
         sections.append(
             DiffSection(WMOSection(old_proposal.wmo), WMOSection(new_proposal.wmo))
         )
-        
+
         if new_proposal.is_pre_assessment:
             if (
                 new_proposal.wmo.status != new_proposal.wmo.WMOStatuses.NO_WMO
                 or old_proposal.wmo.status != old_proposal.wmo.WMOStatuses.NO_WMO
             ):
                 sections.append(
-                    DiffSection(METCSection(old_proposal.wmo), METCSection(new_proposal.wmo))
+                    DiffSection(
+                        METCSection(old_proposal.wmo), METCSection(new_proposal.wmo)
+                    )
                 )
 
             sections.append(
@@ -1117,7 +1129,9 @@ def create_context_diff(context, old_proposal, new_proposal):
                 ):
                     both_studies = [old_study, new_study]
 
-                    sections.append(DiffSection(*multi_sections(StudySection, both_studies)))
+                    sections.append(
+                        DiffSection(*multi_sections(StudySection, both_studies))
+                    )
 
                     if (
                         old_study is not None
@@ -1128,7 +1142,9 @@ def create_context_diff(context, old_proposal, new_proposal):
                         interventions = get_all_related(both_studies, "intervention")
 
                         sections.append(
-                            DiffSection(*multi_sections(InterventionSection, interventions))
+                            DiffSection(
+                                *multi_sections(InterventionSection, interventions)
+                            )
                         )
 
                     if (
@@ -1140,7 +1156,9 @@ def create_context_diff(context, old_proposal, new_proposal):
                         observations = get_all_related(both_studies, "observation")
 
                         sections.append(
-                            DiffSection(*multi_sections(ObservationSection, observations))
+                            DiffSection(
+                                *multi_sections(ObservationSection, observations)
+                            )
                         )
 
                     if (
@@ -1150,7 +1168,9 @@ def create_context_diff(context, old_proposal, new_proposal):
                         and new_study.has_sessions
                     ):
                         sections.append(
-                            DiffSection(*multi_sections(SessionsOverviewSection, both_studies))
+                            DiffSection(
+                                *multi_sections(SessionsOverviewSection, both_studies)
+                            )
                         )
 
                         old_sessions_set, new_sessions_set = get_all_related_set(
@@ -1161,20 +1181,28 @@ def create_context_diff(context, old_proposal, new_proposal):
                             old_sessions_set, new_sessions_set
                         ):
                             sections.append(
-                                DiffSection(*multi_sections(SessionSection, both_sessions))
+                                DiffSection(
+                                    *multi_sections(SessionSection, both_sessions)
+                                )
                             )
 
                             old_tasks_set, new_tasks_set = get_all_related_set(
                                 both_sessions, "task_set"
                             )
 
-                            for both_tasks in zip_equalize_lists(old_tasks_set, new_tasks_set):
+                            for both_tasks in zip_equalize_lists(
+                                old_tasks_set, new_tasks_set
+                            ):
                                 sections.append(
-                                    DiffSection(*multi_sections(TaskSection, both_tasks))
+                                    DiffSection(
+                                        *multi_sections(TaskSection, both_tasks)
+                                    )
                                 )
 
                         sections.append(
-                            DiffSection(*multi_sections(TasksOverviewSection, both_sessions))
+                            DiffSection(
+                                *multi_sections(TasksOverviewSection, both_sessions)
+                            )
                         )
 
                     sections.append(
@@ -1198,14 +1226,18 @@ def create_context_diff(context, old_proposal, new_proposal):
                     ):
                         sections.append(
                             DiffSection(
-                                *multi_sections(ExtraDocumentsSection, zipped_extra_docs, num)
+                                *multi_sections(
+                                    ExtraDocumentsSection, zipped_extra_docs, num
+                                )
                             )
                         )
 
                 if old_proposal.dmp_file or new_proposal.dmp_file:
                     sections.append(
                         DiffSection(
-                            *multi_sections(DMPFileSection, [old_proposal, new_proposal])
+                            *multi_sections(
+                                DMPFileSection, [old_proposal, new_proposal]
+                            )
                         )
                     )
 
