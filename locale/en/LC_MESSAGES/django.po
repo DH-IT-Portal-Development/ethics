@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-16 17:20+0100\n"
-"PO-Revision-Date: 2023-11-07 10:36+0100\n"
+"PO-Revision-Date: 2024-01-17 10:48+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -3827,22 +3827,22 @@ msgstr ""
 #: reviews/templates/reviews/review_detail_sidebar.html:46
 #, python-format
 msgid "Reviewronde gestart op <br /> %(date_start)s."
-msgstr "eviewing round started on %(date_start)s."
+msgstr "Reviewing round started on <br /> %(date_start)s."
 
 #: reviews/templates/reviews/review_detail_sidebar.html:54
 #, python-format
 msgid "Reviewronde beëindigd op <br /> %(date_end)s."
-msgstr "Reviewing round ended on %(date_end)s."
+msgstr "Reviewing round ended on <br /> %(date_end)s."
 
 #: reviews/templates/reviews/review_detail_sidebar.html:63
 #, python-format
 msgid "Afhandeling: <br /> %(continuation)s."
-msgstr "Continuation: %(continuation)s."
+msgstr "Continuation: <br /> %(continuation)s."
 
 #: reviews/templates/reviews/review_detail_sidebar.html:71
 #, python-format
 msgid "Bevestiging verzonden op <br /> %(date_confirmed)s."
-msgstr "Confirmation sent on %(date_confirmed)s."
+msgstr "Confirmation sent on <br /> %(date_confirmed)s."
 
 #: reviews/templates/reviews/review_detail_sidebar.html:77
 #, python-format
