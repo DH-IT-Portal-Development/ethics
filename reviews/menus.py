@@ -55,7 +55,7 @@ def create_committee_menu(commitee: str) -> List[MenuItem]:
         MenuItem(
             _("Overzicht werkverdeling commissieleden"),
             reverse("reviews:workload", args=[commitee]),
-            check=lambda x: is_chair_or_secretary(x.user),
+            check=lambda x: is_secretary(x.user),
         ),
     ]
 

@@ -98,7 +98,7 @@ class CommitteeMembersWorkloadView(
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.today = date.today()
-        self.start_date = self.today - timedelta(days=365)
+        self.start_date = self.today - timedelta(days=90)
         self.end_date = self.today
 
     def post(self, request, *args, **kwargs):
