@@ -25,6 +25,13 @@ en de deelnemer vervolgens een vragenlijst afneemt, dan vul je hierboven "2" '
         ),
     )
 
+    repeats = models.PositiveBigIntegerField(
+        _('Hoe vaak wordt deze sessie herhaald?'),
+        null = False,
+        default = 1,
+        validators=[MinValueValidator(1), MaxValueValidator(100)], # Max of 100 is a technical safeguard
+    )
+
     tasks_duration = models.PositiveIntegerField(
         _(
             "De totale geschatte netto taakduur van je sessie komt \
@@ -137,6 +144,13 @@ dat je van plan bent aan de deelnemer aan te bieden. \
 Het moet voor de commissieleden duidelijk zijn wat je precies gaat doen."
         ),
         blank=True,
+    )
+
+    repeats = models.PositiveBigIntegerField(
+        _('Hoe vaak wordt deze taak herhaald?'),
+        null = False,
+        default = 1,
+        validators=[MinValueValidator(1), MaxValueValidator(100)], # Max of 100 is a technical safeguard
     )
 
     duration = models.PositiveIntegerField(
