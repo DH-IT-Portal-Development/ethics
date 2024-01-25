@@ -36,7 +36,7 @@ def session_urls(study):
     tasks_url = AvailableURL(title=_("Takenonderzoek"))
 
     if study.has_sessions:
-        tasks_url.url = reverse("studies:session_start", args=(study.pk,))
+        tasks_url.url = reverse("tasks:session_create", args=(study.pk,))
 
     if study.has_sessions:
         prev_session_completed = True
@@ -45,7 +45,7 @@ def session_urls(study):
                 title=_("Het takenonderzoek: sessie {}").format(session.order)
             )
             if prev_session_completed:
-                task_start_url.url = reverse("tasks:start", args=(session.pk,))
+                task_start_url.url = reverse("tasks:session_update", args=(session.pk,))
             tasks_url.children.append(task_start_url)
 
             tasks_url.children.extend(tasks_urls(session))

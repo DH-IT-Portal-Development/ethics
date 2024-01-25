@@ -7,24 +7,33 @@ from django.utils.translation import ugettext_lazy as _
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
 from ..forms import TaskForm
 from ..mixins import DeletionAllowedMixin
-from ..models import Task
+from ..models import Task, Session
 from ..utils import get_task_progress
+
+from cdh.core.views import RedirectActionView
 
 
 ######################
 # CRUD actions on Task
 ######################
+
+class TaskCreate(RedirectActionView):
+    
+    def action(self, request):
+        session = Session.objects.get(pk=self.kwargs["pk"])
+        order = session.task_set.count() + 1
+        self.task = Task.objects.create(order=order, session = session)
+
+    def get_redirect_url(self, *args, **kwargs):
+        super().get_redirect_url(*args, **kwargs)
+        return reverse("tasks:update", args=[self.task.pk])
+    
 class TaskUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Updates a Task"""
 
     model = Task
     form_class = TaskForm
     success_message = _("Taak bewerkt")
-
-    def get_context_data(self, **kwargs):
-        context = super(TaskUpdate, self).get_context_data(**kwargs)
-        context["progress"] = get_task_progress(self.object)
-        return context
 
     def get_next_url(self):
         try:
@@ -46,7 +55,7 @@ class TaskUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
             return reverse("tasks:update", args=(prev_task.pk,))
         except Task.DoesNotExist:
             # If this is the first Task, return to task_start
-            return reverse("tasks:start", args=(self.object.session.pk,))
+            return reverse("tasks:session_update", args=(self.object.session.pk,))
 
 
 class TaskDelete(DeletionAllowedMixin, DeleteView):

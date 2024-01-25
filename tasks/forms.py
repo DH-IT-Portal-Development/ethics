@@ -14,17 +14,7 @@ from django.utils.functional import lazy
 mark_safe_lazy = lazy(mark_safe, str)
 
 
-class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
-    is_copy = forms.BooleanField(
-        label=_("Is deze sessie een kopie van een voorgaande sessie?"),
-        help_text=_("Na het kopiëren zijn alle velden bewerkbaar."),
-        widget=forms.RadioSelect(choices=YES_NO),
-        initial=False,
-        required=False,
-    )
-    parent_session = forms.ModelChoiceField(
-        label=_("Te kopiëren sessie"), queryset=Session.objects.all(), required=False
-    )
+class SessionUpdateForm(SoftValidationMixin, ConditionalModelForm):
 
     class Meta:
         model = Session
@@ -33,7 +23,7 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
             "setting_details",
             "supervision",
             "leader_has_coc",
-            "tasks_number",
+            "repeats",
         ]
         widgets = {
             "setting": forms.CheckboxSelectMultiple(),
@@ -46,6 +36,7 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
         "setting_details",
         "supervision",
         "leader_has_coc",
+        "repeats",
     ]
 
     def __init__(self, *args, **kwargs):
@@ -58,15 +49,7 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
         """
         self.study = kwargs.pop("study", None)
 
-        super(TaskStartForm, self).__init__(*args, **kwargs)
-        self.fields["tasks_number"].required = False
-        self.fields["parent_session"].queryset = Session.objects.filter(
-            study=self.instance.study.pk, order__lt=self.instance.order
-        )
-
-        if self.instance.order == 1:
-            del self.fields["is_copy"]
-            del self.fields["parent_session"]
+        super(SessionUpdateForm, self).__init__(*args, **kwargs)
 
         # TODO: add warning
         if not self.study.has_children():
@@ -80,7 +63,7 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
         - If is_copy is True, parent_session is required
         - If is_copy is False, tasks_number is required
         """
-        cleaned_data = super(TaskStartForm, self).clean()
+        cleaned_data = super(SessionUpdateForm, self).clean()
 
         self.mark_soft_required(cleaned_data, "setting")
 
@@ -94,16 +77,6 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
             self.check_dependency(
                 cleaned_data, "supervision", "leader_has_coc", f1_value=False
             )
-
-        self.check_dependency(cleaned_data, "is_copy", "parent_session")
-        if not cleaned_data.get("is_copy") and not cleaned_data.get("tasks_number"):
-            # Prevent double required errors
-            if "tasks_number" not in self.errors:
-                self.add_error(
-                    "tasks_number",
-                    forms.ValidationError(_("Dit veld is verplicht."), code="required"),
-                )
-
 
 class TaskForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:

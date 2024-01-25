@@ -11,7 +11,7 @@ from braces.forms import UserKwargModelFormMixin
 from interventions.forms import InterventionForm
 from observations.forms import ObservationForm
 from studies.forms import StudyForm, StudyDesignForm, SessionStartForm
-from tasks.forms import TaskStartForm, TaskEndForm, TaskForm
+from tasks.forms import SessionUpdateForm, TaskEndForm, TaskForm
 from ..forms import (
     ProposalForm,
     WmoForm,
@@ -160,7 +160,7 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
             taskbased_key = "{}_task_start".format(key_base)
             forms[taskbased_key] = (
                 SessionStartForm,
-                reverse("studies:session_start", args=[study.pk]),
+                reverse("tasks:session_create", args=[study.pk]),
                 _("Het takenonderzoek (traject {})").format(
                     study.order,
                 ),
@@ -174,8 +174,8 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                 )
 
                 forms[session_start_key] = (
-                    TaskStartForm,
-                    reverse("tasks:start", args=[session.pk]),
+                    SessionUpdateForm,
+                    reverse("tasks:session_update", args=[session.pk]),
                     _("Het takenonderzoek: sessie {} (traject {})").format(
                         session.order,
                         study.order,
@@ -256,7 +256,7 @@ def get_form_errors(proposal: Proposal) -> list:
                 kwargs["proposal"] = proposal
 
             if issubclass(
-                form_class, (InterventionForm, ObservationForm, TaskStartForm)
+                form_class, (InterventionForm, ObservationForm, SessionUpdateForm)
             ):
                 kwargs["study"] = obj.study
 

@@ -44,7 +44,7 @@ class InterventionMixin(object):
             else:
                 next_url = "observations:create"
         elif study.has_sessions:
-            next_url = "studies:session_start"
+            next_url = "tasks:session_create"
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):

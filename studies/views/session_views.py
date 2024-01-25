@@ -14,7 +14,7 @@ from ..utils import get_study_progress
 ######################
 # Actions on a Session
 ######################
-class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
+class SessionStartOld(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Initial creation of Sessions"""
 
     model = Study
@@ -26,7 +26,7 @@ class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         """Setting the progress on the context"""
-        context = super(SessionStart, self).get_context_data(**kwargs)
+        context = super(SessionStartOld, self).get_context_data(**kwargs)
         context["progress"] = get_study_progress(self.object) + 9
         return context
 
@@ -48,11 +48,11 @@ class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
             session = Session.objects.get(study=study, order=order)
             session.delete()
 
-        return super(SessionStart, self).form_valid(form)
+        return super(SessionStartOld, self).form_valid(form)
 
     def get_next_url(self):
         """Continue to the addition of Tasks"""
-        return reverse("tasks:start", args=(self.object.first_session().pk,))
+        return reverse("tasks:session_update", args=(self.object.first_session().pk,))
 
     def get_back_url(self):
         """
