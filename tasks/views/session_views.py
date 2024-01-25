@@ -77,18 +77,30 @@ class SessionUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
         return kwargs
 
     def get_next_url(self):
-        return reverse("tasks:create", args=(self.object.pk,))
+        tasks = self.object.task_set.all()
+        if tasks.count() == 0:
+            return reverse("tasks:create", args=(self.object.pk,))
+        else:
+            return reverse("tasks:update", args=(tasks.get(order=1).pk,))
 
     def get_back_url(self):
         try:
-            # Try to return to task_end of the previous Session
+            # Try to return to session_end of the previous Session
             prev_session = Session.objects.get(
                 study=self.object.study, order=self.object.order - 1
             )
-            return reverse("tasks:end", args=(prev_session.pk,))
+            return reverse("tasks:session_end", args=(prev_session.pk,))
         except Session.DoesNotExist:
-            # If this is the first Session, return to session_start
-            return reverse("tasks:session_create", args=(self.object.study.pk,))
+            study = self.object.study
+            next_url = "studies:design"
+            pk = study.pk
+            if study.has_observation:
+                next_url = "observations:update"
+                pk = study.observation.pk
+            elif study.has_intervention:
+                next_url = "interventions:update"
+                pk = study.intervention.pk
+            return reverse(next_url, args=(pk,))
 
 
 class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):

@@ -43,8 +43,8 @@ class TaskUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
             )
             return reverse("tasks:update", args=(next_task.pk,))
         except Task.DoesNotExist:
-            # If this is the last Task, continue to task_end
-            return reverse("tasks:end", args=(self.object.session.pk,))
+            # If this is the last Task, continue to session_end
+            return reverse("tasks:session_end", args=(self.object.session.pk,))
 
     def get_back_url(self):
         try:
@@ -54,7 +54,7 @@ class TaskUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
             )
             return reverse("tasks:update", args=(prev_task.pk,))
         except Task.DoesNotExist:
-            # If this is the first Task, return to task_start
+            # If this is the first Task, return to session_update
             return reverse("tasks:session_update", args=(self.object.session.pk,))
 
 
@@ -65,7 +65,7 @@ class TaskDelete(DeletionAllowedMixin, DeleteView):
     success_message = _("Taak verwijderd")
 
     def get_success_url(self):
-        return reverse("tasks:end", args=(self.object.session.pk,))
+        return reverse("tasks:session_end", args=(self.object.session.pk,))
 
     def delete(self, request, *args, **kwargs):
         """

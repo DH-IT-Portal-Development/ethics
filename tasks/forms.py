@@ -91,6 +91,7 @@ class TaskForm(SoftValidationMixin, ConditionalModelForm):
             "registration_kinds_details",
             "feedback",
             "feedback_details",
+            "repeats",
         ]
         labels = {
             "duration": mark_safe_lazy(

@@ -54,7 +54,7 @@ def session_urls(study):
                 title=_("Overzicht van takenonderzoek: sessie {}").format(session.order)
             )
             if session.tasks_completed():
-                task_end_url.url = reverse("tasks:end", args=(session.pk,))
+                task_end_url.url = reverse("tasks:session_end", args=(session.pk,))
             tasks_url.children.append(task_end_url)
 
             prev_session_completed = session.is_completed()

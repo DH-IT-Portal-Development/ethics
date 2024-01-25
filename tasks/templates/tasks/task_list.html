@@ -5,10 +5,11 @@
     <thead>
         <tr>
             <th width="20%">{% trans "Naam" %}</th>
-            <th width="15%">{% trans "Nettoduur (in minuten)" %}</th>
+            <th width="10%">{% trans "Nettoduur (in minuten)" %}</th>
             <th width="40%">{% trans "Registratie via" %}</th>
             <th width="15%">{% trans "Feedback?" %}</th>
-            <th width="10%">{% trans "Acties" %}</th>
+            <th width="10%">{% trans "Herhalingen" %}</th>
+            <th width="5%">{% trans "Acties" %}</th>
         </tr>
     </thead>
     <tbody>
@@ -21,6 +22,7 @@
                     <span class="label">{{ task.feedback|yesno:_("ja,nee") }}</span>
                     {% if task.feedback %}<span class="help">{{ task.feedback_details }}</span>{% endif %}
                 </td>
+                <td>{{ task.repeats }}</td>
                 <td>
                     <a href="{% url 'tasks:update' task.id %}">
                         <img src="{% static 'proposals/images/pencil.png' %}"

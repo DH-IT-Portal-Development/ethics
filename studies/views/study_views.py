@@ -149,7 +149,7 @@ class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
     def get_back_url(self):
         study = self.object
         if study.has_sessions:
-            next_url = "tasks:end"
+            next_url = "tasks:session_end"
             pk = self.object.last_session().pk
         elif study.has_intervention:
             next_url = "interventions:update"

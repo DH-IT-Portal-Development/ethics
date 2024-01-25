@@ -209,7 +209,7 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
 
                 forms[session_end_key] = (
                     TaskEndForm,
-                    reverse("tasks:end", args=[session.pk]),
+                    reverse("tasks:session_end", args=[session.pk]),
                     _("Overzicht van takenonderzoek: sessie {} (traject {})").format(
                         session.order,
                         study.order,

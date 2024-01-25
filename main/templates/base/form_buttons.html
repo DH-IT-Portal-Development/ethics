@@ -29,6 +29,14 @@
                 <a class="button js-submit-redirect"
                    href="{% url 'tasks:session_update' session.pk %}">{% trans "Terug naar begin sessie" %}</a>
             {% endif %}
+            {% if create_session %}
+                <a class="button button-colored continue-button"
+                    href="{% url 'tasks:session_create' study.pk %}">{% trans "Maak een nieuwe sessie aan" %}</a>                
+            {% endif %}
+            {% if task %}
+                <a class="button button-colored continue-button"
+                    href="{% url 'tasks:create' task.session.pk %}">{% trans "Maak een nieuwe taak aan" %}</a>                
+            {% endif %}
         {% endif %}
         {% if not no_forward %}
             {% trans 'Opslaan en volgende stap >>' as default_next_text %}

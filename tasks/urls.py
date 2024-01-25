@@ -10,7 +10,7 @@ urlpatterns = [
     path("session/delete/<int:pk>/", SessionDelete.as_view(), name="session_delete"),
     path("session/create/<int:pk>/", SessionCreate.as_view(), name="session_create"),
     path("session/update/<int:pk>/", SessionUpdate.as_view(), name="session_update"),
-    path("end/<int:pk>/", SessionEnd.as_view(), name="end"),
+    path("session/end/<int:pk>/", SessionEnd.as_view(), name="session_end"),
     # Task(s)
     path("update/<int:pk>/", TaskUpdate.as_view(), name="update"),
     path("create/<int:pk>", TaskCreate.as_view(), name="create"),

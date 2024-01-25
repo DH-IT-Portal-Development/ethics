@@ -31,7 +31,7 @@ $(function() {
                 <table>
                     {{ form.as_table }}
                 </table>
-                {% with proposal=task.session.study.proposal study=task.session.study session=task.session %}
+                {% with proposal=task.session.study.proposal study=task.session.study session=task.session task=task %}
                     {% include "base/form_buttons.html" %}
                 {% endwith %}
             </form>

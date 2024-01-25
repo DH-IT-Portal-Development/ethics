@@ -27,7 +27,7 @@
                 <table>
                     {{ form.as_table }}
                 </table>
-                {% with proposal=session.study.proposal study=session.study %}
+                {% with proposal=session.study.proposal study=session.study create_session=1 %}
                     {% include "base/form_buttons.html" %}
                 {% endwith %}
             </form>
