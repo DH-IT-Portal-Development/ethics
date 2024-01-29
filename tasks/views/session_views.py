@@ -9,7 +9,7 @@ from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
 from ..forms import SessionUpdateForm, TaskEndForm
 from ..mixins import DeletionAllowedMixin
 from ..models import Session, Task, Study
-from ..utils import copy_task_to_session, get_session_progress
+from ..utils import copy_task_to_session
 
 from cdh.core.views import RedirectActionView
 

@@ -26,10 +26,13 @@ en de deelnemer vervolgens een vragenlijst afneemt, dan vul je hierboven "2" '
     )
 
     repeats = models.PositiveBigIntegerField(
-        _('Hoe vaak wordt deze sessie herhaald?'),
-        null = False,
-        default = 1,
-        validators=[MinValueValidator(1), MaxValueValidator(100)], # Max of 100 is a technical safeguard
+        _("Hoe vaak wordt deze sessie herhaald?"),
+        null=False,
+        default=1,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(100),
+        ],  # Max of 100 is a technical safeguard
     )
 
     tasks_duration = models.PositiveIntegerField(
@@ -52,7 +55,9 @@ instructies per taak, pauzes tussen taken, en debriefing? \
         unique_together = ("study", "order")
 
     def net_duration(self):
-        if duration := self.task_set.aggregate(models.Sum("duration"))["duration__sum"]:
+        if duration := self.task_set.annotate(
+            total_duration=models.F("duration") * models.F("repeats")
+        ).aggregate(models.Sum("total_duration"))["total_duration__sum"]:
             return duration
 
         return 0
@@ -147,10 +152,13 @@ Het moet voor de commissieleden duidelijk zijn wat je precies gaat doen."
     )
 
     repeats = models.PositiveBigIntegerField(
-        _('Hoe vaak wordt deze taak herhaald?'),
-        null = False,
-        default = 1,
-        validators=[MinValueValidator(1), MaxValueValidator(100)], # Max of 100 is a technical safeguard
+        _("Hoe vaak wordt deze taak herhaald?"),
+        null=False,
+        default=1,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(100),
+        ],  # Max of 100 is a technical safeguard
     )
 
     duration = models.PositiveIntegerField(

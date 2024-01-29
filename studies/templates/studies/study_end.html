@@ -135,8 +135,8 @@
                                         <a href="{% url 'tasks:session_update' session.pk %}">
                                             <img src="{% static 'proposals/images/pencil.png' %}"
                                                  title="{% trans 'Sessie verwijderen' %}">
-                                        </a>
-                                        {% if study.sessions_number > 1 %}
+                                        </a> 
+                                        {% if study.last_session.order > 1 %}
                                             <a href="{% url 'tasks:session_delete' session.pk %}">
                                                 <img src="{% static 'proposals/images/delete.png' %}"
                                                      title="{% trans 'Sessie aanpassen' %}">

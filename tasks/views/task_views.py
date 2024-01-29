@@ -8,7 +8,6 @@ from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
 from ..forms import TaskForm
 from ..mixins import DeletionAllowedMixin
 from ..models import Task, Session
-from ..utils import get_task_progress
 
 from cdh.core.views import RedirectActionView
 
