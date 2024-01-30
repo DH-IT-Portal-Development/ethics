@@ -43,21 +43,21 @@ class SessionDelete(DeletionAllowedMixin, DeleteView):
         return HttpResponseRedirect(success_url)
 
 
-
 ##################
 # Actions on Sessions
 ##################
-    
+
+
 class SessionCreate(RedirectActionView):
-    
     def action(self, request):
         study = Study.objects.get(pk=self.kwargs["pk"])
         order = study.session_set.count() + 1
-        self.session = Session.objects.create(order=order, study = study)
+        self.session = Session.objects.create(order=order, study=study)
 
     def get_redirect_url(self, *args: Any, **kwargs: Any) -> str | None:
         super().get_redirect_url(*args, **kwargs)
         return reverse("tasks:session_update", args=[self.session.pk])
+
 
 class SessionUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Initial creation of Tasks for a Session"""
@@ -114,7 +114,7 @@ class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
             pass
 
         return kwargs
-    
+
     def get_success_url(self):
         """Sets the success_url based on the submit button pressed"""
         if "create_new_session" in self.request.POST:

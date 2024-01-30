@@ -746,8 +746,6 @@ class ObservationSection(BaseSection):
         return rows
 
 
-
-
 class SessionSection(BaseSection):
     """This class receives a session object"""
 
@@ -1163,7 +1161,6 @@ def create_context_diff(context, old_proposal, new_proposal):
                         or new_study is not None
                         and new_study.has_sessions
                     ):
-
                         old_sessions_set, new_sessions_set = get_all_related_set(
                             both_studies, "session_set"
                         )

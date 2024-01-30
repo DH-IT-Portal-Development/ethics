@@ -131,11 +131,11 @@
                                 <div class="task_list mt-3">
                                     <h5 class="pt-2">
                                         Sessie {{ session.order }} (totale brutoduur: {{ session.tasks_duration }}
-                                        minuten, aantal herhalingen: {{session.repeats}})
+                                        minuten, aantal herhalingen: {{ session.repeats }})
                                         <a href="{% url 'tasks:session_update' session.pk %}">
                                             <img src="{% static 'proposals/images/pencil.png' %}"
                                                  title="{% trans 'Sessie verwijderen' %}">
-                                        </a> 
+                                        </a>
                                         {% if study.last_session.order > 1 %}
                                             <a href="{% url 'tasks:session_delete' session.pk %}">
                                                 <img src="{% static 'proposals/images/delete.png' %}"

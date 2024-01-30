@@ -45,7 +45,7 @@ instructies per taak, pauzes tussen taken, en debriefing? \
             return duration
 
         return 0
-    
+
     def tasks_number(self):
         return self.task_set.count()
 

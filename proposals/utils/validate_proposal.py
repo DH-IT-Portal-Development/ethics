@@ -157,7 +157,6 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                 )
 
         if study.has_sessions:
-
             for session in study.session_set.all():
                 session_start_key = "{}_session_{}_start".format(
                     key_base,

@@ -16,17 +16,18 @@ from cdh.core.views import RedirectActionView
 # CRUD actions on Task
 ######################
 
+
 class TaskCreate(RedirectActionView):
-    
     def action(self, request):
         session = Session.objects.get(pk=self.kwargs["pk"])
         order = session.task_set.count() + 1
-        self.task = Task.objects.create(order=order, session = session)
+        self.task = Task.objects.create(order=order, session=session)
 
     def get_redirect_url(self, *args, **kwargs):
         super().get_redirect_url(*args, **kwargs)
         return reverse("tasks:update", args=[self.task.pk])
-    
+
+
 class TaskUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Updates a Task"""
 

@@ -32,16 +32,16 @@
             {% if create_session %}
                 {% trans 'Opslaan en maak een nieuwe sessie aan >>' as create_session_text %}
                 <input class="button button-colored continue-button"
-                    type="submit"
-                    name="create_new_session"
-                    value="{{ next_text|default:create_session_text }}" />              
+                       type="submit"
+                       name="create_new_session"
+                       value="{{ next_text|default:create_session_text }}" />
             {% endif %}
             {% if task %}
                 {% trans 'Opslaan en maak een nieuwe taak aan >>' as create_task_text %}
                 <input class="button button-colored continue-button"
-                    type="submit"
-                    name="create_new_task"
-                    value="{{ next_text|default:create_task_text }}" />              
+                       type="submit"
+                       name="create_new_task"
+                       value="{{ next_text|default:create_task_text }}" />
             {% endif %}
         {% endif %}
         {% if not no_forward %}

@@ -15,7 +15,6 @@ mark_safe_lazy = lazy(mark_safe, str)
 
 
 class SessionUpdateForm(SoftValidationMixin, ConditionalModelForm):
-
     class Meta:
         model = Session
         fields = [
@@ -75,6 +74,7 @@ class SessionUpdateForm(SoftValidationMixin, ConditionalModelForm):
             self.check_dependency(
                 cleaned_data, "supervision", "leader_has_coc", f1_value=False
             )
+
 
 class TaskForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
