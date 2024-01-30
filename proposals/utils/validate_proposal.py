@@ -10,8 +10,8 @@ from braces.forms import UserKwargModelFormMixin
 
 from interventions.forms import InterventionForm
 from observations.forms import ObservationForm
-from studies.forms import StudyForm, StudyDesignForm, SessionStartForm
-from tasks.forms import SessionUpdateForm, TaskEndForm, TaskForm
+from studies.forms import StudyForm, StudyDesignForm
+from tasks.forms import SessionUpdateForm, SessionEndForm, TaskForm
 from ..forms import (
     ProposalForm,
     WmoForm,
@@ -157,15 +157,6 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                 )
 
         if study.has_sessions:
-            taskbased_key = "{}_task_start".format(key_base)
-            forms[taskbased_key] = (
-                SessionStartForm,
-                reverse("tasks:session_create", args=[study.pk]),
-                _("Het takenonderzoek (traject {})").format(
-                    study.order,
-                ),
-                study,
-            )
 
             for session in study.session_set.all():
                 session_start_key = "{}_session_{}_start".format(
@@ -208,7 +199,7 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                 )
 
                 forms[session_end_key] = (
-                    TaskEndForm,
+                    SessionEndForm,
                     reverse("tasks:session_end", args=[session.pk]),
                     _("Overzicht van takenonderzoek: sessie {} (traject {})").format(
                         session.order,

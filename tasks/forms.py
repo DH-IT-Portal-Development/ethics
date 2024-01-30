@@ -42,7 +42,6 @@ class SessionUpdateForm(SoftValidationMixin, ConditionalModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Set the Study for later reference
-        - The field tasks_number is not required by default (only if is_copy is set to False)
         - Only allow to choose earlier Sessions
         - Remove option to copy altogether from first Session
         - Don't ask the supervision question when there are only adult AgeGroups in this Study
@@ -61,7 +60,6 @@ class SessionUpdateForm(SoftValidationMixin, ConditionalModelForm):
         Check for conditional requirements:
         - If a setting which needs details or supervision has been checked, make sure the details are filled
         - If is_copy is True, parent_session is required
-        - If is_copy is False, tasks_number is required
         """
         cleaned_data = super(SessionUpdateForm, self).clean()
 
@@ -152,7 +150,7 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
         self.check_dependency(cleaned_data, "feedback", "feedback_details")
 
 
-class TaskEndForm(SoftValidationMixin, forms.ModelForm):
+class SessionEndForm(SoftValidationMixin, forms.ModelForm):
     class Meta:
         model = Session
         fields = ["tasks_duration"]
@@ -162,7 +160,7 @@ class TaskEndForm(SoftValidationMixin, forms.ModelForm):
         - Set the tasks_duration label
         - Set the tasks_duration as required
         """
-        super(TaskEndForm, self).__init__(*args, **kwargs)
+        super(SessionEndForm, self).__init__(*args, **kwargs)
 
         tasks_duration = self.fields["tasks_duration"]
         label = tasks_duration.label % self.instance.net_duration()
@@ -174,7 +172,7 @@ class TaskEndForm(SoftValidationMixin, forms.ModelForm):
         return True
 
     def clean(self):
-        cleaned_data = super(TaskEndForm, self).clean()
+        cleaned_data = super(SessionEndForm, self).clean()
 
         self.mark_soft_required(cleaned_data, "tasks_duration")
 

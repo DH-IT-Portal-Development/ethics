@@ -9,22 +9,6 @@ from studies.models import Study
 class Session(SettingModel):
     order = models.PositiveIntegerField()
 
-    # Fields with respect to Tasks
-    tasks_number = models.PositiveIntegerField(
-        _("Hoeveel taken worden er binnen deze sessie bij de deelnemer afgenomen?"),
-        null=True,
-        validators=[
-            MinValueValidator(1),
-            MaxValueValidator(100),
-        ],  # Max of 100 is a technical safeguard
-        help_text=_(
-            'Wanneer je bijvoorbeeld eerst de deelnemer observeert \
-en de deelnemer vervolgens een vragenlijst afneemt, dan vul je hierboven "2" '
-            "in. Electrodes plakken, sessie-debriefing en kort "
-            "(< 3 minuten) exit-interview gelden niet als een taak."
-        ),
-    )
-
     repeats = models.PositiveBigIntegerField(
         _("Hoe vaak wordt deze sessie herhaald?"),
         null=False,
@@ -61,6 +45,9 @@ instructies per taak, pauzes tussen taken, en debriefing? \
             return duration
 
         return 0
+    
+    def tasks_number(self):
+        return self.task_set.count()
 
     def first_task(self):
         tasks = self.task_set.order_by("order")

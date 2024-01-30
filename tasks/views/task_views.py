@@ -82,8 +82,4 @@ class TaskDelete(DeletionAllowedMixin, DeleteView):
             t.order -= 1
             t.save()
 
-        # Set the number of Tasks on Session
-        session.tasks_number -= 1
-        session.save()
-
         return HttpResponseRedirect(success_url)

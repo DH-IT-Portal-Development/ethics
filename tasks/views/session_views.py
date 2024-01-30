@@ -6,7 +6,7 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
-from ..forms import SessionUpdateForm, TaskEndForm
+from ..forms import SessionUpdateForm, SessionEndForm
 from ..mixins import DeletionAllowedMixin
 from ..models import Session, Task, Study
 from ..utils import copy_task_to_session
@@ -39,10 +39,6 @@ class SessionDelete(DeletionAllowedMixin, DeleteView):
         for s in Session.objects.filter(study=study, order__gt=order):
             s.order -= 1
             s.save()
-
-        # Set the number of Sessions on Study
-        study.sessions_number -= 1
-        study.save()
 
         return HttpResponseRedirect(success_url)
 
@@ -107,7 +103,7 @@ class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Completes a Session"""
 
     model = Session
-    form_class = TaskEndForm
+    form_class = SessionEndForm
     template_name = "tasks/task_end.html"
     success_message = _("Taken toevoegen beëindigd")
 

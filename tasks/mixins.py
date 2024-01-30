@@ -11,10 +11,10 @@ class DeletionAllowedMixin(object):
         obj = super(DeletionAllowedMixin, self).get_object(queryset)
 
         if isinstance(obj, Session):
-            if obj.study.sessions_number == 1:
+            if obj.study.sessions_number() == 1:
                 raise PermissionDenied
         elif isinstance(obj, Task):
-            if obj.session.tasks_number == 1:
+            if obj.session.tasks_number() == 1:
                 raise PermissionDenied
 
         return obj
