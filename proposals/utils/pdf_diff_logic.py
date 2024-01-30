@@ -746,12 +746,6 @@ class ObservationSection(BaseSection):
         return rows
 
 
-class SessionsOverviewSection(BaseSection):
-    """This class receives an study object"""
-
-    section_title = _("Het takenonderzoek en interviews")
-
-    row_fields = ["sessions_number"]
 
 
 class SessionSection(BaseSection):
@@ -767,6 +761,8 @@ class SessionSection(BaseSection):
 
     def __init__(self, obj):
         super().__init__(obj)
+        if self.obj.order == 1:
+            self.section_title = _("Het takenonderzoek en interviews")
         self.sub_title = self.get_sub_title(self.obj, "session")
 
     def get_row_fields(self):
@@ -1038,7 +1034,6 @@ def create_context_pdf(context, model):
                     if study.has_observation:
                         sections.append(ObservationSection(study.observation))
                     if study.has_sessions:
-                        sections.append(SessionsOverviewSection(study))
                         for session in study.session_set.all():
                             sections.append(SessionSection(session))
                             for task in session.task_set.all():
@@ -1168,11 +1163,6 @@ def create_context_diff(context, old_proposal, new_proposal):
                         or new_study is not None
                         and new_study.has_sessions
                     ):
-                        sections.append(
-                            DiffSection(
-                                *multi_sections(SessionsOverviewSection, both_studies)
-                            )
-                        )
 
                         old_sessions_set, new_sessions_set = get_all_related_set(
                             both_studies, "session_set"

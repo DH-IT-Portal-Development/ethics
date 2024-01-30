@@ -34,6 +34,13 @@ class TaskUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
     form_class = TaskForm
     success_message = _("Taak bewerkt")
 
+    def get_success_url(self):
+        """Sets the success_url based on the submit button pressed"""
+        if "create_new_task" in self.request.POST:
+            return reverse("tasks:create", args=(self.object.session.pk,))
+        else:
+            return super().get_success_url()
+
     def get_next_url(self):
         try:
             # Try to continue to next Task

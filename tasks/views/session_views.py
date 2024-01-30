@@ -105,7 +105,6 @@ class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
     model = Session
     form_class = SessionEndForm
     template_name = "tasks/task_end.html"
-    success_message = _("Taken toevoegen beëindigd")
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -115,6 +114,13 @@ class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
             pass
 
         return kwargs
+    
+    def get_success_url(self):
+        """Sets the success_url based on the submit button pressed"""
+        if "create_new_session" in self.request.POST:
+            return reverse("tasks:session_create", args=(self.object.study.pk,))
+        else:
+            return super().get_success_url()
 
     def get_next_url(self):
         try:

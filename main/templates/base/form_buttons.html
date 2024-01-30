@@ -30,12 +30,18 @@
                    href="{% url 'tasks:session_update' session.pk %}">{% trans "Terug naar begin sessie" %}</a>
             {% endif %}
             {% if create_session %}
-                <a class="button button-colored continue-button"
-                    href="{% url 'tasks:session_create' study.pk %}">{% trans "Maak een nieuwe sessie aan" %}</a>                
+                {% trans 'Opslaan en maak een nieuwe sessie aan >>' as create_session_text %}
+                <input class="button button-colored continue-button"
+                    type="submit"
+                    name="create_new_session"
+                    value="{{ next_text|default:create_session_text }}" />              
             {% endif %}
             {% if task %}
-                <a class="button button-colored continue-button"
-                    href="{% url 'tasks:create' task.session.pk %}">{% trans "Maak een nieuwe taak aan" %}</a>                
+                {% trans 'Opslaan en maak een nieuwe taak aan >>' as create_task_text %}
+                <input class="button button-colored continue-button"
+                    type="submit"
+                    name="create_new_task"
+                    value="{{ next_text|default:create_task_text }}" />              
             {% endif %}
         {% endif %}
         {% if not no_forward %}
