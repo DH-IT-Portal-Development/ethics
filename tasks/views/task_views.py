@@ -18,6 +18,9 @@ from cdh.core.views import RedirectActionView
 
 
 class TaskCreate(RedirectActionView):
+    """Creates a task, from a session pk and redirects to TaskUpdate()
+    for that task."""
+
     def action(self, request):
         session = Session.objects.get(pk=self.kwargs["pk"])
         order = session.task_set.count() + 1

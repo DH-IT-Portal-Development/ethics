@@ -49,6 +49,9 @@ class SessionDelete(DeletionAllowedMixin, DeleteView):
 
 
 class SessionCreate(RedirectActionView):
+    """Creates a session, from a study pk and redirects to SessionUpdate()
+    for that session."""
+
     def action(self, request):
         study = Study.objects.get(pk=self.kwargs["pk"])
         order = study.session_set.count() + 1
