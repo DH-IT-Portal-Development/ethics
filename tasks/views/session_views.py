@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-from typing import Any
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
@@ -57,7 +56,7 @@ class SessionCreate(RedirectActionView):
         order = study.session_set.count() + 1
         self.session = Session.objects.create(order=order, study=study)
 
-    def get_redirect_url(self, *args: Any, **kwargs: Any) -> str | None:
+    def get_redirect_url(self, *args, **kwargs):
         super().get_redirect_url(*args, **kwargs)
         return reverse("tasks:session_update", args=[self.session.pk])
 
