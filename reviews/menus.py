@@ -11,6 +11,7 @@ from main.templatetags.fetc_filters import (
     is_po_chair_or_secretary,
 )
 
+
 def create_committee_menu(commitee: str) -> List[MenuItem]:
 
     return [
