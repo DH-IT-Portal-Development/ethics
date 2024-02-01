@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-01 15:58+0100\n"
+"POT-Creation-Date: 2024-02-01 16:42+0100\n"
 "PO-Revision-Date: 2024-01-17 10:48+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -2421,18 +2421,14 @@ msgstr "Register a new application"
 #: proposals/templates/proposals/proposal_start.html:25
 #: proposals/templates/proposals/proposal_start_practice.html:25
 msgid ""
-"Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
-"algemene-kamer/\">Algemene Kamer (AK)</a> of dat van de <a href=\"https://"
-"fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\">Linguïstiek Kamer (LK)</"
-"a>."
+"Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
+"fetc-h/\">FEtC-H</a>."
 msgstr ""
-"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
-"general-chamber-2/\" target=\"blank\">General Chamber</a> or those of the <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/\" "
-"target=\"blank\">Linguistics Chamber</a>."
+"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\"  "
+"target=\"_blank\">FEtC-H </a>."
 
-#: proposals/templates/proposals/proposal_start.html:34
-#: proposals/templates/proposals/proposal_start_practice.html:34
+#: proposals/templates/proposals/proposal_start.html:31
+#: proposals/templates/proposals/proposal_start_practice.html:31
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\">voorbeelddocumenten</a> voor de "
@@ -2442,8 +2438,8 @@ msgstr ""
 "en/documents-ethics-assessment-committee-humanities\" "
 "target=\"_blank\">model documents</a> for <em>informed consent</em>."
 
-#: proposals/templates/proposals/proposal_start.html:39
-#: proposals/templates/proposals/proposal_start_practice.html:39
+#: proposals/templates/proposals/proposal_start.html:36
+#: proposals/templates/proposals/proposal_start_practice.html:36
 #: proposals/templates/proposals/study_consent.html:88
 msgid ""
 "Studenten moeten hun begeleider vragen om deze formulieren; dezelfde "
@@ -2455,8 +2451,8 @@ msgstr ""
 "fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\">this page</a>, though on non-"
 "official documents."
 
-#: proposals/templates/proposals/proposal_start.html:46
-#: proposals/templates/proposals/proposal_start_practice.html:46
+#: proposals/templates/proposals/proposal_start.html:43
+#: proposals/templates/proposals/proposal_start_practice.html:43
 #: proposals/templates/proposals/study_start.html:65
 msgid ""
 "Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) "
@@ -2465,16 +2461,16 @@ msgstr ""
 "An application consists of (i) trajectories, (ii) sessions, and (iii) tasks, "
 "in descending order of subdivision. "
 
-#: proposals/templates/proposals/proposal_start.html:52
-#: proposals/templates/proposals/proposal_start_practice.html:52
+#: proposals/templates/proposals/proposal_start.html:49
+#: proposals/templates/proposals/proposal_start_practice.html:49
 #: proposals/templates/proposals/study_start.html:71
 #: proposals/utils/pdf_diff_logic.py:337
 #: reviews/templates/reviews/committee_members_workload.html:23
 msgid "Traject"
 msgstr "Trajectory"
 
-#: proposals/templates/proposals/proposal_start.html:53
-#: proposals/templates/proposals/proposal_start_practice.html:53
+#: proposals/templates/proposals/proposal_start.html:50
+#: proposals/templates/proposals/proposal_start_practice.html:50
 #: proposals/templates/proposals/study_start.html:72
 msgid ""
 "Als je met verschillende deelnemersgroepen werkt die een verschillend "
@@ -2485,8 +2481,8 @@ msgstr ""
 "not follow the same instructions during your research, they traverse "
 "different trajectories, and require separate informed consent documents. "
 
-#: proposals/templates/proposals/proposal_start.html:57
-#: proposals/templates/proposals/proposal_start_practice.html:57
+#: proposals/templates/proposals/proposal_start.html:54
+#: proposals/templates/proposals/proposal_start_practice.html:54
 #: proposals/templates/proposals/study_start.html:76
 msgid ""
 "<u>Bijvoorbeeld</u>: ouders van leerlingen 15 jaar en jonger, docenten, een "
@@ -2495,27 +2491,27 @@ msgstr ""
 "<u>For example</u>: parents of children up to 15 years of age, teachers, or "
 "an experimental and control group that receive significantly different tasks."
 
-#: proposals/templates/proposals/proposal_start.html:63
-#: proposals/templates/proposals/proposal_start_practice.html:63
+#: proposals/templates/proposals/proposal_start.html:60
+#: proposals/templates/proposals/proposal_start_practice.html:60
 #: proposals/templates/proposals/study_start.html:82
 msgid "Sessie"
 msgstr "Session"
 
-#: proposals/templates/proposals/proposal_start.html:64
-#: proposals/templates/proposals/proposal_start_practice.html:64
+#: proposals/templates/proposals/proposal_start.html:61
+#: proposals/templates/proposals/proposal_start_practice.html:61
 #: proposals/templates/proposals/study_start.html:83
 msgid "Alle taken/onderdelen die iemand op één dag uitvoert."
 msgstr ""
 "All tasks or procedures that a participant completes in a day combined. "
 
-#: proposals/templates/proposals/proposal_start.html:69
-#: proposals/templates/proposals/proposal_start_practice.html:69
+#: proposals/templates/proposals/proposal_start.html:66
+#: proposals/templates/proposals/proposal_start_practice.html:66
 #: proposals/templates/proposals/study_start.html:88
 msgid "Taak"
 msgstr "Task"
 
-#: proposals/templates/proposals/proposal_start.html:70
-#: proposals/templates/proposals/proposal_start_practice.html:70
+#: proposals/templates/proposals/proposal_start.html:67
+#: proposals/templates/proposals/proposal_start_practice.html:67
 #: proposals/templates/proposals/study_start.html:89
 msgid ""
 "Een taak of onderdeel van je onderzoek. <p> <u>Bijvoorbeeld</u>: het "
@@ -2524,7 +2520,7 @@ msgstr ""
 " A task or procedure within your study. <p> <u>For example</u>: completing "
 "an interview, questionnaire, or language test.</p>"
 
-#: proposals/templates/proposals/proposal_start.html:79
+#: proposals/templates/proposals/proposal_start.html:76
 #: proposals/templates/proposals/proposal_start_pre_approved.html:37
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:43
 msgid "Volgende stap >>"
@@ -2535,7 +2531,7 @@ msgstr "Next step >>"
 msgid "Een nieuwe aanvraag aanmelden (oefenportaal)"
 msgstr "Register a new application (practice portal)"
 
-#: proposals/templates/proposals/proposal_start_practice.html:78
+#: proposals/templates/proposals/proposal_start_practice.html:75
 msgid "Houd er rekening mee dat een oefenaanvraag niet ingediend kan worden."
 msgstr ""
 "Please be advised that a practice application cannot be submitted to the "
@@ -5217,6 +5213,17 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:56
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid ""
+#~ "Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
+#~ "algemene-kamer/\">Algemene Kamer (AK)</a> of dat van de <a href=\"https://"
+#~ "fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\">Linguïstiek Kamer "
+#~ "(LK)</a>."
+#~ msgstr ""
+#~ "The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/"
+#~ "regulations-general-chamber-2/\" target=\"blank\">General Chamber</a> or "
+#~ "those of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
+#~ "linguistics-chamber/\" target=\"blank\">Linguistics Chamber</a>."
 
 #~ msgid "Andere betrokkenen"
 #~ msgstr "Other people involved"
