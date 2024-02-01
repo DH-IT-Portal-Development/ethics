@@ -481,7 +481,8 @@ class ProposalSubmit(
         # Checks for practice proposals and starting the right
         # kind of review happen over there.
         proposal = form.instance
-        start_review(proposal)
+        if 'save_back' not in self.request.POST and 'js-redirect-submit' not in self.request.POST:
+            start_review(proposal)
         return success_response
 
     def get_next_url(self):
