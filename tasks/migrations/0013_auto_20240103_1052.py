@@ -7,18 +7,32 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('tasks', '0012_alter_task_registrations'),
+        ("tasks", "0012_alter_task_registrations"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='session',
-            name='repeats',
-            field=models.PositiveBigIntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(100)], verbose_name='Hoe vaak wordt deze sessie herhaald?'),
+            model_name="session",
+            name="repeats",
+            field=models.PositiveBigIntegerField(
+                default=1,
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(100),
+                ],
+                verbose_name="Hoe vaak wordt deze sessie herhaald?",
+            ),
         ),
         migrations.AddField(
-            model_name='task',
-            name='repeats',
-            field=models.PositiveBigIntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(100)], verbose_name='Hoe vaak wordt deze taak herhaald?'),
+            model_name="task",
+            name="repeats",
+            field=models.PositiveBigIntegerField(
+                default=1,
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(100),
+                ],
+                verbose_name="Hoe vaak wordt deze taak herhaald?",
+            ),
         ),
     ]
