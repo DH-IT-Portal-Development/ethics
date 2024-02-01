@@ -40,10 +40,22 @@ form label {
 }
 
 .button-grid {
-    display: grid;
-    grid-auto-flow: column;
+    display: flex;
     column-gap: 15px;
     text-align: center;
+}
+
+
+@media (max-width: 768px)
+{
+    .button-grid {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .button-grid > .button {
+        width: 100%;
+    }
 }
 
 .button-grid > .button {

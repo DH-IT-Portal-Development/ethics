@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-30 15:39+0100\n"
+"POT-Creation-Date: 2024-02-01 16:50+0100\n"
 "PO-Revision-Date: 2024-01-17 10:48+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -37,7 +37,7 @@ msgstr "https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"
 #: faqs/menus.py:17 main/templates/main/index.html:194
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/translated_consent_forms.html:7
-#: proposals/utils/pdf_diff_logic.py:875
+#: proposals/utils/pdf_diff_logic.py:873
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
@@ -63,11 +63,11 @@ msgstr "FAQ"
 msgid "Frequently Asked Questions"
 msgstr "Frequently Asked Questions"
 
-#: fetc/settings.py:128
+#: fetc/settings.py:129
 msgid "Nederlands"
 msgstr "Dutch"
 
-#: fetc/settings.py:129
+#: fetc/settings.py:130
 msgid "Engels"
 msgstr "English"
 
@@ -382,34 +382,23 @@ msgid "Bevestigingsbrief verstuurd"
 msgstr "Confirmation sent"
 
 #: main/templates/base/form_buttons.html:9
-msgid "<< Opslaan en vorige stap"
-msgstr "<< Save and go back to previous step"
+msgid "<< Vorige stap"
+msgstr "<< Previous step"
 
-#: main/templates/base/form_buttons.html:13
-#: main/templates/base/form_buttons.html:17
-#: main/templates/base/form_buttons.html:21
-msgid "Terug naar begin aanvraag"
-msgstr "Return to start of application"
+#: main/templates/base/form_buttons.html:11
+msgid "Maak een nieuwe sessie aan >>"
+msgstr "Create a new session >>"
+
+#: main/templates/base/form_buttons.html:18
+msgid "Maak een nieuwe taak aan >>"
+msgstr "Create a new task >>"
 
 #: main/templates/base/form_buttons.html:26
-msgid "Terug naar begin traject"
-msgstr "Back to the beginning of the trajectory"
-
-#: main/templates/base/form_buttons.html:30
-msgid "Terug naar begin sessie"
-msgstr "Back to the beginning of the session"
-
-#: main/templates/base/form_buttons.html:33
-msgid "Opslaan en maak een nieuwe sessie aan >>"
-msgstr "Save and create a new session >>"
-
-#: main/templates/base/form_buttons.html:40
-msgid "Opslaan en maak een nieuwe taak aan >>"
-msgstr "Save and create a new task >>"
-
-#: main/templates/base/form_buttons.html:48
-msgid "Opslaan en volgende stap >>"
-msgstr "Save and go to next step >>"
+#: proposals/templates/proposals/proposal_start.html:79
+#: proposals/templates/proposals/proposal_start_pre_approved.html:37
+#: proposals/templates/proposals/proposal_start_pre_assessment.html:43
+msgid "Volgende stap >>"
+msgstr "Next step >>"
 
 #: main/templates/base/login_header.html:6
 msgid "Welkom {}"
@@ -1630,7 +1619,7 @@ msgstr ""
 "include it here. Supplying a DMP can expedite ethical assessment of "
 "proposals."
 
-#: proposals/models.py:462 proposals/utils/pdf_diff_logic.py:996
+#: proposals/models.py:462 proposals/utils/pdf_diff_logic.py:994
 #: reviews/models.py:162
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
@@ -2048,7 +2037,7 @@ msgstr ""
 "follow with regard to data."
 
 #: proposals/templates/proposals/proposal_data_management.html:22
-#: proposals/utils/pdf_diff_logic.py:971
+#: proposals/utils/pdf_diff_logic.py:969
 #: reviews/templatetags/documents_list.py:224
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
@@ -2198,10 +2187,10 @@ msgstr ""
 #: proposals/templates/proposals/proposal_form_pre_approved.html:7
 #: proposals/templates/proposals/proposal_form_pre_approved.html:83
 #: proposals/utils/pdf_diff_logic.py:428 proposals/utils/proposal_utils.py:47
-#: proposals/utils/proposal_utils.py:68 proposals/utils/validate_proposal.py:40
-#: proposals/utils/validate_proposal.py:50
-#: proposals/utils/validate_proposal.py:57
-#: proposals/utils/validate_proposal.py:64
+#: proposals/utils/proposal_utils.py:68 proposals/utils/validate_proposal.py:41
+#: proposals/utils/validate_proposal.py:51
+#: proposals/utils/validate_proposal.py:58
+#: proposals/utils/validate_proposal.py:65
 msgid "Algemene informatie over de aanvraag"
 msgstr "General information about the application"
 
@@ -2522,12 +2511,6 @@ msgstr ""
 " A task or procedure within your study. <p> <u>For example</u>: completing "
 "an interview, questionnaire, or language test.</p>"
 
-#: proposals/templates/proposals/proposal_start.html:79
-#: proposals/templates/proposals/proposal_start_pre_approved.html:37
-#: proposals/templates/proposals/proposal_start_pre_assessment.html:43
-msgid "Volgende stap >>"
-msgstr "Next step >>"
-
 #: proposals/templates/proposals/proposal_start_practice.html:7
 #: proposals/templates/proposals/proposal_start_practice.html:13
 msgid "Een nieuwe aanvraag aanmelden (oefenportaal)"
@@ -2763,7 +2746,7 @@ msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
 #: proposals/templates/proposals/proposal_submit.html:176
-#: proposals/utils/pdf_diff_logic.py:979
+#: proposals/utils/pdf_diff_logic.py:977
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -2911,7 +2894,7 @@ msgstr "Additional forms"
 #: proposals/templates/proposals/study_start.html:7
 #: proposals/templates/proposals/study_start.html:63
 #: proposals/utils/pdf_diff_logic.py:530
-#: proposals/utils/validate_proposal.py:94
+#: proposals/utils/validate_proposal.py:95
 msgid "Eén of meerdere trajecten?"
 msgstr "One or more trajectories?"
 
@@ -3120,7 +3103,7 @@ msgstr ", task "
 msgid "De deelnemers"
 msgstr "Participants"
 
-#: proposals/utils/pdf_diff_logic.py:765
+#: proposals/utils/pdf_diff_logic.py:763
 #: studies/templates/studies/session_start.html:7
 #: studies/templates/studies/session_start.html:16
 #: tasks/templates/tasks/task_form.html:7
@@ -3130,18 +3113,18 @@ msgstr "Participants"
 msgid "Het takenonderzoek en interviews"
 msgstr "Task-based research and interviews"
 
-#: proposals/utils/pdf_diff_logic.py:837
+#: proposals/utils/pdf_diff_logic.py:835
 #: studies/templates/studies/study_end.html:7
 #: studies/templates/studies/study_end.html:27
 msgid "Overzicht en eigen beoordeling van het gehele onderzoek"
 msgstr "Overview and self-assessment of the entire study"
 
-#: proposals/utils/pdf_diff_logic.py:947
+#: proposals/utils/pdf_diff_logic.py:945
 msgid "Extra formulieren "
 msgstr "Additional forms "
 
-#: proposals/utils/proposal_utils.py:51 proposals/utils/validate_proposal.py:76
-#: proposals/utils/validate_proposal.py:83
+#: proposals/utils/proposal_utils.py:51 proposals/utils/validate_proposal.py:77
+#: proposals/utils/validate_proposal.py:84
 msgid "Ethische toetsing nodig door een METC?"
 msgstr "Ethical assessment by a METC necessary?"
 
@@ -3181,21 +3164,21 @@ msgstr "FEtC-H: A revised application uses lab facilities"
 msgid "FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: New application uses lab facilities"
 
-#: proposals/utils/validate_proposal.py:105
+#: proposals/utils/validate_proposal.py:106
 msgid "De deelnemers (traject {})"
 msgstr "Participants (trajectory {})"
 
-#: proposals/utils/validate_proposal.py:113
+#: proposals/utils/validate_proposal.py:114
 msgid "De onderzoekstype(n) (traject {})"
 msgstr "Type(s) of research (trajectory {})"
 
-#: proposals/utils/validate_proposal.py:123
-#: proposals/utils/validate_proposal.py:132
+#: proposals/utils/validate_proposal.py:124
+#: proposals/utils/validate_proposal.py:133
 msgid "Het interventieonderzoek (traject {})"
 msgstr "Intervention study (trajectory {})"
 
-#: proposals/utils/validate_proposal.py:144
-#: proposals/utils/validate_proposal.py:153
+#: proposals/utils/validate_proposal.py:145
+#: proposals/utils/validate_proposal.py:154
 msgid "Het observatieonderzoek (traject {})"
 msgstr "Observational study (trajectory {})"
 
@@ -3264,7 +3247,7 @@ msgstr "Application deleted"
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:532
+#: proposals/views/proposal_views.py:533
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -5157,17 +5140,29 @@ msgstr "Overview of task-based research: session {}"
 msgid "Het takenonderzoek: sessie {} taak {}"
 msgstr "Task-based research: session {} task {}"
 
-#: tasks/views/session_views.py:22
+#: tasks/views/session_views.py:21
 msgid "Sessie verwijderd"
 msgstr "Session deleted"
 
-#: tasks/views/task_views.py:35
+#: tasks/views/task_views.py:39
 msgid "Taak bewerkt"
 msgstr "Task edited"
 
-#: tasks/views/task_views.py:71
+#: tasks/views/task_views.py:75
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Terug naar begin aanvraag"
+#~ msgstr "Return to start of application"
+
+#~ msgid "Terug naar begin traject"
+#~ msgstr "Back to the beginning of the trajectory"
+
+#~ msgid "Terug naar begin sessie"
+#~ msgstr "Back to the beginning of the session"
+
+#~ msgid "Opslaan en volgende stap >>"
+#~ msgstr "Save and go to next step >>"
 
 #~ msgid "Het takenonderzoek (traject {})"
 #~ msgstr "Task-based research: trajectory {}"

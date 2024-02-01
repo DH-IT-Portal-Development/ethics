@@ -3,41 +3,19 @@
 <div class="mt-3 mb-3 form-buttons">
     <div class="button-grid">
         {% if not no_back %}
-            <input class="button"
+            <input class="button mr-auto button-black"
                    type="submit"
                    name="save_back"
-                   value="{% trans '<< Opslaan en vorige stap' %}" />
-            {% if proposal %}
-                {% if proposal.is_pre_assessment %}
-                    <a class="button js-submit-redirect"
-                       href="{% url 'proposals:update_pre' proposal.pk %}">{% trans "Terug naar begin aanvraag" %}</a>
-                {% elif proposal.is_practice %}
-                    <a class="button js-submit-redirect"
-                       href="{% url 'proposals:update_practice' proposal.pk %}">
-                        {% trans "Terug naar begin aanvraag" %}
-                    </a>
-                {% else %}
-                    <a class="button js-submit-redirect"
-                       href="{% url 'proposals:update' proposal.pk %}">{% trans "Terug naar begin aanvraag" %}</a>
-                {% endif %}
-            {% endif %}
-            {% if study %}
-                <a class="button js-submit-redirect"
-                   href="{% url 'studies:update' study.pk %}">{% trans "Terug naar begin traject" %}</a>
-            {% endif %}
-            {% if session %}
-                <a class="button js-submit-redirect"
-                   href="{% url 'tasks:session_update' session.pk %}">{% trans "Terug naar begin sessie" %}</a>
-            {% endif %}
+                   value="{% trans '<< Vorige stap' %}" />
             {% if create_session %}
-                {% trans 'Opslaan en maak een nieuwe sessie aan >>' as create_session_text %}
+                {% trans 'Maak een nieuwe sessie aan >>' as create_session_text %}
                 <input class="button button-colored continue-button"
                        type="submit"
                        name="create_new_session"
                        value="{{ next_text|default:create_session_text }}" />
             {% endif %}
             {% if task %}
-                {% trans 'Opslaan en maak een nieuwe taak aan >>' as create_task_text %}
+                {% trans 'Maak een nieuwe taak aan >>' as create_task_text %}
                 <input class="button button-colored continue-button"
                        type="submit"
                        name="create_new_task"
@@ -45,7 +23,7 @@
             {% endif %}
         {% endif %}
         {% if not no_forward %}
-            {% trans 'Opslaan en volgende stap >>' as default_next_text %}
+            {% trans 'Volgende stap >>' as default_next_text %}
             <input class="button button-colored continue-button"
                    type="submit"
                    name="save_continue"
