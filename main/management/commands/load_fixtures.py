@@ -7,6 +7,8 @@ import os
 
 def list_fixtures_in_dir(rel_path):
     files = os.listdir(rel_path)
+    # Sort the list alphabetically for consistent load-order
+    files.sort()
 
     def is_fixture(fn):
         return fn.lower()[-5:] == ".json"
@@ -15,11 +17,11 @@ def list_fixtures_in_dir(rel_path):
 
 
 fixture_dirs = {
+    "main": list_fixtures_in_dir("main/fixtures/"),
     "proposals": list_fixtures_in_dir("proposals/fixtures/"),
     "studies": list_fixtures_in_dir("studies/fixtures/"),
     "tasks": list_fixtures_in_dir("tasks/fixtures/"),
     "observations": list_fixtures_in_dir("observations/fixtures/"),
-    "main": list_fixtures_in_dir("main/fixtures/"),
 }
 
 
