@@ -24,7 +24,7 @@ def in_linguistics_chamber(current_user):
     Check whether the current user is in the 'ETCL' or 'Secretaris' group
     """
     return is_in_groups(
-        current_user, [settings.LINGUISTICS_CHAMBER, settings.GROUP_SECRETARY]
+        current_user, [settings.GROUP_LINGUISTICS_CHAMBER, settings.GROUP_SECRETARY]
     )
 
 
