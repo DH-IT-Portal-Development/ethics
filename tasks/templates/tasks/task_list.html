@@ -24,7 +24,7 @@
                 </td>
                 <td>{{ task.repeats }}</td>
                 <td>
-                    <a href="{% url 'tasks:update' task.id %}">
+                    <a href="{% url 'tasks:update' task.id %}" class="text-decoration-none">
                         <img src="{% static 'proposals/images/pencil.png' %}"
                              title="{% trans 'Taak bewerken' %}">
                     </a>
