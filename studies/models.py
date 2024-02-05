@@ -381,7 +381,8 @@ geschoolde specialisten).'
     class Meta:
         ordering = ["order"]
         unique_together = ("proposal", "order")
-
+    
+    @property
     def sessions_number(self):
         return self.session_set.count()
 

@@ -349,7 +349,7 @@ class SubTitle:
             study_order = session.study.order
             study_name = session.study.name
             studies_number = session.study.proposal.studies_number
-            sessions_number = session.study.sessions_number()
+            sessions_number = session.study.sessions_number
 
             if studies_number > 1 and sessions_number > 1:
                 session_title = format_html(

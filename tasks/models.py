@@ -46,6 +46,7 @@ instructies per taak, pauzes tussen taken, en debriefing? \
 
         return 0
 
+    @property
     def tasks_number(self):
         return self.task_set.count()
 
