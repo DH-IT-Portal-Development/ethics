@@ -27,8 +27,10 @@ blessed==1.20.0
     # via curtsies
 bpython==0.24
     # via -r requirements.in
-cdh-django-core @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@v3.1.0
-    # via -r requirements.in
+cdh-django-core[federated-auth] @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@v3.1.0
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
 certifi==2023.11.17
     # via requests
 cffi==1.16.0
@@ -68,7 +70,7 @@ defusedxml==0.7.1
     #   pysaml2
 deprecated==1.2.14
     # via cdh-django-core
-django==3.2.23
+django==3.2.24
     # via
     #   -r requirements.in
     #   cdh-django-core
@@ -242,6 +244,7 @@ regex==2023.12.25
     # via djlint
 reportlab[pycairo]==4.0.9
     # via
+    #   reportlab
     #   svglib
     #   xhtml2pdf
 requests==2.31.0
