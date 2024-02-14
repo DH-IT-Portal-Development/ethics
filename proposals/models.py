@@ -242,14 +242,14 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
                 "Zijn er nog andere onderzoekers bij deze aanvraag betrokken "
                 "die <strong>niet</strong> geaffilieerd zijn aan een van de "
                 "onderzoeksinstituten van de Faculteit Geestwetenschappen van de "
-                "UU? "
+                "UU? Zoja, vermeld diens naam en affiliatie."
             )
         ),  # Note: form labels with HTML are hard-coded in form Meta classes
         default=False,
     )
 
     stakeholders = models.TextField(
-        _("Andere betrokkenen"),
+        _("Naam en affiliatie van andere betrokkenen"),
         blank=True,
     )
 

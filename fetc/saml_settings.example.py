@@ -16,6 +16,7 @@ For detailed documentation on SAML and the CDH Federated Auth library, please
 consult the CDH Federated Authentication docs:
 https://centrefordigitalhumanities.github.io/Federated-Authentication-Docs/
 """
+
 import os
 
 # Import all default SAML settings from the library, we override some later

@@ -22,6 +22,7 @@ class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
     group_required = [
         settings.GROUP_SECRETARY,
         settings.GROUP_CHAIR,
+        settings.GROUP_PO,
         settings.GROUP_GENERAL_CHAMBER,
         settings.GROUP_LINGUISTICS_CHAMBER,
     ]
@@ -224,6 +225,7 @@ class OpenDecisionsApiView(BaseDecisionApiView):
     group_required = [
         settings.GROUP_SECRETARY,
         settings.GROUP_CHAIR,
+        settings.GROUP_PO,
     ]
 
     def get_queryset(self):
@@ -266,6 +268,7 @@ class OpenSupervisorDecisionApiView(BaseDecisionApiView):
     group_required = [
         settings.GROUP_SECRETARY,
         settings.GROUP_CHAIR,
+        settings.GROUP_PO,
     ]
 
     sort_definitions = [
@@ -367,6 +370,7 @@ class ToConcludeReviewApiView(BaseReviewApiView):
     group_required = [
         settings.GROUP_SECRETARY,
         settings.GROUP_CHAIR,
+        settings.GROUP_PO,
     ]
 
     def get_queryset(self):
@@ -415,7 +419,11 @@ class InRevisionApiView(BaseReviewApiView):
     but for which a revision has not yet been submitted"""
 
     default_sort = ("date_start", "desc")
-    group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
+    group_required = [
+        settings.GROUP_SECRETARY,
+        settings.GROUP_CHAIR,
+        settings.GROUP_PO,
+    ]
 
     def get_queryset(self):
         # 1. Find reviews of revisions:
@@ -452,7 +460,12 @@ class AllOpenReviewsApiView(BaseReviewApiView):
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
 
-        group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
+        group_required = [
+            settings.GROUP_SECRETARY,
+            settings.GROUP_CHAIR,
+            settings.GROUP_PO,
+        ]
+        settings.GROUP_PO,
 
         if self.committee.name == "AK":
             group_required += [settings.GROUP_GENERAL_CHAMBER]
@@ -503,7 +516,11 @@ class AllReviewsApiView(BaseReviewApiView):
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
 
-        group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
+        group_required = [
+            settings.GROUP_SECRETARY,
+            settings.GROUP_CHAIR,
+            settings.GROUP_PO,
+        ]
 
         if self.committee.name == "AK":
             group_required += [settings.GROUP_GENERAL_CHAMBER]

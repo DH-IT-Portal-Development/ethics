@@ -4,6 +4,7 @@ forms and their validation code.
 
 Used for the submit page, to check if a user has completed the proposal.
 """
+
 from collections import OrderedDict
 
 from braces.forms import UserKwargModelFormMixin
