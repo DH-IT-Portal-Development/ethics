@@ -4,7 +4,8 @@ from urllib.parse import urlparse, urlunparse
 import ldap
 import os
 
-from braces.views import LoginRequiredMixin, GroupRequiredMixin
+from braces.views import LoginRequiredMixin, GroupRequiredMixin, \
+    UserPassesTestMixin
 from django.apps import apps
 from django.conf import settings
 from django.contrib import messages
@@ -290,7 +291,7 @@ class AllowErrorsOnBackbuttonMixin(object):
             return super(AllowErrorsOnBackbuttonMixin, self).form_invalid(form)
 
 
-class FacultyRequiredMixin:
+class FacultyRequiredMixin(UserPassesTestMixin):
     """A clone of GroupRequiredMixin, but checking faculties instead"""
 
     faculty_required = None
@@ -315,16 +316,11 @@ class FacultyRequiredMixin:
         )
         return set(faculty).intersection(set(user_faculties))
 
-    def dispatch(self, request, *args, **kwargs):
-        self.request = request
+    def test_func(self, user):
         in_faculty = False
-        if request.user.is_authenticated:
+        if user.is_authenticated:
             in_faculty = self.check_membership(self.get_faculty_required())
-
-        if not in_faculty:
-            return self.handle_no_permission(request)
-
-        return super().dispatch(request, *args, **kwargs)
+        return in_faculty
 
 
 class HumanitiesRequiredMixin(FacultyRequiredMixin):
