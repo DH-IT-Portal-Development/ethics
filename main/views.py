@@ -326,7 +326,7 @@ class HumanitiesRequiredMixin(FacultyRequiredMixin):
     faculty_required = Faculty.InternalNames.HUMANITIES
 
 
-class HumanitiesOrPrivilegeRequiredMixin(HumanitiesRequiredMixin):
+class HumanitiesOrPrivilegeRequiredMixin(UserPassesTestMixin):
     """
     Checks for Humanities faculty affiliation, but also lets in users belonging
     to a privileged set of groups.
