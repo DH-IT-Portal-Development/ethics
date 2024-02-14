@@ -32,7 +32,7 @@ from django.views.generic.detail import SingleObjectMixin
 
 from interventions.models import Intervention
 from main.models import Faculty, SystemMessage
-from main.utils import is_member_of_humanities
+from main.utils import is_member_of_humanities, can_view_archive
 from observations.models import Observation
 from proposals.models import Proposal
 from reviews.models import Review
@@ -325,6 +325,16 @@ class FacultyRequiredMixin(UserPassesTestMixin):
 
 class HumanitiesRequiredMixin(FacultyRequiredMixin):
     faculty_required = Faculty.InternalNames.HUMANITIES
+
+
+class HumanitiesOrPrivilegeRequiredMixin(HumanitiesRequiredMixin):
+    """
+    Checks for Humanities faculty affiliation, but also lets in users belonging
+    to a privileged set of groups.
+    """
+
+    def test_func(self, user):
+        return can_view_archive(user)
 
 
 class UserAllowedMixin(SingleObjectMixin):
