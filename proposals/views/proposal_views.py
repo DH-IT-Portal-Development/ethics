@@ -171,9 +171,7 @@ onderzoeker of eindverantwoordelijke bij betrokken bent."
 
 
 class ProposalUsersOnlyArchiveView(
-    HumanitiesOrPrivilegeRequiredMixin,
-    CommitteeMixin,
-    BaseProposalsView
+    HumanitiesOrPrivilegeRequiredMixin, CommitteeMixin, BaseProposalsView
 ):
     template_name = "proposals/proposal_private_archive.html"
 

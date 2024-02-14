@@ -134,8 +134,10 @@ def get_document_contents(file: FieldFile) -> str:
 def is_member_of_faculty(user, faculty):
     return user.faculties.filter(internal_name=faculty).exists()
 
+
 def is_member_of_humanities(user):
     return is_member_of_faculty(user, Faculty.InternalNames.HUMANITIES)
+
 
 def can_view_archive(user):
     if not user.is_authenticated:

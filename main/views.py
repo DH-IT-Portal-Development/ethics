@@ -4,8 +4,7 @@ from urllib.parse import urlparse, urlunparse
 import ldap
 import os
 
-from braces.views import LoginRequiredMixin, GroupRequiredMixin, \
-    UserPassesTestMixin
+from braces.views import LoginRequiredMixin, GroupRequiredMixin, UserPassesTestMixin
 from django.apps import apps
 from django.conf import settings
 from django.contrib import messages

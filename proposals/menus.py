@@ -90,12 +90,12 @@ Menu.add_item(
 archive_menu = (
     MenuItem(
         _("Bekijk alle goedgekeurde aanvragen van de Algemene Kamer"),
-        reverse("proposals:archive", args=['AK']),
+        reverse("proposals:archive", args=["AK"]),
         check=lambda x: can_view_archive(x.user),
     ),
     MenuItem(
         _("Bekijk alle goedgekeurde aanvragen van de Linguïstiek Kamer"),
-        reverse("proposals:archive", args=['LK']),
+        reverse("proposals:archive", args=["LK"]),
         check=lambda x: can_view_archive(x.user),
     ),
     MenuItem(
@@ -114,5 +114,5 @@ Menu.add_item(
         slug="archive",  # needed for sub-menu!
         children=archive_menu,
         check=lambda x: can_view_archive(x.user),
-    )
+    ),
 )
