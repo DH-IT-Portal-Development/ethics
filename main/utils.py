@@ -11,6 +11,7 @@ import pdftotext
 from docx2txt import docx2txt
 
 from main.models import Faculty
+from fetc import constants
 
 YES_NO = [(True, _("ja")), (False, _("nee"))]
 
@@ -145,10 +146,11 @@ def can_view_archive(user):
     if user.is_superuser:
         return True
     privileged_groups = [
-        "AK",
-        "LK",
-        "Secretaris",
-        "Primaire secretaris",
+        constants.GROUP_CHAIR,
+        constants.GROUP_GENERAL_CHAMBER,
+        constants.GROUP_LINGUISTICS_CHAMBER,
+        constants.GROUP_SECRETARY,
+        constants.GROUP_PRIMARY_SECRETARY,
     ]
     user_groups = user.groups.values_list(
         "name",
