@@ -4,7 +4,7 @@ from urllib.parse import urlparse, urlunparse
 import ldap
 import os
 
-from braces.views import LoginRequiredMixin, GroupRequiredMixin
+from braces.views import LoginRequiredMixin, GroupRequiredMixin, UserPassesTestMixin
 from django.apps import apps
 from django.conf import settings
 from django.contrib import messages
@@ -31,7 +31,7 @@ from django.views.generic.detail import SingleObjectMixin
 
 from interventions.models import Intervention
 from main.models import Faculty, SystemMessage
-from main.utils import is_member_of_humanities
+from main.utils import is_member_of_humanities, can_view_archive
 from observations.models import Observation
 from proposals.models import Proposal
 from reviews.models import Review
@@ -290,7 +290,7 @@ class AllowErrorsOnBackbuttonMixin(object):
             return super(AllowErrorsOnBackbuttonMixin, self).form_invalid(form)
 
 
-class FacultyRequiredMixin:
+class FacultyRequiredMixin(UserPassesTestMixin):
     """A clone of GroupRequiredMixin, but checking faculties instead"""
 
     faculty_required = None
@@ -315,20 +315,25 @@ class FacultyRequiredMixin:
         )
         return set(faculty).intersection(set(user_faculties))
 
-    def dispatch(self, request, *args, **kwargs):
-        self.request = request
+    def test_func(self, user):
         in_faculty = False
-        if request.user.is_authenticated:
+        if user.is_authenticated:
             in_faculty = self.check_membership(self.get_faculty_required())
-
-        if not in_faculty:
-            return self.handle_no_permission(request)
-
-        return super().dispatch(request, *args, **kwargs)
+        return in_faculty
 
 
 class HumanitiesRequiredMixin(FacultyRequiredMixin):
     faculty_required = Faculty.InternalNames.HUMANITIES
+
+
+class HumanitiesOrPrivilegeRequiredMixin(UserPassesTestMixin):
+    """
+    Checks for Humanities faculty affiliation, but also lets in users belonging
+    to a privileged set of groups.
+    """
+
+    def test_func(self, user):
+        return can_view_archive(user)
 
 
 class UserAllowedMixin(SingleObjectMixin):
