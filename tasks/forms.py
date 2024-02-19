@@ -18,11 +18,11 @@ class SessionUpdateForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Session
         fields = [
+            "repeats",
             "setting",
             "setting_details",
             "supervision",
             "leader_has_coc",
-            "repeats",
         ]
         widgets = {
             "setting": forms.CheckboxSelectMultiple(),
@@ -31,11 +31,11 @@ class SessionUpdateForm(SoftValidationMixin, ConditionalModelForm):
         }
 
     _soft_validation_fields = [
+        "repeats",
         "setting",
         "setting_details",
         "supervision",
         "leader_has_coc",
-        "repeats",
     ]
 
     def __init__(self, *args, **kwargs):
@@ -82,6 +82,7 @@ class TaskForm(SoftValidationMixin, ConditionalModelForm):
         fields = [
             "name",
             "description",
+            "repeats",
             "duration",
             "registrations",
             "registrations_details",
@@ -89,7 +90,6 @@ class TaskForm(SoftValidationMixin, ConditionalModelForm):
             "registration_kinds_details",
             "feedback",
             "feedback_details",
-            "repeats",
         ]
         labels = {
             "duration": mark_safe_lazy(

@@ -750,11 +750,11 @@ class SessionSection(BaseSection):
     """This class receives a session object"""
 
     row_fields = [
+        "repeats",
         "setting",
         "setting_details",
         "supervision",
         "leader_has_coc",
-        "repeats",
     ]
 
     def __init__(self, obj):
@@ -785,6 +785,7 @@ class TaskSection(BaseSection):
 
     row_fields = [
         "name",
+        "repeats",
         "duration",
         "registrations",
         "registrations_details",
@@ -793,7 +794,6 @@ class TaskSection(BaseSection):
         "feedback",
         "feedback_details",
         "description",
-        "repeats",
     ]
 
     def __init__(self, obj):
