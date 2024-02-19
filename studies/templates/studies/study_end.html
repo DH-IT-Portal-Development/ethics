@@ -130,8 +130,10 @@
                             {% for session in study.session_set.all %}
                                 <div class="task_list mt-3">
                                     <h5 class="pt-2">
-                                        Sessie {{ session.order }} (totale brutoduur: {{ session.tasks_duration }}
-                                        minuten, aantal herhalingen: {{ session.repeats }})
+                                        {% blocktrans with order=session.order duration=session.tasks_duration repeats=session.repeats trimmed %}
+                                            Sessie {{ order }} (totale brutoduur: {{ duration }}
+                                            minuten, aantal herhalingen: {{ repeats }})
+                                        {% endblocktrans %}
                                         <a href="{% url 'tasks:session_update' session.pk %}">
                                             <img src="{% static 'proposals/images/pencil.png' %}"
                                                  title="{% trans 'Sessie verwijderen' %}">
@@ -147,8 +149,27 @@
                                         <em>{% trans "Deze sessie bestaat uit de volgende taken:" %}</em>
                                     </p>
                                     {% include "tasks/task_list.html" %}
+                                    <br>
+                                    <a href="{% url 'tasks:create' session.pk %}">
+                                        <p>
+                                            {% blocktrans with session_order=session.order trimmed %}
+                                                Nieuwe taak toevoegen aan sessie {{session_order}}
+                                            {% endblocktrans %}
+                                            <img src="{% static 'proposals/images/add.png' %}"
+                                                    title="{% trans 'Taak aanmaken' %}">
+                                        </p>
+                                    </a>
                                 </div>
                             {% endfor %}
+                            <div class="task_list mt-3">                                    
+                                <a href="{% url 'tasks:session_create' study.pk %}">
+                                    <h5 class = "pt-2">
+                                        {% trans "Nieuwe sessie tevoegen" %}
+                                        <img src="{% static 'proposals/images/add.png' %}"
+                                                title="{% trans 'Sessie aanmaken' %}">
+                                    </h5>
+                                </a>
+                            </div>
                         </div>
                     </li>
                 {% endif %}
