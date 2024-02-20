@@ -43,7 +43,8 @@
                                                           id="dropdownMenuButton"
                                                           data-toggle="dropdown"
                                                           aria-haspopup="true"
-                                                          aria-expanded="false">{{ child.title }}</span>
+                                                          aria-expanded="false"
+                                                          onclick="window.location='{{child.url}}'">{{ child.title }}</span>
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                                         {#  Don't support more than 3 layers. This should be enough #}
                                                         {% for subchild in child.children %}

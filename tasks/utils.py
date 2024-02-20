@@ -10,7 +10,7 @@ def session_urls(study):
     tasks_url = AvailableURL(title=_("Takenonderzoek"))
 
     if study.has_sessions:
-        tasks_url.url = reverse("tasks:session_create", args=(study.pk,))
+        tasks_url.url = reverse("tasks:session_start", args=(study.pk,))
 
     if study.has_sessions:
         prev_session_completed = True
