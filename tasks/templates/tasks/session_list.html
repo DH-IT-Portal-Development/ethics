@@ -1,0 +1,41 @@
+{% load static %}
+{% load i18n %}
+
+<li>
+    <div>
+        <h4>{% trans "Takenonderzoek met de volgende opbouw:" %}</h4>
+        {% for session in study.session_set.all %}
+            <div class="task_list mt-3">
+                <h5 class="pt-2">
+                    {% blocktrans with order=session.order duration=session.tasks_duration repeats=session.repeats trimmed %}
+                        Sessie {{ order }} (totale brutoduur: {{ duration }}
+                        minuten, aantal keer uitgevoerd: {{ repeats }})
+                    {% endblocktrans %}
+                    <a href="{% url 'tasks:session_update' session.pk %}">
+                        <img src="{% static 'proposals/images/pencil.png' %}"
+                             title="{% trans 'Sessie aanpassen' %}">
+                    </a>
+                    {% if study.last_session.order > 1 %}
+                        <a href="{% url 'tasks:session_delete' session.pk %}">
+                            <img src="{% static 'proposals/images/delete.png' %}"
+                                 title="{% trans 'Sessie verwijderen' %}">
+                        </a>
+                    {% endif %}
+                </h5>
+                <p>
+                    <em>{% trans "Deze sessie bestaat uit de volgende taken:" %}</em>
+                </p>
+                {% include "tasks/task_list.html" %}
+            </div>
+        {% endfor %}
+        <div class="task_list mt-3">                                    
+            <a href="{% url 'tasks:session_create' study.pk %}">
+                <h5 class = "pt-2" style="text-align:center;">
+                    <strong>{% trans "Nieuwe sessie tevoegen" %}</strong>
+                    <img src="{% static 'proposals/images/add.png' %}"
+                            title="{% trans 'Sessie aanmaken' %}">
+                </h5>
+            </a>
+        </div>
+    </div>
+</li>
