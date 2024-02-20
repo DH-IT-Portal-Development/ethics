@@ -149,22 +149,12 @@
                                         <em>{% trans "Deze sessie bestaat uit de volgende taken:" %}</em>
                                     </p>
                                     {% include "tasks/task_list.html" %}
-                                    <br>
-                                    <a href="{% url 'tasks:create' session.pk %}">
-                                        <p>
-                                            {% blocktrans with session_order=session.order trimmed %}
-                                                Nieuwe taak toevoegen aan sessie {{session_order}}
-                                            {% endblocktrans %}
-                                            <img src="{% static 'proposals/images/add.png' %}"
-                                                    title="{% trans 'Taak aanmaken' %}">
-                                        </p>
-                                    </a>
                                 </div>
                             {% endfor %}
                             <div class="task_list mt-3">                                    
                                 <a href="{% url 'tasks:session_create' study.pk %}">
-                                    <h5 class = "pt-2">
-                                        {% trans "Nieuwe sessie tevoegen" %}
+                                    <h5 class = "pt-2" style="text-align:center;">
+                                        <strong>{% trans "Nieuwe sessie tevoegen" %}</strong>
                                         <img src="{% static 'proposals/images/add.png' %}"
                                                 title="{% trans 'Sessie aanmaken' %}">
                                     </h5>

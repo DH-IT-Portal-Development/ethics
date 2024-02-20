@@ -6,9 +6,9 @@
         <tr>
             <th width="20%">{% trans "Naam" %}</th>
             <th width="10%">{% trans "Nettoduur (in minuten)" %}</th>
-            <th width="40%">{% trans "Registratie via" %}</th>
+            <th width="30%">{% trans "Registratie via" %}</th>
             <th width="15%">{% trans "Feedback?" %}</th>
-            <th width="10%">{% trans "Aantal keer uitgevoerd" %}</th>
+            <th width="20%">{% trans "Aantal keer uitgevoerd" %}</th>
             <th width="5%">{% trans "Acties" %}</th>
         </tr>
     </thead>
@@ -37,6 +37,17 @@
                 </td>
             </tr>
         {% endfor %}
+        <tr>
+            <td colspan="6" style="text-align:center;">
+                <a href="{% url 'tasks:create' session.pk %}">
+                        {% blocktrans with session_order=session.order trimmed %}
+                            Nieuwe taak toevoegen aan sessie {{session_order}}
+                        {% endblocktrans %}
+                        <img src="{% static 'proposals/images/add.png' %}"
+                                title="{% trans 'Taak aanmaken' %}">
+                </a>
+            </td>
+        </tr>
     </tbody>
 </table>
 <script>
