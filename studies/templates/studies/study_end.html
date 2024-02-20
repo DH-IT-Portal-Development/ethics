@@ -132,7 +132,7 @@
                                     <h5 class="pt-2">
                                         {% blocktrans with order=session.order duration=session.tasks_duration repeats=session.repeats trimmed %}
                                             Sessie {{ order }} (totale brutoduur: {{ duration }}
-                                            minuten, aantal herhalingen: {{ repeats }})
+                                            minuten, aantal keer uitgevoerd: {{ repeats }})
                                         {% endblocktrans %}
                                         <a href="{% url 'tasks:session_update' session.pk %}">
                                             <img src="{% static 'proposals/images/pencil.png' %}"
