@@ -16,7 +16,6 @@
             <h2>{% trans "Aanvraag beoordelen" %}</h2>
             {% with proposal=decision.review.proposal %}
                 {% url 'proposals:pdf' proposal.id as pdf_url %}
-                {% url 'proposals:update' proposal.id as update_url %}
                 {% if user != proposal.supervisor %}
                     <p>
                         {% blocktrans trimmed with title=proposal.title refnum=proposal.reference_number chamber=proposal.reviewing_committee %}
