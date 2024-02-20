@@ -3,6 +3,7 @@
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
+from django.forms import ModelForm
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
 from ..forms import SessionUpdateForm, SessionEndForm
@@ -45,7 +46,42 @@ class SessionDelete(DeletionAllowedMixin, DeleteView):
 ##################
 # Actions on Sessions
 ##################
+    
+class HiddenForm(ModelForm):
+    """This is needed to make the navigation work on this information page."""
 
+    class Meta:
+        model = Study
+        fields = []
+
+class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
+
+    model = Study
+    form_class = HiddenForm
+    template_name = "tasks/session_start.html"
+
+    def get_next_url(self):
+        study = self.object
+        pk = study.pk
+        sessions = study.session_set.all()
+        if sessions.count() == 0:
+            next_url = "tasks:session_create"
+        else:
+            pk = sessions.get(order=1).pk
+            next_url = "tasks:session_update"
+        return reverse(next_url, args=(pk,))
+
+    def get_back_url(self):
+        study = self.object
+        next_url = "studies:design"
+        pk = study.pk
+        if study.has_observation:
+            next_url = "observations:update"
+            pk = study.observation.pk
+        elif study.has_intervention:
+            next_url = "interventions:update"
+            pk = study.intervention.pk
+        return reverse(next_url, args=(pk,))
 
 class SessionCreate(RedirectActionView):
     """Creates a session, from a study pk and redirects to SessionUpdate()
@@ -66,7 +102,7 @@ class SessionUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
 
     model = Session
     form_class = SessionUpdateForm
-    template_name = "tasks/task_start.html"
+    template_name = "tasks/session_update.html"
 
     def get_form_kwargs(self):
         """Sets the Study as a form kwarg"""
@@ -90,14 +126,8 @@ class SessionUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
             return reverse("tasks:session_end", args=(prev_session.pk,))
         except Session.DoesNotExist:
             study = self.object.study
-            next_url = "studies:design"
+            next_url = "tasks:session_start"
             pk = study.pk
-            if study.has_observation:
-                next_url = "observations:update"
-                pk = study.observation.pk
-            elif study.has_intervention:
-                next_url = "interventions:update"
-                pk = study.intervention.pk
             return reverse(next_url, args=(pk,))
 
 
@@ -106,7 +136,7 @@ class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
 
     model = Session
     form_class = SessionEndForm
-    template_name = "tasks/task_end.html"
+    template_name = "tasks/session_end.html"
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

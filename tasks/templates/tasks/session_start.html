@@ -10,7 +10,7 @@
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            {% with nav_items=study.proposal.available_urls active=3 %}
+            {% with nav_items=object.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
             <h2>{% trans "Het takenonderzoek en interviews" %}</h2>
@@ -22,15 +22,21 @@
             </p>
             <p>
                 {% blocktrans trimmed %}
+                    <strong>Sessie:</strong> Het geheel van de voor je onderzoek benodigde betrokkenheid die je op één dag van een deelnemer vraagt. Bij een labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege gebeurt vanaf het moment dat je de deelnemer ontvangt tot het moment dat je afscheid neemt, inclusief de benodigde pauzes. En bij een internet-vragenlijst is dat alles wat er van onderzoekswege gebeurt vanaf het welkomstscherm tot de afronding van de (reeks) vragenlijst(en), wederom inclusief benodigde pauzes. Bij veldwerk is dat de tijd dat je met de deelnemer in interactie bent op één dag.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
                     <strong>Taak:</strong> Een coherente verzameling handelingen die je via een gesproken of geschreven taak-instructie aan de deelnemer oplegt, en ook als zodanig als 'taak' in een artikel zou beschrijven (bijvoorbeeld: "Beluister de volgende 200 zinnetjes en druk op een knop als je een fout ontdekt", "Vul persoonlijkheidsvragenlijst X in", "Speel 10 minuten met je kind zoals je dat thuis doet", “houd 1 week een dagboek bij van jouw media-gebruik”, “wil je je gender identiteit beschrijven”, “maak foto’s van plekken in jouw leefomgeving die je bedreigend en inspirerend vindt”, “zoek en deel met ons 10 foto’s uit jouw prive-archief om je levensverhaal te kunnen vertellen”). Indien de specifieke opdracht aan de deelnemer per item varieert (bijvoorbeeld: "bij een Nederlandse zin beoordeel je de betekenis, bij een Engelse zin de grammatica"), beschouw dit dan gewoon als één taak.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    Na het aanmaken van een sessie kun je kiezen om nog een andere sessie aan te maken, of om door te gaan naar het overzicht van je studie. Hetzelfde geldt voor taken binnen een sessie: nadat je een taak hebt aangemaakt, kun je kiezen om nog een taak aan te maken binnen de sessie, of om door te gaan naar het einde van de sessie. Aan het einde van het gehele traject, is nog een overzicht te zien van alle taken en sessie, en is het mogelijk nog dingen aan te passen. 
                 {% endblocktrans %}
             </p>
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                <p>{% trans "Voor elke sessie stellen we in de komende schermen steeds dezelfde vragen." %}</p>
                 {% with proposal=study.proposal %}
                     {% include "base/form_buttons.html" %}
                 {% endwith %}
