@@ -166,8 +166,6 @@ class SessionEndForm(SoftValidationMixin, forms.ModelForm):
         label = tasks_duration.label % self.instance.net_duration()
         tasks_duration.label = mark_safe(label)
 
-    _soft_validation_fields = ["tasks_duration"]
-
     def is_initial_visit(self) -> bool:
         return True
 

@@ -2,6 +2,7 @@
 
 {% load static %}
 {% load i18n %}
+{% load fetc_filters %}
 
 {% block header_title %}
     {% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %} - {{ block.super }}
@@ -70,7 +71,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{{ intervention.setting.all|unordered_list }}</td>
+                                        <td>{{ intervention.setting.all|create_unordered_html_list }}</td>
                                         <td>{{ intervention.amount_per_week }}</td>
                                         <td>{{ intervention.duration }}</td>
                                         <td>{{ intervention.has_controls|yesno:_("ja, nee") }}</td>
@@ -108,7 +109,7 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{{ observation.setting.all|unordered_list }}</td>
+                                        <td>{{ observation.setting.all|create_unordered_html_list }}</td>
                                         <td>{{ observation.days }}</td>
                                         <td>{{ observation.mean_hours }}</td>
                                         <td>{{ observation.is_anonymous|yesno:_("ja, nee") }}</td>
@@ -116,7 +117,7 @@
                                         <td>{{ observation.is_nonpublic_space|yesno:_("ja, nee") }}</td>
                                         <td>{{ observation.needs_approval|yesno:_("ja, nee") }}</td>
                                         {% if observation.needs_approval %}<td>{{ observation.approval_institution }}</td>{% endif %}
-                                        <td>{{ observation.registrations.all|unordered_list }}</td>
+                                        <td>{{ observation.registrations.all|create_unordered_html_list }}</td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from typing import Any
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
@@ -22,7 +23,7 @@ class SessionDelete(DeletionAllowedMixin, DeleteView):
     success_message = _("Sessie verwijderd")
 
     def get_success_url(self):
-        return reverse("studies:design_end", args=(self.object.study.pk,))
+        return reverse("tasks:session_overview", args=(self.object.study.pk,))
 
     def delete(self, request, *args, **kwargs):
         """
@@ -61,15 +62,7 @@ class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
     template_name = "tasks/session_start.html"
 
     def get_next_url(self):
-        study = self.object
-        pk = study.pk
-        sessions = study.session_set.all()
-        if sessions.count() == 0:
-            next_url = "tasks:session_create"
-        else:
-            pk = sessions.get(order=1).pk
-            next_url = "tasks:session_update"
-        return reverse(next_url, args=(pk,))
+        return reverse("tasks:session_overview", args=(self.object.pk,))
 
     def get_back_url(self):
         study = self.object
@@ -115,20 +108,10 @@ class SessionUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
         if tasks.count() == 0:
             return reverse("tasks:create", args=(self.object.pk,))
         else:
-            return reverse("tasks:update", args=(tasks.get(order=1).pk,))
+            return reverse("tasks:session_end", args=(self.object.pk,))
 
     def get_back_url(self):
-        try:
-            # Try to return to session_end of the previous Session
-            prev_session = Session.objects.get(
-                study=self.object.study, order=self.object.order - 1
-            )
-            return reverse("tasks:session_end", args=(prev_session.pk,))
-        except Session.DoesNotExist:
-            study = self.object.study
-            next_url = "tasks:session_start"
-            pk = study.pk
-            return reverse(next_url, args=(pk,))
+        return reverse("tasks:session_overview", args=(self.object.study.pk))
 
 
 class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
@@ -137,6 +120,11 @@ class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
     model = Session
     form_class = SessionEndForm
     template_name = "tasks/session_end.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["can_edit_tasks"] = True
+        return context
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -155,15 +143,24 @@ class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
             return super().get_success_url()
 
     def get_next_url(self):
-        try:
-            # Try to continue to next Session
-            next_session = Session.objects.get(
-                study=self.object.study, order=self.object.order + 1
-            )
-            return reverse("tasks:session_update", args=(next_session.pk,))
-        except Session.DoesNotExist:
-            # If this is the last Session, continue to design_end
-            return reverse("studies:design_end", args=(self.object.study.pk,))
+        return reverse("tasks:session_overview", args=(self.object.study.pk,))
 
     def get_back_url(self):
-        return reverse("tasks:update", args=(self.object.last_task().pk,))
+        return reverse("tasks:session_start", args=(self.object.last_task().pk,))
+    
+class SessionOverview(AllowErrorsOnBackbuttonMixin, UpdateView):
+
+    model = Study
+    form_class = HiddenForm
+    template_name = "tasks/session_overview.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["can_edit_sessions"] = True
+        return context
+
+    def get_next_url(self):
+        return reverse("studies:design_end", args=(self.object.pk,))
+    
+    def get_back_url(self):
+        return reverse("tasks:session_start", args=(self.object.pk,))

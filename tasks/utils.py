@@ -11,8 +11,11 @@ def session_urls(study):
 
     if study.has_sessions:
         tasks_url.url = reverse("tasks:session_start", args=(study.pk,))
-
-    if study.has_sessions:
+        session_overview_url = AvailableURL(
+            title=_("Overzicht van alle sessies"),
+            url = reverse("tasks:session_overview", args=(study.pk,))
+        )
+        tasks_url.children.append(session_overview_url)
         prev_session_completed = True
         for session in study.session_set.all():
             task_start_url = AvailableURL(

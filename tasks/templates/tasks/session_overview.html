@@ -1,0 +1,32 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Overzicht van het takenonderzoek" %} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=study.proposal.available_urls active=3 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+            <h2>{% trans "Overzicht van alle sessies en taken" %}</h2>
+            <p>
+                <em>Vanuit dit overzicht is het mogelijk om nieuwe taken en/of sessies aan te maken</em>
+            </p>
+            <br>
+            <div class="session_list">
+                {% include "tasks/session_list.html" %}
+            </div>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% with proposal=study.proposal %}
+                    {% include "base/form_buttons.html" %}
+                {% endwith %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

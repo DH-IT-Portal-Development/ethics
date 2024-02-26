@@ -2,9 +2,10 @@
 
 {% load static %}
 {% load i18n %}
+{% load fetc_filters %}
 
 {% block header_title %}
-    {% trans "Overzicht van het takenonderzoek" %} - {{ block.super }}
+    {% trans "Sessie overzicht" %} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
@@ -13,12 +14,37 @@
             {% with nav_items=session.study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>{% trans "Overzicht van het takenonderzoek" %}</h2>
+            <h2>{% trans "Overzicht" %}</h2>
             {% include "tasks/session_title.html" %}
             <div class="task_list">
-                <p>
-                    <em>{% trans "Deze sessie bestaat uit de volgende taken:" %}</em>
-                </p>
+                <h5 class="mt-2">
+                    {% trans "Sessie overzicht:" %}
+                </h5>
+                <table class="pure-table" width="100%">
+                    <thead>
+                        <tr>
+                            <th width="80%">{% trans "Setting" %}</th>
+                            <th width="15%">{% trans "Aantal keer uitgevoerd" %}</th>
+                            <th width="5%">{% trans "Acties" %}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>{{ session.setting.all|create_unordered_html_list }}</td>
+                        <td>{{ session.repeats }}</td>
+                        <td>
+                            <a href="{% url 'tasks:session_update' session.pk %}">
+                                <img src="{% static 'proposals/images/pencil.png' %}"
+                                     title="{% trans 'Sessie aanpassen' %}">
+                            </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <h5 class="mt-2">
+                    {% trans "Taken overzicht:" %}
+                </h5>
                 {% include "tasks/task_list.html" %}
             </div>
             <p>{% trans "Beantwoord op basis van dit overzicht de volgende vragen:" %}</p>
@@ -27,7 +53,7 @@
                 <table>
                     {{ form.as_table }}
                 </table>
-                {% with proposal=session.study.proposal study=session.study create_session=1 %}
+                {% with proposal=session.study.proposal study=session.study %}
                     {% include "base/form_buttons.html" %}
                 {% endwith %}
             </form>

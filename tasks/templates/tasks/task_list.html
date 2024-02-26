@@ -1,15 +1,20 @@
 {% load static %}
 {% load i18n %}
+{% load fetc_filters %}
 
 <table class="pure-table" width="100%">
     <thead>
         <tr>
             <th width="20%">{% trans "Naam" %}</th>
             <th width="10%">{% trans "Nettoduur (in minuten)" %}</th>
-            <th width="30%">{% trans "Registratie via" %}</th>
-            <th width="15%">{% trans "Feedback?" %}</th>
-            <th width="20%">{% trans "Aantal keer uitgevoerd" %}</th>
-            <th width="5%">{% trans "Acties" %}</th>
+            <th width="40%">{% trans "Registratie via" %}</th>
+            <th width="10%">{% trans "Feedback?" %}</th>
+            {% if can_edit_tasks %}
+                <th width="15%">{% trans "Aantal keer uitgevoerd" %}</th>
+                <th width="5%">{% trans "Acties" %}</th>
+            {% else %}
+                <th width="20%">{% trans "Aantal keer uitgevoerd" %}</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
@@ -17,37 +22,41 @@
             <tr>
                 <td>{{ task.name }}</td>
                 <td>{{ task.duration }}</td>
-                <td>{{ task.registrations.all|unordered_list }}</td>
+                <td>{{ task.registrations.all|create_unordered_html_list }}</td>
                 <td class="task_feedback">
                     <span class="label">{{ task.feedback|yesno:_("ja,nee") }}</span>
                     {% if task.feedback %}<span class="help">{{ task.feedback_details }}</span>{% endif %}
                 </td>
                 <td>{{ task.repeats }}</td>
-                <td>
-                    <a href="{% url 'tasks:update' task.id %}" class="text-decoration-none">
-                        <img src="{% static 'proposals/images/pencil.png' %}"
-                             title="{% trans 'Taak bewerken' %}">
-                    </a>
-                    {% if session.last_task.order > 1 %}
-                        <a href="{% url 'tasks:delete' task.id %}">
-                            <img src="{% static 'proposals/images/delete.png' %}"
-                                 title="{% trans 'Taak verwijderen' %}">
+                {% if can_edit_tasks %}
+                    <td>
+                        <a href="{% url 'tasks:update' task.id %}" class="text-decoration-none">
+                            <img src="{% static 'proposals/images/pencil.png' %}"
+                                title="{% trans 'Taak bewerken' %}">
                         </a>
-                    {% endif %}
-                </td>
+                        {% if session.last_task.order > 1 %}
+                            <a href="{% url 'tasks:delete' task.id %}">
+                                <img src="{% static 'proposals/images/delete.png' %}"
+                                    title="{% trans 'Taak verwijderen' %}">
+                            </a>
+                        {% endif %}
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
-        <tr>
-            <td colspan="6" style="text-align:center;">
-                <a href="{% url 'tasks:create' session.pk %}">
-                        {% blocktrans with session_order=session.order trimmed %}
-                            Nieuwe taak toevoegen aan sessie {{session_order}}
-                        {% endblocktrans %}
-                        <img src="{% static 'proposals/images/add.png' %}"
-                                title="{% trans 'Taak aanmaken' %}">
-                </a>
-            </td>
-        </tr>
+        {% if can_edit_tasks %}
+            <tr>
+                <td colspan="6" style="text-align:center;">
+                    <a href="{% url 'tasks:create' session.pk %}">
+                            {% blocktrans with session_order=session.order trimmed %}
+                                Nieuwe taak toevoegen aan sessie {{session_order}}
+                            {% endblocktrans %}
+                            <img src="{% static 'proposals/images/add.png' %}"
+                                    title="{% trans 'Taak aanmaken' %}">
+                    </a>
+                </td>
+            </tr>
+        {% endif %}
     </tbody>
 </table>
 <script>
