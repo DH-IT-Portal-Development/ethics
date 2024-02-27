@@ -39,7 +39,7 @@ class ObservationMixin(object):
         next_url = "studies:design_end"
         pk = study.pk
         if study.has_sessions:
-            next_url = "tasks:session_create"
+            next_url = "tasks:session_start"
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
