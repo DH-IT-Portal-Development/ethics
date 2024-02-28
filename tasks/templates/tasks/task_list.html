@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load fetc_filters %}
 
-<table class="pure-table" width="100%">
+<table class="pure-table" width="100%" style="">
     <thead>
         <tr>
             <th width="20%">{% trans "Naam" %}</th>
@@ -17,6 +17,7 @@
             {% endif %}
         </tr>
     </thead>
+    <style>tr {background-color: #FFFFFF;}</style>
     <tbody>
         {% for task in session.task_set.all %}
             <tr>
@@ -44,21 +45,19 @@
                 {% endif %}
             </tr>
         {% endfor %}
-        {% if can_edit_tasks %}
-            <tr>
-                <td colspan="6" style="text-align:center;">
-                    <a href="{% url 'tasks:create' session.pk %}">
-                            {% blocktrans with session_order=session.order trimmed %}
-                                Nieuwe taak toevoegen aan sessie {{session_order}}
-                            {% endblocktrans %}
-                            <img src="{% static 'proposals/images/add.png' %}"
-                                    title="{% trans 'Taak aanmaken' %}">
-                    </a>
-                </td>
-            </tr>
-        {% endif %}
     </tbody>
 </table>
+{% if can_edit_tasks %}
+    <div class="d-flex justify-content-center">   
+        <div class="button mt-2 button-black">
+            <a href="{% url 'tasks:create' session.pk %}">
+                {% blocktrans with session_order=session.order trimmed %}
+                    Nieuwe taak toevoegen aan sessie {{session_order}}
+                {% endblocktrans %}
+            </a>
+        </div> 
+    </div>
+{% endif %}
 <script>
 $(function() {
     let elements = $('.task_feedback');
