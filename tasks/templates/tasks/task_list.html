@@ -5,15 +5,15 @@
 <table class="pure-table" width="100%" style="">
     <thead>
         <tr>
-            <th width="20%">{% trans "Naam" %}</th>
+            <th width="20%">{% trans "Taak" %}</th>
             <th width="10%">{% trans "Nettoduur (in minuten)" %}</th>
             <th width="40%">{% trans "Registratie via" %}</th>
             <th width="10%">{% trans "Feedback?" %}</th>
             {% if can_edit_tasks %}
-                <th width="15%">{% trans "Aantal keer uitgevoerd" %}</th>
+                <th width="15%">{% trans "Aantal keer uit te voeren" %}</th>
                 <th width="5%">{% trans "Acties" %}</th>
             {% else %}
-                <th width="20%">{% trans "Aantal keer uitgevoerd" %}</th>
+                <th width="20%">{% trans "Aantal keer uit te voeren" %}</th>
             {% endif %}
         </tr>
     </thead>
@@ -21,7 +21,7 @@
     <tbody>
         {% for task in session.task_set.all %}
             <tr>
-                <td>{{ task.name }}</td>
+                <td>{% trans "Taak"%} {{task.order}}: {{ task.name }}</td>
                 <td>{{ task.duration }}</td>
                 <td>{{ task.registrations.all|create_unordered_html_list }}</td>
                 <td class="task_feedback">

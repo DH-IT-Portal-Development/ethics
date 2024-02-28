@@ -7,7 +7,7 @@
         <h5 class="pt-2">
             {% blocktrans with order=session.order duration=session.tasks_duration repeats=session.repeats trimmed %}
                 Sessie {{ order }} (totale brutoduur: {{ duration }}
-                minuten, aantal keer uitgevoerd: {{ repeats }})
+                minuten, aantal keer uit te voeren: {{ repeats }})
             {% endblocktrans %}
             {% if can_edit_sessions %}
                 <a href="{% url 'tasks:session_end' session.pk %}" class="text-decoration-none">
