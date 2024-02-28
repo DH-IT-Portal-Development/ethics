@@ -1,7 +1,8 @@
+import logging
+
 from django.contrib.auth.models import User, Group, AnonymousUser
 from django.conf import settings
 from django.test import TestCase
-from django.core.management import call_command
 
 from main.tests import BaseViewTestCase
 from proposals.models import Proposal, Relation
@@ -37,6 +38,11 @@ class BaseProposalTestCase(TestCase):
     def setUp(self):
         self.setup_users()
         self.setup_proposal()
+
+        # Disable logging warnings and all levels below
+        # Our (pdf) code logs warnings that are not relevant to the tests
+        # ERROR and CRITICAL are still logged
+        logging.disable(logging.WARN)
 
     def setup_users(self):
         self.secretary = User.objects.create_user(
