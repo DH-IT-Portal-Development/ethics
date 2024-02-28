@@ -125,6 +125,13 @@
                     {% endwith %}
                 {% endif %}
                 {% if study.has_sessions %}
+                    <h4>
+                        {% trans "Takenonderzoek" %}
+                        <a href="{% url 'tasks:session_overview' study.pk %}">
+                            <img src="{% static 'proposals/images/pencil.png' %}"
+                                title="{% trans 'Takenonderzoek bewerken' %}">
+                        </a>
+                    </h4>
                     {% include "tasks/session_list.html" %}
                 {% endif %}
             </ul>

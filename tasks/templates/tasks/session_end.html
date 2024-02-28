@@ -14,8 +14,10 @@
             {% with nav_items=session.study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>{% trans "Overzicht" %}</h2>
-            {% include "tasks/session_title.html" %}
+            <h2>{% trans "Overzicht sessie " %}{{session.order}}</h2>
+            <p>
+                <em>{% trans "Vanuit dit overzicht is het mogelijk om je sessie te bewerken of om taken aan te maken, te bewerken en te verwijderen." %}</em>
+            </p>
             <div class="task_list">
                 <h5 class="mt-2">
                     {% trans "Sessie overzicht:" %}
