@@ -8,7 +8,6 @@ from django.forms import ModelForm
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
 from ..forms import SessionUpdateForm, SessionEndForm
-from ..mixins import DeletionAllowedMixin
 from ..models import Session, Task, Study
 from ..utils import copy_task_to_session
 
@@ -18,7 +17,7 @@ from cdh.core.views import RedirectActionView
 ######################
 # Actions on a Session
 ######################
-class SessionDelete(DeletionAllowedMixin, DeleteView):
+class SessionDelete(DeleteView):
     model = Session
     success_message = _("Sessie verwijderd")
 

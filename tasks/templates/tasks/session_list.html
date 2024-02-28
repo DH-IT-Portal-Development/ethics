@@ -14,12 +14,10 @@
                     <img src="{% static 'proposals/images/pencil.png' %}"
                         title="{% trans 'Sessie aanpassen' %}">
                 </a>
-                {% if study.last_session.order > 1 %}
-                    <a href="{% url 'tasks:session_delete' session.pk %}" class="text-decoration-none">
-                        <img src="{% static 'proposals/images/delete.png' %}"
-                            title="{% trans 'Sessie verwijderen' %}">
-                    </a>
-                {% endif %}
+                <a href="{% url 'tasks:session_delete' session.pk %}" class="text-decoration-none">
+                    <img src="{% static 'proposals/images/delete.png' %}"
+                        title="{% trans 'Sessie verwijderen' %}">
+                </a>
             {% endif %}
         </h5>
         <p>

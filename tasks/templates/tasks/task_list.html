@@ -35,12 +35,10 @@
                             <img src="{% static 'proposals/images/pencil.png' %}"
                                 title="{% trans 'Taak bewerken' %}">
                         </a>
-                        {% if session.last_task.order > 1 %}
-                            <a href="{% url 'tasks:delete' task.id %}">
-                                <img src="{% static 'proposals/images/delete.png' %}"
-                                    title="{% trans 'Taak verwijderen' %}">
-                            </a>
-                        {% endif %}
+                        <a href="{% url 'tasks:delete' task.id %}">
+                            <img src="{% static 'proposals/images/delete.png' %}"
+                                title="{% trans 'Taak verwijderen' %}">
+                        </a>
                     </td>
                 {% endif %}
             </tr>

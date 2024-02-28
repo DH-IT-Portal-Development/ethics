@@ -6,7 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
 from ..forms import TaskForm
-from ..mixins import DeletionAllowedMixin
 from ..models import Task, Session
 
 from cdh.core.views import RedirectActionView
@@ -53,7 +52,7 @@ class TaskUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
         return reverse("tasks:session_update", args=(self.object.session.pk,))
 
 
-class TaskDelete(DeletionAllowedMixin, DeleteView):
+class TaskDelete(DeleteView):
     """Deletes a Task"""
 
     model = Task
