@@ -28,8 +28,8 @@ class BaseProposalTestCase(TestCase):
         "recruitments",
         "specialdetails",
         "traits",
-        "registrationkinds",
-        "registrations",
+        "00_registrations",
+        "01_registrationkinds",
         "testing/test_users",
         "testing/test_proposals",
     ]

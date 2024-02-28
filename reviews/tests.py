@@ -30,8 +30,8 @@ class BaseReviewTestCase(TestCase):
     fixtures = [
         "relations",
         "compensations",
-        "registrations",
-        "registrationkinds",
+        "00_registrations",
+        "01_registrationkinds",
         "agegroups",
         "groups",
         "institutions",
