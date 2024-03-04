@@ -11,11 +11,13 @@ class Session(SettingModel):
 
     repeats = models.PositiveBigIntegerField(
         _("Hoe vaak wordt deze sessie uitgevoerd?"),
-        help_text=_("Het kan zijn dat een zelfde sessie meerdere keren moet worden \
+        help_text=_(
+            "Het kan zijn dat een zelfde sessie meerdere keren moet worden \
                     uitgevoerd. Als dit het geval is, kun je dat hier \
                     aangeven. Als er variatie zit in de verschillende \
                     sessies van je onderzoek, maak dan een nieuwe sessie \
-                    aan voor elke unieke sessie."),
+                    aan voor elke unieke sessie."
+        ),
         null=False,
         default=1,
         validators=[
@@ -146,11 +148,13 @@ Het moet voor de commissieleden duidelijk zijn wat je precies gaat doen."
 
     repeats = models.PositiveBigIntegerField(
         _("Hoe vaak wordt deze taak uitgevoerd binnen deze sessie?"),
-        help_text=_("Het kan zijn dat eenzelfde taak meerdere keren moet worden \
+        help_text=_(
+            "Het kan zijn dat eenzelfde taak meerdere keren moet worden \
                     uitgevoerd binnen een sessie. Als dit het geval is, kun je dat hier \
                     aangeven. Als er variatie zit in de verschillende \
                     taken van deze sessie, maak dan een nieuwe taak \
-                    aan voor elke unieke taak binnen deze sessie."),
+                    aan voor elke unieke taak binnen deze sessie."
+        ),
         null=False,
         default=1,
         validators=[

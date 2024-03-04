@@ -17,11 +17,15 @@
             {% endif %}
         </tr>
     </thead>
-    <style>tr {background-color: #FFFFFF;}</style>
+    <style>
+        tr {
+            background-color: #FFFFFF;
+        }
+    </style>
     <tbody>
         {% for task in session.task_set.all %}
             <tr>
-                <td>{% trans "Taak"%} {{task.order}}: {{ task.name }}</td>
+                <td>{% trans "Taak" %} {{ task.order }}: {{ task.name }}</td>
                 <td>{{ task.duration }}</td>
                 <td>{{ task.registrations.all|create_unordered_html_list }}</td>
                 <td class="task_feedback">
@@ -33,11 +37,11 @@
                     <td>
                         <a href="{% url 'tasks:update' task.id %}" class="text-decoration-none">
                             <img src="{% static 'proposals/images/pencil.png' %}"
-                                title="{% trans 'Taak bewerken' %}">
+                                 title="{% trans 'Taak bewerken' %}">
                         </a>
                         <a href="{% url 'tasks:delete' task.id %}">
                             <img src="{% static 'proposals/images/delete.png' %}"
-                                title="{% trans 'Taak verwijderen' %}">
+                                 title="{% trans 'Taak verwijderen' %}">
                         </a>
                     </td>
                 {% endif %}
@@ -46,14 +50,14 @@
     </tbody>
 </table>
 {% if can_edit_tasks %}
-    <div class="d-flex justify-content-center">   
+    <div class="d-flex justify-content-center">
         <div class="button mt-2 button-black">
             <a href="{% url 'tasks:create' session.pk %}">
                 {% blocktrans with session_order=session.order trimmed %}
-                    Nieuwe taak toevoegen aan sessie {{session_order}}
+                    Nieuwe taak toevoegen aan sessie {{ session_order }}
                 {% endblocktrans %}
             </a>
-        </div> 
+        </div>
     </div>
 {% endif %}
 <script>

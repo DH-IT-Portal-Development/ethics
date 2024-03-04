@@ -13,7 +13,7 @@ def session_urls(study):
         tasks_url.url = reverse("tasks:session_start", args=(study.pk,))
         session_overview_url = AvailableURL(
             title=_("Overzicht van alle sessies"),
-            url = reverse("tasks:session_overview", args=(study.pk,))
+            url=reverse("tasks:session_overview", args=(study.pk,)),
         )
         tasks_url.children.append(session_overview_url)
         prev_session_completed = True

@@ -67,6 +67,7 @@ def is_po_chair_or_secretary(current_user):
         [settings.GROUP_SECRETARY, settings.GROUP_CHAIR, settings.GROUP_PO],
     )
 
+
 @register.filter
 def create_unordered_html_list(lst):
     html_output = mark_safe('<p class="p-0">')

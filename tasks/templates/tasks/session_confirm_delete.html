@@ -15,11 +15,8 @@
                 <p>
                     Weet u zeker dat u deze sessie <strong>{{ session.order }}</strong> in de aanvraag <em>{{ session.study.proposal.title }}</em> wilt verwijderen?
                 </p>
-                <input class="button"
-                       type="submit"
-                       value="{% trans 'Verwijderen' %}" />
-                <a class="button"
-                   href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
+                <input class="button" type="submit" value="{% trans 'Verwijderen' %}" />
+                <a class="button" href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
             </form>
         </div>
     </div>

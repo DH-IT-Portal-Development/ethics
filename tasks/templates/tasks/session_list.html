@@ -1,7 +1,6 @@
 {% load static %}
 {% load i18n %}
 
-
 {% for session in study.session_set.all %}
     <div class="task_list mt-3">
         <h5 class="pt-2">
@@ -10,13 +9,15 @@
                 minuten, aantal keer uit te voeren: {{ repeats }})
             {% endblocktrans %}
             {% if can_edit_sessions %}
-                <a href="{% url 'tasks:session_end' session.pk %}" class="text-decoration-none">
+                <a href="{% url 'tasks:session_end' session.pk %}"
+                   class="text-decoration-none">
                     <img src="{% static 'proposals/images/pencil.png' %}"
-                        title="{% trans 'Sessie aanpassen' %}">
+                         title="{% trans 'Sessie aanpassen' %}">
                 </a>
-                <a href="{% url 'tasks:session_delete' session.pk %}" class="text-decoration-none">
+                <a href="{% url 'tasks:session_delete' session.pk %}"
+                   class="text-decoration-none">
                     <img src="{% static 'proposals/images/delete.png' %}"
-                        title="{% trans 'Sessie verwijderen' %}">
+                         title="{% trans 'Sessie verwijderen' %}">
                 </a>
             {% endif %}
         </h5>
@@ -26,13 +27,13 @@
         {% include "tasks/task_list.html" %}
     </div>
 {% endfor %}
-{% if can_edit_sessions%}
-    <div class="task_list mt-3">                                    
+{% if can_edit_sessions %}
+    <div class="task_list mt-3">
         <a href="{% url 'tasks:session_create' study.pk %}">
             <h5 class = "pt-2" style="text-align:center;">
                 {% trans "Nieuwe sessie tevoegen" %}
                 <img src="{% static 'proposals/images/add.png' %}"
-                        title="{% trans 'Sessie aanmaken' %}">
+                     title="{% trans 'Sessie aanmaken' %}">
             </h5>
         </a>
     </div>

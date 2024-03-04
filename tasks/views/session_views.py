@@ -46,13 +46,15 @@ class SessionDelete(DeleteView):
 ##################
 # Actions on Sessions
 ##################
-    
+
+
 class HiddenForm(ModelForm):
     """This is needed to make the navigation work on this information page."""
 
     class Meta:
         model = Study
         fields = []
+
 
 class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
 
@@ -74,6 +76,7 @@ class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
             next_url = "interventions:update"
             pk = study.intervention.pk
         return reverse(next_url, args=(pk,))
+
 
 class SessionCreate(RedirectActionView):
     """Creates a session, from a study pk and redirects to SessionUpdate()
@@ -146,7 +149,8 @@ class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
 
     def get_back_url(self):
         return reverse("tasks:session_start", args=(self.object.last_task().pk,))
-    
+
+
 class SessionOverview(AllowErrorsOnBackbuttonMixin, UpdateView):
 
     model = Study
@@ -160,6 +164,6 @@ class SessionOverview(AllowErrorsOnBackbuttonMixin, UpdateView):
 
     def get_next_url(self):
         return reverse("studies:design_end", args=(self.object.pk,))
-    
+
     def get_back_url(self):
         return reverse("tasks:session_start", args=(self.object.pk,))

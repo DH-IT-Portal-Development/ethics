@@ -14,14 +14,12 @@
             {% with nav_items=session.study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>{% trans "Overzicht sessie " %}{{session.order}}</h2>
+            <h2>{% trans "Overzicht sessie " %}{{ session.order }}</h2>
             <p>
                 <em>{% trans "Vanuit dit overzicht is het mogelijk om je sessie te bewerken of om taken aan te maken, te bewerken en te verwijderen." %}</em>
             </p>
             <div class="task_list">
-                <h5 class="mt-2">
-                    {% trans "Sessie overzicht:" %}
-                </h5>
+                <h5 class="mt-2">{% trans "Sessie overzicht:" %}</h5>
                 <table class="pure-table" width="100%">
                     <thead>
                         <tr>
@@ -31,22 +29,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>{{ session.setting.all|create_unordered_html_list }}</td>
-                        <td>{{ session.repeats }}</td>
-                        <td>
-                            <a href="{% url 'tasks:session_update' session.pk %}">
-                                <img src="{% static 'proposals/images/pencil.png' %}"
-                                     title="{% trans 'Sessie aanpassen' %}">
-                            </a>
-                        </td>
-                      </tr>
+                        <tr>
+                            <td>{{ session.setting.all|create_unordered_html_list }}</td>
+                            <td>{{ session.repeats }}</td>
+                            <td>
+                                <a href="{% url 'tasks:session_update' session.pk %}">
+                                    <img src="{% static 'proposals/images/pencil.png' %}"
+                                         title="{% trans 'Sessie aanpassen' %}">
+                                </a>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
                 <hr>
-                <h5 class="mt-2">
-                    {% trans "Taken overzicht:" %}
-                </h5>
+                <h5 class="mt-2">{% trans "Taken overzicht:" %}</h5>
                 {% include "tasks/task_list.html" %}
             </div>
             <p>{% trans "Beantwoord op basis van dit overzicht de volgende vragen:" %}</p>
