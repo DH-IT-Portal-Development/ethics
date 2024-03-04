@@ -3,11 +3,13 @@
 <div class="mt-3 mb-3 form-buttons">
     <div class="button-grid">
         {% if not no_back %}
-            <input class="button mr-auto button-black"
+            <input class="button button-black"
                    type="submit"
                    name="save_back"
                    value="{% trans '<< Vorige stap' %}" />
         {% endif %}
+        <!-- Spacer element, pushes the forward buttons to the right -->
+        <div class="mr-auto"></div>
         {% if not no_forward %}
             {% trans 'Volgende stap >>' as default_next_text %}
             <input class="button button-colored continue-button"
