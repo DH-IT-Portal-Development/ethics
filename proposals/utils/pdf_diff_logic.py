@@ -8,6 +8,7 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext as _
 
+from main.templatetags.fetc_filters import create_unordered_html_list
 from proposals.templatetags.proposal_filters import (
     needs_details,
     medical_traits,
@@ -265,23 +266,11 @@ class RowValue:
 
     def get_applicants_names(self, applicants):
         applicant_names = [applicant.get_full_name() for applicant in applicants.all()]
-        return self.create_unordered_html_list(applicant_names)
+        return create_unordered_html_list(applicant_names)
 
     def get_object_list(self, object):
         list_of_objects = [obj for obj in object.all()]
-        return self.create_unordered_html_list(list_of_objects)
-
-    def create_unordered_html_list(self, lst):
-        html_output = mark_safe('<p class="p-0">')
-
-        for index, item in enumerate(lst):
-            html_output += format_html("- {}", item)
-            if index != len(lst) - 1:
-                html_output += mark_safe("<br/>")
-
-        html_output += mark_safe("</p>")
-
-        return html_output
+        return create_unordered_html_list(list_of_objects)
 
     def handle_field_file(self, field_file):
         if field_file:
@@ -1097,7 +1086,7 @@ def create_context_diff(context, old_proposal, new_proposal):
             DiffSection(WMOSection(old_proposal.wmo), WMOSection(new_proposal.wmo))
         )
 
-        if new_proposal.is_pre_assessment:
+        if not new_proposal.is_pre_assessment:
             if (
                 new_proposal.wmo.status != new_proposal.wmo.WMOStatuses.NO_WMO
                 or old_proposal.wmo.status != old_proposal.wmo.WMOStatuses.NO_WMO
