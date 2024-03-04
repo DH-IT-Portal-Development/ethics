@@ -270,8 +270,8 @@ msgstr "E-mail"
 msgid "Ingediende aanvragen"
 msgstr "My submitted applications;"
 
-#: main/templates/auth/user_detail.html:36 reviews/api/views.py:46
-#: reviews/api/views.py:273 reviews/api/views.py:334
+#: main/templates/auth/user_detail.html:36 reviews/api/views.py:47
+#: reviews/api/views.py:276 reviews/api/views.py:337
 #: reviews/templates/reviews/committee_members_workload.html:24
 msgid "Referentienummer"
 msgstr "Reference number"
@@ -296,7 +296,7 @@ msgstr "Phase"
 #: proposals/api/views.py:146
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:102
 #: proposals/templates/proposals/vue_templates/proposal_list.html:161
-#: reviews/api/views.py:50 reviews/api/views.py:277 reviews/api/views.py:338
+#: reviews/api/views.py:51 reviews/api/views.py:280 reviews/api/views.py:341
 #: reviews/templates/reviews/committee_members_workload.html:25
 #: reviews/templates/reviews/vue_templates/decision_list.html:153
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:95
@@ -317,7 +317,7 @@ msgstr "Desired end date"
 msgid "Mijn besluit"
 msgstr "My decision"
 
-#: main/templates/auth/user_detail.html:43 reviews/api/views.py:328
+#: main/templates/auth/user_detail.html:43 reviews/api/views.py:331
 #: reviews/models.py:34
 #: reviews/templates/reviews/vue_templates/decision_list.html:133
 #: reviews/templates/reviews/vue_templates/review_list.html:137
@@ -1081,7 +1081,7 @@ msgstr "Last edited"
 msgid "Datum ingediend bij eindverantwoordelijke"
 msgstr "Date sent to supervisor"
 
-#: proposals/forms.py:58 proposals/models.py:242
+#: proposals/forms.py:58
 msgid ""
 "Zijn er nog andere onderzoekers bij deze aanvraag betrokken die "
 "<strong>niet</strong> geaffilieerd zijn aan een van de onderzoeksinstituten "
@@ -1453,9 +1453,19 @@ msgstr ""
 "gw@uu.nl\">privacy officer</a>. Agreements may then have to be made about "
 "the processing of personal data."
 
+#: proposals/models.py:242
+msgid ""
+"Zijn er nog andere onderzoekers bij deze aanvraag betrokken die "
+"<strong>niet</strong> geaffilieerd zijn aan een van de onderzoeksinstituten "
+"van de Faculteit Geestwetenschappen van de UU? Zoja, vermeld diens naam en "
+"affiliatie."
+msgstr ""
+"Are there any other researchers involved <strong>outside</strong> the above-"
+"mentioned institutes? If so, please mention their name and affiliation."
+
 #: proposals/models.py:252
-msgid "Andere betrokkenen"
-msgstr "Other people involved"
+msgid "Naam en affiliatie van andere betrokkenen"
+msgstr "Name and affiliation of other involved people"
 
 #: proposals/models.py:259
 msgid ""
@@ -1725,7 +1735,7 @@ msgstr ""
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:677 reviews/api/views.py:40 reviews/api/views.py:324
+#: proposals/models.py:677 reviews/api/views.py:41 reviews/api/views.py:327
 #: reviews/templates/reviews/committee_members_workload.html:35
 #: reviews/templates/reviews/committee_members_workload.html:74
 #: reviews/templates/reviews/review_detail_sidebar.html:106
@@ -2401,18 +2411,14 @@ msgstr "Register a new application"
 #: proposals/templates/proposals/proposal_start.html:25
 #: proposals/templates/proposals/proposal_start_practice.html:25
 msgid ""
-"Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
-"algemene-kamer/\">Algemene Kamer (AK)</a> of dat van de <a href=\"https://"
-"fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\">Linguïstiek Kamer (LK)</"
-"a>."
+"Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
+"fetc-h/\">FEtC-H</a>."
 msgstr ""
-"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
-"general-chamber-2/\" target=\"blank\">General Chamber</a> or those of the <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-linguistics-chamber/\" "
-"target=\"blank\">Linguistics Chamber</a>."
+"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\"  "
+"target=\"_blank\">FEtC-H </a>."
 
-#: proposals/templates/proposals/proposal_start.html:34
-#: proposals/templates/proposals/proposal_start_practice.html:34
+#: proposals/templates/proposals/proposal_start.html:31
+#: proposals/templates/proposals/proposal_start_practice.html:31
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\">voorbeelddocumenten</a> voor de "
@@ -2422,8 +2428,8 @@ msgstr ""
 "en/documents-ethics-assessment-committee-humanities\" "
 "target=\"_blank\">model documents</a> for <em>informed consent</em>."
 
-#: proposals/templates/proposals/proposal_start.html:39
-#: proposals/templates/proposals/proposal_start_practice.html:39
+#: proposals/templates/proposals/proposal_start.html:36
+#: proposals/templates/proposals/proposal_start_practice.html:36
 #: proposals/templates/proposals/study_consent.html:88
 msgid ""
 "Studenten moeten hun begeleider vragen om deze formulieren; dezelfde "
@@ -2435,8 +2441,8 @@ msgstr ""
 "fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\">this page</a>, though on non-"
 "official documents."
 
-#: proposals/templates/proposals/proposal_start.html:46
-#: proposals/templates/proposals/proposal_start_practice.html:46
+#: proposals/templates/proposals/proposal_start.html:43
+#: proposals/templates/proposals/proposal_start_practice.html:43
 #: proposals/templates/proposals/study_start.html:65
 msgid ""
 "Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) "
@@ -2445,16 +2451,16 @@ msgstr ""
 "An application consists of (i) trajectories, (ii) sessions, and (iii) tasks, "
 "in descending order of subdivision. "
 
-#: proposals/templates/proposals/proposal_start.html:52
-#: proposals/templates/proposals/proposal_start_practice.html:52
+#: proposals/templates/proposals/proposal_start.html:49
+#: proposals/templates/proposals/proposal_start_practice.html:49
 #: proposals/templates/proposals/study_start.html:71
 #: proposals/utils/pdf_diff_logic.py:337
 #: reviews/templates/reviews/committee_members_workload.html:23
 msgid "Traject"
 msgstr "Trajectory"
 
-#: proposals/templates/proposals/proposal_start.html:53
-#: proposals/templates/proposals/proposal_start_practice.html:53
+#: proposals/templates/proposals/proposal_start.html:50
+#: proposals/templates/proposals/proposal_start_practice.html:50
 #: proposals/templates/proposals/study_start.html:72
 msgid ""
 "Als je met verschillende deelnemersgroepen werkt die een verschillend "
@@ -2465,8 +2471,8 @@ msgstr ""
 "not follow the same instructions during your research, they traverse "
 "different trajectories, and require separate informed consent documents. "
 
-#: proposals/templates/proposals/proposal_start.html:57
-#: proposals/templates/proposals/proposal_start_practice.html:57
+#: proposals/templates/proposals/proposal_start.html:54
+#: proposals/templates/proposals/proposal_start_practice.html:54
 #: proposals/templates/proposals/study_start.html:76
 msgid ""
 "<u>Bijvoorbeeld</u>: ouders van leerlingen 15 jaar en jonger, docenten, een "
@@ -2475,29 +2481,29 @@ msgstr ""
 "<u>For example</u>: parents of children up to 15 years of age, teachers, or "
 "an experimental and control group that receive significantly different tasks."
 
-#: proposals/templates/proposals/proposal_start.html:63
-#: proposals/templates/proposals/proposal_start_practice.html:63
+#: proposals/templates/proposals/proposal_start.html:60
+#: proposals/templates/proposals/proposal_start_practice.html:60
 #: proposals/templates/proposals/study_start.html:82
 msgid "Sessie"
 msgstr "Session"
 
-#: proposals/templates/proposals/proposal_start.html:64
-#: proposals/templates/proposals/proposal_start_practice.html:64
+#: proposals/templates/proposals/proposal_start.html:61
+#: proposals/templates/proposals/proposal_start_practice.html:61
 #: proposals/templates/proposals/study_start.html:83
 msgid "Alle taken/onderdelen die iemand op één dag uitvoert."
 msgstr ""
 "All tasks or procedures that a participant completes in a day combined. "
 
-#: proposals/templates/proposals/proposal_start.html:69
-#: proposals/templates/proposals/proposal_start_practice.html:69
+#: proposals/templates/proposals/proposal_start.html:66
+#: proposals/templates/proposals/proposal_start_practice.html:66
 #: proposals/templates/proposals/study_start.html:88
 #: tasks/templates/tasks/task_list.html:8
 #: tasks/templates/tasks/task_list.html:24
 msgid "Taak"
 msgstr "Task"
 
-#: proposals/templates/proposals/proposal_start.html:70
-#: proposals/templates/proposals/proposal_start_practice.html:70
+#: proposals/templates/proposals/proposal_start.html:67
+#: proposals/templates/proposals/proposal_start_practice.html:67
 #: proposals/templates/proposals/study_start.html:89
 msgid ""
 "Een taak of onderdeel van je onderzoek. <p> <u>Bijvoorbeeld</u>: het "
@@ -2506,12 +2512,18 @@ msgstr ""
 " A task or procedure within your study. <p> <u>For example</u>: completing "
 "an interview, questionnaire, or language test.</p>"
 
+#: proposals/templates/proposals/proposal_start.html:76
+#: proposals/templates/proposals/proposal_start_pre_approved.html:37
+#: proposals/templates/proposals/proposal_start_pre_assessment.html:43
+msgid "Volgende stap >>"
+msgstr "Next step >>"
+
 #: proposals/templates/proposals/proposal_start_practice.html:7
 #: proposals/templates/proposals/proposal_start_practice.html:13
 msgid "Een nieuwe aanvraag aanmelden (oefenportaal)"
 msgstr "Register a new application (practice portal)"
 
-#: proposals/templates/proposals/proposal_start_practice.html:78
+#: proposals/templates/proposals/proposal_start_practice.html:75
 msgid "Houd er rekening mee dat een oefenaanvraag niet ingediend kan worden."
 msgstr ""
 "Please be advised that a practice application cannot be submitted to the "
@@ -3273,21 +3285,21 @@ msgstr "Contact <a href=\"{link}\">{secretary}</a> to make sure."
 msgid "Je onderzoek zal moeten worden beoordeeld door de METC."
 msgstr "Your application will require assessment by an METC."
 
-#: reviews/api/views.py:32 reviews/api/views.py:316
+#: reviews/api/views.py:33 reviews/api/views.py:319
 #: reviews/templates/reviews/vue_templates/decision_list.html:111
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:61
 #: reviews/templates/reviews/vue_templates/review_list.html:116
 msgid "Stadium"
 msgstr "Stage"
 
-#: reviews/api/views.py:36 reviews/api/views.py:320 reviews/models.py:31
+#: reviews/api/views.py:37 reviews/api/views.py:323 reviews/models.py:31
 #: reviews/templates/reviews/vue_templates/decision_list.html:178
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:121
 #: reviews/templates/reviews/vue_templates/review_list.html:183
 msgid "Route"
 msgstr "Route"
 
-#: reviews/api/views.py:54 reviews/api/views.py:281 reviews/api/views.py:342
+#: reviews/api/views.py:55 reviews/api/views.py:284 reviews/api/views.py:345
 msgid "Start datum"
 msgstr "Start date review"
 
@@ -3339,7 +3351,7 @@ msgstr "Start date period:"
 msgid "Eind datum periode:"
 msgstr "End date period:"
 
-#: reviews/menus.py:18 reviews/views.py:72
+#: reviews/menus.py:18 reviews/views.py:73
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
 
@@ -3355,19 +3367,19 @@ msgstr "All pending decisions committee members"
 msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
-#: reviews/menus.py:36 reviews/views.py:229
+#: reviews/menus.py:36 reviews/views.py:230
 msgid "Nog af te handelen aanvragen"
 msgstr "Applications waiting for conclusion"
 
-#: reviews/menus.py:41 reviews/views.py:241
+#: reviews/menus.py:41 reviews/views.py:242
 msgid "Aanvragen in revisie"
 msgstr "Applications in revision"
 
-#: reviews/menus.py:46 reviews/views.py:253
+#: reviews/menus.py:46 reviews/views.py:254
 msgid "Alle lopende aanvragen"
 msgstr "All running applications"
 
-#: reviews/menus.py:51 reviews/views.py:275
+#: reviews/menus.py:51 reviews/views.py:280
 msgid "Alle ingezonden aanvragen"
 msgstr "All submitted applications"
 
@@ -4149,19 +4161,19 @@ msgstr ""
 "The application contains psychophysiological measurements on children under "
 "{} year(s) old."
 
-#: reviews/views.py:62
+#: reviews/views.py:63
 msgid "Mijn besluiten"
 msgstr "My results"
 
-#: reviews/views.py:84
+#: reviews/views.py:85
 msgid "Openstaande besluiten commissieleden"
 msgstr "Pending decisions committee members"
 
-#: reviews/views.py:202
+#: reviews/views.py:203
 msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
 
-#: reviews/views.py:570
+#: reviews/views.py:580
 msgid ""
 "Deze aanvraag is al beoordeeld, dus je kan je beoordeling niet meer "
 "toevoegen/aanpassen"
@@ -5239,6 +5251,20 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:59
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid ""
+#~ "Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
+#~ "algemene-kamer/\">Algemene Kamer (AK)</a> of dat van de <a href=\"https://"
+#~ "fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\">Linguïstiek Kamer "
+#~ "(LK)</a>."
+#~ msgstr ""
+#~ "The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/"
+#~ "regulations-general-chamber-2/\" target=\"blank\">General Chamber</a> or "
+#~ "those of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
+#~ "linguistics-chamber/\" target=\"blank\">Linguistics Chamber</a>."
+
+#~ msgid "Andere betrokkenen"
+#~ msgstr "Other people involved"
 
 #~ msgid "Maak een nieuwe sessie aan >>"
 #~ msgstr "Create a new session >>"

@@ -26,7 +26,7 @@ class MiscProposalTestCase(TestCase):
         "compensations",
         "recruitments",
         "settings",
-        "registrations",
+        "00_registrations",
         "groups",
         "institutions",
     ]

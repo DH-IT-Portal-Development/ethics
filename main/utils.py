@@ -11,6 +11,7 @@ import pdftotext
 from docx2txt import docx2txt
 
 from main.models import Faculty
+from fetc import constants
 
 YES_NO = [(True, _("ja")), (False, _("nee"))]
 
@@ -137,3 +138,27 @@ def is_member_of_faculty(user, faculty):
 
 def is_member_of_humanities(user):
     return is_member_of_faculty(user, Faculty.InternalNames.HUMANITIES)
+
+
+def can_view_archive(user):
+    if not user.is_authenticated:
+        return False
+    if user.is_superuser:
+        return True
+    privileged_groups = [
+        constants.GROUP_CHAIR,
+        constants.GROUP_GENERAL_CHAMBER,
+        constants.GROUP_LINGUISTICS_CHAMBER,
+        constants.GROUP_SECRETARY,
+        constants.GROUP_PRIMARY_SECRETARY,
+    ]
+    user_groups = user.groups.values_list(
+        "name",
+        flat=True,
+    )
+    for group in user_groups:
+        if group in privileged_groups:
+            return True
+    # If our tests are inconclusive,
+    # check for Humanities affiliation
+    return is_member_of_humanities(user)

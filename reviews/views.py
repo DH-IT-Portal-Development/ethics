@@ -45,6 +45,7 @@ class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateV
         settings.GROUP_GENERAL_CHAMBER,
         settings.GROUP_LINGUISTICS_CHAMBER,
         settings.GROUP_CHAIR,
+        settings.GROUP_PO,
     ]
 
     def get_context_data(self, **kwargs):
@@ -76,7 +77,7 @@ class DecisionMyOpenView(BaseDecisionListView):
 
 
 class DecisionOpenView(BaseDecisionListView):
-    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR)
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR, settings.GROUP_PO)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -98,7 +99,7 @@ class CommitteeMembersWorkloadView(
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.today = date.today()
-        self.start_date = self.today - timedelta(days=365)
+        self.start_date = self.today - timedelta(days=90)
         self.end_date = self.today
 
     def post(self, request, *args, **kwargs):
@@ -194,7 +195,7 @@ class SupervisorDecisionOpenView(BaseDecisionListView):
     This page displays all proposals to be reviewed by supervisors.
     """
 
-    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR)
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR, settings.GROUP_PO)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -210,7 +211,7 @@ class SupervisorDecisionOpenView(BaseDecisionListView):
 
 class BaseReviewListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
     template_name = "reviews/ufl_list.html"
-    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR)
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR, settings.GROUP_PO)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
@@ -221,7 +222,7 @@ class BaseReviewListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateVie
 
 
 class ToConcludeProposalView(BaseReviewListView):
-    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR)
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR, settings.GROUP_PO)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -233,7 +234,7 @@ class ToConcludeProposalView(BaseReviewListView):
 
 
 class InRevisionReviewsView(BaseReviewListView):
-    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR)
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR, settings.GROUP_PO)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -258,7 +259,11 @@ class AllOpenProposalReviewsView(BaseReviewListView):
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
 
-        group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
+        group_required = [
+            settings.GROUP_SECRETARY,
+            settings.GROUP_CHAIR,
+            settings.GROUP_PO,
+        ]
 
         if self.committee.name == "AK":
             group_required += [settings.GROUP_GENERAL_CHAMBER]
@@ -280,7 +285,11 @@ class AllProposalReviewsView(BaseReviewListView):
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
 
-        group_required = [settings.GROUP_SECRETARY, settings.GROUP_CHAIR]
+        group_required = [
+            settings.GROUP_SECRETARY,
+            settings.GROUP_CHAIR,
+            settings.GROUP_PO,
+        ]
 
         if self.committee.name == "AK":
             group_required += [settings.GROUP_GENERAL_CHAMBER]
@@ -304,6 +313,7 @@ class ReviewDetailView(
         group_required = [
             settings.GROUP_SECRETARY,
             settings.GROUP_CHAIR,
+            settings.GROUP_PO,
             obj.proposal.reviewing_committee.name,
         ]
 
@@ -536,6 +546,26 @@ class DecisionUpdateView(
 
     model = Decision
     form_class = DecisionForm
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Supervisors get the chance to update the proposal, but we have
+        # multiple update views for different types of proposals.
+        if self.object.review.proposal.is_pre_approved:
+            context["update_url"] = reverse(
+                "proposals:update_pre_approved", args=[self.object.review.proposal.pk]
+            )
+        elif self.object.review.proposal.is_pre_assessment:
+            context["update_url"] = reverse(
+                "proposals:update_pre", args=[self.object.review.proposal.pk]
+            )
+        else:
+            context["update_url"] = reverse(
+                "proposals:update", args=[self.object.review.proposal.pk]
+            )
+
+        return context
 
     def get_success_url(self):
         obj = self.get_object()

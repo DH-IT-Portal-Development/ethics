@@ -7,12 +7,13 @@ from menu import Menu, MenuItem
 from main.templatetags.fetc_filters import (
     in_general_chamber,
     in_linguistics_chamber,
-    is_secretary,
     is_chair_or_secretary,
+    is_po_chair_or_secretary,
 )
 
 
 def create_committee_menu(commitee: str) -> List[MenuItem]:
+
     return [
         MenuItem(
             _("Mijn openstaande besluiten"),
@@ -25,32 +26,32 @@ def create_committee_menu(commitee: str) -> List[MenuItem]:
         MenuItem(
             _("Alle openstaande besluiten commissieleden"),
             reverse("reviews:open", args=[commitee]),
-            check=lambda x: is_chair_or_secretary(x.user),
+            check=lambda x: is_po_chair_or_secretary(x.user),
         ),
         MenuItem(
             _("Alle openstaande besluiten eindverantwoordelijken"),
             reverse("reviews:open_supervisors", args=[commitee]),
-            check=lambda x: is_chair_or_secretary(x.user),
+            check=lambda x: is_po_chair_or_secretary(x.user),
         ),
         MenuItem(
             _("Nog af te handelen aanvragen"),
             reverse("reviews:to_conclude", args=[commitee]),
-            check=lambda x: is_chair_or_secretary(x.user),
+            check=lambda x: is_po_chair_or_secretary(x.user),
         ),
         MenuItem(
             _("Aanvragen in revisie"),
             reverse("reviews:in_revision", args=[commitee]),
-            check=lambda x: is_chair_or_secretary(x.user),
+            check=lambda x: is_po_chair_or_secretary(x.user),
         ),
         MenuItem(
             _("Alle lopende aanvragen"),
             reverse("reviews:all_open", args=[commitee]),
-            check=lambda x: is_chair_or_secretary(x.user),
+            check=lambda x: is_po_chair_or_secretary(x.user),
         ),
         MenuItem(
             _("Alle ingezonden aanvragen"),
             reverse("reviews:archive", args=[commitee]),
-            check=lambda x: is_chair_or_secretary(x.user),
+            check=lambda x: is_po_chair_or_secretary(x.user),
         ),
         MenuItem(
             _("Overzicht werkverdeling commissieleden"),
