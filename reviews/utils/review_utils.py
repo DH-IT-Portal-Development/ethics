@@ -482,11 +482,36 @@ def auto_review(proposal: Proposal):
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
+        if study.knowledge_security in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+            reasons.append(
+                _(
+                    "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom \
+                    kennisveiligheid."
+                )
+            )
+
+        if study.researcher_risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+            reasons.append(
+                _(
+                    "De onderzoeker geeft aan dat er mogelijk kwesties zijn \
+                    rondom de veiligheid van de betrokken onderzoekers."
+                )
+            )
+
+        if study.negativity in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+            reasons.append(
+                _(
+                    "De onderzoeker geeft aan dat sommige vragen binnen het onderzoek mogelijk \
+                    dermate belastend kunnen zijn dat ze negatieve reacties bij de deelnemers \
+                    en/of onderzoekers kunnen veroorzaken."
+                )
+            )
+        
         if study.risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(
                 _(
-                    "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op psychische of \
-fysieke schade bij deelname aan het onderzoek meer dan minimaal zijn."
+                    "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid \
+                    van de deelnemers tijdens of na het onderzoek."
                 )
             )
 
