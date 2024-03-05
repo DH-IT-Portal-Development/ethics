@@ -839,12 +839,14 @@ class StudyOverviewSection(BaseSection):
 
     section_title = _("Overzicht en eigen beoordeling van het gehele onderzoek")
     row_fields = [
+        "knowledge_security",
+        "knowledge_security_details",
+        "researcher_risk",            
+        "researcher_risk_details",  
         "deception",
         "deception_details",
         "negativity",
         "negativity_details",
-        "stressful",
-        "stressful_details",
         "risk",
         "risk_details",
     ]
@@ -858,7 +860,7 @@ class StudyOverviewSection(BaseSection):
         obj = self.obj
 
         rows_to_remove = []
-        for x in range(0, 7, 2):
+        for x in range(0, 9, 2):
             if getattr(obj, rows[x]) == "N":
                 rows_to_remove.append(rows[x + 1])
         rows = [row for row in rows if row not in rows_to_remove]
