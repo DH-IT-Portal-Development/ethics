@@ -360,7 +360,7 @@ zal worden gedebrieft."
         blank=True,
     )
     negativity_details = models.TextField(
-        _("Licht je antwoord toe."),
+        _("Licht toe"),
         help_text = _(
             "Geef concrete voorbeelden van de relevante aspecten van jouw \
             onderzoek (bijv. voorbeelden van mogelijk zeer kwetsende woorden \
