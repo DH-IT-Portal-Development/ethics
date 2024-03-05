@@ -315,50 +315,27 @@ zal worden gedebrieft."
     )
     negativity = models.CharField(
         _(
-            "Bevat bovenstaand onderzoekstraject elementen die \
-<em>tijdens</em> de deelname niet-triviale negatieve emoties kunnen opwekken? \
-Denk hierbij bijvoorbeeld aan emotioneel indringende vragen, kwetsende \
-uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of \
-(heel) saaie taken."
+            "Bevat bovenstaand onderzoekstraject elementen die <em>tijdens\
+            </em> de deelname zodanig belastend zijn dat deze vragen, \
+            weerstand, of zelfs verontwaardiging zouden kunnen oproepen, \
+            bijvoorbeeld bij collega-onderzoekers, bij de deelnemers zelf, \
+            of bij ouders of andere vertegenwoordigers?"
         ),
         max_length=1,
         choices=YesNoDoubt.choices,
         blank=True,
     )
-    negativity_details = models.TextField(_("Licht je antwoord toe."), blank=True)
-    stressful = models.CharField(
-        _(
-            "Bevat bovenstaand onderzoekstraject elementen die tijdens de \
-deelname zodanig belastend zijn dat deze <em>ondanks de verkregen \
-informed consent</em> vragen zou kunnen oproepen (of zelfs \
-verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers \
-zelf, of bij ouders of andere vertegenwoordigers?"
+    negativity_details = models.TextField(
+        _("Licht je antwoord toe."),
+        help_text = _(
+            "Geef concrete voorbeelden van de relevante aspecten van jouw \
+            onderzoek (bijv. voorbeelden van mogelijk zeer kwetsende woorden \
+            of uitspraken in de taak; zeer confronterende vragen in een \
+            vragenlijst; negatieve feedback), zodat de commissie zich een \
+            goed beeld kan vormen."
         ),
-        help_text=mark_safe_lazy(
-            _(
-                "Dit zou bijvoorbeeld het geval kunnen zijn \
-bij een 'onmenselijk' lange en uitputtende taak, een zeer confronterende \
-vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren \
-inbreuk op de privacy, of een ander ervaren gebrek aan respect. \
-Let op, het gaat bij deze vraag om de door de deelnemer ervaren belasting \
-tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade \
-door het onderzoek."
-            )
-        ),
-        max_length=1,
-        choices=YesNoDoubt.choices,
-        blank=True,
-    )
-    stressful_details = models.TextField(
-        _(
-            "Licht je antwoord toe. Geef concrete voorbeelden van de relevante \
-aspecten van jouw onderzoek (bijv. representatieve voorbeelden van mogelijk zeer \
-kwetsende woorden of uitspraken in de taak, of van zeer confronterende \
-vragen in een vragenlijst), zodat de commissie zich een goed beeld kan \
-vormen."
-        ),
-        blank=True,
-    )
+        blank=True)
+
     risk = models.CharField(
         _(
             'Zijn de risico\'s op psychische, fysieke, of andere (bijv. \

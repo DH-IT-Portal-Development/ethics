@@ -185,15 +185,12 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             "deception_details",
             "negativity",
             "negativity_details",
-            "stressful",
-            "stressful_details",
             "risk",
             "risk_details",
         ]
         widgets = {
             "deception": forms.RadioSelect(),
             "negativity": forms.RadioSelect(),
-            "stressful": forms.RadioSelect(),
             "risk": forms.RadioSelect(),
         }
 
@@ -202,8 +199,6 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         "deception_details",
         "negativity",
         "negativity_details",
-        "stressful",
-        "stressful_details",
         "risk",
         "risk_detail",
     ]
@@ -222,13 +217,10 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         self.fields["deception"].choices = YesNoDoubt.choices
         self.fields["negativity"].empty_label = None
         self.fields["negativity"].choices = YesNoDoubt.choices
-        self.fields["stressful"].empty_label = None
-        self.fields["stressful"].choices = YesNoDoubt.choices
         self.fields["risk"].empty_label = None
         self.fields["risk"].choices = YesNoDoubt.choices
 
         self.fields["negativity"].label = mark_safe(self.fields["negativity"].label)
-        self.fields["stressful"].label = mark_safe(self.fields["stressful"].label)
         self.fields["risk"].label = mark_safe(self.fields["risk"].label)
 
         if not self.study.has_sessions:
@@ -246,7 +238,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         cleaned_data = super(StudyEndForm, self).clean()
 
         # TODO: find a way to hide this on the first view
-        self.mark_soft_required(cleaned_data, "negativity", "stressful", "risk")
+        self.mark_soft_required(cleaned_data, "negativity", "risk")
 
         if "deception" in self.fields:
             self.mark_soft_required(cleaned_data, "deception")
@@ -261,12 +253,6 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             cleaned_data,
             "negativity",
             "negativity_details",
-            f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
-        )
-        self.check_dependency_list(
-            cleaned_data,
-            "stressful",
-            "stressful_details",
             f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
         )
         self.check_dependency_list(
