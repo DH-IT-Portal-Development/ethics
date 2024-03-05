@@ -338,28 +338,17 @@ zal worden gedebrieft."
 
     risk = models.CharField(
         _(
-            'Zijn de risico\'s op psychische, fysieke, of andere (bijv. \
-economische, juridische) schade door deelname aan bovenstaand \
-onderzoekstraject <em>meer dan</em> minimaal? \
-D.w.z. ligt de kans op en/of omvang van mogelijke schade \
-bij de deelnemers duidelijk <em>boven</em> het "achtergrondrisico"?'
+            "Zijn er kwesties rondom de veiligheid van, of risico's voor de \
+            deelnemers <em>tijdens of na</em> deelname aan het onderzoek?"
         ),
         help_text=mark_safe_lazy(
             _(
-                'Achtergrondrisico is datgene dat gezonde, \
-gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken \
-in het dagelijks leven ten deel valt. \
-Denk bij schade ook aan de gevolgen die het voor de deelnemer of \
-anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. \
-op het vlak van zelfbeeld, stigmatisering door anderen, economische \
-schade door data-koppeling, et cetera. Het achtergrondrisico voor \
-psychische en fysieke schade omvat bijvoorbeeld ook de risico\'s van \
-"routine"-tests, -onderzoeken of -procedures die in alledaagse didactische, \
-psychologische of medische contexten plaatsvinden (zoals een eindexamen, \
-een rijexamen, een stressbestendigheids-<em>assessment</em>, een \
-intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke \
-inspanning; dit alles, waar relevant, onder begeleiding van adequaat \
-geschoolde specialisten).'
+                "Houd hierbij niet alleen rekening met mogelijke psychische \
+                of fysieke schadelijke gevolgen, maar ook met andere \
+                mogelijke schade, zoals bijv. stigmatisering, \
+                (re-)traumatisering, aantasting van zelfbeeld, verlies van \
+                privacy, toevalsbevindingen, juridische vervolging of \
+                aansprakelijkheid, e.d."
             )
         ),
         max_length=1,
