@@ -288,6 +288,23 @@ Wanneer je meerdere taken afneemt op dezelfde dag, met pauzes daartussen, \
 dan geldt dat toch als één sessie."
         ),
     )
+
+    knowledge_security = models.CharField(
+        _(
+            "Zijn er kwesties rondom kennisveiligheid?"
+        ),
+        help_text=mark_safe_lazy(
+                _(
+            "Kennisveiligheid gaat over het tijdig signaleren en mitigeren \
+            van veiligheidsrisico's bij wetenschappelijk onderzoek. Klik \
+            <a href='https://intranet.uu.nl/kennisbank/kennisveiligheid'>hier</a> \
+            voor meer informatie."
+        )),
+        max_length=1,
+        choices=YesNoDoubt.choices,
+        blank=True,
+    )
+    knowledge_security_details = models.TextField(_("Licht toe"), max_length=200, blank=True)
     deception = models.CharField(
         _(
             "Is er binnen bovenstaand onderzoekstraject sprake van \
