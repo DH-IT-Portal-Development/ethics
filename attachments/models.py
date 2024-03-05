@@ -3,10 +3,19 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
 from .kinds import ATTACHMENT_CHOICES
 
+from cdh.files.db import FileField as CDHFileField
+
 # Create your models here.
 
 class Attachment(models.Model):
-    upload = models.FileField()
+    upload = CDHFileField()
+    parent = models.ForeignKey(
+        "attachments.attachment",
+        related_name="children",
+        null=True,
+        on_delete=models.SET_NULL,
+        default=None,
+    )
     kind = models.CharField(
         max_length=100,
         choices=ATTACHMENT_CHOICES,
@@ -16,7 +25,8 @@ class Attachment(models.Model):
         max_length=50,
         default="",
         help_text=_(
-            "Geef je bestand een omschrijvende naam, het liefst één of twee woorden."
+            "Geef je bestand een omschrijvende naam, het liefst "
+            "maar enkele woorden."
         )
     )
     comments = models.TextField(

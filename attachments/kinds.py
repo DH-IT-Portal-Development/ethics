@@ -13,8 +13,8 @@ class AttachmentKind:
     attached_model = Proposal
     attached_field = "attachments"
 
-    def __init__(self, object):
-        self.object = object
+    def __init__(self, obj):
+        self.object = obj
 
     def get_instances_for_proposal(self):
         manager = getattr(self.object, self.attached_field)
