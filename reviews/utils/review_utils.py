@@ -482,14 +482,6 @@ def auto_review(proposal: Proposal):
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
-        if study.stressful in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
-            reasons.append(
-                _(
-                    "De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op onderdelen of \
-als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen."
-                )
-            )
-
         if study.risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(
                 _(
