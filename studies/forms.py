@@ -193,7 +193,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             "risk_details",
         ]
         widgets = {
-            "knowlede_security": forms.RadioSelect(),
+            "knowledge_security": forms.RadioSelect(),
             "researcher_risk": forms.RadioSelect(),
             "deception": forms.RadioSelect(),
             "negativity": forms.RadioSelect(),
