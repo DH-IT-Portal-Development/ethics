@@ -2,7 +2,9 @@
 {% load i18n %}
 {% load fetc_filters %}
 
-<table class="pure-table" width="100%" style="">
+
+
+<table class="pure-table nostripes" width="100%" style="">
     <thead>
         <tr>
             <th width="20%">{% trans "Taak" %}</th>
@@ -17,11 +19,6 @@
             {% endif %}
         </tr>
     </thead>
-    <style>
-        tr {
-            background-color: #FFFFFF;
-        }
-    </style>
     <tbody>
         {% for task in session.task_set.all %}
             <tr>
@@ -51,7 +48,7 @@
 </table>
 {% if can_edit_tasks %}
     <div class="d-flex justify-content-center">
-        <div class="button mt-2 button-black">
+        <div class="button m-4 button-black">
             <a href="{% url 'tasks:create' session.pk %}">
                 {% blocktrans with session_order=session.order trimmed %}
                     Nieuwe taak toevoegen aan sessie {{ session_order }}
