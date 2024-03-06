@@ -319,9 +319,7 @@ a.icon-link {
     text-decoration: none;
 }
 
-.nostripes tbody tr {
-    background-color: #FFFFFF;
-}
 .nostripes tr:nth-of-type(n) {
     background-color: unset;
+    border-bottom: 1px solid #eeeeee;
 }
