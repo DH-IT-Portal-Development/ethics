@@ -5,7 +5,7 @@
     <div class="task_list mt-4 mb-4">
         <h2 class="pt-2">
             {% blocktrans with order=session.order duration=session.tasks_duration repeats=session.repeats trimmed %}
-            Sessie {{ order }}
+                Sessie {{ order }}
             {% endblocktrans %}
             {% if can_edit_sessions %}
                 <a href="{% url 'tasks:session_end' session.pk %}"
@@ -22,8 +22,11 @@
         </h5>
         <p>
             <em>
-                {% blocktrans with duration=session.tasks_duration repeats=session.repeats trimmed %}Totale brutoduur: {{ duration }}
-                minuten, aantal keer uit te voeren: {{ repeats }}{% endblocktrans %}</em>
+                {% blocktrans with duration=session.tasks_duration repeats=session.repeats trimmed %}
+                    Totale brutoduur: {{ duration }}
+                    minuten, aantal keer uit te voeren: {{ repeats }}
+                {% endblocktrans %}
+            </em>
         </p>
         {% include "tasks/task_list.html" %}
     </div>
