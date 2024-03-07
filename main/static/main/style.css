@@ -318,3 +318,8 @@ a.icon-link {
 .text-decoration-none {
     text-decoration: none;
 }
+
+.nostripes tr:nth-of-type(n) {
+    background-color: unset;
+    border-bottom: 1px solid #eeeeee;
+}

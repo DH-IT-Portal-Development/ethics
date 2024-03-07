@@ -18,9 +18,9 @@
             <p>
                 <em>{% trans "Vanuit dit overzicht is het mogelijk om je sessie te bewerken of om taken aan te maken, te bewerken en te verwijderen." %}</em>
             </p>
-            <div class="task_list">
-                <h5 class="mt-2">{% trans "Sessie overzicht:" %}</h5>
-                <table class="pure-table" width="100%">
+            <div class="task_list mt-4 mb-4">
+                <h2 class="mt-3">{% trans "Over de sessie" %}</h2>
+                <table class="pure-table nostripes" width="100%">
                     <thead>
                         <tr>
                             <th width="80%">{% trans "Setting" %}</th>
@@ -41,8 +41,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <hr>
-                <h5 class="mt-2">{% trans "Taken overzicht:" %}</h5>
+            </div>
+            <div class="task_list mt-4 mb-4">
+                <h3 class="mt-3">{% trans "Taken" %}</h3>
                 {% include "tasks/task_list.html" %}
             </div>
             <p>{% trans "Beantwoord op basis van dit overzicht de volgende vragen:" %}</p>
