@@ -60,24 +60,26 @@
                                          title="{% trans 'Interventie bewerken' %}">
                                 </a>
                             </h4>
-                            <table class="mb-3">
-                                <thead>
-                                    <tr>
-                                        <th>{% trans "Setting" %}</th>
-                                        <th>{% trans "Aantal sessies (per week)" %}</th>
-                                        <th>{% trans "Duur per sessie (in minuten)" %}</th>
-                                        <th>{% trans "Controlegroep?" %}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>{{ intervention.setting.all|create_unordered_html_list }}</td>
-                                        <td>{{ intervention.amount_per_week }}</td>
-                                        <td>{{ intervention.duration }}</td>
-                                        <td>{{ intervention.has_controls|yesno:_("ja, nee") }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="task_list mt-4 mb-4">
+                                <table class="pure-table nostripes mt-2" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>{% trans "Setting" %}</th>
+                                            <th>{% trans "Aantal sessies (per week)" %}</th>
+                                            <th>{% trans "Duur per sessie (in minuten)" %}</th>
+                                            <th>{% trans "Controlegroep?" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ intervention.setting.all|create_unordered_html_list }}</td>
+                                            <td>{{ intervention.amount_per_week }}</td>
+                                            <td>{{ intervention.duration }}</td>
+                                            <td>{{ intervention.has_controls|yesno:_("ja, nee") }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </li>
                     {% endwith %}
                 {% endif %}
@@ -91,36 +93,38 @@
                                          title="{% trans 'Observatie bewerken' %}">
                                 </a>
                             </h4>
-                            <table class="mb-3">
-                                <thead>
-                                    <tr>
-                                        <th>{% trans "Setting" %}</th>
-                                        <th>{% trans "Aantal dagen" %}</th>
-                                        <th>{% trans "Duur per sessie (in uren)" %}</th>
-                                        <th>{% trans "Anoniem?" %}</th>
-                                        <th>{% trans "Doelgroep?" %}</th>
-                                        <th>{% trans "Niet openbaar?" %}</th>
-                                        <th>{% trans "Toestemming nodig?" %}</th>
-                                        {% if observation.needs_approval %}
-                                            <th>{% trans "Instantie" %}</th>
-                                        {% endif %}
-                                        <th>{% trans "Registratie via" %}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>{{ observation.setting.all|create_unordered_html_list }}</td>
-                                        <td>{{ observation.days }}</td>
-                                        <td>{{ observation.mean_hours }}</td>
-                                        <td>{{ observation.is_anonymous|yesno:_("ja, nee") }}</td>
-                                        <td>{{ observation.is_in_target_group|yesno:_("ja, nee") }}</td>
-                                        <td>{{ observation.is_nonpublic_space|yesno:_("ja, nee") }}</td>
-                                        <td>{{ observation.needs_approval|yesno:_("ja, nee") }}</td>
-                                        {% if observation.needs_approval %}<td>{{ observation.approval_institution }}</td>{% endif %}
-                                        <td>{{ observation.registrations.all|create_unordered_html_list }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="task_list mt-4 mb-4">
+                                <table class="pure-table nostripes mt-2" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th>{% trans "Setting" %}</th>
+                                            <th>{% trans "Aantal dagen" %}</th>
+                                            <th>{% trans "Duur per sessie (in uren)" %}</th>
+                                            <th>{% trans "Anoniem?" %}</th>
+                                            <th>{% trans "Doelgroep?" %}</th>
+                                            <th>{% trans "Niet openbaar?" %}</th>
+                                            <th>{% trans "Toestemming nodig?" %}</th>
+                                            {% if observation.needs_approval %}
+                                                <th>{% trans "Instantie" %}</th>
+                                            {% endif %}
+                                            <th>{% trans "Registratie via" %}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>{{ observation.setting.all|create_unordered_html_list }}</td>
+                                            <td>{{ observation.days }}</td>
+                                            <td>{{ observation.mean_hours }}</td>
+                                            <td>{{ observation.is_anonymous|yesno:_("ja, nee") }}</td>
+                                            <td>{{ observation.is_in_target_group|yesno:_("ja, nee") }}</td>
+                                            <td>{{ observation.is_nonpublic_space|yesno:_("ja, nee") }}</td>
+                                            <td>{{ observation.needs_approval|yesno:_("ja, nee") }}</td>
+                                            {% if observation.needs_approval %}<td>{{ observation.approval_institution }}</td>{% endif %}
+                                            <td>{{ observation.registrations.all|create_unordered_html_list }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </li>
                     {% endwith %}
                 {% endif %}

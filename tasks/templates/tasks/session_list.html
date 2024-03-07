@@ -3,7 +3,7 @@
 
 {% for session in study.session_set.all %}
     <div class="task_list mt-4 mb-4">
-        <h2 class="pt-2">
+        <h3 class="mt-2">
             {% blocktrans with order=session.order duration=session.tasks_duration repeats=session.repeats trimmed %}
                 Sessie {{ order }}
             {% endblocktrans %}
@@ -19,7 +19,7 @@
                          title="{% trans 'Sessie verwijderen' %}">
                 </a>
             {% endif %}
-        </h5>
+        </h3>
         <p>
             <em>
                 {% blocktrans with duration=session.tasks_duration repeats=session.repeats trimmed %}
