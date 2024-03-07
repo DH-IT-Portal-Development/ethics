@@ -38,18 +38,11 @@ class TaskUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
     template_name = "tasks/task_update.html"
     success_message = _("Taak bewerkt")
 
-    def get_success_url(self):
-        """Sets the success_url based on the submit button pressed"""
-        if "create_new_task" in self.request.POST:
-            return reverse("tasks:create", args=(self.object.session.pk,))
-        else:
-            return super().get_success_url()
-
     def get_next_url(self):
         return reverse("tasks:session_end", args=(self.object.session.pk,))
 
     def get_back_url(self):
-        return reverse("tasks:session_update", args=(self.object.session.pk,))
+        return reverse("tasks:session_end", args=(self.object.session.pk,))
 
 
 class TaskDelete(DeleteView):

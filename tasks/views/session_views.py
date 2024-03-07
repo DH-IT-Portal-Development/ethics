@@ -113,7 +113,7 @@ class SessionUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
             return reverse("tasks:session_end", args=(self.object.pk,))
 
     def get_back_url(self):
-        return reverse("tasks:session_overview", args=(self.object.study.pk))
+        return reverse("tasks:session_overview", args=(self.object.study.pk,))
 
 
 class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
@@ -137,18 +137,11 @@ class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
 
         return kwargs
 
-    def get_success_url(self):
-        """Sets the success_url based on the submit button pressed"""
-        if "create_new_session" in self.request.POST:
-            return reverse("tasks:session_create", args=(self.object.study.pk,))
-        else:
-            return super().get_success_url()
-
     def get_next_url(self):
         return reverse("tasks:session_overview", args=(self.object.study.pk,))
 
     def get_back_url(self):
-        return reverse("tasks:session_start", args=(self.object.last_task().pk,))
+        return reverse("tasks:session_start", args=(self.object.study.pk,))
 
 
 class SessionOverview(AllowErrorsOnBackbuttonMixin, UpdateView):
