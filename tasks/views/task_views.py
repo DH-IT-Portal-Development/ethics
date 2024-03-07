@@ -4,35 +4,16 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 
-from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
+from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView, CreateView
 from ..forms import TaskForm
 from ..models import Task, Session
-
-from cdh.core.views import RedirectActionView
 
 
 ######################
 # CRUD actions on Task
 ######################
 
-
-class TaskCreate(RedirectActionView):
-    """Creates a task, from a session pk and redirects to TaskUpdate()
-    for that task."""
-
-    def action(self, request):
-        session = Session.objects.get(pk=self.kwargs["pk"])
-        order = session.task_set.count() + 1
-        self.task = Task.objects.create(order=order, session=session)
-
-    def get_redirect_url(self, *args, **kwargs):
-        super().get_redirect_url(*args, **kwargs)
-        return reverse("tasks:update", args=[self.task.pk])
-
-
-class TaskUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
-    """Updates a Task"""
-
+class TaskMixin(AllowErrorsOnBackbuttonMixin):
     model = Task
     form_class = TaskForm
     template_name = "tasks/task_update.html"
@@ -44,6 +25,21 @@ class TaskUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
     def get_back_url(self):
         return reverse("tasks:session_end", args=(self.object.session.pk,))
 
+class TaskCreate(TaskMixin, CreateView):
+    
+    def form_valid(self, form):
+        """Saves the Proposal on the WMO instance"""
+        session = self.get_session()
+        form.instance.session = session
+        form.instance.order = session.task_set.count() + 1
+        return super(TaskCreate, self).form_valid(form)
+
+    def get_session(self):
+        """Retrieves the Study from the pk kwarg"""
+        return Session.objects.get(pk=self.kwargs["pk"])
+
+class TaskUpdate(TaskMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
+    pass
 
 class TaskDelete(DeleteView):
     """Deletes a Task"""

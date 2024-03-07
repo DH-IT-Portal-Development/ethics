@@ -6,12 +6,9 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
 from django.forms import ModelForm
 
-from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
+from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView, CreateView
 from ..forms import SessionUpdateForm, SessionEndForm
-from ..models import Session, Task, Study
-from ..utils import copy_task_to_session
-
-from cdh.core.views import RedirectActionView
+from ..models import Session, Study
 
 
 ######################
@@ -78,43 +75,44 @@ class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
         return reverse(next_url, args=(pk,))
 
 
-class SessionCreate(RedirectActionView):
-    """Creates a session, from a study pk and redirects to SessionUpdate()
-    for that session."""
-
-    def action(self, request):
-        study = Study.objects.get(pk=self.kwargs["pk"])
-        order = study.session_set.count() + 1
-        self.session = Session.objects.create(order=order, study=study)
-
-    def get_redirect_url(self, *args, **kwargs):
-        super().get_redirect_url(*args, **kwargs)
-        return reverse("tasks:session_update", args=[self.session.pk])
-
-
-class SessionUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
-    """Initial creation of Tasks for a Session"""
+class SessionMixin:
 
     model = Session
     form_class = SessionUpdateForm
     template_name = "tasks/session_update.html"
+
+    def get_next_url(self):
+        return reverse("tasks:session_end", args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse("tasks:session_overview", args=(self.object.study.pk,))
+
+class SessionCreate(SessionMixin, AllowErrorsOnBackbuttonMixin, CreateView):
+
+    def get_form_kwargs(self):
+        """Sets the Study as a form kwarg"""
+        kwargs = super(SessionCreate, self).get_form_kwargs()
+        kwargs["study"] = self.get_study()
+        return kwargs
+
+    def form_valid(self, form):
+        """Saves the Proposal on the WMO instance"""
+        study = self.get_study()
+        form.instance.study = study
+        form.instance.order = study.session_set.count() + 1
+        return super(SessionCreate, self).form_valid(form)
+
+    def get_study(self):
+        """Retrieves the Study from the pk kwarg"""
+        return Study.objects.get(pk=self.kwargs["pk"])
+
+class SessionUpdate(SessionMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
 
     def get_form_kwargs(self):
         """Sets the Study as a form kwarg"""
         kwargs = super(SessionUpdate, self).get_form_kwargs()
         kwargs["study"] = self.object.study
         return kwargs
-
-    def get_next_url(self):
-        tasks = self.object.task_set.all()
-        if tasks.count() == 0:
-            return reverse("tasks:create", args=(self.object.pk,))
-        else:
-            return reverse("tasks:session_end", args=(self.object.pk,))
-
-    def get_back_url(self):
-        return reverse("tasks:session_overview", args=(self.object.study.pk,))
-
 
 class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Completes a Session"""
