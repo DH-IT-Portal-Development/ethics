@@ -261,7 +261,10 @@ sphinx==7.2.6
     #   -r requirements.in
     #   sphinx-rtd-theme
     #   sphinxcontrib-apidoc
+    #   sphinxcontrib-applehelp
+    #   sphinxcontrib-devhelp
     #   sphinxcontrib-django
+    #   sphinxcontrib-htmlhelp
     #   sphinxcontrib-jquery
 sphinx-rtd-theme==2.0.0
     # via -r requirements.in
