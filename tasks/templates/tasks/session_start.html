@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block header_title %}
-    {% trans "Het takenonderzoek en interviews" %} - {{ block.super }}
+    {% trans "Het takenonderzoek en/of interviews" %} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
@@ -13,33 +13,31 @@
             {% with nav_items=object.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>{% trans "Het takenonderzoek en interviews" %}</h2>
+            <h2>{% trans "Het takenonderzoek en/of interviews" %}</h2>
             {% include "studies/study_title.html" %}
             <p>
                 {% blocktrans trimmed %}
-                    In de volgende vragen gaan we nader in op wat je in jouw onderzoek van je deelnemers zal verlangen. Daarbij gelden de volgende definities:
+                Een traject bestaat uit één of meer sessies. Een sessie bestaat uit één of meer taken.
                 {% endblocktrans %}
             </p>
             <p>
                 {% blocktrans trimmed %}
-                    <strong>Sessie:</strong> Het geheel van de voor je onderzoek benodigde betrokkenheid die je op één dag van een deelnemer vraagt. Bij een labonderzoek is dat bijvoorbeeld alles wat er van onderzoekswege gebeurt vanaf het moment dat je de deelnemer ontvangt tot het moment dat je afscheid neemt, inclusief de benodigde pauzes. En bij een internet-vragenlijst is dat alles wat er van onderzoekswege gebeurt vanaf het welkomstscherm tot de afronding van de (reeks) vragenlijst(en), wederom inclusief benodigde pauzes. Bij veldwerk is dat de tijd dat je met de deelnemer in interactie bent op één dag.
+                    <strong>Sessie:</strong> Alle taken/onderdelen die iemand op één dag uitvoert.
                 {% endblocktrans %}
             </p>
             <p>
                 {% blocktrans trimmed %}
-                    <strong>Taak:</strong> Een coherente verzameling handelingen die je via een gesproken of geschreven taak-instructie aan de deelnemer oplegt, en ook als zodanig als 'taak' in een artikel zou beschrijven (bijvoorbeeld: "Beluister de volgende 200 zinnetjes en druk op een knop als je een fout ontdekt", "Vul persoonlijkheidsvragenlijst X in", "Speel 10 minuten met je kind zoals je dat thuis doet", “houd 1 week een dagboek bij van jouw media-gebruik”, “wil je je gender identiteit beschrijven”, “maak foto’s van plekken in jouw leefomgeving die je bedreigend en inspirerend vindt”, “zoek en deel met ons 10 foto’s uit jouw prive-archief om je levensverhaal te kunnen vertellen”). Indien de specifieke opdracht aan de deelnemer per item varieert (bijvoorbeeld: "bij een Nederlandse zin beoordeel je de betekenis, bij een Engelse zin de grammatica"), beschouw dit dan gewoon als één taak.
+                    <strong>Taak:</strong> Eén taak of onderdeel van je onderzoek. Bijvoorbeeld: het invullen van een vragenlijst, een interview, of een taaltest.
                 {% endblocktrans %}
             </p>
             <p>
                 {% blocktrans trimmed %}
-                    Je kan op de volgende pagina vanuit een centraal overzicht beginnen met sessies aanmaken. Binnen elke sessie kun je taken toevoegen. Als je klaar bent met een het bewerken van een sessie, kom je weer terug naar het globale overzicht.
+                    Je kan op de volgende pagina, de overzichtspagina van sessies en taken, beginnen met het aanmaken van sessies. Binnen elke sessie kun je taken aanmaken. Als je klaar bent met het aanmaken van een sessie keer je terug op de overzichtspagina van sessies en taken.
                 {% endblocktrans %}
             </p>
             <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                {% with proposal=study.proposal %}
-                    {% include "base/form_buttons.html" %}
-                {% endwith %}
+                {% include "base/form_buttons.html" %}
             </form>
         </div>
     </div>
