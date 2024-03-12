@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 
+from typing import Any
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
@@ -19,6 +20,23 @@ class TaskMixin(AllowErrorsOnBackbuttonMixin):
     template_name = "tasks/task_update.html"
     success_message = _("Taak bewerkt")
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        session = self.get_session()
+        context["session"] = session
+        try:
+            context["order"] = self.object.order
+        except AttributeError:
+            context["order"] = session.task_set.count() + 1
+        context["session_order"] = session.order
+        context["study_order"] = session.study.order
+        context["study_name"] = session.study.name
+        context["studies_number"] = session.study.proposal.studies_number
+        return context
+    
+    def get_session(self):
+        return self.object.session
+    
     def get_next_url(self):
         return reverse("tasks:session_end", args=(self.object.session.pk,))
 
@@ -38,7 +56,7 @@ class TaskCreate(TaskMixin, CreateView):
         """Retrieves the Study from the pk kwarg"""
         return Session.objects.get(pk=self.kwargs["pk"])
 
-class TaskUpdate(TaskMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
+class TaskUpdate(TaskMixin, UpdateView):
     pass
 
 class TaskDelete(DeleteView):

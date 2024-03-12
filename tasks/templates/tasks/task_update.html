@@ -21,7 +21,7 @@ $(function() {
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            {% with nav_items=task.session.study.proposal.available_urls active=3 %}
+            {% with nav_items=session.study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
             <h2>{% trans "Het takenonderzoek en interviews" %}</h2>

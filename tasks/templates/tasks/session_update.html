@@ -10,7 +10,7 @@
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            {% with nav_items=session.study.proposal.available_urls active=3 %}
+            {% with nav_items=study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
             <h2>{% trans "Het takenonderzoek en interviews" %}</h2>
@@ -22,9 +22,7 @@
                     {{ form.as_table }}
                 </table>
                 <p>{% trans "Voor elke taak stellen we in de komende schermen steeds dezelfde vragen." %}</p>
-                {% with proposal=session.study.proposal study=session.study %}
-                    {% include "base/form_buttons.html" %}
-                {% endwith %}
+                {% include "base/form_buttons.html" %}
             </form>
         </div>
     </div>
