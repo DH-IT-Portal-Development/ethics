@@ -7,15 +7,17 @@ from studies.utils import check_has_adults, check_necessity_required
 
 register = template.Library()
 
+
 @register.filter
-def needs_details(selected_values, field='needs_details'):
+def needs_details(selected_values, field="needs_details"):
     for sv in selected_values:
         if getattr(sv, field):
             return True
     return False
 
+
 @register.filter
-def medical_traits(selected_values, field='medical_traits'):
+def medical_traits(selected_values, field="medical_traits"):
     for sv in selected_values:
         if getattr(sv, field):
             return True
@@ -24,24 +26,24 @@ def medical_traits(selected_values, field='medical_traits'):
 
 @register.filter
 def has_adults(study):
-    age_groups = study.age_groups.values_list('id', flat=True)
+    age_groups = study.age_groups.values_list("id", flat=True)
     return check_has_adults(age_groups)
 
 
 @register.filter
 def necessity_required(study):
-    age_groups = study.age_groups.values_list('id', flat=True)
+    age_groups = study.age_groups.values_list("id", flat=True)
     return check_necessity_required(study.proposal, age_groups, study.legally_incapable)
 
 
 @register.simple_tag
 def show_yesno(doubt=False):
-    result = '<ul>'
-    result += '<li>{}</li>'.format('ja')
-    result += '<li>{}</li>'.format('nee')
+    result = "<ul>"
+    result += "<li>{}</li>".format("ja")
+    result += "<li>{}</li>".format("nee")
     if doubt:
-        result += '<li>{}</li>'.format('twijfel')
-    result += '</ul>'
+        result += "<li>{}</li>".format("twijfel")
+    result += "</ul>"
     return mark_safe(result)
 
 
@@ -71,7 +73,7 @@ class StudyDocumentsNode(template.Node):
                 ).objects.get(study=study)
             except (ObjectDoesNotExist, MultipleObjectsReturned):
                 context[self.var_name] = None
-        return u""
+        return ""
 
 
 @register.tag
@@ -101,9 +103,13 @@ class ExtraDocumentsNode(template.Node):
 
     def render(self, context):
         proposal = self.var_value.resolve(context)
-        context[self.var_name] = apps.get_model("studies", "Documents").objects.filter(proposal=proposal, study=None).all()
+        context[self.var_name] = (
+            apps.get_model("studies", "Documents")
+            .objects.filter(proposal=proposal, study=None)
+            .all()
+        )
 
-        return u""
+        return ""
 
 
 @register.tag
@@ -120,4 +126,3 @@ def get_extra_documents(parser, token):
     parts = token.split_contents()
 
     return ExtraDocumentsNode(parts[1], parts[2])
-

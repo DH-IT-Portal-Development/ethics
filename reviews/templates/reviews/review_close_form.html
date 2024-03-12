@@ -21,11 +21,9 @@
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h2>
-                {% trans "Review afsluiten" %}
-            </h2>
+            <h2>{% trans "Review afsluiten" %}</h2>
             <p>
-                {% blocktrans with title=review.proposal.title %}
+                {% blocktrans trimmed with title=review.proposal.title %}
                     Sluit hier de beoordeling van de aanvraag <em>{{ title }}</em> af. Hieronder volgen de individuele
                     beslissingen.
                 {% endblocktrans %}
@@ -33,19 +31,16 @@
             <h3>{% trans "Individuele beslissingen" %}</h3>
             {% include "reviews/review_table.html" %}
             <h3>{% trans "Uiteindelijk besluit" %}</h3>
-
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
                 <div class="float-right">
-                    <a class="button" href="javascript:history.go(-1);">
-                        {% trans "Terug naar de vorige pagina" %}
-                    </a>
-                    <input type="submit" value="{% trans 'Review afsluiten' %}"/>
+                    <a class="button" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+                    <input type="submit" value="{% trans 'Review afsluiten' %}" />
                 </div>
-
             </form>
         </div>
     </div>
-
-
 {% endblock %}

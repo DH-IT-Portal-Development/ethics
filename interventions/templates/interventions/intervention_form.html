@@ -45,12 +45,11 @@
             {% with nav_items=study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>
-                {% trans "Het interventieonderzoek" %}
-            </h2>
+            <h2>{% trans "Het interventieonderzoek" %}</h2>
             {% include "main/setting_checks.html" %}
             {% include "studies/study_title.html" %}
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <table>
                     {{ form.as_table }}
                     <tr>
@@ -58,10 +57,10 @@
                             <label for="id_extra_info"></label>
                         </th>
                         <td id="id_extra_info">
-                          {% blocktrans trimmed %}
-			  Als je dit nog niet gedaan hebt, zul je op de vorige pagina naast "interventie"
-			  ook "takenonderzoek" moeten aanvinken, om je aanvraag volledig in te vullen.
-			  {% endblocktrans %}
+                            {% blocktrans trimmed %}
+                                Als je dit nog niet gedaan hebt, zul je op de vorige pagina naast "interventie"
+                                ook "takenonderzoek" moeten aanvinken, om je aanvraag volledig in te vullen.
+                            {% endblocktrans %}
                         </td>
                     </tr>
                 </table>

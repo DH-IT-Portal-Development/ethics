@@ -6,15 +6,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('main', '0003_auto_20170601_0816'),
+        ("main", "0003_auto_20170601_0816"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='setting',
-            name='is_school',
+            model_name="setting",
+            name="is_school",
             field=models.BooleanField(default=False),
         ),
     ]

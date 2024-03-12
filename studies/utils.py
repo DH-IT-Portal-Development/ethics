@@ -18,7 +18,9 @@ def check_has_adults(selected_age_groups):
     """
     from .models import AgeGroup
 
-    adult_age_groups = AgeGroup.objects.filter(is_adult=True).values_list('id', flat=True)
+    adult_age_groups = AgeGroup.objects.filter(is_adult=True).values_list(
+        "id", flat=True
+    )
     return bool(set(selected_age_groups).intersection(adult_age_groups))
 
 
@@ -34,7 +36,9 @@ def check_necessity_required(proposal, age_groups, legally_incapable):
     if proposal.relation and not proposal.relation.needs_supervisor:
         result = False
     else:
-        required_values = AgeGroup.objects.filter(needs_details=True).values_list('id', flat=True)
+        required_values = AgeGroup.objects.filter(needs_details=True).values_list(
+            "id", flat=True
+        )
         result = bool(set(required_values).intersection(age_groups))
         result |= bool(legally_incapable)
     return result
@@ -45,7 +49,7 @@ def get_study_progress(study, is_end=False):
         return STUDY_PROGRESS_START
     progress = STUDY_PROGRESS_TOTAL / study.proposal.studies_number
     if not is_end:
-        progress *= (study.order - 1)
+        progress *= study.order - 1
     else:
         progress *= study.order
     return int(STUDY_PROGRESS_START + progress)
@@ -60,15 +64,15 @@ def study_urls(study, prev_study_completed):
     """
     urls = list()
 
-    study_url = AvailableURL(title=_('Deelnemers'))
+    study_url = AvailableURL(title=_("Deelnemers"))
     if study:
-        study_url.url = reverse('studies:update', args=(study.pk,))
+        study_url.url = reverse("studies:update", args=(study.pk,))
 
     urls.append(study_url)
 
-    design_url = AvailableURL(title=_('Onderzoekstype(n)'))
+    design_url = AvailableURL(title=_("Onderzoekstype(n)"))
     if study.compensation:
-        design_url.url = reverse('studies:design', args=(study.pk,))
+        design_url.url = reverse("studies:design", args=(study.pk,))
     urls.append(design_url)
 
     if study.has_intervention:
@@ -81,15 +85,15 @@ def study_urls(study, prev_study_completed):
         urls.append(session_urls(study))
 
     end_url = AvailableURL(
-        title=_('Overzicht'),
+        title=_("Overzicht"),
     )
 
     if prev_study_completed:
-        end_url.url = reverse('studies:design_end', args=(study.pk,))
+        end_url.url = reverse("studies:design_end", args=(study.pk,))
     urls.append(end_url)
 
     return AvailableURL(
-        title=_('Traject {}').format(study.order),
+        title=_("Traject {}").format(study.order),
         is_title=True,
         children=urls,
     )
@@ -117,7 +121,9 @@ def copy_study_to_proposal(proposal, original_study):
     traits = original_study.traits.all()
     compensation = original_study.compensation
     recruitment = original_study.recruitment.all()
-    intervention = original_study.intervention if original_study.has_intervention else None
+    intervention = (
+        original_study.intervention if original_study.has_intervention else None
+    )
     observation = original_study.observation if original_study.has_observation else None
     sessions = original_study.session_set.all() if original_study.has_sessions else []
 

@@ -5,20 +5,26 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0039_auto_20220830_1526'),
+        ("proposals", "0039_auto_20220830_1526"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='proposal',
-            name='student_context_details',
-            field=models.CharField(blank=True, max_length=200, null=True, verbose_name='Namelijk:'),
+            model_name="proposal",
+            name="student_context_details",
+            field=models.CharField(
+                blank=True, max_length=200, null=True, verbose_name="Namelijk:"
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='relation',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='proposals.relation', verbose_name='In welke hoedanigheid ben je betrokken bij dit onderzoek?'),
+            model_name="proposal",
+            name="relation",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="proposals.relation",
+                verbose_name="In welke hoedanigheid ben je betrokken bij dit onderzoek?",
+            ),
         ),
     ]

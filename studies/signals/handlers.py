@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from studies.models import Documents, Study
 from studies.utils import create_documents_for_study as create_document_object
 
+
 @receiver(post_save, sender=Study)
 def create_documents_for_study(sender, instance, **kwargs):
     documents = Documents.objects.filter(study=instance)

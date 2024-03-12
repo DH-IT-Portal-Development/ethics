@@ -7,16 +7,13 @@
     {% trans "Overzicht van het takenonderzoek" %} - {{ block.super }}
 {% endblock %}
 
-
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
             {% with nav_items=session.study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>
-                {% trans "Overzicht van het takenonderzoek" %}
-            </h2>
+            <h2>{% trans "Overzicht van het takenonderzoek" %}</h2>
             {% include "tasks/session_title.html" %}
             <div class="task_list">
                 <p>
@@ -25,13 +22,15 @@
                 {% include "tasks/task_list.html" %}
             </div>
             <p>{% trans "Beantwoord op basis van dit overzicht de volgende vragen:" %}</p>
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
                 {% with proposal=session.study.proposal study=session.study %}
-                {% include "base/form_buttons.html" %}
+                    {% include "base/form_buttons.html" %}
                 {% endwith %}
             </form>
         </div>
     </div>
-
 {% endblock %}

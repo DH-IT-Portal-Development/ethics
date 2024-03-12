@@ -5,25 +5,42 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('studies', '0015_auto_20210125_1159'),
+        ("studies", "0015_auto_20210125_1159"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='study',
-            name='age_groups',
-            field=models.ManyToManyField(blank=True, help_text='De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen.', to='studies.AgeGroup', verbose_name='Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?'),
+            model_name="study",
+            name="age_groups",
+            field=models.ManyToManyField(
+                blank=True,
+                help_text="De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet u hier hier 4-5 én 6-11 invullen.",
+                to="studies.AgeGroup",
+                verbose_name="Uit welke leeftijdscategorie(ën) bestaat uw deelnemersgroep?",
+            ),
         ),
         migrations.AlterField(
-            model_name='study',
-            name='legally_incapable',
-            field=models.BooleanField(blank=True, default=False, help_text='Wilsonbekwame volwassenen zijn volwassenen waarvan redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag worden aangenomen dat informed consent niet goed gerealiseerd kan worden (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). Hier dient in ieder geval altijd informed consent van een relevante vertegenwoordiger te worden verkregen.', verbose_name='Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?'),
+            model_name="study",
+            name="legally_incapable",
+            field=models.BooleanField(
+                blank=True,
+                default=False,
+                help_text="Wilsonbekwame volwassenen zijn volwassenen waarvan redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag worden aangenomen dat informed consent niet goed gerealiseerd kan worden (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). Hier dient in ieder geval altijd informed consent van een relevante vertegenwoordiger te worden verkregen.",
+                verbose_name="Maakt uw studie gebruik van wils<u>on</u>bekwame (volwassen) deelnemers?",
+            ),
         ),
         migrations.AlterField(
-            model_name='study',
-            name='sessions_number',
-            field=models.PositiveIntegerField(help_text='Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken of andere taak/taken te doen, dan spreken we van twee sessies. Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.', null=True, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(100)], verbose_name='Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?'),
+            model_name="study",
+            name="sessions_number",
+            field=models.PositiveIntegerField(
+                help_text="Wanneer u bijvoorbeeld eerst de deelnemer een taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en u laat de deelnemer nog een keer terugkomen om dezelfde taak/taken of andere taak/taken te doen, dan spreken we van twee sessies. Wanneer u meerdere taken afneemt op dezelfde dag, met pauzes daartussen, dan geldt dat toch als één sessie.",
+                null=True,
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(100),
+                ],
+                verbose_name="Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?",
+            ),
         ),
     ]

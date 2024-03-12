@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block html_head %}
-<script>
+    <script>
 $(function() {
     depends_on_hidden_value('passive_consent', 'True', 'passive_consent_details');
     depends_on_hidden_value('passive_consent', 'True', 'director_consent_declaration');
@@ -17,26 +17,30 @@ $(function() {
     depends_on_hidden_value('passive_consent', 'False', 'informed_consent');
     depends_on_hidden_value('passive_consent', 'False', 'briefing');
 });
-</script>
+    </script>
 {% endblock %}
 
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h2>
-                {% trans "Formulieren aanpassen" %}
-            </h2>
+            <h2>{% trans "Formulieren aanpassen" %}</h2>
             <p>
                 {% blocktrans trimmed with title=study.proposal.title ref_number=study.proposal.reference_number order=study.order %}
-                Op deze pagina kan je de formulieren aanpassen behorende bij de aanvraag {{ title }}
-                (referentienummer <em>{{ ref_number }}</em>), traject {{ order }}.
+                    Op deze pagina kan je de formulieren aanpassen behorende bij de aanvraag {{ title }}
+                    (referentienummer <em>{{ ref_number }}</em>), traject {{ order }}.
                 {% endblocktrans %}
             </p>
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
                 <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}">
-                <input class="pure-button pure-button-primary" type="submit" value="{% trans 'Formulieren aanpassen' %}" />
-                <a class="pure-button pure-button-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+                <input class="pure-button pure-button-primary"
+                       type="submit"
+                       value="{% trans 'Formulieren aanpassen' %}" />
+                <a class="pure-button pure-button-secondary"
+                   href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
             </form>
         </div>
     </div>

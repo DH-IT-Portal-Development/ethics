@@ -6,14 +6,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('studies', '0007_auto_20180808_1129'),
+        ("studies", "0007_auto_20180808_1129"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='agegroup',
-            options={'ordering': ('age_min',)},
+            name="agegroup",
+            options={"ordering": ("age_min",)},
         ),
     ]

@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block html_head %}
-<script>
+    <script>
 $(function() {
     $('input[name=age_groups]').change();
 
@@ -68,7 +68,7 @@ $(function() {
     });
     $('input[name=age_groups], input[name=legally_incapable]').change();
 });
-</script>
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -77,25 +77,23 @@ $(function() {
             {% with nav_items=study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-
-            <h2>
-                {% trans "De deelnemers" %}
-            </h2>
-
+            <h2>{% trans "De deelnemers" %}</h2>
             {% include "studies/study_title.html" %}
-
             {% if not study.proposal.relation %}
                 <div class="warning">
                     {% url 'proposals:update' study.proposal.pk as url %}
-                    {% blocktrans %}
+                    {% blocktrans trimmed %}
                         Let op! Je hebt de vraag <a href="{{ url }}">'In welke hoedanigheid ben je betrokken bij deze aanvraag?'</a> nog niet ingevuld, waardoor deze pagina nog kan veranderen op basis van je antwoord.
                     {% endblocktrans %}
                 </div>
             {% endif %}
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
                 {% with proposal=study.proposal %}
-                {% include "base/form_buttons.html" %}
+                    {% include "base/form_buttons.html" %}
                 {% endwith %}
             </form>
         </div>

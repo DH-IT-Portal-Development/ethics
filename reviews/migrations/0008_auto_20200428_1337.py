@@ -4,25 +4,40 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('reviews', '0007_auto_20190401_1343'),
+        ("reviews", "0007_auto_20190401_1343"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='review',
-            name='continuation',
-            field=models.PositiveIntegerField(choices=[(0, 'Goedkeuring door FETC-GW'), (1, 'Revisie noodzakelijk'), (2, 'Afwijzing door FETC-GW'), (3, 'Open review met lange (4-weken) route'), (4, 'Laat opnieuw beoordelen door METC'), (5, 'Positief advies van FETC-GW, post-hoc'), (6, 'Negatief advies van FETC-GW, post-hoc')], default=0, verbose_name='Afhandeling'),
+            model_name="review",
+            name="continuation",
+            field=models.PositiveIntegerField(
+                choices=[
+                    (0, "Goedkeuring door FETC-GW"),
+                    (1, "Revisie noodzakelijk"),
+                    (2, "Afwijzing door FETC-GW"),
+                    (3, "Open review met lange (4-weken) route"),
+                    (4, "Laat opnieuw beoordelen door METC"),
+                    (5, "Positief advies van FETC-GW, post-hoc"),
+                    (6, "Negatief advies van FETC-GW, post-hoc"),
+                ],
+                default=0,
+                verbose_name="Afhandeling",
+            ),
         ),
         migrations.AlterField(
-            model_name='review',
-            name='go',
-            field=models.BooleanField(blank=True, default=None, null=True, verbose_name='Beslissing'),
+            model_name="review",
+            name="go",
+            field=models.BooleanField(
+                blank=True, default=None, null=True, verbose_name="Beslissing"
+            ),
         ),
         migrations.AlterField(
-            model_name='review',
-            name='short_route',
-            field=models.BooleanField(blank=True, default=None, null=True, verbose_name='Route'),
+            model_name="review",
+            name="short_route",
+            field=models.BooleanField(
+                blank=True, default=None, null=True, verbose_name="Route"
+            ),
         ),
     ]

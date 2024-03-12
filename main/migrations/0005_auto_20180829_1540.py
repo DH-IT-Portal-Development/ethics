@@ -6,15 +6,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('main', '0004_setting_is_school'),
+        ("main", "0004_setting_is_school"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='setting',
-            name='is_school',
-            field=models.BooleanField(default=False, verbose_name='Needs external permission'),
+            model_name="setting",
+            name="is_school",
+            field=models.BooleanField(
+                default=False, verbose_name="Needs external permission"
+            ),
         ),
     ]
