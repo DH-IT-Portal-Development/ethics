@@ -85,7 +85,7 @@ class SessionMixin(AllowErrorsOnBackbuttonMixin):
         context = super().get_context_data(**kwargs)
         context["study"] = self.get_study()
         return context
-    
+
     def get_study(self):
         return self.object.study
 
@@ -94,6 +94,7 @@ class SessionMixin(AllowErrorsOnBackbuttonMixin):
 
     def get_back_url(self):
         return reverse("tasks:session_overview", args=(self.object.study.pk,))
+
 
 class SessionCreate(SessionMixin, CreateView):
 
@@ -114,6 +115,7 @@ class SessionCreate(SessionMixin, CreateView):
         """Retrieves the Study from the pk kwarg"""
         return Study.objects.get(pk=self.kwargs["pk"])
 
+
 class SessionUpdate(SessionMixin, UpdateView):
 
     def get_form_kwargs(self):
@@ -121,6 +123,7 @@ class SessionUpdate(SessionMixin, UpdateView):
         kwargs = super(SessionUpdate, self).get_form_kwargs()
         kwargs["study"] = self.object.study
         return kwargs
+
 
 class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Completes a Session"""

@@ -14,6 +14,7 @@ from ..models import Task, Session
 # CRUD actions on Task
 ######################
 
+
 class TaskMixin(AllowErrorsOnBackbuttonMixin):
     model = Task
     form_class = TaskForm
@@ -33,18 +34,19 @@ class TaskMixin(AllowErrorsOnBackbuttonMixin):
         context["study_name"] = session.study.name
         context["studies_number"] = session.study.proposal.studies_number
         return context
-    
+
     def get_session(self):
         return self.object.session
-    
+
     def get_next_url(self):
         return reverse("tasks:session_end", args=(self.object.session.pk,))
 
     def get_back_url(self):
         return reverse("tasks:session_end", args=(self.object.session.pk,))
 
+
 class TaskCreate(TaskMixin, CreateView):
-    
+
     def form_valid(self, form):
         """Saves the Proposal on the WMO instance"""
         session = self.get_session()
@@ -56,8 +58,10 @@ class TaskCreate(TaskMixin, CreateView):
         """Retrieves the Study from the pk kwarg"""
         return Session.objects.get(pk=self.kwargs["pk"])
 
+
 class TaskUpdate(TaskMixin, UpdateView):
     pass
+
 
 class TaskDelete(DeleteView):
     """Deletes a Task"""
