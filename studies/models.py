@@ -290,26 +290,27 @@ dan geldt dat toch als één sessie."
     )
 
     knowledge_security = models.CharField(
-        _(
-            "Zijn er kwesties rondom kennisveiligheid?"
-        ),
-        help_text = mark_safe_lazy(
-                _(
-            "Kennisveiligheid gaat over het tijdig signaleren en mitigeren \
+        _("Zijn er kwesties rondom kennisveiligheid?"),
+        help_text=mark_safe_lazy(
+            _(
+                "Kennisveiligheid gaat over het tijdig signaleren en mitigeren \
             van veiligheidsrisico's bij wetenschappelijk onderzoek. Klik \
             <a href='https://intranet.uu.nl/kennisbank/kennisveiligheid'>hier</a> \
             voor meer informatie."
-        )),
+            )
+        ),
         max_length=1,
         choices=YesNoDoubt.choices,
         blank=True,
     )
-    knowledge_security_details = models.TextField(_("Licht toe"), max_length=200, blank=True)
+    knowledge_security_details = models.TextField(
+        _("Licht toe"), max_length=200, blank=True
+    )
     researcher_risk = models.CharField(
         _(
             "Zijn er kwesties rondom de veiligheid van of risico's voor de onderzoeker(s)?"
         ),
-        help_text = _(
+        help_text=_(
             "Houd hierbij niet alleen rekening met mogelijke psychische of \
             fysieke schade, maar ook met andere mogelijke schade, zoals bijv. \
             hiërarchische machtsverhoudingen in veldwerk, mogelijke negatieve \
@@ -321,7 +322,9 @@ dan geldt dat toch als één sessie."
         choices=YesNoDoubt.choices,
         blank=True,
     )
-    researcher_risk_details = models.TextField(_("Licht toe"), max_length=200, blank=True)
+    researcher_risk_details = models.TextField(
+        _("Licht toe"), max_length=200, blank=True
+    )
     deception = models.CharField(
         _(
             "Is er binnen bovenstaand onderzoekstraject sprake van \
@@ -361,14 +364,15 @@ zal worden gedebrieft."
     )
     negativity_details = models.TextField(
         _("Licht toe"),
-        help_text = _(
+        help_text=_(
             "Geef concrete voorbeelden van de relevante aspecten van jouw \
             onderzoek (bijv. voorbeelden van mogelijk zeer kwetsende woorden \
             of uitspraken in de taak; zeer confronterende vragen in een \
             vragenlijst; negatieve feedback), zodat de commissie zich een \
             goed beeld kan vormen."
         ),
-        blank=True)
+        blank=True,
+    )
 
     risk = models.CharField(
         _(

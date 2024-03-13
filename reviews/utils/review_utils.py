@@ -506,7 +506,7 @@ def auto_review(proposal: Proposal):
                     en/of onderzoekers kunnen veroorzaken."
                 )
             )
-        
+
         if study.risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(
                 _(

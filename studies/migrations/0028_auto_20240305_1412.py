@@ -6,56 +6,93 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('studies', '0027_auto_20230227_1425'),
+        ("studies", "0027_auto_20230227_1425"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='study',
-            name='stressful',
+            model_name="study",
+            name="stressful",
         ),
         migrations.RemoveField(
-            model_name='study',
-            name='stressful_details',
+            model_name="study",
+            name="stressful_details",
         ),
         migrations.AddField(
-            model_name='study',
-            name='knowledge_security',
-            field=models.CharField(blank=True, choices=[('Y', 'ja'), ('N', 'nee'), ('?', 'twijfel')], help_text="Kennisveiligheid gaat over het tijdig signaleren en mitigeren             van veiligheidsrisico's bij wetenschappelijk onderzoek. Klik             <a href='https://intranet.uu.nl/kennisbank/kennisveiligheid'>hier</a>             voor meer informatie.", max_length=1, verbose_name='Zijn er kwesties rondom kennisveiligheid?'),
+            model_name="study",
+            name="knowledge_security",
+            field=models.CharField(
+                blank=True,
+                choices=[("Y", "ja"), ("N", "nee"), ("?", "twijfel")],
+                help_text="Kennisveiligheid gaat over het tijdig signaleren en mitigeren             van veiligheidsrisico's bij wetenschappelijk onderzoek. Klik             <a href='https://intranet.uu.nl/kennisbank/kennisveiligheid'>hier</a>             voor meer informatie.",
+                max_length=1,
+                verbose_name="Zijn er kwesties rondom kennisveiligheid?",
+            ),
         ),
         migrations.AddField(
-            model_name='study',
-            name='knowledge_security_details',
-            field=models.TextField(blank=True, max_length=200, verbose_name='Licht toe'),
+            model_name="study",
+            name="knowledge_security_details",
+            field=models.TextField(
+                blank=True, max_length=200, verbose_name="Licht toe"
+            ),
         ),
         migrations.AddField(
-            model_name='study',
-            name='researcher_risk',
-            field=models.CharField(blank=True, choices=[('Y', 'ja'), ('N', 'nee'), ('?', 'twijfel')], help_text='Houd hierbij niet alleen rekening met mogelijke psychische of             fysieke schade, maar ook met andere mogelijke schade, zoals bijv.             hiërarchische machtsverhoudingen in veldwerk, mogelijke negatieve             gevolgen voor de zichtbaarheid/vindbaarheid van de onderzoeker in             in het publieke domein, juridische vervolging of             aansprakelijkheid, e.d.', max_length=1, verbose_name="Zijn er kwesties rondom de veiligheid van of risico's voor de onderzoeker(s)?"),
+            model_name="study",
+            name="researcher_risk",
+            field=models.CharField(
+                blank=True,
+                choices=[("Y", "ja"), ("N", "nee"), ("?", "twijfel")],
+                help_text="Houd hierbij niet alleen rekening met mogelijke psychische of             fysieke schade, maar ook met andere mogelijke schade, zoals bijv.             hiërarchische machtsverhoudingen in veldwerk, mogelijke negatieve             gevolgen voor de zichtbaarheid/vindbaarheid van de onderzoeker in             in het publieke domein, juridische vervolging of             aansprakelijkheid, e.d.",
+                max_length=1,
+                verbose_name="Zijn er kwesties rondom de veiligheid van of risico's voor de onderzoeker(s)?",
+            ),
         ),
         migrations.AddField(
-            model_name='study',
-            name='researcher_risk_details',
-            field=models.TextField(blank=True, max_length=200, verbose_name='Licht toe'),
+            model_name="study",
+            name="researcher_risk_details",
+            field=models.TextField(
+                blank=True, max_length=200, verbose_name="Licht toe"
+            ),
         ),
         migrations.AlterField(
-            model_name='study',
-            name='deception',
-            field=models.CharField(blank=True, choices=[('Y', 'ja'), ('N', 'nee'), ('?', 'twijfel')], help_text='Misleiding is het doelbewust verschaffen van inaccurate informatie over het doel en/of belangrijke aspecten van de gang van zaken tijdens het onderzoek. Denk aan zaken als een bewust misleidende "cover story" voor het experiment; het ten onrechte suggereren dat er door de deelnemer met andere deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: het gaat hierbij niet om fillers in bijv. taalwetenschappelijk onderzoek.', max_length=1, verbose_name='Is er binnen bovenstaand onderzoekstraject sprake van misleiding van de deelnemer?'),
+            model_name="study",
+            name="deception",
+            field=models.CharField(
+                blank=True,
+                choices=[("Y", "ja"), ("N", "nee"), ("?", "twijfel")],
+                help_text='Misleiding is het doelbewust verschaffen van inaccurate informatie over het doel en/of belangrijke aspecten van de gang van zaken tijdens het onderzoek. Denk aan zaken als een bewust misleidende "cover story" voor het experiment; het ten onrechte suggereren dat er door de deelnemer met andere deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: het gaat hierbij niet om fillers in bijv. taalwetenschappelijk onderzoek.',
+                max_length=1,
+                verbose_name="Is er binnen bovenstaand onderzoekstraject sprake van misleiding van de deelnemer?",
+            ),
         ),
         migrations.AlterField(
-            model_name='study',
-            name='negativity',
-            field=models.CharField(blank=True, choices=[('Y', 'ja'), ('N', 'nee'), ('?', 'twijfel')], max_length=1, verbose_name='Bevat bovenstaand onderzoekstraject elementen die <em>tijdens            </em> de deelname zodanig belastend zijn dat deze vragen,             weerstand, of zelfs verontwaardiging zouden kunnen oproepen,             bijvoorbeeld bij collega-onderzoekers, bij de deelnemers zelf,             of bij ouders of andere vertegenwoordigers?'),
+            model_name="study",
+            name="negativity",
+            field=models.CharField(
+                blank=True,
+                choices=[("Y", "ja"), ("N", "nee"), ("?", "twijfel")],
+                max_length=1,
+                verbose_name="Bevat bovenstaand onderzoekstraject elementen die <em>tijdens            </em> de deelname zodanig belastend zijn dat deze vragen,             weerstand, of zelfs verontwaardiging zouden kunnen oproepen,             bijvoorbeeld bij collega-onderzoekers, bij de deelnemers zelf,             of bij ouders of andere vertegenwoordigers?",
+            ),
         ),
         migrations.AlterField(
-            model_name='study',
-            name='negativity_details',
-            field=models.TextField(blank=True, help_text='Geef concrete voorbeelden van de relevante aspecten van jouw             onderzoek (bijv. voorbeelden van mogelijk zeer kwetsende woorden             of uitspraken in de taak; zeer confronterende vragen in een             vragenlijst; negatieve feedback), zodat de commissie zich een             goed beeld kan vormen.', verbose_name='Licht toe'),
+            model_name="study",
+            name="negativity_details",
+            field=models.TextField(
+                blank=True,
+                help_text="Geef concrete voorbeelden van de relevante aspecten van jouw             onderzoek (bijv. voorbeelden van mogelijk zeer kwetsende woorden             of uitspraken in de taak; zeer confronterende vragen in een             vragenlijst; negatieve feedback), zodat de commissie zich een             goed beeld kan vormen.",
+                verbose_name="Licht toe",
+            ),
         ),
         migrations.AlterField(
-            model_name='study',
-            name='risk',
-            field=models.CharField(blank=True, choices=[('Y', 'ja'), ('N', 'nee'), ('?', 'twijfel')], help_text='Houd hierbij niet alleen rekening met mogelijke psychische                 of fysieke schadelijke gevolgen, maar ook met andere                 mogelijke schade, zoals bijv. stigmatisering,                 (re-)traumatisering, aantasting van zelfbeeld, verlies van                 privacy, toevalsbevindingen, juridische vervolging of                 aansprakelijkheid, e.d.', max_length=1, verbose_name="Zijn er kwesties rondom de veiligheid van, of risico's voor de             deelnemers <em>tijdens of na</em> deelname aan het onderzoek?"),
+            model_name="study",
+            name="risk",
+            field=models.CharField(
+                blank=True,
+                choices=[("Y", "ja"), ("N", "nee"), ("?", "twijfel")],
+                help_text="Houd hierbij niet alleen rekening met mogelijke psychische                 of fysieke schadelijke gevolgen, maar ook met andere                 mogelijke schade, zoals bijv. stigmatisering,                 (re-)traumatisering, aantasting van zelfbeeld, verlies van                 privacy, toevalsbevindingen, juridische vervolging of                 aansprakelijkheid, e.d.",
+                max_length=1,
+                verbose_name="Zijn er kwesties rondom de veiligheid van, of risico's voor de             deelnemers <em>tijdens of na</em> deelname aan het onderzoek?",
+            ),
         ),
     ]

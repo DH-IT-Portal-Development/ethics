@@ -841,8 +841,8 @@ class StudyOverviewSection(BaseSection):
     row_fields = [
         "knowledge_security",
         "knowledge_security_details",
-        "researcher_risk",            
-        "researcher_risk_details",  
+        "researcher_risk",
+        "researcher_risk_details",
         "deception",
         "deception_details",
         "negativity",

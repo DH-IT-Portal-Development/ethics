@@ -183,8 +183,8 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         fields = [
             "knowledge_security",
             "knowledge_security_details",
-            "researcher_risk",            
-            "researcher_risk_details",            
+            "researcher_risk",
+            "researcher_risk_details",
             "deception",
             "deception_details",
             "negativity",
@@ -203,8 +203,8 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
     _soft_validation_fields = [
         "knowledge_security",
         "knowledge_security_details",
-        "researcher_risk",            
-        "researcher_risk_details", 
+        "researcher_risk",
+        "researcher_risk_details",
         "deception",
         "deception_details",
         "negativity",
@@ -223,7 +223,13 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
 
         super(StudyEndForm, self).__init__(*args, **kwargs)
 
-        self.base_fields = ("knowledge_security", "researcher_risk", "deception", "negativity", "risk")
+        self.base_fields = (
+            "knowledge_security",
+            "researcher_risk",
+            "deception",
+            "negativity",
+            "risk",
+        )
         for field in self.base_fields:
             self.fields[field].empty_label = None
             self.fields[field].choices = YesNoDoubt.choices
@@ -245,7 +251,9 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         cleaned_data = super(StudyEndForm, self).clean()
 
         # TODO: find a way to hide this on the first view
-        self.mark_soft_required(cleaned_data, "knowledge_security", "researcher_risk", "negativity", "risk")
+        self.mark_soft_required(
+            cleaned_data, "knowledge_security", "researcher_risk", "negativity", "risk"
+        )
 
         if "deception" in self.fields:
             self.mark_soft_required(cleaned_data, "deception")
