@@ -261,7 +261,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         for field in self.base_fields:
             self.check_dependency_list(
                 cleaned_data,
-                "deception",
+                f"{field}",
                 f"{field}_details",
                 f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
             )
