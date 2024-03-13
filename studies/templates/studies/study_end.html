@@ -10,9 +10,10 @@
 {% block html_head %}
     <script>
         $(function () {
+            depends_on_list_value('knowledge_security', ['Y', '?'], 'knowledge_security_details');
+            depends_on_list_value('researcher_risk', ['Y', '?'], 'researcher_risk_details');
             depends_on_list_value('deception', ['Y', '?'], 'deception_details');
             depends_on_list_value('negativity', ['Y', '?'], 'negativity_details');
-            depends_on_list_value('stressful', ['Y', '?'], 'stressful_details');
             depends_on_list_value('risk', ['Y', '?'], 'risk_details');
         });
     </script>
