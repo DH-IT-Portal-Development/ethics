@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-01 16:42+0100\n"
+"POT-Creation-Date: 2024-03-14 11:57+0100\n"
 "PO-Revision-Date: 2024-01-17 10:48+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -63,11 +63,11 @@ msgstr "FAQ"
 msgid "Frequently Asked Questions"
 msgstr "Frequently Asked Questions"
 
-#: fetc/settings.py:128
+#: fetc/settings.py:129
 msgid "Nederlands"
 msgstr "Dutch"
 
-#: fetc/settings.py:129
+#: fetc/settings.py:130
 msgid "Engels"
 msgstr "English"
 
@@ -204,11 +204,11 @@ msgstr "Log in"
 msgid "Log uit"
 msgstr "Log out"
 
-#: main/models.py:8 main/utils.py:15 proposals/utils/pdf_diff_logic.py:244
+#: main/models.py:8 main/utils.py:16 proposals/utils/pdf_diff_logic.py:244
 msgid "ja"
 msgstr "yes"
 
-#: main/models.py:9 main/utils.py:15 proposals/utils/pdf_diff_logic.py:244
+#: main/models.py:9 main/utils.py:16 proposals/utils/pdf_diff_logic.py:244
 msgid "nee"
 msgstr "no"
 
@@ -261,7 +261,7 @@ msgid "Gebruiksersnaam"
 msgstr "Username"
 
 #: main/templates/auth/user_detail.html:21
-#: proposals/templates/proposals/proposal_pdf.html:117
+#: proposals/templates/proposals/proposal_pdf.html:115
 msgid "E-mail"
 msgstr "E-mail"
 
@@ -375,7 +375,6 @@ msgid "Bevestigingsbrief versturen"
 msgstr "Send confirmation letter"
 
 #: main/templates/auth/user_detail.html:97
-#: proposals/templates/proposals/proposal_confirmation.html:38
 #: reviews/templates/reviews/vue_templates/decision_list.html:90
 #: reviews/templates/reviews/vue_templates/review_list.html:83
 msgid "Bevestigingsbrief verstuurd"
@@ -386,20 +385,21 @@ msgid "<< Opslaan en vorige stap"
 msgstr "<< Save and go back to previous step"
 
 #: main/templates/base/form_buttons.html:13
-#: main/templates/base/form_buttons.html:17
-#: main/templates/base/form_buttons.html:21
+#: main/templates/base/form_buttons.html:16
+#: main/templates/base/form_buttons.html:20
+#: main/templates/base/form_buttons.html:24
 msgid "Terug naar begin aanvraag"
 msgstr "Return to start of application"
 
-#: main/templates/base/form_buttons.html:26
+#: main/templates/base/form_buttons.html:29
 msgid "Terug naar begin traject"
 msgstr "Back to the beginning of the trajectory"
 
-#: main/templates/base/form_buttons.html:30
+#: main/templates/base/form_buttons.html:33
 msgid "Terug naar begin sessie"
 msgstr "Back to the beginning of the session"
 
-#: main/templates/base/form_buttons.html:34
+#: main/templates/base/form_buttons.html:37
 msgid "Opslaan en volgende stap >>"
 msgstr "Save and go to next step >>"
 
@@ -1051,12 +1051,12 @@ msgstr ""
 "%(title)s(reference number <em>%(ref_number)s</em>), trajectory %(order)s."
 
 #: observations/templates/observations/observation_update_attachments.html:43
-#: proposals/templates/proposals/proposal_confirmation.html:39
+#: proposals/templates/proposals/proposal_confirmation.html:36
 #: proposals/templates/proposals/proposal_diff.html:55
 #: proposals/templates/proposals/proposal_update_attachments.html:30
 #: proposals/templates/proposals/proposal_update_date_start.html:33
 #: reviews/templates/reviews/change_chamber_form.html:23
-#: reviews/templates/reviews/decision_form.html:93
+#: reviews/templates/reviews/decision_form.html:92
 #: reviews/templates/reviews/review_assign_form.html:46
 #: reviews/templates/reviews/review_close_form.html:40
 #: reviews/templates/reviews/review_discontinue_form.html:70
@@ -1922,6 +1922,10 @@ msgstr ""
 "Please state when the confirmation letter for <em>%(title)s</em> has been "
 "sent here. "
 
+#: proposals/templates/proposals/proposal_confirmation.html:39
+msgid "Verstuur bevestigingsbrief"
+msgstr "Send confirmation"
+
 #: proposals/templates/proposals/proposal_copy.html:8
 #: proposals/templates/proposals/proposal_copy.html:22
 msgid "Revisie starten"
@@ -2200,10 +2204,10 @@ msgstr ""
 #: proposals/templates/proposals/proposal_form_pre_approved.html:7
 #: proposals/templates/proposals/proposal_form_pre_approved.html:83
 #: proposals/utils/pdf_diff_logic.py:428 proposals/utils/proposal_utils.py:47
-#: proposals/utils/proposal_utils.py:68 proposals/utils/validate_proposal.py:40
-#: proposals/utils/validate_proposal.py:50
-#: proposals/utils/validate_proposal.py:57
-#: proposals/utils/validate_proposal.py:64
+#: proposals/utils/proposal_utils.py:68 proposals/utils/validate_proposal.py:41
+#: proposals/utils/validate_proposal.py:51
+#: proposals/utils/validate_proposal.py:58
+#: proposals/utils/validate_proposal.py:65
 msgid "Algemene informatie over de aanvraag"
 msgstr "General information about the application"
 
@@ -2352,7 +2356,7 @@ msgstr ""
 "Click <img src=\"%(img_add)s\" title=\"add\"> to submit an application to "
 "the archive."
 
-#: proposals/templates/proposals/proposal_pdf.html:86
+#: proposals/templates/proposals/proposal_pdf.html:84
 #, python-format
 msgid ""
 "FETC-GW - <em>%(title)s</em> (referentienummer %(reviewing_committee)s-"
@@ -2361,25 +2365,25 @@ msgstr ""
 "FEtC-H - <em>%(title)s</em> (reference number %(reviewing_committee)s-"
 "%(reference_number)s, submitted by %(submitter)s)"
 
-#: proposals/templates/proposals/proposal_pdf.html:92
+#: proposals/templates/proposals/proposal_pdf.html:90
 #, python-format
 msgid "%(type)s van referentienummer %(reference_number)s"
 msgstr "%(type)s of reference number %(reference_number)s"
 
-#: proposals/templates/proposals/proposal_pdf.html:106
+#: proposals/templates/proposals/proposal_pdf.html:104
 #, python-format
 msgid "Referentienummer %(reference_number)s"
 msgstr "Reference number %(reference_number)s"
 
-#: proposals/templates/proposals/proposal_pdf.html:111
+#: proposals/templates/proposals/proposal_pdf.html:109
 msgid "Huidige staat van de aanvraag"
 msgstr "Current state of the application"
 
-#: proposals/templates/proposals/proposal_pdf.html:113
+#: proposals/templates/proposals/proposal_pdf.html:111
 msgid "Indiener"
 msgstr "Applicant"
 
-#: proposals/templates/proposals/proposal_pdf.html:115
+#: proposals/templates/proposals/proposal_pdf.html:113
 #: tasks/templates/tasks/task_list.html:7
 msgid "Naam"
 msgstr "Name"
@@ -2424,8 +2428,8 @@ msgid ""
 "Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
 "fetc-h/\">FEtC-H</a>."
 msgstr ""
-"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\"  "
-"target=\"_blank\">FEtC-H </a>."
+"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
+"fetc-h/\"  target=\"_blank\">FEtC-H </a>."
 
 #: proposals/templates/proposals/proposal_start.html:31
 #: proposals/templates/proposals/proposal_start_practice.html:31
@@ -2909,7 +2913,7 @@ msgstr "Additional forms"
 #: proposals/templates/proposals/study_start.html:7
 #: proposals/templates/proposals/study_start.html:63
 #: proposals/utils/pdf_diff_logic.py:530
-#: proposals/utils/validate_proposal.py:94
+#: proposals/utils/validate_proposal.py:95
 msgid "Eén of meerdere trajecten?"
 msgstr "One or more trajectories?"
 
@@ -2943,7 +2947,7 @@ msgid "Revisie/amendement"
 msgstr "Revision/amendment"
 
 #: proposals/templates/proposals/translated_consent_forms.html:24
-#: proposals/utils/validate_proposal.py:223
+#: proposals/utils/validate_proposal.py:224
 msgid "Vertaling informed consent formulieren"
 msgstr "Translation of informed consent forms"
 
@@ -3138,8 +3142,8 @@ msgstr "Overview and self-assessment of the entire study"
 msgid "Extra formulieren "
 msgstr "Additional forms "
 
-#: proposals/utils/proposal_utils.py:51 proposals/utils/validate_proposal.py:76
-#: proposals/utils/validate_proposal.py:83
+#: proposals/utils/proposal_utils.py:51 proposals/utils/validate_proposal.py:77
+#: proposals/utils/validate_proposal.py:84
 msgid "Ethische toetsing nodig door een METC?"
 msgstr "Ethical assessment by a METC necessary?"
 
@@ -3179,41 +3183,41 @@ msgstr "FEtC-H: A revised application uses lab facilities"
 msgid "FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: New application uses lab facilities"
 
-#: proposals/utils/validate_proposal.py:105
+#: proposals/utils/validate_proposal.py:106
 msgid "De deelnemers (traject {})"
 msgstr "Participants (trajectory {})"
 
-#: proposals/utils/validate_proposal.py:113
+#: proposals/utils/validate_proposal.py:114
 msgid "De onderzoekstype(n) (traject {})"
 msgstr "Type(s) of research (trajectory {})"
 
-#: proposals/utils/validate_proposal.py:123
-#: proposals/utils/validate_proposal.py:132
+#: proposals/utils/validate_proposal.py:124
+#: proposals/utils/validate_proposal.py:133
 msgid "Het interventieonderzoek (traject {})"
 msgstr "Intervention study (trajectory {})"
 
-#: proposals/utils/validate_proposal.py:144
-#: proposals/utils/validate_proposal.py:153
+#: proposals/utils/validate_proposal.py:145
+#: proposals/utils/validate_proposal.py:154
 msgid "Het observatieonderzoek (traject {})"
 msgstr "Observational study (trajectory {})"
 
-#: proposals/utils/validate_proposal.py:164
+#: proposals/utils/validate_proposal.py:165
 msgid "Het takenonderzoek (traject {})"
 msgstr "Task-based research: trajectory {}"
 
-#: proposals/utils/validate_proposal.py:179
+#: proposals/utils/validate_proposal.py:180
 msgid "Het takenonderzoek: sessie {} (traject {})"
 msgstr "Task-based research: session {} trajectory {}"
 
-#: proposals/utils/validate_proposal.py:196
+#: proposals/utils/validate_proposal.py:197
 msgid "Het takenonderzoek: sessie {} taak {} (traject {})"
 msgstr "Task-based research: session {} task {} (trajectory {})"
 
-#: proposals/utils/validate_proposal.py:213
+#: proposals/utils/validate_proposal.py:214
 msgid "Overzicht van takenonderzoek: sessie {} (traject {})"
 msgstr "Overview of task-based research: session {} (trajectory {})"
 
-#: proposals/utils/validate_proposal.py:230
+#: proposals/utils/validate_proposal.py:231
 msgid "AVG en Data Management"
 msgstr "AVG and Data Management"
 
@@ -3262,11 +3266,11 @@ msgstr ""
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:432
+#: proposals/views/proposal_views.py:452
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:532
+#: proposals/views/proposal_views.py:556
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -3327,11 +3331,11 @@ msgstr "long route (4-weeks)"
 msgid "Direct terug naar aanvrager (Nog niet in behandeling)"
 msgstr "Return directly to applicant (not yet under review)"
 
-#: reviews/forms.py:34 reviews/menus.py:66 reviews/mixins.py:173
+#: reviews/forms.py:34 reviews/menus.py:67 reviews/mixins.py:173
 msgid "Algemene Kamer"
 msgstr "General Chamber"
 
-#: reviews/forms.py:35 reviews/menus.py:76 reviews/mixins.py:176
+#: reviews/forms.py:35 reviews/menus.py:77 reviews/mixins.py:176
 msgid "Linguïstiek Kamer"
 msgstr "Linguistics Chamber"
 
@@ -3363,39 +3367,39 @@ msgstr "Start date period:"
 msgid "Eind datum periode:"
 msgstr "End date period:"
 
-#: reviews/menus.py:18 reviews/views.py:73
+#: reviews/menus.py:19 reviews/views.py:73
 msgid "Mijn openstaande besluiten"
 msgstr "My pending decisions"
 
-#: reviews/menus.py:22
+#: reviews/menus.py:23
 msgid "Al mijn besluiten"
 msgstr "All my decisions"
 
-#: reviews/menus.py:26
+#: reviews/menus.py:27
 msgid "Alle openstaande besluiten commissieleden"
 msgstr "All pending decisions committee members"
 
-#: reviews/menus.py:31
+#: reviews/menus.py:32
 msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
-#: reviews/menus.py:36 reviews/views.py:230
+#: reviews/menus.py:37 reviews/views.py:230
 msgid "Nog af te handelen aanvragen"
 msgstr "Applications waiting for conclusion"
 
-#: reviews/menus.py:41 reviews/views.py:242
+#: reviews/menus.py:42 reviews/views.py:242
 msgid "Aanvragen in revisie"
 msgstr "Applications in revision"
 
-#: reviews/menus.py:46 reviews/views.py:254
+#: reviews/menus.py:47 reviews/views.py:254
 msgid "Alle lopende aanvragen"
 msgstr "All running applications"
 
-#: reviews/menus.py:51 reviews/views.py:280
+#: reviews/menus.py:52 reviews/views.py:280
 msgid "Alle ingezonden aanvragen"
 msgstr "All submitted applications"
 
-#: reviews/menus.py:56
+#: reviews/menus.py:57
 msgid "Overzicht werkverdeling commissieleden"
 msgstr "Overview workload committee members"
 
@@ -3630,7 +3634,7 @@ msgstr "Long route"
 msgid "Aanvraag beoordelen"
 msgstr "Assess the application"
 
-#: reviews/templates/reviews/decision_form.html:22
+#: reviews/templates/reviews/decision_form.html:21
 #, python-format
 msgid ""
 "Je kunt nu een go of no-go geven voor de aanvraag <em>%(title)s</em>, "
@@ -3641,12 +3645,12 @@ msgstr ""
 "%(refnum)s in %(chamber)s.    You can see the details of this application <a "
 "href=\"%(pdf_url)s\" target=\"_blank\">here</a> (downloads as PDF)."
 
-#: reviews/templates/reviews/decision_form.html:30
+#: reviews/templates/reviews/decision_form.html:29
 #, python-format
 msgid "Je kunt nu de aanvraag <em>%(title)s</em> bekijken. <br />"
 msgstr "You can now (re)view this application here: <em>%(title)s</em>. <br />"
 
-#: reviews/templates/reviews/decision_form.html:36
+#: reviews/templates/reviews/decision_form.html:35
 msgid ""
 "Als de aanvraag (incl. geïnformeerde toestemmingsformulieren) in orde is, "
 "klik dan op ‘goedgekeurd’ en ‘Beslissing opslaan’ hieronder; dan wordt de "
@@ -3656,7 +3660,7 @@ msgstr ""
 "'endorsed' and 'Save decision' below; the application will then be submitted "
 "to the FEtC-H. "
 
-#: reviews/templates/reviews/decision_form.html:43
+#: reviews/templates/reviews/decision_form.html:42
 msgid ""
 "Als de aanvraag nog niet in orde is, dan zijn er twee mogelijkheden om de "
 "aanvraag aan te passen:"
@@ -3664,7 +3668,7 @@ msgstr ""
 "If the application is not yet in order, there are two methods to amend the "
 "study: "
 
-#: reviews/templates/reviews/decision_form.html:50
+#: reviews/templates/reviews/decision_form.html:49
 #, python-format
 msgid ""
 "door de supervisor (jijzelf) <br /> Als supervisor kan je deze aanvraag <a "
@@ -3677,7 +3681,7 @@ msgstr ""
 "which, you will be redirected back to this page and you can approve the "
 "application; this means that the application is submitted to the FEtC-H. "
 
-#: reviews/templates/reviews/decision_form.html:59
+#: reviews/templates/reviews/decision_form.html:58
 msgid ""
 "door de indiener (je student of promovendus) <br /> Indien je wilt dat de "
 "indiener de aanvraag zelf aanpast voordat je de studie kunt goedkeuren en "
@@ -3692,7 +3696,7 @@ msgstr ""
 "any comments, and click 'Save decision'. Once you have done this, the "
 "submitter can make changes again. <br /> "
 
-#: reviews/templates/reviews/decision_form.html:71
+#: reviews/templates/reviews/decision_form.html:70
 msgid ""
 "Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw heeft "
 "verstuurd, zal je de aangepaste aanvraag opnieuw moeten beoordelen."
@@ -3700,7 +3704,7 @@ msgstr ""
 "Once the submitter has made the requested changes and resubmitted the "
 "application, you will have to re-evaluate the application. "
 
-#: reviews/templates/reviews/decision_form.html:81
+#: reviews/templates/reviews/decision_form.html:80
 #, python-format
 msgid ""
 "Dit is een revisie van of amendement op een vorige aanvraag. De verschillen "
@@ -3710,7 +3714,7 @@ msgstr ""
 "differences compared to the previous application <a "
 "href=\"%(diff_url)s\">here</a>."
 
-#: reviews/templates/reviews/decision_form.html:96
+#: reviews/templates/reviews/decision_form.html:95
 msgid "Beslissing opslaan"
 msgstr "Save decision"
 
@@ -4185,7 +4189,7 @@ msgstr "Pending decisions committee members"
 msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
 
-#: reviews/views.py:580
+#: reviews/views.py:600
 msgid ""
 "Deze aanvraag is al beoordeeld, dus je kan je beoordeling niet meer "
 "toevoegen/aanpassen"
