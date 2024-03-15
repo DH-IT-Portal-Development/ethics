@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'main',
     'uil.core',
     'uil.vue',
+    'cdh.files',
     'proposals',
     'studies',
     'tasks',
