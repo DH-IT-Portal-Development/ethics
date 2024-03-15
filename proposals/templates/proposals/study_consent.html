@@ -1,15 +1,12 @@
 {% extends "base/base.html" %}
-
 {% load static %}
 {% load i18n %}
 {% load uil_filters %}
-
 {% block header_title %}
-  {% trans "Informed consent formulieren" %} - {{ block.super }}
+    {% trans "Informed consent formulieren" %} - {{ block.super }}
 {% endblock %}
-
 {% block html_head %}
-  <script>
+    <script>
     // This function hides school-related extra forms
     function hide_school_forms(prefix) {
       $("#id_" + prefix + "-director_consent_information").parents("tr").hide();
@@ -60,95 +57,95 @@
     // Show the first add link
     $("a.new").first().show();
     });
-  </script>
+    </script>
 {% endblock %}
-
 {% block content %}
-  <div class="uu-inner-container">
-    <div class="col-12">
-      {% with nav_items=proposal.available_urls active=4 %}
-        {% include 'base/navigation.html' %}
-      {% endwith %}
-
-      <h2>
-        {% trans "Informed consent formulieren uploaden" %}
-      </h2>
-      <p>
-        {% blocktrans trimmed %}
-          Hier kan je de Informed consent formulieren uploaden voor de opgegeven traject(en). Optioneel kan je indien nodig maximaal 10
-          paar extra formulieren uploaden. <br/> Klik hiervoor op 'Voeg extra formulieren' onderaan de pagina. Deze velden
-          kan je weer weg halen door alle formulieren te wissen.
-        {% endblocktrans %}
-      </p>
-
-      <p>
-        {% blocktrans trimmed %}
-          Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="blank">voorbeelddocumenten</a> voor de <em>informed consent</em>. </li>
-        {% endblocktrans %}
-
-        {% blocktrans trimmed %}
-          Studenten moeten hun begeleider vragen om deze formulieren; dezelfde voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
-        {% endblocktrans %}
-      </p>
-
-      <p>
-        {% blocktrans trimmed %}
-          Let op dat je documenten geen redactionele fouten en/of taalfouten bevatten: een aanvraag kan hierom direct voor revisie worden teruggestuurd.
-        {% endblocktrans %}
-	{% blocktrans trimmed %}
-          Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen belangrijke informatie in.
-        {% endblocktrans %}
-      </p>
-      {% if external_permission %}
-        <div class="info">
-          <p>{% blocktrans trimmed %}
-            Omdat er in één of meer trajecten onderzoek wordt uitgevoerd op een externe locatie waar toestemming voor vereist is, vragen we daar om een tweede set Informed Consent formulieren voor het management van de instelling. Dat is bijvoorbeeld de schoolleiding of het departementshoofd van een zorginstelling. Voeg waar nodig ook een informatiebrief voor de ouders/verzorgers toe.
-          {% endblocktrans %}</p>
-        </div>
-      {% endif %}
-      <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-        {{ formset.management_form }}
-
-        {# Reset the counter, as we're looping again #}
-        {% counter extra_form_counter create 1 %}
-        {% for form in formset %}
-
-          {% if form.instance.study %}
-            {# If it's connected to a study, use the study title and a simple div #}
-            <div>
-              {% with study=form.instance.study %}
-                {% include 'studies/study_title.html' %}
-              {% endwith %}
-          {% else %}
-              {# If not, we have to do some fancy stuff for the extra forms #}
-              {% if form.instance.informed_consent or form.instance.briefing or form.instance.parents_information or form.instance.director_consent_information or form.instance.director_consent_declaration %}
-                {# We can't check this in Python, so we determine here if the object is empty or used  #}
-                {% set used = 1 %}
-              {% else %}
-                {% set used = 0 %}
-                {# We only add the add link if the form is empty, as this simplifies the JS #}
-                <div style="float:right;">
-                  <a href="#" id="new-{% counter extra_form_counter value %}" class="new" data-n="{% counter extra_form_counter value %}" style="display: none">
-                    <img src="{% static 'proposals/images/add.png' %}" /> {% trans 'Voeg extra formulieren toe' %}
-                  </a>
-                </div>
-              {% endif %}
-
-              <div id="extra-{% counter extra_form_counter value %}" data-used="{{ used }}">
-                <h3>{% trans 'Extra formulieren' %} {% counter extra_form_counter value %}</h3>
-                {% counter extra_form_counter increment 1 %}
-
-          {% endif %}
-
-          <table>
-            {{ form.as_table }}
-          </table>
-              </div>
-        {% endfor %}
-        <br/>
-        {% include "base/form_buttons.html" %}
-      </form>
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=proposal.available_urls active=4 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+            <h2>{% trans "Informed consent formulieren uploaden" %}</h2>
+            <p>
+                {% blocktrans trimmed %}
+                    Hier kan je de Informed consent formulieren uploaden voor de opgegeven traject(en). Optioneel kan je indien nodig maximaal 10
+                    paar extra formulieren uploaden.
+                    <br />
+                    Klik hiervoor op 'Voeg extra formulieren' onderaan de pagina. Deze velden
+                    kan je weer weg halen door alle formulieren te wissen.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"
+    target="blank">voorbeelddocumenten</a> voor de <em>informed consent</em>.
+                </li>
+            {% endblocktrans %}
+            {% blocktrans trimmed %}
+                Studenten moeten hun begeleider vragen om deze formulieren; dezelfde voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
+            {% endblocktrans %}
+        </p>
+        <p>
+            {% blocktrans trimmed %}
+                Let op dat je documenten geen redactionele fouten en/of taalfouten bevatten: een aanvraag kan hierom direct voor revisie worden teruggestuurd.
+            {% endblocktrans %}
+            {% blocktrans trimmed %}
+                Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen belangrijke informatie in.
+            {% endblocktrans %}
+        </p>
+        {% if external_permission %}
+            <div class="info">
+                <p>
+                    {% blocktrans trimmed %}
+                        Omdat er in één of meer trajecten onderzoek wordt uitgevoerd op een externe locatie waar toestemming voor vereist is, vragen we daar om een tweede set Informed Consent formulieren voor het management van de instelling. Dat is bijvoorbeeld de schoolleiding of het departementshoofd van een zorginstelling. Voeg waar nodig ook een informatiebrief voor de ouders/verzorgers toe.
+                    {% endblocktrans %}
+                </p>
             </div>
+        {% endif %}
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            {# Reset the counter, as we're looping again #}
+            {% counter extra_form_counter create 1 %}
+            {% for form in formset %}
+                {% if form.instance.study %}
+                    {# If it's connected to a study, use the study title and a simple div #}
+                    <div>
+                        {% with study=form.instance.study %}
+                            {% include 'studies/study_title.html' %}
+                        {% endwith %}
+                    {% else %}
+                        {# If not, we have to do some fancy stuff for the extra forms #}
+                        {% if form.instance.informed_consent or form.instance.briefing or form.instance.parents_information or form.instance.director_consent_information or form.instance.director_consent_declaration %}
+                            {# We can't check this in Python, so we determine here if the object is empty or used  #}
+                            {% set used = 1 %}
+                        {% else %}
+                            {% set used = 0 %}
+                            {# We only add the add link if the form is empty, as this simplifies the JS #}
+                            <div style="float:right;">
+                                <a href="#"
+                                   id="new-{% counter extra_form_counter value %}"
+                                   class="new"
+                                   data-n="{% counter extra_form_counter value %}"
+                                   style="display: none">
+                                    <img src="{% static 'proposals/images/add.png' %}" />
+                                    {% trans 'Voeg extra formulieren toe' %}
+                                </a>
+                            </div>
+                        {% endif %}
+                        <div id="extra-{% counter extra_form_counter value %}"
+                             data-used="{{ used }}">
+                            <h3>{% trans 'Extra formulieren' %} {% counter extra_form_counter value %}</h3>
+                            {% counter extra_form_counter increment 1 %}
+                        {% endif %}
+                        <table>
+                            {{ form.as_table }}
+                        </table>
+                    </div>
+                {% endfor %}
+                <br />
+                {% include "base/form_buttons.html" %}
+            </form>
+        </div>
     </div>
-
 {% endblock %}
