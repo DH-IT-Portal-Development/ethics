@@ -66,6 +66,15 @@
                 {% include 'base/navigation.html' %}
             {% endwith %}
             <h2>{% trans "Informed consent formulieren uploaden" %}</h2>
+            {% if DEBUG %}
+            <div class="info">
+                Hello there, would you like to take a look at the
+                <a href="{% url "proposals:attachments" pk=proposal.pk %}">
+                    new and improved attachments page
+                </a>
+                ? It's mighty good, promise!
+            </div>
+            {% endif %}
             <p>
                 {% blocktrans trimmed %}
                     Hier kan je de Informed consent formulieren uploaden voor de opgegeven traject(en). Optioneel kan je indien nodig maximaal 10

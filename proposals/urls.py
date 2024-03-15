@@ -1,4 +1,5 @@
 from django.urls import path, include
+from django.conf import settings
 
 from attachments.views import AttachmentCreateView
 from .models import Proposal
@@ -117,27 +118,6 @@ urlpatterns = [
 
     path('translated/<int:pk>/', TranslatedConsentFormsView.as_view(), name='translated'),
 
-    path("<int:other_pk>/attach/",
-         AttachmentCreateView.as_view(
-             other_model=Proposal,
-             template_name="proposals/proposal_attach.html",
-         ),
-         name="attach_file",
-         ),
-
-    path("<int:other_pk>/attach/<str:kind>/",
-         AttachmentCreateView.as_view(
-             other_model=Proposal,
-             template_name="proposals/proposal_attach.html",
-         ),
-         name="attach_file",
-         ),
-
-    path("<int:pk>/attachments/",
-         AttachmentsView.as_view(),
-         name="attachments",
-         ),
-
     path('copy/', include([
         path('', ProposalCopy.as_view(), name='copy'),
         path('revision/', ProposalCopyRevision.as_view(),
@@ -204,3 +184,32 @@ urlpatterns = [
         ])
     ),
 ]
+
+if settings.DEBUG:
+    urlpatterns.append(
+        [
+            path(
+                "<int:other_pk>/attach/",
+                AttachmentCreateView.as_view(
+                    other_model=Proposal,
+                    template_name="proposals/proposal_attach.html",
+                ),
+                name="attach_file",
+            ),
+
+            path(
+                "<int:other_pk>/attach/<str:kind>/",
+                AttachmentCreateView.as_view(
+                    other_model=Proposal,
+                    template_name="proposals/proposal_attach.html",
+                ),
+                name="attach_file",
+            ),
+
+            path(
+                "<int:pk>/attachments/",
+                AttachmentsView.as_view(),
+                name="attachments",
+            ),
+        ]
+    )

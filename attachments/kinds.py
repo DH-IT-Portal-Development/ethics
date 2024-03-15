@@ -80,6 +80,7 @@ ATTACHMENTS = [
     DataManagementPlan,
     OtherAttachment,
 ]
+
 ATTACHMENT_CHOICES = [
     (a.db_name, a.name) for a in ATTACHMENTS
 ]

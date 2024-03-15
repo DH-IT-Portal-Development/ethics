@@ -2,6 +2,7 @@
 
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, FormSetUpdateView
 from studies.models import Documents, Study
@@ -91,6 +92,9 @@ class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
         context["external_permission"] = True in [
             s.needs_additional_external_forms() for s in studies
         ]
+
+        # Tell the template if debug is enabled
+        context["DEBUG"] = settings.DEBUG
         return context
 
     def get_queryset(self):
