@@ -16,20 +16,23 @@ from ..utils import get_study_progress
 ######################
 class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Initial creation of Sessions"""
+
     model = Study
     form_class = SessionStartForm
-    template_name = 'studies/session_start.html'
-    success_message = _('%(sessions_number)s sessie(s) voor studie %(title)s aangemaakt')
+    template_name = "studies/session_start.html"
+    success_message = _(
+        "%(sessions_number)s sessie(s) voor studie %(title)s aangemaakt"
+    )
 
     def get_context_data(self, **kwargs):
         """Setting the progress on the context"""
         context = super(SessionStart, self).get_context_data(**kwargs)
-        context['progress'] = get_study_progress(self.object) + 9
+        context["progress"] = get_study_progress(self.object) + 9
         return context
 
     def form_valid(self, form):
         """Creates or deletes Sessions on save"""
-        nr_sessions = form.cleaned_data['sessions_number']
+        nr_sessions = form.cleaned_data["sessions_number"]
         study = form.instance
         current = study.session_set.count() or 0
 
@@ -49,7 +52,7 @@ class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
 
     def get_next_url(self):
         """Continue to the addition of Tasks"""
-        return reverse('tasks:start', args=(self.object.first_session().pk,))
+        return reverse("tasks:start", args=(self.object.first_session().pk,))
 
     def get_back_url(self):
         """
@@ -57,16 +60,18 @@ class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
         return to this part. Otherwise, return to the Study design overview.
         """
         study = self.object
-        next_url = 'studies:design'
+        next_url = "studies:design"
         pk = study.pk
         if study.has_observation:
-            next_url = 'observations:update'
+            next_url = "observations:update"
             pk = study.observation.pk
         elif study.has_intervention:
-            next_url = 'interventions:update'
+            next_url = "interventions:update"
             pk = study.intervention.pk
         return reverse(next_url, args=(pk,))
 
     def get_success_message(self, cleaned_data):
         """Fill the success message using the cleaned_data"""
-        return self.success_message % dict(cleaned_data, title=self.object.proposal.title)
+        return self.success_message % dict(
+            cleaned_data, title=self.object.proposal.title
+        )

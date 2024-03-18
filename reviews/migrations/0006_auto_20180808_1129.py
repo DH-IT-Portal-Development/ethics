@@ -6,15 +6,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('reviews', '0005_review_date_should_end'),
+        ("reviews", "0005_review_date_should_end"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='decision',
-            name='go',
-            field=models.CharField(blank=True, choices=[('Y', 'goedgekeurd'), ('N', 'niet goegekeurd'), ('?', 'revisie noodzakelijk')], max_length=1, verbose_name='Beslissing'),
+            model_name="decision",
+            name="go",
+            field=models.CharField(
+                blank=True,
+                choices=[
+                    ("Y", "goedgekeurd"),
+                    ("N", "niet goegekeurd"),
+                    ("?", "revisie noodzakelijk"),
+                ],
+                max_length=1,
+                verbose_name="Beslissing",
+            ),
         ),
     ]

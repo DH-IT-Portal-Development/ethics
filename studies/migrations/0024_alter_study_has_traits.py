@@ -4,15 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('studies', '0023_auto_20221018_1541'),
+        ("studies", "0023_auto_20221018_1541"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='study',
-            name='has_traits',
-            field=models.BooleanField(blank=True, help_text="In de meeste gevallen kun je dit soort gegevens alleen verzamelen als je daar toestemming voor hebt: zie de <a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf' target='_blank'>Richtlijnen voor geïnformeerde toestemming,</a> ‘Bijzondere persoonsgegevens’. Is het in de praktijk onmogelijk of disproportioneel moeilijk om om toestemming te vragen, neem dan eerst contact op met de <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>, voordat je je aanvraag indient.", null=True, verbose_name='Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. Is dit in jouw onderzoek bij (een deel van) de deelnemers het geval?'),
+            model_name="study",
+            name="has_traits",
+            field=models.BooleanField(
+                blank=True,
+                help_text="In de meeste gevallen kun je dit soort gegevens alleen verzamelen als je daar toestemming voor hebt: zie de <a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf' target='_blank'>Richtlijnen voor geïnformeerde toestemming,</a> ‘Bijzondere persoonsgegevens’. Is het in de praktijk onmogelijk of disproportioneel moeilijk om om toestemming te vragen, neem dan eerst contact op met de <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>, voordat je je aanvraag indient.",
+                null=True,
+                verbose_name="Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. Is dit in jouw onderzoek bij (een deel van) de deelnemers het geval?",
+            ),
         ),
     ]

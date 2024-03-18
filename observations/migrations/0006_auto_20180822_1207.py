@@ -6,15 +6,17 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('observations', '0005_auto_20180822_1206'),
+        ("observations", "0005_auto_20180822_1206"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='observation',
-            name='version',
-            field=models.PositiveIntegerField(default=2, verbose_name='INTERNAL - Describes which version of the intervention model is used'),
+            model_name="observation",
+            name="version",
+            field=models.PositiveIntegerField(
+                default=2,
+                verbose_name="INTERNAL - Describes which version of the intervention model is used",
+            ),
         ),
     ]

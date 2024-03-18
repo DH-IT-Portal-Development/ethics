@@ -4,20 +4,27 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0043_auto_20221025_1057'),
+        ("proposals", "0043_auto_20221025_1057"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='proposal',
-            name='inform_local_staff',
-            field=models.BooleanField(blank=True, default=None, null=True, verbose_name='<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één van de faciliteiten van het ILS, namelijk de database, Zep software en/of het ILS lab. Het lab supportteam van het ILS zou graag op de hoogte willen worden gesteld van aankomende onderzoeken. Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.</p> <p>Vind je het goed dat de volgende delen uit de aanvraag worden doorgestuurd:</p> - Jouw naam en de namen van de andere betrokkenen <br/> - De eindverantwoordelijke van het onderzoek <br/> - De titel van het onderzoek <br/> - De beoogde startdatum <br/> - Van welke faciliteiten je gebruik wil maken (database, lab, Zep software)'),
+            model_name="proposal",
+            name="inform_local_staff",
+            field=models.BooleanField(
+                blank=True,
+                default=None,
+                null=True,
+                verbose_name="<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één van de faciliteiten van het ILS, namelijk de database, Zep software en/of het ILS lab. Het lab supportteam van het ILS zou graag op de hoogte willen worden gesteld van aankomende onderzoeken. Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.</p> <p>Vind je het goed dat de volgende delen uit de aanvraag worden doorgestuurd:</p> - Jouw naam en de namen van de andere betrokkenen <br/> - De eindverantwoordelijke van het onderzoek <br/> - De titel van het onderzoek <br/> - De beoogde startdatum <br/> - Van welke faciliteiten je gebruik wil maken (database, lab, Zep software)",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='other_applicants',
-            field=models.BooleanField(default=False, verbose_name='Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of ILS?'),
+            model_name="proposal",
+            name="other_applicants",
+            field=models.BooleanField(
+                default=False,
+                verbose_name="Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of ILS?",
+            ),
         ),
     ]

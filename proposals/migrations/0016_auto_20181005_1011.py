@@ -7,25 +7,37 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0015_auto_20181004_1043'),
+        ("proposals", "0015_auto_20181004_1043"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='proposal',
-            name='is_pre_approved',
-            field=models.NullBooleanField(default=None, verbose_name='Heeft u formele toestemming van een ethische toetsingcommissie, uitgezonderd deze EtCL commissie?'),
+            model_name="proposal",
+            name="is_pre_approved",
+            field=models.NullBooleanField(
+                default=None,
+                verbose_name="Heeft u formele toestemming van een ethische toetsingcommissie, uitgezonderd deze EtCL commissie?",
+            ),
         ),
         migrations.AddField(
-            model_name='proposal',
-            name='pre_approval_institute',
-            field=models.CharField(blank=True, max_length=200, null=True, verbose_name='Welk instituut heeft de studie goedgekeurd?'),
+            model_name="proposal",
+            name="pre_approval_institute",
+            field=models.CharField(
+                blank=True,
+                max_length=200,
+                null=True,
+                verbose_name="Welk instituut heeft de studie goedgekeurd?",
+            ),
         ),
         migrations.AddField(
-            model_name='proposal',
-            name='pre_approval_pdf',
-            field=models.FileField(blank=True, upload_to='', validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)'),
+            model_name="proposal",
+            name="pre_approval_pdf",
+            field=models.FileField(
+                blank=True,
+                upload_to="",
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)",
+            ),
         ),
     ]

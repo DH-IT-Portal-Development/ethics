@@ -5,12 +5,12 @@ from main.utils import AvailableURL
 
 
 def observation_url(study):
-    result = AvailableURL(title=_('Observatieonderzoek'), margin=2)
+    result = AvailableURL(title=_("Observatieonderzoek"), margin=2)
     if study.has_observation:
-        if hasattr(study, 'observation'):
-            result.url = reverse('observations:update', args=(study.observation.pk,))
+        if hasattr(study, "observation"):
+            result.url = reverse("observations:update", args=(study.observation.pk,))
         else:
-            result.url = reverse('observations:create', args=(study.pk,))
+            result.url = reverse("observations:create", args=(study.pk,))
     return result
 
 

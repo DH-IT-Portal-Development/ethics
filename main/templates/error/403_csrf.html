@@ -9,28 +9,16 @@
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h2>
-                {% trans 'Verzoek kon niet geverifieerd worden' %}
-            </h2>
-            <p>
-                {% trans 'Er is iets fout gegaan met het verifiëren van je browser.' %}
-            </p>
+            <h2>{% trans 'Verzoek kon niet geverifieerd worden' %}</h2>
+            <p>{% trans 'Er is iets fout gegaan met het verifiëren van je browser.' %}</p>
             <p>
                 {% trans 'Dit kan meerdere oorzaken hebben, zoals het gebruik van een script- of ad-blocker, of je cookie-instellingen. Probeer eerst een <em>volledige verversing</em> van de pagina:' %}
             </p>
             <ul>
-                <li>
-                    {% trans 'Voor Chrome: ctrl + F5 (Windows) of cmd + shift + R (Mac)' %}
-                </li>
-                <li>
-                    {% trans 'Voor Firefox: ctrl + shift + R (Windows) of cmd + shift + R (Mac)' %}
-                </li>
-                <li>
-                    {% trans 'Voor Edge: ctrl + F5' %}
-                </li>
-                <li>
-                    {% trans 'Voor Safari: option + cmnd + E' %}
-                </li>
+                <li>{% trans 'Voor Chrome: ctrl + F5 (Windows) of cmd + shift + R (Mac)' %}</li>
+                <li>{% trans 'Voor Firefox: ctrl + shift + R (Windows) of cmd + shift + R (Mac)' %}</li>
+                <li>{% trans 'Voor Edge: ctrl + F5' %}</li>
+                <li>{% trans 'Voor Safari: option + cmnd + E' %}</li>
             </ul>
             <p>
                 {% blocktrans trimmed %}

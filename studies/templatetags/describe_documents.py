@@ -20,25 +20,25 @@ def describe_file(file):
 
     field_name = file.field.name
 
-    nice_name = _('bestand')
+    nice_name = _("bestand")
 
-    if field_name == 'informed_consent':
-        nice_name = _('informed consent')
+    if field_name == "informed_consent":
+        nice_name = _("informed consent")
 
-    if field_name == 'briefing':
-        nice_name = _('informatiebrief')
+    if field_name == "briefing":
+        nice_name = _("informatiebrief")
 
-    if field_name == 'director_consent_declaration':
-        nice_name = _('informed consent voor de schoolleiding of het departementshoofd')
+    if field_name == "director_consent_declaration":
+        nice_name = _("informed consent voor de schoolleiding of het departementshoofd")
 
-    if field_name == 'director_consent_information':
-        nice_name = _('informatiebrief voor de schoolleiding of het departementshoofd')
+    if field_name == "director_consent_information":
+        nice_name = _("informatiebrief voor de schoolleiding of het departementshoofd")
 
-    if field_name == 'parents_information':
-        nice_name = _('informatiebrief voor de ouders of verzorgers')
+    if field_name == "parents_information":
+        nice_name = _("informatiebrief voor de ouders of verzorgers")
 
-    if field_name == 'dmp_file':
-        nice_name = _('data management plan')
+    if field_name == "dmp_file":
+        nice_name = _("data management plan")
 
     parent = file.instance
 
@@ -56,25 +56,31 @@ def describe_file(file):
         trajectory_name = give_name(parent).lower()
 
     if has_trajectory:
-        trajectory_name = trajectory_name.replace('hoofdtraject',
-                                                  'het hoofdtraject',
-                                                  )
-        out_string = _('''
+        trajectory_name = trajectory_name.replace(
+            "hoofdtraject",
+            "het hoofdtraject",
+        )
+        out_string = _(
+            """
             {} bij {} van aanvraag {}-{}: <i>{}</i>
-            ''').format(nice_name.capitalize(),
-                         trajectory_name,
-                         proposal.reviewing_committee.name,
-                         proposal.reference_number,
-                         escape(proposal.title),
-                         )
+            """
+        ).format(
+            nice_name.capitalize(),
+            trajectory_name,
+            proposal.reviewing_committee.name,
+            proposal.reference_number,
+            escape(proposal.title),
+        )
     else:
-        out_string = _('''
+        out_string = _(
+            """
             {} van aanvraag {}-{}: <i>{}</i>
-            ''').format(nice_name.capitalize(),
-                         proposal.reviewing_committee.name,
-                         proposal.reference_number,
-                         escape(proposal.title),
-                         )
-
+            """
+        ).format(
+            nice_name.capitalize(),
+            proposal.reviewing_committee.name,
+            proposal.reference_number,
+            escape(proposal.title),
+        )
 
     return mark_safe(out_string)

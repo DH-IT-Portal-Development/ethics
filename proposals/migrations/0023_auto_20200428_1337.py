@@ -4,30 +4,44 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0022_auto_20191107_1438'),
+        ("proposals", "0022_auto_20191107_1438"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='proposal',
-            name='inform_local_staff',
-            field=models.BooleanField(blank=True, default=None, null=True, verbose_name='<p>U hebt aangegeven dat u gebruik wilt gaan maken van één van de faciliteiten van het UiL OTS, namelijk de database, Zep software en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op de hoogte willen worden gesteld van aankomende studies. Daarom vragen wij hier u toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.</p> <p>Vindt u het goed dat de volgende delen uit de aanvraag worden doorgestuurd:</p> - Uw naam en de namen van de andere betrokkenen <br/> - De eindverantwoordelijke van de studie <br/> - De titel van de studie <br/> - De beoogde startdatum <br/> - Van welke faciliteiten u gebruik wilt maken (database, lab, Zep software)'),
+            model_name="proposal",
+            name="inform_local_staff",
+            field=models.BooleanField(
+                blank=True,
+                default=None,
+                null=True,
+                verbose_name="<p>U hebt aangegeven dat u gebruik wilt gaan maken van één van de faciliteiten van het UiL OTS, namelijk de database, Zep software en/of het UiL OTS lab. Het lab supportteam van het UiL OTS zou graag op de hoogte willen worden gesteld van aankomende studies. Daarom vragen wij hier u toestemming om delen van deze aanvraag door te sturen naar het lab supportteam.</p> <p>Vindt u het goed dat de volgende delen uit de aanvraag worden doorgestuurd:</p> - Uw naam en de namen van de andere betrokkenen <br/> - De eindverantwoordelijke van de studie <br/> - De titel van de studie <br/> - De beoogde startdatum <br/> - Van welke faciliteiten u gebruik wilt maken (database, lab, Zep software)",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='is_pre_approved',
-            field=models.BooleanField(blank=True, default=None, null=True, verbose_name='Heeft u formele toestemming van een ethische toetsingcommissie, uitgezonderd deze FETC-GW commissie?'),
+            model_name="proposal",
+            name="is_pre_approved",
+            field=models.BooleanField(
+                blank=True,
+                default=None,
+                null=True,
+                verbose_name="Heeft u formele toestemming van een ethische toetsingcommissie, uitgezonderd deze FETC-GW commissie?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='status_review',
+            model_name="proposal",
+            name="status_review",
             field=models.BooleanField(blank=True, default=None, null=True),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='studies_similar',
-            field=models.BooleanField(blank=True, help_text='Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is sprake van in essentie hetzelfde traject. Denk hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op hetzelfde moment een verschillende interventie-variant krijgen (specificeer dan wel bij de beschrijving van de interventie welke varianten precies gebruikt worden).', null=True, verbose_name='Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?'),
+            model_name="proposal",
+            name="studies_similar",
+            field=models.BooleanField(
+                blank=True,
+                help_text="Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is sprake van in essentie hetzelfde traject. Denk hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op hetzelfde moment een verschillende interventie-variant krijgen (specificeer dan wel bij de beschrijving van de interventie welke varianten precies gebruikt worden).",
+                null=True,
+                verbose_name="Doorlopen alle deelnemersgroepen in essentie hetzelfde traject?",
+            ),
         ),
     ]

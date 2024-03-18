@@ -1,0 +1,14 @@
+{% load i18n %}
+
+{% if page_break %}
+    <h2 style="page-break-before: always">{% trans section_title %}</h2>
+{% elif section_title %}
+    <h2>{% trans section_title %}</h2>
+{% endif %}
+{% if sub_title %}<h3>{{ sub_title }}</h3>{% endif %}
+<div class="table">
+    {% for row in rows %}
+        <div class="question">{{ row.verbose_name }}</div>
+        <div class="answer">{{ row.value }}</div>
+    {% endfor %}
+</div>

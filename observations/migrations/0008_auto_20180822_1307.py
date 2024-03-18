@@ -6,25 +6,33 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('observations', '0007_auto_20180822_1214'),
+        ("observations", "0007_auto_20180822_1214"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='observation',
-            name='details_frequency',
-            field=models.TextField(help_text='Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten worden geobserveerd.', verbose_name='Beschrijf <b>hoe vaak en hoe lang</b> de observant wordt geobserveerd.'),
+            model_name="observation",
+            name="details_frequency",
+            field=models.TextField(
+                help_text="Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten worden geobserveerd.",
+                verbose_name="Beschrijf <b>hoe vaak en hoe lang</b> de observant wordt geobserveerd.",
+            ),
         ),
         migrations.AlterField(
-            model_name='observation',
-            name='details_who',
-            field=models.TextField(help_text='Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies van de deelnemer wordt geobserveerd. Bijvoorbeeld: De leraar zal geobserveerd worden. De observatie moet de interactie tussen leraar en leerling in kaart brengen.', verbose_name='Beschrijf <b>wie</b> er wordt geobserveerd.'),
+            model_name="observation",
+            name="details_who",
+            field=models.TextField(
+                help_text="Maak duidelijk voor de commissie wie er wordt geobserveerd en wat er precies van de deelnemer wordt geobserveerd. Bijvoorbeeld: De leraar zal geobserveerd worden. De observatie moet de interactie tussen leraar en leerling in kaart brengen.",
+                verbose_name="Beschrijf <b>wie</b> er wordt geobserveerd.",
+            ),
         ),
         migrations.AlterField(
-            model_name='observation',
-            name='details_why',
-            field=models.TextField(help_text='Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie is inzicht te krijgen in hoe de leerkracht omgaat met de uitleg van de nieuwe lesmethode. Doet h/zij dat op de gewenste manier en in begrijpelijke taal?', verbose_name='Beschrijf <b>waarom</b> er wordt geobserveerd.'),
+            model_name="observation",
+            name="details_why",
+            field=models.TextField(
+                help_text="Wat is het doel van de observatie? Bijvoorbeeld: Het doel van de observatie is inzicht te krijgen in hoe de leerkracht omgaat met de uitleg van de nieuwe lesmethode. Doet h/zij dat op de gewenste manier en in begrijpelijke taal?",
+                verbose_name="Beschrijf <b>waarom</b> er wordt geobserveerd.",
+            ),
         ),
     ]

@@ -4,25 +4,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('main', '0007_auto_20210528_1331'),
+        ("main", "0007_auto_20210528_1331"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='systemmessage',
-            name='message',
+            model_name="systemmessage",
+            name="message",
             field=models.TextField(),
         ),
         migrations.AlterField(
-            model_name='systemmessage',
-            name='message_en',
+            model_name="systemmessage",
+            name="message_en",
             field=models.TextField(null=True),
         ),
         migrations.AlterField(
-            model_name='systemmessage',
-            name='message_nl',
+            model_name="systemmessage",
+            name="message_nl",
             field=models.TextField(null=True),
         ),
     ]

@@ -14,13 +14,11 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    help = (
-        'Renames a Django Application. Usage rename_app [old_name] [new_name]'
-    )
+    help = "Renames a Django Application. Usage rename_app [old_name] [new_name]"
 
     def add_arguments(self, parser):
-        parser.add_argument('old_name', nargs=1, type=str)
-        parser.add_argument('new_name', nargs=1, type=str)
+        parser.add_argument("old_name", nargs=1, type=str)
+        parser.add_argument("new_name", nargs=1, type=str)
 
     def handle(self, old_name, new_name, *args, **options):
         with connection.cursor() as cursor:
@@ -28,14 +26,13 @@ class Command(BaseCommand):
             new_name = new_name[0]
 
             cursor.execute(
-                "SELECT * FROM django_content_type "
-                f"where app_label='{new_name}'"
+                "SELECT * FROM django_content_type " f"where app_label='{new_name}'"
             )
             has_already_been_ran = cursor.fetchone()
             if has_already_been_ran:
                 logger.info(
-                    'Rename has already been done, exiting without '
-                    'making any changes'
+                    "Rename has already been done, exiting without "
+                    "making any changes"
                 )
                 return None
 
@@ -57,6 +54,4 @@ class Command(BaseCommand):
                 try:
                     cursor.execute(query)
                 except ProgrammingError:
-                    logger.warning(
-                        'Rename query failed: "%s"', query, exc_info=True
-                    )
+                    logger.warning('Rename query failed: "%s"', query, exc_info=True)

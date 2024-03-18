@@ -12,9 +12,10 @@ SESSION_PROGRESS_EPSILON = 5
 
 def get_session_progress(session, is_end=False):
     from studies.utils import get_study_progress
+
     progress = SESSION_PROGRESS_TOTAL / session.study.sessions_number
     if not is_end:
-        progress *= (session.order - 1)
+        progress *= session.order - 1
     else:
         progress *= session.order
     return int(get_study_progress(session.study) + SESSION_PROGRESS_START + progress)
@@ -24,29 +25,36 @@ def get_task_progress(task):
     session = task.session
     session_progress = get_session_progress(session)
     task_progress = task.order / session.tasks_number
-    return int(session_progress + (SESSION_PROGRESS_TOTAL / session.study.sessions_number) * task_progress - SESSION_PROGRESS_EPSILON)
+    return int(
+        session_progress
+        + (SESSION_PROGRESS_TOTAL / session.study.sessions_number) * task_progress
+        - SESSION_PROGRESS_EPSILON
+    )
 
 
 def session_urls(study):
-
-    tasks_url = AvailableURL(title=_('Takenonderzoek'))
+    tasks_url = AvailableURL(title=_("Takenonderzoek"))
 
     if study.has_sessions:
-        tasks_url.url = reverse('studies:session_start', args=(study.pk,))
+        tasks_url.url = reverse("studies:session_start", args=(study.pk,))
 
     if study.has_sessions:
         prev_session_completed = True
         for session in study.session_set.all():
-            task_start_url = AvailableURL(title=_('Het takenonderzoek: sessie {}').format(session.order))
+            task_start_url = AvailableURL(
+                title=_("Het takenonderzoek: sessie {}").format(session.order)
+            )
             if prev_session_completed:
-                task_start_url.url = reverse('tasks:start', args=(session.pk,))
+                task_start_url.url = reverse("tasks:start", args=(session.pk,))
             tasks_url.children.append(task_start_url)
 
             tasks_url.children.extend(tasks_urls(session))
 
-            task_end_url = AvailableURL(title=_('Overzicht van takenonderzoek: sessie {}').format(session.order))
+            task_end_url = AvailableURL(
+                title=_("Overzicht van takenonderzoek: sessie {}").format(session.order)
+            )
             if session.tasks_completed():
-                task_end_url.url = reverse('tasks:end', args=(session.pk,))
+                task_end_url.url = reverse("tasks:end", args=(session.pk,))
             tasks_url.children.append(task_end_url)
 
             prev_session_completed = session.is_completed()
@@ -59,9 +67,13 @@ def tasks_urls(session):
 
     prev_task_completed = True
     for task in session.task_set.all():
-        task_url = AvailableURL(title=_('Het takenonderzoek: sessie {} taak {}').format(session.order, task.order))
+        task_url = AvailableURL(
+            title=_("Het takenonderzoek: sessie {} taak {}").format(
+                session.order, task.order
+            )
+        )
         if prev_task_completed:
-            task_url.url = reverse('tasks:update', args=(task.pk,))
+            task_url.url = reverse("tasks:update", args=(task.pk,))
         result.append(task_url)
 
         prev_task_completed = task.is_completed()
@@ -78,9 +90,7 @@ def copy_task_to_session(session, original_task):
     t.save()
 
     t.registrations.set(original_task.registrations.all())
-    t.registration_kinds.set(
-        original_task.registration_kinds.all()
-    )
+    t.registration_kinds.set(original_task.registration_kinds.all())
     t.save()
 
 

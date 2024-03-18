@@ -5,10 +5,10 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.template.loader import render_to_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import activate, get_language, ugettext_lazy as _
 from django.utils import timezone
 
-from main.models import YES, DOUBT
+from main.models import YesNoDoubt
 from main.utils import get_secretary
 from proposals.models import Proposal
 from tasks.models import Task
@@ -20,14 +20,24 @@ def start_review(proposal):
     """
     Starts a Review for the given Proposal.
 
-    If the proposal needs a supervisor, start the supervisor phase. Otherwise, start the assignment phase.
+    If the proposal needs a supervisor, start the supervisor phase.
+    Otherwise, start the assignment phase.
     """
-    if proposal.relation.needs_supervisor:
-        review = start_supervisor_phase(proposal)
-    else:
-        review = start_assignment_phase(proposal)
+    if proposal.is_practice():
+        # These should never start a review
+        return None
+    if proposal.status != Proposal.Statuses.DRAFT:
+        # This prevents double submissions
+        return None
 
-    return review
+    proposal.generate_pdf()
+
+    if proposal.relation.needs_supervisor:
+        return start_supervisor_phase(proposal)
+    elif proposal.is_pre_assessment:
+        return start_review_pre_assessment(proposal)
+    else:
+        return start_assignment_phase(proposal)
 
 
 def start_supervisor_phase(proposal):
@@ -41,49 +51,80 @@ def start_supervisor_phase(proposal):
     - send an e-mail to other applicants
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.stage = Review.SUPERVISOR
+    review.stage = Review.Stages.SUPERVISOR
+    review.is_committee_review = False
     review.save()
 
     proposal.date_submitted_supervisor = timezone.now()
-    proposal.status = proposal.SUBMITTED_TO_SUPERVISOR
+    proposal.status = proposal.Statuses.SUBMITTED_TO_SUPERVISOR
     proposal.save()
 
     decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
     reference = proposal.committee_prefixed_refnum()
 
-    subject = _('FETC-GW {}: bevestiging indienen concept-aanmelding'.format(reference))
+    subject = _("FETC-GW {}: bevestiging indienen concept-aanmelding".format(reference))
     params = {
-        'proposal': proposal,
-        'title': proposal.title,
-        'supervisor': proposal.supervisor.get_full_name(),
-        'secretary': get_secretary().get_full_name(),
-        'pdf_url': settings.BASE_URL + proposal.pdf.url,
+        "proposal": proposal,
+        "title": proposal.title,
+        "supervisor": proposal.supervisor.get_full_name(),
+        "secretary": get_secretary().get_full_name(),
+        "pdf_url": settings.BASE_URL + proposal.pdf.url,
     }
-    msg_plain = render_to_string('mail/concept_creator.txt', params)
-    msg_html = render_to_string('mail/concept_creator.html', params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email], html_message=msg_html)
+    msg_plain = render_to_string("mail/concept_creator.txt", params)
+    msg_html = render_to_string("mail/concept_creator.html", params)
+    send_mail(
+        subject,
+        msg_plain,
+        settings.EMAIL_FROM,
+        [proposal.created_by.email],
+        html_message=msg_html,
+    )
 
     if proposal.other_applicants:
-        params['creator'] = proposal.created_by.get_full_name()
-        msg_plain = render_to_string('mail/concept_other_applicants.txt', params)
-        msg_html = render_to_string('mail/concept_other_applicants.html', params)
-        applicants_to_remove = [proposal.created_by, proposal.supervisor]
-        other_applicants_emails = [applicant.email for applicant in proposal.applicants.all() if applicant not in applicants_to_remove]
-        send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
+        params["creator"] = proposal.created_by.get_full_name()
+        msg_plain = render_to_string("mail/concept_other_applicants.txt", params)
+        msg_html = render_to_string("mail/concept_other_applicants.html", params)
 
-    subject = _('FETC-GW {}: beoordelen als eindverantwoordelijke'.format(reference))
+        # Note: the original applicant gets the email as well as primary
+        # recipient
+        # They should be regarded as CC'd, but the currently used mail API
+        # doesn't support that. When moving to cdh.core mailing this should
+        # be corrected
+        applicants_to_remove = [proposal.supervisor]
+        other_applicants_emails = [
+            applicant.email
+            for applicant in proposal.applicants.all()
+            if applicant not in applicants_to_remove
+        ]
+
+        send_mail(
+            subject,
+            msg_plain,
+            settings.EMAIL_FROM,
+            other_applicants_emails,
+            html_message=msg_html,
+        )
+
+    subject = _("FETC-GW {}: beoordelen als eindverantwoordelijke".format(reference))
     params = {
-        'proposal': proposal,
-        'creator': proposal.created_by.get_full_name(),
-        'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
-        'secretary': get_secretary().get_full_name(),
-        'revision': proposal.is_revision,
-        'revision_type': proposal.type(),
-        'my_supervised': settings.BASE_URL + reverse('proposals:my_supervised'),
+        "proposal": proposal,
+        "creator": proposal.created_by.get_full_name(),
+        "proposal_url": settings.BASE_URL
+        + reverse("reviews:decide", args=(decision.pk,)),
+        "secretary": get_secretary().get_full_name(),
+        "revision": proposal.is_revision,
+        "revision_type": proposal.type(),
+        "my_supervised": settings.BASE_URL + reverse("proposals:my_supervised"),
     }
-    msg_plain = render_to_string('mail/concept_supervisor.txt', params)
-    msg_html = render_to_string('mail/concept_supervisor.html', params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.supervisor.email], html_message=msg_html)
+    msg_plain = render_to_string("mail/concept_supervisor.txt", params)
+    msg_html = render_to_string("mail/concept_supervisor.html", params)
+    send_mail(
+        subject,
+        msg_plain,
+        settings.EMAIL_FROM,
+        [proposal.supervisor.email],
+        html_message=msg_html,
+    )
 
     return review
 
@@ -105,15 +146,17 @@ def start_assignment_phase(proposal):
     short_route = len(reasons) == 0
 
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.stage = Review.ASSIGNMENT
+    review.stage = Review.Stages.ASSIGNMENT
     review.short_route = short_route
 
     if short_route:
-        review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.SHORT_ROUTE_WEEKS)
+        review.date_should_end = timezone.now() + timezone.timedelta(
+            weeks=settings.SHORT_ROUTE_WEEKS
+        )
     review.save()
 
     proposal.date_submitted = timezone.now()
-    proposal.status = proposal.SUBMITTED
+    proposal.status = proposal.Statuses.SUBMITTED
     proposal.save()
 
     secretary = get_secretary()
@@ -121,36 +164,58 @@ def start_assignment_phase(proposal):
 
     notify_secretary_assignment(review)
 
-    subject = _('FETC-GW {}: aanmelding ontvangen'.format(proposal.committee_prefixed_refnum()))
+    subject = _(
+        "FETC-GW {}: aanmelding ontvangen".format(proposal.committee_prefixed_refnum())
+    )
     params = {
-        'secretary': secretary.get_full_name(),
-        'review_date': review.date_should_end,
-        'pdf_url': settings.BASE_URL + proposal.pdf.url,
-        'title': proposal.title,
+        "secretary": secretary.get_full_name(),
+        "review_date": review.date_should_end,
+        "pdf_url": settings.BASE_URL + proposal.pdf.url,
+        "title": proposal.title,
     }
     if review.short_route:
-        msg_plain = render_to_string('mail/submitted_shortroute.txt', params)
-        msg_html = render_to_string('mail/submitted_shortroute.html', params)
+        msg_plain = render_to_string("mail/submitted_shortroute.txt", params)
+        msg_html = render_to_string("mail/submitted_shortroute.html", params)
     else:
-        msg_plain = render_to_string('mail/submitted_longroute.txt', params)
-        msg_html = render_to_string('mail/submitted_longroute.html', params)
+        msg_plain = render_to_string("mail/submitted_longroute.txt", params)
+        msg_html = render_to_string("mail/submitted_longroute.html", params)
     recipients = [proposal.created_by.email]
     if proposal.relation.needs_supervisor:
         recipients.append(proposal.supervisor.email)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html)
+    send_mail(
+        subject, msg_plain, settings.EMAIL_FROM, recipients, html_message=msg_html
+    )
 
     if proposal.supervisor is None and proposal.other_applicants:
-        params['creator'] = proposal.created_by.get_full_name()
+        params["creator"] = proposal.created_by.get_full_name()
         if review.short_route:
-            msg_plain = render_to_string('mail/submitted_shortroute_other_applicants.txt', params)
-            msg_html = render_to_string('mail/submitted_shortroute_other_applicants.html', params)
+            msg_plain = render_to_string(
+                "mail/submitted_shortroute_other_applicants.txt", params
+            )
+            msg_html = render_to_string(
+                "mail/submitted_shortroute_other_applicants.html", params
+            )
         else:
-            msg_plain = render_to_string('mail/submitted_longroute_other_applicants.txt', params)
-            msg_html = render_to_string('mail/submitted_longroute_other_applicants.html', params)
-        applicants_to_remove = [proposal.created_by]
-        other_applicants_emails = [applicant.email for applicant in proposal.applicants.all() if applicant not in applicants_to_remove]
+            msg_plain = render_to_string(
+                "mail/submitted_longroute_other_applicants.txt", params
+            )
+            msg_html = render_to_string(
+                "mail/submitted_longroute_other_applicants.html", params
+            )
 
-        send_mail(subject, msg_plain, settings.EMAIL_FROM, other_applicants_emails, html_message=msg_html)
+        # Note: the original applicant gets the email as well as primary
+        # recipient
+        # They should be regarded as CC'd, but the currently used mail API
+        # doesn't support that. When moving to cdh.core mailing this should
+        # be corrected
+        applicants_emails = [applicant.email for applicant in proposal.applicants.all()]
+        send_mail(
+            subject,
+            msg_plain,
+            settings.EMAIL_FROM,
+            applicants_emails,
+            html_message=msg_html,
+        )
 
     if proposal.inform_local_staff:
         notify_local_staff(proposal)
@@ -168,11 +233,11 @@ def remind_reviewers():
     next_two_days = today + datetime.timedelta(days=2)
 
     decisions = Decision.objects.filter(
-        review__stage=Review.COMMISSION,
+        review__stage=Review.Stages.COMMISSION,
         review__short_route=True,
         review__date_should_end__gte=today,
         review__date_should_end__lte=next_two_days,
-        go='',  # Checks if the decision has already been done; we don't
+        go="",  # Checks if the decision has already been done; we don't
         # check for None as the field cannot be None according to the field
         # definition
     )
@@ -183,13 +248,20 @@ def remind_reviewers():
             proposal.committee_prefixed_refnum(),
         )
         params = {
-            'creator': proposal.created_by.get_full_name(),
-            'proposal_url': settings.BASE_URL + reverse('reviews:decide', args=(decision.pk,)),
-            'secretary': get_secretary().get_full_name(),
+            "creator": proposal.created_by.get_full_name(),
+            "proposal_url": settings.BASE_URL
+            + reverse("reviews:decide", args=(decision.pk,)),
+            "secretary": get_secretary().get_full_name(),
         }
-        msg_plain = render_to_string('mail/reminder.txt', params)
-        msg_html = render_to_string('mail/reminder.html', params)
-        send_mail(subject, msg_plain, settings.EMAIL_FROM, [decision.reviewer.email], html_message=msg_html)
+        msg_plain = render_to_string("mail/reminder.txt", params)
+        msg_html = render_to_string("mail/reminder.html", params)
+        send_mail(
+            subject,
+            msg_plain,
+            settings.EMAIL_FROM,
+            [decision.reviewer.email],
+            html_message=msg_html,
+        )
 
 
 def start_review_pre_assessment(proposal):
@@ -203,40 +275,53 @@ def start_review_pre_assessment(proposal):
     :param proposal: the current Proposal
     """
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
-    review.stage = Review.ASSIGNMENT
+    review.stage = Review.Stages.ASSIGNMENT
     review.short_route = True
-    review.date_should_end = timezone.now() + timezone.timedelta(weeks=settings.PREASSESSMENT_ROUTE_WEEKS)
+    review.date_should_end = timezone.now() + timezone.timedelta(
+        weeks=settings.PREASSESSMENT_ROUTE_WEEKS
+    )
     review.save()
 
     proposal.date_submitted = timezone.now()
-    proposal.status = proposal.SUBMITTED
+    proposal.status = proposal.Statuses.SUBMITTED
     proposal.save()
 
     secretary = get_secretary()
     Decision.objects.create(review=review, reviewer=secretary)
 
-    subject = _('FETC-GW {}: nieuwe aanvraag voor voortoetsing'.format(
-        proposal.committee_prefixed_refnum(),
+    subject = _(
+        "FETC-GW {}: nieuwe aanvraag voor voortoetsing".format(
+            proposal.committee_prefixed_refnum(),
         )
-                )
-                
-    params = {
-        'secretary': secretary.get_full_name(),
-        'proposal': proposal,
-        'proposal_pdf': settings.BASE_URL + proposal.pdf.url,
-    }
-    msg_plain = render_to_string('mail/pre_assessment_secretary.txt', params)
-    msg_html = render_to_string('mail/pre_assessment_secretary.html', params)
-    send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email], html_message=msg_html)
+    )
 
-    subject = _('FETC-GW {}: bevestiging indienen aanvraag voor voortoetsing'.format(
-        proposal.committee_prefixed_refnum(),)
-                )
     params = {
-        'secretary': secretary.get_full_name(),
+        "secretary": secretary.get_full_name(),
+        "proposal": proposal,
+        "proposal_pdf": settings.BASE_URL + proposal.pdf.url,
     }
-    msg_plain = render_to_string('mail/pre_assessment_creator.txt', params)
+    msg_plain = render_to_string("mail/pre_assessment_secretary.txt", params)
+    msg_html = render_to_string("mail/pre_assessment_secretary.html", params)
+    send_mail(
+        subject,
+        msg_plain,
+        settings.EMAIL_FROM,
+        [secretary.email],
+        html_message=msg_html,
+    )
+
+    subject = _(
+        "FETC-GW {}: bevestiging indienen aanvraag voor voortoetsing".format(
+            proposal.committee_prefixed_refnum(),
+        )
+    )
+    params = {
+        "secretary": secretary.get_full_name(),
+    }
+    msg_plain = render_to_string("mail/pre_assessment_creator.txt", params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [proposal.created_by.email])
+
+    return review
 
 
 def start_review_route(review, commission_users, use_short_route):
@@ -244,28 +329,32 @@ def start_review_route(review, commission_users, use_short_route):
     Creates Decisions and sends notification e-mail to the selected Reviewers
     """
 
-    template = 'mail/assignment_shortroute.txt' if use_short_route else 'mail/assignment_longroute.txt'
+    template = (
+        "mail/assignment_shortroute.txt"
+        if use_short_route
+        else "mail/assignment_longroute.txt"
+    )
 
     was_revised = review.proposal.is_revision
 
     if was_revised:
-        subject = 'FETC-GW {}: gereviseerde aanvraag ter beoordeling'
+        subject = "FETC-GW {}: gereviseerde aanvraag ter beoordeling"
     else:
-        subject = 'FETC-GW {}: nieuwe aanvraag ter beoordeling'
+        subject = "FETC-GW {}: nieuwe aanvraag ter beoordeling"
         # These emails are Dutch-only, therefore intentionally untranslated
 
-    subject = subject.format(review.proposal.committee_prefixed_refnum(),
-                             )
+    subject = subject.format(
+        review.proposal.committee_prefixed_refnum(),
+    )
 
     for user in commission_users:
-
         Decision.objects.create(review=review, reviewer=user)
         params = {
-            'secretary': get_secretary().get_full_name(),
-            'reviewer': user.get_full_name(),
-            'review_date': review.date_should_end,
-            'is_pre_assessment': review.proposal.is_pre_assessment,
-            'was_revised': was_revised,
+            "secretary": get_secretary().get_full_name(),
+            "reviewer": user.get_full_name(),
+            "review_date": review.date_should_end,
+            "is_pre_assessment": review.proposal.is_pre_assessment,
+            "was_revised": was_revised,
         }
         msg_plain = render_to_string(template, params)
         send_mail(subject, msg_plain, settings.EMAIL_FROM, [user.email])
@@ -278,12 +367,14 @@ def notify_secretary_assignment(review):
     secretary = get_secretary()
     proposal = review.proposal
     committee = review.proposal.reviewing_committee
-    subject = _('FETC-GW {}: nieuwe aanvraag ingediend').format(proposal.committee_prefixed_refnum())
+    subject = _("FETC-GW {}: nieuwe aanvraag ingediend").format(
+        proposal.committee_prefixed_refnum()
+    )
     params = {
-        'secretary': secretary.get_full_name(),
-        'review': review,
+        "secretary": secretary.get_full_name(),
+        "review": review,
     }
-    msg_plain = render_to_string('mail/submitted.txt', params)
+    msg_plain = render_to_string("mail/submitted.txt", params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
 
 
@@ -293,15 +384,43 @@ def notify_secretary(decision):
     """
     secretary = get_secretary()
     proposal = decision.review.proposal
-    subject = _('FETC-GW {}: nieuwe beoordeling toegevoegd').format(
+    subject = _("FETC-GW {}: nieuwe beoordeling toegevoegd").format(
         proposal.committee_prefixed_refnum(),
     )
     params = {
-        'secretary': secretary.get_full_name(),
-        'decision': decision,
+        "secretary": secretary.get_full_name(),
+        "decision": decision,
     }
-    msg_plain = render_to_string('mail/decision_notify.txt', params)
+    msg_plain = render_to_string("mail/decision_notify.txt", params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
+
+
+def notify_secretary_all_decisions(review):
+    """
+    Notifies a secretary all Decisions have been made for a certain review
+    """
+    # Change language to Dutch for this e-mail, but save the current language to reset it later
+    current_language = get_language()
+    activate("nl")
+
+    secretary = get_secretary()
+    subject = "FETC-GW {}: alle beoordelingen toegevoegd".format(
+        review.proposal.committee_prefixed_refnum(),
+    )
+    params = {
+        "secretary": secretary.get_full_name(),
+        "review": review,
+        "decisions": review.decision_set.all(),
+        "review_detail_page": settings.BASE_URL
+        + (reverse("reviews:detail", args=[review.pk])),
+        "close_review_page": settings.BASE_URL
+        + (reverse("reviews:close", args=[review.pk])),
+    }
+    msg_plain = render_to_string("mail/all_decisions_notify.txt", params)
+    send_mail(subject, msg_plain, settings.EMAIL_FROM, [settings.EMAIL_FROM])
+
+    # Reset the current language
+    activate(current_language)
 
 
 def notify_supervisor_nogo(decision):
@@ -309,18 +428,20 @@ def notify_supervisor_nogo(decision):
     proposal = decision.review.proposal
     supervisor = proposal.supervisor
     receivers = set(applicant for applicant in proposal.applicants.all())
-    subject = _('FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld'.format(
-        proposal.committee_prefixed_refnum(),)
+    subject = _(
+        "FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld".format(
+            proposal.committee_prefixed_refnum(),
+        )
     )
     params = {
-        'secretary': secretary.get_full_name(),
-        'decision': decision,
-        'supervisor': supervisor,
+        "secretary": secretary.get_full_name(),
+        "decision": decision,
+        "supervisor": supervisor,
     }
 
     for applicant in receivers:
-        params['applicant'] = applicant
-        msg_plain = render_to_string('mail/supervisor_decision.txt', params)
+        params["applicant"] = applicant
+        msg_plain = render_to_string("mail/supervisor_decision.txt", params)
         send_mail(subject, msg_plain, settings.EMAIL_FROM, [applicant.email])
 
 
@@ -333,40 +454,66 @@ def auto_review(proposal: Proposal):
     reasons = []
 
     for study in proposal.study_set.all():
-
         if study.legally_incapable:
-            reasons.append(_('De aanvraag bevat het gebruik van wilsonbekwame volwassenen.'))
+            reasons.append(
+                _("De aanvraag bevat het gebruik van wilsonbekwame volwassenen.")
+            )
 
-        if study.deception in [YES, DOUBT]:
-            reasons.append(_('De aanvraag bevat het gebruik van misleiding.'))
+        if study.deception in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+            reasons.append(_("De aanvraag bevat het gebruik van misleiding."))
 
         if study.hierarchy:
-            reasons.append(_('Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)'))
+            reasons.append(
+                _(
+                    "Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)"
+                )
+            )
 
         if study.has_special_details:
-            reasons.append(_('Het onderzoek verzamelt bijzondere persoonsgegevens.'))
+            reasons.append(_("Het onderzoek verzamelt bijzondere persoonsgegevens."))
 
         if study.has_traits:
-            reasons.append(_('Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.'))
+            reasons.append(
+                _(
+                    "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen."
+                )
+            )
 
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
-        if study.stressful in [YES, DOUBT]:
-            reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op onderdelen of \
-als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen.'))
+        if study.stressful in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+            reasons.append(
+                _(
+                    "De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op onderdelen of \
+als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen."
+                )
+            )
 
-        if study.risk in [YES, DOUBT]:
-            reasons.append(_('De onderzoeker geeft aan dat (of twijfelt erover of) de risico\'s op psychische of \
-fysieke schade bij deelname aan het onderzoek meer dan minimaal zijn.'))
+        if study.risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+            reasons.append(
+                _(
+                    "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op psychische of \
+fysieke schade bij deelname aan het onderzoek meer dan minimaal zijn."
+                )
+            )
 
         if study.has_sessions:
             for session in study.session_set.all():
                 for age_group in study.age_groups.all():
                     if session.net_duration() > age_group.max_net_duration:
-                        reasons.append(_('De totale duur van de taken in sessie {s}, exclusief pauzes \
+                        reasons.append(
+                            _(
+                                "De totale duur van de taken in sessie {s}, exclusief pauzes \
 en andere niet-taak elementen ({d} minuten), is groter dan het streefmaximum ({max_d} minuten) \
-voor de leeftijdsgroep {ag}.').format(s=session.order, ag=age_group, d=session.net_duration(), max_d=age_group.max_net_duration))
+voor de leeftijdsgroep {ag}."
+                            ).format(
+                                s=session.order,
+                                ag=age_group,
+                                d=session.net_duration(),
+                                max_d=age_group.max_net_duration,
+                            )
+                        )
 
     return reasons
 
@@ -381,18 +528,30 @@ def auto_review_observation(observation):
 
     if observation.settings_requires_review():
         for setting in observation.settings_requires_review():
-            reasons.append(_('Het onderzoek observeert deelnemers in de volgende setting: {s}').format(s=setting))
+            reasons.append(
+                _(
+                    "Het onderzoek observeert deelnemers in de volgende setting: {s}"
+                ).format(s=setting)
+            )
 
     if observation.is_nonpublic_space:
         if not observation.has_advanced_consent:
-            reasons.append(_('Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met informed consent achteraf.'))
+            reasons.append(
+                _(
+                    "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met informed consent achteraf."
+                )
+            )
         if observation.is_anonymous:
-            reasons.append(_('De onderzoeker begeeft zich "under cover" in een beheerde niet-publieke ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie deel en/of verzamelt data die te herleiden zijn tot individuele personen.'))
+            reasons.append(
+                _(
+                    'De onderzoeker begeeft zich "under cover" in een beheerde niet-publieke ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie deel en/of verzamelt data die te herleiden zijn tot individuele personen.'
+                )
+            )
 
     for registration in observation.registrations.all():
         if registration.requires_review:
             reasons.append(
-                _('De aanvraag bevat het gebruik van {}').format(
+                _("De aanvraag bevat het gebruik van {}").format(
                     registration.description
                 )
             )
@@ -412,8 +571,15 @@ def auto_review_task(study, task):
         if registration.requires_review:
             if registration.age_min:
                 for age_group in study.age_groups.all():
-                    if age_group.age_max is not None and age_group.age_max < registration.age_min:
-                        reasons.append(_('De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar.').format(registration.age_min))
+                    if (
+                        age_group.age_max is not None
+                        and age_group.age_max < registration.age_min
+                    ):
+                        reasons.append(
+                            _(
+                                "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
+                            ).format(registration.age_min)
+                        )
                         break
 
     return reasons
@@ -422,12 +588,12 @@ def auto_review_task(study, task):
 def discontinue_review(review):
     """
     Set continuation to discontinued on the given review,
-    and set DECISION_MADE on its proposal. """
+    and set DECISION_MADE on its proposal."""
 
     # Set review continuation
-    review.continuation = review.DISCONTINUED
-    review.proposal.status = review.proposal.DECISION_MADE
-    review.stage = review.CLOSED
+    review.continuation = review.Continuations.DISCONTINUED
+    review.proposal.status = review.proposal.Statuses.DECISION_MADE
+    review.stage = review.Stages.CLOSED
     review.date_end = datetime.datetime.now()
     review.save()
     review.proposal.save()
@@ -438,30 +604,26 @@ def assign_reviewers(review, list_of_users, route):
 
     # Set stage to commission if users are assigned
     if len(list_of_users) > 0:
-        review.stage = review.COMMISSION
+        review.stage = review.Stages.COMMISSION
     else:
-        review.stage = review.ASSIGNMENT
+        review.stage = review.Stages.ASSIGNMENT
 
     current_reviewers = set(review.current_reviewers())
     new_reviewers = list_of_users - current_reviewers
     obsolete_reviewers = current_reviewers - list_of_users
 
     if review.proposal.is_revision:
-        #Revisions should end in one week.
-        review.date_should_end = timezone.now() + \
-            timezone.timedelta(
-                weeks=1
-            )
+        # Revisions should end in one week.
+        review.date_should_end = timezone.now() + timezone.timedelta(weeks=1)
     elif review.date_should_end is not None:
-        #if the date_end_variable gets assigned through auto review
-        #the review keeps this date
+        # if the date_end_variable gets assigned through auto review
+        # the review keeps this date
         pass
     elif route == True:
-        #The short route reviews should take two weeks.
-        review.date_should_end = timezone.now() + \
-            timezone.timedelta(
-                weeks=settings.SHORT_ROUTE_WEEKS
-            )
+        # The short route reviews should take two weeks.
+        review.date_should_end = timezone.now() + timezone.timedelta(
+            weeks=settings.SHORT_ROUTE_WEEKS
+        )
     elif route == False:
         # We have no desired end date for long track reviews
         review.date_should_end = None
@@ -470,14 +632,14 @@ def assign_reviewers(review, list_of_users, route):
     start_review_route(review, new_reviewers, route)
 
     # Remove the Decision for obsolete reviewers
-    Decision.objects.filter(review=review,
-                            reviewer__in=obsolete_reviewers).delete()
+    Decision.objects.filter(review=review, reviewer__in=obsolete_reviewers).delete()
 
     review.save()
 
     # Finally, update the review process
     # This prevents it waiting for removed reviewers
     review.update_go()
+
 
 def straight_to_revision(review):
     """This action by the secretary in ReviewAssignForm bypasses

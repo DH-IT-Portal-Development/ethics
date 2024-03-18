@@ -3,9 +3,7 @@
 {% load static %}
 {% load i18n %}
 
-{% block header_title %}
-    Goedgekeurde aanvragen - {{ block.super }}
-{% endblock %}
+{% block header_title %}Goedgekeurde aanvragen - {{ block.super }}{% endblock %}
 
 {% block content %}
     <div class="uu-inner-container">
@@ -27,25 +25,21 @@
                         <td>{{ proposal.title }}</td>
                         <td>{{ proposal.created_by.get_full_name }}</td>
                         <td>
-                            {% if proposal.supervisor %}
-                                {{ proposal.supervisor.get_full_name }}
-                            {% endif %}
+                            {% if proposal.supervisor %}{{ proposal.supervisor.get_full_name }}{% endif %}
                         </td>
-                        <td>
-                            {{ proposal.date_confirmed|date:"d M Y" }}
-                        </td>
+                        <td>{{ proposal.date_confirmed|date:"d M Y" }}</td>
                         <td>
                             {# Bad translation hack #}
                             {% if proposal.reviewing_committee.name == "AK" %}
-                            GC
+                                GC
                             {% else %}
-                            LC
+                                LC
                             {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
             </table>
-            <br/>
+            <br />
         </div>
     </div>
 {% endblock %}

@@ -6,35 +6,73 @@ import proposals.utils.proposal_utils
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('studies', '0014_auto_20200428_1337'),
+        ("studies", "0014_auto_20200428_1337"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='documents',
-            name='briefing',
-            field=models.FileField(blank=True, storage=proposals.utils.proposal_utils.OverwriteStorage(), upload_to=proposals.utils.proposal_utils.FilenameFactory('Briefing'), validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)'),
+            model_name="documents",
+            name="briefing",
+            field=models.FileField(
+                blank=True,
+                storage=proposals.utils.proposal_utils.OverwriteStorage(),
+                upload_to=proposals.utils.proposal_utils.FilenameFactory("Briefing"),
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)",
+            ),
         ),
         migrations.AlterField(
-            model_name='documents',
-            name='director_consent_declaration',
-            field=models.FileField(blank=True, help_text='If it is already signed, upload the signed declaration form. If it is not signed yet, you can upload the unsigned document and send the document when it is signed to the secretary of the FEtC-H', storage=proposals.utils.proposal_utils.OverwriteStorage(), upload_to=proposals.utils.proposal_utils.FilenameFactory('Department_Consent'), validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het departement (in .pdf of .doc(x)-format)'),
+            model_name="documents",
+            name="director_consent_declaration",
+            field=models.FileField(
+                blank=True,
+                help_text="If it is already signed, upload the signed declaration form. If it is not signed yet, you can upload the unsigned document and send the document when it is signed to the secretary of the FEtC-H",
+                storage=proposals.utils.proposal_utils.OverwriteStorage(),
+                upload_to=proposals.utils.proposal_utils.FilenameFactory(
+                    "Department_Consent"
+                ),
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier de toestemmingsverklaring van de schoolleider/hoofd van het departement (in .pdf of .doc(x)-format)",
+            ),
         ),
         migrations.AlterField(
-            model_name='documents',
-            name='director_consent_information',
-            field=models.FileField(blank=True, storage=proposals.utils.proposal_utils.OverwriteStorage(), upload_to=proposals.utils.proposal_utils.FilenameFactory('Department_Info'), validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)'),
+            model_name="documents",
+            name="director_consent_information",
+            field=models.FileField(
+                blank=True,
+                storage=proposals.utils.proposal_utils.OverwriteStorage(),
+                upload_to=proposals.utils.proposal_utils.FilenameFactory(
+                    "Department_Info"
+                ),
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier de informatiebrief voor de schoolleider/hoofd van het departement (in .pdf of .doc(x)-formaat)",
+            ),
         ),
         migrations.AlterField(
-            model_name='documents',
-            name='informed_consent',
-            field=models.FileField(blank=True, storage=proposals.utils.proposal_utils.OverwriteStorage(), upload_to=proposals.utils.proposal_utils.FilenameFactory('Informed_Consent'), validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)'),
+            model_name="documents",
+            name="informed_consent",
+            field=models.FileField(
+                blank=True,
+                storage=proposals.utils.proposal_utils.OverwriteStorage(),
+                upload_to=proposals.utils.proposal_utils.FilenameFactory(
+                    "Informed_Consent"
+                ),
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)",
+            ),
         ),
         migrations.AlterField(
-            model_name='documents',
-            name='parents_information',
-            field=models.FileField(blank=True, storage=proposals.utils.proposal_utils.OverwriteStorage(), upload_to=proposals.utils.proposal_utils.FilenameFactory('Parental_Info'), validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)'),
+            model_name="documents",
+            name="parents_information",
+            field=models.FileField(
+                blank=True,
+                storage=proposals.utils.proposal_utils.OverwriteStorage(),
+                upload_to=proposals.utils.proposal_utils.FilenameFactory(
+                    "Parental_Info"
+                ),
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier de informatiebrief voor de ouders (in .pdf of .doc(x)-formaat)",
+            ),
         ),
     ]

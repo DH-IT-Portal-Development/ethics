@@ -7,25 +7,36 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('observations', '0004_auto_20180808_1129'),
+        ("observations", "0004_auto_20180808_1129"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='observation',
-            name='version',
-            field=models.PositiveIntegerField(default=1, verbose_name='INTERNAL - Describes which version of the intervention model is used'),
+            model_name="observation",
+            name="version",
+            field=models.PositiveIntegerField(
+                default=1,
+                verbose_name="INTERNAL - Describes which version of the intervention model is used",
+            ),
         ),
         migrations.AlterField(
-            model_name='observation',
-            name='days',
-            field=models.PositiveIntegerField(blank=True, verbose_name='Op hoeveel dagen wordt er geobserveerd (per deelnemer)?'),
+            model_name="observation",
+            name="days",
+            field=models.PositiveIntegerField(
+                blank=True,
+                verbose_name="Op hoeveel dagen wordt er geobserveerd (per deelnemer)?",
+            ),
         ),
         migrations.AlterField(
-            model_name='observation',
-            name='mean_hours',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=4, validators=[django.core.validators.MaxValueValidator(24)], verbose_name='Hoeveel uur wordt er gemiddeld per dag geobserveerd?'),
+            model_name="observation",
+            name="mean_hours",
+            field=models.DecimalField(
+                blank=True,
+                decimal_places=2,
+                max_digits=4,
+                validators=[django.core.validators.MaxValueValidator(24)],
+                verbose_name="Hoeveel uur wordt er gemiddeld per dag geobserveerd?",
+            ),
         ),
     ]

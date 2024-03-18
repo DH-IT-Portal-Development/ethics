@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.models import Group
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.utils.functional import cached_property
 from django.utils.translation import ugettext as _
 from django.views.generic.base import ContextMixin
@@ -12,26 +12,69 @@ from .models import Decision, Review
 from .utils.review_utils import auto_review
 
 
-class UserAllowedMixin(SingleObjectMixin):
-    def get_object(self, queryset=None):
+class UserAllowedToDecisionMixin(SingleObjectMixin):
+    class ReviewClosed(PermissionDenied):
         """
-        Checks whether the current User is a reviewer in this Review,
-        as well as whether the Review is still open.
+        ReviewClosed Class
+
+        Subclass of PermissionDenied that represents an exception indicating that a review has been closed and no further actions can be performed on it.
+
+        This is a subclass of PermissionDenied to ensure Django handles it like that.
+
         """
-        obj = super(UserAllowedMixin, self).get_object(queryset)
 
-        if isinstance(obj, Review):
-            if not obj.decision_set.filter(reviewer=self.request.user):
-                raise PermissionDenied
+    def handle_review_closed(self, request, exception):
+        """
+        Handle the case when a review is closed.
 
-        if isinstance(obj, Decision):
-            reviewer = obj.reviewer
-            date_end = obj.review.date_end
+        :param self: The instance of the class.
+        :param request: The request object.
+        :param exception: The exception object.
 
-            if self.request.user != reviewer or date_end:
-                raise PermissionDenied
+        :raises: The same exception object raised by the view as a fallback
+        """
+        # If unhandled by the view, re-raise the exception to ensure we do not
+        # continue
+        raise exception
 
-        return obj
+    def dispatch(self, request, *args, **kwargs):
+        """
+        Dispatches the request to the appropriate view method based on the object type and checks user permissions.
+
+        :param request: The request object.
+        :type request: HttpRequest
+        :param args: Positional arguments passed to the view method.
+        :param kwargs: Keyword arguments passed to the view method.
+        :return: The response returned by the dispatched view method.
+        :rtype: HttpResponse
+        :raises PermissionDenied: If the current user does not have permission to access the object.
+        :raises self.ReviewClosed: If the review of the object is closed and the view does not handle this exception
+        :raises ImproperlyConfigured: If the mixin is used for a non-decision object.
+        """
+        try:
+            obj = self.get_object()
+
+            if isinstance(obj, Decision):
+                reviewer = obj.reviewer
+                date_end = obj.review.date_end
+
+                if request.user != reviewer:
+                    raise PermissionDenied
+
+                if date_end:
+                    raise self.ReviewClosed
+            else:
+                raise ImproperlyConfigured(
+                    "UserAllowedToDecisionMixin used for a non-decision object!"
+                )
+        except self.ReviewClosed as e:
+            ret = self.handle_review_closed(request, e)
+            # If the handle method returns None, it deemed it fine to continue
+            # as if nothing happened
+            if ret is not None:
+                return ret
+
+        return super().dispatch(request, *args, **kwargs)
 
 
 class UserOrSecretaryAllowedMixin(SingleObjectMixin):
@@ -45,7 +88,9 @@ class UserOrSecretaryAllowedMixin(SingleObjectMixin):
         current_user = self.request.user
 
         if isinstance(obj, Review):
-            secretary_reviewers = obj.decision_set.filter(reviewer__groups__name=settings.GROUP_SECRETARY)
+            secretary_reviewers = obj.decision_set.filter(
+                reviewer__groups__name=settings.GROUP_SECRETARY
+            )
             if secretary_reviewers and is_secretary(current_user):
                 return obj
             if not obj.decision_set.filter(reviewer=current_user):
@@ -57,15 +102,15 @@ class UserOrSecretaryAllowedMixin(SingleObjectMixin):
 
             if date_end:
                 raise PermissionDenied
-            if (self.request.user != reviewer) and \
-                    not (is_secretary(reviewer) and is_secretary(current_user)):
+            if (self.request.user != reviewer) and not (
+                is_secretary(reviewer) and is_secretary(current_user)
+            ):
                 raise PermissionDenied
 
         return obj
 
 
-class UsersOrGroupsAllowedMixin():
-
+class UsersOrGroupsAllowedMixin:
     def get_group_required(self):
         """Is overwritten to provide a dynamic list of
         groups which have access"""
@@ -81,7 +126,7 @@ class UsersOrGroupsAllowedMixin():
         return self.allowed_users
 
     def check_membership(self, groups):
-        """ Check required group(s) """
+        """Check required group(s)"""
         if self.current_user.is_superuser:
             return True
         return set(groups).intersection(set(self.current_user_groups))
@@ -89,14 +134,18 @@ class UsersOrGroupsAllowedMixin():
     def dispatch(self, request, *args, **kwargs):
         authorized = False
         self.current_user = request.user
-        self.current_user_groups = set(self.current_user.groups.values_list("name", flat=True))
+        self.current_user_groups = set(
+            self.current_user.groups.values_list("name", flat=True)
+        )
 
         # Default allowed groups and users
-        try: group_required = self.group_required
+        try:
+            group_required = self.group_required
         except AttributeError:
             self.group_required = None
 
-        try: allowed_users = self.allowed_users
+        try:
+            allowed_users = self.allowed_users
         except AttributeError:
             self.allowed_users = None
 
@@ -109,33 +158,30 @@ class UsersOrGroupsAllowedMixin():
         if not authorized:
             raise PermissionDenied
 
-        return super(UsersOrGroupsAllowedMixin, self).dispatch(
-            request, *args, **kwargs)
-
+        return super(UsersOrGroupsAllowedMixin, self).dispatch(request, *args, **kwargs)
 
 
 class CommitteeMixin(ContextMixin):
-
     @cached_property
     def committee(self):
-        group = self.kwargs.get('committee')
+        group = self.kwargs.get("committee")
 
         return Group.objects.get(name=group)
 
     @cached_property
     def committee_display_name(self):
-        committee = _('Algemene Kamer')
+        committee = _("Algemene Kamer")
 
-        if self.committee.name == 'LK':
-            committee = _('Linguïstiek Kamer')
+        if self.committee.name == "LK":
+            committee = _("Linguïstiek Kamer")
 
         return committee
 
     def get_context_data(self, **kwargs):
         context = super(CommitteeMixin, self).get_context_data(**kwargs)
 
-        context['committee'] = self.committee
-        context['committee_name'] = self.committee_display_name
+        context["committee"] = self.committee
+        context["committee_name"] = self.committee_display_name
 
         return context
 
@@ -145,6 +191,6 @@ class AutoReviewMixin(object):
         """Adds the results of the machine-wise review to the context."""
         context = super(AutoReviewMixin, self).get_context_data(**kwargs)
         reasons = auto_review(self.get_object().proposal)
-        context['auto_review_go'] = len(reasons) == 0
-        context['auto_review_reasons'] = reasons
+        context["auto_review_go"] = len(reasons) == 0
+        context["auto_review_reasons"] = reasons
         return context

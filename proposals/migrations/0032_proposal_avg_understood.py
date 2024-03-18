@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0031_auto_20210201_1519'),
+        ("proposals", "0031_auto_20210201_1519"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='proposal',
-            name='avg_understood',
+            model_name="proposal",
+            name="avg_understood",
             field=models.BooleanField(default=None, null=True),
         ),
     ]

@@ -14,30 +14,37 @@
 {% static 'reviews/images/website.png' as img_export %}
 {% static 'reviews/images/report_go.png' as img_confirm %}
 {% static 'reviews/images/tick.png' as img_confirmed %}
-
 <div class="col-12 {% if request.user|is_secretary %}col-md-6{% endif %}">
     <h3>{% trans "Uitleg" %}</h3>
     <ul>
         <li>
-            {% blocktrans %}
-                Klik op <img src="{{ img_pdf }}" title="Inzien"> om een ingediende aanvraag in te zien.
+            {% blocktrans trimmed %}
+                Klik op
+                <img src="{{ img_pdf }}" title="Inzien">
+                om een ingediende aanvraag in te zien.
             {% endblocktrans %}
         </li>
         <li>
-            {% blocktrans %}
-                Klik op <img src="{{ img_diff }}" title="Toon verschillen"> om de verschillen met de voorgaande
+            {% blocktrans trimmed %}
+                Klik op
+                <img src="{{ img_diff }}" title="Toon verschillen">
+                om de verschillen met de voorgaande
                 versie te zien (alleen beschikbaar voor revisies/amendementen).
             {% endblocktrans %}
         </li>
         <li>
-            {% blocktrans %}
-                Klik op <img src="{{ img_details }}" title="Toon details"> om alle details en beoordelingen van
+            {% blocktrans trimmed %}
+                Klik op
+                <img src="{{ img_details }}" title="Toon details">
+                om alle details en beoordelingen van
                 een ingediende aanvraag te zien.
             {% endblocktrans %}
         </li>
         <li>
-            {% blocktrans %}
-                Klik op <img src="{{ img_decide }}" title="Beslissen"> om je beslissing door te geven.
+            {% blocktrans trimmed %}
+                Klik op
+                <img src="{{ img_decide }}" title="Beslissen">
+                om je beslissing door te geven.
             {% endblocktrans %}
         </li>
     </ul>
@@ -47,42 +54,56 @@
     <ul>
         {% if request.user|is_secretary %}
             <li>
-                {% blocktrans %}
-                    Klik op <img src="{{ img_hide }}" title="Verbergen"> om een ingediende aanvraag te verbergen uit het
+                {% blocktrans trimmed %}
+                    Klik op
+                    <img src="{{ img_hide }}" title="Verbergen">
+                    om een ingediende aanvraag te verbergen uit het
                     archief.
                 {% endblocktrans %}
             </li>
             <li>
                 {% blocktrans trimmed %}
-                    Klik op <img src="{{ img_add }}" title="Toevoegen"> om een ingediende aanvraag toe te voegen
+                    Klik op
+                    <img src="{{ img_add }}" title="Toevoegen">
+                    om een ingediende aanvraag toe te voegen
                     aan het archief.
                 {% endblocktrans %}
             </li>
             <li>
-                {% blocktrans %}
-                    Klik op <img src="{{ img_add_reviewers }}" title="Aanstellen"> om beoordelaars aan te stellen.
+                {% blocktrans trimmed %}
+                    Klik op
+                    <img src="{{ img_add_reviewers }}" title="Aanstellen">
+                    om beoordelaars aan te stellen.
                 {% endblocktrans %}
             </li>
             <li>
-                {% blocktrans %}
-                    Klik op <img src="{{ img_change_chamber }}" title="Verplaats naar andere kamer"> om een aanvraag
+                {% blocktrans trimmed %}
+                    Klik op
+                    <img src="{{ img_change_chamber }}" title="Verplaats naar andere kamer">
+                    om een aanvraag
                     te verplaatsen naar een andere kamer.
                 {% endblocktrans %}
             </li>
             <li>
-                {% blocktrans %}
-                    Klik op <img src="{{ img_close }}" title="Afsluiten"> om een aanvraag af te sluiten.
+                {% blocktrans trimmed %}
+                    Klik op
+                    <img src="{{ img_close }}" title="Afsluiten">
+                    om een aanvraag af te sluiten.
                 {% endblocktrans %}
             </li>
             <li>
-                {% blocktrans %}
-                    Klik op <img src="{{ img_confirm }}" title="Bevestigingsbrief"> om aan te geven dat de
+                {% blocktrans trimmed %}
+                    Klik op
+                    <img src="{{ img_confirm }}" title="Bevestigingsbrief">
+                    om aan te geven dat de
                     bevestigingsbrief is verstuurd.
                 {% endblocktrans %}
             </li>
             <li>
-                {% blocktrans %}
-                    Klik op <img src="{{ img_confirmed }}" title="Bevestigingsbrief"> om de opgegeven datum
+                {% blocktrans trimmed %}
+                    Klik op
+                    <img src="{{ img_confirmed }}" title="Bevestigingsbrief">
+                    om de opgegeven datum
                     van de bevestigingsbrief te veranderen.
                 {% endblocktrans %}
             </li>

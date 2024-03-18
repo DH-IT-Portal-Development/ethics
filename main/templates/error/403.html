@@ -5,23 +5,13 @@
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h2>
-                {% trans 'Geen toegang' %}
-            </h2>
-            <p>
-                {% trans 'Je hebt geen toegang tot de opgevraagde pagina.' %}
-            </p>
+            <h2>{% trans 'Geen toegang' %}</h2>
+            <p>{% trans 'Je hebt geen toegang tot de opgevraagde pagina.' %}</p>
             {% if request.user.is_authenticated %}
-                <p>
-                    {% trans 'Dit kan meerdere oorzaken hebben:' %}
-                </p>
+                <p>{% trans 'Dit kan meerdere oorzaken hebben:' %}</p>
                 <ul>
-                    <li>
-                        {% trans 'Je hebt niet de benodigde rechten om deze pagina te bekijken;' %}
-                    </li>
-                    <li>
-                        {% trans 'Je bent niet als mede-onderzoeker opgegeven voor deze aanvraag;' %}
-                    </li>
+                    <li>{% trans 'Je hebt niet de benodigde rechten om deze pagina te bekijken;' %}</li>
+                    <li>{% trans 'Je bent niet als mede-onderzoeker opgegeven voor deze aanvraag;' %}</li>
                     <li>
                         {% trans 'Je probeert een door jou eerder genomen beslissing aan te passen, maar de beoordelingsperiode is verstreken.' %}
                     </li>
@@ -30,7 +20,7 @@
                 <p>
                     {% url 'login' as login_url %}
                     {% blocktrans trimmed %}
-                        Je bent niet ingelogd, probeer <a href="{{ login_url }}"> in te loggen</a>.
+                        Je bent niet ingelogd, probeer <a href="{{ login_url }}">in te loggen</a>.
                     {% endblocktrans %}
                 </p>
             {% endif %}

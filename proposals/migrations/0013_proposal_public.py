@@ -5,15 +5,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0012_proposal_inform_local_staff'),
+        ("proposals", "0012_proposal_inform_local_staff"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='proposal',
-            name='public',
+            model_name="proposal",
+            name="public",
             field=models.BooleanField(default=True),
         ),
     ]

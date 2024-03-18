@@ -22,15 +22,14 @@ help_menu = (
         _("FAQs"),
         reverse("faqs:list"),
     ),
-    MenuItem(
-        _("Feedback"),
-        reverse("feedback:create"),
-    )
 )
 
-Menu.add_item("main", MenuItem(_('Help'),
-                               "#",
-                               children=help_menu,
-                               exact_url=True,
-                               ))
-
+Menu.add_item(
+    "main",
+    MenuItem(
+        _("Help"),
+        "#",
+        children=help_menu,
+        exact_url=True,
+    ),
+)

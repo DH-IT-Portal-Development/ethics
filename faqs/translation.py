@@ -5,4 +5,7 @@ from .models import Faq
 
 @register(Faq)
 class FaqTranslationOptions(TranslationOptions):
-    fields = ('question', 'answer',)
+    fields = (
+        "question",
+        "answer",
+    )

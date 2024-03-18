@@ -7,6 +7,8 @@
 {% static "main/images/page_white_acrobat.png" as img_pdf %}
 {% static "proposals/images/folder_delete.png" as img_hide %}
 {% static 'reviews/images/scale.png' as img_decide %}
+{% static 'proposals/images/edit-undo.png' as img_revise %}
+
 
 <script type="text/x-template" id="proposalsUFLList">
     <FancyList
@@ -73,14 +75,20 @@
                      title="{% trans 'Inzien' %}">
             </a>
             <a
-                :href="$url('proposals:archive_status', [proposal.pk])"
-                v-if="proposal.in_archive && context.is_secretary"
+            :href="$url('proposals:archive_status', [proposal.pk])"
+            v-if="proposal.in_archive && context.is_secretary"
             >
-                <img src="{{ img_hide }}"
-                     title="{% trans 'Verberg' %}">
+            <img src="{{ img_hide }}"
+                 title="{% trans 'Verberg' %}">
+            </a>
+            <a
+                v-if="proposal.is_revisable"
+                :href="$url('proposals:copy_revision')"
+            >
+                <img src="{{ img_revise }}"
+                     title="{% trans 'Maak revisie' %}">
             </a>
         </template>
-
 
         <template #undertitle="{ item: proposal, context }">
             <div class="ufl-undertitle-line">
@@ -163,7 +171,7 @@
                             </tr>
                             <tr v-if="proposal.supervisor">
                                 <td>
-                                    {% trans "Eindverantwoordelijke onderzoeker" %}:
+                                    {% trans "Promotor/Begeleider" %}:
                                 </td>
                                 <td v-html="proposal.supervisor.fullname">
 

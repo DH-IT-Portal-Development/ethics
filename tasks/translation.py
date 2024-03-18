@@ -5,9 +5,9 @@ from .models import Registration, RegistrationKind
 
 @register(Registration)
 class RegistrationTranslationOptions(TranslationOptions):
-    fields = ('description',)
+    fields = ("description",)
 
 
 @register(RegistrationKind)
 class RegistrationKindTranslationOptions(TranslationOptions):
-    fields = ('description',)
+    fields = ("description",)

@@ -6,25 +6,24 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('observations', '0008_auto_20180822_1307'),
+        ("observations", "0008_auto_20180822_1307"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='observation',
-            name='is_anonymous_details',
-            field=models.TextField(blank=True, verbose_name='Licht toe'),
+            model_name="observation",
+            name="is_anonymous_details",
+            field=models.TextField(blank=True, verbose_name="Licht toe"),
         ),
         migrations.AddField(
-            model_name='observation',
-            name='is_in_target_group_details',
-            field=models.TextField(blank=True, verbose_name='Licht toe'),
+            model_name="observation",
+            name="is_in_target_group_details",
+            field=models.TextField(blank=True, verbose_name="Licht toe"),
         ),
         migrations.AddField(
-            model_name='observation',
-            name='is_nonpublic_space_details',
-            field=models.TextField(blank=True, verbose_name='Licht toe'),
+            model_name="observation",
+            name="is_nonpublic_space_details",
+            field=models.TextField(blank=True, verbose_name="Licht toe"),
         ),
     ]

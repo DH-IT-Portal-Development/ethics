@@ -5,15 +5,21 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0026_auto_20210112_1632'),
+        ("proposals", "0026_auto_20210112_1632"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='proposal',
-            name='studies_number',
-            field=models.PositiveIntegerField(default=1, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(10)], verbose_name='Hoeveel verschillende trajecten zijn er?'),
+            model_name="proposal",
+            name="studies_number",
+            field=models.PositiveIntegerField(
+                default=1,
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(10),
+                ],
+                verbose_name="Hoeveel verschillende trajecten zijn er?",
+            ),
         ),
     ]

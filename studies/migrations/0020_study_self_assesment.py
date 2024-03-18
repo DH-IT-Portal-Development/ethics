@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('studies', '0019_auto_20211213_1503'),
+        ("studies", "0019_auto_20211213_1503"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='study',
-            name='self_assesment',
-            field=models.TextField(blank=True, max_length=500, verbose_name='PLACEHOLDER QUESTION FOR SELF ASSESMENT'),
+            model_name="study",
+            name="self_assesment",
+            field=models.TextField(
+                blank=True,
+                max_length=500,
+                verbose_name="PLACEHOLDER QUESTION FOR SELF ASSESMENT",
+            ),
         ),
     ]

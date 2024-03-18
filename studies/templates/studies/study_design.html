@@ -13,54 +13,58 @@
             {% with nav_items=study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>
-                {% trans "De onderzoekstype(n)" %}
-            </h2>
+            <h2>{% trans "De onderzoekstype(n)" %}</h2>
             {% include "studies/study_title.html" %}
             <p>
-                {% blocktrans %}
+                {% blocktrans trimmed %}
                     De FETC-GW onderscheidt 3 typen onderzoek (die evt. ook samen in één aanvraag voor kunnen komen):
                 {% endblocktrans %}
             </p>
             <ul>
                 <li>
                     <p>
-                        {% blocktrans %}
-                            <strong>Interventieonderzoek</strong>:</br >
-                            De onderzoeker manipuleert d.m.v. een <em>interventie</em> de context waarin de deelnemers in hun normale leven doen wat ze normaliter ook doen. <br />
+                        {% blocktrans trimmed %}
+                            <strong>Interventieonderzoek</strong>:
+                            <br />
+                            De onderzoeker manipuleert d.m.v. een <em>interventie</em> de context waarin de deelnemers in hun normale leven doen wat ze normaliter ook doen.
+                            <br />
                             De effecten kunnen gelijktijdig en/of achteraf worden geobserveerd.
                         {% endblocktrans %}
                     </p>
                 </li>
                 <li>
                     <p>
-                        {% blocktrans %}
-                            <strong>Observatieonderzoek</strong>:</br >
+                        {% blocktrans trimmed %}
+                            <strong>Observatieonderzoek</strong>:
+                            <br />
                             De onderzoeker observeert deelnemers in hun normale leven, maar grijpt hier niet op in.
                         {% endblocktrans %}
                     </p>
                 </li>
                 <li>
                     <p>
-                        {% blocktrans %}
-                            <strong>Taakonderzoek en Interviews</strong>:</br >
+                        {% blocktrans trimmed %}
+                            <strong>Taakonderzoek en Interviews</strong>:
+                            <br />
                             De onderzoeker
                             <ul>
-                                <li>legt deelnemers een taak op (bijv. vragenlijst, experiment) of </li>
-                                <li>neemt een interview af, of </li>
+                                <li>legt deelnemers een taak op (bijv. vragenlijst, experiment) of</li>
+                                <li>neemt een interview af, of</li>
                                 <li>vraagt deelnemer deel te nemen aan een focusgroep.</li>
-                            </ul><br />
+                            </ul>
+                            <br />
                             Onderzoek in het ILS-lab is vanwege de locatie per definitie altijd taakonderzoek (óók als de deelnemers na ontvangst alleen maar worden geobserveerd).
                         {% endblocktrans %}
                     </p>
                 </li>
             </ul>
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <table>
                     <tr>
                         <th>
                             <label for="id_study_design">
-                                {% blocktrans %}
+                                {% blocktrans trimmed %}
                                     Om welk type onderzoek gaat het hier?
                                     Je kan meerdere opties aankruisen.
                                 {% endblocktrans %}
@@ -76,23 +80,23 @@
                                 {% endfor %}
                             </ul>
                             <span class="helptext">
-                    {% blocktrans trimmed %}
-                        Dit is bijvoorbeeld het geval wanneer je een
-                        observatiedeel combineert met een taakonderzoeksdeel,
-                        of met een interventiedeel (in dezelfde sessie, of
-                        verspreid over dagen).
-                        Wanneer je in interventieonderzoek <em>extra</em> taken
-                        inzet om de effecten van de interventie te bemeten
-                        (bijvoorbeeld een speciale voor- en nameting met een
-                        vragenlijst die anders niet zou worden afgenomen)
-                        dien je die apart als taakonderzoek te specificeren.
-                    {% endblocktrans %}
-                </span>
+                                {% blocktrans trimmed %}
+                                    Dit is bijvoorbeeld het geval wanneer je een
+                                    observatiedeel combineert met een taakonderzoeksdeel,
+                                    of met een interventiedeel (in dezelfde sessie, of
+                                    verspreid over dagen).
+                                    Wanneer je in interventieonderzoek <em>extra</em> taken
+                                    inzet om de effecten van de interventie te bemeten
+                                    (bijvoorbeeld een speciale voor- en nameting met een
+                                    vragenlijst die anders niet zou worden afgenomen)
+                                    dien je die apart als taakonderzoek te specificeren.
+                                {% endblocktrans %}
+                            </span>
                         </td>
                     </tr>
                 </table>
                 <p>
-                    {% blocktrans %}
+                    {% blocktrans trimmed %}
                         Voor elk door jou aangekruiste type onderzoek kan je op de hiernavolgende pagina's
                         de relevante informatie verschaffen.
                     {% endblocktrans %}
@@ -103,5 +107,4 @@
             </form>
         </div>
     </div>
-
 {% endblock %}

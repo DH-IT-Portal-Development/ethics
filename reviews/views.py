@@ -2,6 +2,7 @@ from datetime import date, timedelta
 
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
+from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.urls import reverse
@@ -13,129 +14,179 @@ from django.db.models import Q, Count
 
 from main.utils import get_reviewers, get_secretary
 from proposals.models import Proposal
-from .forms import (DecisionForm, ReviewAssignForm, ReviewCloseForm,
-                    ChangeChamberForm, ReviewDiscontinueForm)
-from .mixins import (AutoReviewMixin, UserAllowedMixin,
-                     CommitteeMixin,
-                     UsersOrGroupsAllowedMixin)
+from .forms import (
+    DecisionForm,
+    ReviewAssignForm,
+    ReviewCloseForm,
+    ChangeChamberForm,
+    ReviewDiscontinueForm,
+    StartEndDateForm,
+)
+from .mixins import (
+    AutoReviewMixin,
+    UserAllowedToDecisionMixin,
+    CommitteeMixin,
+    UsersOrGroupsAllowedMixin,
+)
 from .models import Decision, Review
-from .utils.review_utils import notify_secretary, start_review_route, \
-                                 discontinue_review, assign_reviewers
+from .utils.review_utils import (
+    notify_secretary,
+    start_review_route,
+    discontinue_review,
+    assign_reviewers,
+)
 from .utils.review_actions import ReviewActions
 
 
 class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
-    template_name = 'reviews/ufl_list.html'
+    template_name = "reviews/ufl_list.html"
     group_required = [
         settings.GROUP_SECRETARY,
         settings.GROUP_GENERAL_CHAMBER,
         settings.GROUP_LINGUISTICS_CHAMBER,
+        settings.GROUP_CHAIR,
+        settings.GROUP_PO,
     ]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['list_template'] = "reviews/vue_templates/decision_list.html"
+        context["list_template"] = "reviews/vue_templates/decision_list.html"
 
         return context
-    
-class DecisionListView(BaseDecisionListView):
 
+
+class DecisionListView(BaseDecisionListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = _("Mijn besluiten")
-        context['data_url'] = reverse(
-            "reviews:api:my_archive",
-            args=[self.committee]
-        )
+        context["title"] = _("Mijn besluiten")
+        context["data_url"] = reverse("reviews:api:my_archive", args=[self.committee])
 
         return context
 
 
 class DecisionMyOpenView(BaseDecisionListView):
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = _("Mijn openstaande besluiten")
-        context['data_url'] = reverse(
-            "reviews:api:my_open",
-            args=[self.committee]
-        )
+        context["title"] = _("Mijn openstaande besluiten")
+        context["data_url"] = reverse("reviews:api:my_open", args=[self.committee])
 
         return context
 
 
 class DecisionOpenView(BaseDecisionListView):
-    group_required = settings.GROUP_SECRETARY
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR, settings.GROUP_PO)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = _("Openstaande besluiten commissieleden")
-        context['list_template'] = "reviews/vue_templates/decision_list_reviewer.html"
-        context['data_url'] = reverse("reviews:api:open", args=[self.committee])
+        context["title"] = _("Openstaande besluiten commissieleden")
+        context["list_template"] = "reviews/vue_templates/decision_list_reviewer.html"
+        context["data_url"] = reverse("reviews:api:open", args=[self.committee])
 
         return context
-    
 
-class CommitteeMembersWorkloadView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
-    
-    template_name = 'reviews/committee_members_workload.html'
-    group_required = [settings.GROUP_SECRETARY]
-    
+
+class CommitteeMembersWorkloadView(
+    GroupRequiredMixin, CommitteeMixin, generic.FormView
+):
+    template_name = "reviews/committee_members_workload.html"
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR)
+    form_class = StartEndDateForm
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.today = date.today()
+        self.start_date = self.today - timedelta(days=90)
+        self.end_date = self.today
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            self.start_date = form.cleaned_data["start_date"]
+            self.end_date = form.cleaned_data["end_date"]
+        else:
+            return self.form_invalid(form)
+
+        return self.get(request, *args, **kwargs)
+
+    def get_initial(self):
+        initial = super().get_initial()
+
+        # The string casting here is a workaround for a bug in the DSC.
+        initial["start_date"] = self.start_date.strftime("%Y-%m-%d")
+        initial["end_date"] = self.end_date.strftime("%Y-%m-%d")
+
+        return initial
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['decisions'] = self.get_all_open_decisions()
-        context['today'] = date.today()
-        context['reviewers'] = self.get_review_counts_last_year()
+        context["decisions"] = self.get_all_open_decisions()
+        context["today"] = self.today
+        context["reviewers"] = self.get_review_counts_last_year()
 
         return context
+
+    def get_committee_decisions(self):
+        decisions = Decision.objects.filter(
+            review__proposal__reviewing_committee=self.committee
+        ).select_related(
+            "reviewer",
+            "review",
+            "review__proposal",
+        )
+        return decisions
 
     def get_all_open_decisions(self):
-        '''Returns a queryset with all open decisions'''
+        """Returns a queryset with all open decisions"""
 
-        objects = Decision.objects.filter(
-            # This fetches all Decisions which are not approved or need revision
-            go__exact = '',
-            review__proposal__reviewing_committee = self.committee,
-            ).select_related(
-            'reviewer',
-            'review',
-            'review__proposal',
-            ).order_by(
-            "reviewer",
-            "review__date_start"
+        open_decisions = (
+            self.get_committee_decisions()
+            .filter(
+                review__stage=Review.Stages.COMMISSION,
             )
+            .order_by("reviewer", "review__date_start")
+        )
 
-        return objects
-    
+        return open_decisions
+
     def get_review_counts_last_year(self):
-        '''This function returns an annoted queryset, with counts
-        for specific review types, per reviewer.'''
+        """This function returns an annoted queryset, with counts
+        for specific review types, per reviewer."""
 
-        reviewers = get_user_model().objects.filter(groups = self.committee)
-        one_year_ago = timezone.now() - timedelta(days=365)
+        decisions = self.get_committee_decisions()
+
+        reviewers = get_user_model().objects.filter(decision__in=decisions)
         base_filter = Q(
-            decision__review__date_start__gt=one_year_ago,
-            decision__review__stage__gt=Review.SUPERVISOR,
+            decision__review__date_start__gt=self.start_date,
+            decision__review__date_start__lt=self.end_date,
+            decision__review__stage__gt=Review.Stages.SUPERVISOR,
         )
         return reviewers.annotate(
             total=Count("decision", filter=base_filter),
-            num_short_route=Count("decision", filter=base_filter & Q(
-                decision__review__proposal__is_revision=False,
-                decision__review__short_route=True
-            )),
-            num_long_route=Count("decision", filter=base_filter & Q(
-                decision__review__proposal__is_revision=False,
-                decision__review__short_route=False
-            )),
-            num_revision=Count("decision", filter=base_filter & Q(
-                decision__review__date_start__gt=one_year_ago,
-                decision__review__proposal__is_revision=True
-            )),
+            num_short_route=Count(
+                "decision",
+                filter=base_filter
+                & Q(
+                    decision__review__proposal__is_revision=False,
+                    decision__review__short_route=True,
+                ),
+            ),
+            num_long_route=Count(
+                "decision",
+                filter=base_filter
+                & Q(
+                    decision__review__proposal__is_revision=False,
+                    decision__review__short_route=False,
+                ),
+            ),
+            num_revision=Count(
+                "decision",
+                filter=base_filter & Q(decision__review__proposal__is_revision=True),
+            ),
         )
 
 
@@ -143,172 +194,168 @@ class SupervisorDecisionOpenView(BaseDecisionListView):
     """
     This page displays all proposals to be reviewed by supervisors.
     """
-    group_required = settings.GROUP_SECRETARY
+
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR, settings.GROUP_PO)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = _("Openstaande besluiten eindverantwoordelijken")
-        context['list_template'] = "reviews/vue_templates/decision_list_reviewer.html"
-        context['data_url'] = reverse(
-            "reviews:api:open_supervisors",
-            args=[self.committee]
+        context["title"] = _("Openstaande besluiten eindverantwoordelijken")
+        context["list_template"] = "reviews/vue_templates/decision_list_reviewer.html"
+        context["data_url"] = reverse(
+            "reviews:api:open_supervisors", args=[self.committee]
         )
 
         return context
 
 
 class BaseReviewListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
-    template_name = 'reviews/ufl_list.html'
-    group_required = [
-        settings.GROUP_SECRETARY,
-    ]
+    template_name = "reviews/ufl_list.html"
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR, settings.GROUP_PO)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
 
-        context['list_template'] = "reviews/vue_templates/review_list.html"
+        context["list_template"] = "reviews/vue_templates/review_list.html"
 
         return context
 
 
 class ToConcludeProposalView(BaseReviewListView):
-    group_required = settings.GROUP_SECRETARY
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR, settings.GROUP_PO)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = _("Nog af te handelen aanvragen")
-        context['data_url'] = reverse(
-            "reviews:api:to_conclude",
-            args=[self.committee]
-        )
+        context["title"] = _("Nog af te handelen aanvragen")
+        context["data_url"] = reverse("reviews:api:to_conclude", args=[self.committee])
 
         return context
 
 
 class InRevisionReviewsView(BaseReviewListView):
-
-    group_required = [settings.GROUP_SECRETARY]
+    group_required = (settings.GROUP_SECRETARY, settings.GROUP_CHAIR, settings.GROUP_PO)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = _("Aanvragen in revisie")
-        context['data_url'] = reverse(
+        context["title"] = _("Aanvragen in revisie")
+        context["data_url"] = reverse(
             "reviews:api:in_revision",
             args=[self.committee],
-            )
+        )
         return context
 
 
-
 class AllOpenProposalReviewsView(BaseReviewListView):
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = _("Alle lopende aanvragen")
-        context['data_url'] = reverse(
-            "reviews:api:all_open",
-            args=[self.committee]
-        )
+        context["title"] = _("Alle lopende aanvragen")
+        context["data_url"] = reverse("reviews:api:all_open", args=[self.committee])
 
         return context
 
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
 
-        group_required = [settings.GROUP_SECRETARY]
+        group_required = [
+            settings.GROUP_SECRETARY,
+            settings.GROUP_CHAIR,
+            settings.GROUP_PO,
+        ]
 
-        if self.committee.name == 'AK':
-            group_required += [ settings.GROUP_GENERAL_CHAMBER ]
-        if self.committee.name == 'LK':
-            group_required += [ settings.GROUP_LINGUISTICS_CHAMBER ]
+        if self.committee.name == "AK":
+            group_required += [settings.GROUP_GENERAL_CHAMBER]
+        if self.committee.name == "LK":
+            group_required += [settings.GROUP_LINGUISTICS_CHAMBER]
 
         return group_required
 
 
 class AllProposalReviewsView(BaseReviewListView):
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context['title'] = _("Alle ingezonden aanvragen")
-        context['data_url'] = reverse(
-            "reviews:api:archive",
-            args=[self.committee]
-        )
+        context["title"] = _("Alle ingezonden aanvragen")
+        context["data_url"] = reverse("reviews:api:archive", args=[self.committee])
 
         return context
 
     def get_group_required(self):
         # Depending on committee kwarg we test for the correct group
 
-        group_required = [settings.GROUP_SECRETARY]
+        group_required = [
+            settings.GROUP_SECRETARY,
+            settings.GROUP_CHAIR,
+            settings.GROUP_PO,
+        ]
 
-        if self.committee.name == 'AK':
-            group_required += [ settings.GROUP_GENERAL_CHAMBER ]
-        if self.committee.name == 'LK':
-            group_required += [ settings.GROUP_LINGUISTICS_CHAMBER ]
+        if self.committee.name == "AK":
+            group_required += [settings.GROUP_GENERAL_CHAMBER]
+        if self.committee.name == "LK":
+            group_required += [settings.GROUP_LINGUISTICS_CHAMBER]
 
         return group_required
 
 
-class ReviewDetailView(LoginRequiredMixin, AutoReviewMixin,
-                       UsersOrGroupsAllowedMixin, generic.DetailView):
+class ReviewDetailView(
+    LoginRequiredMixin, AutoReviewMixin, UsersOrGroupsAllowedMixin, generic.DetailView
+):
     """
     Shows the Decisions for a Review
     """
+
     model = Review
 
     def get_group_required(self):
-
         obj = self.get_object()
-        group_required = [ settings.GROUP_SECRETARY, obj.proposal.reviewing_committee.name ]
+        group_required = [
+            settings.GROUP_SECRETARY,
+            settings.GROUP_CHAIR,
+            settings.GROUP_PO,
+            obj.proposal.reviewing_committee.name,
+        ]
 
         return group_required
-
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         actions = ReviewActions(self.object, user=self.request.user)
-        context['detail_actions'] = actions.get_detail_actions()
+        context["detail_actions"] = actions.get_detail_actions()
 
         return context
 
 
-
-
-class ChangeChamberView(LoginRequiredMixin, UserAllowedMixin,
-                        generic.UpdateView):
+class ChangeChamberView(LoginRequiredMixin, GroupRequiredMixin, generic.UpdateView):
     model = Proposal
     form_class = ChangeChamberForm
-    template_name = 'reviews/change_chamber_form.html'
+    template_name = "reviews/change_chamber_form.html"
+    group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
-        committee = self.object.reviewing_committee.name
-        return reverse('reviews:detail', args=[self.object.latest_review().pk])
+        return reverse("reviews:detail", args=[self.object.latest_review().pk])
 
 
 class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
     """
     Allows a User of the SECRETARY group to assign reviewers.
     """
+
     model = Review
     form_class = ReviewAssignForm
-    template_name = 'reviews/review_assign_form.html'
+    template_name = "reviews/review_assign_form.html"
     group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
-        return reverse('reviews:detail', args=[self.object.pk])
+        return reverse("reviews:detail", args=[self.object.pk])
 
     def form_valid(self, form):
         """Updates the Review stage and start the selected Review route for the selected Users."""
         route = form.instance.short_route
         review = self.object
-        selected_reviewers = set(form.cleaned_data['reviewers'])
+        selected_reviewers = set(form.cleaned_data["reviewers"])
 
         if route is not None:
             # Start a short/long route or reassign reviewers
@@ -317,20 +364,20 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
         else:
             # Directly mark this Proposal as closed: applicants should start a revision Proposal
             for decision in Decision.objects.filter(review=review):
-                decision.go = Decision.NEEDS_REVISION
+                decision.go = Decision.Approval.NEEDS_REVISION
                 decision.date_decision = timezone.now()
                 decision.save()
 
             # Mark the proposal as finished
             proposal = form.instance.proposal
-            proposal.status = Proposal.DECISION_MADE
+            proposal.status = Proposal.Statuses.DECISION_MADE
             proposal.status_review = False
             proposal.date_reviewed = timezone.now()
             proposal.save()
 
-            form.instance.continuation = Review.REVISION
+            form.instance.continuation = Review.Continuations.REVISION
             form.instance.date_end = timezone.now()
-            form.instance.stage = Review.CLOSED
+            form.instance.stage = Review.Stages.CLOSED
 
         return super(ReviewAssignView, self).form_valid(form)
 
@@ -338,44 +385,42 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
 class ReviewDiscontinueView(GroupRequiredMixin, generic.UpdateView):
     model = Review
     form_class = ReviewDiscontinueForm
-    template_name = 'reviews/review_discontinue_form.html'
+    template_name = "reviews/review_discontinue_form.html"
     group_required = settings.GROUP_SECRETARY
 
     def dispatch(self, request, *args, **kwargs):
         self.request = request
         review = self.get_object()
 
-        if review.continuation in [review.DISCONTINUED,
-                                   review.GO,
-                                   review.GO_POST_HOC,
-                                   ]:
+        if review.continuation in [
+            review.Continuations.DISCONTINUED,
+            review.Continuations.GO,
+            review.Continuations.GO_POST_HOC,
+        ]:
             return HttpResponseRedirect(self.get_success_url())
 
-        return super().dispatch(
-            request, *args, **kwargs
-        )
+        return super().dispatch(request, *args, **kwargs)
 
     def get_success_url(self):
-        'Return to the detail view after unsubmission'
-        return reverse('reviews:detail', args=[self.get_object().pk])
+        "Return to the detail view after unsubmission"
+        return reverse("reviews:detail", args=[self.get_object().pk])
 
     def form_valid(self, form):
-        'Sets the discontinued continuation on the review'
+        "Sets the discontinued continuation on the review"
         review = form.instance
         discontinue_review(review)
 
         return super().form_valid(form)
 
 
-
 class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
     model = Review
     form_class = ReviewCloseForm
-    template_name = 'reviews/review_close_form.html'
+    template_name = "reviews/review_close_form.html"
     group_required = settings.GROUP_SECRETARY
 
     def get_success_url(self):
-        return reverse('reviews:detail', args=[self.object.pk])
+        return reverse("reviews:detail", args=[self.object.pk])
 
     def get_form_kwargs(self):
         """
@@ -386,8 +431,9 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         review = self.get_object()
 
         kwargs = super(ReviewCloseView, self).get_form_kwargs()
-        kwargs[
-            'allow_long_route_continuation'] = review.short_route and not review.proposal.is_pre_assessment
+        kwargs["allow_long_route_continuation"] = (
+            review.short_route and not review.proposal.is_pre_assessment
+        )
         return kwargs
 
     def get_initial(self):
@@ -399,56 +445,61 @@ class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
         review = self.get_object()
 
         initial = super(ReviewCloseView, self).get_initial()
-        initial['continuation'] = Review.GO if review.go else Review.NO_GO
+        initial["continuation"] = (
+            Review.Continuations.GO if review.go else Review.Continuations.NO_GO
+        )
 
-        if review.proposal.date_start and \
-           review.proposal.date_start < date.today():
-            initial['continuation'] = \
-                Review.GO_POST_HOC if initial['continuation'] == Review.GO \
-                else Review.NO_GO_POST_HOC
+        if review.proposal.date_start and review.proposal.date_start < date.today():
+            initial["continuation"] = (
+                Review.Continuations.GO_POST_HOC
+                if initial["continuation"] == Review.Continuations.GO
+                else Review.Continuations.NO_GO_POST_HOC
+            )
 
-        initial['in_archive'] = not review.proposal.is_pre_assessment
+        initial["in_archive"] = not review.proposal.is_pre_assessment
         return initial
 
     def form_valid(self, form):
         proposal = form.instance.proposal
 
         if form.instance.continuation in [
-                Review.GO,
-                Review.NO_GO,
-                Review.GO_POST_HOC,
-                Review.NO_GO_POST_HOC,
-                Review.REVISION,
+            Review.Continuations.GO,
+            Review.Continuations.NO_GO,
+            Review.Continuations.GO_POST_HOC,
+            Review.Continuations.NO_GO_POST_HOC,
+            Review.Continuations.REVISION,
         ]:
             proposal.mark_reviewed(form.instance.continuation)
-        elif form.instance.continuation == Review.LONG_ROUTE:
+        elif form.instance.continuation == Review.Continuations.LONG_ROUTE:
             # Create a new review
             review = Review.objects.create(
                 proposal=proposal,
-                stage=Review.COMMISSION,
+                stage=Review.Stages.COMMISSION,
                 short_route=False,
-                date_start=timezone.now())
+                date_start=timezone.now(),
+            )
             # Create a Decision for the secretary
             Decision.objects.create(review=review, reviewer=get_secretary())
             # Start the long review route
             start_review_route(review, get_reviewers(), False)
-        elif form.instance.continuation == Review.METC:
+        elif form.instance.continuation == Review.Continuations.METC:
             proposal.enforce_wmo()
 
-        proposal.in_archive = form.cleaned_data['in_archive']
-        proposal.has_minor_revision = form.cleaned_data['has_minor_revision']
+        proposal.in_archive = form.cleaned_data["in_archive"]
+        proposal.has_minor_revision = form.cleaned_data["has_minor_revision"]
         proposal.minor_revision_description = form.cleaned_data[
-            'minor_revision_description']
+            "minor_revision_description"
+        ]
         proposal.save()
 
-        form.instance.stage = Review.CLOSED
+        form.instance.stage = Review.Stages.CLOSED
 
         return super(ReviewCloseView, self).form_valid(form)
 
 
-class CreateDecisionRedirectView(LoginRequiredMixin,
-                                 GroupRequiredMixin,
-                                 generic.RedirectView):
+class CreateDecisionRedirectView(
+    LoginRequiredMixin, GroupRequiredMixin, generic.RedirectView
+):
     """
     This redirect first creates a new decision for a secretary that does not
     have one yet, and redirects to the DecisionUpdateView.
@@ -459,18 +510,18 @@ class CreateDecisionRedirectView(LoginRequiredMixin,
     to no longer require a secretary decision for every review. See PR
     #188 for details.
     """
+
     group_required = settings.GROUP_SECRETARY
 
     def get_redirect_url(self, *args, **kwargs):
-        review_pk = kwargs.get('review', None)
+        review_pk = kwargs.get("review", None)
         decision_pk = None
 
         if not review_pk:
             raise PermissionDenied
 
         existing_decision_qs = Decision.objects.filter(
-            reviewer=self.request.user,
-            review_id=review_pk
+            reviewer=self.request.user, review_id=review_pk
         )
 
         # Re-use an existing one if present
@@ -483,31 +534,45 @@ class CreateDecisionRedirectView(LoginRequiredMixin,
             )
             decision_pk = decision.pk
 
-        return reverse('reviews:decide', args=[decision_pk])
+        return reverse("reviews:decide", args=[decision_pk])
 
 
-class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
-                         generic.UpdateView):
+class DecisionUpdateView(
+    LoginRequiredMixin, UserAllowedToDecisionMixin, generic.UpdateView
+):
     """
     Allows a User to make a Decision on a Review.
     """
+
     model = Decision
     form_class = DecisionForm
 
-    def is_reviewer(self):
-        if self.request.user.is_superuser:
-            return True
-        user_groups = self.request.user.groups.values_list("name", flat=True)
-        return {settings.GROUP_SECRETARY, settings.GROUP_LINGUISTICS_CHAMBER,
-                settings.GROUP_GENERAL_CHAMBER
-        }.intersection(set(user_groups))
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Supervisors get the chance to update the proposal, but we have
+        # multiple update views for different types of proposals.
+        if self.object.review.proposal.is_pre_approved:
+            context["update_url"] = reverse(
+                "proposals:update_pre_approved", args=[self.object.review.proposal.pk]
+            )
+        elif self.object.review.proposal.is_pre_assessment:
+            context["update_url"] = reverse(
+                "proposals:update_pre", args=[self.object.review.proposal.pk]
+            )
+        else:
+            context["update_url"] = reverse(
+                "proposals:update", args=[self.object.review.proposal.pk]
+            )
+
+        return context
 
     def get_success_url(self):
-        if self.is_reviewer():
-            committee = self.object.review.proposal.reviewing_committee.name
-            return reverse('reviews:detail', args=[self.object.review.pk])
+        obj = self.get_object()
+        if obj.review.is_committee_review:
+            return reverse("reviews:detail", args=[obj.review.pk])
         else:
-            return reverse('proposals:my_archive')
+            return reverse("proposals:my_supervised")
 
     def form_valid(self, form):
         """Save the decision date and send e-mail to secretary"""
@@ -516,7 +581,49 @@ class DecisionUpdateView(LoginRequiredMixin, UserAllowedMixin,
 
         # Don't notify the secretary if this is a supervisor decision.
         # If it was a GO they the secretary will be notified anyway
-        if not review.stage == review.SUPERVISOR:
+        if review.is_committee_review:
             notify_secretary(form.instance)
 
         return super(DecisionUpdateView, self).form_valid(form)
+
+    def handle_review_closed(self, request, exception):
+        # Redirect to our 'this review is closed' page for supervisor reviews
+        redirect_url = reverse(
+            "reviews:review-closed-decision", args=[self.get_object().pk]
+        )
+        # And go to the details page for committee reviews
+        if self.get_object().review.is_committee_review:
+            # Show a message for this case.
+            messages.warning(
+                request,
+                _(
+                    "Deze aanvraag is al beoordeeld, dus je kan je beoordeling "
+                    "niet meer toevoegen/aanpassen"
+                ),
+            )
+            redirect_url = self.get_success_url()
+
+        return HttpResponseRedirect(redirect_url)
+
+
+class ReviewClosedDecisionView(
+    LoginRequiredMixin, UserAllowedToDecisionMixin, generic.DetailView
+):
+    """Custom page for supervisors visiting links to already concluded
+    supervisor reviews
+    """
+
+    template_name = "reviews/review_closed.html"
+    model = Decision
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["review"] = self.object.review
+
+        return context
+
+    def handle_review_closed(self, request, exception):
+        # Do nothing; we only use the permission check, this page is only for
+        # cases where the review is closed.
+        return None

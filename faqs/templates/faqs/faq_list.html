@@ -9,15 +9,14 @@
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h2>
-                {% trans "Frequently Asked Questions" %}
-            </h2>
+            <h2>{% trans "Frequently Asked Questions" %}</h2>
             {% for faq in faqs %}
                 <ul>
-                    <li><a href="#{{ faq.order }}">{{ faq.question }}</a></li>
+                    <li>
+                        <a href="#{{ faq.order }}">{{ faq.question }}</a>
+                    </li>
                 </ul>
             {% endfor %}
-
             {% for faq in faqs %}
                 <a name="{{ faq.order }}"></a>
                 <h4>{{ faq.question }}</h4>

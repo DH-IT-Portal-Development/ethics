@@ -8,7 +8,7 @@
 {% load uil_filters %}
 
 {% block header_title %}
-    {% blocktrans with proposal=review.proposal.title %}
+    {% blocktrans trimmed with proposal=review.proposal.title %}
         Details van besluitvorming bij aanmelding {{ proposal }}
     {% endblocktrans %}
     - {{ review.proposal.reference_number }} - {{ block.super }}
@@ -18,7 +18,7 @@
     <div class="uu-inner-container">
         <div class="col-12">
             <h2>
-                {% blocktrans with proposal=review.proposal.title %}
+                {% blocktrans trimmed with proposal=review.proposal.title %}
                     Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
                 {% endblocktrans %}
                 - {{ review.proposal.reference_number }}
@@ -26,33 +26,23 @@
         </div>
     </div>
     <div class="uu-inner-container">
-
-    {% with review=review %}
-        {% include "reviews/review_detail_sidebar.html" %}
-    {% endwith %}
-
+        {% with review=review %}
+            {% include "reviews/review_detail_sidebar.html" %}
+        {% endwith %}
         <div class="col-12 col-md-9">
-            <h4>
-                {% trans "Reviewers" %}
-            </h4>
+            <h4>{% trans "Reviewers" %}</h4>
             {% include "reviews/review_table.html" %}
             <h4>{% trans "Handelingen" %}</h4>
             <ul>
-            {% for action in detail_actions %}
-                <li>
-                    {{ action }}
-                </li>
+                {% for action in detail_actions %}
+                    <li>{{ action }}</li>
                 {% empty %}
-                <li>
-                    {% trans "Geen handelingen beschikbaar" %}
-                </li>
-            {% endfor %}
+                    <li>{% trans "Geen handelingen beschikbaar" %}</li>
+                {% endfor %}
             </ul>
             {% if not review.proposal.is_pre_assessment %}
                 {% include "reviews/auto_review.html" %}
             {% endif %}
         </div>
-
     </div>
-
 {% endblock %}

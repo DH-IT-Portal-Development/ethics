@@ -4,25 +4,37 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('tasks', '0007_auto_20190401_1343'),
+        ("tasks", "0007_auto_20190401_1343"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='session',
-            name='leader_has_coc',
-            field=models.BooleanField(blank=True, help_text='Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a href="https://www.justis.nl/producten/vog/"         target="_blank">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De FETC-GW neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.', null=True, verbose_name='Is de testleider in het bezit van een VOG?'),
+            model_name="session",
+            name="leader_has_coc",
+            field=models.BooleanField(
+                blank=True,
+                help_text='Iedereen die op een school werkt moet in het bezit         zijn van een Verklaring Omtrent Gedrag (VOG, zie         <a href="https://www.justis.nl/producten/vog/"         target="_blank">https://www.justis.nl/producten/vog/</a>).         Het is de verantwoordelijkheid van de school om hierom te vragen.         De FETC-GW neemt hierin een adviserende rol en wil de onderzoekers         waarschuwen dat de school om een VOG kan vragen.',
+                null=True,
+                verbose_name="Is de testleider in het bezit van een VOG?",
+            ),
         ),
         migrations.AlterField(
-            model_name='session',
-            name='supervision',
-            field=models.BooleanField(blank=True, null=True, verbose_name='Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?'),
+            model_name="session",
+            name="supervision",
+            field=models.BooleanField(
+                blank=True,
+                null=True,
+                verbose_name="Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of een ander persoon die bevoegd is?",
+            ),
         ),
         migrations.AlterField(
-            model_name='task',
-            name='feedback',
-            field=models.BooleanField(blank=True, null=True, verbose_name='Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?'),
+            model_name="task",
+            name="feedback",
+            field=models.BooleanField(
+                blank=True,
+                null=True,
+                verbose_name="Krijgt de deelnemer tijdens of na deze taak feedback op zijn/haar gedrag of toestand?",
+            ),
         ),
     ]

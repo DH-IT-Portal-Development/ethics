@@ -13,27 +13,30 @@
     </thead>
     <tbody>
         {% for task in session.task_set.all %}
-        <tr>
-            <td>{{ task.name }}</td>
-            <td>{{ task.duration }}</td>
-            <td>{{ task.registrations.all|unordered_list }}</td>
-            <td class="task_feedback">
-                <span class="label">{{ task.feedback|yesno:_("ja,nee") }}</span>
-                {% if task.feedback %}
-                <span class="help">{{ task.feedback_details }}</span>
-                {% endif %}
-            </td>
-            <td>
-                <a href="{% url 'tasks:update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Taak bewerken' %}"></a>
-                {% if session.tasks_number > 1 %}
-                <a href="{% url 'tasks:delete' task.id %}"><img src="{% static 'proposals/images/delete.png' %}" title="{% trans 'Taak verwijderen' %}"></a>
-                {% endif %}
-            </td>
-        </tr>
+            <tr>
+                <td>{{ task.name }}</td>
+                <td>{{ task.duration }}</td>
+                <td>{{ task.registrations.all|unordered_list }}</td>
+                <td class="task_feedback">
+                    <span class="label">{{ task.feedback|yesno:_("ja,nee") }}</span>
+                    {% if task.feedback %}<span class="help">{{ task.feedback_details }}</span>{% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'tasks:update' task.id %}">
+                        <img src="{% static 'proposals/images/pencil.png' %}"
+                             title="{% trans 'Taak bewerken' %}">
+                    </a>
+                    {% if session.tasks_number > 1 %}
+                        <a href="{% url 'tasks:delete' task.id %}">
+                            <img src="{% static 'proposals/images/delete.png' %}"
+                                 title="{% trans 'Taak verwijderen' %}">
+                        </a>
+                    {% endif %}
+                </td>
+            </tr>
         {% endfor %}
     </tbody>
 </table>
-
 <script>
 $(function() {
     let elements = $('.task_feedback');

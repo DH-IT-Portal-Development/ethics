@@ -5,30 +5,29 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('tasks', '0002_auto_20160927_2106'),
+        ("tasks", "0002_auto_20160927_2106"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='registration',
-            name='description_en',
+            model_name="registration",
+            name="description_en",
             field=models.CharField(max_length=200, null=True),
         ),
         migrations.AddField(
-            model_name='registration',
-            name='description_nl',
+            model_name="registration",
+            name="description_nl",
             field=models.CharField(max_length=200, null=True),
         ),
         migrations.AddField(
-            model_name='registrationkind',
-            name='description_en',
+            model_name="registrationkind",
+            name="description_en",
             field=models.CharField(max_length=200, null=True),
         ),
         migrations.AddField(
-            model_name='registrationkind',
-            name='description_nl',
+            model_name="registrationkind",
+            name="description_nl",
             field=models.CharField(max_length=200, null=True),
         ),
     ]

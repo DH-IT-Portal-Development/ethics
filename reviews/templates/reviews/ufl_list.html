@@ -6,20 +6,14 @@
 {% load vue_tags %}
 
 {% get_current_language as LANGUAGE_CODE %}
-
-{% block header_title %}
-    {{ committee_name }} - {{ title }} - {{ block.super }}
-{% endblock %}
+{% block header_title %}{{ committee_name }} - {{ title }} - {{ block.super }}{% endblock %}
 
 {% block html_head %}
-
     {# This template loads in either the dev or prod Vue library, depending on settings.DEBUG #}
     {% include 'uil.vue/vueloader.html' %}
     {# Load in the base component FancyList #}
     {% load_vue_component 'FancyList' %}
-
     {% include list_template %}
-
     <script>
         // Needs to be wrapped into an onload to ensure all dependencies are loaded
         window.onload = _ => {
@@ -31,12 +25,9 @@
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h2>
-                {{ committee_name }} - {{ title }}
-            </h2>
+            <h2>{{ committee_name }} - {{ title }}</h2>
         </div>
         {% include 'reviews/action_explaination.html' %}
-
         <div class="col-12">
             <div id="list"></div>
         </div>

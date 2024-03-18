@@ -15,38 +15,39 @@ from .models import Observation
 #############################
 class ObservationMixin(object):
     """Mixin for a Observation, to use in both ObservationCreate and ObservationUpdate below"""
+
     model = Observation
     form_class = ObservationForm
-    success_message = _('Observatie opgeslagen')
+    success_message = _("Observatie opgeslagen")
 
     def get_context_data(self, **kwargs):
         """Setting the Study and progress on the context"""
         context = super(ObservationMixin, self).get_context_data(**kwargs)
         study = self.get_study()
-        context['study'] = study
-        context['progress'] = get_study_progress(study) + 5
+        context["study"] = study
+        context["progress"] = get_study_progress(study) + 5
         return context
 
     def get_form_kwargs(self):
         """Sets the Study as a form kwarg"""
         kwargs = super(ObservationMixin, self).get_form_kwargs()
-        kwargs['study'] = self.get_study()
+        kwargs["study"] = self.get_study()
         return kwargs
 
     def get_next_url(self):
         study = self.get_study()
-        next_url = 'studies:design_end'
+        next_url = "studies:design_end"
         pk = study.pk
         if study.has_sessions:
-            next_url = 'studies:session_start'
+            next_url = "studies:session_start"
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
         study = self.get_study()
         pk = study.pk
-        next_url = 'studies:design'
+        next_url = "studies:design"
         if study.has_intervention:
-            next_url = 'interventions:update'
+            next_url = "interventions:update"
             pk = study.intervention.pk
         return reverse(next_url, args=(pk,))
 
@@ -56,7 +57,7 @@ class ObservationMixin(object):
 
 class AttachmentsUpdate(UpdateView):
     model = Observation
-    template_name = 'observations/observation_update_attachments.html'
+    template_name = "observations/observation_update_attachments.html"
     form_class = ObservationUpdateAttachmentsForm
     group_required = settings.GROUP_SECRETARY
 
@@ -71,7 +72,7 @@ class ObservationCreate(ObservationMixin, AllowErrorsOnBackbuttonMixin, CreateVi
 
     def get_study(self):
         """Retrieves the Study from the pk kwarg"""
-        return Study.objects.get(pk=self.kwargs['pk'])
+        return Study.objects.get(pk=self.kwargs["pk"])
 
 
 class ObservationUpdate(ObservationMixin, AllowErrorsOnBackbuttonMixin, UpdateView):

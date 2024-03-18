@@ -6,15 +6,17 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('observations', '0011_auto_20190401_1343'),
+        ("observations", "0011_auto_20190401_1343"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='observation',
-            name='has_advanced_consent_details',
-            field=models.TextField(blank=True, verbose_name='Leg uit waarom informed consent niet van te voren plaatsvindt en geef ook op welke wijze dit achteraf verzorgd wordt.'),
+            model_name="observation",
+            name="has_advanced_consent_details",
+            field=models.TextField(
+                blank=True,
+                verbose_name="Leg uit waarom informed consent niet van te voren plaatsvindt en geef ook op welke wijze dit achteraf verzorgd wordt.",
+            ),
         ),
     ]

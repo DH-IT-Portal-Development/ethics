@@ -8,30 +8,47 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0017_proposal_reviewing_committee'),
+        ("proposals", "0017_proposal_reviewing_committee"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='proposal',
-            name='funding',
-            field=models.ManyToManyField(blank=True, to='proposals.Funding', verbose_name='Hoe wordt dit onderzoek gefinancierd?'),
+            model_name="proposal",
+            name="funding",
+            field=models.ManyToManyField(
+                blank=True,
+                to="proposals.Funding",
+                verbose_name="Hoe wordt dit onderzoek gefinancierd?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='relation',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='proposals.Relation', verbose_name='In welke hoedanigheid bent u betrokken bij deze UiL OTS studie?'),
+            model_name="proposal",
+            name="relation",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="proposals.Relation",
+                verbose_name="In welke hoedanigheid bent u betrokken bij deze UiL OTS studie?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='reviewing_committee',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='auth.Group', verbose_name='Door welke comissie dient deze studie te worden beoordeeld?'),
+            model_name="proposal",
+            name="reviewing_committee",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.PROTECT,
+                to="auth.Group",
+                verbose_name="Door welke comissie dient deze studie te worden beoordeeld?",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='summary',
-            field=models.TextField(blank=True, validators=[main.validators.MaxWordsValidator(200)], verbose_name='Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.'),
+            model_name="proposal",
+            name="summary",
+            field=models.TextField(
+                blank=True,
+                validators=[main.validators.MaxWordsValidator(200)],
+                verbose_name="Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.",
+            ),
         ),
     ]

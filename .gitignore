@@ -4,7 +4,7 @@
 *.pyc
 __pycache__/
 .env*
-
+*.mo
 
 ### Project-specific ###
 media/

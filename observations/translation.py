@@ -5,4 +5,4 @@ from .models import Registration
 
 @register(Registration)
 class RegistrationTranslationOptions(TranslationOptions):
-    fields = ('description',)
+    fields = ("description",)

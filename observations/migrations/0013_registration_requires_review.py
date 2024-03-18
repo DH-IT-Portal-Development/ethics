@@ -6,15 +6,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('observations', '0012_observation_has_advanced_consent_details'),
+        ("observations", "0012_observation_has_advanced_consent_details"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='registration',
-            name='requires_review',
+            model_name="registration",
+            name="requires_review",
             field=models.BooleanField(default=False),
         ),
     ]

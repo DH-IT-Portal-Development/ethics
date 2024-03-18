@@ -1,0 +1,7 @@
+[tool.djlint]
+profile="django"
+extend_exclude="docs,reviews/templates/reviews/vue_templates/,proposals/templates/proposals/vue_templates/"
+max-blank-lines=3
+blank_line_after_tag="load,extends,endblock"
+format_css=true
+format_js=false # Disabled till we can solve our django-in-js situation

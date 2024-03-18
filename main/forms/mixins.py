@@ -10,6 +10,7 @@ class SoftValidationMixin:
     This mixin will allow a form to submit even if specified fields have
     validator errors.
     """
+
     _soft_validation_fields = []
 
     def __init__(self, *args, **kwargs):
@@ -17,7 +18,7 @@ class SoftValidationMixin:
 
         # If we have an existing instance and we're not POSTing,
         # run a initial clean
-        if self.instance.pk and 'data' not in kwargs:
+        if self.instance.pk and "data" not in kwargs:
             self.initial_clean()
 
     def initial_clean(self):
@@ -27,7 +28,7 @@ class SoftValidationMixin:
         self._errors = ErrorDict()
 
         reset_cleaned = False
-        if not hasattr(self, 'cleaned_data'):
+        if not hasattr(self, "cleaned_data"):
             reset_cleaned = True
             self.cleaned_data = {}
 
@@ -50,8 +51,8 @@ class SoftValidationMixin:
                     val = field.clean(value, value)
                 else:
                     val = field.clean(value)
-                if hasattr(self, 'clean_%s' % field):
-                    val = getattr(self, 'clean_%s' % field)()
+                if hasattr(self, "clean_%s" % field):
+                    val = getattr(self, "clean_%s" % field)()
 
                 self.cleaned_data[field_name] = val
             except ValidationError as e:
@@ -73,14 +74,11 @@ class SoftValidationMixin:
         for field in fields:
             if field not in self.fields:
                 raise ImproperlyConfigured(
-                    "{} is not a field of {}!".format(
-                        field,
-                        self.__class__.__name__
-                    )
+                    "{} is not a field of {}!".format(field, self.__class__.__name__)
                 )
 
             if field not in data or not data[field]:
-                self.add_error(field, _('Dit veld is verplicht.'))
+                self.add_error(field, _("Dit veld is verplicht."))
 
     def _initial_post_clean(self):
         opts = self._meta
@@ -99,7 +97,9 @@ class SoftValidationMixin:
                 exclude.append(name)
 
         try:
-            self.instance = construct_instance(self, self.instance, opts.fields, opts.exclude)
+            self.instance = construct_instance(
+                self, self.instance, opts.fields, opts.exclude
+            )
         except ValidationError as e:
             self._update_errors(e)
 
@@ -113,8 +113,11 @@ class SoftValidationMixin:
 
     @property
     def _hard_errors(self):
-        return [x for x in self.errors.items() if x[0] not in
-                self.get_soft_validation_fields()]
+        return [
+            x
+            for x in self.errors.items()
+            if x[0] not in self.get_soft_validation_fields()
+        ]
 
     def get_soft_validation_fields(self):
         return self._soft_validation_fields
@@ -129,9 +132,10 @@ class SoftValidationMixin:
         """
         if self._hard_errors:
             raise ValueError(
-                "The %s could not be %s because the data didn't validate." % (
+                "The %s could not be %s because the data didn't validate."
+                % (
                     self.instance._meta.object_name,
-                    'created' if self.instance._state.adding else 'changed',
+                    "created" if self.instance._state.adding else "changed",
                 )
             )
         if commit:

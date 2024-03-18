@@ -1,17 +1,17 @@
 {% load i18n %}
 
 {% with order=task.order session_order=task.session.order study_order=task.session.study.order study_name=task.session.study.name studies_number=task.session.study.proposal.studies_number %}
-{% if studies_number > 1 %}
-<h3>
-    {% blocktrans %}
-    Traject {{ study_order }} (<em>{{ study_name }}</em>), sessie {{ session_order }}, taak {{ order }}
-    {% endblocktrans %}
-</h3>
-{% else %}
-<h3>
-    {% blocktrans %}
-    Sessie {{ session_order }}, taak {{ order }}
-    {% endblocktrans %}
-</h3>
-{% endif %}
+    {% if studies_number > 1 %}
+        <h3>
+            {% blocktrans trimmed %}
+                Traject {{ study_order }} (<em>{{ study_name }}</em>), sessie {{ session_order }}, taak {{ order }}
+            {% endblocktrans %}
+        </h3>
+    {% else %}
+        <h3>
+            {% blocktrans trimmed %}
+                Sessie {{ session_order }}, taak {{ order }}
+            {% endblocktrans %}
+        </h3>
+    {% endif %}
 {% endwith %}

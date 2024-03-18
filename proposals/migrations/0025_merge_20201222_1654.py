@@ -4,11 +4,9 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0024_remove_wmo_is_behavioristic'),
-        ('proposals', '0023_auto_20200428_1337'),
+        ("proposals", "0024_remove_wmo_is_behavioristic"),
+        ("proposals", "0023_auto_20200428_1337"),
     ]
 
-    operations = [
-    ]
+    operations = []

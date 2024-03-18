@@ -11,21 +11,28 @@ class Session(SettingModel):
 
     # Fields with respect to Tasks
     tasks_number = models.PositiveIntegerField(
-        _('Hoeveel taken worden er binnen deze sessie bij de deelnemer afgenomen?'),
+        _("Hoeveel taken worden er binnen deze sessie bij de deelnemer afgenomen?"),
         null=True,
-        validators=[MinValueValidator(1), MaxValueValidator(100)], # Max of 100 is a technical safeguard
-        help_text=_('Wanneer je bijvoorbeeld eerst de deelnemer observeert \
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(100),
+        ],  # Max of 100 is a technical safeguard
+        help_text=_(
+            'Wanneer je bijvoorbeeld eerst de deelnemer observeert \
 en de deelnemer vervolgens een vragenlijst afneemt, dan vul je hierboven "2" '
-                    'in. Electrodes plakken, sessie-debriefing en kort '
-                    '(< 3 minuten) exit-interview gelden niet als een taak.')
+            "in. Electrodes plakken, sessie-debriefing en kort "
+            "(< 3 minuten) exit-interview gelden niet als een taak."
+        ),
     )
 
     tasks_duration = models.PositiveIntegerField(
-        _('De totale geschatte netto taakduur van je sessie komt \
+        _(
+            "De totale geschatte netto taakduur van je sessie komt \
 op basis van je opgave per taak uit op <strong>%d minuten</strong>. \
 Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, \
 instructies per taak, pauzes tussen taken, en debriefing? \
-(bij labbezoek dus van binnenkomst tot vertrek)'),
+(bij labbezoek dus van binnenkomst tot vertrek)"
+        ),
         null=True,
         blank=True,
     )
@@ -34,24 +41,21 @@ instructies per taak, pauzes tussen taken, en debriefing? \
     study = models.ForeignKey(Study, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['order']
-        unique_together = ('study', 'order')
+        ordering = ["order"]
+        unique_together = ("study", "order")
 
     def net_duration(self):
-        if duration := self.task_set.aggregate(models.Sum('duration'))[
-            'duration__sum'
-        ]:
+        if duration := self.task_set.aggregate(models.Sum("duration"))["duration__sum"]:
             return duration
 
         return 0
 
-
     def first_task(self):
-        tasks = self.task_set.order_by('order')
+        tasks = self.task_set.order_by("order")
         return tasks[0] if tasks else None
 
     def last_task(self):
-        tasks = self.task_set.order_by('-order')
+        tasks = self.task_set.order_by("-order")
         return tasks[0] if tasks else None
 
     def current_task(self):
@@ -81,7 +85,7 @@ instructies per taak, pauzes tussen taken, en debriefing? \
         return result
 
     def __str__(self):
-        return _('Sessie {}').format(self.order)
+        return _("Sessie {}").format(self.order)
 
 
 class Registration(models.Model):
@@ -94,8 +98,8 @@ class Registration(models.Model):
     age_min = models.PositiveIntegerField(blank=True, null=True)
 
     class Meta:
-        ordering = ['order']
-        verbose_name = _('Vastlegging gedrag')
+        ordering = ["order"]
+        verbose_name = _("Vastlegging gedrag")
 
     def __str__(self):
         return self.description
@@ -109,7 +113,7 @@ class RegistrationKind(models.Model):
     registration = models.ForeignKey(Registration, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['order']
+        ordering = ["order"]
 
     def __str__(self):
         return self.description
@@ -118,27 +122,31 @@ class RegistrationKind(models.Model):
 class Task(models.Model):
     order = models.PositiveIntegerField()
     name = models.CharField(
-        _('Wat is de naam van de taak?'),
+        _("Wat is de naam van de taak?"),
         max_length=200,
         blank=True,
     )
 
     description = models.TextField(
-        _('Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort \
+        _(
+            "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort \
 uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de \
 beantwoording van jouw onderzoeksvragen bijdraagt. \
 Geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli \
 dat je van plan bent aan de deelnemer aan te bieden. \
-Het moet voor de commissieleden duidelijk zijn wat je precies gaat doen.'),
+Het moet voor de commissieleden duidelijk zijn wat je precies gaat doen."
+        ),
         blank=True,
     )
 
     duration = models.PositiveIntegerField(
-        _('Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, \
+        _(
+            "Wat is de duur van deze taak van begin tot eind in <strong>minuten</strong>, \
 dus vanaf het moment dat de taak van start gaat tot en met het einde van de taak \
 (exclusief instructie maar inclusief oefensessie)? \
 Indien de taakduur per deelnemer varieert (self-paced taak of task-to-criterion), \
-geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.'),
+geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
+        ),
         default=0,
         validators=[MinValueValidator(1)],
         blank=True,
@@ -146,40 +154,46 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.'),
 
     registrations = models.ManyToManyField(
         Registration,
-        verbose_name=_('Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?'),
-        help_text = _("Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het gebruik van de term \
+        verbose_name=_(
+            "Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?"
+        ),
+        help_text=_(
+            "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het gebruik van de term \
         ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor deelnemers. Voor meer informatie, zie de \
         <a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf'> \
-        Richtlijnen voor geïnformeerde toestemming, ‘Beeld en geluid’</a>.")
+        Richtlijnen voor geïnformeerde toestemming, ‘Beeld en geluid’</a>."
+        ),
     )
 
     registrations_details = models.CharField(
-        _('Namelijk'),
+        _("Namelijk"),
         max_length=200,
         blank=True,
     )
 
     registration_kinds = models.ManyToManyField(
         RegistrationKind,
-        verbose_name=_('Kies het soort meting'),
+        verbose_name=_("Kies het soort meting"),
         blank=True,
     )
 
     registration_kinds_details = models.CharField(
-        _('Namelijk'),
+        _("Namelijk"),
         max_length=200,
         blank=True,
     )
 
     feedback = models.BooleanField(
-        _('Krijgt de deelnemer tijdens of na deze taak feedback op hun '
-          'gedrag of toestand?'),
+        _(
+            "Krijgt de deelnemer tijdens of na deze taak feedback op hun "
+            "gedrag of toestand?"
+        ),
         null=True,
         blank=True,
     )
 
     feedback_details = models.TextField(
-        _('Beschrijf hoe de feedback wordt gegeven.'),
+        _("Beschrijf hoe de feedback wordt gegeven."),
         blank=True,
     )
 
@@ -187,11 +201,11 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.'),
     session = models.ForeignKey(Session, on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['order']
-        unique_together = ('session', 'order')
+        ordering = ["order"]
+        unique_together = ("session", "order")
 
     def is_completed(self):
-        return self.name != ''
+        return self.name != ""
 
     def delete(self, *args, **kwargs):
         """
@@ -203,4 +217,4 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>.'),
         session.save()
 
     def __str__(self):
-        return _('Taak {} in sessie {}').format(self.order, self.session.order)
+        return _("Taak {} in sessie {}").format(self.order, self.session.order)

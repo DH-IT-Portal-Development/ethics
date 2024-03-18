@@ -6,30 +6,42 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('interventions', '0002_intervention_leader_has_coc'),
+        ("interventions", "0002_intervention_leader_has_coc"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='intervention',
-            name='extra_task',
-            field=models.BooleanField(default=False, help_text='Moet het nog een taak doen, zoals het invullen van een (onderzoeks)vragenlijst, die niet binnen de interventie zelf valt?', verbose_name='Voert de leerling nog een taak uit die niet onder het leerplan valt?'),
+            model_name="intervention",
+            name="extra_task",
+            field=models.BooleanField(
+                default=False,
+                help_text="Moet het nog een taak doen, zoals het invullen van een (onderzoeks)vragenlijst, die niet binnen de interventie zelf valt?",
+                verbose_name="Voert de leerling nog een taak uit die niet onder het leerplan valt?",
+            ),
         ),
         migrations.AddField(
-            model_name='intervention',
-            name='multiple_sessions',
-            field=models.BooleanField(default=False, verbose_name='Zal de interventie vaker dan één keer plaatsvinden?'),
+            model_name="intervention",
+            name="multiple_sessions",
+            field=models.BooleanField(
+                default=False,
+                verbose_name="Zal de interventie vaker dan één keer plaatsvinden?",
+            ),
         ),
         migrations.AddField(
-            model_name='intervention',
-            name='version',
-            field=models.PositiveIntegerField(default=1, verbose_name='INTERNAL - Describes which version of the intervention model is used'),
+            model_name="intervention",
+            name="version",
+            field=models.PositiveIntegerField(
+                default=1,
+                verbose_name="INTERNAL - Describes which version of the intervention model is used",
+            ),
         ),
         migrations.AlterField(
-            model_name='intervention',
-            name='period',
-            field=models.TextField(help_text='De interventie vindt plaats binnen het schooljaar 2018-2019', verbose_name='Wat is de periode waarbinnen de interventie plaatsvindt?'),
+            model_name="intervention",
+            name="period",
+            field=models.TextField(
+                help_text="De interventie vindt plaats binnen het schooljaar 2018-2019",
+                verbose_name="Wat is de periode waarbinnen de interventie plaatsvindt?",
+            ),
         ),
     ]

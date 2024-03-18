@@ -8,12 +8,12 @@ def intervention_url(study):
     """
     Returns the available URLs for an Intervention
     """
-    result = AvailableURL(title=_('Interventieonderzoek'), margin=2)
+    result = AvailableURL(title=_("Interventieonderzoek"), margin=2)
     if study.has_intervention:
-        if hasattr(study, 'intervention'):
-            result.url = reverse('interventions:update', args=(study.intervention.pk,))
+        if hasattr(study, "intervention"):
+            result.url = reverse("interventions:update", args=(study.intervention.pk,))
         else:
-            result.url = reverse('interventions:create', args=(study.pk,))
+            result.url = reverse("interventions:create", args=(study.pk,))
     return result
 
 

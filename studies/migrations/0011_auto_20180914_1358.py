@@ -6,8 +6,8 @@ from django.db import migrations
 
 
 def migrate(apps, schema_editor):
-    Study = apps.get_model('studies', 'Study')
-    Documents = apps.get_model('studies', 'Documents')
+    Study = apps.get_model("studies", "Study")
+    Documents = apps.get_model("studies", "Documents")
 
     for study in Study.objects.all():
         d = Documents()
@@ -20,13 +20,18 @@ def migrate(apps, schema_editor):
         d.parents_information = study.parents_information
         d.save()
 
+
 def reverse(apps, schema_editor):
-    Study = apps.get_model('studies', 'Study')
-    Documents = apps.get_model('studies', 'Documents')
+    Study = apps.get_model("studies", "Study")
+    Documents = apps.get_model("studies", "Documents")
 
     for documents in Documents.objects.all():
         if not documents.study:
-            print("Could not restore {} as it's not connected to a study".format(documents))
+            print(
+                "Could not restore {} as it's not connected to a study".format(
+                    documents
+                )
+            )
             continue
 
         study = documents.study
@@ -40,15 +45,14 @@ def reverse(apps, schema_editor):
 
         documents.delete()
 
+
 class Migration(migrations.Migration):
     """
     This migrates data a study to the new documents model created in 0010_documents.py
     """
 
     dependencies = [
-        ('studies', '0010_documents'),
+        ("studies", "0010_documents"),
     ]
 
-    operations = [
-        migrations.RunPython(migrate, reverse_code=reverse)
-    ]
+    operations = [migrations.RunPython(migrate, reverse_code=reverse)]

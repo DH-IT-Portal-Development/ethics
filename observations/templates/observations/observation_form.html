@@ -7,7 +7,6 @@
     {% trans "Het observatieonderzoek" %} - {{ block.super }}
 {% endblock %}
 
-
 {% block html_head %}
     <script>
 $(function() {
@@ -30,8 +29,8 @@ $(function() {
     add_title('needs_approval', "{% trans 'Toestemming' %}");
     add_title('registrations', "{% trans 'Registratie gedrag' %}");
 });
-</script>
-{% include "main/setting_checks.html" %}
+    </script>
+    {% include "main/setting_checks.html" %}
 {% endblock %}
 
 {% block content %}
@@ -40,14 +39,15 @@ $(function() {
             {% with nav_items=study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>
-                {% trans "Het observatieonderzoek" %}
-            </h2>
+            <h2>{% trans "Het observatieonderzoek" %}</h2>
             {% include "studies/study_title.html" %}
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
                 {% with proposal=observation.study.proposal %}
-                {% include "base/form_buttons.html" %}
+                    {% include "base/form_buttons.html" %}
                 {% endwith %}
             </form>
         </div>

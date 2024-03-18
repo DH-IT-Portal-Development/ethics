@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('studies', '0021_remove_study_self_assesment'),
+        ("studies", "0021_remove_study_self_assesment"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='study',
-            name='recruitment_details',
-            field=models.TextField(blank=True, help_text='Er zijn specifieke voorbeelddocumenten voor het gebruik van             Amazon Mechanical Turk/Prolific op <a href="https://intranet.uu.nl/en/knowledgebase/documents-ethics-assessment-committee-humanities">deze pagina</a>.', verbose_name='Licht toe'),
+            model_name="study",
+            name="recruitment_details",
+            field=models.TextField(
+                blank=True,
+                help_text='Er zijn specifieke voorbeelddocumenten voor het gebruik van             Amazon Mechanical Turk/Prolific op <a href="https://intranet.uu.nl/en/knowledgebase/documents-ethics-assessment-committee-humanities">deze pagina</a>.',
+                verbose_name="Licht toe",
+            ),
         ),
     ]

@@ -22,32 +22,32 @@
 
 {% block content %}
     <div class="uu-inner-container">
-
-    {% with review=review %}
-        {% include "reviews/review_detail_sidebar.html" %}
-    {% endwith %}
-
+        {% with review=review %}
+            {% include "reviews/review_detail_sidebar.html" %}
+        {% endwith %}
         <div class="col-12 col-md-9">
-            <h2>
-                {% trans "Commissieleden aanstellen" %}
-            </h2>
-
+            <h2>{% trans "Commissieleden aanstellen" %}</h2>
             {% url 'reviews:workload' review.proposal.reviewing_committee as workload_url %}
             {% blocktrans trimmed with title=review.proposal.title %}
                 <p>
                     Kies hier de geschikte route en commissieleden voor de aanvraag <em>{{ title }}</em>.
                     klik <a href="{{ workload_url }}">hier</a> voor een overzicht van de werkverdeling van deze commissie.
-                <p\>
+                </p>
             {% endblocktrans %}
-            <form class="clearfix" action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
+            <form class="clearfix"
+                  action=""
+                  method="post"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
                 <div class="float-right">
-                    <a class="button" href="javascript:history.go(-1);">
-                        {% trans "Terug naar de vorige pagina" %}
-                    </a>
-                    <input class="pure-button pure-button-primary" type="submit" value="{% trans 'OK' %}"/>
+                    <a class="button" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+                    <input class="pure-button pure-button-primary"
+                           type="submit"
+                           value="{% trans 'OK' %}" />
                 </div>
-
             </form>
             {% if not review.proposal.is_pre_assessment %}
                 {% include "reviews/auto_review.html" %}

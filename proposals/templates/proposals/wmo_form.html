@@ -8,7 +8,9 @@
 {% endblock %}
 
 {% block html_head %}
-    <script type="text/javascript" charset="utf8" src="{% static 'proposals/js/wmo.js' %}"></script>
+    <script type="text/javascript"
+            charset="utf8"
+            src="{% static 'proposals/js/wmo.js' %}"></script>
     <script>
     $(function() {
         check_metc_required("{% url 'proposals:check_wmo' %}");
@@ -19,19 +21,18 @@
     </script>
 {% endblock %}
 
-
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
             {% with nav_items=proposal.available_urls active=2 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>
-                {% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %}
-            </h2>
-
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
-                <table>{{ form.as_table }}</table>
+            <h2>{% trans "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?" %}</h2>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
                 <div id="metc_status"></div>
                 {% with proposal=wmo.proposal %}
                     {% include "base/form_buttons.html" %}

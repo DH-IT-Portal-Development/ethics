@@ -16,41 +16,47 @@ from ..utils import get_task_progress
 ######################
 class TaskUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
     """Updates a Task"""
+
     model = Task
     form_class = TaskForm
-    success_message = _('Taak bewerkt')
+    success_message = _("Taak bewerkt")
 
     def get_context_data(self, **kwargs):
         context = super(TaskUpdate, self).get_context_data(**kwargs)
-        context['progress'] = get_task_progress(self.object)
+        context["progress"] = get_task_progress(self.object)
         return context
 
     def get_next_url(self):
         try:
             # Try to continue to next Task
-            next_task = Task.objects.get(session=self.object.session, order=self.object.order + 1)
-            return reverse('tasks:update', args=(next_task.pk,))
+            next_task = Task.objects.get(
+                session=self.object.session, order=self.object.order + 1
+            )
+            return reverse("tasks:update", args=(next_task.pk,))
         except Task.DoesNotExist:
             # If this is the last Task, continue to task_end
-            return reverse('tasks:end', args=(self.object.session.pk,))
+            return reverse("tasks:end", args=(self.object.session.pk,))
 
     def get_back_url(self):
         try:
             # Try to return to previous Task
-            prev_task = Task.objects.get(session=self.object.session, order=self.object.order - 1)
-            return reverse('tasks:update', args=(prev_task.pk,))
+            prev_task = Task.objects.get(
+                session=self.object.session, order=self.object.order - 1
+            )
+            return reverse("tasks:update", args=(prev_task.pk,))
         except Task.DoesNotExist:
             # If this is the first Task, return to task_start
-            return reverse('tasks:start', args=(self.object.session.pk,))
+            return reverse("tasks:start", args=(self.object.session.pk,))
 
 
 class TaskDelete(DeletionAllowedMixin, DeleteView):
     """Deletes a Task"""
+
     model = Task
-    success_message = _('Taak verwijderd')
+    success_message = _("Taak verwijderd")
 
     def get_success_url(self):
-        return reverse('tasks:end', args=(self.object.session.pk,))
+        return reverse("tasks:end", args=(self.object.session.pk,))
 
     def delete(self, request, *args, **kwargs):
         """
