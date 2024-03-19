@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-14 11:57+0100\n"
+"POT-Creation-Date: 2024-03-19 16:09+0100\n"
 "PO-Revision-Date: 2024-01-17 10:48+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -375,6 +375,7 @@ msgid "Bevestigingsbrief versturen"
 msgstr "Send confirmation letter"
 
 #: main/templates/auth/user_detail.html:97
+#: proposals/templates/proposals/proposal_confirmation.html:39
 #: reviews/templates/reviews/vue_templates/decision_list.html:90
 #: reviews/templates/reviews/vue_templates/review_list.html:83
 msgid "Bevestigingsbrief verstuurd"
@@ -1908,8 +1909,8 @@ msgstr "Delete"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:21
 #: proposals/templates/proposals/proposal_copy.html:93
-#: tasks/templates/tasks/session_confirm_delete.html:22
-#: tasks/templates/tasks/task_confirm_delete.html:22
+#: tasks/templates/tasks/session_confirm_delete.html:21
+#: tasks/templates/tasks/task_confirm_delete.html:21
 msgid "Annuleren"
 msgstr "Cancel"
 
@@ -1921,10 +1922,6 @@ msgid ""
 msgstr ""
 "Please state when the confirmation letter for <em>%(title)s</em> has been "
 "sent here. "
-
-#: proposals/templates/proposals/proposal_confirmation.html:39
-msgid "Verstuur bevestigingsbrief"
-msgstr "Send confirmation"
 
 #: proposals/templates/proposals/proposal_copy.html:8
 #: proposals/templates/proposals/proposal_copy.html:22
@@ -5217,17 +5214,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:56
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid ""
-#~ "Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
-#~ "algemene-kamer/\">Algemene Kamer (AK)</a> of dat van de <a href=\"https://"
-#~ "fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\">Linguïstiek Kamer "
-#~ "(LK)</a>."
-#~ msgstr ""
-#~ "The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/"
-#~ "regulations-general-chamber-2/\" target=\"blank\">General Chamber</a> or "
-#~ "those of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
-#~ "linguistics-chamber/\" target=\"blank\">Linguistics Chamber</a>."
-
-#~ msgid "Andere betrokkenen"
-#~ msgstr "Other people involved"
