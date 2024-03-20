@@ -5,5 +5,8 @@ from .models import Faq
 
 @admin.register(Faq)
 class FaqAdmin(admin.ModelAdmin):
-    list_display = ('order', 'question', )
-    ordering = ['order']
+    list_display = (
+        "order",
+        "question",
+    )
+    ordering = ["order"]

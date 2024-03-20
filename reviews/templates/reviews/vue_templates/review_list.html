@@ -118,6 +118,12 @@
                 {{ review.get_stage_display }}
                 {% endverbatim %}
             </div>
+            <div class="ufl-undertitle-line" v-if="review.stage === context.review.CLOSED && review.continuation === context.review.REVISION">
+                {% trans "Reviewronde beëindigd: " %}
+                {% verbatim %}
+                {{ review.date_end | date("DD-MM-YYYY") }}
+                {% endverbatim %}
+            </div>
         </template>
 
 

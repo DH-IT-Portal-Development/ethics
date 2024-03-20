@@ -8,45 +8,75 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0013_proposal_public'),
+        ("proposals", "0013_proposal_public"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='proposal',
-            name='applicants',
-            field=models.ManyToManyField(related_name='applicants', to=settings.AUTH_USER_MODEL, verbose_name='Uitvoerende(n) (inclusief uzelf)'),
+            model_name="proposal",
+            name="applicants",
+            field=models.ManyToManyField(
+                related_name="applicants",
+                to=settings.AUTH_USER_MODEL,
+                verbose_name="Uitvoerende(n) (inclusief uzelf)",
+            ),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='pdf',
-            field=models.FileField(blank=True, upload_to=''),
+            model_name="proposal",
+            name="pdf",
+            field=models.FileField(blank=True, upload_to=""),
         ),
         migrations.AlterField(
-            model_name='proposal',
-            name='pre_assessment_pdf',
-            field=models.FileField(blank=True, upload_to='', validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)'),
+            model_name="proposal",
+            name="pre_assessment_pdf",
+            field=models.FileField(
+                blank=True,
+                upload_to="",
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier uw aanvraag (in .pdf of .doc(x)-formaat)",
+            ),
         ),
         migrations.AlterField(
-            model_name='wmo',
-            name='is_behavioristic',
-            field=models.CharField(blank=True, choices=[('Y', 'ja'), ('N', 'nee'), ('?', 'twijfel')], help_text='Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. Bij observatieonderzoek waarbij er niets van de deelnemers gevraagd wordt, deze dus uitsluitend geobserveerd worden in hun leven zoals het ook had plaatsgevonden zonder de observatie, slechts dan kan "nee" ingevuld worden.', max_length=1, verbose_name='Worden de deelnemers aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?'),
+            model_name="wmo",
+            name="is_behavioristic",
+            field=models.CharField(
+                blank=True,
+                choices=[("Y", "ja"), ("N", "nee"), ("?", "twijfel")],
+                help_text='Een handeling of opgelegde gedragsregel varieert tussen het afnemen van weefsel bij een deelnemer tot de deelnemer een knop/toets in laten drukken. Bij observatieonderzoek waarbij er niets van de deelnemers gevraagd wordt, deze dus uitsluitend geobserveerd worden in hun leven zoals het ook had plaatsgevonden zonder de observatie, slechts dan kan "nee" ingevuld worden.',
+                max_length=1,
+                verbose_name="Worden de deelnemers aan een handeling onderworpen of worden hen gedragsregels opgelegd (zoals gedefinieerd door de WMO)?",
+            ),
         ),
         migrations.AlterField(
-            model_name='wmo',
-            name='is_medical',
-            field=models.CharField(blank=True, choices=[('Y', 'ja'), ('N', 'nee'), ('?', 'twijfel')], help_text='De definitie van medisch-wetenschappelijk onderzoek is: Medisch-wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden van een vraag op het gebied van ziekte en gezondheid (etiologie, pathogenese, verschijnselen/symptomen, diagnose, preventie, uitkomst of behandeling van ziekte), door het op systematische wijze vergaren en bestuderen van gegevens. Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor populaties buiten de directe onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk onderzoek, 2005, ccmo.nl)', max_length=1, verbose_name='Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd door de WMO)?'),
+            model_name="wmo",
+            name="is_medical",
+            field=models.CharField(
+                blank=True,
+                choices=[("Y", "ja"), ("N", "nee"), ("?", "twijfel")],
+                help_text="De definitie van medisch-wetenschappelijk onderzoek is: Medisch-wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden van een vraag op het gebied van ziekte en gezondheid (etiologie, pathogenese, verschijnselen/symptomen, diagnose, preventie, uitkomst of behandeling van ziekte), door het op systematische wijze vergaren en bestuderen van gegevens. Het onderzoek beoogt bij te dragen aan medische kennis die ook geldend is voor populaties buiten de directe onderzoekspopulatie. (CCMO-notitie, Definitie medisch-wetenschappelijk onderzoek, 2005, ccmo.nl)",
+                max_length=1,
+                verbose_name="Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd door de WMO)?",
+            ),
         ),
         migrations.AlterField(
-            model_name='wmo',
-            name='metc',
-            field=models.CharField(choices=[('Y', 'ja'), ('N', 'nee'), ('?', 'twijfel')], default=None, max_length=1, verbose_name='Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling waar toetsing door een METC verplicht is gesteld?'),
+            model_name="wmo",
+            name="metc",
+            field=models.CharField(
+                choices=[("Y", "ja"), ("N", "nee"), ("?", "twijfel")],
+                default=None,
+                max_length=1,
+                verbose_name="Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling waar toetsing door een METC verplicht is gesteld?",
+            ),
         ),
         migrations.AlterField(
-            model_name='wmo',
-            name='metc_decision_pdf',
-            field=models.FileField(blank=True, upload_to='', validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)'),
+            model_name="wmo",
+            name="metc_decision_pdf",
+            field=models.FileField(
+                blank=True,
+                upload_to="",
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)",
+            ),
         ),
     ]

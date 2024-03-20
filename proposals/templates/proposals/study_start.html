@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block html_head %}
-<script>
+    <script>
 $(function() {
     add_title('study_name_1', "{% trans 'Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters.' %}");
 
@@ -49,7 +49,7 @@ $(function() {
     });
     $('input[name=studies_number]').change();
 });
-</script>
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -60,42 +60,42 @@ $(function() {
             {% with nav_items=proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>
-                {% trans "Eén of meerdere trajecten?" %}
-            </h2>
+            <h2>{% trans "Eén of meerdere trajecten?" %}</h2>
             <p>
-                {% blocktrans %}
+                {% blocktrans trimmed %}
                     Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) sessies, (iii) taken.
                 {% endblocktrans %}
             </p>
             <ul>
-            <p>
-                <li><strong>{% trans "Traject" %}</strong>:
+                <li>
+                    <strong>{% trans "Traject" %}</strong>:
                     {% blocktrans trimmed %}
-                    Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende informed consent documenten nodig zijn.{% endblocktrans %}
-                    <p>{% blocktrans trimmed %}
-                        <u>Bijvoorbeeld</u>: ouders van leerlingen 15 jaar en jonger, docenten, een controlegroep en een experimentele groep die verschillende taken krijgen.
+                        Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende informed consent documenten nodig zijn.
+                    {% endblocktrans %}
+                    <p>
+                        {% blocktrans trimmed %}
+                            <u>Bijvoorbeeld</u>: ouders van leerlingen 15 jaar en jonger, docenten, een controlegroep en een experimentele groep die verschillende taken krijgen.
                         {% endblocktrans %}
-            </p>
-            <p>
-            <li><strong>{% trans "Sessie" %}</strong>:
-                {% blocktrans trimmed %}
-                    Alle taken/onderdelen die iemand op één dag uitvoert.
-                {% endblocktrans %}
-            </li>
-            </p>
-            <p>
-            <li><strong>{% trans "Taak" %}</strong>:
-                {% blocktrans trimmed %}
-                    Een taak of onderdeel van je onderzoek.
-                <p>
-                    <u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of een taaltest.
-                </p>
-                {% endblocktrans %}
-            </li>
-            </p>
+                    </p>
+                </li>
+                <li>
+                    <strong>{% trans "Sessie" %}</strong>:
+                    {% blocktrans trimmed %}
+                        Alle taken/onderdelen die iemand op één dag uitvoert.
+                    {% endblocktrans %}
+                </li>
+                <li>
+                    <strong>{% trans "Taak" %}</strong>:
+                    {% blocktrans trimmed %}
+                        Een taak of onderdeel van je onderzoek.
+                        <p>
+                            <u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of een taaltest.
+                        </p>
+                    {% endblocktrans %}
+                </li>
             </ul>
-            <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <table>
                     {{ form.as_table }}
                 </table>

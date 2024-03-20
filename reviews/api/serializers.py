@@ -8,9 +8,19 @@ from main.serializers import UserSerializer
 class InlineReviewProposalSerializer(serializers.ModelSerializer):
     class Meta:
         model = Proposal
-        fields = ['pk', 'reference_number', 'title', 'is_revision',
-                  'date_confirmed', 'date_submitted', 'latest_review',
-                  'applicants', 'pdf', 'date_submitted_supervisor', 'in_archive']
+        fields = [
+            "pk",
+            "reference_number",
+            "title",
+            "is_revision",
+            "date_confirmed",
+            "date_submitted",
+            "latest_review",
+            "applicants",
+            "pdf",
+            "date_submitted_supervisor",
+            "in_archive",
+        ]
         read_only_fields = fields
 
     latest_review = serializers.SerializerMethodField()
@@ -41,9 +51,20 @@ class InlineReviewProposalSerializer(serializers.ModelSerializer):
 class ReviewProposalSerializer(InlineReviewProposalSerializer):
     class Meta:
         model = Proposal
-        fields = ['pk', 'reference_number', 'title', 'is_revision',
-                  'date_confirmed', 'date_submitted', 'parent', 'latest_review',
-                  'applicants', 'pdf', 'date_submitted_supervisor', 'in_archive']
+        fields = [
+            "pk",
+            "reference_number",
+            "title",
+            "is_revision",
+            "date_confirmed",
+            "date_submitted",
+            "parent",
+            "latest_review",
+            "applicants",
+            "pdf",
+            "date_submitted_supervisor",
+            "in_archive",
+        ]
         read_only_fields = fields
 
     parent = serializers.SerializerMethodField()
@@ -78,7 +99,7 @@ class ReviewProposalSerializer(InlineReviewProposalSerializer):
 class InlineDecisionSerializer(ModelDisplaySerializer):
     class Meta:
         model = Decision
-        fields = ['pk', 'go', 'date_decision', 'comments', 'reviewer']
+        fields = ["pk", "go", "date_decision", "comments", "reviewer"]
         read_only_fields = fields
 
     reviewer = serializers.SerializerMethodField()
@@ -90,12 +111,21 @@ class InlineDecisionSerializer(ModelDisplaySerializer):
 class InlineReviewSerializer(ModelDisplaySerializer):
     class Meta:
         model = Review
-        fields = ['pk', 'stage', 'route', 'go', 'continuation', 'date_start',
-                  'date_end', 'date_should_end', 'accountable_user',
-                  'current_reviewers']
+        fields = [
+            "pk",
+            "stage",
+            "route",
+            "go",
+            "continuation",
+            "date_start",
+            "date_end",
+            "date_should_end",
+            "accountable_user",
+            "current_reviewers",
+        ]
         read_only_fields = fields
 
-    route = serializers.CharField(source='get_route_display')
+    route = serializers.CharField(source="get_route_display")
     accountable_user = serializers.SerializerMethodField()
     current_reviewers = serializers.SerializerMethodField()
 
@@ -109,19 +139,26 @@ class InlineReviewSerializer(ModelDisplaySerializer):
 class ReviewSerializer(InlineReviewSerializer):
     class Meta:
         model = Review
-        fields = ['pk', 'stage', 'route', 'go', 'continuation', 'date_start',
-                  'date_end', 'date_should_end', 'accountable_user', 'decision',
-                  'proposal']
+        fields = [
+            "pk",
+            "stage",
+            "route",
+            "go",
+            "continuation",
+            "date_start",
+            "date_end",
+            "date_should_end",
+            "accountable_user",
+            "decision",
+            "proposal",
+        ]
         read_only_fields = fields
 
     decision = serializers.SerializerMethodField()
     proposal = serializers.SerializerMethodField()
 
     def get_decision(self, review):
-        return InlineDecisionSerializer(
-            review.decision_set.all(),
-            many=True
-        ).data
+        return InlineDecisionSerializer(review.decision_set.all(), many=True).data
 
     def get_proposal(self, review):
         return ReviewProposalSerializer(review.proposal).data
@@ -130,8 +167,15 @@ class ReviewSerializer(InlineReviewSerializer):
 class DecisionSerializer(InlineDecisionSerializer):
     class Meta:
         model = Decision
-        fields = ['pk', 'go', 'date_decision', 'comments', 'review', 'reviewer',
-                  'proposal']
+        fields = [
+            "pk",
+            "go",
+            "date_decision",
+            "comments",
+            "review",
+            "reviewer",
+            "proposal",
+        ]
         read_only_fields = fields
 
     review = serializers.SerializerMethodField()
@@ -142,4 +186,3 @@ class DecisionSerializer(InlineDecisionSerializer):
 
     def get_proposal(self, decision):
         return ReviewProposalSerializer(decision.review.proposal).data
-

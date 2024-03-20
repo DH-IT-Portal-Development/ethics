@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from menu import Menu, MenuItem
 
-from main.utils import is_member_of_humanities, is_secretary
+from main.utils import is_secretary, can_view_archive
 
 new_proposal_menu = (
     MenuItem(
@@ -18,8 +18,10 @@ new_proposal_menu = (
         reverse("proposals:start_pre"),
     ),
     MenuItem(
-        _("Nieuwe aanvraag starten (die al goedgekeurd is door een andere "
-          "ethische toetsingscomissie)"),
+        _(
+            "Nieuwe aanvraag starten (die al goedgekeurd is door een andere "
+            "ethische toetsingscomissie)"
+        ),
         reverse("proposals:start_pre_approved"),
     ),
     MenuItem(
@@ -41,10 +43,10 @@ Menu.add_item(
     MenuItem(
         _("Nieuwe aanvraag"),
         "#",
-        slug='new-studies',  # needed for sub-menu!
+        slug="new-studies",  # needed for sub-menu!
         children=new_proposal_menu,
         check=lambda x: x.user.is_authenticated,
-    )
+    ),
 )
 
 my_proposals_menu = (
@@ -79,22 +81,22 @@ Menu.add_item(
     MenuItem(
         _("Mijn aanvragen"),
         reverse("proposals:my_archive"),
-        slug='my-studies',  # needed for sub-menu!
+        slug="my-studies",  # needed for sub-menu!
         children=my_proposals_menu,
         check=lambda x: x.user.is_authenticated,
-    )
+    ),
 )
 
 archive_menu = (
     MenuItem(
         _("Bekijk alle goedgekeurde aanvragen van de Algemene Kamer"),
-        reverse("proposals:archive", args=['AK']),
-        check=lambda x: is_member_of_humanities(x.user),
+        reverse("proposals:archive", args=["AK"]),
+        check=lambda x: can_view_archive(x.user),
     ),
     MenuItem(
         _("Bekijk alle goedgekeurde aanvragen van de Linguïstiek Kamer"),
-        reverse("proposals:archive", args=['LK']),
-        check=lambda x: is_member_of_humanities(x.user),
+        reverse("proposals:archive", args=["LK"]),
+        check=lambda x: can_view_archive(x.user),
     ),
     MenuItem(
         _("Site-export"),
@@ -109,8 +111,8 @@ Menu.add_item(
     MenuItem(
         _("Archief"),
         "#",
-        slug='archive',  # needed for sub-menu!
+        slug="archive",  # needed for sub-menu!
         children=archive_menu,
-        check=lambda x: x.user.is_authenticated and is_member_of_humanities(x.user),
-    )
+        check=lambda x: can_view_archive(x.user),
+    ),
 )

@@ -6,15 +6,21 @@ import proposals.utils.proposal_utils
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0030_auto_20210201_1514'),
+        ("proposals", "0030_auto_20210201_1514"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='proposal',
-            name='pre_approval_pdf',
-            field=models.FileField(blank=True, upload_to=proposals.utils.proposal_utils.FilenameFactory('Pre_Approval'), validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)'),
+            model_name="proposal",
+            name="pre_approval_pdf",
+            field=models.FileField(
+                blank=True,
+                upload_to=proposals.utils.proposal_utils.FilenameFactory(
+                    "Pre_Approval"
+                ),
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier uw formele toestemmingsbrief van dit instituut (in .pdf of .doc(x)-formaat)",
+            ),
         ),
     ]

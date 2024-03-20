@@ -3,42 +3,35 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-YES = 'Y'
-NO = 'N'
-DOUBT = '?'
-YES_NO_DOUBT = (
-    (YES, _('ja')),
-    (NO, _('nee')),
-    (DOUBT, _('twijfel')),
-)
+
+class YesNoDoubt(models.TextChoices):
+    YES = "Y", _("ja")
+    NO = "N", _("nee")
+    DOUBT = "?", _("twijfel")
 
 
 class SystemMessage(models.Model):
-    URGENT = 1
-    ATTENTION = 2
-    INFO = 3
-    # Not translated, as it's backend only
-    LEVELS = (
-        (URGENT, "Urgent"),
-        (ATTENTION, "Attention"),
-        (INFO, "Info")
-    )
+    class Levels(models.IntegerChoices):
+        # Not translated, as it's backend only
+        URGENT = 1, "Urgent"
+        ATTENTION = 2, "Attention"
+        INFO = 3, "Info"
 
     message = models.TextField()
-    level = models.IntegerField(choices=LEVELS)
+    level = models.IntegerField(choices=Levels.choices)
     not_before = models.DateTimeField()
     not_after = models.DateTimeField()
 
     @property
     def css_class(self):
-        if self.level == self.URGENT:
-            return 'failed'
-        if self.level == self.ATTENTION:
-            return 'warning'
-        if self.level == self.INFO:
-            return 'info'
+        if self.level == self.Levels.URGENT:
+            return "failed"
+        if self.level == self.Levels.ATTENTION:
+            return "warning"
+        if self.level == self.Levels.INFO:
+            return "info"
 
-        return ''
+        return ""
 
 
 class Setting(models.Model):
@@ -53,8 +46,8 @@ class Setting(models.Model):
     is_school = models.BooleanField("Needs external permission", default=False)
 
     class Meta:
-        ordering = ['order']
-        verbose_name = _('Setting')
+        ordering = ["order"]
+        verbose_name = _("Setting")
 
     def __str__(self):
         return self.description
@@ -63,29 +56,33 @@ class Setting(models.Model):
 class SettingModel(models.Model):
     setting = models.ManyToManyField(
         Setting,
-        verbose_name=_('Geef aan waar de dataverzameling plaatsvindt'),
-        blank=True, # TODO: mark this as soft required in ALL forms
+        verbose_name=_("Geef aan waar de dataverzameling plaatsvindt"),
+        blank=True,  # TODO: mark this as soft required in ALL forms
     )
     setting_details = models.CharField(
-        _('Namelijk'),
+        _("Namelijk"),
         max_length=200,
         blank=True,
     )
     supervision = models.BooleanField(
-        _('Vindt het afnemen van de taak plaats onder het toeziend oog \
-van de leraar of een ander persoon die bevoegd is?'),
+        _(
+            "Vindt het afnemen van de taak plaats onder het toeziend oog \
+van de leraar of een ander persoon die bevoegd is?"
+        ),
         null=True,
         blank=True,
     )
     leader_has_coc = models.BooleanField(
-        _('Is de testleider in het bezit van een VOG?'),
-        help_text=_('Iedereen die op een school werkt moet in het bezit \
+        _("Is de testleider in het bezit van een VOG?"),
+        help_text=_(
+            'Iedereen die op een school werkt moet in het bezit \
         zijn van een Verklaring Omtrent Gedrag (VOG, zie \
         <a href="https://www.justis.nl/producten/vog/" \
         target="_blank">https://www.justis.nl/producten/vog/</a>). \
         Het is de verantwoordelijkheid van de school om hierom te vragen. \
         De FETC-GW neemt hierin een adviserende rol en wil de onderzoekers \
-        waarschuwen dat de school om een VOG kan vragen.'),
+        waarschuwen dat de school om een VOG kan vragen.'
+        ),
         null=True,
         blank=True,
     )
@@ -95,7 +92,7 @@ van de leraar of een ander persoon die bevoegd is?'),
 
     def settings_contains_schools(self):
         """If the current settings contains any that are marked as schools."""
-        return self.setting.filter(is_school=True).exists();
+        return self.setting.filter(is_school=True).exists()
 
     def settings_requires_review(self):
         """If the current settings contain any that requires review"""
@@ -115,10 +112,7 @@ class Faculty(models.Model):
         max_length=255,
     )
 
-    users = models.ManyToManyField(
-        get_user_model(),
-        related_name='faculties'
-    )
+    users = models.ManyToManyField(get_user_model(), related_name="faculties")
 
     internal_name = models.CharField(
         max_length=50,
@@ -135,6 +129,7 @@ class SamlUserProxy(User):
     It's not a replacement User model. It may be used elsewhere in code, but
     why would you?
     """
+
     class Meta:
         proxy = True
 

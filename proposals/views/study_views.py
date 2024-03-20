@@ -14,12 +14,12 @@ from ..models import Proposal
 class StudyStart(AllowErrorsOnBackbuttonMixin, UpdateView):
     model = Proposal
     form_class = StudyStartForm
-    template_name = 'proposals/study_start.html'
+    template_name = "proposals/study_start.html"
 
     def get_form_kwargs(self):
         """Sets the Proposal as a form kwarg"""
         kwargs = super(StudyStart, self).get_form_kwargs()
-        kwargs['proposal'] = self.object
+        kwargs["proposal"] = self.object
         return kwargs
 
     def form_valid(self, form):
@@ -33,7 +33,7 @@ class StudyStart(AllowErrorsOnBackbuttonMixin, UpdateView):
         for n in range(proposal.studies_number):
             order = n + 1
             s, _ = Study.objects.get_or_create(proposal=proposal, order=order)
-            s.name = self.request.POST.get('study_name_' + str(order))
+            s.name = self.request.POST.get("study_name_" + str(order))
             s.save()
 
         # Delete Studies
@@ -47,30 +47,32 @@ class StudyStart(AllowErrorsOnBackbuttonMixin, UpdateView):
     def get_next_url(self):
         """Continue to the first Study"""
         proposal = self.object
-        return reverse('studies:update', args=(proposal.first_study().pk,))
+        return reverse("studies:update", args=(proposal.first_study().pk,))
 
     def get_back_url(self):
         """Return to the Wmo overview"""
-        return reverse('proposals:wmo_update', args=(self.object.wmo.pk,))
+        return reverse("proposals:wmo_update", args=(self.object.wmo.pk,))
 
 
 class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
     """
     Allows the applicant to add informed consent to their Studies
     """
-    success_message = _('Consent opgeslagen')
-    template_name = 'proposals/study_consent.html'
+
+    success_message = _("Consent opgeslagen")
+    template_name = "proposals/study_consent.html"
     form = StudyConsentForm
     extra = 10
-    
+
     def get(self, request, *args, **kwargs):
         """A bit of a hacky override to ensure only 2 extra document forms
         apart from the study document forms are presented"""
 
-        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
+        proposal = Proposal.objects.get(pk=self.kwargs.get("pk"))
 
-        self.extra = (len(proposal.study_set.all()) + self.extra) - \
-            len(self.get_queryset().all())
+        self.extra = (len(proposal.study_set.all()) + self.extra) - len(
+            self.get_queryset().all()
+        )
 
         return super(StudyConsent, self).get(request, *args, **kwargs)
 
@@ -78,13 +80,13 @@ class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
         """Setting the progress on the context"""  # (??)
         context = super().get_context_data(*args, **kwargs)
         # The following is used by the progress bar
-        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
-        context['proposal'] = proposal
+        proposal = Proposal.objects.get(pk=self.kwargs.get("pk"))
+        context["proposal"] = proposal
 
         initial = []
         for i in range(self.extra):
-            initial.append({'proposal': proposal.pk})
-        context['formset'].initial_extra = initial
+            initial.append({"proposal": proposal.pk})
+        context["formset"].initial_extra = initial
 
         # Tell the template if any studies need external forms
         studies = Study.objects.filter(proposal=proposal)
@@ -94,7 +96,7 @@ class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
         return context
 
     def get_queryset(self):
-        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
+        proposal = Proposal.objects.get(pk=self.kwargs.get("pk"))
         documents = Documents.objects.filter(proposal=proposal)
 
         if len(documents) == 0:
@@ -105,16 +107,15 @@ class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
 
         return documents
 
-
     def get_next_url(self):
         """
         If there is another Study in this Proposal, continue to that one.
         Otherwise, go to the data management view.
         """
-        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
-        return reverse('proposals:data_management', args=(proposal.pk,))
+        proposal = Proposal.objects.get(pk=self.kwargs.get("pk"))
+        return reverse("proposals:data_management", args=(proposal.pk,))
 
     def get_back_url(self):
         """Return to the Study design view"""
-        proposal = Proposal.objects.get(pk=self.kwargs.get('pk'))
-        return reverse('proposals:translated', args=(proposal.pk,))
+        proposal = Proposal.objects.get(pk=self.kwargs.get("pk"))
+        return reverse("proposals:translated", args=(proposal.pk,))

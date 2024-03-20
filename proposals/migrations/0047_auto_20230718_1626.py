@@ -4,24 +4,32 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('proposals', '0046_auto_20230711_1634'),
+        ("proposals", "0046_auto_20230711_1634"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='proposal',
-            name='public',
+            model_name="proposal",
+            name="public",
         ),
         migrations.AddField(
-            model_name='proposal',
-            name='embargo',
-            field=models.BooleanField(blank=True, default=None, null=True, verbose_name='Als de deelnemers van je onderzoek moeten worden misleid, kan           je ervoor kiezen je applicatie pas later op te laten nemen in het           semi-publieke archief. Wil je dat jouw onderzoek tijdelijk onder           embargo wordt geplaatst?'),
+            model_name="proposal",
+            name="embargo",
+            field=models.BooleanField(
+                blank=True,
+                default=None,
+                null=True,
+                verbose_name="Als de deelnemers van je onderzoek moeten worden misleid, kan           je ervoor kiezen je applicatie pas later op te laten nemen in het           semi-publieke archief. Wil je dat jouw onderzoek tijdelijk onder           embargo wordt geplaatst?",
+            ),
         ),
         migrations.AddField(
-            model_name='proposal',
-            name='embargo_end_date',
-            field=models.DateField(blank=True, null=True, verbose_name='Vanaf welke datum mag je onderzoek wel in het archief worden weergegeven?'),
+            model_name="proposal",
+            name="embargo_end_date",
+            field=models.DateField(
+                blank=True,
+                null=True,
+                verbose_name="Vanaf welke datum mag je onderzoek wel in het archief worden weergegeven?",
+            ),
         ),
     ]

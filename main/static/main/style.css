@@ -86,6 +86,10 @@ form label {
     background-color: orange;
 }
 
+.proposals-diff th, .proposals-diff td {
+    padding: 10px;
+}
+
 /* Form specifics */
 input[name=title] {
     width: 20em;

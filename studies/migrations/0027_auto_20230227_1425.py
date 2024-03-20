@@ -6,25 +6,49 @@ import proposals.utils.proposal_utils
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('studies', '0026_alter_study_traits'),
+        ("studies", "0026_alter_study_traits"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='documents',
-            name='director_consent_declaration',
-            field=models.FileField(blank=True, help_text='Upload indien mogelijk een ondertekende versie van het document. Upload als deze nog niet bestaat een blanco versie, en stuur de ondertekende versie later op naar de secretaris van de FETC-GW.', storage=proposals.utils.proposal_utils.OverwriteStorage(), upload_to=proposals.utils.proposal_utils.FilenameFactory('Department_Consent'), validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier de toestemmingsverklaring voor de leiding of het management van de instelling (in .pdf of .doc(x)-format)'),
+            model_name="documents",
+            name="director_consent_declaration",
+            field=models.FileField(
+                blank=True,
+                help_text="Upload indien mogelijk een ondertekende versie van het document. Upload als deze nog niet bestaat een blanco versie, en stuur de ondertekende versie later op naar de secretaris van de FETC-GW.",
+                storage=proposals.utils.proposal_utils.OverwriteStorage(),
+                upload_to=proposals.utils.proposal_utils.FilenameFactory(
+                    "Department_Consent"
+                ),
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier de toestemmingsverklaring voor de leiding of het management van de instelling (in .pdf of .doc(x)-format)",
+            ),
         ),
         migrations.AlterField(
-            model_name='documents',
-            name='director_consent_information',
-            field=models.FileField(blank=True, storage=proposals.utils.proposal_utils.OverwriteStorage(), upload_to=proposals.utils.proposal_utils.FilenameFactory('Department_Info'), validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier de informatiebrief voor de leiding of het management van de instelling (in .pdf of .doc(x)-formaat)'),
+            model_name="documents",
+            name="director_consent_information",
+            field=models.FileField(
+                blank=True,
+                storage=proposals.utils.proposal_utils.OverwriteStorage(),
+                upload_to=proposals.utils.proposal_utils.FilenameFactory(
+                    "Department_Info"
+                ),
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier de informatiebrief voor de leiding of het management van de instelling (in .pdf of .doc(x)-formaat)",
+            ),
         ),
         migrations.AlterField(
-            model_name='documents',
-            name='parents_information',
-            field=models.FileField(blank=True, storage=proposals.utils.proposal_utils.OverwriteStorage(), upload_to=proposals.utils.proposal_utils.FilenameFactory('Parental_Info'), validators=[main.validators.validate_pdf_or_doc], verbose_name='Upload hier de informatiebrief voor de ouders of verzorgers (in .pdf of .doc(x)-formaat)'),
+            model_name="documents",
+            name="parents_information",
+            field=models.FileField(
+                blank=True,
+                storage=proposals.utils.proposal_utils.OverwriteStorage(),
+                upload_to=proposals.utils.proposal_utils.FilenameFactory(
+                    "Parental_Info"
+                ),
+                validators=[main.validators.validate_pdf_or_doc],
+                verbose_name="Upload hier de informatiebrief voor de ouders of verzorgers (in .pdf of .doc(x)-formaat)",
+            ),
         ),
     ]

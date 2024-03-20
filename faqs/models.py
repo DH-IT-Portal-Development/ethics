@@ -8,7 +8,7 @@ class Faq(models.Model):
     answer = models.TextField()
 
     class Meta:
-        verbose_name = _('FAQ')
+        verbose_name = _("FAQ")
 
     def __str__(self):
         return self.question
