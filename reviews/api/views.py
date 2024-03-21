@@ -98,6 +98,7 @@ class MyDecisionsApiView(BaseDecisionApiView):
             reviewer=self.request.user,
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
+            review__is_committee_review=True,
         )
 
         for obj in objects:
@@ -121,6 +122,7 @@ class MyDecisionsApiView(BaseDecisionApiView):
             reviewer__groups__name=settings.GROUP_SECRETARY,
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
+            review__is_committee_review=True,
         )
 
         for obj in objects:
@@ -171,6 +173,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
             go="",
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
+            review__is_committee_review=True,
         )
 
         for obj in objects:
@@ -195,6 +198,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
             go="",
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
+            review__is_committee_review=True,
         )
 
         for obj in objects:
@@ -238,7 +242,8 @@ class OpenDecisionsApiView(BaseDecisionApiView):
             go="",
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
-        ).exclude(review__stage=Review.Stages.SUPERVISOR)
+            review__is_committee_review = True,
+        )
 
         for obj in objects:
             proposal = obj.review.proposal
@@ -288,7 +293,7 @@ class OpenSupervisorDecisionApiView(BaseDecisionApiView):
     default_sort = ("proposal.date_submitted_supervisor", "desc")
 
     def get_queryset(self):
-        """Returns all proposals that still need to be reviewed by the secretary"""
+        """Returns all proposals that still need to be reviewed by the supervisor"""
         objects = Decision.objects.filter(
             go="",
             review__stage=Review.Stages.SUPERVISOR,
@@ -441,6 +446,7 @@ class InRevisionApiView(BaseReviewApiView):
             proposal__reviewing_committee=self.committee,
             stage=Review.Stages.CLOSED,
             continuation=Review.Continuations.REVISION,
+            is_committee_review=True,
         )
         # 3. Finally, exclude candidates whose proposal
         # has a child with a revision review
@@ -538,6 +544,7 @@ class AllReviewsApiView(BaseReviewApiView):
                 stage__gte=Review.Stages.ASSIGNMENT,
                 proposal__status__gte=Proposal.Statuses.SUBMITTED,
                 proposal__reviewing_committee=self.committee,
+                is_committee_review=True,
             )
             .select_related(
                 "proposal",
