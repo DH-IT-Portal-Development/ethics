@@ -379,6 +379,7 @@ class ToConcludeReviewApiView(BaseReviewApiView):
         objects = (
             Review.objects.filter(
                 stage__gte=Review.Stages.CLOSING,
+                is_committee_review = True,
                 proposal__status__gte=Proposal.Statuses.SUBMITTED,
                 proposal__date_confirmed=None,
                 proposal__reviewing_committee=self.committee,
