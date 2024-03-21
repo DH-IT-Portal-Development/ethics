@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-21 15:55+0100\n"
+"POT-Creation-Date: 2024-03-21 16:27+0100\n"
 "PO-Revision-Date: 2024-01-17 10:48+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -1896,15 +1896,15 @@ msgstr "Are you sure you want to delete the application <em>%(title)s</em>?"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:20
 #: proposals/templates/proposals/vue_templates/proposal_list.html:66
-#: tasks/templates/tasks/session_confirm_delete.html:18
-#: tasks/templates/tasks/task_confirm_delete.html:18
+#: tasks/templates/tasks/session_confirm_delete.html:20
+#: tasks/templates/tasks/task_confirm_delete.html:20
 msgid "Verwijderen"
 msgstr "Delete"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:21
 #: proposals/templates/proposals/proposal_copy.html:93
-#: tasks/templates/tasks/session_confirm_delete.html:19
-#: tasks/templates/tasks/task_confirm_delete.html:19
+#: tasks/templates/tasks/session_confirm_delete.html:21
+#: tasks/templates/tasks/task_confirm_delete.html:21
 msgid "Annuleren"
 msgstr "Cancel"
 
@@ -5018,6 +5018,13 @@ msgstr "Task {} in session {}"
 msgid "Sessie verwijderen"
 msgstr "Delete session"
 
+#: tasks/templates/tasks/session_confirm_delete.html:16
+msgid ""
+"Weet u zeker dat u deze sessie <strong>%(session.order)s</strong> in de "
+"aanvraag <em>%(session.study.proposal.title)s</em> wilt verwijderen?"
+msgstr "Are you sure you want to delete session <strong>%(session.order)s</strong> "
+"from the application <em>%(session.study.proposal.title)s</em>?"
+
 #: tasks/templates/tasks/session_end.html:8
 msgid "Sessie overzicht"
 msgstr "Session overview"
@@ -5156,6 +5163,16 @@ msgstr "We will ask the same questions for each task on the next few pages."
 #: tasks/templates/tasks/task_list.html:39
 msgid "Taak verwijderen"
 msgstr "Delete task"
+
+#: tasks/templates/tasks/task_confirm_delete.html:16
+msgid ""
+"Weet u zeker dat u de taak <strong>%(task.name)s</strong> uit sessie "
+"<strong>%(task.session.order)s</strong> in de aanvraag "
+"<em>%(task.session.study.proposal.title)s</em> wilt verwijderen?"
+msgstr ""
+"Are you sure you would like to delete task <strong>%(task.name)s</strong> "
+"from session <strong>%(task.session.order)s</strong> in the application "
+"<em>%(task.session.study.proposal.title)s</em>?"
 
 #: tasks/templates/tasks/task_list.html:9
 msgid "Nettoduur (in minuten)"
