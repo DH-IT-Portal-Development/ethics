@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
+from django.utils.translation import ugettext_lazy as _
 
 register = template.Library()
 
@@ -80,3 +81,7 @@ def create_unordered_html_list(lst):
     html_output += mark_safe("</p>")
 
     return html_output
+
+@register.filter
+def unknown_if_none(value):
+    return value if value is not None else _("Onbekend aantal")

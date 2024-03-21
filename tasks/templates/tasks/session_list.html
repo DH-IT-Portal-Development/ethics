@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% load fetc_filters %}
 
 {% for session in study.session_set.all %}
     <div class="task_list mt-4 mb-4">
@@ -22,7 +23,7 @@
         </h3>
         <p>
             <em>
-                {% blocktrans with duration=session.tasks_duration repeats=session.repeats trimmed %}
+                {% blocktrans with duration=session.tasks_duration|unknown_if_none repeats=session.repeats trimmed %}
                     Totale brutoduur: {{ duration }}
                     minuten, aantal keer uit te voeren: {{ repeats }}
                 {% endblocktrans %}

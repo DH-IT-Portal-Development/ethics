@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-13 13:56+0100\n"
+"POT-Creation-Date: 2024-03-21 15:55+0100\n"
 "PO-Revision-Date: 2024-01-17 10:48+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -850,6 +850,10 @@ msgstr "Password"
 #: reviews/templates/reviews/vue_templates/review_list.html:54
 msgid "Toon verschillen"
 msgstr "Show differences"
+
+#: main/templatetags/fetc_filters.py:87
+msgid "Onbekend aantal"
+msgstr "Unknown number of"
 
 #: main/validators.py:17
 #, python-format
@@ -5010,7 +5014,7 @@ msgstr "Task {} in session {}"
 
 #: tasks/templates/tasks/session_confirm_delete.html:6
 #: tasks/templates/tasks/session_confirm_delete.html:12
-#: tasks/templates/tasks/session_list.html:19
+#: tasks/templates/tasks/session_list.html:20
 msgid "Sessie verwijderen"
 msgstr "Delete session"
 
@@ -5041,7 +5045,7 @@ msgid "Aantal keer uit te voeren"
 msgstr "Number of times to be performed"
 
 #: tasks/templates/tasks/session_end.html:38
-#: tasks/templates/tasks/session_list.html:14
+#: tasks/templates/tasks/session_list.html:15
 msgid "Sessie aanpassen"
 msgstr "Edit session"
 
@@ -5053,25 +5057,26 @@ msgstr "Tasks"
 msgid "Beantwoord op basis van dit overzicht de volgende vragen:"
 msgstr "Answer the following questions on the basis of this overview:"
 
-#: tasks/templates/tasks/session_list.html:7
+#: tasks/templates/tasks/session_list.html:8
 #: tasks/templates/tasks/session_title.html:18
 #, python-format
 msgid "Sessie %(order)s"
 msgstr "Session %(order)s"
 
-#: tasks/templates/tasks/session_list.html:25
+#: tasks/templates/tasks/session_list.html:26
+#, python-format
 msgid ""
 "Totale brutoduur: %(duration)s minuten, aantal keer uit te voeren: "
 "%(repeats)s"
 msgstr ""
-"Total duration: %(duration)s minutes, number of times to "
-"be performed: %(repeats)s"
+"Total duration: %(duration)s minutes, number of times to be performed: "
+"%(repeats)s"
 
-#: tasks/templates/tasks/session_list.html:38
+#: tasks/templates/tasks/session_list.html:39
 msgid "Nieuwe sessie tevoegen"
 msgstr "Add new session"
 
-#: tasks/templates/tasks/session_list.html:40
+#: tasks/templates/tasks/session_list.html:41
 msgid "Sessie aanmaken"
 msgstr "Create session"
 
@@ -5098,23 +5103,25 @@ msgstr "Task-based research and/or interviews"
 msgid ""
 "Een traject bestaat uit één of meer sessies. Een sessie bestaat uit één of "
 "meer taken."
-msgstr "A trajectory is made up of one or multiple sessions. One session is made "
-"up off multiple tasks."
+msgstr ""
+"A trajectory is made up of one or multiple sessions. One session is made up "
+"off multiple tasks."
 
 #: tasks/templates/tasks/session_start.html:24
 msgid ""
 "<strong>Sessie:</strong> Alle taken/onderdelen die iemand op één dag "
 "uitvoert."
-msgstr "<strong>Session:</strong> "
-"All tasks or procedures that a participant completes in a day combined."
+msgstr ""
+"<strong>Session:</strong> All tasks or procedures that a participant "
+"completes in a day combined."
 
 #: tasks/templates/tasks/session_start.html:29
 msgid ""
 "<strong>Taak:</strong> Eén taak of onderdeel van je onderzoek. Bijvoorbeeld: "
 "het invullen van een vragenlijst, een interview, of een taaltest."
-msgstr "<strong>Task:</strong>:"
-"A task or procedure within your study. For example: completing "
-"an interview, questionnaire, or language test."
+msgstr ""
+"<strong>Task:</strong>:A task or procedure within your study. For example: "
+"completing an interview, questionnaire, or language test."
 
 #: tasks/templates/tasks/session_start.html:34
 msgid ""
@@ -5123,10 +5130,10 @@ msgid ""
 "aanmaken. Als je klaar bent met het aanmaken van een sessie keer je terug op "
 "de overzichtspagina van sessies en taken."
 msgstr ""
-"On the following page, an overview page of all sessions and tasks, you "
-"can start to create sessions. Within every session, it is possible to create "
-"tasks. When you are finished with a session, you will return to the "
-"overview of all sessions and tasks."
+"On the following page, an overview page of all sessions and tasks, you can "
+"start to create sessions. Within every session, it is possible to create "
+"tasks. When you are finished with a session, you will return to the overview "
+"of all sessions and tasks."
 
 #: tasks/templates/tasks/session_title.html:6
 #, python-format
@@ -5205,11 +5212,11 @@ msgstr "Task-based research: session {} task {}"
 msgid "Sessie verwijderd"
 msgstr "Session deleted"
 
-#: tasks/views/task_views.py:21
+#: tasks/views/task_views.py:22
 msgid "Taak bewerkt"
 msgstr "Task edited"
 
-#: tasks/views/task_views.py:66
+#: tasks/views/task_views.py:70
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
