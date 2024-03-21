@@ -242,7 +242,7 @@ class OpenDecisionsApiView(BaseDecisionApiView):
             go="",
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
-            review__is_committee_review = True,
+            review__is_committee_review=True,
         )
 
         for obj in objects:
@@ -384,7 +384,7 @@ class ToConcludeReviewApiView(BaseReviewApiView):
         objects = (
             Review.objects.filter(
                 stage__gte=Review.Stages.CLOSING,
-                is_committee_review = True,
+                is_committee_review=True,
                 proposal__status__gte=Proposal.Statuses.SUBMITTED,
                 proposal__date_confirmed=None,
                 proposal__reviewing_committee=self.committee,
