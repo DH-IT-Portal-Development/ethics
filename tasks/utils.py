@@ -16,13 +16,11 @@ def session_urls(study):
             url=reverse("tasks:session_overview", args=(study.pk,)),
         )
         tasks_url.children.append(session_overview_url)
-        prev_session_completed = True
         for session in study.session_set.all():
             task_start_url = AvailableURL(
                 title=_("Het takenonderzoek: sessie {}").format(session.order)
             )
-            if prev_session_completed:
-                task_start_url.url = reverse("tasks:session_update", args=(session.pk,))
+            task_start_url.url = reverse("tasks:session_update", args=(session.pk,))
             tasks_url.children.append(task_start_url)
 
             tasks_url.children.extend(tasks_urls(session))
@@ -30,11 +28,8 @@ def session_urls(study):
             task_end_url = AvailableURL(
                 title=_("Overzicht van takenonderzoek: sessie {}").format(session.order)
             )
-            if session.tasks_completed():
-                task_end_url.url = reverse("tasks:session_end", args=(session.pk,))
+            task_end_url.url = reverse("tasks:session_end", args=(session.pk,))
             tasks_url.children.append(task_end_url)
-
-            prev_session_completed = session.is_completed()
 
     return tasks_url
 
@@ -42,18 +37,14 @@ def session_urls(study):
 def tasks_urls(session):
     result = list()
 
-    prev_task_completed = True
     for task in session.task_set.all():
         task_url = AvailableURL(
             title=_("Het takenonderzoek: sessie {} taak {}").format(
                 session.order, task.order
             )
         )
-        if prev_task_completed:
-            task_url.url = reverse("tasks:update", args=(task.pk,))
+        task_url.url = reverse("tasks:update", args=(task.pk,))
         result.append(task_url)
-
-        prev_task_completed = task.is_completed()
 
     return result
 
