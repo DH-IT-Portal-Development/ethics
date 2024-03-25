@@ -65,32 +65,6 @@ instructies per taak, pauzes tussen taken, en debriefing? \
         tasks = self.task_set.order_by("-order")
         return tasks[0] if tasks else None
 
-    def current_task(self):
-        """
-        Returns the current (incomplete) Task.
-        - If all Tasks are completed, the last Task is returned.
-        - If no Tasks have yet been created, None is returned.
-        """
-        current_task = None
-        for task in self.task_set.all():
-            current_task = task
-            if not task.is_completed():
-                break
-        return current_task
-
-    def tasks_completed(self):
-        result = True
-        if self.task_set.count() == 0:
-            result = False
-        for task in self.task_set.all():
-            result &= task.is_completed()
-        return result
-
-    def is_completed(self):
-        result = self.tasks_completed()
-        result &= self.tasks_duration is not None
-        return result
-
     def __str__(self):
         return _("Sessie {}").format(self.order)
 
@@ -227,9 +201,6 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
     class Meta:
         ordering = ["order"]
         unique_together = ("session", "order")
-
-    def is_completed(self):
-        return self.name != ""
 
     def delete(self, *args, **kwargs):
         """
