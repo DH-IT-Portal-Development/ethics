@@ -92,6 +92,7 @@ class SessionMixin(AllowErrorsOnBackbuttonMixin):
     def get_next_url(self):
         return reverse("tasks:session_end", args=(self.object.pk,))
 
+
 class SessionCreate(SessionMixin, CreateView):
 
     def get_form_kwargs(self):
@@ -114,6 +115,7 @@ class SessionCreate(SessionMixin, CreateView):
     def get_back_url(self):
         return reverse("tasks:session_overview", args=(self.object.study.pk,))
 
+
 class SessionUpdate(SessionMixin, UpdateView):
 
     def get_form_kwargs(self):
@@ -121,7 +123,7 @@ class SessionUpdate(SessionMixin, UpdateView):
         kwargs = super(SessionUpdate, self).get_form_kwargs()
         kwargs["study"] = self.object.study
         return kwargs
-    
+
     def get_back_url(self):
         return reverse("tasks:session_end", args=(self.object.study.pk,))
 

@@ -82,6 +82,7 @@ def create_unordered_html_list(lst):
 
     return html_output
 
+
 @register.filter
 def unknown_if_none(value):
     return value if value is not None else _("Onbekend aantal")
