@@ -132,7 +132,8 @@ class CommitteeMembersWorkloadView(
 
     def get_committee_decisions(self):
         decisions = Decision.objects.filter(
-            review__proposal__reviewing_committee=self.committee
+            review__proposal__reviewing_committee=self.committee,
+            review__is_committee_review = True,
         ).select_related(
             "reviewer",
             "review",
@@ -163,7 +164,6 @@ class CommitteeMembersWorkloadView(
         base_filter = Q(
             decision__review__date_start__gt=self.start_date,
             decision__review__date_start__lt=self.end_date,
-            decision__review__stage__gt=Review.Stages.SUPERVISOR,
         )
         return reviewers.annotate(
             total=Count("decision", filter=base_filter),
