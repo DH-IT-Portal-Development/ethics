@@ -162,7 +162,7 @@ class CommitteeMembersWorkloadView(
 
         # This is done to include in the base_filter, decisions which are taken
         # today. The comparison was having some troubles due to different
-        #time formats.
+        # time formats.
         end_date = self.end_date + timedelta(days=1)
 
         reviewers = get_user_model().objects.filter(decision__in=decisions)
