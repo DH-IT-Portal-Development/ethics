@@ -133,7 +133,7 @@ class CommitteeMembersWorkloadView(
     def get_committee_decisions(self):
         decisions = Decision.objects.filter(
             review__proposal__reviewing_committee=self.committee,
-            review__is_committee_review = True,
+            review__is_committee_review=True,
         ).select_related(
             "reviewer",
             "review",
