@@ -80,6 +80,7 @@ class Review(models.Model):
 
                     start_assignment_phase(self.proposal)
                     self.stage = self.Stages.CLOSED
+                    self.save()
                 # On NO-GO, reset the Proposal status
                 else:
                     # See comment above
