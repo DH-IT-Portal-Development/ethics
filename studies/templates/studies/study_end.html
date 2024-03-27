@@ -25,7 +25,7 @@
             {% with nav_items=study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>{% trans "Overzicht en eigen beoordeling van het gehele onderzoek" %}</h2>
+            <h2>{% trans "Overzicht en eigen beoordeling van het gehele traject" %}</h2>
             {% include "studies/study_title.html" %}
             <p>
                 {% blocktrans trimmed with age_groups=study.age_groups.all|join:', ' %}
