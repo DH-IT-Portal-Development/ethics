@@ -158,7 +158,7 @@ MENU_SELECT_PARENTS = True
 MENU_HIDE_EMPTY = False
 
 # Base URL
-BASE_URL = "127.0.0.1:8000"
+BASE_URL = "https://127.0.0.1:8000"
 
 # CSRF Setting
 CSRF_FAILURE_VIEW = "main.error_views.csrf_failure"
