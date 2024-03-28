@@ -40,10 +40,22 @@ form label {
 }
 
 .button-grid {
-    display: grid;
-    grid-auto-flow: column;
+    display: flex;
     column-gap: 15px;
     text-align: center;
+}
+
+
+@media (max-width: 768px)
+{
+    .button-grid {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .button-grid > .button {
+        width: 100%;
+    }
 }
 
 .button-grid > .button {
@@ -301,4 +313,13 @@ a.icon-link {
     -webkit-border-radius: 6px 0 6px 6px;
     -moz-border-radius: 6px 0 6px 6px;
     border-radius: 6px 0 6px 6px;
+}
+
+.text-decoration-none {
+    text-decoration: none;
+}
+
+.nostripes tr:nth-of-type(n) {
+    background-color: unset;
+    border-bottom: 1px solid #eeeeee;
 }

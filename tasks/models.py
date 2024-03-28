@@ -9,20 +9,21 @@ from studies.models import Study
 class Session(SettingModel):
     order = models.PositiveIntegerField()
 
-    # Fields with respect to Tasks
-    tasks_number = models.PositiveIntegerField(
-        _("Hoeveel taken worden er binnen deze sessie bij de deelnemer afgenomen?"),
-        null=True,
+    repeats = models.PositiveBigIntegerField(
+        _("Hoe vaak wordt deze sessie uitgevoerd?"),
+        help_text=_(
+            "Het kan zijn dat een zelfde sessie meerdere keren moet worden \
+                    uitgevoerd. Als dit het geval is, kun je dat hier \
+                    aangeven. Als er variatie zit in de verschillende \
+                    sessies van je onderzoek, maak dan een nieuwe sessie \
+                    aan voor elke unieke sessie."
+        ),
+        null=False,
+        default=1,
         validators=[
             MinValueValidator(1),
             MaxValueValidator(100),
         ],  # Max of 100 is a technical safeguard
-        help_text=_(
-            'Wanneer je bijvoorbeeld eerst de deelnemer observeert \
-en de deelnemer vervolgens een vragenlijst afneemt, dan vul je hierboven "2" '
-            "in. Electrodes plakken, sessie-debriefing en kort "
-            "(< 3 minuten) exit-interview gelden niet als een taak."
-        ),
     )
 
     tasks_duration = models.PositiveIntegerField(
@@ -45,10 +46,16 @@ instructies per taak, pauzes tussen taken, en debriefing? \
         unique_together = ("study", "order")
 
     def net_duration(self):
-        if duration := self.task_set.aggregate(models.Sum("duration"))["duration__sum"]:
+        if duration := self.task_set.annotate(
+            total_duration=models.F("duration") * models.F("repeats")
+        ).aggregate(models.Sum("total_duration"))["total_duration__sum"]:
             return duration
 
         return 0
+
+    @property
+    def tasks_number(self):
+        return self.task_set.count()
 
     def first_task(self):
         tasks = self.task_set.order_by("order")
@@ -57,32 +64,6 @@ instructies per taak, pauzes tussen taken, en debriefing? \
     def last_task(self):
         tasks = self.task_set.order_by("-order")
         return tasks[0] if tasks else None
-
-    def current_task(self):
-        """
-        Returns the current (incomplete) Task.
-        - If all Tasks are completed, the last Task is returned.
-        - If no Tasks have yet been created, None is returned.
-        """
-        current_task = None
-        for task in self.task_set.all():
-            current_task = task
-            if not task.is_completed():
-                break
-        return current_task
-
-    def tasks_completed(self):
-        result = True
-        if self.task_set.count() == 0:
-            result = False
-        for task in self.task_set.all():
-            result &= task.is_completed()
-        return result
-
-    def is_completed(self):
-        result = self.tasks_completed()
-        result &= self.tasks_duration is not None
-        return result
 
     def __str__(self):
         return _("Sessie {}").format(self.order)
@@ -137,6 +118,23 @@ dat je van plan bent aan de deelnemer aan te bieden. \
 Het moet voor de commissieleden duidelijk zijn wat je precies gaat doen."
         ),
         blank=True,
+    )
+
+    repeats = models.PositiveBigIntegerField(
+        _("Hoe vaak wordt deze taak uitgevoerd binnen deze sessie?"),
+        help_text=_(
+            "Het kan zijn dat eenzelfde taak meerdere keren moet worden \
+                    uitgevoerd binnen een sessie. Als dit het geval is, kun je dat hier \
+                    aangeven. Als er variatie zit in de verschillende \
+                    taken van deze sessie, maak dan een nieuwe taak \
+                    aan voor elke unieke taak binnen deze sessie."
+        ),
+        null=False,
+        default=1,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(100),
+        ],  # Max of 100 is a technical safeguard
     )
 
     duration = models.PositiveIntegerField(
@@ -203,9 +201,6 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
     class Meta:
         ordering = ["order"]
         unique_together = ("session", "order")
-
-    def is_completed(self):
-        return self.name != ""
 
     def delete(self, *args, **kwargs):
         """
