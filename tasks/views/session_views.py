@@ -4,10 +4,9 @@ from typing import Any
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import ugettext_lazy as _
-from django.forms import ModelForm
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView, CreateView
-from ..forms import SessionUpdateForm, SessionEndForm
+from ..forms import SessionUpdateForm, SessionEndForm, SessionOverviewForm
 from ..models import Session, Study
 
 
@@ -45,18 +44,10 @@ class SessionDelete(DeleteView):
 ##################
 
 
-class HiddenForm(ModelForm):
-    """This is needed to make the navigation work on this information page."""
-
-    class Meta:
-        model = Study
-        fields = []
-
-
 class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
 
     model = Study
-    form_class = HiddenForm
+    form_class = SessionOverviewForm
     template_name = "tasks/session_start.html"
 
     def get_next_url(self):
@@ -159,7 +150,7 @@ class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
 class SessionOverview(AllowErrorsOnBackbuttonMixin, UpdateView):
 
     model = Study
-    form_class = HiddenForm
+    form_class = SessionOverviewForm
     template_name = "tasks/session_overview.html"
 
     def get_context_data(self, **kwargs):

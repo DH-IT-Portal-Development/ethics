@@ -1,10 +1,12 @@
 # -*- encoding: utf-8 -*-
 
 from django import forms
+from django.forms import ModelForm
 from django.utils.translation import ugettext_lazy as _
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.utils import YES_NO
+from tasks.models import Study
 from .models import Session, Task
 
 
@@ -155,6 +157,10 @@ class SessionEndForm(SoftValidationMixin, forms.ModelForm):
         model = Session
         fields = ["tasks_duration"]
 
+    _soft_validation_fields = [
+        "tasks_duration",
+    ]
+
     def __init__(self, *args, **kwargs):
         """
         - Set the tasks_duration label
@@ -189,3 +195,29 @@ class SessionEndForm(SoftValidationMixin, forms.ModelForm):
             )
 
         return tasks_duration
+
+
+class SessionOverviewForm(SoftValidationMixin, ModelForm):
+    """This is form is mostly used to make the navigation work on
+    SessionOverview and SessionStart. However, it is also use to validate
+    that if study.has_session, it also contains sessions."""
+
+    class Meta:
+        model = Study
+        fields = []
+
+    def get_soft_validation_fields(self):
+        return self.errors
+
+    def clean(self):
+        cleaned_data = super(SessionOverviewForm, self).clean()
+
+        if self.instance.has_no_sessions():
+            self.add_error(
+                None,
+                _(
+                    "Je hebt aangegeven dat traject {} sessie's en taken bevat, maar er zijn nog geen sessie's aangemaakt."
+                ).format(self.instance.order),
+            )
+
+        return cleaned_data
