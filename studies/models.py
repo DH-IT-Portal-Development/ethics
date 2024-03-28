@@ -436,6 +436,9 @@ geschoolde specialisten).'
 
         return False
 
+    def has_no_sessions(self):
+        return self.has_sessions and self.sessions_number == 0
+
     def research_settings_contains_schools(self):
         """Checks if any research track contains a school in it's setting"""
         if self.has_intervention and self.intervention.settings_contains_schools():
