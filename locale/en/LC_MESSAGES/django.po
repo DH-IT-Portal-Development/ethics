@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-02 10:53+0200\n"
+"POT-Creation-Date: 2024-04-02 12:03+0200\n"
 "PO-Revision-Date: 2024-01-17 10:48+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -1747,7 +1747,7 @@ msgstr "Amendment"
 #: proposals/models.py:677 reviews/api/views.py:41 reviews/api/views.py:327
 #: reviews/templates/reviews/committee_members_workload.html:35
 #: reviews/templates/reviews/committee_members_workload.html:74
-#: reviews/templates/reviews/review_detail_sidebar.html:106
+#: reviews/templates/reviews/review_detail_sidebar.html:108
 msgid "Revisie"
 msgstr "Revision"
 
@@ -3787,15 +3787,15 @@ msgstr ""
 "Do you want to change your decision? Please contact the <a href=\"mailto:"
 "fetc-gw@uu.nl\">secretary of the FEtC-H</a>."
 
-#: reviews/templates/reviews/review_detail.html:27
+#: reviews/templates/reviews/review_detail.html:25
 msgid "Reviewers"
 msgstr "Reviewers"
 
-#: reviews/templates/reviews/review_detail.html:29
+#: reviews/templates/reviews/review_detail.html:27
 msgid "Handelingen"
 msgstr "Actions"
 
-#: reviews/templates/reviews/review_detail.html:34
+#: reviews/templates/reviews/review_detail.html:32
 msgid "Geen handelingen beschikbaar"
 msgstr "No actions available"
 
@@ -3826,43 +3826,41 @@ msgid "Reviewronde gestart op <br /> %(date_start)s."
 msgstr "Reviewing round started on <br /> %(date_start)s."
 
 #: reviews/templates/reviews/review_detail_sidebar.html:54
-#, python-format
-msgid "Reviewronde beëindigd op <br /> %(date_end)s."
-msgstr "Reviewing round ended on <br /> %(date_end)s."
+msgid "Laatste beoordeling ontvangen op <br /> %(date_end)s."
+msgstr "Last decision received on <br /> %(date_end)s."
 
 #: reviews/templates/reviews/review_detail_sidebar.html:63
-#, python-format
-msgid "Afhandeling: <br /> %(continuation)s."
-msgstr "Continuation: <br /> %(continuation)s."
+msgid "Afhandeling: <br /> %(continuation)s, <br /> %(date_reviewed)s."
+msgstr "Continuation: <br /> %(continuation)s, <br /> %(date_reviewed)s."
 
-#: reviews/templates/reviews/review_detail_sidebar.html:71
+#: reviews/templates/reviews/review_detail_sidebar.html:73
 #, python-format
 msgid "Bevestiging verzonden op <br /> %(date_confirmed)s."
 msgstr "Confirmation sent on <br /> %(date_confirmed)s."
 
-#: reviews/templates/reviews/review_detail_sidebar.html:77
+#: reviews/templates/reviews/review_detail_sidebar.html:79
 #, python-format
 msgid "Opmerkingen: <br /> %(comments)s."
 msgstr "Comments: <br /> %(comments)s."
 
-#: reviews/templates/reviews/review_detail_sidebar.html:89
+#: reviews/templates/reviews/review_detail_sidebar.html:91
 msgid "Dit is een aanvraag voor voortoetsing."
 msgstr "This is an application for preliminary assessment"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:98
+#: reviews/templates/reviews/review_detail_sidebar.html:100
 msgid "Dit is een beslissing van een eindverantwoordelijke"
 msgstr "This is a supervisor review"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:108
+#: reviews/templates/reviews/review_detail_sidebar.html:110
 msgid "Deze aanvraag heeft een revisie gehad tijdens het beslisproces."
 msgstr ""
 "A revision was made to this application after it was submitted to the FEtC-H"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:114
+#: reviews/templates/reviews/review_detail_sidebar.html:116
 msgid "Er zijn de volgende opmerkingen bijgevoegd: <br />"
 msgstr "The following comments have been provided: <br />"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:122
+#: reviews/templates/reviews/review_detail_sidebar.html:124
 msgid "Documenten"
 msgstr "Documents"
 
