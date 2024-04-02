@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-19 16:09+0100\n"
-"PO-Revision-Date: 2024-01-17 10:48+0100\n"
+"POT-Creation-Date: 2024-04-02 17:04+0200\n"
+"PO-Revision-Date: 2024-04-02 17:09+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -270,7 +270,7 @@ msgid "Ingediende aanvragen"
 msgstr "My submitted applications;"
 
 #: main/templates/auth/user_detail.html:36 reviews/api/views.py:47
-#: reviews/api/views.py:276 reviews/api/views.py:337
+#: reviews/api/views.py:281 reviews/api/views.py:342
 #: reviews/templates/reviews/committee_members_workload.html:24
 msgid "Referentienummer"
 msgstr "Reference number"
@@ -295,7 +295,7 @@ msgstr "Phase"
 #: proposals/api/views.py:146
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:102
 #: proposals/templates/proposals/vue_templates/proposal_list.html:161
-#: reviews/api/views.py:51 reviews/api/views.py:280 reviews/api/views.py:341
+#: reviews/api/views.py:51 reviews/api/views.py:285 reviews/api/views.py:346
 #: reviews/templates/reviews/committee_members_workload.html:25
 #: reviews/templates/reviews/vue_templates/decision_list.html:153
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:95
@@ -316,7 +316,7 @@ msgstr "Desired end date"
 msgid "Mijn besluit"
 msgstr "My decision"
 
-#: main/templates/auth/user_detail.html:43 reviews/api/views.py:331
+#: main/templates/auth/user_detail.html:43 reviews/api/views.py:336
 #: reviews/models.py:34
 #: reviews/templates/reviews/vue_templates/decision_list.html:133
 #: reviews/templates/reviews/vue_templates/review_list.html:137
@@ -328,7 +328,7 @@ msgstr "Conclusion"
 msgid "Acties"
 msgstr "Actions"
 
-#: main/templates/auth/user_detail.html:60 reviews/models.py:117
+#: main/templates/auth/user_detail.html:60 reviews/models.py:118
 msgid ", met revisie"
 msgstr ", with revision"
 
@@ -370,7 +370,7 @@ msgstr "Website export text"
 #: proposals/templates/proposals/proposal_confirmation.html:25
 #: reviews/templates/reviews/vue_templates/decision_list.html:95
 #: reviews/templates/reviews/vue_templates/review_list.html:88
-#: reviews/utils/review_actions.py:228
+#: reviews/utils/review_actions.py:227
 msgid "Bevestigingsbrief versturen"
 msgstr "Send confirmation letter"
 
@@ -1057,7 +1057,7 @@ msgstr ""
 #: proposals/templates/proposals/proposal_update_attachments.html:30
 #: proposals/templates/proposals/proposal_update_date_start.html:33
 #: reviews/templates/reviews/change_chamber_form.html:23
-#: reviews/templates/reviews/decision_form.html:92
+#: reviews/templates/reviews/decision_form.html:99
 #: reviews/templates/reviews/review_assign_form.html:46
 #: reviews/templates/reviews/review_close_form.html:40
 #: reviews/templates/reviews/review_discontinue_form.html:70
@@ -1634,7 +1634,7 @@ msgstr ""
 "proposals."
 
 #: proposals/models.py:462 proposals/utils/pdf_diff_logic.py:999
-#: reviews/models.py:162
+#: reviews/models.py:163
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -1745,7 +1745,7 @@ msgstr ""
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:677 reviews/api/views.py:41 reviews/api/views.py:327
+#: proposals/models.py:677 reviews/api/views.py:41 reviews/api/views.py:332
 #: reviews/templates/reviews/committee_members_workload.html:35
 #: reviews/templates/reviews/committee_members_workload.html:74
 #: reviews/templates/reviews/review_detail_sidebar.html:106
@@ -3079,7 +3079,7 @@ msgstr ""
 "This section was present in the original application, but was removed for "
 "the revision."
 
-#: proposals/utils/pdf_diff_logic.py:248 reviews/models.py:111
+#: proposals/utils/pdf_diff_logic.py:248 reviews/models.py:112
 msgid "Onbekend"
 msgstr "Unknown"
 
@@ -3298,21 +3298,21 @@ msgstr "Contact <a href=\"{link}\">{secretary}</a> to make sure."
 msgid "Je onderzoek zal moeten worden beoordeeld door de METC."
 msgstr "Your application will require assessment by an METC."
 
-#: reviews/api/views.py:33 reviews/api/views.py:319
+#: reviews/api/views.py:33 reviews/api/views.py:324
 #: reviews/templates/reviews/vue_templates/decision_list.html:111
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:61
 #: reviews/templates/reviews/vue_templates/review_list.html:116
 msgid "Stadium"
 msgstr "Stage"
 
-#: reviews/api/views.py:37 reviews/api/views.py:323 reviews/models.py:31
+#: reviews/api/views.py:37 reviews/api/views.py:328 reviews/models.py:31
 #: reviews/templates/reviews/vue_templates/decision_list.html:178
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:121
 #: reviews/templates/reviews/vue_templates/review_list.html:183
 msgid "Route"
 msgstr "Route"
 
-#: reviews/api/views.py:55 reviews/api/views.py:284 reviews/api/views.py:345
+#: reviews/api/views.py:55 reviews/api/views.py:289 reviews/api/views.py:350
 msgid "Start datum"
 msgstr "Start date review"
 
@@ -3380,19 +3380,19 @@ msgstr "All pending decisions committee members"
 msgid "Alle openstaande besluiten eindverantwoordelijken"
 msgstr "All pending decisions supervisors"
 
-#: reviews/menus.py:37 reviews/views.py:230
+#: reviews/menus.py:37 reviews/views.py:235
 msgid "Nog af te handelen aanvragen"
 msgstr "Applications waiting for conclusion"
 
-#: reviews/menus.py:42 reviews/views.py:242
+#: reviews/menus.py:42 reviews/views.py:247
 msgid "Aanvragen in revisie"
 msgstr "Applications in revision"
 
-#: reviews/menus.py:47 reviews/views.py:254
+#: reviews/menus.py:47 reviews/views.py:259
 msgid "Alle lopende aanvragen"
 msgstr "All running applications"
 
-#: reviews/menus.py:52 reviews/views.py:280
+#: reviews/menus.py:52 reviews/views.py:285
 msgid "Alle ingezonden aanvragen"
 msgstr "All submitted applications"
 
@@ -3452,32 +3452,32 @@ msgstr "Post hoc negative advice by FETC-H"
 msgid "Niet verder in behandeling genomen"
 msgstr "Not to be assessed further"
 
-#: reviews/models.py:32 reviews/models.py:157
+#: reviews/models.py:32 reviews/models.py:158
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
 
-#: reviews/models.py:123
+#: reviews/models.py:124
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
-#: reviews/models.py:124
+#: reviews/models.py:125
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: reviews/models.py:125
+#: reviews/models.py:126
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: reviews/models.py:152
+#: reviews/models.py:153
 msgid "goedgekeurd"
 msgstr "endorsed"
 
-#: reviews/models.py:153
+#: reviews/models.py:154
 msgid "niet goedgekeurd"
 msgstr "not endorsed"
 
-#: reviews/models.py:154
+#: reviews/models.py:155
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
@@ -3643,11 +3643,18 @@ msgstr ""
 "href=\"%(pdf_url)s\" target=\"_blank\">here</a> (downloads as PDF)."
 
 #: reviews/templates/reviews/decision_form.html:29
+msgid ""
+"<strong>Attentie:</strong> jij bent de laatste beoordelaar van deze "
+"aanvraag. Daarom kun je na het versturen je oordeel en commentaar niet meer "
+"bewerken. Controleer je antwoorden goed."
+msgstr "<strong>Warning</strong>: because you are the last remaining reviewer for this proposal, you won't be able to edit your response after submission. Double-check your answers."
+
+#: reviews/templates/reviews/decision_form.html:36
 #, python-format
 msgid "Je kunt nu de aanvraag <em>%(title)s</em> bekijken. <br />"
 msgstr "You can now (re)view this application here: <em>%(title)s</em>. <br />"
 
-#: reviews/templates/reviews/decision_form.html:35
+#: reviews/templates/reviews/decision_form.html:42
 msgid ""
 "Als de aanvraag (incl. geïnformeerde toestemmingsformulieren) in orde is, "
 "klik dan op ‘goedgekeurd’ en ‘Beslissing opslaan’ hieronder; dan wordt de "
@@ -3657,7 +3664,7 @@ msgstr ""
 "'endorsed' and 'Save decision' below; the application will then be submitted "
 "to the FEtC-H. "
 
-#: reviews/templates/reviews/decision_form.html:42
+#: reviews/templates/reviews/decision_form.html:49
 msgid ""
 "Als de aanvraag nog niet in orde is, dan zijn er twee mogelijkheden om de "
 "aanvraag aan te passen:"
@@ -3665,7 +3672,7 @@ msgstr ""
 "If the application is not yet in order, there are two methods to amend the "
 "study: "
 
-#: reviews/templates/reviews/decision_form.html:49
+#: reviews/templates/reviews/decision_form.html:56
 #, python-format
 msgid ""
 "door de supervisor (jijzelf) <br /> Als supervisor kan je deze aanvraag <a "
@@ -3678,7 +3685,7 @@ msgstr ""
 "which, you will be redirected back to this page and you can approve the "
 "application; this means that the application is submitted to the FEtC-H. "
 
-#: reviews/templates/reviews/decision_form.html:58
+#: reviews/templates/reviews/decision_form.html:65
 msgid ""
 "door de indiener (je student of promovendus) <br /> Indien je wilt dat de "
 "indiener de aanvraag zelf aanpast voordat je de studie kunt goedkeuren en "
@@ -3693,7 +3700,7 @@ msgstr ""
 "any comments, and click 'Save decision'. Once you have done this, the "
 "submitter can make changes again. <br /> "
 
-#: reviews/templates/reviews/decision_form.html:70
+#: reviews/templates/reviews/decision_form.html:77
 msgid ""
 "Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw heeft "
 "verstuurd, zal je de aangepaste aanvraag opnieuw moeten beoordelen."
@@ -3701,7 +3708,7 @@ msgstr ""
 "Once the submitter has made the requested changes and resubmitted the "
 "application, you will have to re-evaluate the application. "
 
-#: reviews/templates/reviews/decision_form.html:80
+#: reviews/templates/reviews/decision_form.html:87
 #, python-format
 msgid ""
 "Dit is een revisie van of amendement op een vorige aanvraag. De verschillen "
@@ -3711,7 +3718,7 @@ msgstr ""
 "differences compared to the previous application <a "
 "href=\"%(diff_url)s\">here</a>."
 
-#: reviews/templates/reviews/decision_form.html:95
+#: reviews/templates/reviews/decision_form.html:102
 msgid "Beslissing opslaan"
 msgstr "Save decision"
 
@@ -3731,10 +3738,14 @@ msgid "Commissieleden aanstellen"
 msgstr "Appoint committee members"
 
 #: reviews/templates/reviews/review_assign_form.html:31
-#, python-format
+#, fuzzy, python-format
+#| msgid ""
+#| "<p> Kies hier de geschikte route en commissieleden voor de aanvraag "
+#| "<em>%(title)s</em>. klik <a href=\"%(workload_url)s\">hier</a> voor een "
+#| "overzicht van de werkverdeling van deze commissie. </p>"
 msgid ""
 "<p> Kies hier de geschikte route en commissieleden voor de aanvraag "
-"<em>%(title)s</em>. klik <a href=\"%(workload_url)s\">hier</a> voor een "
+"<em>%(title)s</em>. Klik <a href=\"%(workload_url)s\">hier</a> voor een "
 "overzicht van de werkverdeling van deze commissie. </p>"
 msgstr ""
 "<p> Choose the appropriate route and committee members for the application "
@@ -3949,7 +3960,7 @@ msgid "Verplaats naar andere kamer"
 msgstr "Move study to different reviewing chamber"
 
 #: reviews/templates/reviews/vue_templates/review_list.html:95
-#: reviews/utils/review_actions.py:264
+#: reviews/utils/review_actions.py:263
 msgid "Verberg aanvraag uit het archief"
 msgstr "Remove this application from the archive"
 
@@ -4017,31 +4028,31 @@ msgstr "Information letter for the parents"
 msgid "Toestemmingsdocument observatie"
 msgstr "Consent document for observation"
 
-#: reviews/utils/review_actions.py:118
+#: reviews/utils/review_actions.py:117
 msgid "Geef jouw beslissing en/of commentaar door"
 msgstr "Provide feedback on this proposal"
 
-#: reviews/utils/review_actions.py:141
+#: reviews/utils/review_actions.py:140
 msgid "Deze versie afhandelen"
 msgstr "Conclude this version"
 
-#: reviews/utils/review_actions.py:169
+#: reviews/utils/review_actions.py:168
 msgid "Beëindig definitief de afhandeling van deze aanvraag"
 msgstr "Discontinue assessment of this application"
 
-#: reviews/utils/review_actions.py:197
+#: reviews/utils/review_actions.py:196
 msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
 
-#: reviews/utils/review_actions.py:229
+#: reviews/utils/review_actions.py:228
 msgid "Datum van bevestigingsbrief aanpassen"
 msgstr "Change date of confirmation letter"
 
-#: reviews/utils/review_actions.py:266
+#: reviews/utils/review_actions.py:265
 msgid "Plaats aanvraag in het archief."
 msgstr "Add this application to the archive"
 
-#: reviews/utils/review_actions.py:283
+#: reviews/utils/review_actions.py:282
 msgid "Startdatum wijzigen"
 msgstr "Edit start date"
 
@@ -4182,11 +4193,11 @@ msgstr "My results"
 msgid "Openstaande besluiten commissieleden"
 msgstr "Pending decisions committee members"
 
-#: reviews/views.py:203
+#: reviews/views.py:208
 msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
 
-#: reviews/views.py:600
+#: reviews/views.py:605
 msgid ""
 "Deze aanvraag is al beoordeeld, dus je kan je beoordeling niet meer "
 "toevoegen/aanpassen"
