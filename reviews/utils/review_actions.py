@@ -92,7 +92,6 @@ class DecideAction(ReviewAction):
             decision = Decision.objects.get(
                 review=review,
                 reviewer=user,
-                go="",
             )
         except Decision.DoesNotExist:
             return None
