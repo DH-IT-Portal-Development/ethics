@@ -5208,35 +5208,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:56
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid ""
-#~ "<li> de workshop <a href=\"https://www.uu.nl/en/node/75859\" "
-#~ "target=\"_blank\">Quick start to Research Data Management</a> </li>"
-#~ msgstr ""
-#~ "<li>the workshop <a href=\"https://www.uu.nl/en/node/75859\" "
-#~ "target=\"_blank\">Quick start to Research Data Management</a></li>"
-
-#~ msgid "Revisie/amendement"
-#~ msgstr "Revision/amendment"
-
-#, python-format
-#~ msgid "Details van besluitvorming bij aanmelding %(proposal)s"
-#~ msgstr "Details on the review process of application %(proposal)s"
-
-#, python-format
-#~ msgid "Details van besluitvorming bij aanmelding <em>%(proposal)s</em>"
-#~ msgstr "Details on the review process of application %(proposal)s"
-
-#~ msgid ""
-#~ "Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
-#~ "algemene-kamer/\">Algemene Kamer (AK)</a> of dat van de <a href=\"https://"
-#~ "fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\">Linguïstiek Kamer "
-#~ "(LK)</a>."
-#~ msgstr ""
-#~ "The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/"
-#~ "regulations-general-chamber-2/\" target=\"blank\">General Chamber</a> or "
-#~ "those of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
-#~ "linguistics-chamber/\" target=\"blank\">Linguistics Chamber</a>."
-
-#~ msgid "Andere betrokkenen"
-#~ msgstr "Other people involved"
