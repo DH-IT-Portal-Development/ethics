@@ -8,20 +8,14 @@
 {% load uil_filters %}
 
 {% block header_title %}
-    {% blocktrans trimmed with proposal=review.proposal.title %}
-        Details van besluitvorming bij aanmelding {{ proposal }}
-    {% endblocktrans %}
-    - {{ review.proposal.reference_number }} - {{ block.super }}
+        {{ review.proposal.title }} - {{ review.proposal.reference_number }} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
             <h2>
-                {% blocktrans trimmed with proposal=review.proposal.title %}
-                    Details van besluitvorming bij aanmelding <em>{{ proposal }}</em>
-                {% endblocktrans %}
-                - {{ review.proposal.reference_number }}
+                {{ review.proposal.title }} - {{ review.proposal.reference_number }}
             </h2>
         </div>
     </div>
