@@ -8,15 +8,13 @@
 {% load uil_filters %}
 
 {% block header_title %}
-        {{ review.proposal.title }} - {{ review.proposal.reference_number }} - {{ block.super }}
+    {{ review.proposal.title }} - {{ review.proposal.reference_number }} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
     <div class="uu-inner-container">
         <div class="col-12">
-            <h2>
-                {{ review.proposal.title }} - {{ review.proposal.reference_number }}
-            </h2>
+            <h2>{{ review.proposal.title }} - {{ review.proposal.reference_number }}</h2>
         </div>
     </div>
     <div class="uu-inner-container">
