@@ -25,11 +25,11 @@
                         {% endblocktrans %}
                     </p>
                     {% if decision.is_final_decision %}
-                        <p>
+                        <div class="alert alert-info">
                             {% blocktrans trimmed %}
                                 <strong>Attentie:</strong> jij bent de laatste beoordelaar van deze aanvraag. Daarom kun je na het versturen je oordeel en commentaar niet meer bewerken. Controleer je antwoorden goed.
                             {% endblocktrans %}
-                        </p>
+                        </div>
                     {% endif %}
                 {% else %}
                     <p>
