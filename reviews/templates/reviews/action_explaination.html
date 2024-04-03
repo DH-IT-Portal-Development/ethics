@@ -49,10 +49,10 @@
         </li>
     </ul>
 </div>
-<div class="col-12 {% if request.user|is_secretary %}col-md-6{% endif %}">
-    <h3>{% trans "Uitleg secretaris" %}</h3>
-    <ul>
-        {% if request.user|is_secretary %}
+{% if request.user|is_secretary %}
+    <div class="col-12 {% if request.user|is_secretary %}col-md-6{% endif %}">
+        <ul>
+            <h3>{% trans "Uitleg secretaris" %}</h3>
             <li>
                 {% blocktrans trimmed %}
                     Klik op
@@ -107,6 +107,6 @@
                     van de bevestigingsbrief te veranderen.
                 {% endblocktrans %}
             </li>
-        {% endif %}
-    </ul>
-</div>
+        </ul>
+    </div>
+{% endif %}
