@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-03 11:18+0200\n"
-"PO-Revision-Date: 2024-04-03 11:18+0200\n"
+"POT-Creation-Date: 2024-04-03 12:31+0200\n"
+"PO-Revision-Date: 2024-04-03 12:32+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -370,7 +370,7 @@ msgstr "Website export text"
 #: proposals/templates/proposals/proposal_confirmation.html:25
 #: reviews/templates/reviews/vue_templates/decision_list.html:95
 #: reviews/templates/reviews/vue_templates/review_list.html:88
-#: reviews/utils/review_actions.py:227
+#: reviews/utils/review_actions.py:230
 msgid "Bevestigingsbrief versturen"
 msgstr "Send confirmation letter"
 
@@ -3741,7 +3741,7 @@ msgid "Commissieleden aanstellen"
 msgstr "Appoint committee members"
 
 #: reviews/templates/reviews/review_assign_form.html:31
-#, fuzzy, python-format
+#, python-format
 msgid ""
 "<p> Kies hier de geschikte route en commissieleden voor de aanvraag "
 "<em>%(title)s</em>. Klik <a href=\"%(workload_url)s\">hier</a> voor een "
@@ -3959,7 +3959,7 @@ msgid "Verplaats naar andere kamer"
 msgstr "Move study to different reviewing chamber"
 
 #: reviews/templates/reviews/vue_templates/review_list.html:95
-#: reviews/utils/review_actions.py:263
+#: reviews/utils/review_actions.py:266
 msgid "Verberg aanvraag uit het archief"
 msgstr "Remove this application from the archive"
 
@@ -4027,31 +4027,35 @@ msgstr "Information letter for the parents"
 msgid "Toestemmingsdocument observatie"
 msgstr "Consent document for observation"
 
-#: reviews/utils/review_actions.py:117
+#: reviews/utils/review_actions.py:118
+msgid "Pas jouw beslissing en/of commentaar aan"
+msgstr "Edit your feedback on this proposal"
+
+#: reviews/utils/review_actions.py:120
 msgid "Geef jouw beslissing en/of commentaar door"
 msgstr "Provide feedback on this proposal"
 
-#: reviews/utils/review_actions.py:140
+#: reviews/utils/review_actions.py:143
 msgid "Deze versie afhandelen"
 msgstr "Conclude this version"
 
-#: reviews/utils/review_actions.py:168
+#: reviews/utils/review_actions.py:171
 msgid "Beëindig definitief de afhandeling van deze aanvraag"
 msgstr "Discontinue assessment of this application"
 
-#: reviews/utils/review_actions.py:196
+#: reviews/utils/review_actions.py:199
 msgid "Verander aangestelde commissieleden"
 msgstr "Change appointment of committee members"
 
-#: reviews/utils/review_actions.py:228
+#: reviews/utils/review_actions.py:231
 msgid "Datum van bevestigingsbrief aanpassen"
 msgstr "Change date of confirmation letter"
 
-#: reviews/utils/review_actions.py:265
+#: reviews/utils/review_actions.py:268
 msgid "Plaats aanvraag in het archief."
 msgstr "Add this application to the archive"
 
-#: reviews/utils/review_actions.py:282
+#: reviews/utils/review_actions.py:285
 msgid "Startdatum wijzigen"
 msgstr "Edit start date"
 

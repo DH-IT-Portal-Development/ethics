@@ -114,7 +114,10 @@ class DecideAction(ReviewAction):
     def description(self):
         decision = self.get_available_decision()
 
-        return _("Geef jouw beslissing en/of commentaar door")
+        if decision.go != "":
+            return _("Pas jouw beslissing en/of commentaar aan")
+        else:
+            return _("Geef jouw beslissing en/of commentaar door")
 
 
 class CloseReview(ReviewAction):
