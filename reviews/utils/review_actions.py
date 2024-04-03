@@ -85,7 +85,7 @@ class DecideAction(ReviewAction):
         user = self.user
         review = self.review
 
-        if review.stage != review.Stages.COMMISSION:
+        if review.stage in (review.Stages.COMMISSION, review.Stages.SUPERVISOR):
             return False
 
         try:
