@@ -50,9 +50,12 @@ def start_supervisor_phase(proposal):
     - Send an e-mail to the supervisor
     - send an e-mail to other applicants
     """
+    next_week = timezone.now() + timezone.timedelta(weeks=1)
+
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.Stages.SUPERVISOR
     review.is_committee_review = False
+    review.date_should_end = next_week
     review.save()
 
     proposal.date_submitted_supervisor = timezone.now()
@@ -223,9 +226,9 @@ def start_assignment_phase(proposal):
     return review
 
 
-def remind_reviewers():
+def remind_committee_reviewers():
     """
-    Sends an email to a reviewer to remind them to review a proposal.
+    Sends an email to a committee reviewer to remind them to review a proposal.
     The reminders are only sent for proposals that are on the short track and need to be reviewed in the next 2 days
     """
 
@@ -233,6 +236,7 @@ def remind_reviewers():
     next_two_days = today + datetime.timedelta(days=2)
 
     decisions = Decision.objects.filter(
+        review__is_committee_review=True,
         review__stage=Review.Stages.COMMISSION,
         review__short_route=True,
         review__date_should_end__gte=today,
@@ -262,6 +266,53 @@ def remind_reviewers():
             [decision.reviewer.email],
             html_message=msg_html,
         )
+
+
+def remind_supervisor_reviewers():
+    """
+    Sends an email to a supervisor reviewer to remind them to review a proposal.
+    The reminders are only sent for open reviews older than a week.
+    """
+
+    today = datetime.date.today()
+
+    decisions = Decision.objects.filter(
+        review__is_committee_review=False,
+        review__stage=Review.Stages.SUPERVISOR,
+        review__date_should_end__lte=today,
+    )
+
+    for decision in decisions:
+        proposal = decision.review.proposal
+        subject = "Herinnering: beoordeel aanvraag {}".format(
+            proposal.committee_prefixed_refnum(),
+        )
+        params = {
+            "supervisor": decision.reviewer.get_full_name(),
+            "creator": proposal.created_by.get_full_name(),
+            "proposal_url": settings.BASE_URL
+            + reverse("reviews:decide", args=(decision.pk,)),
+            "secretary": get_secretary().get_full_name(),
+            "date_start": decision.review.date_start.strftime("%d-%m-%Y"),
+        }
+        msg_plain = render_to_string("mail/reminder_supervisor.txt", params)
+        msg_html = render_to_string("mail/reminder_supervisor.html", params)
+        send_mail(
+            subject,
+            msg_plain,
+            settings.EMAIL_FROM,
+            [decision.reviewer.email],
+            html_message=msg_html,
+        )
+
+
+def remind_reviewers():
+    """
+    Sends reminders to committee reviewers and supervisor reviewers. Used by a cron job that calls the
+    send_reminders management command.
+    """
+    remind_committee_reviewers()
+    remind_supervisor_reviewers()
 
 
 def start_review_pre_assessment(proposal):
