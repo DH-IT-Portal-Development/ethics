@@ -15,11 +15,10 @@
                 <p>
                     Weet u zeker dat u de taak <strong>{{ task.name }}</strong> uit sessie <strong>{{ task.session.order }}</strong> in de aanvraag <em>{{ task.session.study.proposal.title }}</em> wilt verwijderen?
                 </p>
-                <input class="pure-button pure-button-primary"
+                <input class="button btn-danger"
                        type="submit"
                        value="{% trans 'Verwijderen' %}" />
-                <a class="pure-button pure-button-secondary"
-                   href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
+                <a class="button" href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
             </form>
         </div>
     </div>
