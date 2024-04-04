@@ -17,7 +17,9 @@
                         Weet u zeker dat u de taak <strong>{{ task.name }}</strong> uit sessie <strong>{{ task.session.order }}</strong> in de aanvraag <em>{{ task.session.study.proposal.title }}</em> wilt verwijderen?
                     {% endblocktrans %}
                 </p>
-                <input class="button" type="submit" value="{% trans 'Verwijderen' %}" />
+                <input class="button btn-danger"
+                       type="submit"
+                       value="{% trans 'Verwijderen' %}" />
                 <a class="button" href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
             </form>
         </div>

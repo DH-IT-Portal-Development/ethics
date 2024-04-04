@@ -27,3 +27,4 @@ pdftotext
 bpython
 black
 djlint
+sentry-sdk[django]

@@ -401,6 +401,16 @@ class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
     form_class = ProposalUpdateDataManagementForm
     group_required = settings.GROUP_SECRETARY
 
+    def form_valid(self, form):
+        ret = super().form_valid(form)
+        # Always regenerate the PDF after updating the DMP
+        # This is necessary, as the canonical PDF protection might already
+        # have kicked in if the secretary changes the documents later than
+        # we initially expected.
+        self.object.generate_pdf(force_overwrite=True)
+
+        return ret
+
     def get_success_url(self):
         """Continue to the URL specified in the 'next' POST parameter"""
         return reverse("reviews:detail", args=[self.object.latest_review().pk])
@@ -415,6 +425,16 @@ class ProposalUpdateDateStart(GroupRequiredMixin, generic.UpdateView):
     template_name = "proposals/proposal_update_date_start.html"
     form_class = ProposalUpdateDateStartForm
     group_required = settings.GROUP_SECRETARY
+
+    def form_valid(self, form):
+        ret = super().form_valid(form)
+        # Always regenerate the PDF after updating the DMP
+        # This is necessary, as the canonical PDF protection might already
+        # have kicked in if the secretary changes the documents later than
+        # we initially expected.
+        self.object.generate_pdf(force_overwrite=True)
+
+        return ret
 
     def get_success_url(self):
         """Continue to the URL specified in the 'next' POST parameter"""
