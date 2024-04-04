@@ -4,21 +4,21 @@
     Beste collega,
     <br />
     <br />
-    {{ creator }} heeft binnen de FETC-GW-webportal een concept-aanvraag opgesteld voor een onderzoek waarbij je als de eindverantwoordelijke onderzoeker staat genoemd.
+    {{ creator }} heeft in de FETC-GW portal een concept-aanvraag opgesteld voor een aanvraag waarbij je als de eindverantwoordelijke onderzoeker staat genoemd.
     <br />
     <p>{{ proposal.reference_number }}: {{ proposal.title }}</p>
-    Je kunt deze concept-aanmelding <a href="{{ proposal_url }}">hier</a> bekijken, eventueel na aanpassingen door jezelf of door {{ creator }}, formeel ter toetsing bij de FETC-GW indienen.
+    Je kunt deze concept-aanvraag <a href="{{ proposal_url }}">hier</a> bekijken. Je kunt deze, eventueel na aanpassingen door jezelf of door {{ creator }}, formeel ter toetsing indienen bij de FETC-GW.
     <br />
     Als {{ creator }} de aanpassingen moet maken, dan moet je de aanvraag formeel afkeuren en zelf {{ creator }} hiervan op de hoogte stellen.
     <br />
     <br />
-    Je kunt al je aanmeldingen als eindverantwoordelijke onderzoeker en hun status <a href="{{ my_supervised }}">hier</a> bekijken.
+    Je kunt al je aanvragen als eindverantwoordelijke onderzoeker en hun status <a href="{{ my_supervised }}">hier</a> bekijken.
     <br />
     <br />
     {% if revision %}
-        <strong>Let op:</strong> het gaat hierbij om een {{ revision_type|lower }} van een eerdere aanmelding.
+        <strong>Let op:</strong> het gaat hierbij om een {{ revision_type|lower }} van een eerdere aanvraag.
         <br />
-        Op het webportaal kun je de wijzigingen ten opzichte van de vorige aanmelding inzien.
+        In de portal kun je de wijzigingen ten opzichte van de vorige aanvraag inzien.
         <br />
     {% endif %}
 {% endblock %}
@@ -41,7 +41,7 @@
     {% if revision %}
         <strong>Please note</strong> that this involves a {{ revision_type | lower }} of a previous application.
         <br />
-        On the web portal you can check the differences between the current and previous application.
+        In the portal, you can check the differences between the current and previous application.
         <br />
     {% endif %}
 {% endblock %}

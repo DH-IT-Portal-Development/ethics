@@ -62,7 +62,7 @@ def start_supervisor_phase(proposal):
     decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
     reference = proposal.committee_prefixed_refnum()
 
-    subject = _("FETC-GW {}: bevestiging indienen concept-aanmelding".format(reference))
+    subject = _("FETC-GW {}: bevestiging indiening concept-aanvraag".format(reference))
     params = {
         "proposal": proposal,
         "title": proposal.title,
@@ -165,7 +165,7 @@ def start_assignment_phase(proposal):
     notify_secretary_assignment(review)
 
     subject = _(
-        "FETC-GW {}: aanmelding ontvangen".format(proposal.committee_prefixed_refnum())
+        "FETC-GW {}: aanvraag ontvangen".format(proposal.committee_prefixed_refnum())
     )
     params = {
         "secretary": secretary.get_full_name(),

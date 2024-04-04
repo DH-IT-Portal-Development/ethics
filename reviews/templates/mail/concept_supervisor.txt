@@ -3,18 +3,18 @@
 {% block content_nl %}
 Beste collega,
 
-{{ creator }} heeft binnen de FETC-GW-webportal een concept-aanvraag opgesteld voor een onderzoek waarbij je als de eindverantwoordelijke onderzoeker staat genoemd.
+{{ creator }} heeft in de FETC-GW portal een concept-aanvraag opgesteld voor een aanvraag waarbij je als de eindverantwoordelijke onderzoeker staat genoemd.
 
 {{ proposal.reference_number }}: {{ proposal.title }}
 
-Je kunt deze concept-aanmelding bekijken via {{ proposal_url }}, en eventueel na aanpassingen door jezelf of door {{ creator }}, formeel ter toetsing bij de FETC-GW indienen.
+Je kunt deze concept-aanvraag bekijken via {{ proposal_url }}. Je kunt deze, eventueel na aanpassingen door jezelf of door {{ creator }}, formeel ter toetsing indienen bij de FETC-GW.
 Als {{ creator }} de aanpassingen moet maken, dan moet je de aanvraag formeel afkeuren en zelf {{ creator }} hiervan op de hoogte stellen.
 
-Je kunt al je aanmeldingen als eindverantwoordelijke onderzoeker en hun status via {{ my_supervised }}> bekijken.
+Je kunt al je aanvragen als eindverantwoordelijke onderzoeker en hun status via {{ my_supervised }} bekijken.
 
 {% if revision %}
-Let op: het gaat hierbij om een {{ revision_type|lower }} van een eerdere aanmelding.
-Op het webportaal kun je de wijzigingen ten opzichte van de vorige aanmelding inzien.
+Let op: het gaat hierbij om een {{ revision_type|lower }} van een eerdere aanvraag.
+In de portal kun je de wijzigingen ten opzichte van de vorige aanvraag inzien.
 {% endif %}
 {% endblock %}
 
@@ -28,10 +28,10 @@ Dear colleague,
 You can review this draft application via {{ proposal_url }} and submit this application to the FEtC-H after you have approved it. Note that in case minor revisions are necessary, you can adjust the application yourself before submitting it.
 In case the application needs to be revised more substantially by {{ creator }}, we ask you to formally disapprove it in order for {{ creator }} to be able to revise it. In such a case, we ask you to inform {{ creator }} about this.
 
-You can view all applications and their statuses, for which you are the researcher with final responsibility here: {{ my_supervised }}.
+You can view all applications and their statuses, for which you are the researcher with final responsibility, here: {{ my_supervised }}.
 
 {% if revision %}
 Please note that this involves a {{ revision_type | lower }} of a previous application.
-On the web portal you can check the differences between the current and previous application.
+In the portal, you can check the differences between the current and previous application.
 {% endif %}
 {% endblock %}

@@ -3,7 +3,7 @@
 {% block content_nl %}
 Beste collega,
 
-Je collega {{ creator }} (cc) heeft een concept-aanmelding ingediend bij de ethische commissie voor het onderzoek {{ title }}, waar je aan meewerkt.
+Je collega {{ creator }} (cc) heeft een concept-aanmelding ingediend bij de ethische commissie (FETC-GW) voor het onderzoek {{ title }}, waar je aan meewerkt.
 De aanmelding wordt door de eindverantwoordelijk onderzoeker {{ supervisor }} van deze aanvraag gecontroleerd.
 
 Zodra deze de concept-aanmelding, evt. na kleine aanpassingen, heeft goedgekeurd en ter toetsing bij de FETC-GW heeft ingediend, krijgt je collega {{ creator }} van ons bericht.
@@ -17,8 +17,8 @@ Je kunt de ingediende aanmelding hier in PDF vorm bekijken:
 {% block content_en %}
 Dear colleague,
 
-Your colleague {{ creator }} (cc) has submitted a draft application to the ethics commission for the study {{ title }}, in which you are collaborating.
-The application will be checked by the study's supervisor {{ supervisor }}, the researcher who has the final responsibility of this study.
+Your colleague {{ creator }} (cc) has submitted a draft application to the ethics commission (FEtC-H) for the study {{ title }}, in which you collaborate.
+The application will be checked by the study's supervisor, {{ supervisor }}, the researcher who has the final responsibility of this study.
 
 Your colleague {{ creator }} will receive a notification as soon as {{ supervisor }} has approved and formally submitted the draft application, possibly after making some minor revisions.
 

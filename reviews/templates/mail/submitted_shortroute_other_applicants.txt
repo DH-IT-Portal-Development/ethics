@@ -6,18 +6,18 @@ Beste collega,
 
 Je collega {{ creator }} (cc) heeft een gereviseerde aanvraag ingediend bij de ethische commissie (FETC-GW) voor het onderzoek {{ title }}, waar je aan meewerkt. De aanvraag is door de FETC-GW ontvangen.
 
-Dit houdt in dat de revisie nu door twee leden van de FETC-GW zal worden beoordeeld; een eenvoudige revisie wordt alleen door de secretaris beoordeeld. We hopen je collega, {{ creator }}, binnenkort een beoordeling te kunnen sturen.
+This means that your application will be assessed by two members of the FEtC-H; minor revisions will be assessed by the secretary only. We hope to be able to send your colleague {{ creator }} a decision soon.
 
 Je kunt de ingediende aanmelding hier in PDF-vorm bekijken:
 {{ pdf_url }}
 {% else %}
 Beste collega,
 
-Je collega {{ creator }} (cc) heeft een aanvraag ingediend bij de ethische commissie (FETC-GW) voor het onderzoek {{ title }}, waar je aan meewerkt. De aanvraag is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door jouw collega gegeven beschrijving voorlopig de status 'korte-route onderzoek' gekregen.
+Je collega {{ creator }} (cc) heeft een aanvraag ingediend bij de ethische commissie (FETC-GW) voor het onderzoek {{ title }}, waar je aan meewerkt. De aanvraag is door de FETC-GW ontvangen. De automatische screening van de portal heeft de aanvraag op basis van de door jouw collega gegeven beschrijving voorlopig de status 'korte-route onderzoek' gegeven.
 
 Dit houdt in dat wij ernaar streven om uw collega binnen twee werkweken een eerste beoordeling van de FETC-GW te sturen.
 
-Je kunt de ingediende aanmelding hier in PDF-vorm bekijken:
+Je kunt de ingediende aanvraag hier in PDF-vorm bekijken:
 {{ pdf_url }}
 {% endif %}
 {% endblock %}
@@ -35,7 +35,7 @@ You can find a PDF file of your submission here:
 {% else %}
 Dear colleague,
 
-Your colleague {{ creator }} (cc) has submitted an application to the ethical assessment committee (FEtC-H) for the study {{ title }}, in which you are participating. The FEtC-H has received your application. The automatic screening of the portal has given your application the status of 'short-route research'.
+Your colleague {{ creator }} (cc) has submitted an application to the ethical assessment committee (FEtC-H) for the study {{ title }}, in which you are collaborating. The FEtC-H has received that application. The automatic screening of the portal has given the application the status of 'short-route research'.
 
 This means that your colleague will receive an assessment within two working weeks.
 

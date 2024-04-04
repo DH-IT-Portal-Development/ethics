@@ -11,7 +11,7 @@ Dit houdt in dat je revisie nu door twee leden van de FETC-GW zal worden beoorde
 {% else %}
 Beste collega,
 
-Je aanmelding is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door jou gegeven beschrijving voorlopig de status 'lange-route onderzoek', zie appendix A van het reglement voor de criteria (https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/).
+Je aanvraag is door de FETC-GW ontvangen. De automatische screening van de portal heeft op basis van de door jou gegeven beschrijving je aanvraag voorlopig de status 'lange-route onderzoek' gegeven, zie appendix A van het reglement voor de criteria (https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/).
 
 Dit houdt in dat je aanvraag op de eerstvolgende vergadering van de FETC-GW zal worden besproken, wanneer je aanvraag tenminste een week voor die vergadering is ingediend. Zie de FETC-GW-agenda (https://fetc-gw.wp.hum.uu.nl/category/agenda/) voor een overzicht van de komende vergaderingen. Kort na de vergadering zul je de beoordeling ontvangen.
 {% endif %}
@@ -23,11 +23,11 @@ Dear colleague,
 
 The FEtC-H has received your revised application.
 
-This means that your application be assessed by two members of the FEtC-H; minor revisions will be assessed by the secretary only. We hope to be able to send you a decision soon.
+This means that your application will be assessed by two members of the FEtC-H; minor revisions will be assessed by the secretary only. We hope to be able to send you a decision soon.
 {% else %}
 Dear colleague,
 
-The FEtC-H has received your application. The automatic screening of the portal has given your study the status of long-route research, see appendix A in the regulations for the criteria (https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/).
+The FEtC-H has received your application. The automatic screening of the portal has given your application the status of long-route research, see appendix A in the regulations for the criteria (https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/).
 
 This means that your application will be discussed during the next FEtC-H meeting, if your application was submitted at least one week before that meeting. See the FEtC-H agenda (https://fetc-gw.wp.hum.uu.nl/en/category/agenda-en/) for an overview of upcoming meetings. You will receive the assessment shortly after the meeting.
 {% endif %}
