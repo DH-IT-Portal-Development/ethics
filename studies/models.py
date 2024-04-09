@@ -515,6 +515,7 @@ class Documents(models.Model):
 
     informed_consent = models.FileField(
         _("Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"),
+        help_text=_("Bij algemeen belang, dien hier s.v.p. een leeg Word document in."),
         blank=True,
         validators=[validate_pdf_or_doc],
         upload_to=INFORMED_CONSENT_FILENAME,
