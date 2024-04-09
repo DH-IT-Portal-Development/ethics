@@ -158,8 +158,8 @@ class Proposal(models.Model):
         WMO_DECISION_MADE = 60, _("Aanvraag is beoordeeld door FETC-GW")
 
     class PracticeReasons(models.IntegerChoices):
-        COURSE = 1, _("om de portal te exploreren")
-        EXPLORATION = 2, _("in het kader van een cursus")
+        COURSE = 1, _("in het kader van een cursus")
+        EXPLORATION = 2, _("om de portal te exploreren")
 
     # Fields of a proposal
     reference_number = models.CharField(

@@ -1381,12 +1381,12 @@ msgid "Aanvraag is beoordeeld door FETC-GW"
 msgstr "Application has been assessed by FEtC-H"
 
 #: proposals/models.py:161
-msgid "om de portal te exploreren"
-msgstr "to explore the portal"
-
-#: proposals/models.py:162
 msgid "in het kader van een cursus"
 msgstr "in the context of a course"
+
+#: proposals/models.py:162
+msgid "om de portal te exploreren"
+msgstr "to explore the portal"
 
 # Not actually used in the interface
 #: proposals/models.py:172
@@ -1748,7 +1748,7 @@ msgstr "Amendment"
 #: proposals/models.py:677 reviews/api/views.py:41 reviews/api/views.py:332
 #: reviews/templates/reviews/committee_members_workload.html:35
 #: reviews/templates/reviews/committee_members_workload.html:74
-#: reviews/templates/reviews/review_detail_sidebar.html:106
+#: reviews/templates/reviews/review_detail_sidebar.html:108
 msgid "Revisie"
 msgstr "Revision"
 
@@ -2102,26 +2102,21 @@ msgstr ""
 "funding, provided by Utrecht University."
 
 #: proposals/templates/proposals/proposal_data_management.html:46
-#: proposals/templates/proposals/proposal_data_management.html:79
-msgid "Nuttige workshops:"
-msgstr "Recommended workshops"
+msgid "Nuttige informatie:"
+msgstr "Useful information:"
 
 #: proposals/templates/proposals/proposal_data_management.html:48
-#: proposals/templates/proposals/proposal_data_management.html:81
 msgid ""
-"Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende "
-"workshop te volgen:"
-msgstr "If you have not already done so, it is highly recommended you attend: "
+"Voor vragen over privacy, zoals: \"Wat zijn persoonlijke gegevens?\" of "
+"\"Wanneer mag ik mijn onderzoek anoniem noemen?\", raden we je aan het <a "
+"href=\"https://utrechtuniversity.github.io/dataprivacyhandbook/\">Data "
+"Privacy Handboek</a> te raadplegen."
+msgstr "For all your questions regarding privacy, e.g.: \"What are personal "
+"data?\" or \"When may I call my research anonymous?\", consult the <a "
+"href=\"https://utrechtuniversity.github.io/dataprivacyhandbook/\">Data "
+"Privacy Handbook</a>."
 
 #: proposals/templates/proposals/proposal_data_management.html:53
-msgid ""
-"<li> de workshop <a href=\"https://www.uu.nl/en/node/75859\" "
-"target=\"_blank\">Quick start to Research Data Management</a> </li>"
-msgstr ""
-"<li>the workshop <a href=\"https://www.uu.nl/en/node/75859\" "
-"target=\"_blank\">Quick start to Research Data Management</a></li>"
-
-#: proposals/templates/proposals/proposal_data_management.html:61
 msgid ""
 "Voor advies op het gebied van data management planning kun je contact "
 "opnemen met de datamanager GW, Frans de Liagre Böhl via <a href=\"mailto:"
@@ -2132,11 +2127,11 @@ msgstr ""
 "target=\"_blank\">datamanagement.gw@uu.nl</a>, who is the data manager of "
 "the Faculty of Humanities."
 
-#: proposals/templates/proposals/proposal_data_management.html:65
+#: proposals/templates/proposals/proposal_data_management.html:57
 msgid "Privacy: AVG en GDPR"
 msgstr "Privacy: AVG and GDPR"
 
-#: proposals/templates/proposals/proposal_data_management.html:67
+#: proposals/templates/proposals/proposal_data_management.html:59
 msgid ""
 "Wanneer je persoonsgebonden data verzamelt, zorg je er voor dat je je houdt "
 "aan de Algemene Verordening Gegevensbescherming, of AVG. Deze wet is de "
@@ -2149,7 +2144,7 @@ msgstr ""
 "regulation is in line with European <a href=\"https://gdpr.eu/\" "
 "target=\"_blank\">GDPR privacy legislation</a>."
 
-#: proposals/templates/proposals/proposal_data_management.html:73
+#: proposals/templates/proposals/proposal_data_management.html:65
 msgid ""
 "De autoriteit persoonsgegevens heeft <a href=\"https://www."
 "autoriteitpersoonsgegevens.nl/nl/onderwerpen/algemene-informatie-avg/"
@@ -2162,7 +2157,17 @@ msgstr ""
 "how the AVG affects data collectors, though only in Dutch at the time of "
 "writing.    "
 
-#: proposals/templates/proposals/proposal_data_management.html:86
+#: proposals/templates/proposals/proposal_data_management.html:71
+msgid "Nuttige workshops:"
+msgstr "Recommended workshops"
+
+#: proposals/templates/proposals/proposal_data_management.html:73
+msgid ""
+"Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende "
+"workshop te volgen:"
+msgstr "If you have not already done so, it is highly recommended you attend: "
+
+#: proposals/templates/proposals/proposal_data_management.html:78
 msgid ""
 "<li> de workshop <a href=\"https://www.uu.nl/en/node/81799\" "
 "target=\"_blank\">Handling personal data in research</a> </li>"
@@ -2170,7 +2175,7 @@ msgstr ""
 "<li>the workshop <a href=\"https://www.uu.nl/en/node/81799\" "
 "target=\"_blank\">Handling personal data in research</a></li>"
 
-#: proposals/templates/proposals/proposal_data_management.html:94
+#: proposals/templates/proposals/proposal_data_management.html:86
 msgid ""
 "Voor advies op het gebied van privacy en de AVG kun je contact opnemen met "
 "de privacy officer van GW via <a href=\"mailto:privacy.gw@uu.nl\">privacy."
@@ -2936,12 +2941,12 @@ msgstr ""
 "the following pages."
 
 #: proposals/templates/proposals/table_with_header_diff.html:11
-msgid "Originele aanvraag"
-msgstr "Original application"
+msgid "Vorige aanvraag"
+msgstr "Previous application"
 
 #: proposals/templates/proposals/table_with_header_diff.html:12
-msgid "Revisie/amendement"
-msgstr "Revision/amendment"
+msgid "Huidige aanvraag"
+msgstr "Current application"
 
 #: proposals/templates/proposals/translated_consent_forms.html:24
 #: proposals/utils/validate_proposal.py:224
@@ -3798,25 +3803,15 @@ msgstr ""
 "Do you want to change your decision? Please contact the <a href=\"mailto:"
 "fetc-gw@uu.nl\">secretary of the FEtC-H</a>."
 
-#: reviews/templates/reviews/review_detail.html:11
-#, python-format
-msgid "Details van besluitvorming bij aanmelding %(proposal)s"
-msgstr "Details on the review process of application %(proposal)s"
-
-#: reviews/templates/reviews/review_detail.html:21
-#, python-format
-msgid "Details van besluitvorming bij aanmelding <em>%(proposal)s</em>"
-msgstr "Details on the review process of application %(proposal)s"
-
-#: reviews/templates/reviews/review_detail.html:33
+#: reviews/templates/reviews/review_detail.html:25
 msgid "Reviewers"
 msgstr "Reviewers"
 
-#: reviews/templates/reviews/review_detail.html:35
+#: reviews/templates/reviews/review_detail.html:27
 msgid "Handelingen"
 msgstr "Actions"
 
-#: reviews/templates/reviews/review_detail.html:40
+#: reviews/templates/reviews/review_detail.html:32
 msgid "Geen handelingen beschikbaar"
 msgstr "No actions available"
 
@@ -3848,42 +3843,42 @@ msgstr "Reviewing round started on <br /> %(date_start)s."
 
 #: reviews/templates/reviews/review_detail_sidebar.html:54
 #, python-format
-msgid "Reviewronde beëindigd op <br /> %(date_end)s."
-msgstr "Reviewing round ended on <br /> %(date_end)s."
+msgid "Laatste beoordeling ontvangen op <br /> %(date_end)s."
+msgstr "Last decision received on <br /> %(date_end)s."
 
 #: reviews/templates/reviews/review_detail_sidebar.html:63
 #, python-format
-msgid "Afhandeling: <br /> %(continuation)s."
-msgstr "Continuation: <br /> %(continuation)s."
+msgid "Afhandeling: <br /> %(continuation)s, <br /> %(date_reviewed)s."
+msgstr "Continuation: <br /> %(continuation)s, <br /> %(date_reviewed)s."
 
-#: reviews/templates/reviews/review_detail_sidebar.html:71
+#: reviews/templates/reviews/review_detail_sidebar.html:73
 #, python-format
 msgid "Bevestiging verzonden op <br /> %(date_confirmed)s."
 msgstr "Confirmation sent on <br /> %(date_confirmed)s."
 
-#: reviews/templates/reviews/review_detail_sidebar.html:77
+#: reviews/templates/reviews/review_detail_sidebar.html:79
 #, python-format
 msgid "Opmerkingen: <br /> %(comments)s."
 msgstr "Comments: <br /> %(comments)s."
 
-#: reviews/templates/reviews/review_detail_sidebar.html:89
+#: reviews/templates/reviews/review_detail_sidebar.html:91
 msgid "Dit is een aanvraag voor voortoetsing."
 msgstr "This is an application for preliminary assessment"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:98
+#: reviews/templates/reviews/review_detail_sidebar.html:100
 msgid "Dit is een beslissing van een eindverantwoordelijke"
 msgstr "This is a supervisor review"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:108
+#: reviews/templates/reviews/review_detail_sidebar.html:110
 msgid "Deze aanvraag heeft een revisie gehad tijdens het beslisproces."
 msgstr ""
 "A revision was made to this application after it was submitted to the FEtC-H"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:114
+#: reviews/templates/reviews/review_detail_sidebar.html:116
 msgid "Er zijn de volgende opmerkingen bijgevoegd: <br />"
 msgstr "The following comments have been provided: <br />"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:122
+#: reviews/templates/reviews/review_detail_sidebar.html:124
 msgid "Documenten"
 msgstr "Documents"
 
