@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-09 14:48+0200\n"
+"POT-Creation-Date: 2024-04-10 14:51+0200\n"
 "PO-Revision-Date: 2024-04-03 12:32+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -2108,22 +2108,29 @@ msgstr "Recommended workshops"
 #: proposals/templates/proposals/proposal_data_management.html:48
 msgid ""
 "Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende "
-"workshop te volgen:"
+"workshop/online training te volgen:"
 msgstr "If you have not already done so, it is highly recommended you attend: "
 
-#: proposals/templates/proposals/proposal_data_management.html:53
-#, fuzzy
-#| msgid ""
-#| "<li> de workshop <a href=\"https://www.uu.nl/en/node/81799\" "
-#| "target=\"_blank\">Handling personal data in research</a> </li>"
+#: proposals/templates/proposals/proposal_data_management.html:54
 msgid ""
-"<li> de workshop <a href=\"https://www.uu.nl/en/node/75859\" "
-"target=\"_blank\">Quick start to Research Data Management</a> </li>"
+"de workshop <a href=\"https://www.uu.nl/en/node/75859\" "
+"target=\"_blank\">Quick start to Research Data Management</a>"
 msgstr ""
-"<li>the workshop <a href=\"https://www.uu.nl/en/node/81799\" "
-"target=\"_blank\">Handling personal data in research</a></li>"
+"the workshop <a href=\"https://www.uu.nl/en/research/research-data-"
+"management/training-workshops/online-training-learn-to-write-your-dmp\" "
+"target=\"_blank\">Quick start to Research Data Management</a>"
 
-#: proposals/templates/proposals/proposal_data_management.html:61
+#: proposals/templates/proposals/proposal_data_management.html:60
+msgid ""
+"De online training <a href=\"https://www.uu.nl/en/research/research-data-"
+"management/training-workshops/online-training-learn-to-write-your-dmp\" "
+"target=\"_blank\"> Write your DMP</a>"
+msgstr ""
+"The online training <a href=\"https://www.uu.nl/en/research/research-data-"
+"management/training-workshops/online-training-learn-to-write-your-dmp\" "
+"target=\"_blank\">Write your DMP</a>"
+
+#: proposals/templates/proposals/proposal_data_management.html:67
 msgid ""
 "Voor advies op het gebied van data management planning kun je contact "
 "opnemen met de datamanager GW, Frans de Liagre Böhl via <a href=\"mailto:"
@@ -2134,11 +2141,11 @@ msgstr ""
 "target=\"_blank\">datamanagement.gw@uu.nl</a>, who is the data manager of "
 "the Faculty of Humanities."
 
-#: proposals/templates/proposals/proposal_data_management.html:65
+#: proposals/templates/proposals/proposal_data_management.html:71
 msgid "Privacy: AVG en GDPR"
 msgstr "Privacy: AVG and GDPR"
 
-#: proposals/templates/proposals/proposal_data_management.html:67
+#: proposals/templates/proposals/proposal_data_management.html:73
 msgid ""
 "Wanneer je persoonsgebonden data verzamelt, zorg je er voor dat je je houdt "
 "aan de Algemene Verordening Gegevensbescherming, of AVG. Deze wet is de "
@@ -2151,7 +2158,7 @@ msgstr ""
 "regulation is in line with European <a href=\"https://gdpr.eu/\" "
 "target=\"_blank\">GDPR privacy legislation</a>."
 
-#: proposals/templates/proposals/proposal_data_management.html:73
+#: proposals/templates/proposals/proposal_data_management.html:79
 msgid ""
 "De autoriteit persoonsgegevens heeft <a href=\"https://www."
 "autoriteitpersoonsgegevens.nl/nl/onderwerpen/algemene-informatie-avg/"
@@ -2164,11 +2171,11 @@ msgstr ""
 "how the AVG affects data collectors, though only in Dutch at the time of "
 "writing.    "
 
-#: proposals/templates/proposals/proposal_data_management.html:79
+#: proposals/templates/proposals/proposal_data_management.html:85
 msgid "Nuttige informatie:"
 msgstr "Useful information:"
 
-#: proposals/templates/proposals/proposal_data_management.html:81
+#: proposals/templates/proposals/proposal_data_management.html:87
 msgid ""
 "Voor vragen over privacy, zoals: \"Wat zijn persoonlijke gegevens?\" of "
 "\"Wanneer mag ik mijn onderzoek anoniem noemen?\", raden we je aan het <a "
@@ -2179,7 +2186,7 @@ msgstr ""
 "or \"When may I call my research anonymous?\", consult the <a href=\"https://"
 "utrechtuniversity.github.io/dataprivacyhandbook/\">Data Privacy Handbook</a>."
 
-#: proposals/templates/proposals/proposal_data_management.html:87
+#: proposals/templates/proposals/proposal_data_management.html:93
 msgid ""
 "Voor advies op het gebied van privacy en de AVG kun je contact opnemen met "
 "de privacy officer van GW via <a href=\"mailto:privacy.gw@uu.nl\">privacy."
