@@ -482,22 +482,6 @@ def auto_review(proposal: Proposal):
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
-        if study.knowledge_security in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
-            reasons.append(
-                _(
-                    "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom \
-                    kennisveiligheid."
-                )
-            )
-
-        if study.researcher_risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
-            reasons.append(
-                _(
-                    "De onderzoeker geeft aan dat er mogelijk kwesties zijn \
-                    rondom de veiligheid van de betrokken onderzoekers."
-                )
-            )
-
         if study.negativity in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(
                 _(

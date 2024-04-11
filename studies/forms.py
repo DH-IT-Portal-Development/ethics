@@ -181,10 +181,6 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Study
         fields = [
-            "knowledge_security",
-            "knowledge_security_details",
-            "researcher_risk",
-            "researcher_risk_details",
             "deception",
             "deception_details",
             "negativity",
@@ -193,18 +189,12 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             "risk_details",
         ]
         widgets = {
-            "knowledge_security": forms.RadioSelect(),
-            "researcher_risk": forms.RadioSelect(),
             "deception": forms.RadioSelect(),
             "negativity": forms.RadioSelect(),
             "risk": forms.RadioSelect(),
         }
 
     _soft_validation_fields = [
-        "knowledge_security",
-        "knowledge_security_details",
-        "researcher_risk",
-        "researcher_risk_details",
         "deception",
         "deception_details",
         "negativity",
@@ -216,7 +206,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Set the Study for later reference
-        - Remove empty label from knowledge_security/researcher_risk/deception/negativity/risk field and reset the choices
+        - Remove empty label from deception/negativity/risk field and reset the choices
         - mark_safe the labels of negativity/risk
         """
         self.study = kwargs.pop("study", None)
@@ -224,8 +214,6 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         super(StudyEndForm, self).__init__(*args, **kwargs)
 
         self.base_fields = (
-            "knowledge_security",
-            "researcher_risk",
             "deception",
             "negativity",
             "risk",
@@ -252,7 +240,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
 
         # TODO: find a way to hide this on the first view
         self.mark_soft_required(
-            cleaned_data, "knowledge_security", "researcher_risk", "negativity", "risk"
+            cleaned_data, "negativity", "risk"
         )
 
         if "deception" in self.fields:

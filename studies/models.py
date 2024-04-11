@@ -289,42 +289,6 @@ dan geldt dat toch als één sessie."
         ),
     )
 
-    knowledge_security = models.CharField(
-        _("Zijn er kwesties rondom kennisveiligheid?"),
-        help_text=mark_safe_lazy(
-            _(
-                "Kennisveiligheid gaat over het tijdig signaleren en mitigeren \
-            van veiligheidsrisico's bij wetenschappelijk onderzoek. Klik \
-            <a href='https://intranet.uu.nl/kennisbank/kennisveiligheid'>hier</a> \
-            voor meer informatie."
-            )
-        ),
-        max_length=1,
-        choices=YesNoDoubt.choices,
-        blank=True,
-    )
-    knowledge_security_details = models.TextField(
-        _("Licht toe"), max_length=200, blank=True
-    )
-    researcher_risk = models.CharField(
-        _(
-            "Zijn er kwesties rondom de veiligheid van of risico's voor de onderzoeker(s)?"
-        ),
-        help_text=_(
-            "Houd hierbij niet alleen rekening met mogelijke psychische of \
-            fysieke schade, maar ook met andere mogelijke schade, zoals bijv. \
-            hiërarchische machtsverhoudingen in veldwerk, mogelijke negatieve \
-            gevolgen voor de zichtbaarheid/vindbaarheid van de onderzoeker in \
-            in het publieke domein, juridische vervolging of \
-            aansprakelijkheid, e.d."
-        ),
-        max_length=1,
-        choices=YesNoDoubt.choices,
-        blank=True,
-    )
-    researcher_risk_details = models.TextField(
-        _("Licht toe"), max_length=200, blank=True
-    )
     deception = models.CharField(
         _(
             "Is er binnen bovenstaand onderzoekstraject sprake van \
