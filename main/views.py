@@ -24,7 +24,7 @@ from django.http import (
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
@@ -540,9 +540,9 @@ class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
     """Generic delete view including login required and user allowed mixin and
     alternative for success message"""
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form):
         messages.success(self.request, self.success_message)
-        return super(DeleteView, self).delete(request, *args, **kwargs)
+        return super(DeleteView, self).form_valid(form)
 
 
 class UserMediaView(LoginRequiredMixin, generic.View):

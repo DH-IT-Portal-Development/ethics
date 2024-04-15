@@ -7,12 +7,12 @@ from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from django.utils.functional import lazy
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe, SafeString
 
-mark_safe_lazy = lazy(mark_safe, str)
+mark_safe_lazy = lazy(mark_safe, SafeString)
 
 from main.models import YesNoDoubt
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
@@ -861,10 +861,13 @@ bij een METC?"
         on_delete=models.CASCADE,
     )
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, update_fields, **kwargs):
         """Sets the correct status on save of a WMO"""
         self.update_status()
-        super(Wmo, self).save(*args, **kwargs)
+        # If update_fields is supplied, we need to add status to it (or it will be ignored)
+        if update_fields is not None and "name" in update_fields:
+            update_fields = {"status"}.union(update_fields)
+        super(Wmo, self).save(*args, update_fields=update_fields, **kwargs)
 
     def update_status(self):
         if (
