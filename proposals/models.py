@@ -861,7 +861,7 @@ bij een METC?"
         on_delete=models.CASCADE,
     )
 
-    def save(self, *args, update_fields, **kwargs):
+    def save(self, *args, update_fields=None, **kwargs):
         """Sets the correct status on save of a WMO"""
         self.update_status()
         # If update_fields is supplied, we need to add status to it (or it will be ignored)
