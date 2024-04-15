@@ -9,7 +9,7 @@ from rest_framework.authentication import SessionAuthentication
 
 from main.utils import is_secretary
 from proposals.models import Proposal
-from uil.vue.rest import FancyListApiView
+from cdh.vue.rest import FancyListApiView
 from ..mixins import CommitteeMixin
 
 from ..models import Decision, Review

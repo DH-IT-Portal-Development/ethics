@@ -6,8 +6,6 @@
 #
 -e git+https://github.com/UiL-OTS-labs/python-docx2txt#egg=docx2txt
     # via -r requirements.in
--e git+https://github.com/UiL-OTS-labs/django-shared-core.git@v2.0.10#egg=uil-django-core
-    # via -r requirements.in
 alabaster==0.7.16
     # via sphinx
 arabic-reshaper==3.0.0
@@ -21,13 +19,15 @@ asn1crypto==1.5.1
     #   pyhanko-certvalidator
 babel==2.14.0
     # via sphinx
-black==24.3.0
+black==24.4.0
     # via -r requirements.in
 blessed==1.20.0
     # via curtsies
 bpython==0.24
-    # via -r requirements.in
-cdh-django-core[federated-auth] @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@v3.1.0
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
+cdh-django-core[core,federated-auth,files,mail,recommended,rest,vue] @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@v3.2.0-alpha.0
     # via -r requirements.in
 certifi==2024.2.2
     # via
@@ -45,11 +45,12 @@ click==8.1.7
     #   djlint
     #   pyhanko
 closure==20191111
-    # via uil-django-core
+    # via cdh-django-core
 colorama==0.4.6
     # via djlint
 cryptography==42.0.5
     # via
+    #   cdh-django-core
     #   pyhanko
     #   pyhanko-certvalidator
     #   pyopenssl
@@ -76,8 +77,10 @@ django==4.2.11
     #   cdh-django-core
     #   django-auth-ldap
     #   django-braces
+    #   django-csp
     #   django-debug-toolbar
     #   django-extensions
+    #   django-filter
     #   django-modeltranslation
     #   django-simple-menu
     #   django-user-agents
@@ -85,28 +88,43 @@ django==4.2.11
     #   djangosaml2
     #   sentry-sdk
     #   sphinxcontrib-django
-    #   uil-django-core
 django-auth-ldap==4.8.0
     # via -r requirements.in
 django-braces==1.15.0
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
+django-csp==3.8
+    # via cdh-django-core
 django-debug-toolbar==4.3.0
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
 django-extensions==3.2.3
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
+django-filter==24.2
+    # via cdh-django-core
 django-impersonate==1.9.2
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
 django-modeltranslation==0.18.11
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
 django-simple-menu==2.1.3
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
 django-user-agents==0.4.0
     # via -r requirements.in
 djangorestframework==3.15.1
     # via
     #   -r requirements.in
-    #   uil-django-core
-djangosaml2==1.6.0
+    #   cdh-django-core
+djangosaml2==1.9.2
     # via
     #   -r requirements.in
     #   cdh-django-core
@@ -144,10 +162,10 @@ jsbeautifier==1.15.1
     # via
     #   cssbeautifier
     #   djlint
-json5==0.9.24
+json5==0.9.25
     # via djlint
 lesscpy==0.15.1
-    # via uil-django-core
+    # via cdh-django-core
 lxml==5.2.1
     # via svglib
 markupsafe==2.1.5
@@ -203,7 +221,7 @@ pyhanko-certvalidator==0.26.3
     #   pyhanko
     #   xhtml2pdf
 pyjwt==2.8.0
-    # via uil-django-core
+    # via cdh-django-core
 pyopenssl==24.1.0
     # via pysaml2
 pypdf==4.2.0
@@ -213,7 +231,7 @@ pypng==0.20220715.0
 pysaml2==7.5.0
     # via djangosaml2
 pyscss==1.4.0
-    # via uil-django-core
+    # via cdh-django-core
 python-bidi==0.4.2
     # via xhtml2pdf
 python-dateutil==2.9.0.post0
@@ -221,7 +239,9 @@ python-dateutil==2.9.0.post0
 python-ldap==3.4.4
     # via django-auth-ldap
 python-magic==0.4.27
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
 pytz==2024.1
     # via pysaml2
 pyxdg==0.28
@@ -242,11 +262,11 @@ requests==2.31.0
     # via
     #   -r requirements.in
     #   bpython
+    #   cdh-django-core
     #   pyhanko
     #   pyhanko-certvalidator
     #   pysaml2
     #   sphinx
-    #   uil-django-core
 sentry-sdk[django]==1.45.0
     # via -r requirements.in
 six==1.16.0
@@ -287,7 +307,7 @@ sphinxcontrib-qthelp==1.0.7
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.10
     # via sphinx
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via
     #   django
     #   django-debug-toolbar
@@ -323,7 +343,7 @@ urllib3==2.2.1
 user-agents==2.2.0
     # via django-user-agents
 vbuild==0.8.2
-    # via uil-django-core
+    # via cdh-django-core
 wcwidth==0.2.13
     # via blessed
 webencodings==0.5.1
