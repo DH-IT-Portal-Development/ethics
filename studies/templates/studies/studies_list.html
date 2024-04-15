@@ -1,0 +1,55 @@
+{% load static %}
+{% load i18n %}
+
+{% if proposal.studies_number > 1 %}
+    <h4>{%trans "Overzicht van trajecten" %}</h4>
+    <table class="mb-4" width="100%">
+        <thead>
+            <tr>
+                <th>{% trans "Traject" %}</th>
+                <th>{% trans "Titel" %}</th>
+                <th>{% trans "Onderzoekstype(n)" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for study in proposal.study_set.all %}
+                <tr>
+                    <td>{% trans "Traject" %} {{ study.order }}</td>
+                    <td>{{ study.name }}</td>
+                    <td>
+                        {% for research_type in study.research_types %}
+                            - {{research_type}}<br>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+<h4>{%trans "Overzicht van het traject" %}</h4>
+    <table class="mb-4" width="100%">
+        <thead>
+            <tr>
+                <th>{% trans "Onderzoekstype(n)" %}</th>
+                <th>{% trans "Leeftijdscategorie(ën)" %}</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    {% comment %} These for loops should be replaced with the 
+                    template tag 'unordered_html_list' that is a part of
+                    the multiple sessions_tasks branch {% endcomment %}
+                    <td>
+                        {% for research_type in proposal.last_study.research_types %}
+                            - {{research_type}}<br>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% for age_group in proposal.last_study.age_groups.all %}
+                        - {{age_group}}<br>
+                        {% endfor %}
+                    </td>
+                </tr>
+        </tbody>
+    </table>
+{% endif %}

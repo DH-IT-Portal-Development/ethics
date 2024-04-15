@@ -1,0 +1,42 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Afronding trajecten" %} - {{ block.super }}
+{% endblock %}
+
+
+{% block html_head %}
+    <script>
+        $(function () {
+            depends_on_list_value('knowledge_security', ['Y', '?'], 'knowledge_security_details');
+            depends_on_list_value('researcher_risk', ['Y', '?'], 'researcher_risk_details');
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=proposal.available_urls active=pagenr %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+            <h2 class="mb-4">{% trans "Afronding trajecten" %}</h2>
+            {% include "studies/studies_list.html" %}
+            <p>
+                {% blocktrans trimmed %}
+                    Onderstaande vragen hebben betrekking op het gehele onderzoek.
+                {% endblocktrans %}
+            </p>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                {% include "base/form_buttons.html" %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

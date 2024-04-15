@@ -381,6 +381,20 @@ zal worden gedebrieft."
     def has_participants_below_age(self, age):
         """Returns whether the Study contains AgeGroups with ages below the specified age"""
         return self.age_groups.filter(Q(age_min__lt=age) & Q(age_max__lt=age)).exists()
+    
+    def research_types(self):
+        """Return a list of the research types of a study as human-readable strings"""
+
+        research_types = []
+
+        if self.has_intervention:
+            research_types.append(_("Interventieonderzoek"))
+        if self.has_observation:
+            research_types.append(_("Observatieonderzoek"))
+        if self.has_sessions:
+            research_types.append(_("Taakonderzoek en interviews"))
+
+        return research_types
 
     def design_started(self):
         """Checks if the design phase has started"""

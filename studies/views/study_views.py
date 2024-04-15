@@ -139,7 +139,7 @@ class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
             next_study = Study.objects.get(proposal=proposal, order=next_order)
             return reverse("studies:update", args=(next_study.pk,))
         else:
-            return reverse("proposals:translated", args=(proposal.pk,))
+            return reverse("proposals:knowledge_security", args=(proposal.pk,))
 
     def get_back_url(self):
         study = self.object

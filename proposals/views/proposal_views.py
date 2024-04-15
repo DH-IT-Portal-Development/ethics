@@ -42,7 +42,8 @@ from ..forms import (
     AmendmentProposalCopyForm,
     ProposalUpdateDataManagementForm,
     ProposalUpdateDateStartForm,
-    TranslatedConsentForms,
+    TranslatedConsentForm,
+    KnowledgeSecurityForm,
 )
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
@@ -361,11 +362,21 @@ class ProposalStart(generic.TemplateView):
         context = super(ProposalStart, self).get_context_data(**kwargs)
         context["secretary"] = get_secretary()
         return context
+    
+class ProposalKnowledgeSecurity(AllowErrorsOnBackbuttonMixin, UpdateView):
+    model = Proposal
+    form_class = KnowledgeSecurityForm
+    template_name = "proposals/knowledge_security_form.html"
 
+    def get_next_url(self):
+        return reverse("proposals:translated", args=(self.object.pk,))
+    
+    def get_back_url(self):
+        return reverse("studies:design_end", args=(self.object.last_study().pk,))
 
 class TranslatedConsentFormsView(UpdateView):
     model = Proposal
-    form_class = TranslatedConsentForms
+    form_class = TranslatedConsentForm
     template_name = "proposals/translated_consent_forms.html"
 
     def get_next_url(self):
@@ -374,7 +385,8 @@ class TranslatedConsentFormsView(UpdateView):
 
     def get_back_url(self):
         """Return to the overview of the last Study"""
-        return reverse("studies:design_end", args=(self.object.last_study().pk,))
+        return reverse("proposals:knowledge_security", args=(self.object.pk,))
+        
 
 
 class ProposalDataManagement(UpdateView):
