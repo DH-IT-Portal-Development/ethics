@@ -291,17 +291,17 @@ dan geldt dat toch als één sessie."
 
     deception = models.CharField(
         _(
-            "Is er binnen bovenstaand onderzoekstraject sprake van \
-misleiding van de deelnemer?"
+            "Is er binnen bovenstaand onderzoekstraject sprake van "
+"misleiding van de deelnemer?"
         ),
         help_text=_(
-            'Misleiding is het doelbewust verschaffen van inaccurate \
-informatie over het doel en/of belangrijke aspecten van de gang van zaken \
-tijdens het onderzoek. Denk aan zaken als een bewust misleidende "cover story" \
-voor het experiment; het ten onrechte suggereren dat er door de deelnemer met andere \
-deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale \
-geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: \
-het gaat hierbij niet om fillers in bijv. taalwetenschappelijk onderzoek.'
+            'Misleiding is het doelbewust verschaffen van inaccurate '
+'informatie over het doel en/of belangrijke aspecten van de gang van zaken '
+'tijdens het onderzoek. Denk aan zaken als een bewust misleidende "cover story" '
+'voor het experiment; het ten onrechte suggereren dat er door de deelnemer met andere '
+'deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale '
+'geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: '
+'het gaat hierbij niet om fillers in bijv. taalwetenschappelijk onderzoek.'
         ),
         max_length=1,
         choices=YesNoDoubt.choices,
@@ -309,18 +309,18 @@ het gaat hierbij niet om fillers in bijv. taalwetenschappelijk onderzoek.'
     )
     deception_details = models.TextField(
         _(
-            "Geef een toelichting en beschrijf hoe en wanneer de deelnemer \
-zal worden gedebrieft."
+            "Geef een toelichting en beschrijf hoe en wanneer de deelnemer "
+"zal worden gedebrieft."
         ),
         blank=True,
     )
     negativity = models.CharField(
         _(
-            "Bevat bovenstaand onderzoekstraject elementen die <em>tijdens\
-            </em> de deelname zodanig belastend zijn dat deze vragen, \
-            weerstand, of zelfs verontwaardiging zouden kunnen oproepen, \
-            bijvoorbeeld bij collega-onderzoekers, bij de deelnemers zelf, \
-            of bij ouders of andere vertegenwoordigers?"
+            "Bevat bovenstaand onderzoekstraject elementen die <em>tijdens"
+            "</em> de deelname zodanig belastend zijn dat deze vragen, "
+            "weerstand, of zelfs verontwaardiging zouden kunnen oproepen, "
+            "bijvoorbeeld bij collega-onderzoekers, bij de deelnemers zelf, "
+            "of bij ouders of andere vertegenwoordigers?"
         ),
         max_length=1,
         choices=YesNoDoubt.choices,
@@ -329,11 +329,11 @@ zal worden gedebrieft."
     negativity_details = models.TextField(
         _("Licht toe"),
         help_text=_(
-            "Geef concrete voorbeelden van de relevante aspecten van jouw \
-            onderzoek (bijv. voorbeelden van mogelijk zeer kwetsende woorden \
-            of uitspraken in de taak; zeer confronterende vragen in een \
-            vragenlijst; negatieve feedback), zodat de commissie zich een \
-            goed beeld kan vormen."
+            "Geef concrete voorbeelden van de relevante aspecten van jouw "
+            "onderzoek (bijv. voorbeelden van mogelijk zeer kwetsende woorden "
+            "of uitspraken in de taak; zeer confronterende vragen in een "
+            "vragenlijst; negatieve feedback), zodat de commissie zich een "
+            "goed beeld kan vormen."
         ),
         blank=True,
     )
