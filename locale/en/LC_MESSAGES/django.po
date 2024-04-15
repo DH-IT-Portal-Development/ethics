@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-10 14:51+0200\n"
+"POT-Creation-Date: 2024-04-15 11:16+0200\n"
 "PO-Revision-Date: 2024-04-03 12:32+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -2113,10 +2113,10 @@ msgstr "If you have not already done so, it is highly recommended you attend: "
 
 #: proposals/templates/proposals/proposal_data_management.html:54
 msgid ""
-"de workshop <a href=\"https://www.uu.nl/en/node/75859\" "
+"De workshop <a href=\"https://www.uu.nl/en/node/75859\" "
 "target=\"_blank\">Quick start to Research Data Management</a>"
 msgstr ""
-"the workshop <a href=\"https://www.uu.nl/en/research/research-data-"
+"The workshop <a href=\"https://www.uu.nl/en/research/research-data-"
 "management/training-workshops/online-training-learn-to-write-your-dmp\" "
 "target=\"_blank\">Quick start to Research Data Management</a>"
 
@@ -2124,7 +2124,7 @@ msgstr ""
 msgid ""
 "De online training <a href=\"https://www.uu.nl/en/research/research-data-"
 "management/training-workshops/online-training-learn-to-write-your-dmp\" "
-"target=\"_blank\"> Write your DMP</a>"
+"target=\"_blank\">Write your DMP</a>"
 msgstr ""
 "The online training <a href=\"https://www.uu.nl/en/research/research-data-"
 "management/training-workshops/online-training-learn-to-write-your-dmp\" "
@@ -4590,15 +4590,21 @@ msgid "Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"
 msgstr ""
 "Please upload the declaration of consent here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:518
-msgid "Bij algemeen belang, dien hier s.v.p. een leeg Word document in."
-msgstr "In case of public interest, please upload an empty Word document."
+#: studies/models.py:519
+msgid ""
+"Als je de AVG grondslag 'Algemeen belang' gebruikt, en er helemaal geen "
+"toestemmingsverklaring nodig is (ook niet voor bijzondere persoonsgegevens "
+"of opnames), upload dan een leeg document in dit veld."
+msgstr ""
+"When the legal basis for your research is 'Public interest', and no "
+"declarations of consent are required (neither for special categories of "
+"data, nor for recordings), please upload an empty document in this field."
 
-#: studies/models.py:526
+#: studies/models.py:528
 msgid "Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the information letter here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:535
+#: studies/models.py:537
 msgid ""
 "Upload hier de toestemmingsverklaring voor de leiding of het management van "
 "de instelling (in .pdf of .doc(x)-format)"
@@ -4606,7 +4612,7 @@ msgstr ""
 "Please upload the declaration of consent for the management of the school or "
 "institution (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:540
+#: studies/models.py:542
 msgid ""
 "Upload indien mogelijk een ondertekende versie van het document. Upload als "
 "deze nog niet bestaat een blanco versie, en stuur de ondertekende versie "
@@ -4617,7 +4623,7 @@ msgstr ""
 "and follow up by sending a signed copy to the secretary of the FEtC-H once "
 "available."
 
-#: studies/models.py:548
+#: studies/models.py:550
 msgid ""
 "Upload hier de informatiebrief voor de leiding of het management van de "
 "instelling (in .pdf of .doc(x)-formaat)"
@@ -4625,7 +4631,7 @@ msgstr ""
 "Please upload the the information letter for the management of the school or "
 "institution (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:558
+#: studies/models.py:560
 msgid ""
 "Upload hier de informatiebrief voor de ouders of verzorgers (in .pdf of ."
 "doc(x)-formaat)"
@@ -5238,3 +5244,6 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:56
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Bij algemeen belang, dien hier s.v.p. een leeg Word document in."
+#~ msgstr "In case of public interest, please upload an empty Word document."
