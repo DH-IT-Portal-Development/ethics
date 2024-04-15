@@ -55,7 +55,7 @@ def get_study_progress(study, is_end=False):
     return int(STUDY_PROGRESS_START + progress)
 
 
-def study_urls(study, prev_study_completed):
+def study_urls(study, prev_study_completed, single_study = False):
     """
     Returns the available URLs for the current Study.
     :param study: the current Study
@@ -85,13 +85,21 @@ def study_urls(study, prev_study_completed):
         urls.append(session_urls(study))
 
     end_url = AvailableURL(
-        title=_("Overzicht"),
+        title=_("Traject overzicht"),
     )
 
     if prev_study_completed:
         end_url.url = reverse("studies:design_end", args=(study.pk,))
     urls.append(end_url)
 
+    if single_study:
+        urls.append(
+            AvailableURL(
+                title=_("Traject afronding"),
+                url= reverse("proposals:knowledge_security", args=(study.proposal.pk,)),
+            )
+        )
+        
     return AvailableURL(
         title=_("Traject {}").format(study.order),
         is_title=True,

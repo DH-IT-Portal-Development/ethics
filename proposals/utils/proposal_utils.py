@@ -140,7 +140,7 @@ def _add_study_urls(main_element, proposal):
     # (Bypassing the study's own node)
     if proposal.studies_number == 1:
         main_element.children.extend(
-            study_urls(proposal.study_set.first(), True).children
+            study_urls(proposal.study_set.first(), True, single_study=True).children
         )
         return
 
@@ -149,7 +149,12 @@ def _add_study_urls(main_element, proposal):
     for study in proposal.study_set.all():
         main_element.children.append(study_urls(study, prev_study_completed))
         prev_study_completed = study.is_completed()
-
+    main_element.children.append(
+            AvailableURL(
+                title=_("Afronding trajecten"),
+                url= reverse("proposals:knowledge_security", args=(study.proposal.pk,)),
+            )
+        )
 
 def generate_ref_number():
     """
