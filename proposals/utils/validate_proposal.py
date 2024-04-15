@@ -18,8 +18,9 @@ from ..forms import (
     WmoForm,
     StudyStartForm,
     WmoApplicationForm,
-    TranslatedConsentForms,
+    TranslatedConsentForm,
     ProposalDataManagementForm,
+    KnowledgeSecurityForm,
 )
 from ..models import Proposal
 
@@ -218,8 +219,15 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                     session,
                 )
 
+    forms["knowledge_security"] = (
+        KnowledgeSecurityForm,
+        reverse("proposals:knowledge_security", args=[proposal.pk]),
+        _("Afronding traject(en)"),
+        proposal,
+    )
+
     forms["translated"] = (
-        TranslatedConsentForms,
+        TranslatedConsentForm,
         reverse("proposals:translated", args=[proposal.pk]),
         _("Vertaling informed consent formulieren"),
         proposal,

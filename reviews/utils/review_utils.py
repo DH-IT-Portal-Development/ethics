@@ -516,6 +516,22 @@ voor de leeftijdsgroep {ag}."
                             )
                         )
 
+    if proposal.knowledge_security in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+        reasons.append(
+            _(
+                "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom \
+                kennisveiligheid."
+            )
+        )
+
+    if proposal.researcher_risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+        reasons.append(
+            _(
+                "De onderzoeker geeft aan dat er mogelijk kwesties zijn \
+                rondom de veiligheid van de betrokken onderzoekers."
+            )
+        )
+
     return reasons
 
 
