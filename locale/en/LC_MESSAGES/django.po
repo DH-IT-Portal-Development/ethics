@@ -5244,6 +5244,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:56
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid "Bij algemeen belang, dien hier s.v.p. een leeg Word document in."
-#~ msgstr "In case of public interest, please upload an empty Word document."
