@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-03 12:31+0200\n"
+"POT-Creation-Date: 2024-04-15 11:16+0200\n"
 "PO-Revision-Date: 2024-04-03 12:32+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -2102,21 +2102,35 @@ msgstr ""
 "funding, provided by Utrecht University."
 
 #: proposals/templates/proposals/proposal_data_management.html:46
-msgid "Nuttige informatie:"
-msgstr "Useful information:"
+msgid "Nuttige workshops:"
+msgstr "Recommended workshops"
 
 #: proposals/templates/proposals/proposal_data_management.html:48
 msgid ""
-"Voor vragen over privacy, zoals: \"Wat zijn persoonlijke gegevens?\" of "
-"\"Wanneer mag ik mijn onderzoek anoniem noemen?\", raden we je aan het <a "
-"href=\"https://utrechtuniversity.github.io/dataprivacyhandbook/\">Data "
-"Privacy Handboek</a> te raadplegen."
-msgstr "For all your questions regarding privacy, e.g.: \"What are personal "
-"data?\" or \"When may I call my research anonymous?\", consult the <a "
-"href=\"https://utrechtuniversity.github.io/dataprivacyhandbook/\">Data "
-"Privacy Handbook</a>."
+"Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende "
+"workshop/online training te volgen:"
+msgstr "If you have not already done so, it is highly recommended you attend: "
 
-#: proposals/templates/proposals/proposal_data_management.html:53
+#: proposals/templates/proposals/proposal_data_management.html:54
+msgid ""
+"De workshop <a href=\"https://www.uu.nl/en/node/75859\" "
+"target=\"_blank\">Quick start to Research Data Management</a>"
+msgstr ""
+"The workshop <a href=\"https://www.uu.nl/en/research/research-data-"
+"management/training-workshops/online-training-learn-to-write-your-dmp\" "
+"target=\"_blank\">Quick start to Research Data Management</a>"
+
+#: proposals/templates/proposals/proposal_data_management.html:60
+msgid ""
+"De online training <a href=\"https://www.uu.nl/en/research/research-data-"
+"management/training-workshops/online-training-learn-to-write-your-dmp\" "
+"target=\"_blank\">Write your DMP</a>"
+msgstr ""
+"The online training <a href=\"https://www.uu.nl/en/research/research-data-"
+"management/training-workshops/online-training-learn-to-write-your-dmp\" "
+"target=\"_blank\">Write your DMP</a>"
+
+#: proposals/templates/proposals/proposal_data_management.html:67
 msgid ""
 "Voor advies op het gebied van data management planning kun je contact "
 "opnemen met de datamanager GW, Frans de Liagre Böhl via <a href=\"mailto:"
@@ -2127,11 +2141,11 @@ msgstr ""
 "target=\"_blank\">datamanagement.gw@uu.nl</a>, who is the data manager of "
 "the Faculty of Humanities."
 
-#: proposals/templates/proposals/proposal_data_management.html:57
+#: proposals/templates/proposals/proposal_data_management.html:71
 msgid "Privacy: AVG en GDPR"
 msgstr "Privacy: AVG and GDPR"
 
-#: proposals/templates/proposals/proposal_data_management.html:59
+#: proposals/templates/proposals/proposal_data_management.html:73
 msgid ""
 "Wanneer je persoonsgebonden data verzamelt, zorg je er voor dat je je houdt "
 "aan de Algemene Verordening Gegevensbescherming, of AVG. Deze wet is de "
@@ -2144,7 +2158,7 @@ msgstr ""
 "regulation is in line with European <a href=\"https://gdpr.eu/\" "
 "target=\"_blank\">GDPR privacy legislation</a>."
 
-#: proposals/templates/proposals/proposal_data_management.html:65
+#: proposals/templates/proposals/proposal_data_management.html:79
 msgid ""
 "De autoriteit persoonsgegevens heeft <a href=\"https://www."
 "autoriteitpersoonsgegevens.nl/nl/onderwerpen/algemene-informatie-avg/"
@@ -2157,25 +2171,22 @@ msgstr ""
 "how the AVG affects data collectors, though only in Dutch at the time of "
 "writing.    "
 
-#: proposals/templates/proposals/proposal_data_management.html:71
-msgid "Nuttige workshops:"
-msgstr "Recommended workshops"
+#: proposals/templates/proposals/proposal_data_management.html:85
+msgid "Nuttige informatie:"
+msgstr "Useful information:"
 
-#: proposals/templates/proposals/proposal_data_management.html:73
+#: proposals/templates/proposals/proposal_data_management.html:87
 msgid ""
-"Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende "
-"workshop te volgen:"
-msgstr "If you have not already done so, it is highly recommended you attend: "
-
-#: proposals/templates/proposals/proposal_data_management.html:78
-msgid ""
-"<li> de workshop <a href=\"https://www.uu.nl/en/node/81799\" "
-"target=\"_blank\">Handling personal data in research</a> </li>"
+"Voor vragen over privacy, zoals: \"Wat zijn persoonlijke gegevens?\" of "
+"\"Wanneer mag ik mijn onderzoek anoniem noemen?\", raden we je aan het <a "
+"href=\"https://utrechtuniversity.github.io/dataprivacyhandbook/\">Data "
+"Privacy Handboek</a> te raadplegen."
 msgstr ""
-"<li>the workshop <a href=\"https://www.uu.nl/en/node/81799\" "
-"target=\"_blank\">Handling personal data in research</a></li>"
+"For all your questions regarding privacy, e.g.: \"What are personal data?\" "
+"or \"When may I call my research anonymous?\", consult the <a href=\"https://"
+"utrechtuniversity.github.io/dataprivacyhandbook/\">Data Privacy Handbook</a>."
 
-#: proposals/templates/proposals/proposal_data_management.html:86
+#: proposals/templates/proposals/proposal_data_management.html:93
 msgid ""
 "Voor advies op het gebied van privacy en de AVG kun je contact opnemen met "
 "de privacy officer van GW via <a href=\"mailto:privacy.gw@uu.nl\">privacy."
@@ -3504,7 +3515,7 @@ msgstr ""
 "Click <img src=\"%(img_decide)s\" title=\"Decide\"> to make your decision "
 "(as a supervisor)."
 
-#: reviews/templates/reviews/action_explaination.html:53
+#: reviews/templates/reviews/action_explaination.html:55
 msgid "Uitleg secretaris"
 msgstr "Explanation for secretary"
 
@@ -4579,11 +4590,21 @@ msgid "Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"
 msgstr ""
 "Please upload the declaration of consent here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:525
+#: studies/models.py:519
+msgid ""
+"Als je de AVG grondslag 'Algemeen belang' gebruikt, en er helemaal geen "
+"toestemmingsverklaring nodig is (ook niet voor bijzondere persoonsgegevens "
+"of opnames), upload dan een leeg document in dit veld."
+msgstr ""
+"When the legal basis for your research is 'Public interest', and no "
+"declarations of consent are required (neither for special categories of "
+"data, nor for recordings), please upload an empty document in this field."
+
+#: studies/models.py:528
 msgid "Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the information letter here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:534
+#: studies/models.py:537
 msgid ""
 "Upload hier de toestemmingsverklaring voor de leiding of het management van "
 "de instelling (in .pdf of .doc(x)-format)"
@@ -4591,7 +4612,7 @@ msgstr ""
 "Please upload the declaration of consent for the management of the school or "
 "institution (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:539
+#: studies/models.py:542
 msgid ""
 "Upload indien mogelijk een ondertekende versie van het document. Upload als "
 "deze nog niet bestaat een blanco versie, en stuur de ondertekende versie "
@@ -4602,7 +4623,7 @@ msgstr ""
 "and follow up by sending a signed copy to the secretary of the FEtC-H once "
 "available."
 
-#: studies/models.py:547
+#: studies/models.py:550
 msgid ""
 "Upload hier de informatiebrief voor de leiding of het management van de "
 "instelling (in .pdf of .doc(x)-formaat)"
@@ -4610,7 +4631,7 @@ msgstr ""
 "Please upload the the information letter for the management of the school or "
 "institution (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:557
+#: studies/models.py:560
 msgid ""
 "Upload hier de informatiebrief voor de ouders of verzorgers (in .pdf of ."
 "doc(x)-formaat)"
@@ -5223,3 +5244,6 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:56
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Bij algemeen belang, dien hier s.v.p. een leeg Word document in."
+#~ msgstr "In case of public interest, please upload an empty Word document."

@@ -46,16 +46,22 @@
             <h3>{% trans "Nuttige workshops:" %}</h3>
             <p>
                 {% blocktrans trimmed %}
-                    Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende workshop te volgen:
+                    Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende workshop/online training te volgen:
                 {% endblocktrans %}
             </p>
             <ul>
-                {% blocktrans trimmed %}
-                    <li>
-                        de workshop <a href="https://www.uu.nl/en/node/75859" target="_blank">Quick
+                <li>
+                    {% blocktrans trimmed %}
+                        De workshop <a href="https://www.uu.nl/en/node/75859" target="_blank">Quick
                     start to Research Data Management</a>
-                </li>
-            {% endblocktrans %}
+                {% endblocktrans %}
+            </li>
+            <li>
+                {% blocktrans trimmed %}
+                    De online training <a href="https://www.uu.nl/en/research/research-data-management/training-workshops/online-training-learn-to-write-your-dmp"
+    target="_blank">Write your DMP</a>
+                {% endblocktrans %}
+            </li>
         </ul>
         <p>
             {% blocktrans trimmed %}
