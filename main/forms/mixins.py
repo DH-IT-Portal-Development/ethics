@@ -10,6 +10,8 @@ class SoftValidationMixin:
     This mixin will allow a form to submit even if specified fields have
     validator errors.
     """
+    # Disable the default TemplatedForm behavior of showing valid fields, it will be even more confusing
+    show_valid_fields = False
 
     _soft_validation_fields = []
 
