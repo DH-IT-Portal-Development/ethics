@@ -462,7 +462,7 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
         )
 
 
-class WmoCheckForm(forms.ModelForm):
+class WmoCheckForm(TemplatedModelForm):
     class Meta:
         model = Wmo
         fields = [
@@ -470,8 +470,8 @@ class WmoCheckForm(forms.ModelForm):
             "is_medical",
         ]
         widgets = {
-            "metc": forms.RadioSelect(),
-            "is_medical": forms.RadioSelect(),
+            "metc": BootstrapRadioSelect(),
+            "is_medical": BootstrapRadioSelect(),
         }
 
     def __init__(self, *args, **kwargs):
