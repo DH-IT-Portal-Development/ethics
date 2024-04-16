@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load static %}
 {% load proposal_filters %}
@@ -12,12 +12,12 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{{ review.proposal.title }} - {{ review.proposal.reference_number }}</h2>
         </div>
     </div>
-    <div class="uu-inner-container">
+    <div class="uu-container">
         {% with review=review %}
             {% include "reviews/review_detail_sidebar.html" %}
         {% endwith %}

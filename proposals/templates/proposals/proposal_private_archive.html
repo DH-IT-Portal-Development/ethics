@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load vue_tags %}
 {% load static %}
@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{{ title }}</h2>
             {% static "proposals/images/page_white_go.png" as img_next %}

@@ -7,11 +7,10 @@ from django.db.models import Q
 
 from django.utils.translation import gettext_lazy as _
 from django.utils.functional import lazy
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe, SafeString
 from django.utils import timezone
-from datetime import timedelta
 
-mark_safe_lazy = lazy(mark_safe, str)
+mark_safe_lazy = lazy(mark_safe, SafeString)
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.models import YesNoDoubt
@@ -20,9 +19,10 @@ from .field import ParentChoiceModelField
 from .models import Proposal, Relation, Wmo
 from .utils import check_local_facilities
 from .validators import UniqueTitleValidator
-from .widgets import SelectMultipleUser, SelectUser
 
-from cdh.core.forms import DateField
+from cdh.core.forms import DateField, BootstrapRadioSelect, BootstrapCheckboxSelectMultiple, BootstrapSelect, \
+    SearchableSelectWidget, DateInput, SplitDateTimeWidget, BootstrapSplitDateTimeWidget, TemplatedForm, \
+    TemplatedModelForm
 
 
 class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
@@ -63,16 +63,17 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
             ),
         }
         widgets = {
-            "is_pre_approved": forms.RadioSelect(choices=YES_NO),
-            "institution": forms.RadioSelect(),
-            "relation": forms.RadioSelect(),
-            "student_context": forms.RadioSelect(),
-            "other_applicants": forms.RadioSelect(choices=YES_NO),
-            "other_stakeholders": forms.RadioSelect(choices=YES_NO),
+            "is_pre_approved": BootstrapRadioSelect(choices=YES_NO),
+            "institution": BootstrapRadioSelect(),
+            "relation": BootstrapRadioSelect(),
+            "student_context": BootstrapRadioSelect(),
+            "other_applicants": BootstrapRadioSelect(choices=YES_NO),
+            "other_stakeholders": BootstrapRadioSelect(choices=YES_NO),
+            "date_start": DateInput(),
             "summary": forms.Textarea(attrs={"cols": 50}),
-            "funding": forms.CheckboxSelectMultiple(),
-            "applicants": SelectMultipleUser(),
-            "supervisor": forms.Select(),
+            "funding": BootstrapCheckboxSelectMultiple(),
+            "applicants": SearchableSelectWidget(),
+            "supervisor": SearchableSelectWidget(),
         }
         error_messages = {
             "title": {
@@ -120,6 +121,10 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
         self.fields["relation"].empty_label = None
         self.fields["institution"].empty_label = None
         self.fields["student_context"].empty_label = None
+
+        # Needed to set the widget into multiple mode
+        # TODO: write a DSC widget that has this enabled by default
+        self.fields["applicants"].widget.allow_multiple_selected = True
 
         # Only revisions or amendments are allowed to have a title that's not
         # unique.
@@ -281,15 +286,15 @@ van het FETC-GW worden opgenomen."
         )
 
 
-class ProposalStartPracticeForm(forms.Form):
+class ProposalStartPracticeForm(TemplatedForm):
     practice_reason = forms.ChoiceField(
         label=_("Ik maak een oefenaanvraag aan"),
         choices=Proposal.PracticeReasons.choices,
-        widget=forms.RadioSelect(),
+        widget=BootstrapRadioSelect(),
     )
 
 
-class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
+class BaseProposalCopyForm(UserKwargModelFormMixin, TemplatedModelForm):
     class Meta:
         model = Proposal
         fields = ["parent", "is_revision"]
@@ -297,6 +302,7 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
             "is_revision": forms.HiddenInput(),
         }
 
+    # TODO: figure out if we need to change widgets here
     parent = ParentChoiceModelField(
         queryset=Proposal.objects.all(),
         label=_("Te kopiëren aanvraag"),
@@ -403,7 +409,7 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
         )
 
 
-class ProposalConfirmationForm(forms.ModelForm):
+class ProposalConfirmationForm(TemplatedModelForm):
     class Meta:
         model = Proposal
         fields = ["date_confirmed", "confirmation_comments"]
@@ -413,7 +419,7 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Wmo
         fields = ["metc", "metc_details", "metc_institution", "is_medical"]
-        widgets = {"metc": forms.RadioSelect(), "is_medical": forms.RadioSelect()}
+        widgets = {"metc": BootstrapRadioSelect(), "is_medical": BootstrapRadioSelect()}
 
     _soft_validation_fields = ["metc_details", "metc_institution", "is_medical"]
 
@@ -486,8 +492,8 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
             "metc_decision_pdf",
         ]
         widgets = {
-            "metc_application": forms.RadioSelect(choices=YES_NO),
-            "metc_decision": forms.RadioSelect(choices=YES_NO),
+            "metc_application": BootstrapRadioSelect(choices=YES_NO),
+            "metc_decision": BootstrapRadioSelect(choices=YES_NO),
         }
 
     _soft_validation_fields = [

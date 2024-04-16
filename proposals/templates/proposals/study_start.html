@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -55,7 +55,7 @@ $(function() {
 {% block content %}
     {% trans "Je kan de aard van de aanvraag nu in detail op de volgende pagina's specificeren." as is_similar %}
     {% trans "Je kan de aard van de aanvraag nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             {% with nav_items=proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
