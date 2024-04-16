@@ -59,6 +59,7 @@ class _SystemMessageView(generic.ListView):
 
 class HomeView(LoginRequiredMixin, _SystemMessageView):
     template_name = "main/index.html"
+    max_n_proposals = 2
 
     def no_permissions_fail(self, request=None):
         """
@@ -73,8 +74,44 @@ class HomeView(LoginRequiredMixin, _SystemMessageView):
         context = super().get_context_data(*args, **kwargs)
 
         context["is_humanities"] = is_member_of_humanities(self.request.user)
+        context['proposals'] = self.get_priority_proposals()
 
         return context
+
+    def get_priority_proposals(self):
+        proposals = []
+
+        proposals += Proposal.objects.filter(
+            supervisor=self.request.user,
+            status=Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
+            date_reviewed_supervisor=None,
+        ).order_by('date_submitted_supervisor')[:self.max_n_proposals]
+
+        if len(proposals) == self.max_n_proposals:
+            return proposals
+
+        n_needed = self.max_n_proposals - len(proposals)
+
+        proposals += Proposal.objects.filter(
+            applicants=self.request.user,
+            status=Proposal.Statuses.DRAFT,
+        ).distinct().order_by(
+            '-date_modified',
+        )[:n_needed]
+
+        if len(proposals) == self.max_n_proposals:
+            return proposals
+
+        n_needed = self.max_n_proposals - len(proposals)
+
+        proposals += Proposal.objects.filter(
+            applicants=self.request.user,
+            status__gt=Proposal.Statuses.DRAFT,
+        ).distinct().order_by(
+            '-date_modified',
+        )[:n_needed]
+
+        return proposals
 
 
 class LandingView(_SystemMessageView):
