@@ -178,6 +178,17 @@ class Decision(models.Model):
         super(Decision, self).save(*args, **kwargs)
         self.review.update_go(last_decision=self)
 
+    def is_final_decision(self):
+        """
+        Checks if this is the final review in a reviewing round.
+
+        Will always return True on Supervisor reviews.
+        """
+        open_decisions = self.review.decision_set.filter(
+            go="",
+        )
+        return open_decisions.count() < 2
+
     def __str__(self):
         return "Decision #%d by %s on %s: %s" % (
             self.pk,
