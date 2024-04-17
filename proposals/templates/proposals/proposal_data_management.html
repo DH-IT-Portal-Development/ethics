@@ -46,16 +46,22 @@
             <h3>{% trans "Nuttige workshops:" %}</h3>
             <p>
                 {% blocktrans trimmed %}
-                    Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende workshop te volgen:
+                    Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende workshop/online training te volgen:
                 {% endblocktrans %}
             </p>
             <ul>
-                {% blocktrans trimmed %}
-                    <li>
-                        de workshop <a href="https://www.uu.nl/en/node/75859" target="_blank">Quick
+                <li>
+                    {% blocktrans trimmed %}
+                        De workshop <a href="https://www.uu.nl/en/node/75859" target="_blank">Quick
                     start to Research Data Management</a>
-                </li>
-            {% endblocktrans %}
+                {% endblocktrans %}
+            </li>
+            <li>
+                {% blocktrans trimmed %}
+                    De online training <a href="https://www.uu.nl/en/research/research-data-management/training-workshops/online-training-learn-to-write-your-dmp"
+    target="_blank">Write your DMP</a>
+                {% endblocktrans %}
+            </li>
         </ul>
         <p>
             {% blocktrans trimmed %}
@@ -76,23 +82,17 @@
                 {% endblocktrans %}
             </li>
         </ul>
-        <h3>{% trans "Nuttige workshops:" %}</h3>
+        <h3>{% trans "Nuttige informatie:" %}</h3>
         <p>
             {% blocktrans trimmed %}
-                Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende workshop te volgen:
+                Voor vragen over privacy, zoals: "Wat zijn persoonlijke gegevens?" of "Wanneer mag ik mijn onderzoek anoniem noemen?", raden we je aan het <a href="https://utrechtuniversity.github.io/dataprivacyhandbook/"
+    target="_blank">Data Privacy Handboek</a> te raadplegen.
             {% endblocktrans %}
         </p>
-        <ul>
-            {% blocktrans trimmed %}
-                <li>
-                    de workshop <a href="https://www.uu.nl/en/node/81799" target="_blank">Handling
-                personal data in research</a>
-            </li>
-        {% endblocktrans %}
     </ul>
     <p>
         {% blocktrans trimmed %}
-            Voor advies op het gebied van privacy en de AVG kun je contact opnemen met de privacy officer van GW via <a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>.
+            Voor advies op het gebied van privacy en de AVG kun je contact opnemen met de privacy officer van GW via <a href="mailto:privacy.gw@uu.nl" target="_blank">privacy.gw@uu.nl</a>.
         {% endblocktrans %}
     </p>
     <form action="" method="post" enctype="multipart/form-data">
