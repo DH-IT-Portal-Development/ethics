@@ -24,12 +24,7 @@
 {% endblock %}
 
 {% block pre-messages-content %}
-    <div class="uu-cover align-items-end h-300">
-        <img class="uu-cover-image" alt="cover" src="{% static 'main/images/coverimage-summer_Kim_Oleary.jpg' %}"/>
-        <div class="uu-cover-copyright uu-cover-copyright-right">
-            Cover by Kim O'leary
-        </div>
-    </div>
+    {% include 'main/index_parts/cover.html' %}
     <div class="uu-hero">
         <h2>
             {% trans "Startpagina" %}

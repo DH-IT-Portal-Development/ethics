@@ -1,0 +1,8 @@
+{% load static %}
+
+<div class="uu-cover h-400 {{ cover_image.classes }}">
+    <img class="uu-cover-image w-100" alt="cover" src="{% static cover_image.image %}"/>
+    <div class="uu-cover-copyright uu-cover-copyright-right">
+        Cover by {{ cover_image.author }}
+    </div>
+</div>

@@ -57,7 +57,56 @@ class _SystemMessageView(generic.ListView):
         return self.model.objects.filter(not_after__gt=now, not_before__lt=now)
 
 
-class HomeView(LoginRequiredMixin, _SystemMessageView):
+class SeasonalCoverImageMixin:
+    seasons = {
+        "spring": {
+            "image": "main/images/coverimage-spring.jpg",
+            "author": "Dick Boetekees",
+            # This controls how the image is fitted inside the container; every image has its own 'best' fit
+            "classes": "align-items-end",
+        },
+        "summer": {
+            "image": "main/images/coverimage-summer.jpg",
+            "author": "Bert Spiertz",
+            "classes": "align-items-middle",
+        },
+        "autumn": {
+            "image": "main/images/coverimage-autumn.jpg",
+            "author": "Ivar Pel",
+            "classes": "align-items-middle",
+        },
+        "winter": {
+            "image": "main/images/coverimage-winter.jpg",
+            "author": "Simona Evstatieva",
+            "classes": "align-items-middle",
+        },
+    }
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["cover_image"] = self.get_seasonal_cover_image()
+        return context
+
+    def get_seasonal_cover_image(self):
+        now = timezone.now()
+
+        # Allow overriding by adding a ?season= get parameter
+        # For dev/testing mostly
+        if override := self.request.GET.get('season', None):
+            if override in self.seasons.keys():
+                return self.seasons[override]
+
+        if now.month in [3, 4, 5]:
+            return self.seasons["spring"]
+        elif now.month in [6, 7, 8]:
+            return self.seasons["summer"]
+        elif now.month in [9, 10, 11]:
+            return self.seasons["autumn"]
+        else:
+            return self.seasons["winter"]
+
+
+class HomeView(LoginRequiredMixin, SeasonalCoverImageMixin, _SystemMessageView):
     template_name = "main/index.html"
     max_n_proposals = 2
 
@@ -114,7 +163,7 @@ class HomeView(LoginRequiredMixin, _SystemMessageView):
         return proposals
 
 
-class LandingView(_SystemMessageView):
+class LandingView(SeasonalCoverImageMixin, _SystemMessageView):
     template_name = "main/landing.html"
     model = SystemMessage
 
