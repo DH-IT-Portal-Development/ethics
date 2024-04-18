@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 
 logger = logging.getLogger("ethics.main")
 
+
 class YesNoDoubt(models.TextChoices):
     YES = "Y", _("ja")
     NO = "N", _("nee")
