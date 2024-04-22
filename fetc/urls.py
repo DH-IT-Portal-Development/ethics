@@ -36,7 +36,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("impersonate/", include("impersonate.urls")),
     path("i18n/", include("django.conf.urls.i18n")),
-    path("uilcore/", include("cdh.core.urls")),
+    path("cdhcore/", include("cdh.core.urls")),
     path("vue/", include("cdh.vue.urls")),
 ]
 
