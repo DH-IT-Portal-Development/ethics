@@ -1,0 +1,673 @@
+from __future__ import unicode_literals
+import logging
+
+from django.conf import settings
+from django.contrib.auth.models import Group
+from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
+from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
+
+from django.utils.functional import lazy
+from django.utils.safestring import mark_safe
+mark_safe_lazy = lazy(mark_safe, str)
+
+from main.models import YES, YES_NO_DOUBT
+from main.validators import MaxWordsValidator, validate_pdf_or_doc
+from .validators import AVGUnderstoodValidator
+from .utils import available_urls, FilenameFactory, OverwriteStorage
+from datetime import date, timedelta
+
+logger = logging.getLogger(__name__)
+
+SUMMARY_MAX_WORDS = 200
+SELF_ASSESSMENT_MAX_WORDS = 1000
+COMMENTS_MAX_WORDS = 1000
+PROPOSAL_FILENAME = FilenameFactory('Proposal')
+PREASSESSMENT_FILENAME = FilenameFactory('Preassessment')
+DMP_FILENAME = FilenameFactory('DMP')
+METC_DECISION_FILENAME = FilenameFactory('METC_Decision')
+PRE_APPROVAL_FILENAME = FilenameFactory('Pre_Approval')
+
+class ProposalQuerySet(models.QuerySet):
+
+    DECISION_MADE = 55
+
+    def archive_pre_filter(self):
+        return self.filter(status__gte=self.DECISION_MADE,
+                                             status_review=True,
+                                             in_archive=True,
+        )
+
+    def no_embargo(self):
+        return self.filter(models.Q(embargo_end_date__isnull=True)
+             | models.Q(embargo_end_date__lt=date.today())
+             )
+
+    def public_archive(self):
+        two_years_ago = (
+                date.today() -
+                timedelta(weeks=104)
+        )
+        return self.archive_pre_filter().no_embargo().filter(
+                                        date_confirmed__gt=two_years_ago,
+        ).order_by(
+            "-date_reviewed"
+        )
+
+    def export(self):
+        return self.archive_pre_filter().order_by(
+            "-date_reviewed"
+        )
+
+    def users_only_archive(self, committee):
+        return self.archive_pre_filter().no_embargo().filter(
+                                       is_pre_assessment=False,
+                                       reviewing_committee=committee,
+                                       ).select_related(
+            # this optimizes the loading a bit
+            'supervisor', 'parent', 'relation',
+            'parent__supervisor', 'parent__relation',
+        ).prefetch_related(
+            'applicants', 'review_set', 'parent__review_set', 'study_set',
+            'study_set__observation', 'study_set__session_set',
+            'study_set__intervention', 'study_set__session_set__task_set'
+        )
+
+
+class Proposal(models.Model):
+
+    objects = ProposalQuerySet.as_manager()
+
+    DRAFT = 1
+    SUBMITTED_TO_SUPERVISOR = 40
+    SUBMITTED = 50
+    DECISION_MADE = 55
+    WMO_DECISION_MADE = 60
+    STATUSES = (
+        (DRAFT, _('Concept')),
+
+        (SUBMITTED_TO_SUPERVISOR,
+         _('Opgestuurd ter beoordeling door eindverantwoordelijke')),
+        (SUBMITTED, _('Opgestuurd ter beoordeling door FETC-GW')),
+
+        (DECISION_MADE, _('Aanvraag is beoordeeld door FETC-GW')),
+        (WMO_DECISION_MADE, _('Aanvraag is beoordeeld door FETC-GW')),
+    )
+
+    COURSE = 1
+    EXPLORATION = 2
+    PRACTICE_REASONS = (
+        (COURSE, _('in het kader van een cursus')),
+        (EXPLORATION, _('om de portal te exploreren')),
+    )
+
+    # Fields of a proposal
+    reference_number = models.CharField(
+        max_length=20,
+        unique=True,
+    )
+
+    reviewing_committee = models.ForeignKey(
+        Group,
+        verbose_name=_(
+            'Door welke comissie dient deze aanvraag te worden beoordeeld?'
+        ),
+        help_text="",
+        on_delete=models.PROTECT,
+    )
+
+    institution = models.ForeignKey(
+        Institution,
+        verbose_name=_(
+            'Aan welk onderzoeksinstituut ben je verbonden?'
+        ),
+        on_delete=models.PROTECT,
+    )
+
+    date_start = models.DateField(
+        _('Wat is de beoogde startdatum van het onderzoek waarvoor deze aanvraag wordt ingediend?'),
+        help_text=_("NB: Voor een aanvraag van een onderzoek dat al gestart is voordat \
+de FETC-GW de aanvraag heeft goedgekeurd kan geen formele goedkeuring meer \
+gegeven worden; de FETC-GW geeft in die gevallen een post-hoc advies."),
+        blank=True,
+        null=True,
+    )
+
+    title = models.CharField(
+        _(
+            'Wat is de titel van je aanvraag? Deze titel zal worden gebruikt in '
+            'alle formele correspondentie.'
+        ),
+        max_length=200,
+        unique=False,
+        help_text=_('De titel die je hier opgeeft is zichtbaar voor de \
+FETC-GW-leden en, wanneer de aanvraag is goedgekeurd, ook voor alle \
+medewerkers die in het archief van deze portal kijken. De titel mag niet \
+identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend.'),
+    )
+
+    summary = models.TextField(
+        _(
+            'Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. Gebruik maximaal 200 woorden.'
+        ),
+        validators=[MaxWordsValidator(SUMMARY_MAX_WORDS)],
+        blank=True,
+    )
+
+    other_applicants = models.BooleanField(
+        _(
+            'Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of ILS?'
+        ),
+        default=False,
+    )
+
+    other_stakeholders = models.BooleanField(
+        mark_safe_lazy(_('Zijn er nog andere onderzoekers bij deze aanvraag betrokken '
+          'die <strong>niet</strong> geaffilieerd zijn aan een van de '
+          'onderzoeksinstituten van de Faculteit Geestwetenschappen van de '
+          'UU? ')), # Note: form labels with HTML are hard-coded in form Meta classes
+        default=False,
+    )
+
+    stakeholders = models.TextField(
+        _('Andere betrokkenen'),
+        blank=True,
+    )
+
+    translated_forms = models.BooleanField(
+        mark_safe_lazy(_('Worden de informed consent formulieren nog vertaald naar een andere taal dan Nederlands of Engels?')),
+        default=None,
+        blank=True,
+        null=True,
+    )
+
+    translated_forms_languages = models.CharField(
+        _('Andere talen:'),
+        max_length=255,
+        default=None,
+        blank=True,
+        null=True,
+    )
+
+    funding = models.ManyToManyField(
+        Funding,
+        verbose_name=_('Hoe wordt dit onderzoek gefinancierd?'),
+        blank=True,
+    )
+
+    funding_details = models.CharField(
+        _('Namelijk'),
+        max_length=200,
+        blank=True,
+    )
+
+    funding_name = models.CharField(
+        _('Wat is de naam van het gefinancierde project en wat is het projectnummer?'),
+        max_length=200,
+        blank=True,
+        help_text=_(
+            'De titel die je hier opgeeft zal in de formele toestemmingsbrief '
+            'gebruikt worden.'
+        ),
+    )
+
+    comments = models.TextField(
+        _('Ruimte voor eventuele opmerkingen. Gebruik maximaal 1000 woorden.'),
+        validators=[MaxWordsValidator(COMMENTS_MAX_WORDS)],
+        blank=True,
+    )
+
+    inform_local_staff = models.BooleanField(
+        _('<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één \
+van de faciliteiten van het ILS, namelijk de database, Zep software \
+en/of het ILS lab. Het lab supportteam van het ILS zou graag op \
+de hoogte willen worden gesteld van aankomende onderzoeken. \
+Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te \
+sturen naar het lab supportteam.</p> \
+<p>Vind je het goed dat de volgende delen uit de aanvraag \
+worden doorgestuurd:</p> \
+- Jouw naam en de namen van de andere betrokkenen <br/> \
+- De eindverantwoordelijke van het onderzoek <br/> \
+- De titel van het onderzoek <br/> \
+- De beoogde startdatum <br/> \
+- Van welke faciliteiten je gebruik wil maken (database, lab, \
+Zep software)'),
+        default=None,
+        blank=True,
+        null=True
+    )
+
+    embargo = models.BooleanField(
+        _('Als de deelnemers van je onderzoek moeten worden misleid, kan \
+          je ervoor kiezen je applicatie pas later op te laten nemen in het \
+          publieke archief en het archief voor gebruikers \
+          van dit portaal. Wil je dat jouw onderzoek tijdelijk onder \
+          embargo wordt geplaatst?'),
+          default=None,
+          blank=True,
+          null=True
+    )
+
+    embargo_end_date = models.DateField(
+        _('Vanaf welke datum mag je onderzoek wel in het archief worden weergegeven?'),
+        blank=True,
+        null=True
+    )
+
+    in_archive = models.BooleanField(default=False)
+
+    is_pre_assessment = models.BooleanField(default=False)
+
+    pre_assessment_pdf = models.FileField(
+        _('Upload hier je aanvraag (in .pdf of .doc(x)-formaat)'),
+        blank=True,
+        upload_to=PREASSESSMENT_FILENAME,
+        validators=[validate_pdf_or_doc],
+    )
+
+    is_pre_approved = models.BooleanField(
+        _(
+            'Heb je formele toestemming van een ethische toetsingcommissie, '
+            'uitgezonderd deze FETC-GW commissie?'),
+        default=None,
+        null=True,
+        blank=True,
+    )
+
+    pre_approval_institute = models.CharField(
+        _('Welk instituut heeft de aanvraag goedgekeurd?'),
+        max_length=200,
+        blank=True,
+        null=True,
+    )
+
+    pre_approval_pdf = models.FileField(
+        _(
+            'Upload hier je formele toestemmingsbrief van dit instituut (in '
+            '.pdf of .doc(x)-formaat)'),
+        blank=True,
+        upload_to=PRE_APPROVAL_FILENAME,
+        validators=[validate_pdf_or_doc],
+    )
+
+    in_course = models.BooleanField(
+        _('Ik vul de portal in in het kader van een cursus'),
+        default=False,
+    )
+
+    is_exploration = models.BooleanField(
+        _('Ik vul de portal in om de portal te exploreren'),
+        default=False,
+    )
+
+    pdf = models.FileField(
+        blank=True,
+        upload_to=PROPOSAL_FILENAME,
+        storage=OverwriteStorage(),
+    )
+
+    attachments = models.ManyToManyField(
+        "attachments.Attachment",
+        related_name="proposal_set",
+    )
+
+    # Fields with respect to Studies
+    studies_similar = models.BooleanField(
+        _('Kan voor alle deelnemersgroepen dezelfde informatiebrief en \
+        toestemmingsverklaring gebruikt worden?'),
+        help_text=_('Daar waar de verschillen klein en qua belasting of \
+risico irrelevant zijn is sprake van in essentie hetzelfde traject, en \
+voldoet één set documenten voor de informed consent. Denk \
+hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van \
+een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere \
+helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op \
+hetzelfde moment een verschillende interventie-variant krijgen (specificeer \
+dan wel bij de beschrijving van de interventie welke varianten precies \
+gebruikt worden). Let op: als verschillende groepen deelnemers verschillende \
+<i>soorten</i> taken krijgen, dan kan dit niet en zijn dit afzonderlijke \
+trajecten.'),
+        blank=True,
+        null=True,
+    )
+
+    studies_number = models.PositiveIntegerField(
+        _('Hoeveel verschillende trajecten zijn er?'),
+        default=1,
+        validators=[MinValueValidator(1), MaxValueValidator(10)],
+    )
+
+    # Status
+    status = models.PositiveIntegerField(
+        choices=STATUSES,
+        default=DRAFT,
+    )
+
+    status_review = models.BooleanField(
+        default=None,
+        null=True,
+        blank=True,
+    )
+
+    avg_understood = models.BooleanField(
+        _('Ik heb kennis genomen van het bovenstaande en begrijp mijn verantwoordelijkheden ten opzichte van de AVG.'),
+        default=False,
+        null=False,
+        validators=[AVGUnderstoodValidator],
+    )
+
+    dmp_file = models.FileField(
+        _('Als je een Data Management Plan hebt voor deze aanvraag, '
+          'kan je kiezen om deze hier bij te voegen. Het aanleveren van een '
+          'DMP vergemakkelijkt het toetsingsproces aanzienlijk.'),
+        blank=True,
+        validators=[validate_pdf_or_doc],
+        upload_to=DMP_FILENAME,
+        storage=OverwriteStorage(),
+    )
+
+
+    # Confirmation
+    confirmation_comments = models.TextField(
+        _('Ruimte voor eventuele opmerkingen'),
+        blank=True,
+    )
+
+    # Dates for bookkeeping
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
+    date_submitted_supervisor = models.DateTimeField(null=True)
+    date_reviewed_supervisor = models.DateTimeField(null=True)
+    date_submitted = models.DateTimeField(null=True)
+    date_reviewed = models.DateTimeField(null=True)
+    date_confirmed = models.DateField(
+        _('Datum bevestigingsbrief verstuurd'),
+        null=True,
+    )
+
+    has_minor_revision = models.BooleanField(
+        _('Is er een revisie geweest na het indienen van deze aanvraag?'),
+        default=False,
+    )
+
+    minor_revision_description = models.TextField(
+        _('Leg uit'),
+        null=True,
+        blank=True,
+    )
+
+    self_assessment = models.TextField(
+        _('Wat zijn de belangrijkste ethische kwesties in dit onderzoek en '
+          'beschrijf kort hoe ga je daarmee omgaat.  Gebruik maximaal 1000 '
+          'woorden.'),
+        blank=True,
+        validators=[
+            MaxWordsValidator(
+                SELF_ASSESSMENT_MAX_WORDS
+            ),
+        ]
+    )
+
+    # References to other models
+    relation = models.ForeignKey(
+        Relation,
+        verbose_name=_('In welke hoedanigheid ben je betrokken \
+bij dit onderzoek?'),
+        on_delete=models.CASCADE,
+        blank=False,
+        null=True,
+    )
+
+    student_program = models.CharField(
+        verbose_name=_('Wat is je studierichting?'),
+        max_length = 200,
+        blank=True,
+    )
+
+    student_context = models.ForeignKey(
+        StudentContext,
+        verbose_name=_("In welke context doe je dit onderzoek?"),
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+
+    student_context_details = models.CharField(
+        verbose_name=_('Namelijk:'),
+        max_length=200,
+        blank=True,
+        null=True,
+    )
+
+    student_justification = models.TextField(
+        verbose_name=_('Studenten (die mensgebonden onderzoek uitvoeren binnen hun \
+studieprogramma) hoeven in principe geen aanvraag in te dienen bij de \
+FETC-GW. Bespreek met je begeleider of je daadwerkelijk een aanvraag \
+moet indienen. Als dat niet hoeft kun je nu je aanvraag afbreken. \
+Als dat wel moet, geef dan hier aan wat de reden is:'),
+        max_length=500,
+        blank=True,
+    )
+
+    created_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='created_by',
+        on_delete=models.CASCADE,
+    )
+
+    applicants = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_('Uitvoerenden, inclusief uzelf. Let op! De andere onderzoekers moeten \
+        ten minste één keer zijn ingelogd op dit portaal om ze te kunnen selecteren.'),
+        related_name='applicants',
+    )
+
+    supervisor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_('Eindverantwoordelijke onderzoeker'),
+        blank=True,
+        null=True,
+        help_text=_('''Aan het einde van de procedure kan je deze aanvraag ter
+        verificatie naar je eindverantwoordelijke sturen. De
+        eindverantwoordelijke zal de aanvraag vervolgens kunnen aanpassen en
+        indienen bij de FETC-GW. <br><br><strong>NB</strong>: als je je
+        eindverantwoordelijke niet kunt vinden met dit veld, moeten zij
+        waarschijnlijk eerst één keer inloggen in deze portal. Je kunt nog wel
+        verder met de aanvraag, maar vergeet dit veld niet in te vullen voor je de
+        aanvraag indient.'''),
+        on_delete=models.CASCADE,
+    )
+
+    # Copying an existing Proposal
+    parent = models.ForeignKey(
+        'self',
+        null=True,
+        related_name='children',
+        verbose_name=_('Te kopiëren aanvraag'),
+        help_text=_(
+            'Dit veld toont enkel aanvragen waar je zelf een medeuitvoerende '
+            'bent.'),
+        on_delete=models.CASCADE,
+    )
+
+    is_revision = models.BooleanField(
+        _(
+            'Is deze aanvraag een revisie van of amendement op een ingediende aanvraag?'
+        ),
+        default=False,
+    )
+
+    def is_practice(self):
+        return self.in_course or self.is_exploration
+
+    def accountable_user(self):
+        return self.supervisor if self.relation.needs_supervisor else self.created_by
+
+    def continue_url(self):
+        """Returns the next URL for this Proposal"""
+        available_urls = self.available_urls()
+        # For copies, always start at the first available URL
+        if self.parent:
+            result = available_urls[0].url
+        # Otherwise, loop through the available URLs to find the last non-title with an URL
+        else:
+            for available_url in available_urls:
+                if available_url.url and not available_url.is_title:
+                    result = available_url.url
+        return result
+
+    def committee_prefixed_refnum(self):
+        """Returns the reference number including the reviewing committee"""
+        parts = (self.reviewing_committee.name, self.reference_number)
+        return '-'.join(parts)
+
+    def available_urls(self):
+        """Returns the available URLs for this Proposal"""
+        return available_urls(self)
+
+    def first_study(self):
+        """Returns the first Study in this Proposal, or None if there's none."""
+        return self.study_set.order_by('order')[
+            0] if self.study_set.count() else None
+
+    def last_study(self):
+        """Returns the last Study in this Proposal, or None if there's none."""
+        return self.study_set.order_by('-order')[
+            0] if self.study_set.count() else None
+
+    def current_study(self):
+        """
+        Returns the current (incomplete) Study.
+        - If all Studies are completed, the last Study is returned.
+        - If no Studies have yet been created, None is returned.
+        """
+        current_study = None
+        for study in self.study_set.all():
+            current_study = study
+            if not study.is_completed():
+                break
+        return current_study
+
+    def current_session(self):
+        """
+        Returns the current (incomplete) Session.
+        - If all Sessions are completed, the last Session is returned.
+        - If no Sessions have yet been created, None is returned.
+        """
+        current_session = None
+        for study in self.study_set.all().prefetch_related('session_set'):
+            for session in study.session_set.all():
+                current_session = session
+                if session.tasks_duration is None:
+                    break
+        return current_session
+
+    def amendment_or_revision(self):
+        if self.is_revision and self.parent:
+            return _('Amendement') if self.parent.status_review else _('Revisie')
+
+    def type(self):
+        """
+        Returns the type of a Study: either normal, revision, amendment, preliminary assessment or practice
+        """
+        result = _('Normaal')
+        amendment_or_revision = self.amendment_or_revision()
+        if amendment_or_revision is not None:
+            result = amendment_or_revision
+        elif self.is_pre_assessment:
+            result = _('Voortoetsing')
+        elif self.is_practice():
+            result = _('Oefening')
+        elif self.is_pre_approved:
+            result = _('Extern getoetst')
+
+        return result
+
+    def supervisor_decision(self):
+        """Returns the Decision of the supervisor for this Proposal (if any and in current stage)"""
+        from reviews.models import Review, Decision
+
+        if self.supervisor and self.status == Proposal.SUBMITTED_TO_SUPERVISOR:
+            decisions = Decision.objects.filter(
+                review__proposal=self,
+                review__stage=Review.SUPERVISOR
+            ).order_by('-pk')
+
+            if decisions:
+                return decisions[0]
+
+            from reviews.utils import start_supervisor_phase
+            start_supervisor_phase(self)
+
+            return self.supervisor_decision()
+
+    def latest_review(self):
+        from reviews.models import Review
+
+        return Review.objects.filter(proposal=self).last()
+
+    def enforce_wmo(self):
+        """Send proposal back to draft phase with WMO enforced."""
+        self.status = self.DRAFT
+        self.save()
+        self.wmo.enforced_by_commission = True
+        self.wmo.save()
+
+    def mark_reviewed(self, continuation, time=None):
+        """Finalize a proposal after a decision has been made."""
+        if time is None:
+            time = timezone.now()
+        self.status = self.DECISION_MADE
+        # Importing here to prevent circular import
+        from reviews.models import Review
+        self.status_review = continuation in [
+            Review.GO, Review.GO_POST_HOC
+        ]
+        self.date_reviewed = time
+        self.generate_pdf()
+        self.save()
+
+    def generate_pdf(self, force_overwrite=False):
+        """Generate _and save_ a pdf of the proposal for posterity.
+        The currently existing PDF will not be overwritten unless the
+        force_overwrite keyword is True."""
+        from proposals.utils import generate_pdf
+        pdf = generate_pdf(self)
+        if (force_overwrite is True
+            or not self.use_canonical_pdf
+            or not self.pdf
+            ):
+            self.pdf.save(
+                PROPOSAL_FILENAME(self, "document.pdf"),
+                pdf,
+            )
+            self.save()
+        else:
+            logger.warn(
+                f"Not saving PDF of {self.reference_number} "
+                "to preserve canonical PDF.",
+            )
+        return pdf
+
+    @property
+    def pdf_template_name(self):
+        """Determine the correct PDf template for this proposal."""
+        template_name = 'proposals/proposal_pdf.html'
+        if self.is_pre_approved:
+            template_name = 'proposals/proposal_pdf_pre_approved.html'
+        elif self.is_pre_assessment:
+            template_name = 'proposals/proposal_pdf_pre_assessment.html'
+        return template_name
+
+    def use_canonical_pdf(self):
+        """Returns False if this proposal should regenerate its PDF
+        on request. Proposals that have already been decided on should
+        rely on a PDF generated at time of review, so that the PDF
+        generation templates can evolve without breaking older proposals."""
+        return self.status_review is not None
+
+    def __str__(self):
+        if self.is_practice():
+            return '{} ({}) (Practice)'.format(self.title, self.created_by)
+        return '{} ({})'.format(self.title, self.created_by)
+
