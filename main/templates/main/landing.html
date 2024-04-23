@@ -26,9 +26,7 @@
 {% block pre-messages-content %}
     {% include 'main/index_parts/cover.html' %}
     <div class="uu-hero">
-        <h2>
-            {% trans "Startpagina" %}
-        </h2>
+        <h2>{% trans "Startpagina" %}</h2>
     </div>
 {% endblock %}
 
@@ -84,8 +82,7 @@
                 {% endblocktrans %}
             </p>
             {% if show_saml %}
-                <a href="{% url 'saml-login' %}?next={{ next }}"
-                   class="btn btn-primary">
+                <a href="{% url 'saml-login' %}?next={{ next }}" class="btn btn-primary">
                     {% trans 'Log in met je Solis-ID' %}
                     {% if login_descriptors %}(SAML){% endif %}
                 </a>
@@ -93,8 +90,7 @@
             {# Unnecessary layout hack #}
             {% if show_saml and show_django %}<div class="mt-1"></div>{% endif %}
             {% if show_django %}
-                <a href="{% url 'login' %}?next={{ next }}"
-                   class="btn btn-primary">
+                <a href="{% url 'login' %}?next={{ next }}" class="btn btn-primary">
                     {% trans 'Log in met je Solis-ID' %}
                     {% if login_descriptors %}(Non-SAML){% endif %}
                 </a>

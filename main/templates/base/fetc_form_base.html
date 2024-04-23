@@ -10,28 +10,29 @@
             {% block stepper %}
                 {% include "base/stepper.html" %}
             {% endblock %}
-        </div>
 
+        </div>
         <div class="col-9">
             {# A block one can use to add stuff before the actual form, but next to the stepper #}
             {% block pre-form %}{% endblock %}
-            <form action="" method="post" class="uu-form mt-3 {% block form-css-classes %}{% endblock %}" enctype="multipart/form-data">
+
+            <form action="" method="post" class="uu-form mt-3 {% block form-css-classes %}{% endblock %}
+                " enctype="multipart/form-data">
                 {% csrf_token %}
                 <table>
                     {{ form }}
                 </table>
-
                 {% block form-buttons %}
                     {% include "base/form_buttons.html" %}
                 {% endblock %}
-            </form>
 
+            </form>
             {# A block one can use to add stuff after the form, but still next to the stepper #}
             {% block post-form %}{% endblock %}
-        </div>
 
+        </div>
         {# A block one can use to insert content after the stepper/form container #}
         {% block post-form-container-content %}{% endblock %}
-    </div>
 
+    </div>
 {% endblock %}

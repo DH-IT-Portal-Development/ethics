@@ -17,7 +17,9 @@
             </p>
             <form action="" method="post">
                 {% csrf_token %}
-                <input class="btn btn-danger" type="submit" value="{% trans 'Verwijderen' %}" />
+                <input class="btn btn-danger"
+                       type="submit"
+                       value="{% trans 'Verwijderen' %}" />
                 <a class="btn btn-secondary" href="javascript:history.go(-1)">{% trans "Annuleren" %}</a>
             </form>
         </div>

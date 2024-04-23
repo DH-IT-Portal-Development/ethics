@@ -92,7 +92,7 @@ class SeasonalCoverImageMixin:
 
         # Allow overriding by adding a ?season= get parameter
         # For dev/testing mostly
-        if override := self.request.GET.get('season', None):
+        if override := self.request.GET.get("season", None):
             if override in self.seasons.keys():
                 return self.seasons[override]
 
@@ -123,7 +123,7 @@ class HomeView(LoginRequiredMixin, SeasonalCoverImageMixin, _SystemMessageView):
         context = super().get_context_data(*args, **kwargs)
 
         context["is_humanities"] = is_member_of_humanities(self.request.user)
-        context['proposals'] = self.get_priority_proposals()
+        context["proposals"] = self.get_priority_proposals()
 
         return context
 
@@ -134,31 +134,39 @@ class HomeView(LoginRequiredMixin, SeasonalCoverImageMixin, _SystemMessageView):
             supervisor=self.request.user,
             status=Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
             date_reviewed_supervisor=None,
-        ).order_by('date_submitted_supervisor')[:self.max_n_proposals]
+        ).order_by("date_submitted_supervisor")[: self.max_n_proposals]
 
         if len(proposals) == self.max_n_proposals:
             return proposals
 
         n_needed = self.max_n_proposals - len(proposals)
 
-        proposals += Proposal.objects.filter(
-            applicants=self.request.user,
-            status=Proposal.Statuses.DRAFT,
-        ).distinct().order_by(
-            '-date_modified',
-        )[:n_needed]
+        proposals += (
+            Proposal.objects.filter(
+                applicants=self.request.user,
+                status=Proposal.Statuses.DRAFT,
+            )
+            .distinct()
+            .order_by(
+                "-date_modified",
+            )[:n_needed]
+        )
 
         if len(proposals) == self.max_n_proposals:
             return proposals
 
         n_needed = self.max_n_proposals - len(proposals)
 
-        proposals += Proposal.objects.filter(
-            applicants=self.request.user,
-            status__gt=Proposal.Statuses.DRAFT,
-        ).distinct().order_by(
-            '-date_modified',
-        )[:n_needed]
+        proposals += (
+            Proposal.objects.filter(
+                applicants=self.request.user,
+                status__gt=Proposal.Statuses.DRAFT,
+            )
+            .distinct()
+            .order_by(
+                "-date_modified",
+            )[:n_needed]
+        )
 
         return proposals
 

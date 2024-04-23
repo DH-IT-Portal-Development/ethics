@@ -22,7 +22,6 @@
 
 {% block pre-form %}
     <h3>{% trans "Aanmelding bij de METC" %}</h3>
-
     {% if wmo.status == wmo.WMOStatuses.WAITING %}
         <div class="alert alert-warning mt-3">
             {% trans "Zolang je aanvraag nog niet is beoordeeld door de METC, kan je niet verder in het aanmeldingsproces." %}

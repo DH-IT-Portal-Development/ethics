@@ -1,4 +1,5 @@
 {% extends "base/tool_base.html" %}
+
 {% load i18n %}
 {% load static %}
 
@@ -19,11 +20,9 @@
     {% include "base/form_styling.html" %}
 {% endblock %}
 
-
 {% block uu-header-pre-menu %}
     <a href="{% url 'main:home' %}"
-       class="navbar-text fs-4 text-black text-decoration-none d-none d-lg-flex text-nowrap pe-4"
-    >
+       class="navbar-text fs-4 text-black text-decoration-none d-none d-lg-flex text-nowrap pe-4">
         {% trans 'FETC-GW Portal' %}
     </a>
 {% endblock %}

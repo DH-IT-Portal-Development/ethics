@@ -20,9 +20,18 @@ from .models import Proposal, Relation, Wmo
 from .utils import check_local_facilities
 from .validators import UniqueTitleValidator
 
-from cdh.core.forms import DateField, BootstrapRadioSelect, BootstrapCheckboxSelectMultiple, BootstrapSelect, \
-    SearchableSelectWidget, DateInput, SplitDateTimeWidget, BootstrapSplitDateTimeWidget, TemplatedForm, \
-    TemplatedModelForm
+from cdh.core.forms import (
+    DateField,
+    BootstrapRadioSelect,
+    BootstrapCheckboxSelectMultiple,
+    BootstrapSelect,
+    SearchableSelectWidget,
+    DateInput,
+    SplitDateTimeWidget,
+    BootstrapSplitDateTimeWidget,
+    TemplatedForm,
+    TemplatedModelForm,
+)
 
 
 class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):

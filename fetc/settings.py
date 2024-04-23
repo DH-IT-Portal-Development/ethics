@@ -34,19 +34,16 @@ WSGI_APPLICATION = "fetc.wsgi.application"
 INSTALLED_APPS = [
     # Main app
     "main",
-
     # CDH Core libraries
     "cdh.core",
     "cdh.vue",
     "cdh.rest",
-
     # Django supplied apps
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
     # External apps
     "menu",
     "debug_toolbar",
@@ -56,7 +53,6 @@ INSTALLED_APPS = [
     "django_user_agents",
     "modeltranslation",
     "impersonate",
-
     # Other local apps
     "proposals",
     "studies",
