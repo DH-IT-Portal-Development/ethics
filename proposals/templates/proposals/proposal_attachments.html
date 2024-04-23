@@ -1,0 +1,77 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+{% load i18n %}
+{% load uil_filters %}
+
+{% block header_title %}
+    {% trans "Informed consent formulieren" %} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=proposal.available_urls active=4 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+
+            <h2>
+                {% trans "Informed consent formulieren uploaden" %}
+            </h2>
+            <p>
+                {% blocktrans trimmed %}
+                    Hier kan je de Informed consent formulieren uploaden voor de opgegeven traject(en). Optioneel kan je indien nodig maximaal 10
+                    paar extra formulieren uploaden. <br/> Klik hiervoor op 'Voeg extra formulieren' onderaan de pagina. Deze velden
+                    kan je weer weg halen door alle formulieren te wissen.
+                {% endblocktrans %}
+            </p>
+
+            <p>
+                {% blocktrans trimmed %}
+                    Gebruik de juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" target="blank">voorbeelddocumenten</a> voor de <em>informed consent</em>. </li>
+                {% endblocktrans %}
+
+                {% blocktrans trimmed %}
+                    Studenten moeten hun begeleider vragen om deze formulieren; dezelfde voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
+                {% endblocktrans %}
+            </p>
+
+            <p>
+                {% blocktrans trimmed %}
+                    Let op dat je documenten geen redactionele fouten en/of taalfouten bevatten: een aanvraag kan hierom direct voor revisie worden teruggestuurd.
+                {% endblocktrans %}
+	        {% blocktrans trimmed %}
+                    Bij ontvangst worden alle bestandsnamen gewijzigd, zet hier dus geen belangrijke informatie in.
+                {% endblocktrans %}
+            </p>
+            <h2 class="">{% trans "Bestanden bij deze aanvraag" %}</h2>
+            {% include my_attachment %}
+                {% for kind in attachment_kinds %}
+                    <div class="mt-3 task_list">
+                        <div class="row d-flex justify-content-between m-0 mt-3">
+                            <h3 class="">{{kind.name}}</h3>
+                            <h6 class="">Nog toe te voegen</h6>
+                        </div>
+                        <pre>bestandsnaap_informatiebrief_traject1.docx</pre>
+                        <p>{{kind.description}}</p>
+                        <p><a href="{{kind.get_attach_url}}">Voeg toe</a></p>
+                        <strong>Status:</strong>
+                        {% if kind.test_required %}
+                            Vereist, nog toe te voegen: {{kind.still_required}}
+                        {% else %}
+                            {% if num_provided > 0 %}
+                                Voldaan
+                            {% else %}
+                                Niet vereist
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                            </div>
+                            <br/>
+                            {% include "base/form_buttons.html" %}
+            </form>
+                        </div>
+        </div>
+
+{% endblock %}
