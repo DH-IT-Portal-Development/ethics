@@ -2,6 +2,8 @@ from django.urls import path, include
 from django.conf import settings
 
 from attachments.views import AttachmentCreateView
+from .views.attachment_views import AttachmentsView
+
 from .models import Proposal
 
 from .views.proposal_views import (
@@ -300,30 +302,36 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns.append(
-        [
-            path(
-                "<int:other_pk>/attach/",
-                AttachmentCreateView.as_view(
-                    other_model=Proposal,
-                    template_name="proposals/proposal_attach.html",
-                ),
-                name="attach_file",
+    urlpatterns += [
+        path(
+            "<int:other_pk>/attach/",
+            AttachmentCreateView.as_view(
+                other_model=Proposal,
+                template_name="proposals/proposal_attach.html",
             ),
-
-            path(
-                "<int:other_pk>/attach/<str:kind>/",
-                AttachmentCreateView.as_view(
-                    other_model=Proposal,
-                    template_name="proposals/proposal_attach.html",
-                ),
-                name="attach_file",
+            name="attach_file",
+        ),
+        # The following attach path must come first to avoid greedy
+        # matching of the <str:kind> variable
+        path(
+            "<int:other_pk>/attach/<int:attachment_pk>/",
+            AttachmentCreateView.as_view(
+                other_model=Proposal,
+                template_name="proposals/proposal_attach.html",
             ),
-
-            path(
-                "<int:pk>/attachments/",
-                AttachmentsView.as_view(),
-                name="attachments",
+            name="attach_file",
+        ),
+        path(
+            "<int:other_pk>/attach/<str:kind>/",
+            AttachmentCreateView.as_view(
+                other_model=Proposal,
+                template_name="proposals/proposal_attach.html",
             ),
-        ]
-    )
+            name="attach_file",
+        ),
+        path(
+            "<int:pk>/attachments/",
+            AttachmentsView.as_view(),
+            name="attachments",
+        ),
+    ]
