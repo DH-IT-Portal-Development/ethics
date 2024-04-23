@@ -8,6 +8,8 @@ Voordat deze aanvraag in behandeling kan worden genomen door de FETC-GW moet dez
 
 Als er nog wijzigingen nodig zijn kun je die zelf aanbrengen of je kunt de aanvraag afkeuren.
 In dat laatste geval moet je {{ creator }} op de hoogte stellen, zodat hij/zij de aanvraag kan aanpassen.
+
+Je kunt deze concept-aanvraag bekijken via {{ proposal_url }}.
 {% endblock %}
 
 {% block content_en %}
@@ -18,4 +20,6 @@ processed by the FEtC-H, it must be approved by you.
 
 If changes are still needed you can make them yourself, or you can reject the application. In the latter case, you must
 then notify {{ creator }} so that he/she can modify the application.
+
+You can review this draft application via {{ proposal_url }}.
 {% endblock %}
