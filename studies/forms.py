@@ -2,7 +2,7 @@
 
 from django import forms
 from django.utils.functional import lazy
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe, SafeString
 from django.utils.translation import gettext_lazy as _
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
@@ -43,7 +43,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
             "recruitment": forms.CheckboxSelectMultiple(),
             "compensation": forms.RadioSelect(),
         }
-        mark_safe_lazy = lazy(mark_safe, str)
+        mark_safe_lazy = lazy(mark_safe, SafeString)
         labels = {
             "legally_incapable": mark_safe_lazy(
                 _(

@@ -8,10 +8,10 @@ from main.utils import YES_NO
 from .models import Session, Task
 
 
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe, SafeString
 from django.utils.functional import lazy
 
-mark_safe_lazy = lazy(mark_safe, str)
+mark_safe_lazy = lazy(mark_safe, SafeString)
 
 
 class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
