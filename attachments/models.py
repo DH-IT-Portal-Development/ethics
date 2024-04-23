@@ -9,6 +9,11 @@ from cdh.files.db import FileField as CDHFileField
 
 class Attachment(models.Model):
     upload = CDHFileField()
+    attached_to = models.ManyToManyField(
+        "proposals.Proposal",
+        related_name="attachments_set",
+        null=True,
+    )
     parent = models.ForeignKey(
         "attachments.attachment",
         related_name="children",

@@ -1,0 +1,11 @@
+.attachment-outer {
+    border: 1px solid #cccccc;
+    background-color: #eeeeee;
+}
+
+.attachment-upper-border {
+    background-color: #ccc;
+    font-size: smaller;
+    padding: 0.2rem;
+    padding-left: 0.5rem;
+}
