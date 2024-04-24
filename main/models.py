@@ -163,6 +163,6 @@ class SamlUserProxy(User):
                     continue
 
                 faculty_obj.users.add(self)
-            except Exception as e:
-                logger.error(f"Error processing faculty for user: {e}", exc_info=True)
+            except:  # noQA
+                logger.error(f"Error processing faculty for user", exc_info=True)
                 continue
