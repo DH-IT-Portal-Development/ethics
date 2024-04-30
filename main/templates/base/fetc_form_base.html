@@ -21,9 +21,11 @@
                     <div class="uu-form-text-row">
                         <div class="uu-form-text">
                             {% block pre-form-text %}{% endblock %}
+
                         </div>
                         <aside class="uu-form-text-aside">
                             {% block pre-form-aside %}{% endblock %}
+
                         </aside>
                     </div>
                 {% endblock %}
@@ -31,9 +33,7 @@
                 {{ form }}
                 {% block form-buttons %}
                     <div class="uu-form-text-row">
-                        <div class="uu-form-text">
-                            {% include "base/form_buttons.html" %}
-                        </div>
+                        <div class="uu-form-text">{% include "base/form_buttons.html" %}</div>
                     </div>
                 {% endblock %}
 
@@ -42,14 +42,16 @@
                     <div class="uu-form-text-row">
                         <div class="uu-form-text">
                             {% block post-form-text %}{% endblock %}
+
                         </div>
                         <aside class="uu-form-text-aside">
                             {% block post-form-aside %}{% endblock %}
+
                         </aside>
                     </div>
                 {% endblock %}
-            </form>
 
+            </form>
         </div>
         {# A block one can use to insert content after the stepper/form container #}
         {% block post-form-container-content %}{% endblock %}
