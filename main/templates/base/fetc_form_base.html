@@ -19,9 +19,7 @@
             <form action="" method="post" class="uu-form mt-3 {% block form-css-classes %}{% endblock %}
                  " enctype="multipart/form-data">
                 {% csrf_token %}
-                <table>
-                    {{ form }}
-                </table>
+                {{ form }}
                 {% block form-buttons %}
                     {% include "base/form_buttons.html" %}
                 {% endblock %}
