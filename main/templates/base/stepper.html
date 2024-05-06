@@ -3,15 +3,15 @@
 <div class="stepper">
     <ul>
         {% counter counter create 1 %}
-        {% for url in proposal.available_urls %}
+        {% for item in stepper.collect_items %}
             <li>
-                <a class="stepper-item" href="{{ url.url }}">
+                <a class="stepper-item" href="{{ item.get_url }}">
                     <span class="stepper-bubble stepper-bubble-largest">{% counter counter value %}</span>
-                    <span>{{ url.title }}</span>
+                    <span>{{ item.stepper_title }}</span>
                 </a>
-                {% if url.children %}
+                {% if item.children %}
                     <ul>
-                        {% for child in url.children %}
+                        {% for child in item.children %}
                             <li>
                                 <a class="stepper-item" href="{{ child.url }}">
                                     <span class="stepper-bubble stepper-bubble-normal"></span>

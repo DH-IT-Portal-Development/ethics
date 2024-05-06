@@ -13,9 +13,13 @@ from django.template.loader import get_template
 from .models import Proposal
 from .forms import ProposalForm
 from .utils.proposal_utils import pdf_link_callback
+from .utils.stepper import StepperContextMixin
 
 
-class ProposalMixin(UserFormKwargsMixin):
+class ProposalMixin(
+        UserFormKwargsMixin,
+        StepperContextMixin,
+):
     model = Proposal
     form_class = ProposalForm
     success_message = _("Aanvraag %(title)s bewerkt")
