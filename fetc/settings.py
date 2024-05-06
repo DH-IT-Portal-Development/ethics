@@ -14,7 +14,7 @@ import os
 
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse_lazy
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
@@ -32,18 +32,28 @@ WSGI_APPLICATION = "fetc.wsgi.application"
 # Application definition
 
 INSTALLED_APPS = [
+    # Main app
+    "main",
+    # CDH Core libraries
+    "cdh.core",
+    "cdh.vue",
+    "cdh.rest",
+    # Django supplied apps
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    # External apps
     "menu",
     "debug_toolbar",
     "django_extensions",
     "rest_framework",
-    "main",
-    "uil.core",
-    "uil.vue",
+    "django.contrib.admin",
+    "django_user_agents",
+    "modeltranslation",
+    "impersonate",
+    # Other local apps
     "proposals",
     "studies",
     "tasks",
@@ -51,10 +61,6 @@ INSTALLED_APPS = [
     "observations",
     "reviews",
     "faqs",
-    "modeltranslation",
-    "impersonate",
-    "django.contrib.admin",
-    "django_user_agents",
 ]
 
 MIDDLEWARE = [

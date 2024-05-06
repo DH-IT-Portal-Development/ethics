@@ -1,0 +1,38 @@
+{% extends 'base/fetc_base.html' %}
+
+{% block content %}
+    <div class="uu-container">
+        {# A block one can use to insert content before the stepper/form container #}
+        {% block pre-form-container-content %}{% endblock %}
+
+        {# todo: responsive design #}
+        <div class="col-3">
+            {% block stepper %}
+                {% include "base/stepper.html" %}
+            {% endblock %}
+
+        </div>
+        <div class="col-9">
+            {# A block one can use to add stuff before the actual form, but next to the stepper #}
+            {% block pre-form %}{% endblock %}
+
+            <form action="" method="post" class="uu-form mt-3 {% block form-css-classes %}{% endblock %}
+                 " enctype="multipart/form-data">
+                {% csrf_token %}
+                <table>
+                    {{ form }}
+                </table>
+                {% block form-buttons %}
+                    {% include "base/form_buttons.html" %}
+                {% endblock %}
+
+            </form>
+            {# A block one can use to add stuff after the form, but still next to the stepper #}
+            {% block post-form %}{% endblock %}
+
+        </div>
+        {# A block one can use to insert content after the stepper/form container #}
+        {% block post-form-container-content %}{% endblock %}
+
+    </div>
+{% endblock %}

@@ -6,11 +6,11 @@ from django.db import models
 from django.db.models import Q
 
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.utils.functional import lazy
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe, SafeString
 
-mark_safe_lazy = lazy(mark_safe, str)
+mark_safe_lazy = lazy(mark_safe, SafeString)
 
 from main.models import YesNoDoubt
 from main.validators import validate_pdf_or_doc

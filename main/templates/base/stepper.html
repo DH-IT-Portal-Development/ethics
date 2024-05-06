@@ -1,0 +1,28 @@
+{% load cdh_filters %}
+
+<div class="stepper">
+    <ul>
+        {% counter counter create 1 %}
+        {% for url in proposal.available_urls %}
+            <li>
+                <a class="stepper-item" href="{{ url.url }}">
+                    <span class="stepper-bubble stepper-bubble-largest">{% counter counter value %}</span>
+                    <span>{{ url.title }}</span>
+                </a>
+                {% if url.children %}
+                    <ul>
+                        {% for child in url.children %}
+                            <li>
+                                <a class="stepper-item" href="{{ child.url }}">
+                                    <span class="stepper-bubble stepper-bubble-normal"></span>
+                                    <span>{{ child.title }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+            {% counter counter increment %}
+        {% endfor %}
+    </ul>
+</div>
