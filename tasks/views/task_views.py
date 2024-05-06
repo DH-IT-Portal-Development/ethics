@@ -2,7 +2,7 @@
 
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
 from ..forms import TaskForm
@@ -58,7 +58,7 @@ class TaskDelete(DeletionAllowedMixin, DeleteView):
     def get_success_url(self):
         return reverse("tasks:end", args=(self.object.session.pk,))
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form):
         """
         Deletes the Task and updates the Session.
         Completely overrides the default delete function (as that calls delete too late for us).

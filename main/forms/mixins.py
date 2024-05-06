@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError, ImproperlyConfigured
 from django.forms.fields import Field, FileField
 from django.forms.models import InlineForeignKeyField, construct_instance
 from django.forms.utils import ErrorDict
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 
 class SoftValidationMixin:
@@ -10,6 +10,9 @@ class SoftValidationMixin:
     This mixin will allow a form to submit even if specified fields have
     validator errors.
     """
+
+    # Disable the default TemplatedForm behavior of showing valid fields, it will be even more confusing
+    show_valid_fields = False
 
     _soft_validation_fields = []
 

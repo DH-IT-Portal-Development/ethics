@@ -1,23 +1,23 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load static %}
 {% load proposal_filters %}
 {% load fetc_filters %}
 {% load i18n %}
 {% load compare_tags %}
-{% load uil_filters %}
+{% load cdh_filters %}
 
 {% block header_title %}
     {{ review.proposal.title }} - {{ review.proposal.reference_number }} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{{ review.proposal.title }} - {{ review.proposal.reference_number }}</h2>
         </div>
     </div>
-    <div class="uu-inner-container">
+    <div class="uu-container">
         {% with review=review %}
             {% include "reviews/review_detail_sidebar.html" %}
         {% endwith %}

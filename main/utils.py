@@ -4,7 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 import magic  # whoooooo
 import pdftotext

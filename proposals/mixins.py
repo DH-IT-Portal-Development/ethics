@@ -3,7 +3,7 @@ from collections.abc import Iterable
 from braces.views import UserFormKwargsMixin
 from xhtml2pdf import pisa
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ImproperlyConfigured
 
 from django.views.generic.base import TemplateResponseMixin

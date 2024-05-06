@@ -13,7 +13,7 @@ from django.core.mail import send_mail
 from django.db.models import Q
 from django.urls import reverse
 from django.template.loader import render_to_string
-from django.utils.translation import activate, get_language, ugettext as _
+from django.utils.translation import activate, get_language, gettext as _
 from django.utils.deconstruct import deconstructible
 
 from main.utils import AvailableURL, get_secretary

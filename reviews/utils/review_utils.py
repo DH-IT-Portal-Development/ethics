@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.template.loader import render_to_string
-from django.utils.translation import activate, get_language, ugettext_lazy as _
+from django.utils.translation import activate, get_language, gettext_lazy as _
 from django.utils import timezone
 
 from main.models import YesNoDoubt

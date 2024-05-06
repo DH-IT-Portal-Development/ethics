@@ -1,9 +1,9 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load i18n %}
 {% load proposal_filters %}
 {% load static %}
-{% load uil_filters %}
+{% load cdh_filters %}
 {% load get_field_name %}
 {% load diff_tags %}
 
@@ -32,7 +32,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>
                 {% trans "Overzicht van wijzigingen bij aanmelding " %}
@@ -43,7 +43,7 @@
             </p>
         </div>
     </div>
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12 compare document-compare">
             <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
                 <img src="{% static 'main/images/loading.gif' %}" />
@@ -51,8 +51,8 @@
             {% for section in sections %}
                 {% include section %}
             {% endfor %}
-            <p class="mt-5 float-right">
-                <button class="button" onclick="window.history.back();">{% trans "Terug naar de vorige pagina" %}</button>
+            <p class="mt-5 float-end">
+                <button class="btn btn-secondary" onclick="window.history.back();">{% trans "Terug naar de vorige pagina" %}</button>
             </p>
         </div>
     </div>
