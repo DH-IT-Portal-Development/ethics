@@ -3,10 +3,12 @@
 {% block content_nl %}
 Beste collega,
 
-Uw concept-aanmelding wordt door de eindverantwoordelijk onderzoeker {{ supervisor }} van deze aanvraag gecontroleerd.
-Zodra deze de concept-aanmelding, evt. na kleine aanpassingen, heeft goedgekeurd en ter toetsing bij de FETC-GW heeft ingediend, krijgt u van ons bericht.
-Indien de concept-aanmelding nog aanzienlijke wijzigingen uwerzijds behoeft zal de eindverantwoordelijk onderzoeker zelf contact met u opnemen.
-U kunt uw ingediende aanmelding hier in PDF vorm bekijken:
+Je conceptaanvraag wordt door de eindverantwoordelijk onderzoeker {{ supervisor }} gecontroleerd.
+Zodra {{ supervisor }} de conceptaanvraag, evt. na kleine aanpassingen, heeft goedgekeurd en ter toetsing bij de FETC-GW heeft ingediend, krijg je van ons bericht.
+
+Als er nog aanzienlijke wijzigingen in de conceptaanvraag moeten worden doorgevoerd zal {{ supervisor }} zelf contact met je opnemen. Je aanvraag wordt dan voorlopig door {{ supervisor }} afgekeurd in de portal, zodat je de wijzigingen kunt doorvoeren.
+
+U kunt uw ingediende aanmelding hier in PDF-vorm bekijken:
 {{ pdf_url }}
 {% endblock %}
 
@@ -15,7 +17,9 @@ Dear colleague,
 
 Your draft application will be checked by your supervisor {{ supervisor }}, the researcher who has the final responsibility of this study.
 You will receive a notification as soon as {{ supervisor }} has approved and formally submitted your draft application, possibly after making some minor revisions.
-In case {{ supervisor }} finds it necessary for you to make more substantial revisions in the application, he/she will notify you about this, and meanwhile formally disapprove the study in order for you to be able to revise and resubmit it.
-You can find a PDF file of your submission here:
+
+In case {{ supervisor }} finds it necessary for you to make more substantial revisions in the application, he/she will notify you about this, and meanwhile formally disapprove the application in order for you to be able to revise and resubmit it.
+
+You can find the PDF file of your submission here:
 {{pdf_url}}
 {% endblock %}
