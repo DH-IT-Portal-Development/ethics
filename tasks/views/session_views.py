@@ -3,7 +3,7 @@
 from typing import Any
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView, CreateView
 from ..forms import SessionUpdateForm, SessionEndForm, SessionOverviewForm
@@ -20,7 +20,7 @@ class SessionDelete(DeleteView):
     def get_success_url(self):
         return reverse("tasks:session_overview", args=(self.object.study.pk,))
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form):
         """
         Deletes the Session and updates the Study and other Sessions.
         Completely overrides the default delete function (as that calls delete too late for us).

@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load i18n %}
 {% load static %}
@@ -23,28 +23,28 @@
     </script>
 {% endblock %}
 
+{% block pre-messages-content %}
+    {% include 'main/index_parts/cover.html' %}
+    <div class="uu-hero">
+        <h2>{% trans "Startpagina" %}</h2>
+    </div>
+{% endblock %}
+
 {% block content %}
-    <div class="coverimage">
-        <img src="{% static 'main/images/coverimage-summer_Kim_Oleary.jpg' %}" />
-    </div>
-    {# Very ugly imitation of uu-hero #}
-    <div style="background: #FFCD00; margin: -10px -15px; padding:1rem;">
-        <div class="uu-inner-container" style="padding-left: 15px">
-            <h2 style="font-weight: 500">{% trans "Startpagina" %}</h2>
+    {% if systemmessage_list %}
+        <div class="uu-container">
+            <div class="col-12">
+                {% for message in systemmessage_list %}
+                    <div class="{{ message.css_class }}">
+                        {% autoescape off %}
+                            {{ message.message }}
+                        {% endautoescape %}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <div class="uu-inner-container mt-1">
-        <div class="col-12">
-            {% for message in systemmessage_list %}
-                <div class="{{ message.css_class }}">
-                    {% autoescape off %}
-                        {{ message.message }}
-                    {% endautoescape %}
-                </div>
-            {% endfor %}
-        </div>
-    </div>
-    <div class="uu-inner-container mt-4">
+    {% endif %}
+    <div class="uu-container">
         <div class="col-12 col-md-8">
             <p>
                 {% blocktrans trimmed %}
@@ -82,8 +82,7 @@
                 {% endblocktrans %}
             </p>
             {% if show_saml %}
-                <a href="{% url 'saml-login' %}?next={{ next }}"
-                   class="button button-colored">
+                <a href="{% url 'saml-login' %}?next={{ next }}" class="btn btn-primary">
                     {% trans 'Log in met je Solis-ID' %}
                     {% if login_descriptors %}(SAML){% endif %}
                 </a>
@@ -91,8 +90,7 @@
             {# Unnecessary layout hack #}
             {% if show_saml and show_django %}<div class="mt-1"></div>{% endif %}
             {% if show_django %}
-                <a href="{% url 'login' %}?next={{ next }}"
-                   class="button button-colored">
+                <a href="{% url 'login' %}?next={{ next }}" class="btn btn-primary">
                     {% trans 'Log in met je Solis-ID' %}
                     {% if login_descriptors %}(Non-SAML){% endif %}
                 </a>

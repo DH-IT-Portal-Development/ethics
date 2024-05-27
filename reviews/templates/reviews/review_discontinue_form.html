@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -21,7 +21,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         {% with review=review %}
             {% include "reviews/review_detail_sidebar.html" %}
         {% endwith %}
@@ -66,11 +66,9 @@
                     <table>
                         {{ form.as_table }}
                     </table>
-                    <div class="float-right">
-                        <a class="button" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
-                        <input class="pure-button pure-button-primary"
-                               type="submit"
-                               value="{% trans 'OK' %}" />
+                    <div class="float-end">
+                        <a class="btn btn-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+                        <input class="btn btn-primary" type="submit" value="{% trans 'OK' %}" />
                     </div>
                 </form>
             </div>

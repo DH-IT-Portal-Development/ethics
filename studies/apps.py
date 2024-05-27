@@ -6,4 +6,4 @@ class StudiesConfig(AppConfig):
     verbose_name = "studies"
 
     def ready(self):
-        import studies.signals.handlers
+        import studies.signals.handlers  # noqa

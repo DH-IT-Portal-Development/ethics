@@ -52,7 +52,7 @@ Remember to include it in a with statement if the view does not provide it.
         {% if review.date_end %}
             <li>
                 {% blocktrans trimmed with date_end=review.date_end|date:"j F Y, G:i" %}
-                    Reviewronde beëindigd op
+                    Laatste beoordeling ontvangen op
                     <br />
                     {{ date_end }}.
                 {% endblocktrans %}
@@ -60,10 +60,12 @@ Remember to include it in a with statement if the view does not provide it.
         {% endif %}
         {% if review.stage == review.Stages.CLOSED %}
             <li>
-                {% blocktrans trimmed with continuation=review.get_continuation_display %}
+                {% blocktrans trimmed with continuation=review.get_continuation_display date_reviewed=review.proposal.date_reviewed|date:"j F Y, G:i" %}
                     Afhandeling:
                     <br />
-                    {{ continuation }}.
+                    {{ continuation }},
+                    <br />
+                    {{ date_reviewed }}.
                 {% endblocktrans %}
             </li>
             {% if review.proposal.date_confirmed %}

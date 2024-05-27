@@ -2,7 +2,7 @@
 
 from django import forms
 from django.forms import ModelForm
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.utils import YES_NO
@@ -10,10 +10,10 @@ from tasks.models import Study
 from .models import Session, Task
 
 
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe, SafeString
 from django.utils.functional import lazy
 
-mark_safe_lazy = lazy(mark_safe, str)
+mark_safe_lazy = lazy(mark_safe, SafeString)
 
 
 class SessionUpdateForm(SoftValidationMixin, ConditionalModelForm):

@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.template.loader import get_template
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 from main.templatetags.fetc_filters import create_unordered_html_list
 from proposals.templatetags.proposal_filters import (

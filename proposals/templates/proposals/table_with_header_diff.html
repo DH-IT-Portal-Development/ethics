@@ -8,8 +8,8 @@
 <table class="proposals-diff ">
     <tr>
         <th class="proposals-diff-question"></th>
-        <th class="proposals-diff-answer">{% trans "Originele aanvraag" %}</th>
-        <th class="proposals-diff-answer">{% trans "Revisie/amendement" %}</th>
+        <th class="proposals-diff-answer">{% trans "Vorige aanvraag" %}</th>
+        <th class="proposals-diff-answer">{% trans "Huidige aanvraag" %}</th>
     </tr>
     {% if warning %}
         {% for row in rows|slice:":1" %}
