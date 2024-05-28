@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load fetc_filters %}
 
-<table class="pure-table nostripes" width="100%" style="">
+<table class="pure-table" width="100%" style="">
     <thead>
         <tr>
             <th width="20%">{% trans "Taak" %}</th>
@@ -30,7 +30,7 @@
                 <td>{{ task.repeats }}</td>
                 {% if can_edit_tasks %}
                     <td>
-                        <a href="{% url 'tasks:update' task.id %}" class="text-decoration-none">
+                        <a href="{% url 'tasks:update' task.id %}">
                             <img src="{% static 'proposals/images/pencil.png' %}"
                                  title="{% trans 'Taak bewerken' %}">
                         </a>

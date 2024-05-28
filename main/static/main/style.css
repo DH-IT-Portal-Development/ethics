@@ -2,12 +2,3 @@
     --bs-nav-link-font-size: .9rem;
     --bs-uu-header-font-size: .9rem;
 }
-
-.text-decoration-none {
-    text-decoration: none;
-}
-
-.nostripes tr:nth-of-type(n) {
-    background-color: unset;
-    border-bottom: 1px solid #eeeeee;
-}
