@@ -11,6 +11,8 @@ from cdh.core.forms import (
     BootstrapRadioSelect,
     BootstrapCheckboxSelectMultiple,
 )
+
+
 class ObservationForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Observation

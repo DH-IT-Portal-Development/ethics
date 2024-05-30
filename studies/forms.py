@@ -16,6 +16,7 @@ from cdh.core.forms import (
     BootstrapCheckboxSelectMultiple,
 )
 
+
 class StudyForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Study

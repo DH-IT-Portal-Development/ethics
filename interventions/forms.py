@@ -9,6 +9,7 @@ from cdh.core.forms import (
     BootstrapRadioSelect,
 )
 
+
 class InterventionForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Intervention
