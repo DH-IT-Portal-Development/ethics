@@ -7,7 +7,10 @@ from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.utils import YES_NO
 from .models import Observation
 
-
+from cdh.core.forms import (
+    BootstrapRadioSelect,
+    BootstrapCheckboxSelectMultiple,
+)
 class ObservationForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Observation
@@ -33,15 +36,15 @@ class ObservationForm(SoftValidationMixin, ConditionalModelForm):
             "registrations_details",
         ]
         widgets = {
-            "setting": forms.CheckboxSelectMultiple(),
-            "supervision": forms.RadioSelect(choices=YES_NO),
-            "leader_has_coc": forms.RadioSelect(choices=YES_NO),
-            "is_anonymous": forms.RadioSelect(choices=YES_NO),
-            "is_in_target_group": forms.RadioSelect(choices=YES_NO),
-            "is_nonpublic_space": forms.RadioSelect(choices=YES_NO),
-            "has_advanced_consent": forms.RadioSelect(choices=YES_NO),
-            "needs_approval": forms.RadioSelect(choices=YES_NO),
-            "registrations": forms.CheckboxSelectMultiple(),
+            "setting": BootstrapCheckboxSelectMultiple(),
+            "supervision": BootstrapRadioSelect(choices=YES_NO),
+            "leader_has_coc": BootstrapRadioSelect(choices=YES_NO),
+            "is_anonymous": BootstrapRadioSelect(choices=YES_NO),
+            "is_in_target_group": BootstrapRadioSelect(choices=YES_NO),
+            "is_nonpublic_space": BootstrapRadioSelect(choices=YES_NO),
+            "has_advanced_consent": BootstrapRadioSelect(choices=YES_NO),
+            "needs_approval": BootstrapRadioSelect(choices=YES_NO),
+            "registrations": BootstrapCheckboxSelectMultiple(),
         }
 
     def __init__(self, *args, **kwargs):

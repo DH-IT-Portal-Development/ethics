@@ -13,6 +13,11 @@ from .models import Session, Task
 from django.utils.safestring import mark_safe, SafeString
 from django.utils.functional import lazy
 
+from cdh.core.forms import (
+    BootstrapRadioSelect,
+    BootstrapCheckboxSelectMultiple,
+)
+
 mark_safe_lazy = lazy(mark_safe, SafeString)
 
 
@@ -27,9 +32,9 @@ class SessionUpdateForm(SoftValidationMixin, ConditionalModelForm):
             "leader_has_coc",
         ]
         widgets = {
-            "setting": forms.CheckboxSelectMultiple(),
-            "supervision": forms.RadioSelect(choices=YES_NO),
-            "leader_has_coc": forms.RadioSelect(choices=YES_NO),
+            "setting": BootstrapCheckboxSelectMultiple(),
+            "supervision": BootstrapRadioSelect(choices=YES_NO),
+            "leader_has_coc": BootstrapRadioSelect(choices=YES_NO),
         }
 
     _soft_validation_fields = [
@@ -105,9 +110,9 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
             ),
         }
         widgets = {
-            "registrations": forms.CheckboxSelectMultiple(),
-            "registration_kinds": forms.CheckboxSelectMultiple(),
-            "feedback": forms.RadioSelect(choices=YES_NO),
+            "registrations": BootstrapCheckboxSelectMultiple(),
+            "registration_kinds": BootstrapCheckboxSelectMultiple(),
+            "feedback": BootstrapRadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
