@@ -4,6 +4,11 @@ from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.utils import YES_NO
 from .models import Intervention
 
+from cdh.core.forms import (
+    BootstrapCheckboxSelectMultiple,
+    BootstrapRadioSelect,
+)
+
 
 class InterventionForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
@@ -25,12 +30,12 @@ class InterventionForm(SoftValidationMixin, ConditionalModelForm):
             "extra_task",
         ]
         widgets = {
-            "setting": forms.CheckboxSelectMultiple(),
-            "supervision": forms.RadioSelect(choices=YES_NO),
-            "multiple_sessions": forms.RadioSelect(choices=YES_NO),
-            "leader_has_coc": forms.RadioSelect(choices=YES_NO),
-            "has_controls": forms.RadioSelect(choices=YES_NO),
-            "extra_task": forms.RadioSelect(choices=YES_NO),
+            "setting": BootstrapCheckboxSelectMultiple(),
+            "supervision": BootstrapRadioSelect(choices=YES_NO),
+            "multiple_sessions": BootstrapRadioSelect(choices=YES_NO),
+            "leader_has_coc": BootstrapRadioSelect(choices=YES_NO),
+            "has_controls": BootstrapRadioSelect(choices=YES_NO),
+            "extra_task": BootstrapRadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):

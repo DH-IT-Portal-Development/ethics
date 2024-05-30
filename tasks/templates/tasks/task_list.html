@@ -1,42 +1,60 @@
 {% load static %}
 {% load i18n %}
+{% load fetc_filters %}
 
-<table class="pure-table" width="100%">
+<table class="pure-table" width="100%" style="">
     <thead>
         <tr>
-            <th width="20%">{% trans "Naam" %}</th>
-            <th width="15%">{% trans "Nettoduur (in minuten)" %}</th>
+            <th width="20%">{% trans "Taak" %}</th>
+            <th width="10%">{% trans "Nettoduur (in minuten)" %}</th>
             <th width="40%">{% trans "Registratie via" %}</th>
-            <th width="15%">{% trans "Feedback?" %}</th>
-            <th width="10%">{% trans "Acties" %}</th>
+            <th width="10%">{% trans "Feedback?" %}</th>
+            {% if can_edit_tasks %}
+                <th width="15%">{% trans "Aantal keer uit te voeren" %}</th>
+                <th width="5%">{% trans "Acties" %}</th>
+            {% else %}
+                <th width="20%">{% trans "Aantal keer uit te voeren" %}</th>
+            {% endif %}
         </tr>
     </thead>
     <tbody>
         {% for task in session.task_set.all %}
             <tr>
-                <td>{{ task.name }}</td>
+                <td>{% trans "Taak" %} {{ task.order }}: {{ task.name }}</td>
                 <td>{{ task.duration }}</td>
-                <td>{{ task.registrations.all|unordered_list }}</td>
+                <td>{{ task.registrations.all|create_unordered_html_list }}</td>
                 <td class="task_feedback">
                     <span class="label">{{ task.feedback|yesno:_("ja,nee") }}</span>
                     {% if task.feedback %}<span class="help">{{ task.feedback_details }}</span>{% endif %}
                 </td>
-                <td>
-                    <a href="{% url 'tasks:update' task.id %}">
-                        <img src="{% static 'proposals/images/pencil.png' %}"
-                             title="{% trans 'Taak bewerken' %}">
-                    </a>
-                    {% if session.tasks_number > 1 %}
+                <td>{{ task.repeats }}</td>
+                {% if can_edit_tasks %}
+                    <td>
+                        <a href="{% url 'tasks:update' task.id %}">
+                            <img src="{% static 'proposals/images/pencil.png' %}"
+                                 title="{% trans 'Taak bewerken' %}">
+                        </a>
                         <a href="{% url 'tasks:delete' task.id %}">
                             <img src="{% static 'proposals/images/delete.png' %}"
                                  title="{% trans 'Taak verwijderen' %}">
                         </a>
-                    {% endif %}
-                </td>
+                    </td>
+                {% endif %}
             </tr>
         {% endfor %}
     </tbody>
 </table>
+{% if can_edit_tasks %}
+    <div class="d-flex justify-content-center">
+        <div class="button m-4 button-black">
+            <a href="{% url 'tasks:create' session.pk %}">
+                {% blocktrans with session_order=session.order trimmed %}
+                    Nieuwe taak toevoegen aan sessie {{ session_order }}
+                {% endblocktrans %}
+            </a>
+        </div>
+    </div>
+{% endif %}
 <script>
 $(function() {
     let elements = $('.task_feedback');
