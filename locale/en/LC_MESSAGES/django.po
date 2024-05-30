@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-23 12:50+0200\n"
+"POT-Creation-Date: 2024-05-30 11:19+0200\n"
 "PO-Revision-Date: 2024-04-03 12:32+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -188,24 +188,11 @@ msgstr "Intervention saved"
 #: main/forms/conditional_form.py:32 main/forms/conditional_form.py:43
 #: main/forms/conditional_form.py:59 main/forms/mixins.py:84
 #: proposals/forms.py:629 proposals/forms.py:714 proposals/forms.py:735
-#: studies/forms.py:137 tasks/forms.py:104
+#: studies/forms.py:137
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
-#: main/menus.py:6 main/templates/main/index.html:7
-#: main/templates/main/index.html:53 main/templates/main/landing.html:33
-msgid "Startpagina"
-msgstr "Start page"
-
-#: main/menus.py:11
-msgid "Log in"
-msgstr "Log in"
-
-#: main/menus.py:17 main/templates/base/login_header.html:7
-msgid "Log uit"
-msgstr "Log out"
-
-#: main/models.py:8 main/utils.py:16 proposals/utils/pdf_diff_logic.py:244
+#: main/models.py:8 main/utils.py:16 proposals/utils/pdf_diff_logic.py:245
 msgid "ja"
 msgstr "yes"
 
@@ -634,8 +621,7 @@ msgstr "Support"
 #: main/templates/main/index.html:104
 msgid ""
 "<strong>FETC-GW secretaris</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
-msgstr ""
-"<strong>FEtC-H secretary</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
+msgstr "<strong>FEtC-H secretary</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
 
 #: main/templates/main/index.html:111
 msgid "<strong>Data Management advies</strong> <br /> datamanagement.gw@uu.nl"
@@ -2476,6 +2462,14 @@ msgstr ""
 " A task or procedure within your study. <p> <u>For example</u>: completing "
 "an interview, questionnaire, or language test.</p>"
 
+#: proposals/templates/proposals/proposal_start.html:76
+#: proposals/templates/proposals/proposal_start_pre_approved.html:37
+#: proposals/templates/proposals/proposal_start_pre_assessment.html:43
+#, fuzzy
+#| msgid "Naar volgende stap"
+msgid "Volgende stap >>"
+msgstr "To next step"
+
 #: proposals/templates/proposals/proposal_start_practice.html:7
 #: proposals/templates/proposals/proposal_start_practice.html:13
 msgid "Een nieuwe aanvraag aanmelden (oefenportaal)"
@@ -2984,7 +2978,7 @@ msgstr "Revision/amendment of"
 
 #: proposals/templates/proposals/wmo_application.html:7
 #: proposals/templates/proposals/wmo_application.html:24
-#: proposals/utils/pdf_diff_logic.py:522
+#: proposals/utils/pdf_diff_logic.py:511
 msgid "Aanmelding bij de METC"
 msgstr "Registration with the METC"
 
@@ -3007,7 +3001,7 @@ msgstr "Start again"
 
 #: proposals/templates/proposals/wmo_form.html:7
 #: proposals/templates/proposals/wmo_form.html:28
-#: proposals/utils/pdf_diff_logic.py:497
+#: proposals/utils/pdf_diff_logic.py:486
 msgid ""
 "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?"
 msgstr ""
@@ -4993,7 +4987,7 @@ msgstr "Task {} in session {}"
 
 #: tasks/templates/tasks/session_confirm_delete.html:6
 #: tasks/templates/tasks/session_confirm_delete.html:12
-#: tasks/templates/tasks/session_list.html:20
+#: tasks/templates/tasks/session_list.html:18
 msgid "Sessie verwijderen"
 msgstr "Delete session"
 
@@ -5033,7 +5027,7 @@ msgid "Aantal keer uit te voeren"
 msgstr "Number of times to be performed"
 
 #: tasks/templates/tasks/session_end.html:38
-#: tasks/templates/tasks/session_list.html:15
+#: tasks/templates/tasks/session_list.html:14
 msgid "Sessie aanpassen"
 msgstr "Edit session"
 
@@ -5051,7 +5045,7 @@ msgstr "Answer the following questions on the basis of this overview:"
 msgid "Sessie %(order)s"
 msgstr "Session %(order)s"
 
-#: tasks/templates/tasks/session_list.html:26
+#: tasks/templates/tasks/session_list.html:24
 #, python-format
 msgid ""
 "Totale brutoduur: %(duration)s minuten, aantal keer uit te voeren: "
@@ -5060,15 +5054,15 @@ msgstr ""
 "Total duration: %(duration)s minutes, number of times to be performed: "
 "%(repeats)s"
 
-#: tasks/templates/tasks/session_list.html:35
+#: tasks/templates/tasks/session_list.html:33
 msgid "Nog geen sessies. Tijd om er één aan te maken!"
 msgstr "No sessions yet. Time to create one!"
 
-#: tasks/templates/tasks/session_list.html:41
+#: tasks/templates/tasks/session_list.html:39
 msgid "Nieuwe sessie tevoegen"
 msgstr "Add new session"
 
-#: tasks/templates/tasks/session_list.html:43
+#: tasks/templates/tasks/session_list.html:41
 msgid "Sessie aanmaken"
 msgstr "Create session"
 
