@@ -162,6 +162,9 @@ class SamlUserProxy(User):
                 if faculty_obj.users.filter(pk=self.pk).exists():
                     continue
 
+                # Save the user to ensure the user is saved before adding the faculty
+                self.save()
+
                 faculty_obj.users.add(self)
             except:  # noQA
                 logger.error(f"Error processing faculty for user", exc_info=True)
