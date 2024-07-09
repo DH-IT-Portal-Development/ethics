@@ -12,6 +12,11 @@ from .views.proposal_views import (
     ProposalUpdate,
     ProposalDelete,
     ProposalStart,
+    ProposalResearcherFormView,
+    ProposalOtherResearchersFormView,
+    ProposalFundingFormView,
+    ProposalResearchGoalFormView,
+    ProposalPreApprovedFormView,
     ProposalDataManagement,
     ProposalSubmit,
     ProposalSubmitted,
@@ -21,12 +26,11 @@ from .views.proposal_views import (
     ProposalDifference,
     ProposalAsPdf,
     ProposalCreatePreAssessment,
-    ProposalUpdatePreAssessment,
+    ProposalUpdate,
     ProposalStartPreAssessment,
     ProposalSubmitPreAssessment,
     ProposalSubmittedPreAssessment,
     ProposalCreatePractice,
-    ProposalUpdatePractice,
     ProposalStartPractice,
     ChangeArchiveStatusView,
     ProposalsExportView,
@@ -34,7 +38,6 @@ from .views.proposal_views import (
     ProposalCreatePreApproved,
     ProposalSubmittedPreApproved,
     ProposalSubmitPreApproved,
-    ProposalUpdatePreApproved,
     ProposalUsersOnlyArchiveView,
     ProposalCopyAmendment,
     ProposalsPublicArchiveView,
@@ -118,25 +121,7 @@ urlpatterns = [
             ]
         ),
     ),
-    path(
-        "update/<int:pk>/",
-        include(
-            [
-                path("", ProposalUpdate.as_view(), name="update"),
-                path("pre/", ProposalUpdatePreAssessment.as_view(), name="update_pre"),
-                path(
-                    "practice/",
-                    ProposalUpdatePractice.as_view(),
-                    name="update_practice",
-                ),
-                path(
-                    "pre_approved/",
-                    ProposalUpdatePreApproved.as_view(),
-                    name="update_pre_approved",
-                ),
-            ]
-        ),
-    ),
+    path("update/<int:pk>/", ProposalUpdate.as_view(), name="update"),
     path("delete/<int:pk>/", ProposalDelete.as_view(), name="delete"),
     path(
         "start/",
@@ -154,6 +139,31 @@ urlpatterns = [
                 ),
             ]
         ),
+    ),
+    path(
+        "researcher/<int:pk>/",
+        ProposalResearcherFormView.as_view(),
+        name="researcher",
+    ),
+    path(
+        "other_researchers/<int:pk>/",
+        ProposalOtherResearchersFormView.as_view(),
+        name="other_researchers",
+    ),
+    path(
+        "funding/<int:pk>/",
+        ProposalFundingFormView.as_view(),
+        name="funding",
+    ),
+    path(
+        "research_goal/<int:pk>/",
+        ProposalResearchGoalFormView.as_view(),
+        name="research_goal",
+    ),
+    path(
+        "pre_approved/<int:pk>/",
+        ProposalPreApprovedFormView.as_view(),
+        name="pre_approved",
     ),
     path(
         "data_management/<int:pk>/",

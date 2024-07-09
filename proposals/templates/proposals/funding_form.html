@@ -1,0 +1,26 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Informatie over financiering" %} - {{ block.super }}
+{% endblock %}
+
+{% block html_head %}
+    {{ block.super }}
+    <script>
+        $(function () {
+            check_field_required('funding', 'needs_details', 'funding_details', 'proposals');
+            check_field_required('funding', 'needs_name', 'funding_name', 'proposals');
+        });
+    </script>
+{% endblock %}
+
+{% block pre-form-container-content %}
+    {% include "./practice_or_supervisor_warning.html" %}
+{% endblock %}
+
+{% block pre-form-text %}
+    <h3>{% trans "Informatie over financiering" %}</h3>
+{% endblock %}
