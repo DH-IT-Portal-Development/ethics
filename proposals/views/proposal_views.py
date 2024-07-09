@@ -254,7 +254,7 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
         form.instance.reviewing_committee = form.instance.institution.reviewing_chamber
         obj = form.save()
         obj.applicants.set([self.request.user])
-        obj.save()        
+        obj.save()
         return super(ProposalCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -369,8 +369,11 @@ class ProposalStart(generic.TemplateView):
         context = super(ProposalStart, self).get_context_data(**kwargs)
         context["secretary"] = get_secretary()
         return context
-    
-class ProposalResearcherFormView(UserFormKwargsMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
+
+
+class ProposalResearcherFormView(
+    UserFormKwargsMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
     model = Proposal
     form_class = ResearcherForm
     template_name = "proposals/researcher_form.html"
@@ -380,8 +383,11 @@ class ProposalResearcherFormView(UserFormKwargsMixin, ProposalContextMixin, Allo
 
     def get_back_url(self):
         return reverse("proposals:update", args=(self.object.pk,))
-    
-class ProposalOtherResearchersFormView(UserFormKwargsMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
+
+
+class ProposalOtherResearchersFormView(
+    UserFormKwargsMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
     model = Proposal
     form_class = OtherResearchersForm
     template_name = "proposals/other_researchers_form.html"
@@ -395,8 +401,11 @@ class ProposalOtherResearchersFormView(UserFormKwargsMixin, ProposalContextMixin
 
     def get_back_url(self):
         return reverse("proposals:researcher", args=(self.object.pk,))
-    
-class ProposalFundingFormView(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
+
+
+class ProposalFundingFormView(
+    ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
     model = Proposal
     form_class = FundingForm
     template_name = "proposals/funding_form.html"
@@ -407,7 +416,10 @@ class ProposalFundingFormView(ProposalContextMixin, AllowErrorsOnBackbuttonMixin
     def get_back_url(self):
         return reverse("proposals:other_researchers", args=(self.object.pk,))
 
-class ProposalResearchGoalFormView(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
+
+class ProposalResearchGoalFormView(
+    ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
     model = Proposal
     form_class = ResearchGoalForm
     template_name = "proposals/research_goal_form.html"
@@ -432,7 +444,10 @@ class ProposalResearchGoalFormView(ProposalContextMixin, AllowErrorsOnBackbutton
         else:
             return reverse("proposals:funding", args=(self.object.pk,))
 
-class ProposalPreApprovedFormView(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
+
+class ProposalPreApprovedFormView(
+    ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
     model = Proposal
     form_class = PreApprovedForm
     template_name = "proposals/pre_approved_form.html"
@@ -445,7 +460,8 @@ class ProposalPreApprovedFormView(ProposalContextMixin, AllowErrorsOnBackbuttonM
     def get_back_url(self):
         """Return to the Proposal Form page"""
         return reverse("proposals:research_goal", args=(self.object.pk,))
-    
+
+
 class TranslatedConsentFormsView(UpdateView):
     model = Proposal
     form_class = TranslatedConsentForms
@@ -764,6 +780,7 @@ class ProposalCreatePreAssessment(ProposalCreate):
         form.instance.is_pre_assessment = True
         return super(ProposalCreatePreAssessment, self).form_valid(form)
 
+
 class ProposalSubmitPreAssessment(ProposalSubmit):
     def get_next_url(self):
         """After submission, go to the thank-you view"""
@@ -847,4 +864,3 @@ class ProposalCreatePractice(ProposalCreate):
             self.kwargs["reason"] == Proposal.PracticeReasons.EXPLORATION
         )
         return super(ProposalCreatePractice, self).form_valid(form)
-

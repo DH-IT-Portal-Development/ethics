@@ -10,16 +10,16 @@
 {% block html_head %}
     {{ block.super }}
     <script type="text/javascript"
-    charset="utf8"
-    src="{% static 'proposals/js/word_counter.js' %}"></script>
-<script>
+            charset="utf8"
+            src="{% static 'proposals/js/word_counter.js' %}"></script>
+    <script>
     $(function () {
         // adds running wordcounter for the summary and self_assessment text fields
         let translated_string = " {% trans 'Aantal woorden:' %} "
         wordCounter("summary", translated_string)
         wordCounter("self_assessment", translated_string)
     });
-</script>
+    </script>
 {% endblock %}
 
 {% block pre-form-container-content %}

@@ -54,7 +54,6 @@ def available_urls(proposal):
         )
     )
 
-
     urls.append(
         AvailableURL(
             url=reverse("proposals:other_researchers", args=(proposal.pk,)),
@@ -69,7 +68,7 @@ def available_urls(proposal):
                 title=_("Informatie over financiering"),
             )
         )
-    
+
     urls.append(
         AvailableURL(
             url=reverse("proposals:research_goal", args=(proposal.pk,)),

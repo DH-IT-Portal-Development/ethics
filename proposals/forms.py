@@ -33,6 +33,7 @@ from cdh.core.forms import (
     TemplatedModelForm,
 )
 
+
 class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
@@ -69,7 +70,10 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
 
         self.mark_soft_required(cleaned_data, "date_start")
 
-class ResearcherForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
+
+class ResearcherForm(
+    UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm
+):
     class Meta:
         model = Proposal
         fields = [
@@ -145,7 +149,11 @@ van het FETC-GW worden opgenomen."
                 )
                 self.add_error("supervisor", error)
 
-            if relation.needs_supervisor and supervisor == self.user and self.instance.status != Proposal.Statuses.SUBMITTED_TO_SUPERVISOR:
+            if (
+                relation.needs_supervisor
+                and supervisor == self.user
+                and self.instance.status != Proposal.Statuses.SUBMITTED_TO_SUPERVISOR
+            ):
                 error = forms.ValidationError(
                     _("Je kunt niet jezelf als promotor/begeleider opgeven.")
                 )
@@ -165,7 +173,10 @@ van het FETC-GW worden opgenomen."
             cleaned_data, "relation", "check_in_course", "student_justification"
         )
 
-class OtherResearchersForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
+
+class OtherResearchersForm(
+    UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm
+):
     class Meta:
         model = Proposal
         fields = [
@@ -241,6 +252,7 @@ class OtherResearchersForm(UserKwargModelFormMixin, SoftValidationMixin, Conditi
 
         self.check_dependency(cleaned_data, "other_stakeholders", "stakeholders")
 
+
 class FundingForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
@@ -274,7 +286,10 @@ class FundingForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModel
             cleaned_data, "funding", "needs_name", "funding_name"
         )
 
-class ResearchGoalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
+
+class ResearchGoalForm(
+    UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm
+):
     class Meta:
         model = Proposal
         fields = [
@@ -327,7 +342,10 @@ class ResearchGoalForm(UserKwargModelFormMixin, SoftValidationMixin, Conditional
                 ),
             )
 
-class PreApprovedForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
+
+class PreApprovedForm(
+    UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm
+):
     class Meta:
         model = Proposal
         fields = [
@@ -383,6 +401,7 @@ class PreApprovedForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalM
             self.check_dependency(
                 cleaned_data, "is_pre_approved", "pre_approval_institute"
             )
+
 
 class ProposalStartPracticeForm(TemplatedForm):
     practice_reason = forms.ChoiceField(
