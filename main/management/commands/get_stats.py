@@ -148,8 +148,8 @@ class Row:
             "Amendement?": self.get_amendment,
         }
 
-    def get_amendment(self, row_dict):
+    def get_amendment(self,):
         amendment = "Nee"
         if self.is_amendment:
             amendment = "Ja"
-        row_dict["Amendement?"] = amendment
+        return amendment
