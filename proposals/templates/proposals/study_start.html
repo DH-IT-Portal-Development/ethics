@@ -1,4 +1,4 @@
-{% extends "base/fetc_base.html" %}
+{% extends "base/fetc_form_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -8,13 +8,15 @@
 {% endblock %}
 
 {% block html_head %}
+    {{ block.super }}
+    {% trans "Je kan de aard van de aanvraag nu in detail op de volgende pagina's specificeren." as is_similar %}
+    {% trans "Je kan de aard van de aanvraag nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}
     <script>
 $(function() {
-    add_title('study_name_1', "{% trans 'Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters.' %}");
 
     $('input[name=studies_similar]').change(function() {
         var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
-
+        
         var text = "{{ is_similar }}";
         if (is_dissimilar) {
             // Set the default value for studies_number to 2 (if it's not already set)
@@ -25,25 +27,26 @@ $(function() {
         }
         else {
             $('input[name="studies_number"]').val('1');
-            $('input[name^="study_name"]').parents('tr').hide();
-            $('input[name="study_name_1"]').parents('tr').prev().hide();
+            $('input[name^="study_name"]').parents('.uu-form-row').hide();
+            $('input[name="study_name_1"]').parents('.uu-form-row').prev().hide();
         }
+        console.log(text)
 
         $('#next_text').html(text);
         $('#next_text').show();
-
-        $('#id_studies_number').parents('tr').toggle(is_dissimilar);
+        
+        $('#id_studies_number').parents('.uu-form-row').toggle(is_dissimilar);
         $('#id_studies_number').change();
     });
     $('input[name=studies_similar]').change();
-
+    
     $('input[name=studies_number]').change(function() {
         var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
-
+        
         if (is_dissimilar) {
-            $('input[name="study_name_1"]').parents('tr').prev().show();
+            $('input[name="study_name_1"]').parents('.uu-form-row').prev().show();
             for (var i = 1; i <= 10; i++) {
-                $('input[name="study_name_' + i + '"]').parents('tr').toggle(i <= $(this).val());
+                $('input[name="study_name_' + i + '"]').parents('.uu-form-row').toggle(i <= $(this).val());
             }
         }
     });
@@ -52,56 +55,45 @@ $(function() {
     </script>
 {% endblock %}
 
-{% block content %}
-    {% trans "Je kan de aard van de aanvraag nu in detail op de volgende pagina's specificeren." as is_similar %}
-    {% trans "Je kan de aard van de aanvraag nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}
-    <div class="uu-container">
-        <div class="col-12">
-            {% with nav_items=proposal.available_urls active=3 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
-            <h2>{% trans "Eén of meerdere trajecten?" %}</h2>
+{% block pre-form-text %}
+<h2>{% trans "Eén of meerdere trajecten?" %}</h2>
+<p>
+    {% blocktrans trimmed %}
+        Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) sessies, (iii) taken.
+    {% endblocktrans %}
+</p>
+<ul>
+    <li>
+        <strong>{% trans "Traject" %}</strong>:
+        {% blocktrans trimmed %}
+            Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende informed consent documenten nodig zijn.
+        {% endblocktrans %}
+        <p>
+            {% blocktrans trimmed %}
+                <u>Bijvoorbeeld</u>: ouders van leerlingen 15 jaar en jonger, docenten, een controlegroep en een experimentele groep die verschillende taken krijgen.
+            {% endblocktrans %}
+        </p>
+    </li>
+    <li>
+        <strong>{% trans "Sessie" %}</strong>:
+        {% blocktrans trimmed %}
+            Alle taken/onderdelen die iemand op één dag uitvoert.
+        {% endblocktrans %}
+    </li>
+    <li>
+        <strong>{% trans "Taak" %}</strong>:
+        {% blocktrans trimmed %}
+            Een taak of onderdeel van je onderzoek.
             <p>
-                {% blocktrans trimmed %}
-                    Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) sessies, (iii) taken.
-                {% endblocktrans %}
+                <u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of een taaltest.
             </p>
-            <ul>
-                <li>
-                    <strong>{% trans "Traject" %}</strong>:
-                    {% blocktrans trimmed %}
-                        Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende informed consent documenten nodig zijn.
-                    {% endblocktrans %}
-                    <p>
-                        {% blocktrans trimmed %}
-                            <u>Bijvoorbeeld</u>: ouders van leerlingen 15 jaar en jonger, docenten, een controlegroep en een experimentele groep die verschillende taken krijgen.
-                        {% endblocktrans %}
-                    </p>
-                </li>
-                <li>
-                    <strong>{% trans "Sessie" %}</strong>:
-                    {% blocktrans trimmed %}
-                        Alle taken/onderdelen die iemand op één dag uitvoert.
-                    {% endblocktrans %}
-                </li>
-                <li>
-                    <strong>{% trans "Taak" %}</strong>:
-                    {% blocktrans trimmed %}
-                        Een taak of onderdeel van je onderzoek.
-                        <p>
-                            <u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of een taaltest.
-                        </p>
-                    {% endblocktrans %}
-                </li>
-            </ul>
-            <form action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                <p id="next_text"></p>
-                {% include "base/form_buttons.html" %}
-            </form>
-        </div>
-    </div>
+        {% endblocktrans %}
+    </li>
+</ul>
+{% endblock %}
+
+{% block post-form-pre-buttons %}
+<div class="uu-form-text-row mb-0">
+    <div id="next_text" class="alert alert-info"></div>
+</div>
 {% endblock %}

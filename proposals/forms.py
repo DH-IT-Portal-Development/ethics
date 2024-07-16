@@ -534,9 +534,9 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
         return cleaned_data  # Sticking to Django conventions
 
 
-class StudyStartForm(forms.ModelForm):
+class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
     study_name_1 = forms.CharField(
-        label=_("Naam traject 1"), max_length=15, required=False
+        label=_("Naam traject 1"), max_length=15, required=False, help_text=_("Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters."),
     )
     study_name_2 = forms.CharField(
         label=_("Naam traject 2"), max_length=15, required=False
@@ -583,7 +583,7 @@ class StudyStartForm(forms.ModelForm):
             "study_name_10",
         ]
         widgets = {
-            "studies_similar": forms.RadioSelect(choices=YES_NO),
+            "studies_similar": BootstrapRadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
