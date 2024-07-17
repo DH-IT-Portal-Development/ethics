@@ -11,6 +11,19 @@ from main.utils import YES_NO
 from .models import AgeGroup, Documents, Study
 from .utils import check_necessity_required
 
+from cdh.core.forms import (
+    DateField,
+    BootstrapRadioSelect,
+    BootstrapCheckboxSelectMultiple,
+    BootstrapSelect,
+    SearchableSelectWidget,
+    DateInput,
+    SplitDateTimeWidget,
+    BootstrapSplitDateTimeWidget,
+    TemplatedForm,
+    TemplatedModelForm,
+)
+
 
 class StudyForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
@@ -33,15 +46,15 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
             "hierarchy_details",
         ]
         widgets = {
-            "age_groups": forms.CheckboxSelectMultiple(),
-            "legally_incapable": forms.RadioSelect(choices=YES_NO),
-            "has_special_details": forms.RadioSelect(choices=YES_NO),
-            "hierarchy": forms.RadioSelect(choices=YES_NO),
-            "special_details": forms.CheckboxSelectMultiple(),
-            "traits": forms.CheckboxSelectMultiple(),
-            "necessity": forms.RadioSelect(),
-            "recruitment": forms.CheckboxSelectMultiple(),
-            "compensation": forms.RadioSelect(),
+            "age_groups": BootstrapCheckboxSelectMultiple(),
+            "legally_incapable": BootstrapRadioSelect(choices=YES_NO),
+            "has_special_details": BootstrapRadioSelect(choices=YES_NO),
+            "hierarchy": BootstrapRadioSelect(choices=YES_NO),
+            "special_details": BootstrapCheckboxSelectMultiple(),
+            "traits": BootstrapCheckboxSelectMultiple(),
+            "necessity": BootstrapRadioSelect(),
+            "recruitment": BootstrapCheckboxSelectMultiple(),
+            "compensation": BootstrapRadioSelect(),
         }
         mark_safe_lazy = lazy(mark_safe, SafeString)
         labels = {
@@ -191,10 +204,10 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             "risk_details",
         ]
         widgets = {
-            "deception": forms.RadioSelect(),
-            "negativity": forms.RadioSelect(),
-            "stressful": forms.RadioSelect(),
-            "risk": forms.RadioSelect(),
+            "deception": BootstrapRadioSelect(),
+            "negativity": BootstrapRadioSelect(),
+            "stressful": BootstrapRadioSelect(),
+            "risk": BootstrapRadioSelect(),
         }
 
     _soft_validation_fields = [

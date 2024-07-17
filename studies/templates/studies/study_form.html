@@ -1,4 +1,4 @@
-{% extends "base/fetc_base.html" %}
+{% extends "base/fetc_form_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block html_head %}
+    {{ block.super }}
     <script>
 $(function() {
     $('input[name=age_groups]').change();
@@ -39,11 +40,11 @@ $(function() {
             'age_groups': age_groups
         };
         $.post(url, params, function(data) {
-            $('#id_legally_incapable').parents('tr').toggle(data.result);
-            $('#id_legally_incapable').parents('tr').prev().toggle(data.result); // Toggles header as well
+            $('#id_legally_incapable').parents('.uu-form-row').toggle(data.result);
+            $('#id_legally_incapable').parents('.uu-form-row').prev().toggle(data.result); // Toggles header as well
 
             var check = data.result && $('input[name=legally_incapable]:checked').val() === 'True';
-            $('#id_legally_incapable_details').parents('tr').toggle(check);
+            $('#id_legally_incapable_details').parents('.uu-form-row').toggle(check);
         });
     });
     $('input[name=age_groups], input[name=legally_incapable]').change();
@@ -62,8 +63,8 @@ $(function() {
             'proposal_pk': {{ study.proposal.pk }}
         };
         $.post(url, params, function(data) {
-            $('#id_necessity, #id_necessity_reason').parents('tr').toggle(data.result);
-            $('#id_necessity').parents('tr').prev().toggle(data.result); // Toggles header as well
+            $('#id_necessity, #id_necessity_reason').parents('.uu-form-row').toggle(data.result);
+            $('#id_necessity').parents('.uu-form-row').prev().toggle(data.result); // Toggles header as well
         });
     });
     $('input[name=age_groups], input[name=legally_incapable]').change();
@@ -71,31 +72,15 @@ $(function() {
     </script>
 {% endblock %}
 
-{% block content %}
-    <div class="uu-container">
-        <div class="col-12">
-            {% with nav_items=study.proposal.available_urls active=3 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
+{% block pre-form %}
             <h2>{% trans "De deelnemers" %}</h2>
             {% include "studies/study_title.html" %}
             {% if not study.proposal.relation %}
-                <div class="warning">
+                <div class="alert alert-primary">
                     {% url 'proposals:update' study.proposal.pk as url %}
                     {% blocktrans trimmed %}
                         Let op! Je hebt de vraag <a href="{{ url }}">'In welke hoedanigheid ben je betrokken bij deze aanvraag?'</a> nog niet ingevuld, waardoor deze pagina nog kan veranderen op basis van je antwoord.
                     {% endblocktrans %}
                 </div>
             {% endif %}
-            <form action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                {% with proposal=study.proposal %}
-                    {% include "base/form_buttons.html" %}
-                {% endwith %}
-            </form>
-        </div>
-    </div>
 {% endblock %}
