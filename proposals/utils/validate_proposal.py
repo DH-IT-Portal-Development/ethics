@@ -15,6 +15,11 @@ from studies.forms import StudyForm, StudyDesignForm, SessionStartForm
 from tasks.forms import TaskStartForm, TaskEndForm, TaskForm
 from ..forms import (
     ProposalForm,
+    ResearcherForm,
+    OtherResearchersForm,
+    FundingForm,
+    ResearchGoalForm,
+    PreApprovedForm,
     WmoForm,
     StudyStartForm,
     WmoApplicationForm,
@@ -33,36 +38,50 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
     wmo_update_url = "proposals:wmo_update"
     wmo_application_url = "proposals:wmo_application"
 
-    # Get the correct URL for the
-    if proposal.is_pre_assessment:
-        forms["start"] = (
-            ProposalForm,
-            reverse("proposals:update_pre", args=[proposal.pk]),
-            _("Algemene informatie over de aanvraag"),
+    forms["start"] = (
+        ProposalForm,
+        reverse("proposals:update", args=[proposal.pk]),
+        _("Algemene informatie over de aanvraag"),
+        proposal,
+    )
+
+    forms["Researcher"] = (
+        ResearcherForm,
+        reverse("proposal:researcher", args=[proposal.pk]),
+        _("Informatie over de onderzoeker"),
+        proposal,
+    )
+
+    forms["OtherResearchers"] = (
+        OtherResearchersForm,
+        reverse("proposal:other_researchers", args=[proposal.pk]),
+        _("Informatie over betrokken onderzoekers"),
+        proposal,
+    )
+
+    if not proposal.is_pre_assessment:
+        forms["Funding"] = (
+            FundingForm,
+            reverse("proposal:funding", args=[proposal.pk]),
+            _("Informatie over financiering"),
             proposal,
         )
 
-        wmo_create_url = "proposals:wmo_create_pro"
-        wmo_update_url = "proposals:wmo_update_pro"
-    elif proposal.is_pre_approved:
-        forms["start"] = (
-            ProposalForm,
-            reverse("proposals:update_pre_approved", args=[proposal.pk]),
-            _("Algemene informatie over de aanvraag"),
-            proposal,
-        )
-    elif proposal.is_practice():
-        forms["start"] = (
-            ProposalForm,
-            reverse("proposals:update_practice", args=[proposal.pk]),
-            _("Algemene informatie over de aanvraag"),
-            proposal,
-        )
-    else:
-        forms["start"] = (
-            ProposalForm,
-            reverse("proposals:update", args=[proposal.pk]),
-            _("Algemene informatie over de aanvraag"),
+    forms["ResearchGoal"] = (
+        ResearchGoalForm,
+        reverse("proposal:research_goal", args=[proposal.pk]),
+        _("Informatie over het onderzoeksdoel"),
+        proposal,
+    )
+
+    if proposal.is_pre_assessment:
+        wmo_update_url = "proposals:wmo_update_pre"
+
+    if proposal.is_pre_approved:
+        forms["PreApproved"] = (
+            PreApprovedForm,
+            reverse("proposal:pre_approved", args=[proposal.pk]),
+            _("Informatie over eerdere toetsing"),
             proposal,
         )
 

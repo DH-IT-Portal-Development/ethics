@@ -1,0 +1,12 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Informatie over eerdere toetsing" %} - {{ block.super }}
+{% endblock %}
+
+{% block pre-form-text %}
+    <h3>{% trans "Informatie over eerdere toesting" %}</h3>
+{% endblock %}

@@ -9,28 +9,7 @@
 
 {% block html_head %}
     {{ block.super }}
-    <script type="text/javascript"
-            charset="utf8"
-            src="{% static 'proposals/js/word_counter.js' %}"></script>
     <script>
-        $(function () {
-            check_field_required('relation', 'needs_supervisor', 'supervisor', 'proposals');
-            check_field_required('relation', 'check_in_course', 'student_program', 'proposals');
-            check_field_required('relation', 'check_in_course', 'student_context', 'proposals');
-            check_field_required('relation', 'check_in_course', 'student_justification', 'proposals');
-            check_field_required('student_context', 'needs_details', 'student_context_details', 'proposals', 'studentcontext');
-            depends_on_value('other_applicants', 'True', 'applicants');
-            depends_on_value('other_stakeholders', 'True', 'stakeholders');
-            check_field_required('funding', 'needs_details', 'funding_details', 'proposals');
-            check_field_required('funding', 'needs_name', 'funding_name', 'proposals');
-        });
-        $(function () {
-            // adds running wordcounter for the summary and self_assessment text fields
-            let translated_string = " {% trans 'Aantal woorden:' %} "
-            wordCounter("summary", translated_string)
-            wordCounter("self_assessment", translated_string)
-        });
-
         $(function () {
             /* Find date start input */
             let date_start_input = $("#id_date_start")
@@ -72,22 +51,6 @@
             updateWarning();
     });
     </script>
-{% endblock %}
-
-{% block pre-form-container-content %}
-    {% if not create and is_supervisor %}
-        <div class="alert alert-info">
-            {% blocktrans trimmed %}
-                Je past nu een aanvraag aan van een student/PhD kandidaat onder jouw supervisie. Let er op dat je
-                het formulier invult alsof jij die student/PhD kandidaat bent.
-            {% endblocktrans %}
-        </div>
-    {% endif %}
-    {% if is_practice %}
-        <div class="alert alert-info">
-            {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
-        </div>
-    {% endif %}
 {% endblock %}
 
 {% block pre-form-text %}

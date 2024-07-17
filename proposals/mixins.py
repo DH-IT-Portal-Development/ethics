@@ -18,15 +18,9 @@ from .utils.proposal_utils import pdf_link_callback
 class ProposalMixin(UserFormKwargsMixin):
     model = Proposal
     form_class = ProposalForm
-    success_message = _("Aanvraag %(title)s bewerkt")
 
     def get_next_url(self):
-        """If the Proposal has a Wmo model attached, go to update, else, go to create"""
-        proposal = self.object
-        if hasattr(proposal, "wmo"):
-            return reverse("proposals:wmo_update", args=(proposal.pk,))
-        else:
-            return reverse("proposals:wmo_create", args=(proposal.pk,))
+        return reverse("proposals:researcher", args=(self.object.pk,))
 
 
 class ProposalContextMixin:
