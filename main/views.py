@@ -480,7 +480,10 @@ class UserAllowedMixin(SingleObjectMixin):
             if self.request.user not in supervisor:
                 raise PermissionDenied
         else:
-            if self.request.user not in applicants | supervisor:
+            if (
+                self.request.user not in applicants | supervisor
+                and self.request.user != proposal.created_by
+            ):
                 raise PermissionDenied
 
         return obj
