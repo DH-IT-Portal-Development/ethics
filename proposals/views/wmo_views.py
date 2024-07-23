@@ -42,9 +42,9 @@ class WmoMixin(AllowErrorsOnBackbuttonMixin, object):
         """Return to the Proposal overview, or practice overview if we are in practice mode"""
         proposal = self.get_proposal()
         url = (
-            "proposals:update_practice"
-            if proposal.is_practice()
-            else "proposals:update"
+            "proposals:pre_approved"
+            if proposal.is_pre_approved
+            else "proposals:research_goal"
         )
         return reverse(url, args=(proposal.pk,))
 
@@ -119,7 +119,7 @@ class PreAssessmentMixin(object):
 
     def get_back_url(self):
         """Different return URL for pre-assessment Proposals"""
-        return reverse("proposals:update_pre", args=(self.object.proposal.pk,))
+        return reverse("proposals:update", args=(self.object.proposal.pk,))
 
 
 class WmoCreatePreAssessment(PreAssessmentMixin, WmoCreate):

@@ -35,13 +35,17 @@ from ..forms import (
     ProposalConfirmationForm,
     ProposalCopyForm,
     ProposalDataManagementForm,
-    ProposalForm,
     ProposalStartPracticeForm,
     ProposalSubmitForm,
     RevisionProposalCopyForm,
     AmendmentProposalCopyForm,
     ProposalUpdateDataManagementForm,
     ProposalUpdateDateStartForm,
+    ResearcherForm,
+    OtherResearchersForm,
+    FundingForm,
+    ResearchGoalForm,
+    PreApprovedForm,
     TranslatedConsentForms,
 )
 from ..models import Proposal, Wmo
@@ -236,17 +240,21 @@ class ChangeArchiveStatusView(GroupRequiredMixin, generic.RedirectView):
 class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
     # Note: template_name is auto-generated to proposal_form.html
 
-    def get_initial(self):
-        """Sets initial applicant to current User"""
-        initial = super(ProposalCreate, self).get_initial()
-        initial["applicants"] = [self.request.user]
-        return initial
+    success_message = _("Aanvraag %(title)s aangemaakt")
 
     def form_valid(self, form):
-        """Sets created_by to current user and generates a reference number"""
+        """
+        - Sets created_by to current user
+        - Generates a reference number
+        - Sets reviewing committee
+        - Adds user to applicants
+        """
         form.instance.created_by = self.request.user
         form.instance.reference_number = generate_ref_number()
         form.instance.reviewing_committee = form.instance.institution.reviewing_chamber
+        obj = form.save()
+        obj.applicants.set([self.request.user])
+        obj.save()
         return super(ProposalCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -361,6 +369,97 @@ class ProposalStart(generic.TemplateView):
         context = super(ProposalStart, self).get_context_data(**kwargs)
         context["secretary"] = get_secretary()
         return context
+
+
+class ProposalResearcherFormView(
+    UserFormKwargsMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
+    model = Proposal
+    form_class = ResearcherForm
+    template_name = "proposals/researcher_form.html"
+
+    def get_next_url(self):
+        return reverse("proposals:other_researchers", args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse("proposals:update", args=(self.object.pk,))
+
+
+class ProposalOtherResearchersFormView(
+    UserFormKwargsMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
+    model = Proposal
+    form_class = OtherResearchersForm
+    template_name = "proposals/other_researchers_form.html"
+
+    def get_next_url(self):
+        proposal = self.object
+        if proposal.is_pre_assessment:
+            return reverse("proposals:research_goal", args=(self.object.pk,))
+        else:
+            return reverse("proposals:funding", args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse("proposals:researcher", args=(self.object.pk,))
+
+
+class ProposalFundingFormView(
+    ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
+    model = Proposal
+    form_class = FundingForm
+    template_name = "proposals/funding_form.html"
+
+    def get_next_url(self):
+        return reverse("proposals:research_goal", args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse("proposals:other_researchers", args=(self.object.pk,))
+
+
+class ProposalResearchGoalFormView(
+    ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
+    model = Proposal
+    form_class = ResearchGoalForm
+    template_name = "proposals/research_goal_form.html"
+
+    def get_next_url(self):
+        proposal = self.object
+        if proposal.is_pre_assessment:
+            pre_suffix = "_pre"
+        else:
+            pre_suffix = ""
+        if proposal.is_pre_approved:
+            return reverse("proposals:pre_approved", args=(self.object.pk,))
+        elif hasattr(proposal, "wmo"):
+            return reverse(f"proposals:wmo_update{pre_suffix}", args=(proposal.pk,))
+        else:
+            return reverse(f"proposals:wmo_create{pre_suffix}", args=(proposal.pk,))
+
+    def get_back_url(self):
+        proposal = self.object
+        if proposal.is_pre_assessment:
+            return reverse("proposals:other_researchers", args=(self.object.pk,))
+        else:
+            return reverse("proposals:funding", args=(self.object.pk,))
+
+
+class ProposalPreApprovedFormView(
+    ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
+    model = Proposal
+    form_class = PreApprovedForm
+    template_name = "proposals/pre_approved_form.html"
+
+    def get_next_url(self):
+        """Go to the Other Researcher page"""
+
+        return reverse("proposals:submit_pre_approved", args=(self.object.pk,))
+
+    def get_back_url(self):
+        """Return to the Proposal Form page"""
+        return reverse("proposals:research_goal", args=(self.object.pk,))
 
 
 class TranslatedConsentFormsView(UpdateView):
@@ -675,31 +774,11 @@ class ProposalStartPreAssessment(ProposalStart):
     template_name = "proposals/proposal_start_pre_assessment.html"
 
 
-class PreAssessmentMixin(ProposalMixin):
-    def get_form_kwargs(self):
-        """Sets is_pre_assessment as a form kwarg"""
-        kwargs = super(PreAssessmentMixin, self).get_form_kwargs()
-        kwargs["is_pre_assessment"] = True
-        return kwargs
-
-    def get_next_url(self):
-        """If the Proposal has a Wmo model attached, go to update, else, go to create"""
-        proposal = self.object
-        if hasattr(proposal, "wmo"):
-            return reverse("proposals:wmo_update_pre", args=(proposal.pk,))
-        else:
-            return reverse("proposals:wmo_create_pre", args=(proposal.pk,))
-
-
-class ProposalCreatePreAssessment(PreAssessmentMixin, ProposalCreate):
+class ProposalCreatePreAssessment(ProposalCreate):
     def form_valid(self, form):
         """Sets is_pre_assessment to True"""
         form.instance.is_pre_assessment = True
         return super(ProposalCreatePreAssessment, self).form_valid(form)
-
-
-class ProposalUpdatePreAssessment(PreAssessmentMixin, ProposalUpdate):
-    pass
 
 
 class ProposalSubmitPreAssessment(ProposalSubmit):
@@ -725,29 +804,12 @@ class ProposalStartPreApproved(ProposalStart):
     template_name = "proposals/proposal_start_pre_approved.html"
 
 
-class PreApprovedMixin(ProposalMixin):
-    def get_form_kwargs(self):
-        """Sets is_pre_approved as a form kwarg"""
-        kwargs = super(PreApprovedMixin, self).get_form_kwargs()
-        kwargs["is_pre_approved"] = True
-        return kwargs
-
-    def get_next_url(self):
-        proposal = self.object
-        return reverse("proposals:submit_pre_approved", args=(proposal.pk,))
-
-
-class ProposalCreatePreApproved(PreApprovedMixin, ProposalCreate):
-    template_name = "proposals/proposal_form_pre_approved.html"
+class ProposalCreatePreApproved(ProposalCreate):
 
     def form_valid(self, form):
         """Sets is_pre_approved to True"""
         form.instance.is_pre_approved = True
         return super(ProposalCreatePreApproved, self).form_valid(form)
-
-
-class ProposalUpdatePreApproved(PreApprovedMixin, ProposalUpdate):
-    pass
 
 
 class ProposalSubmitPreApproved(ProposalSubmit):
@@ -757,7 +819,7 @@ class ProposalSubmitPreApproved(ProposalSubmit):
 
     def get_back_url(self):
         """Return to the update page"""
-        return reverse("proposals:update_pre_approved", args=(self.object.pk,))
+        return reverse("proposals:pre_approved", args=(self.object.pk,))
 
 
 class ProposalSubmittedPreApproved(ProposalSubmitted):
@@ -793,12 +855,6 @@ class ProposalCreatePractice(ProposalCreate):
         context["is_practice"] = True
         return context
 
-    def get_form_kwargs(self):
-        """Sets in_course as a form kwarg"""
-        kwargs = super(ProposalCreatePractice, self).get_form_kwargs()
-        kwargs["in_course"] = self.kwargs["reason"] == Proposal.PracticeReasons.COURSE
-        return kwargs
-
     def form_valid(self, form):
         """Sets in_course and is_exploration"""
         form.instance.in_course = (
@@ -808,11 +864,3 @@ class ProposalCreatePractice(ProposalCreate):
             self.kwargs["reason"] == Proposal.PracticeReasons.EXPLORATION
         )
         return super(ProposalCreatePractice, self).form_valid(form)
-
-
-class ProposalUpdatePractice(ProposalUpdate):
-    def get_form_kwargs(self):
-        """Sets in_course as a form kwarg"""
-        kwargs = super(ProposalUpdatePractice, self).get_form_kwargs()
-        kwargs["in_course"] = self.object.in_course
-        return kwargs
