@@ -13,7 +13,26 @@ from django.template.loader import get_template
 from .models import Proposal
 from .forms import ProposalForm
 from .utils.proposal_utils import pdf_link_callback
-from .utils.stepper import StepperContextMixin
+
+
+class StepperContextMixin:
+    """
+    Includes a stepper object in the view's context
+    """
+
+    def get_context_data(self, *args, **kwargs):
+        # Importing here to prevent circular import
+        from .utils.stepper import Stepper
+        context = super().get_context_data(*args, **kwargs)
+        # Try to determine proposal
+        if hasattr(self, "proposal"):
+            proposal = self.proposal
+        else:
+            proposal = Proposal.objects.get(pk=self.kwargs.get("pk"))
+        # Initialize and insert stepper object
+        stepper = Stepper(proposal)
+        context["stepper"] = stepper
+        return context
 
 
 class ProposalMixin(
@@ -142,3 +161,4 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
         response["Content-Disposition"] = self.get_content_disposition()
 
         return self.get_pdf_response(context, **response_kwargs, dest=response)
+
