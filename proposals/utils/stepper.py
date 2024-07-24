@@ -3,6 +3,10 @@ from copy import copy
 from django.urls import reverse
 from django.template import loader, Template
 from django.core.exceptions import ImproperlyConfigured
+from django.utils.translation import gettext as _
+
+from proposals.models import Proposal
+from proposals.forms import ProposalForm
 
 from proposals.views.proposal_views import ProposalUpdate
 
@@ -120,6 +124,7 @@ class BaseChecker:
 
     def __init__(self, stepper):
         self.stepper = stepper
+        self.proposal = stepper.proposal
 
     def __call__(self, *args, **kwargs):
         """
@@ -137,18 +142,56 @@ class BaseChecker:
         """
         return []
 
+class ProposalTypeChecker(
+        BaseChecker,
+):
+
+    def check(self):
+        self.stepper.layout = RegularProposalLayout
+        return []
+
+class ModelFormChecker(
+        BaseChecker,
+):
+    form_class = None
+
+    def __init__(self, stepper):
+        super().__init__(stepper)
+        if not self.form_class:
+            raise ImproperlyConfigured(
+                "form_class must be defined"
+            )
+        self.model_form = self.instantiate_form()
+
+    def get_form_object(self):
+        return self.proposal
+
+    def instantiate_form(self):
+        model_form = self.form_class(
+            instance=self.get_form_object(),
+        )
+        self.form_errors = model_form.errors
+        return model_form
+
+class ProposalCreateChecker(
+        ModelFormChecker,
+):
+    form_class = ProposalForm
+
+    def check(self):
+        return []
 
 class StepperItem:
     """
     Represents an item in the stepper
     """
 
-    stepper_title = "Stepper item"
-    stepper_children = []
+    title = "Stepper item"
+    children = []
     available = True
 
     @property
-    def stepper_url(self):
+    def get_url(self):
         return "#"
 
     def is_current(self, request):
@@ -158,49 +201,8 @@ class StepperItem:
         """
         return False
 
-class FormPage(StepperItem):
+class PlaceholderItem(StepperItem):
 
-    def instantiate(self):
-        pass
-
-class ViewPage(StepperItem):
-
-    view_class = None
-
-    def is_current(self, request):
-        breakpoint()
-        return True
-
-    def css_classes(self):
-        classes = set()
-        if self.is_current():
-            classess.add("current")
-
-
-class FirstPage(ViewPage):
-
-    view_class = ProposalUpdate
-
-
-class Page(StepperItem):
-    """Represents both a visitable page in the proposal form,
-    and an entry in the stepper."""
-
-    def __init__(self, proposal, current=None):
-        """Initialize the page with the proposal object"""
-        self.proposal = proposal
-
-    def collect_errors(self):
-        return []
-
-    def is_complete(self):
-        return self.collect_errors == []
-
-    def get_url(self):
-        return reverse(
-            "proposals:update",
-            kwargs={
-                "pk": self.proposal.pk,
-            },
-        )
+    def __init__(self, name):
+        self.title = name
 
