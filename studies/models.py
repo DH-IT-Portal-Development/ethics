@@ -272,22 +272,6 @@ cadeautje."
     has_sessions = models.BooleanField(_("Taakonderzoek en interviews"), default=False)
 
     # Fields with respect to Sessions
-    sessions_number = models.PositiveIntegerField(
-        _("Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?"),
-        null=True,
-        validators=[
-            MinValueValidator(1),
-            MaxValueValidator(100),
-        ],  # Max of 100 is just a technical safeguard
-        help_text=_(
-            "Wanneer je bijvoorbeeld eerst de deelnemer een \
-taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en \
-je laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
-of andere taak/taken te doen, dan spreken we van twee sessies. \
-Wanneer je meerdere taken afneemt op dezelfde dag, met pauzes daartussen, \
-dan geldt dat toch als één sessie."
-        ),
-    )
     deception = models.CharField(
         _(
             "Is er binnen bovenstaand onderzoekstraject sprake van \
@@ -398,6 +382,10 @@ geschoolde specialisten).'
         ordering = ["order"]
         unique_together = ("proposal", "order")
 
+    @property
+    def sessions_number(self):
+        return self.session_set.count()
+
     def first_session(self):
         """Returns the first Session in this Study"""
         return self.session_set.order_by("order")[0]
@@ -447,6 +435,9 @@ geschoolde specialisten).'
             )
 
         return False
+
+    def has_no_sessions(self):
+        return self.has_sessions and self.sessions_number == 0
 
     def research_settings_contains_schools(self):
         """Checks if any research track contains a school in it's setting"""

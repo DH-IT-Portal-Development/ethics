@@ -11,8 +11,8 @@ from braces.forms import UserKwargModelFormMixin
 
 from interventions.forms import InterventionForm
 from observations.forms import ObservationForm
-from studies.forms import StudyForm, StudyDesignForm, SessionStartForm
-from tasks.forms import TaskStartForm, TaskEndForm, TaskForm
+from studies.forms import StudyForm, StudyDesignForm
+from tasks.forms import SessionUpdateForm, SessionEndForm, TaskForm, SessionOverviewForm
 from ..forms import (
     ProposalForm,
     ResearcherForm,
@@ -176,17 +176,24 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                     None,
                 )
 
-        if study.has_sessions:
-            taskbased_key = "{}_task_start".format(key_base)
-            forms[taskbased_key] = (
-                SessionStartForm,
-                reverse("studies:session_start", args=[study.pk]),
-                _("Het takenonderzoek (traject {})").format(
+        if study.has_no_sessions():
+            session_overview_key = "{}_session_overview".format(
+                key_base,
+            )
+            forms[session_overview_key] = (
+                SessionOverviewForm,
+                reverse(
+                    "tasks:session_overview",
+                    args=[
+                        study.pk,
+                    ],
+                ),
+                _("Overzicht van het takenonderzoek (traject {})").format(
                     study.order,
                 ),
                 study,
             )
-
+        elif study.has_sessions:
             for session in study.session_set.all():
                 session_start_key = "{}_session_{}_start".format(
                     key_base,
@@ -194,8 +201,8 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                 )
 
                 forms[session_start_key] = (
-                    TaskStartForm,
-                    reverse("tasks:start", args=[session.pk]),
+                    SessionUpdateForm,
+                    reverse("tasks:session_update", args=[session.pk]),
                     _("Het takenonderzoek: sessie {} (traject {})").format(
                         session.order,
                         study.order,
@@ -228,8 +235,8 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                 )
 
                 forms[session_end_key] = (
-                    TaskEndForm,
-                    reverse("tasks:end", args=[session.pk]),
+                    SessionEndForm,
+                    reverse("tasks:session_end", args=[session.pk]),
                     _("Overzicht van takenonderzoek: sessie {} (traject {})").format(
                         session.order,
                         study.order,
@@ -276,7 +283,13 @@ def get_form_errors(proposal: Proposal) -> list:
                 kwargs["proposal"] = proposal
 
             if issubclass(
-                form_class, (InterventionForm, ObservationForm, TaskStartForm)
+                form_class,
+                (
+                    InterventionForm,
+                    ObservationForm,
+                    SessionUpdateForm,
+                    SessionOverviewForm,
+                ),
             ):
                 kwargs["study"] = obj.study
 

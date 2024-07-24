@@ -304,16 +304,3 @@ class StudyUpdateAttachmentsForm(forms.ModelForm):
         widgets = {
             # 'passive_consent': forms.HiddenInput
         }
-
-
-class SessionStartForm(forms.ModelForm):
-    class Meta:
-        model = Study
-        fields = ["sessions_number"]
-
-    def __init__(self, *args, **kwargs):
-        """
-        - Set the sessions_number field as required
-        """
-        super(SessionStartForm, self).__init__(*args, **kwargs)
-        self.fields["sessions_number"].required = True
