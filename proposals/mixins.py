@@ -41,9 +41,7 @@ class ProposalMixin(
     model = Proposal
     form_class = ProposalForm
 
-    def get_proposal(
-            self,
-    ):
+    def get_proposal(self,):
         return self.get_object()
 
     def get_next_url(self):

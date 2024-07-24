@@ -241,6 +241,10 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
     # Note: template_name is auto-generated to proposal_form.html
 
     success_message = _("Aanvraag %(title)s aangemaakt")
+    proposal_type_hint = "regular"
+
+    def get_proposal(self,):
+        return self.get_form().instance
 
     def form_valid(self, form):
         """
