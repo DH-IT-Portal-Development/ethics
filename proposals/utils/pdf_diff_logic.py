@@ -8,6 +8,7 @@ from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
+from main.templatetags.fetc_filters import create_unordered_html_list
 from proposals.templatetags.proposal_filters import (
     needs_details,
     medical_traits,
@@ -265,23 +266,11 @@ class RowValue:
 
     def get_applicants_names(self, applicants):
         applicant_names = [applicant.get_full_name() for applicant in applicants.all()]
-        return self.create_unordered_html_list(applicant_names)
+        return create_unordered_html_list(applicant_names)
 
     def get_object_list(self, object):
         list_of_objects = [obj for obj in object.all()]
-        return self.create_unordered_html_list(list_of_objects)
-
-    def create_unordered_html_list(self, lst):
-        html_output = mark_safe('<p class="p-0">')
-
-        for index, item in enumerate(lst):
-            html_output += format_html("- {}", item)
-            if index != len(lst) - 1:
-                html_output += mark_safe("<br/>")
-
-        html_output += mark_safe("</p>")
-
-        return html_output
+        return create_unordered_html_list(list_of_objects)
 
     def handle_field_file(self, field_file):
         if field_file:
@@ -746,27 +735,21 @@ class ObservationSection(BaseSection):
         return rows
 
 
-class SessionsOverviewSection(BaseSection):
-    """This class receives an study object"""
-
-    section_title = _("Het takenonderzoek en interviews")
-
-    row_fields = ["sessions_number"]
-
-
 class SessionSection(BaseSection):
     """This class receives a session object"""
 
     row_fields = [
+        "repeats",
         "setting",
         "setting_details",
         "supervision",
         "leader_has_coc",
-        "tasks_number",
     ]
 
     def __init__(self, obj):
         super().__init__(obj)
+        if self.obj.order == 1:
+            self.section_title = _("Het takenonderzoek en interviews")
         self.sub_title = self.get_sub_title(self.obj, "session")
 
     def get_row_fields(self):
@@ -791,6 +774,7 @@ class TaskSection(BaseSection):
 
     row_fields = [
         "name",
+        "repeats",
         "duration",
         "registrations",
         "registrations_details",
@@ -1037,7 +1021,6 @@ def create_context_pdf(context, model):
                     if study.has_observation:
                         sections.append(ObservationSection(study.observation))
                     if study.has_sessions:
-                        sections.append(SessionsOverviewSection(study))
                         for session in study.session_set.all():
                             sections.append(SessionSection(session))
                             for task in session.task_set.all():
@@ -1167,12 +1150,6 @@ def create_context_diff(context, old_proposal, new_proposal):
                         or new_study is not None
                         and new_study.has_sessions
                     ):
-                        sections.append(
-                            DiffSection(
-                                *multi_sections(SessionsOverviewSection, both_studies)
-                            )
-                        )
-
                         old_sessions_set, new_sessions_set = get_all_related_set(
                             both_studies, "session_set"
                         )

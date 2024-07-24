@@ -275,7 +275,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.study.age_groups.set(AgeGroup.objects.filter(pk=2))  # toddlers
         self.study.save()
 
-        s1 = Session.objects.create(study=self.study, order=1, tasks_number=2)
+        s1 = Session.objects.create(study=self.study, order=1)
         s1_t1 = Task.objects.create(session=s1, order=1, duration=20)
         s1_t2 = Task.objects.create(session=s1, order=2, duration=20)
         self.study.save()
@@ -322,7 +322,7 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
 
-        s1 = Session.objects.create(study=self.study, order=1, tasks_number=1)
+        s1 = Session.objects.create(study=self.study, order=1)
         s1_t1 = Task.objects.create(session=s1, order=1)
         s1_t1.registrations.set(
             Registration.objects.filter(pk=6)

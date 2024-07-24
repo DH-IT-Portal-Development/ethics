@@ -1,47 +1,44 @@
 # -*- encoding: utf-8 -*-
 
 from django import forms
+from django.forms import ModelForm
 from django.utils.translation import gettext_lazy as _
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.utils import YES_NO
+from tasks.models import Study
 from .models import Session, Task
 
 
 from django.utils.safestring import mark_safe, SafeString
 from django.utils.functional import lazy
 
+from cdh.core.forms import (
+    BootstrapRadioSelect,
+    BootstrapCheckboxSelectMultiple,
+)
+
 mark_safe_lazy = lazy(mark_safe, SafeString)
 
 
-class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
-    is_copy = forms.BooleanField(
-        label=_("Is deze sessie een kopie van een voorgaande sessie?"),
-        help_text=_("Na het kopiëren zijn alle velden bewerkbaar."),
-        widget=forms.RadioSelect(choices=YES_NO),
-        initial=False,
-        required=False,
-    )
-    parent_session = forms.ModelChoiceField(
-        label=_("Te kopiëren sessie"), queryset=Session.objects.all(), required=False
-    )
-
+class SessionUpdateForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Session
         fields = [
+            "repeats",
             "setting",
             "setting_details",
             "supervision",
             "leader_has_coc",
-            "tasks_number",
         ]
         widgets = {
-            "setting": forms.CheckboxSelectMultiple(),
-            "supervision": forms.RadioSelect(choices=YES_NO),
-            "leader_has_coc": forms.RadioSelect(choices=YES_NO),
+            "setting": BootstrapCheckboxSelectMultiple(),
+            "supervision": BootstrapRadioSelect(choices=YES_NO),
+            "leader_has_coc": BootstrapRadioSelect(choices=YES_NO),
         }
 
     _soft_validation_fields = [
+        "repeats",
         "setting",
         "setting_details",
         "supervision",
@@ -51,22 +48,13 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Set the Study for later reference
-        - The field tasks_number is not required by default (only if is_copy is set to False)
         - Only allow to choose earlier Sessions
         - Remove option to copy altogether from first Session
         - Don't ask the supervision question when there are only adult AgeGroups in this Study
         """
         self.study = kwargs.pop("study", None)
 
-        super(TaskStartForm, self).__init__(*args, **kwargs)
-        self.fields["tasks_number"].required = False
-        self.fields["parent_session"].queryset = Session.objects.filter(
-            study=self.instance.study.pk, order__lt=self.instance.order
-        )
-
-        if self.instance.order == 1:
-            del self.fields["is_copy"]
-            del self.fields["parent_session"]
+        super(SessionUpdateForm, self).__init__(*args, **kwargs)
 
         # TODO: add warning
         if not self.study.has_children():
@@ -78,9 +66,8 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
         Check for conditional requirements:
         - If a setting which needs details or supervision has been checked, make sure the details are filled
         - If is_copy is True, parent_session is required
-        - If is_copy is False, tasks_number is required
         """
-        cleaned_data = super(TaskStartForm, self).clean()
+        cleaned_data = super(SessionUpdateForm, self).clean()
 
         self.mark_soft_required(cleaned_data, "setting")
 
@@ -95,15 +82,6 @@ class TaskStartForm(SoftValidationMixin, ConditionalModelForm):
                 cleaned_data, "supervision", "leader_has_coc", f1_value=False
             )
 
-        self.check_dependency(cleaned_data, "is_copy", "parent_session")
-        if not cleaned_data.get("is_copy") and not cleaned_data.get("tasks_number"):
-            # Prevent double required errors
-            if "tasks_number" not in self.errors:
-                self.add_error(
-                    "tasks_number",
-                    forms.ValidationError(_("Dit veld is verplicht."), code="required"),
-                )
-
 
 class TaskForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
@@ -111,6 +89,7 @@ class TaskForm(SoftValidationMixin, ConditionalModelForm):
         fields = [
             "name",
             "description",
+            "repeats",
             "duration",
             "registrations",
             "registrations_details",
@@ -131,9 +110,9 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
             ),
         }
         widgets = {
-            "registrations": forms.CheckboxSelectMultiple(),
-            "registration_kinds": forms.CheckboxSelectMultiple(),
-            "feedback": forms.RadioSelect(choices=YES_NO),
+            "registrations": BootstrapCheckboxSelectMultiple(),
+            "registration_kinds": BootstrapCheckboxSelectMultiple(),
+            "feedback": BootstrapRadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -178,29 +157,31 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
         self.check_dependency(cleaned_data, "feedback", "feedback_details")
 
 
-class TaskEndForm(SoftValidationMixin, forms.ModelForm):
+class SessionEndForm(SoftValidationMixin, forms.ModelForm):
     class Meta:
         model = Session
         fields = ["tasks_duration"]
+
+    _soft_validation_fields = [
+        "tasks_duration",
+    ]
 
     def __init__(self, *args, **kwargs):
         """
         - Set the tasks_duration label
         - Set the tasks_duration as required
         """
-        super(TaskEndForm, self).__init__(*args, **kwargs)
+        super(SessionEndForm, self).__init__(*args, **kwargs)
 
         tasks_duration = self.fields["tasks_duration"]
         label = tasks_duration.label % self.instance.net_duration()
         tasks_duration.label = mark_safe(label)
 
-    _soft_validation_fields = ["tasks_duration"]
-
     def is_initial_visit(self) -> bool:
         return True
 
     def clean(self):
-        cleaned_data = super(TaskEndForm, self).clean()
+        cleaned_data = super(SessionEndForm, self).clean()
 
         self.mark_soft_required(cleaned_data, "tasks_duration")
 
@@ -219,3 +200,29 @@ class TaskEndForm(SoftValidationMixin, forms.ModelForm):
             )
 
         return tasks_duration
+
+
+class SessionOverviewForm(SoftValidationMixin, ModelForm):
+    """This is form is mostly used to make the navigation work on
+    SessionOverview and SessionStart. However, it is also use to validate
+    that if study.has_session, it also contains sessions."""
+
+    class Meta:
+        model = Study
+        fields = []
+
+    def get_soft_validation_fields(self):
+        return self.errors
+
+    def clean(self):
+        cleaned_data = super(SessionOverviewForm, self).clean()
+
+        if self.instance.has_no_sessions():
+            self.add_error(
+                None,
+                _(
+                    "Je hebt aangegeven dat traject {} sessie's en taken bevat, maar er zijn nog geen sessie's aangemaakt."
+                ).format(self.instance.order),
+            )
+
+        return cleaned_data

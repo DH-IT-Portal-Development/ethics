@@ -1,0 +1,44 @@
+{% extends "base/base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Het takenonderzoek en/of interviews" %} - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <div class="uu-inner-container">
+        <div class="col-12">
+            {% with nav_items=object.proposal.available_urls active=3 %}
+                {% include 'base/navigation.html' %}
+            {% endwith %}
+            <h2>{% trans "Het takenonderzoek en/of interviews" %}</h2>
+            {% include "studies/study_title.html" %}
+            <p>
+                {% blocktrans trimmed %}
+                    Een traject bestaat uit één of meer sessies. Een sessie bestaat uit één of meer taken.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    <strong>Sessie:</strong> Alle taken/onderdelen die iemand op één dag uitvoert.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    <strong>Taak:</strong> Eén taak of onderdeel van je onderzoek. Bijvoorbeeld: het invullen van een vragenlijst, een interview, of een taaltest.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    Je kan op de volgende pagina, de overzichtspagina van sessies en taken, beginnen met het aanmaken van sessies. Binnen elke sessie kun je taken aanmaken. Als je klaar bent met het aanmaken van een sessie keer je terug op de overzichtspagina van sessies en taken.
+                {% endblocktrans %}
+            </p>
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% include "base/form_buttons.html" %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

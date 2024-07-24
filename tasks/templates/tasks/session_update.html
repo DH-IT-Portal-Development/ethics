@@ -4,27 +4,16 @@
 {% load i18n %}
 
 {% block header_title %}
-    {% trans "Het takenonderzoek en interviews" %} - {{ block.super }}
-{% endblock %}
-
-{% block html_head %}
-    <script>
-$(function() {
-    depends_on_value('is_copy', 'True', 'parent_session');
-    depends_on_value('is_copy', 'False', 'tasks_number');
-
-    $('input[name=tasks_number]').parents('tr').insertAfter($('input[name=is_copy]').parents('tr'));
-});
-    </script>
+    {% trans "Het takenonderzoek en/of interviews" %} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
     <div class="uu-container">
         <div class="col-12">
-            {% with nav_items=session.study.proposal.available_urls active=3 %}
+            {% with nav_items=study.proposal.available_urls active=3 %}
                 {% include 'base/navigation.html' %}
             {% endwith %}
-            <h2>{% trans "Het takenonderzoek en interviews" %}</h2>
+            <h2>{% trans "Het takenonderzoek en/of interviews" %}</h2>
             {% include "main/setting_checks.html" %}
             {% include "tasks/session_title.html" %}
             <form action="" method="post" enctype="multipart/form-data">
@@ -33,9 +22,7 @@ $(function() {
                     {{ form.as_table }}
                 </table>
                 <p>{% trans "Voor elke taak stellen we in de komende schermen steeds dezelfde vragen." %}</p>
-                {% with proposal=session.study.proposal study=session.study %}
-                    {% include "base/form_buttons.html" %}
-                {% endwith %}
+                {% include "base/form_buttons.html" %}
             </form>
         </div>
     </div>

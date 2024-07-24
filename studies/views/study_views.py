@@ -97,7 +97,7 @@ class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView):
             else:
                 next_url = "observations:create"
         elif study.has_sessions:
-            next_url = "studies:session_start"
+            next_url = "tasks:session_start"
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
@@ -144,8 +144,8 @@ class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
     def get_back_url(self):
         study = self.object
         if study.has_sessions:
-            next_url = "tasks:end"
-            pk = self.object.last_session().pk
+            next_url = "tasks:session_overview"
+            pk = self.object.pk
         elif study.has_intervention:
             next_url = "interventions:update"
             pk = Intervention.objects.get(study=study).pk
