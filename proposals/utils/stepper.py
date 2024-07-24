@@ -1,4 +1,5 @@
-from proposals.models import Proposal
+from copy import copy
+
 from django.urls import reverse
 from django.template import loader, Template
 from django.core.exceptions import ImproperlyConfigured
@@ -25,16 +26,58 @@ class renderable:
         context.update(self.get_context_data())
         return template.render(context.flatten())
 
+class Layout:
+
+    def __init__(self, layout):
+        self.layout = layout
+
+    def insert_item(self, new_item):
+        if new_item.parent:
+            self.insert_child(new_item)
+        location = new_item.location
+        for index, item in enumerate(copy(self.layout)):
+            if location == item[0]:
+                self.layout.insert(new_item, index)
+                self.layout.remove(item)
+                return
+        self.layout.append(new_item)
+
+    def insert_placeholders(self):
+        for index, item in enumerate(copy(self.layout)):
+            if isinstance(item, StepperItem):
+                continue
+            placeholder = PlaceholderItem(
+                item[1],
+            )
+            self.layout.insert(index, placeholder)
+            self.layout.remove(item)
+
+    def make_stepper(self):
+        self.insert_placeholders()
+        return self.layout
+
+
+RegularProposalLayout = Layout([
+    ("create", _("Basisgegevens")),
+    ("wmo", _("WMO")),
+    ("studies", _("Trajecten")),
+    ("attachments", _("Documenten")),
+    ("data_management", _("Datamanagement")),
+    ("submit", _("Indienen")),
+])
 
 class Stepper(renderable):
 
     template_name = "base/stepper.html"
-    starting_checkers = []
 
     def __init__(self, proposal, current=None):
 
         self.proposal = proposal
         self.current = current
+        self.starting_checkers = [
+            ProposalTypeChecker,
+        ]
+        self.items = []
         self.check_all(self.starting_checkers)
 
     def get_context_data(self):
@@ -45,21 +88,18 @@ class Stepper(renderable):
         Returns the url of the first page that requires attention,
         that being either a page with an error or an incomplete page.
         """
-        pages = self.collect_pages()
-
-        for page in flatten(pages):
-            if not page.is_complete:
-                return page.get_url()
+        for item in flatten(self.items):
+            if not item.is_complete:
+                return item.get_url()
 
     def collect_items(self):
-        some_pages = []
-        for i in range(5):
-            some_pages.append(
-                Page(self.proposal)
+        if not hasattr(self, "layout"):
+            raise RuntimeError(
+                "Layout was never defined for this stepper",
             )
-        first_page = FirstPage()
-        some_pages.append(first_page)
-        return some_pages
+        for item in self.items:
+            self.layout.insert(item)
+        return self.layout.make_stepper()
 
     def check_all(self, next_checkers):
         # No more checkers means we are done
