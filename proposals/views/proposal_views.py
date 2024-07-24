@@ -372,7 +372,10 @@ class ProposalStart(generic.TemplateView):
 
 
 class ProposalResearcherFormView(
-    UserFormKwargsMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+    UserFormKwargsMixin,
+    ProposalContextMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView
 ):
     model = Proposal
     form_class = ResearcherForm
