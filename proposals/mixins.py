@@ -25,10 +25,9 @@ class StepperContextMixin:
         from .utils.stepper import Stepper
         context = super().get_context_data(*args, **kwargs)
         # Try to determine proposal
-        if hasattr(self, "proposal"):
-            proposal = self.proposal
-        else:
-            proposal = Proposal.objects.get(pk=self.kwargs.get("pk"))
+        proposal = Proposal()
+        if hasattr(self, "get_proposal"):
+            proposal = self.get_proposal()
         # Initialize and insert stepper object
         stepper = Stepper(proposal)
         context["stepper"] = stepper
@@ -42,11 +41,18 @@ class ProposalMixin(
     model = Proposal
     form_class = ProposalForm
 
+    def get_proposal(
+            self,
+    ):
+        return self.get_object()
+
     def get_next_url(self):
         return reverse("proposals:researcher", args=(self.object.pk,))
 
 
-class ProposalContextMixin:
+class ProposalContextMixin(
+        StepperContextMixin,
+):
     def current_user_is_supervisor(self):
         return self.object.supervisor == self.request.user
 
