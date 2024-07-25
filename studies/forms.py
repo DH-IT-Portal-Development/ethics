@@ -152,10 +152,28 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
                 self.add_error("necessity_reason", error)
 
 
-class StudyDesignForm(forms.ModelForm):
+class StudyDesignForm(TemplatedModelForm):
+
+    study_types = forms.MultipleChoiceField(label=_("Om welk type onderzoek gaat het hier? Je kan meerdere opties aankruisen."),
+                                            widget=BootstrapCheckboxSelectMultiple,
+                                            choices = (("has_intervention", _("Interventieonderzoek")),
+                                                       ("has_observation", _("Observatieonderzoek")),
+                                                       ("has_sessions", _("Taakonderzoek en interviews"))
+                                                       ),
+                                            help_text=_("Dit is bijvoorbeeld het geval wanneer je een "
+                                    "observatiedeel combineert met een taakonderzoeksdeel, "
+                                    "of met een interventiedeel (in dezelfde sessie, of "
+                                    "verspreid over dagen). "
+                                    "Wanneer je in interventieonderzoek <em>extra</em> taken "
+                                    "inzet om de effecten van de interventie te bemeten "
+                                    "(bijvoorbeeld een speciale voor- en nameting met een "
+                                    "vragenlijst die anders niet zou worden afgenomen) "
+                                    "dien je die apart als taakonderzoek te specificeren.)")
+    )
+
     class Meta:
         model = Study
-        fields = ["has_intervention", "has_observation", "has_sessions"]
+        fields=[]
 
     def clean(self):
         """
@@ -163,14 +181,9 @@ class StudyDesignForm(forms.ModelForm):
         - at least one of the fields has to be checked
         """
         cleaned_data = super(StudyDesignForm, self).clean()
-        if not (
-            cleaned_data.get("has_intervention")
-            or cleaned_data.get("has_observation")
-            or cleaned_data.get("has_sessions")
-        ):
+        if not cleaned_data:
             msg = _("Je dient minstens één van de opties te selecteren")
-            self.add_error("has_sessions", forms.ValidationError(msg, code="required"))
-
+            self.add_error("study_types", forms.ValidationError(msg, code="required"))
 
 class StudyConsentForm(ConditionalModelForm):
     class Meta:
