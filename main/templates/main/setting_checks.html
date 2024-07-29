@@ -8,7 +8,7 @@ $(function() {
 
     $('input[name="leader_has_coc"]').change(function() {
         if ($(this).val() === 'False') {
-            $(this).parents('tr').find('img').qtip('show');
+            $(this).parents('.uu-form-row').find('img').qtip('show');
         }
     });
 });
