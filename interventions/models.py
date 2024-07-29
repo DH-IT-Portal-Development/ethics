@@ -15,7 +15,6 @@ class Intervention(SettingModel):
 
     period = models.TextField(
         _("Wat is de periode waarbinnen de interventie plaatsvindt?"),
-        help_text=_("De interventie vindt plaats binnen het schooljaar " "2018-2019"),
         blank=True,
     )
 
