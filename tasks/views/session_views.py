@@ -43,10 +43,31 @@ class SessionDelete(DeleteView):
 # Actions on Sessions
 ##################
 
+class SessionMixin(AllowErrorsOnBackbuttonMixin):
 
-class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
+    model = Session
+    form_class = SessionUpdateForm
+    template_name = "tasks/session_update.html"
+
+    def get_context_data(self, **kwargs):
+        study = self.get_study()
+        context = super().get_context_data(**kwargs)
+        context["study"] = study
+        context["proposal"] = study.proposal
+        return context
+
+    def get_study(self):
+        return self.object.study
+
+    def get_next_url(self):
+        return reverse("tasks:session_end", args=(self.object.pk,))
+
+
+class SessionStart(SessionMixin, UpdateView):
 
     model = Study
+    #This form is just a placeholder to make navigation work. It does not do 
+    #anything.
     form_class = SessionOverviewForm
     template_name = "tasks/session_start.html"
 
@@ -64,25 +85,9 @@ class SessionStart(AllowErrorsOnBackbuttonMixin, UpdateView):
             next_url = "interventions:update"
             pk = study.intervention.pk
         return reverse(next_url, args=(pk,))
-
-
-class SessionMixin(AllowErrorsOnBackbuttonMixin):
-
-    model = Session
-    form_class = SessionUpdateForm
-    template_name = "tasks/session_update.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["study"] = self.get_study()
-        return context
-
+ 
     def get_study(self):
-        return self.object.study
-
-    def get_next_url(self):
-        return reverse("tasks:session_end", args=(self.object.pk,))
-
+        return self.object
 
 class SessionCreate(SessionMixin, CreateView):
 
