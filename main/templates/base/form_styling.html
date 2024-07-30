@@ -135,13 +135,6 @@ function check_field_required(input_name, field_name, required_input, app_name, 
     input.change();
 }
 
-// Adds a title row to a form field
-function add_title(field, title)
-{
-    var insert = $('<div>').append($('<h3>').text(title));
-    $('#id_' + field).parents('.uu-form-row').before(insert);
-}
-
 $(function() {
     // Will make each textarea auto-resize.
     // Copied from: http://stackoverflow.com/a/25621277

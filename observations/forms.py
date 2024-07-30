@@ -2,6 +2,7 @@
 
 from django import forms
 from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.utils import YES_NO
@@ -10,20 +11,44 @@ from .models import Observation
 from cdh.core.forms import (
     BootstrapRadioSelect,
     BootstrapCheckboxSelectMultiple,
+    TemplatedFormTextField,
 )
 
 
 class ObservationForm(SoftValidationMixin, ConditionalModelForm):
+
+    setting_header = TemplatedFormTextField(
+        header=_("Setting"), header_element="h4"
+    )
+    
+    details_who_header = TemplatedFormTextField(
+        header=_("Details observatie"), header_element="h4"
+    )
+
+    is_anonymous_header = TemplatedFormTextField(
+        header=_("Anonimiteit"), header_element="h4"
+    )
+    needs_approval_header = TemplatedFormTextField(
+        header=_("Toestemming"), header_element="h4"
+    )
+    
+    registrations_header = TemplatedFormTextField(
+        header=_("Registratie gedrag"), header_element="h4"
+    )
+
     class Meta:
         model = Observation
         fields = [
+            "setting_header",
             "setting",
             "setting_details",
             "supervision",
             "leader_has_coc",
+            "details_who_header",
             "details_who",
             "details_why",
             "details_frequency",
+            "is_anonymous_header",
             "is_anonymous",
             "is_anonymous_details",
             "is_in_target_group",
@@ -32,8 +57,10 @@ class ObservationForm(SoftValidationMixin, ConditionalModelForm):
             "is_nonpublic_space_details",
             "has_advanced_consent",
             "has_advanced_consent_details",
+            "needs_approval_header",
             "needs_approval",
             "approval_institution",
+            "registrations_header",
             "registrations",
             "registrations_details",
         ]

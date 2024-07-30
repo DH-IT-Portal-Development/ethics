@@ -22,26 +22,62 @@ from cdh.core.forms import (
     BootstrapSplitDateTimeWidget,
     TemplatedForm,
     TemplatedModelForm,
+    TemplatedFormTextField,
 )
 
 
 class StudyForm(SoftValidationMixin, ConditionalModelForm):
+
+    age_groups_header = TemplatedFormTextField(
+        header=_("De leeftijdsgroup van je deelnemers"), header_element="h4"
+    )
+    
+    legally_incapable_header = TemplatedFormTextField(
+        header=_("Wilsonbekwaamheid"), header_element="h4"
+    )
+
+    has_special_details_header = TemplatedFormTextField(
+        header=_("Bijzondere persoonsgegevens"), header_element="h4"
+    )
+
+    necessity_header = TemplatedFormTextField(
+        header=_("Noodzakelijkheid"), header_element="h4"
+    )
+    
+    recruitment_header = TemplatedFormTextField(
+        header=_("Werving"), header_element="h4"
+    )
+
+    compensation_header = TemplatedFormTextField(
+        header=_("Compensatie"), header_element="h4"
+    )
+
+    hierarchy_header = TemplatedFormTextField(
+        header=_("Hiërarchie"), header_element="h4"
+    )
     class Meta:
         model = Study
         fields = [
+            "age_groups_header",
             "age_groups",
+            "legally_incapable_header",
             "legally_incapable",
             "legally_incapable_details",
+            "has_special_details_header",
             "has_special_details",
             "special_details",
             "traits",
             "traits_details",
+            "necessity_header",
             "necessity",
             "necessity_reason",
+            "recruitment_header",
             "recruitment",
             "recruitment_details",
+            "compensation_header",
             "compensation",
             "compensation_details",
+            "hierarchy_header",
             "hierarchy",
             "hierarchy_details",
         ]
@@ -81,6 +117,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         self.fields["compensation"].empty_label = None
         self.fields["necessity"].empty_label = None
         self.fields["necessity"].choices = YesNoDoubt.choices
+        self.fields["legally_incapable"].css_classes = " uu-form-no-gap"
 
         self.fields["age_groups"].queryset = AgeGroup.objects.filter(is_active=True)
 

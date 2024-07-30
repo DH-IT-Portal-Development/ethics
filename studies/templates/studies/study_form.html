@@ -20,15 +20,6 @@ $(function() {
     check_field_required('recruitment', 'needs_details', 'recruitment_details', 'studies');
     depends_on_value('hierarchy', 'True', 'hierarchy_details');
 
-    add_title('age_groups', "{% trans 'De leeftijdsgroep van je deelnemers' %}");
-    add_title('legally_incapable', "{% trans 'Wilsonbekwaamheid' %}");
-    add_title('has_special_details', "{% trans 'Bijzondere persoonsgegevens' %}");
-    add_title('necessity', "{% trans 'Noodzakelijkheid' %}");
-    add_title('recruitment', "{% trans 'Werving' %}");
-    add_title('compensation', "{% trans 'Vergoeding' %}");
-    add_title('hierarchy', "{% trans 'Hiërarchie' %}");
-
-
     // Logic for legally_incapable
     $('input[name=age_groups], input[name=legally_incapable]').change(function() {
         var age_groups = $('input[name=age_groups]:checked').map(function() {

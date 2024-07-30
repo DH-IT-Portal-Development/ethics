@@ -15,11 +15,6 @@
             depends_on_value('multiple_sessions', 'True', 'session_frequency');
             depends_on_value('extra_task', 'True', 'extra_info');
 
-            add_title('setting', "{% trans 'Setting' %}");
-            add_title('period', "{% trans 'Beschrijving van de interventie' %}");
-            add_title('extra_task', "{% trans 'Extra taak' %}");
-
-
             // Logic for extra task display
             $('input[name=setting]').change(function () {
                 var checked_inputs = $('input[name=setting]:checked').map(function () {
