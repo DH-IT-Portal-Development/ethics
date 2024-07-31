@@ -1,4 +1,4 @@
-{% extends "base/fetc_base.html" %}
+{% extends "base/fetc_form_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -7,23 +7,16 @@
     {% trans "Het takenonderzoek en/of interviews" %} - {{ block.super }}
 {% endblock %}
 
-{% block content %}
-    <div class="uu-container">
-        <div class="col-12">
-            {% with nav_items=study.proposal.available_urls active=3 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
-            <h2>{% trans "Het takenonderzoek en/of interviews" %}</h2>
-            {% include "main/setting_checks.html" %}
-            {% include "tasks/session_title.html" %}
-            <form action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                <p>{% trans "Voor elke taak stellen we in de komende schermen steeds dezelfde vragen." %}</p>
-                {% include "base/form_buttons.html" %}
-            </form>
-        </div>
+{% block pre-form-text %}
+    <h2>{% trans "Het takenonderzoek en/of interviews" %}</h2>
+    {% include "main/setting_checks.html" %}
+    {% include "tasks/session_title.html" %}
+{% endblock %}
+
+{% block post-form-pre-buttons %}
+<div class="uu-form-row mb-0">
+    <div class="alert alert-info">
+        {% trans "Voor elke taak stellen we in de komende schermen steeds dezelfde vragen." %}
     </div>
+</div>
 {% endblock %}
