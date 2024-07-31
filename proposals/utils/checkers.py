@@ -8,12 +8,16 @@ from proposals import forms
 
 from .stepper_helpers import RegularProposalLayout, PlaceholderItem, StepperItem
 
-class BaseChecker:
+class BaseStepperComponent:
 
     def __init__(self, stepper, parent=None):
         self.stepper = stepper
         self.proposal = stepper.proposal
         self.parent = parent
+
+class Checker(
+        BaseStepperComponent,
+):
 
     def __call__(self, *args, **kwargs):
         """
@@ -31,9 +35,43 @@ class BaseChecker:
         """
         return []
 
+class ModelFormChecker(
+        Checker,
+):
+
+    form_class = None
+    title = None
+
+    def __init__(self, *args, **kwargs):
+        if not self.form_class:
+            raise ImproperlyConfigured(
+                "form_class must be defined"
+            )
+        return super().__init__(*args, **kwargs)
+
+    def make_stepper_item(self):
+        if not self.title:
+            raise ImproperlyConfigured(
+                "title must be defined"
+            )
+        stepper_item = ModelFormItem(
+            self.stepper,
+            title=self.title,
+            parent=self.parent,
+            form_object=self.get_form_object(),
+            form_class=self.form_class,
+            url_func=self.get_url,
+        )
+        return stepper_item
+
+    def get_form_object(self,):
+        # Overwrite method for other objects
+        return self.proposal
+
 
 class ProposalTypeChecker(
-        BaseChecker,
+        Checker,
+        BaseStepperComponent,
 ):
 
     def check(self):
@@ -46,18 +84,34 @@ class ProposalTypeChecker(
         return [ProposalCreateChecker]
 
 
-class ModelFormChecker(
-        BaseChecker,
+class ModelFormItem(
+        StepperItem,
 ):
-    form_class = None
 
-    def __init__(self, stepper, parent=None):
-        super().__init__(stepper, parent=parent)
+    def __init__(self, *args, **kwargs):
+        self.form_class = kwargs.pop(
+            "form_class",
+        )
+        self.form_object = kwargs.pop(
+            "form_object",
+        )
+        get_url = kwargs.pop(
+            "url_func",
+            None,
+        )
+        if get_url:
+            self.get_url = get_url
+        return super().__init__(*args, **kwargs)
+
+    @property
+    def model_form(self):
         if not self.form_class:
             raise ImproperlyConfigured(
                 "form_class must be defined"
             )
-        self.model_form = self.instantiate_form()
+        if not hasattr(self, instantiated_form):
+            self.instantiated_form = self.instantiate_form()
+        return self.instantiated_form
 
     def get_form_object(self):
         return self.proposal
@@ -111,7 +165,6 @@ class BasicDetailsItem(
 
 class ProposalCreateChecker(
         ModelFormChecker,
-        StepperItem,
 ):
     title = _("Start")
     form_class = forms.ProposalForm
@@ -135,13 +188,33 @@ class ProposalCreateChecker(
 
     def new_proposal(self):
         self.stepper.items.append(
-            self,
+            self.make_stepper_item()
         )
+        placeholders = [
+            PlaceholderItem(
+                self.stepper,
+                title=_("Onderzoeker"),
+                parent=self.parent,
+            ),
+            PlaceholderItem(
+                self.stepper,
+                title=_("Andere onderzoekers"),
+                parent=self.parent,
+            ),
+        ]
+        self.stepper.items += placeholders
         return []
 
     def proposal_exists(self):
+        stepper_item = ModelFormItem(
+            self.stepper,
+            parent=self.parent,
+            form_object=self.proposal,
+            form_class=self.form_class,
+            url_func=self.get_url,
+        )
         self.stepper.items.append(
-            self,
+            stepper_item,
         )
         return [
             ResearcherChecker(
@@ -150,25 +223,39 @@ class ProposalCreateChecker(
             )
         ]
 
-class ModelFormItem(
-        StepperItem,
-):
-    def __init__(self, model_form):
-        self.model_form = model_form
-
 class ResearcherChecker(
         ModelFormChecker,
-        StepperItem,
 ):
     title = _("Onderzoeker")
     form_class = forms.ResearcherForm
 
     def check(self):
-        self.stepper.items.append(self)
-        return []
+        self.stepper.items.append(self.make_stepper_item())
+        return [
+            OtherResearchersChecker(
+                self.stepper,
+                parent=self.parent
+            )
+        ]
 
     def get_url(self):
         return reverse(
             "proposals:researcher",
+            args=(self.proposal.pk,),
+        )
+
+class OtherResearchersChecker(
+        ModelFormChecker,
+):
+    title = _("Andere onderzoekers")
+    form_class = forms.OtherResearchersForm
+
+    def check(self):
+        self.stepper.items.append(self.make_stepper_item())
+        return []
+
+    def get_url(self):
+        return reverse(
+            "proposals:other_researchers",
             args=(self.proposal.pk,),
         )

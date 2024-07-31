@@ -401,7 +401,10 @@ class ProposalResearcherFormView(
 
 
 class ProposalOtherResearchersFormView(
-    UserFormKwargsMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+        UserFormKwargsMixin,
+        AllowErrorsOnBackbuttonMixin,
+        ProposalMixin,
+        UpdateView,
 ):
     model = Proposal
     form_class = OtherResearchersForm

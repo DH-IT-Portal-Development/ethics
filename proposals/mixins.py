@@ -37,16 +37,6 @@ class StepperContextMixin:
         return context
 
 
-class ProposalMixin(
-        UserFormKwargsMixin,
-        StepperContextMixin,
-):
-    model = Proposal
-
-    def get_proposal(self,):
-        return self.get_object()
-
-
 class ProposalContextMixin(
         StepperContextMixin,
 ):
@@ -58,6 +48,15 @@ class ProposalContextMixin(
         context["is_supervisor"] = self.current_user_is_supervisor()
         context["is_practice"] = self.object.is_practice()
         return context
+
+
+class ProposalMixin(
+        ProposalContextMixin,
+):
+    model = Proposal
+
+    def get_proposal(self,):
+        return self.get_object()
 
 
 class PDFTemplateResponseMixin(TemplateResponseMixin):

@@ -11,11 +11,14 @@ class StepperItem:
 
     title = "Stepper item"
 
-    def __init__(self, stepper, parent=None):
+    def __init__(self, stepper, parent=None, disabled=False, title=None):
         self.stepper = stepper
         self.children = []
-        self.parent = None
+        self.parent = parent
         self.available = False
+        self.disabled = disabled
+        if title:
+            self.title = title
 
     def get_url(self):
         return "#"
@@ -28,6 +31,10 @@ class StepperItem:
         if self.is_current(self.stepper.request):
             classes.append(
                 "active",
+            )
+        if self.disabled:
+            classes.append(
+                "disabled",
             )
         return self._concat_css_classes(
             classes,
@@ -48,9 +55,11 @@ class StepperItem:
 class PlaceholderItem(StepperItem):
 
     def __init__(self, *args, **kwargs):
-        self.title = kwargs.pop("name", "Placeholder Item")
         self.location = kwargs.pop("location", None)
         return super().__init__(*args, **kwargs)
+
+    def get_url(self,):
+        return ""
 
 
 def flatten(lst):
@@ -99,7 +108,7 @@ class Layout:
                 continue
             placeholder = PlaceholderItem(
                 self.stepper,
-                name=item[1],
+                title=item[1],
             )
             self.layout.insert(index, placeholder)
             self.layout.remove(item)
