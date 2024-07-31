@@ -5,7 +5,7 @@
         {% counter counter create 1 %}
         {% for item in stepper.collect_items %}
             <li>
-                <a class="stepper-item" href="{{ item.get_url }}">
+                <a class="stepper-item {{ item.css_classes }}" href="{{ item.get_url }}">
                     <span class="stepper-bubble stepper-bubble-largest">{% counter counter value %}</span>
                     <span>{{ item.title }}</span>
                 </a>
@@ -13,7 +13,7 @@
                     <ul>
                         {% for child in item.children %}
                             <li>
-                                <a class="stepper-item" href="{{ child.url }}">
+                                <a class="stepper-item {{ child.css_classes }}" href="{{ child.get_url }}">
                                     <span class="stepper-bubble stepper-bubble-normal"></span>
                                     <span>{{ child.title }}</span>
                                 </a>

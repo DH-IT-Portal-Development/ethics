@@ -20,11 +20,29 @@ class StepperItem:
     def get_url(self):
         return "#"
 
+    def get_errors(self):
+        return []
+
+    def css_classes(self,):
+        classes = []
+        if self.is_current(self.stepper.request):
+            classes.append(
+                "active",
+            )
+        return self._concat_css_classes(
+            classes,
+        )
+
+    def _concat_css_classes(self, classes,):
+        return " ".join(classes)
+
     def is_current(self, request):
         """
         Returns True if this item represents the page the user
         is currently on.
         """
+        if request.path == self.get_url():
+            return True
         return False
 
 class PlaceholderItem(StepperItem):
