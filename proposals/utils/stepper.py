@@ -56,7 +56,7 @@ class Stepper(renderable):
             raise RuntimeError(
                 "Base layout was never defined for this stepper",
             )
-        self.layout = Layout(self.base_layout)
+        self.layout = Layout(self, self.base_layout)
         for item in self.items:
             self.layout.insert_item(item)
         return self.layout.make_stepper()

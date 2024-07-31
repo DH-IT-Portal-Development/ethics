@@ -11,9 +11,10 @@ class StepperItem:
 
     title = "Stepper item"
 
-    def __init__(self):
+    def __init__(self, stepper, parent=None):
+        self.stepper = stepper
         self.children = []
-        self.parent = []
+        self.parent = None
         self.available = False
 
     def get_url(self):
@@ -28,10 +29,10 @@ class StepperItem:
 
 class PlaceholderItem(StepperItem):
 
-    def __init__(self, name, parent=None, location=None):
-        self.title = name
-        self.parent = parent
-        self.location = location
+    def __init__(self, *args, **kwargs):
+        self.title = kwargs.pop("name", "Placeholder Item")
+        self.location = kwargs.pop("location", None)
+        return super().__init__(*args, **kwargs)
 
 
 def flatten(lst):
@@ -57,15 +58,17 @@ class renderable:
 
 class Layout:
 
-    def __init__(self, layout):
-        self.layout = layout
+    def __init__(self, stepper, base_layout):
+        self.stepper = stepper
+        self.layout = copy(base_layout)
 
     def insert_item(self, new_item):
         if new_item.parent:
             return self.insert_child(new_item)
         location = new_item.location
         for index, item in enumerate(copy(self.layout)):
-            breakpoint()
+            if type(item) is not tuple:
+                continue
             if location == item[0]:
                 self.layout.insert(index, new_item)
                 self.layout.remove(item)
@@ -77,7 +80,8 @@ class Layout:
             if isinstance(item, StepperItem):
                 continue
             placeholder = PlaceholderItem(
-                item[1],
+                self.stepper,
+                name=item[1],
             )
             self.layout.insert(index, placeholder)
             self.layout.remove(item)
