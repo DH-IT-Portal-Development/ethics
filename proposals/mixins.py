@@ -42,13 +42,9 @@ class ProposalMixin(
         StepperContextMixin,
 ):
     model = Proposal
-    form_class = ProposalForm
 
     def get_proposal(self,):
         return self.get_object()
-
-    def get_next_url(self):
-        return reverse("proposals:researcher", args=(self.object.pk,))
 
 
 class ProposalContextMixin(

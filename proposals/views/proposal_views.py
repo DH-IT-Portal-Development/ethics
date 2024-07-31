@@ -47,6 +47,7 @@ from ..forms import (
     ResearchGoalForm,
     PreApprovedForm,
     TranslatedConsentForms,
+    ProposalForm,
 )
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
@@ -242,6 +243,7 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
 
     success_message = _("Aanvraag %(title)s aangemaakt")
     proposal_type_hint = "regular"
+    form_class = ProposalForm
 
     def get_proposal(self,):
         return self.get_form().instance
@@ -272,6 +274,8 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
 class ProposalUpdate(
     ProposalMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
 ):
+    form_class = ProposalForm
+
     def form_valid(self, form):
         """Sets created_by to current user and generates a reference number"""
         form.instance.reviewing_committee = form.instance.institution.reviewing_chamber
@@ -284,6 +288,9 @@ class ProposalUpdate(
         context["no_back"] = True
 
         return context
+
+    def get_next_url(self):
+        return reverse("proposals:researcher", args=(self.object.pk,))
 
 
 class ProposalDelete(DeleteView):
@@ -376,10 +383,11 @@ class ProposalStart(generic.TemplateView):
 
 
 class ProposalResearcherFormView(
+    ProposalMixin,
     UserFormKwargsMixin,
     ProposalContextMixin,
     AllowErrorsOnBackbuttonMixin,
-    UpdateView
+    UpdateView,
 ):
     model = Proposal
     form_class = ResearcherForm
