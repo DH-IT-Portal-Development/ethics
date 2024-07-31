@@ -1,15 +1,19 @@
+from braces.forms import UserKwargModelFormMixin
+
 from django.utils.translation import gettext as _
 from django.core.exceptions import ImproperlyConfigured
+from django.urls import reverse
 
-from proposals.forms import ProposalForm
+from proposals import forms
 
 from .stepper_helpers import RegularProposalLayout, PlaceholderItem, StepperItem
 
 class BaseChecker:
 
-    def __init__(self, stepper):
+    def __init__(self, stepper, parent=None):
         self.stepper = stepper
         self.proposal = stepper.proposal
+        self.parent = parent
 
     def __call__(self, *args, **kwargs):
         """
@@ -47,8 +51,8 @@ class ModelFormChecker(
 ):
     form_class = None
 
-    def __init__(self, stepper):
-        super().__init__(stepper)
+    def __init__(self, stepper, parent=None):
+        super().__init__(stepper, parent=parent)
         if not self.form_class:
             raise ImproperlyConfigured(
                 "form_class must be defined"
@@ -58,52 +62,113 @@ class ModelFormChecker(
     def get_form_object(self):
         return self.proposal
 
+    def get_form_kwargs(self):
+        kwargs = {}
+        if issubclass(self.form_class, UserKwargModelFormMixin):
+            kwargs["user"] = self.stepper.request.user
+        return kwargs
+
     def instantiate_form(self):
+        kwargs = self.get_form_kwargs()
         model_form = self.form_class(
             instance=self.get_form_object(),
+            **kwargs,
         )
         self.form_errors = model_form.errors
         return model_form
 
-class BasicDetailsItem(
+    def get_errors(self):
+        return self.form_errors
+
+class ContainerItem(
     StepperItem,
 ):
-    title = "Basic details inserted"
-    location = "create"
+    """
+    A basic stepper item that is nothing more than a parent for its
+    children. Its url will try to redirect to its first child.
+    """
 
     def get_url(self):
         try:
             url = self.children[0].get_url()
             return url
         except:
-            return "#"
+            return ""
+
+    def is_current(self, request):
+        """
+        Because container items by default refer to their first child,
+        we say they are never current. The child is.
+        """
+        return False
+
+class BasicDetailsItem(
+    ContainerItem,
+):
+    title = _("Basisgegevens")
+    location = "create"
+
 
 class ProposalCreateChecker(
         ModelFormChecker,
+        StepperItem,
 ):
-    form_class = ProposalForm
+    title = _("Start")
+    form_class = forms.ProposalForm
+
+    def get_url(self):
+        if self.proposal.pk:
+            return reverse(
+                "proposals:update",
+                args=[self.proposal.pk],
+            )
+        return reverse(
+            "proposals:create",
+        )
 
     def check(self):
-        self.parent_item = BasicDetailsItem()
-        self.stepper.items.append(self.parent_item)
+        self.parent = BasicDetailsItem(self.stepper)
+        self.stepper.items.append(self.parent)
         if self.proposal.pk:
             return self.proposal_exists()
         return self.new_proposal()
 
     def new_proposal(self):
         self.stepper.items.append(
-            PlaceholderItem(
-                name="Create_proposal",
-                parent=self.parent_item,
-            )
+            self,
         )
         return []
 
     def proposal_exists(self):
         self.stepper.items.append(
-            PlaceholderItem(
-                name="Update_proposal",
-                parent=self.parent_item,
-            )
+            self,
         )
+        return [
+            ResearcherChecker(
+                self.stepper,
+                parent=self.parent,
+            )
+        ]
+
+class ModelFormItem(
+        StepperItem,
+):
+    def __init__(self, model_form):
+        self.model_form = model_form
+
+class ResearcherChecker(
+        ModelFormChecker,
+        StepperItem,
+):
+    title = _("Onderzoeker")
+    form_class = forms.ResearcherForm
+
+    def check(self):
+        self.stepper.items.append(self)
         return []
+
+    def get_url(self):
+        return reverse(
+            "proposals:researcher",
+            args=(self.proposal.pk,),
+        )
