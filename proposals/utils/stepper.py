@@ -27,13 +27,14 @@ class Stepper(renderable):
         proposal,
         current=None,
         proposal_type_hint=None,
+        request=None,
     ):
-
         self.proposal = proposal
         self.current = current
         self.starting_checkers = [
             ProposalTypeChecker,
         ]
+        self.request = request
         self.proposal_type_hint = proposal_type_hint
         self.items = []
         self.check_all(self.starting_checkers)

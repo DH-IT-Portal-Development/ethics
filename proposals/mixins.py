@@ -29,7 +29,10 @@ class StepperContextMixin:
         if hasattr(self, "get_proposal"):
             proposal = self.get_proposal()
         # Initialize and insert stepper object
-        stepper = Stepper(proposal)
+        stepper = Stepper(
+            proposal,
+            request=self.request,
+        )
         context["stepper"] = stepper
         return context
 
