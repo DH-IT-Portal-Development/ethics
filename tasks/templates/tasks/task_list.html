@@ -2,18 +2,18 @@
 {% load i18n %}
 {% load fetc_filters %}
 
-<table class="pure-table" width="100%" style="">
+<table class="table">
     <thead>
         <tr>
-            <th width="20%">{% trans "Taak" %}</th>
-            <th width="10%">{% trans "Nettoduur (in minuten)" %}</th>
-            <th width="40%">{% trans "Registratie via" %}</th>
-            <th width="10%">{% trans "Feedback?" %}</th>
+            <th scope="col">{% trans "Taak" %}</th>
+            <th scope="col">{% trans "Nettoduur (in minuten)" %}</th>
+            <th scope="col">{% trans "Registratie via" %}</th>
+            <th scope="col">{% trans "Feedback?" %}</th>
             {% if can_edit_tasks %}
-                <th width="15%">{% trans "Aantal keer uit te voeren" %}</th>
-                <th width="5%">{% trans "Acties" %}</th>
+                <th scope="col">{% trans "Aantal keer uit te voeren" %}</th>
+                <th scope="col">{% trans "Acties" %}</th>
             {% else %}
-                <th width="20%">{% trans "Aantal keer uit te voeren" %}</th>
+                <th scope="col">{% trans "Aantal keer uit te voeren" %}</th>
             {% endif %}
         </tr>
     </thead>

@@ -152,7 +152,7 @@ class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
         return reverse("tasks:session_overview", args=(self.object.study.pk,))
 
 
-class SessionOverview(AllowErrorsOnBackbuttonMixin, UpdateView):
+class SessionOverview(SessionMixin, UpdateView):
 
     model = Study
     form_class = SessionOverviewForm
@@ -168,3 +168,6 @@ class SessionOverview(AllowErrorsOnBackbuttonMixin, UpdateView):
 
     def get_back_url(self):
         return reverse("tasks:session_start", args=(self.object.pk,))
+
+    def get_study(self):
+        return self.object

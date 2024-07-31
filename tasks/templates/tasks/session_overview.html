@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+\{% extends "base/fetc_form_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -7,24 +7,11 @@
     {% trans "Overzicht van het takenonderzoek" %} - {{ block.super }}
 {% endblock %}
 
-{% block content %}
-    <div class="uu-inner-container">
-        <div class="col-12">
-            {% with nav_items=study.proposal.available_urls active=3 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
+{% block pre-form %}
             <h2>{% trans "Overzicht van alle sessies en taken" %}</h2>
             {% include "studies/study_title.html" %}
             <p>
                 <em>{% trans "Vanuit dit overzicht is het mogelijk om sessies aan te maken, te bewerken of te verwijderen." %}</em>
             </p>
-            <div class="session_list">{% include "tasks/session_list.html" %}</div>
-            <form action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                {% with proposal=study.proposal %}
-                    {% include "base/form_buttons.html" %}
-                {% endwith %}
-            </form>
-        </div>
-    </div>
+            {% include "tasks/session_list.html" %}
 {% endblock %}

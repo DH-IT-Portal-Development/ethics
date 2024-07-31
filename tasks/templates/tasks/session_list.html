@@ -3,20 +3,14 @@
 {% load fetc_filters %}
 
 {% for session in study.session_set.all %}
-    <div class="task_list mt-4 mb-4">
+    <div class="container">
         <h3 class="mt-2">
             {% blocktrans with order=session.order duration=session.tasks_duration repeats=session.repeats trimmed %}
                 Sessie {{ order }}
             {% endblocktrans %}
             {% if can_edit_sessions %}
-                <a href="{% url 'tasks:session_end' session.pk %}">
-                    <img src="{% static 'proposals/images/pencil.png' %}"
-                         title="{% trans 'Sessie aanpassen' %}">
-                </a>
-                <a href="{% url 'tasks:session_delete' session.pk %}">
-                    <img src="{% static 'proposals/images/delete.png' %}"
-                         title="{% trans 'Sessie verwijderen' %}">
-                </a>
+                <a href="{% url 'tasks:session_end' session.pk %}"><img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Sessie aanpassen' %}"></a>
+                <a href="{% url 'tasks:session_delete' session.pk %}"><img src="{% static 'proposals/images/delete.png' %}" title="{% trans 'Sessie verwijderen' %}"></a>
             {% endif %}
         </h3>
         <p>
@@ -33,7 +27,7 @@
     <div class="alert alert-primary" role="alert">{% trans "Nog geen sessies. Tijd om er één aan te maken!" %}</div>
 {% endfor %}
 {% if can_edit_sessions %}
-    <div class="task_list mt-3">
+    <div class="mt-3">
         <a href="{% url 'tasks:session_create' study.pk %}">
             <h5 class = "pt-2" style="text-align:center;">
                 {% trans "Nieuwe sessie tevoegen" %}
