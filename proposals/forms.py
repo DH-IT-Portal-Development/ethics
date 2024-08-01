@@ -854,12 +854,12 @@ class ProposalSubmitForm(forms.ModelForm):
                 )
 
 
-class TranslatedConsentForms(SoftValidationMixin, forms.ModelForm):
+class TranslatedConsentForms(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = ["translated_forms", "translated_forms_languages"]
         widgets = {
-            "translated_forms": forms.RadioSelect(choices=YES_NO),
+            "translated_forms": BootstrapRadioSelect(choices=YES_NO),
         }
 
     _soft_validation_fields = ["translated_forms", "translated_forms_languages"]
