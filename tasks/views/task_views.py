@@ -25,6 +25,7 @@ class TaskMixin(AllowErrorsOnBackbuttonMixin):
         context = super().get_context_data(**kwargs)
         session = self.get_session()
         context["session"] = session
+        context["proposal"] = session.study.proposal
         try:
             context["order"] = self.object.order
         except AttributeError:

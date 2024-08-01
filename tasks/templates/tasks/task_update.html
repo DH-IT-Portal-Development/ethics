@@ -1,4 +1,4 @@
-{% extends "base/fetc_base.html" %}
+{% extends "base/fetc_form_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block html_head %}
+    {{block.super}}
     <script>
 $(function() {
     check_field_required('registrations', 'needs_kind', 'registration_kinds', 'tasks', 'Registration');
@@ -18,21 +19,7 @@ $(function() {
     </script>
 {% endblock %}
 
-{% block content %}
-    <div class="uu-container">
-        <div class="col-12">
-            {% with nav_items=session.study.proposal.available_urls active=3 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
+{% block pre-form-text %}
             <h2>{% trans "Het takenonderzoek en/of interviews" %}</h2>
             {% include "tasks/task_title.html" %}
-            <form action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                {% include "base/form_buttons.html" %}
-            </form>
-        </div>
-    </div>
 {% endblock %}
