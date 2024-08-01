@@ -77,7 +77,6 @@ class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView, generic.edit.FormMix
         context["progress"] = get_study_progress(self.object) + 3
         context["proposal"] = self.object.proposal
         return context
-    
 
     def get_initial(self):
         """Fill in initial data"""

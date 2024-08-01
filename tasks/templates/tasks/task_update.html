@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block html_head %}
-    {{block.super}}
+    {{ block.super }}
     <script>
 $(function() {
     check_field_required('registrations', 'needs_kind', 'registration_kinds', 'tasks', 'Registration');
@@ -20,6 +20,6 @@ $(function() {
 {% endblock %}
 
 {% block pre-form-text %}
-            <h2>{% trans "Het takenonderzoek en/of interviews" %}</h2>
-            {% include "tasks/task_title.html" %}
+    <h2>{% trans "Het takenonderzoek en/of interviews" %}</h2>
+    {% include "tasks/task_title.html" %}
 {% endblock %}

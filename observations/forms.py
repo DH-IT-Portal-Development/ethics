@@ -17,10 +17,8 @@ from cdh.core.forms import (
 
 class ObservationForm(SoftValidationMixin, ConditionalModelForm):
 
-    setting_header = TemplatedFormTextField(
-        header=_("Setting"), header_element="h4"
-    )
-    
+    setting_header = TemplatedFormTextField(header=_("Setting"), header_element="h4")
+
     details_who_header = TemplatedFormTextField(
         header=_("Details observatie"), header_element="h4"
     )
@@ -31,7 +29,7 @@ class ObservationForm(SoftValidationMixin, ConditionalModelForm):
     needs_approval_header = TemplatedFormTextField(
         header=_("Toestemming"), header_element="h4"
     )
-    
+
     registrations_header = TemplatedFormTextField(
         header=_("Registratie gedrag"), header_element="h4"
     )

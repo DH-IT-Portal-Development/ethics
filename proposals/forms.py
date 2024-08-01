@@ -644,7 +644,12 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
 
 class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
     study_name_1 = forms.CharField(
-        label=_("Naam traject 1"), max_length=15, required=False, help_text=_("Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters."),
+        label=_("Naam traject 1"),
+        max_length=15,
+        required=False,
+        help_text=_(
+            "Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters."
+        ),
     )
     study_name_2 = forms.CharField(
         label=_("Naam traject 2"), max_length=15, required=False

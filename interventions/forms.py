@@ -8,16 +8,14 @@ from .models import Intervention
 from cdh.core.forms import (
     BootstrapCheckboxSelectMultiple,
     BootstrapRadioSelect,
-    TemplatedFormTextField
+    TemplatedFormTextField,
 )
 
 
 class InterventionForm(SoftValidationMixin, ConditionalModelForm):
 
-    setting_header = TemplatedFormTextField(
-        header=_("Setting"), header_element="h4"
-    )
-    
+    setting_header = TemplatedFormTextField(header=_("Setting"), header_element="h4")
+
     period_header = TemplatedFormTextField(
         header=_("Beschrijving van de interventie"), header_element="h4"
     )

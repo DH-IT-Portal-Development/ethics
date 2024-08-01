@@ -31,7 +31,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
     age_groups_header = TemplatedFormTextField(
         header=_("De leeftijdsgroup van je deelnemers"), header_element="h4"
     )
-    
+
     legally_incapable_header = TemplatedFormTextField(
         header=_("Wilsonbekwaamheid"), header_element="h4"
     )
@@ -43,7 +43,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
     necessity_header = TemplatedFormTextField(
         header=_("Noodzakelijkheid"), header_element="h4"
     )
-    
+
     recruitment_header = TemplatedFormTextField(
         header=_("Werving"), header_element="h4"
     )
@@ -55,6 +55,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
     hierarchy_header = TemplatedFormTextField(
         header=_("Hiërarchie"), header_element="h4"
     )
+
     class Meta:
         model = Study
         fields = [
@@ -191,26 +192,32 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
 
 class StudyDesignForm(TemplatedModelForm):
 
-    study_types = forms.MultipleChoiceField(label=_("Om welk type onderzoek gaat het hier? Je kan meerdere opties aankruisen."),
-                                            widget=BootstrapCheckboxSelectMultiple,
-                                            choices = (("has_intervention", _("Interventieonderzoek")),
-                                                       ("has_observation", _("Observatieonderzoek")),
-                                                       ("has_sessions", _("Taakonderzoek en interviews"))
-                                                       ),
-                                            help_text=_("Dit is bijvoorbeeld het geval wanneer je een "
-                                    "observatiedeel combineert met een taakonderzoeksdeel, "
-                                    "of met een interventiedeel (in dezelfde sessie, of "
-                                    "verspreid over dagen). "
-                                    "Wanneer je in interventieonderzoek <em>extra</em> taken "
-                                    "inzet om de effecten van de interventie te bemeten "
-                                    "(bijvoorbeeld een speciale voor- en nameting met een "
-                                    "vragenlijst die anders niet zou worden afgenomen) "
-                                    "dien je die apart als taakonderzoek te specificeren.)")
+    study_types = forms.MultipleChoiceField(
+        label=_(
+            "Om welk type onderzoek gaat het hier? Je kan meerdere opties aankruisen."
+        ),
+        widget=BootstrapCheckboxSelectMultiple,
+        choices=(
+            ("has_intervention", _("Interventieonderzoek")),
+            ("has_observation", _("Observatieonderzoek")),
+            ("has_sessions", _("Taakonderzoek en interviews")),
+        ),
+        help_text=_(
+            "Dit is bijvoorbeeld het geval wanneer je een "
+            "observatiedeel combineert met een taakonderzoeksdeel, "
+            "of met een interventiedeel (in dezelfde sessie, of "
+            "verspreid over dagen). "
+            "Wanneer je in interventieonderzoek <em>extra</em> taken "
+            "inzet om de effecten van de interventie te bemeten "
+            "(bijvoorbeeld een speciale voor- en nameting met een "
+            "vragenlijst die anders niet zou worden afgenomen) "
+            "dien je die apart als taakonderzoek te specificeren.)"
+        ),
     )
 
     class Meta:
         model = Study
-        fields=[]
+        fields = []
 
     def clean(self):
         """
@@ -221,6 +228,7 @@ class StudyDesignForm(TemplatedModelForm):
         if not cleaned_data:
             msg = _("Je dient minstens één van de opties te selecteren")
             self.add_error("study_types", forms.ValidationError(msg, code="required"))
+
 
 class StudyConsentForm(ConditionalModelForm):
     class Meta:

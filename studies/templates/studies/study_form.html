@@ -64,14 +64,14 @@ $(function() {
 {% endblock %}
 
 {% block pre-form %}
-            <h2>{% trans "De deelnemers" %}</h2>
-            {% include "studies/study_title.html" %}
-            {% if not study.proposal.relation %}
-                <div class="alert alert-primary">
-                    {% url 'proposals:update' study.proposal.pk as url %}
-                    {% blocktrans trimmed %}
-                        Let op! Je hebt de vraag <a href="{{ url }}">'In welke hoedanigheid ben je betrokken bij deze aanvraag?'</a> nog niet ingevuld, waardoor deze pagina nog kan veranderen op basis van je antwoord.
-                    {% endblocktrans %}
-                </div>
-            {% endif %}
+    <h2>{% trans "De deelnemers" %}</h2>
+    {% include "studies/study_title.html" %}
+    {% if not study.proposal.relation %}
+        <div class="alert alert-primary">
+            {% url 'proposals:update' study.proposal.pk as url %}
+            {% blocktrans trimmed %}
+                Let op! Je hebt de vraag <a href="{{ url }}">'In welke hoedanigheid ben je betrokken bij deze aanvraag?'</a> nog niet ingevuld, waardoor deze pagina nog kan veranderen op basis van je antwoord.
+            {% endblocktrans %}
+        </div>
+    {% endif %}
 {% endblock %}

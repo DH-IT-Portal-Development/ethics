@@ -45,18 +45,18 @@
             zullen aan de volgende onderdelen meedoen:
         {% endblocktrans %}
     </p>
-        {% include "studies/intervention_table.html" %}
-        {% include "studies/observation_table.html" %}
-        {% if study.has_sessions %}
-            <h3>
-                {% trans "Takenonderzoek" %}
-                <a href="{% url 'tasks:session_overview' study.pk %}">
-                    <img src="{% static 'proposals/images/pencil.png' %}"
-                            title="{% trans 'Takenonderzoek bewerken' %}">
-                </a>
-            </h3>
-            {% include "tasks/session_list.html" %}
-        {% endif %}
+    {% include "studies/intervention_table.html" %}
+    {% include "studies/observation_table.html" %}
+    {% if study.has_sessions %}
+        <h3>
+            {% trans "Takenonderzoek" %}
+            <a href="{% url 'tasks:session_overview' study.pk %}">
+                <img src="{% static 'proposals/images/pencil.png' %}"
+                     title="{% trans 'Takenonderzoek bewerken' %}">
+            </a>
+        </h3>
+        {% include "tasks/session_list.html" %}
+    {% endif %}
     <p>
         {% blocktrans trimmed %}
             Beantwoord op basis van dit overzicht de volgende vragen,

@@ -43,6 +43,7 @@ class SessionDelete(DeleteView):
 # Actions on Sessions
 ##################
 
+
 class SessionMixin(AllowErrorsOnBackbuttonMixin):
 
     model = Session
@@ -66,8 +67,8 @@ class SessionMixin(AllowErrorsOnBackbuttonMixin):
 class SessionStart(SessionMixin, UpdateView):
 
     model = Study
-    #This form is just a placeholder to make navigation work. It does not do 
-    #anything.
+    # This form is just a placeholder to make navigation work. It does not do
+    # anything.
     form_class = SessionOverviewForm
     template_name = "tasks/session_start.html"
 
@@ -85,9 +86,10 @@ class SessionStart(SessionMixin, UpdateView):
             next_url = "interventions:update"
             pk = study.intervention.pk
         return reverse(next_url, args=(pk,))
- 
+
     def get_study(self):
         return self.object
+
 
 class SessionCreate(SessionMixin, CreateView):
 
@@ -150,7 +152,7 @@ class SessionEnd(SessionMixin, UpdateView):
 
     def get_back_url(self):
         return reverse("tasks:session_overview", args=(self.object.study.pk,))
-    
+
     def get_study(self):
         return self.object.study
 
