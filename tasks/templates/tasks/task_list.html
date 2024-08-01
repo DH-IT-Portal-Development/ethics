@@ -2,8 +2,9 @@
 {% load i18n %}
 {% load fetc_filters %}
 
+{% if session.task_set.all %}
 <table class="table">
-    <thead>
+    <thead class="table-primary">
         <tr>
             <th scope="col">{% trans "Taak" %}</th>
             <th scope="col">{% trans "Nettoduur (in minuten)" %}</th>
@@ -30,29 +31,28 @@
                 <td>{{ task.repeats }}</td>
                 {% if can_edit_tasks %}
                     <td>
-                        <a href="{% url 'tasks:update' task.id %}">
-                            <img src="{% static 'proposals/images/pencil.png' %}"
-                                 title="{% trans 'Taak bewerken' %}">
-                        </a>
-                        <a href="{% url 'tasks:delete' task.id %}">
-                            <img src="{% static 'proposals/images/delete.png' %}"
-                                 title="{% trans 'Taak verwijderen' %}">
-                        </a>
+                        <a href="{% url 'tasks:update' task.id %}"><img src="{% static 'proposals/images/pencil.png' %}" title="{% trans 'Taak bewerken' %}"></a>
+                        <a href="{% url 'tasks:delete' task.id %}"><img src="{% static 'proposals/images/delete.png' %}" title="{% trans 'Taak verwijderen' %}"></a>
                     </td>
                 {% endif %}
             </tr>
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+    <div class="alert alert-info" role="alert">{% trans "Deze sessie bevat nog geen taken. Klik op het podloodje om taken aan te maken!" %}</div>
+{% endif %}
 {% if can_edit_tasks %}
-    <div class="d-flex justify-content-center">
-        <div class="button m-4 button-black">
-            <a href="{% url 'tasks:create' session.pk %}">
+    <div class="mt-3">
+        <a href="{% url 'tasks:create' session.pk %}">
+            <h5 class="pt-2 text-center">
                 {% blocktrans with session_order=session.order trimmed %}
                     Nieuwe taak toevoegen aan sessie {{ session_order }}
                 {% endblocktrans %}
-            </a>
-        </div>
+                <img src="{% static 'proposals/images/add.png' %}"
+                title="{% trans 'Sessie aanmaken' %}">
+            </h5>
+        </a>
     </div>
 {% endif %}
 <script>
