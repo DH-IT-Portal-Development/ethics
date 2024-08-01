@@ -737,12 +737,12 @@ class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
                     self.add_error(study_name, _("Dit veld is verplicht."))
 
 
-class ProposalDataManagementForm(SoftValidationMixin, forms.ModelForm):
+class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = ["privacy_officer", "dmp_file"]
         widgets = {
-            "privacy_officer": forms.RadioSelect(choices=YES_NO),
+            "privacy_officer": BootstrapRadioSelect(choices=YES_NO),
         }
 
     def clean(self):
