@@ -148,6 +148,7 @@ class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
         """Setting the progress on the context"""
         context = super(StudyEnd, self).get_context_data(**kwargs)
         context["progress"] = get_study_progress(self.object, True) - 10
+        context["proposal"] = self.object.proposal
         return context
 
     def get_form_kwargs(self):
