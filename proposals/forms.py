@@ -768,13 +768,14 @@ class ProposalUpdateDateStartForm(forms.ModelForm):
         fields = ["date_start"]
 
 
-class ProposalSubmitForm(forms.ModelForm):
+class ProposalSubmitForm(ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = ["comments", "inform_local_staff", "embargo", "embargo_end_date"]
         widgets = {
-            "inform_local_staff": forms.RadioSelect(choices=YES_NO),
-            "embargo": forms.RadioSelect(choices=YES_NO),
+            "inform_local_staff": BootstrapRadioSelect(choices=YES_NO),
+            "embargo": BootstrapRadioSelect(choices=YES_NO),
+            "embargo_end_date": DateInput(),
         }
 
     def __init__(self, *args, **kwargs):
