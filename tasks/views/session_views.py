@@ -124,7 +124,7 @@ class SessionUpdate(SessionMixin, UpdateView):
         return reverse("tasks:session_end", args=(self.object.study.pk,))
 
 
-class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
+class SessionEnd(SessionMixin, UpdateView):
     """Completes a Session"""
 
     model = Session
@@ -150,6 +150,9 @@ class SessionEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
 
     def get_back_url(self):
         return reverse("tasks:session_overview", args=(self.object.study.pk,))
+    
+    def get_study(self):
+        return self.object.study
 
 
 class SessionOverview(SessionMixin, UpdateView):
