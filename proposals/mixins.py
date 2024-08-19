@@ -41,12 +41,21 @@ class ProposalContextMixin(
         StepperContextMixin,
 ):
     def current_user_is_supervisor(self):
-        return self.object.supervisor == self.request.user
+        return self.get_proposal().supervisor == self.request.user
+
+    def get_proposal(self,):
+        try:
+            if self.model is Proposal:
+                return self.get_object()
+        except AttributeError:
+            raise RuntimeError(
+                "Couldn't find proposal object for ProposalContextMixin",
+            )
 
     def get_context_data(self, **kwargs):
         context = super(ProposalContextMixin, self).get_context_data(**kwargs)
         context["is_supervisor"] = self.current_user_is_supervisor()
-        context["is_practice"] = self.object.is_practice()
+        context["is_practice"] = self.get_proposal().is_practice()
         return context
 
 
