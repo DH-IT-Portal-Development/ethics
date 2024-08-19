@@ -24,6 +24,7 @@ class InterventionMixin(object):
         context = super(InterventionMixin, self).get_context_data(**kwargs)
         study = self.get_study()
         context["study"] = study
+        context["proposal"] = study.proposal
         context["progress"] = get_study_progress(study) + 7
         return context
 
@@ -44,7 +45,7 @@ class InterventionMixin(object):
             else:
                 next_url = "observations:create"
         elif study.has_sessions:
-            next_url = "studies:session_start"
+            next_url = "tasks:session_start"
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):

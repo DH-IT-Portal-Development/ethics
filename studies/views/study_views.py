@@ -39,6 +39,7 @@ class StudyUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
         """Setting the progress on the context"""
         context = super(StudyUpdate, self).get_context_data(**kwargs)
         context["progress"] = get_study_progress(self.object)
+        context["proposal"] = self.object.proposal
         return context
 
     def get_form_kwargs(self):
@@ -64,7 +65,7 @@ class StudyUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
 ###############
 # Other actions
 ###############
-class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView):
+class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView, generic.edit.FormMixin):
     model = Study
     form_class = StudyDesignForm
     success_message = _("Traject opgeslagen")
@@ -74,7 +75,33 @@ class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView):
         """Setting the progress on the context"""
         context = super(StudyDesign, self).get_context_data(**kwargs)
         context["progress"] = get_study_progress(self.object) + 3
+        context["proposal"] = self.object.proposal
         return context
+
+    def get_initial(self):
+        """Fill in initial data"""
+
+        study_types = ["has_intervention", "has_observation", "has_sessions"]
+
+        initial = {
+            "study_types": [
+                study_type
+                for study_type in study_types
+                if getattr(self.object, study_type)
+            ]
+        }
+
+        return initial
+
+    def form_valid(self, form):
+        """Fill in the model attributes, using the form data"""
+
+        for study_type in form.fields["study_types"].choices:
+            form_value = study_type[0] in form.data.getlist("study_types")
+            form.instance.__setattr__(study_type[0], form_value)
+        form.instance.save()
+
+        return super(StudyDesign, self).form_valid(form)
 
     def get_next_url(self):
         """
@@ -97,7 +124,7 @@ class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView):
             else:
                 next_url = "observations:create"
         elif study.has_sessions:
-            next_url = "studies:session_start"
+            next_url = "tasks:session_start"
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
@@ -120,6 +147,7 @@ class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
         """Setting the progress on the context"""
         context = super(StudyEnd, self).get_context_data(**kwargs)
         context["progress"] = get_study_progress(self.object, True) - 10
+        context["proposal"] = self.object.proposal
         return context
 
     def get_form_kwargs(self):
@@ -144,8 +172,8 @@ class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
     def get_back_url(self):
         study = self.object
         if study.has_sessions:
-            next_url = "tasks:end"
-            pk = self.object.last_session().pk
+            next_url = "tasks:session_overview"
+            pk = self.object.pk
         elif study.has_intervention:
             next_url = "interventions:update"
             pk = Intervention.objects.get(study=study).pk

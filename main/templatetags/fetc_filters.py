@@ -1,6 +1,9 @@
 from django import template
 from django.conf import settings
 from django.contrib.auth.models import Group
+from django.utils.html import format_html
+from django.utils.safestring import mark_safe
+from django.utils.translation import gettext_lazy as _
 
 register = template.Library()
 
@@ -64,3 +67,22 @@ def is_po_chair_or_secretary(current_user):
         current_user,
         [settings.GROUP_SECRETARY, settings.GROUP_CHAIR, settings.GROUP_PO],
     )
+
+
+@register.filter
+def create_unordered_html_list(lst):
+    html_output = mark_safe('<p class="p-0">')
+
+    for index, item in enumerate(lst):
+        html_output += format_html("• {}", item)
+        if index != len(lst) - 1:
+            html_output += mark_safe("<br/>")
+
+    html_output += mark_safe("</p>")
+
+    return html_output
+
+
+@register.filter
+def unknown_if_none(value):
+    return value if value is not None else _("Onbekend aantal")

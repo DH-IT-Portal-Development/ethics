@@ -1,25 +1,24 @@
 # -*- encoding: utf-8 -*-
 
+from typing import Any
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 
-from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView
-from ..forms import TaskStartForm, TaskEndForm
-from ..mixins import DeletionAllowedMixin
-from ..models import Session, Task
-from ..utils import copy_task_to_session, get_session_progress
+from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView, CreateView
+from ..forms import SessionUpdateForm, SessionEndForm, SessionOverviewForm
+from ..models import Session, Study
 
 
 ######################
 # Actions on a Session
 ######################
-class SessionDelete(DeletionAllowedMixin, DeleteView):
+class SessionDelete(DeleteView):
     model = Session
     success_message = _("Sessie verwijderd")
 
     def get_success_url(self):
-        return reverse("studies:design_end", args=(self.object.study.pk,))
+        return reverse("tasks:session_overview", args=(self.object.study.pk,))
 
     def form_valid(self, form):
         """
@@ -37,106 +36,106 @@ class SessionDelete(DeletionAllowedMixin, DeleteView):
             s.order -= 1
             s.save()
 
-        # Set the number of Sessions on Study
-        study.sessions_number -= 1
-        study.save()
-
         return HttpResponseRedirect(success_url)
 
 
 ##################
-# Actions on Tasks
+# Actions on Sessions
 ##################
-class TaskStart(AllowErrorsOnBackbuttonMixin, UpdateView):
-    """Initial creation of Tasks for a Session"""
+
+
+class SessionMixin(AllowErrorsOnBackbuttonMixin):
 
     model = Session
-    form_class = TaskStartForm
-    template_name = "tasks/task_start.html"
-    success_message = _("%(tasks_number)s ta(a)k(en) aangemaakt")
+    form_class = SessionUpdateForm
+    template_name = "tasks/session_update.html"
+
+    def get_context_data(self, **kwargs):
+        study = self.get_study()
+        context = super().get_context_data(**kwargs)
+        context["study"] = study
+        context["proposal"] = study.proposal
+        return context
+
+    def get_study(self):
+        return self.object.study
+
+    def get_next_url(self):
+        return reverse("tasks:session_end", args=(self.object.pk,))
+
+
+class SessionStart(SessionMixin, UpdateView):
+
+    model = Study
+    # This form is just a placeholder to make navigation work. It does not do
+    # anything.
+    form_class = SessionOverviewForm
+    template_name = "tasks/session_start.html"
+
+    def get_next_url(self):
+        return reverse("tasks:session_overview", args=(self.object.pk,))
+
+    def get_back_url(self):
+        study = self.object
+        next_url = "studies:design"
+        pk = study.pk
+        if study.has_observation:
+            next_url = "observations:update"
+            pk = study.observation.pk
+        elif study.has_intervention:
+            next_url = "interventions:update"
+            pk = study.intervention.pk
+        return reverse(next_url, args=(pk,))
+
+    def get_study(self):
+        return self.object
+
+
+class SessionCreate(SessionMixin, CreateView):
 
     def get_form_kwargs(self):
         """Sets the Study as a form kwarg"""
-        kwargs = super(TaskStart, self).get_form_kwargs()
+        kwargs = super(SessionCreate, self).get_form_kwargs()
+        kwargs["study"] = self.get_study()
+        return kwargs
+
+    def form_valid(self, form):
+        """Saves the Proposal on the WMO instance"""
+        study = self.get_study()
+        form.instance.study = study
+        form.instance.order = study.session_set.count() + 1
+        return super(SessionCreate, self).form_valid(form)
+
+    def get_study(self):
+        """Retrieves the Study from the pk kwarg"""
+        return Study.objects.get(pk=self.kwargs["pk"])
+
+    def get_back_url(self):
+        return reverse("tasks:session_overview", args=(self.object.study.pk,))
+
+
+class SessionUpdate(SessionMixin, UpdateView):
+
+    def get_form_kwargs(self):
+        """Sets the Study as a form kwarg"""
+        kwargs = super(SessionUpdate, self).get_form_kwargs()
         kwargs["study"] = self.object.study
         return kwargs
 
-    def get_context_data(self, **kwargs):
-        context = super(TaskStart, self).get_context_data(**kwargs)
-        context["progress"] = get_session_progress(self.object)
-        return context
-
-    def form_valid(self, form):
-        """Copies, creates or deletes Tasks on save"""
-        if "is_copy" in form.cleaned_data and form.cleaned_data["is_copy"]:
-            session = form.instance
-
-            # Delete all existing Tasks
-            for task in session.task_set.all():
-                task.delete()
-
-            # Copy fields from the parent Session
-            s = form.cleaned_data["parent_session"]
-            session.tasks_number = s.tasks_number
-            session.tasks_duration = s.tasks_duration
-            session.save()
-
-            # Update cleaned_data as well, to make sure this isn't overridden on the super call below
-            form.cleaned_data["tasks_number"] = s.tasks_number
-
-            # Copy Tasks from the parent Session
-            for task in s.task_set.all():
-                copy_task_to_session(session, task)
-        else:
-            nr_tasks = form.cleaned_data["tasks_number"]
-            session = form.instance
-            current = session.task_set.count() or 0
-
-            # Create Tasks
-            for n in range(current, nr_tasks):
-                order = n + 1
-                task = Task(session=session, order=order)
-                task.save()
-
-            # Delete Tasks
-            for n in range(nr_tasks, current):
-                order = n + 1
-                task = Task.objects.get(session=session, order=order)
-                task.delete()
-
-            # If the number of Tasks has changed, invalidate the Session duration
-            if current != nr_tasks:
-                session.tasks_duration = None
-                session.save()
-
-        return super(TaskStart, self).form_valid(form)
-
-    def get_next_url(self):
-        return reverse("tasks:update", args=(self.object.first_task().pk,))
-
     def get_back_url(self):
-        try:
-            # Try to return to task_end of the previous Session
-            prev_session = Session.objects.get(
-                study=self.object.study, order=self.object.order - 1
-            )
-            return reverse("tasks:end", args=(prev_session.pk,))
-        except Session.DoesNotExist:
-            # If this is the first Session, return to session_start
-            return reverse("studies:session_start", args=(self.object.study.pk,))
+        return reverse("tasks:session_end", args=(self.object.study.pk,))
 
 
-class TaskEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
+class SessionEnd(SessionMixin, UpdateView):
     """Completes a Session"""
 
     model = Session
-    form_class = TaskEndForm
-    template_name = "tasks/task_end.html"
-    success_message = _("Taken toevoegen beëindigd")
+    form_class = SessionEndForm
+    template_name = "tasks/session_end.html"
 
     def get_context_data(self, **kwargs):
-        context = super(TaskEnd, self).get_context_data(**kwargs)
-        context["progress"] = get_session_progress(self.object, True)
+        context = super().get_context_data(**kwargs)
+        context["can_edit_tasks"] = True
         return context
 
     def get_form_kwargs(self):
@@ -149,15 +148,31 @@ class TaskEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
         return kwargs
 
     def get_next_url(self):
-        try:
-            # Try to continue to next Session
-            next_session = Session.objects.get(
-                study=self.object.study, order=self.object.order + 1
-            )
-            return reverse("tasks:start", args=(next_session.pk,))
-        except Session.DoesNotExist:
-            # If this is the last Session, continue to design_end
-            return reverse("studies:design_end", args=(self.object.study.pk,))
+        return reverse("tasks:session_overview", args=(self.object.study.pk,))
 
     def get_back_url(self):
-        return reverse("tasks:update", args=(self.object.last_task().pk,))
+        return reverse("tasks:session_overview", args=(self.object.study.pk,))
+
+    def get_study(self):
+        return self.object.study
+
+
+class SessionOverview(SessionMixin, UpdateView):
+
+    model = Study
+    form_class = SessionOverviewForm
+    template_name = "tasks/session_overview.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["can_edit_sessions"] = True
+        return context
+
+    def get_next_url(self):
+        return reverse("studies:design_end", args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse("tasks:session_start", args=(self.object.pk,))
+
+    def get_study(self):
+        return self.object

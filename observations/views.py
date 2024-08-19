@@ -25,6 +25,7 @@ class ObservationMixin(object):
         context = super(ObservationMixin, self).get_context_data(**kwargs)
         study = self.get_study()
         context["study"] = study
+        context["proposal"] = study.proposal
         context["progress"] = get_study_progress(study) + 5
         return context
 
@@ -39,7 +40,7 @@ class ObservationMixin(object):
         next_url = "studies:design_end"
         pk = study.pk
         if study.has_sessions:
-            next_url = "studies:session_start"
+            next_url = "tasks:session_start"
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):

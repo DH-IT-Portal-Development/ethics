@@ -11,37 +11,87 @@ from main.utils import YES_NO
 from .models import AgeGroup, Documents, Study
 from .utils import check_necessity_required
 
+from cdh.core.forms import (
+    DateField,
+    BootstrapRadioSelect,
+    BootstrapCheckboxSelectMultiple,
+    BootstrapSelect,
+    SearchableSelectWidget,
+    DateInput,
+    SplitDateTimeWidget,
+    BootstrapSplitDateTimeWidget,
+    TemplatedForm,
+    TemplatedModelForm,
+    TemplatedFormTextField,
+)
+
 
 class StudyForm(SoftValidationMixin, ConditionalModelForm):
+
+    age_groups_header = TemplatedFormTextField(
+        header=_("De leeftijdsgroup van je deelnemers"), header_element="h4"
+    )
+
+    legally_incapable_header = TemplatedFormTextField(
+        header=_("Wilsonbekwaamheid"), header_element="h4"
+    )
+
+    has_special_details_header = TemplatedFormTextField(
+        header=_("Bijzondere persoonsgegevens"), header_element="h4"
+    )
+
+    necessity_header = TemplatedFormTextField(
+        header=_("Noodzakelijkheid"), header_element="h4"
+    )
+
+    recruitment_header = TemplatedFormTextField(
+        header=_("Werving"), header_element="h4"
+    )
+
+    compensation_header = TemplatedFormTextField(
+        header=_("Compensatie"), header_element="h4"
+    )
+
+    hierarchy_header = TemplatedFormTextField(
+        header=_("Hiërarchie"), header_element="h4"
+    )
+
     class Meta:
         model = Study
         fields = [
+            "age_groups_header",
             "age_groups",
+            "legally_incapable_header",
             "legally_incapable",
             "legally_incapable_details",
+            "has_special_details_header",
             "has_special_details",
             "special_details",
             "traits",
             "traits_details",
+            "necessity_header",
             "necessity",
             "necessity_reason",
+            "recruitment_header",
             "recruitment",
             "recruitment_details",
+            "compensation_header",
             "compensation",
             "compensation_details",
+            "hierarchy_header",
             "hierarchy",
             "hierarchy_details",
         ]
         widgets = {
-            "age_groups": forms.CheckboxSelectMultiple(),
-            "legally_incapable": forms.RadioSelect(choices=YES_NO),
-            "has_special_details": forms.RadioSelect(choices=YES_NO),
-            "hierarchy": forms.RadioSelect(choices=YES_NO),
-            "special_details": forms.CheckboxSelectMultiple(),
-            "traits": forms.CheckboxSelectMultiple(),
-            "necessity": forms.RadioSelect(),
-            "recruitment": forms.CheckboxSelectMultiple(),
-            "compensation": forms.RadioSelect(),
+            "age_groups": BootstrapCheckboxSelectMultiple(),
+            "legally_incapable": BootstrapRadioSelect(choices=YES_NO),
+            "has_special_details": BootstrapRadioSelect(choices=YES_NO),
+            "hierarchy": BootstrapRadioSelect(choices=YES_NO),
+            "special_details": BootstrapCheckboxSelectMultiple(),
+            "traits": BootstrapCheckboxSelectMultiple(),
+            "necessity": BootstrapRadioSelect(),
+            "recruitment": BootstrapCheckboxSelectMultiple(),
+            "compensation": BootstrapRadioSelect(),
         }
         mark_safe_lazy = lazy(mark_safe, SafeString)
         labels = {
@@ -68,6 +118,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         self.fields["compensation"].empty_label = None
         self.fields["necessity"].empty_label = None
         self.fields["necessity"].choices = YesNoDoubt.choices
+        self.fields["legally_incapable"].css_classes = " uu-form-no-gap"
 
         self.fields["age_groups"].queryset = AgeGroup.objects.filter(is_active=True)
 
@@ -139,10 +190,34 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
                 self.add_error("necessity_reason", error)
 
 
-class StudyDesignForm(forms.ModelForm):
+class StudyDesignForm(TemplatedModelForm):
+
+    study_types = forms.MultipleChoiceField(
+        label=_(
+            "Om welk type onderzoek gaat het hier? Je kan meerdere opties aankruisen."
+        ),
+        widget=BootstrapCheckboxSelectMultiple,
+        choices=(
+            ("has_intervention", _("Interventieonderzoek")),
+            ("has_observation", _("Observatieonderzoek")),
+            ("has_sessions", _("Taakonderzoek en interviews")),
+        ),
+        help_text=_(
+            "Dit is bijvoorbeeld het geval wanneer je een "
+            "observatiedeel combineert met een taakonderzoeksdeel, "
+            "of met een interventiedeel (in dezelfde sessie, of "
+            "verspreid over dagen). "
+            "Wanneer je in interventieonderzoek <em>extra</em> taken "
+            "inzet om de effecten van de interventie te bemeten "
+            "(bijvoorbeeld een speciale voor- en nameting met een "
+            "vragenlijst die anders niet zou worden afgenomen) "
+            "dien je die apart als taakonderzoek te specificeren.)"
+        ),
+    )
+
     class Meta:
         model = Study
-        fields = ["has_intervention", "has_observation", "has_sessions"]
+        fields = []
 
     def clean(self):
         """
@@ -150,13 +225,9 @@ class StudyDesignForm(forms.ModelForm):
         - at least one of the fields has to be checked
         """
         cleaned_data = super(StudyDesignForm, self).clean()
-        if not (
-            cleaned_data.get("has_intervention")
-            or cleaned_data.get("has_observation")
-            or cleaned_data.get("has_sessions")
-        ):
+        if not cleaned_data:
             msg = _("Je dient minstens één van de opties te selecteren")
-            self.add_error("has_sessions", forms.ValidationError(msg, code="required"))
+            self.add_error("study_types", forms.ValidationError(msg, code="required"))
 
 
 class StudyConsentForm(ConditionalModelForm):
@@ -191,10 +262,10 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             "risk_details",
         ]
         widgets = {
-            "deception": forms.RadioSelect(),
-            "negativity": forms.RadioSelect(),
-            "stressful": forms.RadioSelect(),
-            "risk": forms.RadioSelect(),
+            "deception": BootstrapRadioSelect(),
+            "negativity": BootstrapRadioSelect(),
+            "stressful": BootstrapRadioSelect(),
+            "risk": BootstrapRadioSelect(),
         }
 
     _soft_validation_fields = [
@@ -291,16 +362,3 @@ class StudyUpdateAttachmentsForm(forms.ModelForm):
         widgets = {
             # 'passive_consent': forms.HiddenInput
         }
-
-
-class SessionStartForm(forms.ModelForm):
-    class Meta:
-        model = Study
-        fields = ["sessions_number"]
-
-    def __init__(self, *args, **kwargs):
-        """
-        - Set the sessions_number field as required
-        """
-        super(SessionStartForm, self).__init__(*args, **kwargs)
-        self.fields["sessions_number"].required = True

@@ -125,7 +125,7 @@ function check_field_required(input_name, field_name, required_input, app_name, 
             // Remove header if present
             if(header)
             {
-                r_input.parents('div').prev().toggle(data.result);
+                r_input.parents('.uu-form-row').prev().toggle(data.result);
             }
             //when the request is done, mark it undefined
             postrequests.delete(process_identifier);
@@ -133,13 +133,6 @@ function check_field_required(input_name, field_name, required_input, app_name, 
         postrequests.set(process_identifier, req);
     });
     input.change();
-}
-
-// Adds a title row to a form field
-function add_title(field, title)
-{
-    var insert = $('<div>').append($('<h3>').text(title));
-    $('#id_' + field).parents('.uu-form-row').before(insert);
 }
 
 $(function() {
