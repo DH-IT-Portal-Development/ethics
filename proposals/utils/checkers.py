@@ -30,7 +30,7 @@ class Checker(
     def check(self):
         """
         This method gets called to process an item in the proposal creation
-        process. It finall returns a list of checkers with which to continue
+        process. It finally returns a list of checkers with which to continue
         the checking process. This list can be empty.
         """
         return []
@@ -252,10 +252,115 @@ class OtherResearchersChecker(
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
-        return []
+        return [
+            FundingChecker(
+                self.stepper,
+                parent=self.parent,
+            )
+        ]
 
     def get_url(self):
         return reverse(
             "proposals:other_researchers",
             args=(self.proposal.pk,),
         )
+
+
+class FundingChecker(
+        ModelFormChecker,
+):
+    title = _("Financiering")
+    form_class = forms.FundingForm
+
+    def check(self):
+        self.stepper.items.append(self.make_stepper_item())
+        return [
+            GoalChecker(
+                self.stepper,
+                parent=self.parent,
+            )
+        ]
+
+    def get_url(self):
+        return reverse(
+            "proposals:funding",
+            args=(self.proposal.pk,),
+        )
+
+class GoalChecker(
+        ModelFormChecker,
+):
+    title = _("Onderzoeksdoel")
+    form_class = forms.ResearchGoalForm
+
+    def check(self):
+        self.stepper.items.append(self.make_stepper_item())
+        return [WMOChecker]
+
+    def get_url(self):
+        return reverse(
+            "proposals:research_goal",
+            args=(self.proposal.pk,),
+        )
+
+class WMOItem(
+        StepperItem,
+):
+    location = "wmo"
+    title = _("WMO")
+    
+    def __init__(
+        self,
+        *args,
+        **kwargs,
+    ):
+        super().__init__(*args, **kwargs)
+        self.proposal = self.stepper.proposal
+        self.wmo = self.get_wmo()
+
+    def get_wmo(self,):
+        if hasattr(
+            self.proposal,
+            "wmo",
+        ):
+            return self.proposal.wmo
+        return None
+
+    def get_url(self,):
+        if self.wmo:
+            return reverse(
+                "proposals:wmo_update",
+                args=[self.wmo.pk],
+            )
+        else:
+            return reverse(
+                "proposals:wmo_create",
+                args=[self.proposal.pk],
+            )
+
+    def wmo_exists(self,):
+        return hasattr(
+            self.proposal,
+            "wmo",
+        )
+
+
+class WMOChecker(
+        Checker,
+):
+
+    def check(self,):
+        self.item = WMOItem(self.stepper)
+        self.stepper.items.append(self.item)
+        if self.item.wmo:
+            return self.check_wmo()
+        else:
+            return []
+
+    def check_wmo(self,):
+        """
+        This method should check the correctness of the
+        WMO object.
+        """
+        # Just assume any WMO is correct as long as it exists
+        return [] # TODO next item
