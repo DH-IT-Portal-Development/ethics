@@ -363,4 +363,25 @@ class WMOChecker(
         WMO object.
         """
         # Just assume any WMO is correct as long as it exists
+        if self.item.wmo:
+            return [TrajectoriesChecker]
         return [] # TODO next item
+
+
+class TrajectoriesItem(
+        StepperItem,
+):
+    title = _("Trajecten")
+    location = "studies"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+class TrajectoriesChecker(
+        Checker,
+):
+
+    def check(self,):
+        self.item = TrajectoriesItem(self.stepper)
+        self.stepper.items.append(self.item)
+        return []
