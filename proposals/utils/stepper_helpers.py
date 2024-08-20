@@ -13,6 +13,7 @@ class StepperItem:
 
     def __init__(self, stepper, parent=None, disabled=False, title=None):
         self.stepper = stepper
+        self.proposal = stepper.proposal
         self.children = []
         self.parent = parent
         self.available = False

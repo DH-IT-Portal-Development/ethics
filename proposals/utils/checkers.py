@@ -4,7 +4,8 @@ from django.utils.translation import gettext as _
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse
 
-from proposals import forms
+from proposals import forms as proposal_forms
+from studies import forms as study_forms
 
 from .stepper_helpers import RegularProposalLayout, PlaceholderItem, StepperItem
 
@@ -167,7 +168,7 @@ class ProposalCreateChecker(
         ModelFormChecker,
 ):
     title = _("Start")
-    form_class = forms.ProposalForm
+    form_class = proposal_forms.ProposalForm
 
     def get_url(self):
         if self.proposal.pk:
@@ -208,6 +209,7 @@ class ProposalCreateChecker(
     def proposal_exists(self):
         stepper_item = ModelFormItem(
             self.stepper,
+            title=self.title,
             parent=self.parent,
             form_object=self.proposal,
             form_class=self.form_class,
@@ -227,7 +229,7 @@ class ResearcherChecker(
         ModelFormChecker,
 ):
     title = _("Onderzoeker")
-    form_class = forms.ResearcherForm
+    form_class = proposal_forms.ResearcherForm
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
@@ -248,7 +250,7 @@ class OtherResearchersChecker(
         ModelFormChecker,
 ):
     title = _("Andere onderzoekers")
-    form_class = forms.OtherResearchersForm
+    form_class = proposal_forms.OtherResearchersForm
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
@@ -270,7 +272,7 @@ class FundingChecker(
         ModelFormChecker,
 ):
     title = _("Financiering")
-    form_class = forms.FundingForm
+    form_class = proposal_forms.FundingForm
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
@@ -291,7 +293,7 @@ class GoalChecker(
         ModelFormChecker,
 ):
     title = _("Onderzoeksdoel")
-    form_class = forms.ResearchGoalForm
+    form_class = proposal_forms.ResearchGoalForm
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
@@ -377,6 +379,12 @@ class TrajectoriesItem(
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+    def get_url(self,):
+        return reverse(
+            "proposals:study_start",
+            args=[self.proposal.pk],
+        )
+
 class TrajectoriesChecker(
         Checker,
 ):
@@ -384,4 +392,166 @@ class TrajectoriesChecker(
     def check(self,):
         self.item = TrajectoriesItem(self.stepper)
         self.stepper.items.append(self.item)
+        sub_items = [
+            self.make_study_checker(s) for s in self.get_studies()
+        ]
+        return sub_items + self.remaining_checkers()
+
+    def make_study_checker(self, study):
+        return StudyChecker(
+            self.stepper,
+            parent=self.item,
+            study=study,
+        )
+
+    def remaining_checkers(self,):
+        return []
+
+    def get_studies(self,):
+        proposal = self.stepper.proposal
+        return list(
+            proposal.study_set.all(),
+        )
+
+class StudyChecker(
+    Checker,
+):
+    def __init__(self, *args, **kwargs):
+        self.study = kwargs.pop("study")
+        return super().__init__(*args, **kwargs)
+
+    def check(self,):
+        self.current_parent = self.parent
+        checkers = []
+        if self.stepper.has_multiple_studies():
+            # Create an intermediate container item per study,
+            # if we have more than one
+            self.current_parent = ContainerItem(
+                stepper=self.stepper,
+                title=self.study.name,
+                parent=self.parent,
+            )
+            self.stepper.items.append(self.current_parent)
+        # We always have a Participants and StudyDesign item
+        checkers = [
+            ParticipantsChecker(
+                self.stepper,
+                study=self.study,
+                parent=self.current_parent,
+            ),
+            DesignChecker(
+                self.stepper,
+                study=self.study,
+                parent=self.current_parent,
+            ),
+        ]
+        return checkers + self.determine_study_checkers(self.study)
+
+    def determine_study_checkers(self, study):
+        tests = {
+            self.make_intervention: lambda s: s.has_intervention,
+            self.make_observation: lambda s: s.has_observation,
+            self.make_sessions: lambda s: s.has_sessions,
+        }
+        optional_checkers = [
+            maker(study) for maker, test in tests.items() if test(study)
+        ]
+        return optional_checkers
+
+    def make_intervention(self, study):
+        return InterventionChecker(
+            self.stepper,
+            study=study,
+            parent=self.current_parent,
+        )
+
+    def make_observation(self, study):
+        return ObservationChecker(
+            self.stepper,
+            study=study,
+            parent=self.current_parent,
+        )
+
+    def make_sessions(self, study):
+        return SessionsChecker(
+            self.stepper,
+            study=study,
+            parent=self.current_parent,
+        )
+
+
+class ParticipantsChecker(
+        ModelFormChecker,
+):
+    title = _("Deelnemers")
+    form_class = study_forms.StudyForm
+
+    def __init__(self, *args, **kwargs,):
+        self.study = kwargs.pop("study")
+        return super().__init__(*args, **kwargs)
+
+    def check(self,):
+        self.stepper.items.append(
+            self.make_stepper_item()
+        )
+        return []
+
+    def get_url(self,):
+        return reverse(
+            "studies:update",
+            args=[self.study.pk,],
+        )
+
+class DesignChecker(
+        ModelFormChecker,
+):
+    title = _("Ontwerp")
+    form_class = study_forms.StudyDesignForm
+
+    def __init__(self, *args, **kwargs,):
+        self.study = kwargs.pop("study")
+        return super().__init__(*args, **kwargs)
+
+    def check(self,):
+        self.stepper.items.append(
+            self.make_stepper_item()
+        )
+        return []
+
+    def get_url(self,):
+        return reverse(
+            "studies:design",
+            args=[self.study.pk,],
+        )
+
+class InterventionChecker(
+        Checker,
+):
+    def __init__(self, *args, **kwargs,):
+        self.study = kwargs.pop("study")
+        return super().__init__(*args, **kwargs)
+
+    def check(self,):
+        return []
+
+
+class ObservationChecker(
+        Checker,
+):
+    def __init__(self, *args, **kwargs,):
+        self.study = kwargs.pop("study")
+        return super().__init__(*args, **kwargs)
+
+    def check(self,):
+        return []
+
+
+class SessionsChecker(
+        Checker,
+):
+    def __init__(self, *args, **kwargs,):
+        self.study = kwargs.pop("study")
+        return super().__init__(*args, **kwargs)
+
+    def check(self,):
         return []

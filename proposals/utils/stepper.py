@@ -85,3 +85,10 @@ class Stepper(renderable):
         next_checkers = new_checkers + next_checkers
         # Recurse until next_checkers is empty
         return self.check_all(next_checkers)
+
+    def has_multiple_studies(self,):
+        """
+        Returns True if the proposal has more than one trajectory (study).
+        """
+        num_studies = self.proposal.study_set.count()
+        return num_studies > 1
