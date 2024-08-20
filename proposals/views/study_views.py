@@ -4,7 +4,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, FormSetUpdateView
-from proposals.mixins import StepperContextMixin
+from proposals.mixins import ProposalContextMixin
 from studies.models import Documents, Study
 from studies.forms import StudyConsentForm
 from studies.utils import create_documents_for_study
@@ -13,7 +13,7 @@ from ..models import Proposal
 
 
 class StudyStart(
-        StepperContextMixin,
+        ProposalContextMixin,
         AllowErrorsOnBackbuttonMixin,
         UpdateView,
 ):

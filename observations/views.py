@@ -5,6 +5,7 @@ from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from fetc import settings
 from studies.models import Study
 from studies.utils import get_study_progress
+from proposals.mixins import StepperContextMixin
 
 from .forms import ObservationForm, ObservationUpdateAttachmentsForm
 from .models import Observation
@@ -13,7 +14,7 @@ from .models import Observation
 #############################
 # CRUD actions on Observation
 #############################
-class ObservationMixin(object):
+class ObservationMixin(StepperContextMixin):
     """Mixin for a Observation, to use in both ObservationCreate and ObservationUpdate below"""
 
     model = Observation
@@ -53,7 +54,11 @@ class ObservationMixin(object):
         return reverse(next_url, args=(pk,))
 
     def get_study(self):
+        # Um.... what?
         raise NotImplementedError
+
+    def get_proposal(self):
+        return self.get_object().study.proposal
 
 
 class AttachmentsUpdate(UpdateView):

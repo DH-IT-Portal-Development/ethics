@@ -23,12 +23,17 @@ from ..forms import (
 )
 from ..models import Study, Documents
 from ..utils import check_has_adults, check_necessity_required, get_study_progress
+from ..mixins import StudyMixin
 
 
 #######################
 # CRUD actions on Study
 #######################
-class StudyUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
+class StudyUpdate(
+        StudyMixin,
+        AllowErrorsOnBackbuttonMixin,
+        UpdateView,
+):
     """Updates a Study from a StudyForm"""
 
     model = Study
@@ -65,7 +70,7 @@ class StudyUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
 ###############
 # Other actions
 ###############
-class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView, generic.edit.FormMixin):
+class StudyDesign(StudyMixin, AllowErrorsOnBackbuttonMixin, UpdateView, generic.edit.FormMixin):
     model = Study
     form_class = StudyDesignForm
     success_message = _("Traject opgeslagen")

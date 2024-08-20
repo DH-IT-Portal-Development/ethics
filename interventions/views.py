@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from studies.models import Study
 from studies.utils import get_study_progress
+from proposals.mixins import StepperContextMixin
 
 from .forms import InterventionForm
 from .models import Intervention
@@ -12,7 +13,7 @@ from .models import Intervention
 ##############################
 # CRUD actions on Intervention
 ##############################
-class InterventionMixin(object):
+class InterventionMixin(StepperContextMixin):
     """Mixin for an Intervention, to use in both InterventionCreate and InterventionUpdate below"""
 
     model = Intervention
@@ -47,6 +48,9 @@ class InterventionMixin(object):
         elif study.has_sessions:
             next_url = "tasks:session_start"
         return reverse(next_url, args=(pk,))
+
+    def get_proposal(self):
+        return self.get_object().study.proposal
 
     def get_back_url(self):
         return reverse("studies:design", args=(self.get_study().pk,))
