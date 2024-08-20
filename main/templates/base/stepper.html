@@ -6,18 +6,14 @@
         {% for item in stepper.collect_items %}
             <li>
                 <a class="stepper-item {{ item.css_classes }}" href="{{ item.get_url }}">
-                    <span class="stepper-bubble stepper-bubble-largest">{% counter counter value %}</span>
+                    <span class="stepper-bubble {{bubble_size.0}}">{% counter counter value %}</span>
                     <span>{{ item.title }}</span>
                 </a>
+                {% counter depth create 1 %}
                 {% if item.children %}
                     <ul>
                         {% for child in item.children %}
-                            <li>
-                                <a class="stepper-item {{ child.css_classes }}" href="{{ child.get_url }}">
-                                    <span class="stepper-bubble stepper-bubble-normal"></span>
-                                    <span>{{ child.title }}</span>
-                                </a>
-                            </li>
+                            {% include "base/stepper_item.html" with item=child bubble_size=bubble_size|slice:"1:" %}
                         {% endfor %}
                     </ul>
                 {% endif %}
