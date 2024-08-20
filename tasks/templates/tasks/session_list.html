@@ -3,13 +3,15 @@
 {% load fetc_filters %}
 
 {% for session in study.session_set.all %}
-    <div class="task_list mt-4 mb-4">
-        <h3 class="mt-2">
+    <div class="container">
+        <h4 class="mt-2">
             {% blocktrans with order=session.order duration=session.tasks_duration repeats=session.repeats trimmed %}
                 Sessie {{ order }}
             {% endblocktrans %}
             {% if can_edit_sessions %}
-                <a href="{% url 'tasks:session_end' session.pk %}">
+                <!-- This inline style prevent a stupid "underscore" between the links -->
+                <a style="text-decoration:none"
+                   href="{% url 'tasks:session_end' session.pk %}">
                     <img src="{% static 'proposals/images/pencil.png' %}"
                          title="{% trans 'Sessie aanpassen' %}">
                 </a>
@@ -18,7 +20,7 @@
                          title="{% trans 'Sessie verwijderen' %}">
                 </a>
             {% endif %}
-        </h3>
+        </h4>
         <p>
             <em>
                 {% blocktrans with duration=session.tasks_duration|unknown_if_none repeats=session.repeats trimmed %}
@@ -33,9 +35,9 @@
     <div class="alert alert-primary" role="alert">{% trans "Nog geen sessies. Tijd om er één aan te maken!" %}</div>
 {% endfor %}
 {% if can_edit_sessions %}
-    <div class="task_list mt-3">
+    <div class="mt-3">
         <a href="{% url 'tasks:session_create' study.pk %}">
-            <h5 class = "pt-2" style="text-align:center;">
+            <h5 class = "pt-2 text-center">
                 {% trans "Nieuwe sessie tevoegen" %}
                 <img src="{% static 'proposals/images/add.png' %}"
                      title="{% trans 'Sessie aanmaken' %}">

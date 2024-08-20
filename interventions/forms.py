@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.utils import YES_NO
@@ -7,17 +8,31 @@ from .models import Intervention
 from cdh.core.forms import (
     BootstrapCheckboxSelectMultiple,
     BootstrapRadioSelect,
+    TemplatedFormTextField,
 )
 
 
 class InterventionForm(SoftValidationMixin, ConditionalModelForm):
+
+    setting_header = TemplatedFormTextField(header=_("Setting"), header_element="h4")
+
+    period_header = TemplatedFormTextField(
+        header=_("Beschrijving van de interventie"), header_element="h4"
+    )
+
+    extra_task_header = TemplatedFormTextField(
+        header=_("Extra taak"), header_element="h4"
+    )
+
     class Meta:
         model = Intervention
         fields = [
+            "setting_header",
             "setting",
             "setting_details",
             "supervision",
             "leader_has_coc",
+            "period_header",
             "period",
             "multiple_sessions",
             "session_frequency",
@@ -27,6 +42,7 @@ class InterventionForm(SoftValidationMixin, ConditionalModelForm):
             "has_controls",
             "controls_description",
             "measurement",
+            "extra_task_header",
             "extra_task",
         ]
         widgets = {

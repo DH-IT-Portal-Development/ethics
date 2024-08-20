@@ -642,9 +642,14 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
         return cleaned_data  # Sticking to Django conventions
 
 
-class StudyStartForm(forms.ModelForm):
+class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
     study_name_1 = forms.CharField(
-        label=_("Naam traject 1"), max_length=15, required=False
+        label=_("Naam traject 1"),
+        max_length=15,
+        required=False,
+        help_text=_(
+            "Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters."
+        ),
     )
     study_name_2 = forms.CharField(
         label=_("Naam traject 2"), max_length=15, required=False
@@ -691,7 +696,7 @@ class StudyStartForm(forms.ModelForm):
             "study_name_10",
         ]
         widgets = {
-            "studies_similar": forms.RadioSelect(choices=YES_NO),
+            "studies_similar": BootstrapRadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -703,9 +708,17 @@ class StudyStartForm(forms.ModelForm):
 
         super(StudyStartForm, self).__init__(*args, **kwargs)
 
+        for field, name in self._get_study_names().items():
+            self.fields[field].initial = name
+
+    def _get_study_names(
+        self,
+    ):
+        names = {}
         for n, study in enumerate(self.proposal.study_set.all()):
             study_name = "study_name_" + str(n + 1)
-            self.fields[study_name].initial = study.name
+            names[study_name] = study.name
+        return names
 
     def clean(self):
         """
@@ -714,7 +727,10 @@ class StudyStartForm(forms.ModelForm):
         - If studies_similar is set to False, make sure studies_number is set (and higher than 2)
         - If studies_number is set, make sure the corresponding name fields are filled.
         """
-        cleaned_data = super(StudyStartForm, self).clean()
+        # Start with study names
+        cleaned_data = self._get_study_names()
+        # Update with provided form data
+        cleaned_data.update(super().clean())
 
         if cleaned_data["studies_similar"] is None:
             self.add_error(
@@ -737,12 +753,12 @@ class StudyStartForm(forms.ModelForm):
                     self.add_error(study_name, _("Dit veld is verplicht."))
 
 
-class ProposalDataManagementForm(SoftValidationMixin, forms.ModelForm):
+class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = ["privacy_officer", "dmp_file"]
         widgets = {
-            "privacy_officer": forms.RadioSelect(choices=YES_NO),
+            "privacy_officer": BootstrapRadioSelect(choices=YES_NO),
         }
 
     def clean(self):
@@ -768,13 +784,14 @@ class ProposalUpdateDateStartForm(forms.ModelForm):
         fields = ["date_start"]
 
 
-class ProposalSubmitForm(forms.ModelForm):
+class ProposalSubmitForm(ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = ["comments", "inform_local_staff", "embargo", "embargo_end_date"]
         widgets = {
-            "inform_local_staff": forms.RadioSelect(choices=YES_NO),
-            "embargo": forms.RadioSelect(choices=YES_NO),
+            "inform_local_staff": BootstrapRadioSelect(choices=YES_NO),
+            "embargo": BootstrapRadioSelect(choices=YES_NO),
+            "embargo_end_date": DateInput(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -854,12 +871,12 @@ class ProposalSubmitForm(forms.ModelForm):
                 )
 
 
-class TranslatedConsentForms(SoftValidationMixin, forms.ModelForm):
+class TranslatedConsentForms(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = ["translated_forms", "translated_forms_languages"]
         widgets = {
-            "translated_forms": forms.RadioSelect(choices=YES_NO),
+            "translated_forms": BootstrapRadioSelect(choices=YES_NO),
         }
 
     _soft_validation_fields = ["translated_forms", "translated_forms_languages"]

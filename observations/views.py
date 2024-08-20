@@ -25,6 +25,7 @@ class ObservationMixin(object):
         context = super(ObservationMixin, self).get_context_data(**kwargs)
         study = self.get_study()
         context["study"] = study
+        context["proposal"] = study.proposal
         context["progress"] = get_study_progress(study) + 5
         return context
 

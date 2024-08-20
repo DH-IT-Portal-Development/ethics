@@ -2,57 +2,66 @@
 {% load i18n %}
 {% load fetc_filters %}
 
-<table class="pure-table" width="100%" style="">
-    <thead>
-        <tr>
-            <th width="20%">{% trans "Taak" %}</th>
-            <th width="10%">{% trans "Nettoduur (in minuten)" %}</th>
-            <th width="40%">{% trans "Registratie via" %}</th>
-            <th width="10%">{% trans "Feedback?" %}</th>
-            {% if can_edit_tasks %}
-                <th width="15%">{% trans "Aantal keer uit te voeren" %}</th>
-                <th width="5%">{% trans "Acties" %}</th>
-            {% else %}
-                <th width="20%">{% trans "Aantal keer uit te voeren" %}</th>
-            {% endif %}
-        </tr>
-    </thead>
-    <tbody>
-        {% for task in session.task_set.all %}
+{% if session.task_set.all %}
+    <table class="table">
+        <thead class="table-primary">
             <tr>
-                <td>{% trans "Taak" %} {{ task.order }}: {{ task.name }}</td>
-                <td>{{ task.duration }}</td>
-                <td>{{ task.registrations.all|create_unordered_html_list }}</td>
-                <td class="task_feedback">
-                    <span class="label">{{ task.feedback|yesno:_("ja,nee") }}</span>
-                    {% if task.feedback %}<span class="help">{{ task.feedback_details }}</span>{% endif %}
-                </td>
-                <td>{{ task.repeats }}</td>
+                <th scope="col">{% trans "Taak" %}</th>
+                <th scope="col">{% trans "Nettoduur (in minuten)" %}</th>
+                <th scope="col">{% trans "Registratie via" %}</th>
+                <th scope="col">{% trans "Feedback?" %}</th>
                 {% if can_edit_tasks %}
-                    <td>
-                        <a href="{% url 'tasks:update' task.id %}">
-                            <img src="{% static 'proposals/images/pencil.png' %}"
-                                 title="{% trans 'Taak bewerken' %}">
-                        </a>
-                        <a href="{% url 'tasks:delete' task.id %}">
-                            <img src="{% static 'proposals/images/delete.png' %}"
-                                 title="{% trans 'Taak verwijderen' %}">
-                        </a>
-                    </td>
+                    <th scope="col">{% trans "Aantal keer uit te voeren" %}</th>
+                    <th scope="col">{% trans "Acties" %}</th>
+                {% else %}
+                    <th scope="col">{% trans "Aantal keer uit te voeren" %}</th>
                 {% endif %}
             </tr>
-        {% endfor %}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            {% for task in session.task_set.all %}
+                <tr>
+                    <td>{% trans "Taak" %} {{ task.order }}: {{ task.name }}</td>
+                    <td>{{ task.duration }}</td>
+                    <td>{{ task.registrations.all|create_unordered_html_list }}</td>
+                    <td class="task_feedback">
+                        <span class="label">{{ task.feedback|yesno:_("ja,nee") }}</span>
+                        {% if task.feedback %}<span class="help">{{ task.feedback_details }}</span>{% endif %}
+                    </td>
+                    <td>{{ task.repeats }}</td>
+                    {% if can_edit_tasks %}
+                        <td>
+                            <!-- This inline style prevent a stupid "underscore" between the links -->
+                            <a style="text-decoration:none;" href="{% url 'tasks:update' task.id %}">
+                                <img src="{% static 'proposals/images/pencil.png' %}"
+                                     title="{% trans 'Taak bewerken' %}">
+                            </a>
+                            <a href="{% url 'tasks:delete' task.id %}">
+                                <img src="{% static 'proposals/images/delete.png' %}"
+                                     title="{% trans 'Taak verwijderen' %}">
+                            </a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <div class="alert alert-info" role="alert">
+        {% trans "Deze sessie bevat nog geen taken. Klik op het podloodje om taken aan te maken!" %}
+    </div>
+{% endif %}
 {% if can_edit_tasks %}
-    <div class="d-flex justify-content-center">
-        <div class="button m-4 button-black">
-            <a href="{% url 'tasks:create' session.pk %}">
+    <div class="mt-3">
+        <a href="{% url 'tasks:create' session.pk %}">
+            <h5 class="pt-2 text-center">
                 {% blocktrans with session_order=session.order trimmed %}
                     Nieuwe taak toevoegen aan sessie {{ session_order }}
                 {% endblocktrans %}
-            </a>
-        </div>
+                <img src="{% static 'proposals/images/add.png' %}"
+                     title="{% trans 'Sessie aanmaken' %}">
+            </h5>
+        </a>
     </div>
 {% endif %}
 <script>

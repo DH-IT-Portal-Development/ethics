@@ -157,7 +157,7 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
         self.check_dependency(cleaned_data, "feedback", "feedback_details")
 
 
-class SessionEndForm(SoftValidationMixin, forms.ModelForm):
+class SessionEndForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Session
         fields = ["tasks_duration"]
