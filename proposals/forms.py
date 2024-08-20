@@ -708,9 +708,15 @@ class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
 
         super(StudyStartForm, self).__init__(*args, **kwargs)
 
+        for field, name in self._get_study_names().items():
+            self.fields[field].initial = name
+
+    def _get_study_names(self,):
+        names = {}
         for n, study in enumerate(self.proposal.study_set.all()):
             study_name = "study_name_" + str(n + 1)
-            self.fields[study_name].initial = study.name
+            names[study_name] = study.name
+        return names
 
     def clean(self):
         """
@@ -719,7 +725,10 @@ class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
         - If studies_similar is set to False, make sure studies_number is set (and higher than 2)
         - If studies_number is set, make sure the corresponding name fields are filled.
         """
-        cleaned_data = super(StudyStartForm, self).clean()
+        # Start with study names
+        cleaned_data = self._get_study_names()
+        # Update with provided form data
+        cleaned_data.update(super().clean())
 
         if cleaned_data["studies_similar"] is None:
             self.add_error(

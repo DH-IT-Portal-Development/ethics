@@ -47,14 +47,14 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
 
     forms["Researcher"] = (
         ResearcherForm,
-        reverse("proposal:researcher", args=[proposal.pk]),
+        reverse("proposals:researcher", args=[proposal.pk]),
         _("Informatie over de onderzoeker"),
         proposal,
     )
 
     forms["OtherResearchers"] = (
         OtherResearchersForm,
-        reverse("proposal:other_researchers", args=[proposal.pk]),
+        reverse("proposals:other_researchers", args=[proposal.pk]),
         _("Informatie over betrokken onderzoekers"),
         proposal,
     )
@@ -62,14 +62,14 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
     if not proposal.is_pre_assessment:
         forms["Funding"] = (
             FundingForm,
-            reverse("proposal:funding", args=[proposal.pk]),
+            reverse("proposals:funding", args=[proposal.pk]),
             _("Informatie over financiering"),
             proposal,
         )
 
     forms["ResearchGoal"] = (
         ResearchGoalForm,
-        reverse("proposal:research_goal", args=[proposal.pk]),
+        reverse("proposals:research_goal", args=[proposal.pk]),
         _("Informatie over het onderzoeksdoel"),
         proposal,
     )
@@ -80,7 +80,7 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
     if proposal.is_pre_approved:
         forms["PreApproved"] = (
             PreApprovedForm,
-            reverse("proposal:pre_approved", args=[proposal.pk]),
+            reverse("proposals:pre_approved", args=[proposal.pk]),
             _("Informatie over eerdere toetsing"),
             proposal,
         )
