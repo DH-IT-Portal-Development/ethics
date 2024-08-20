@@ -10,7 +10,8 @@
             {% endblocktrans %}
             {% if can_edit_sessions %}
                 <!-- This inline style prevent a stupid "underscore" between the links -->
-                <a style="text-decoration:none;" href="{% url 'tasks:session_end' session.pk %}">
+                <a style="text-decoration:none"
+                   href="{% url 'tasks:session_end' session.pk %}">
                     <img src="{% static 'proposals/images/pencil.png' %}"
                          title="{% trans 'Sessie aanpassen' %}">
                 </a>

@@ -153,7 +153,6 @@ class SessionEnd(SessionMixin, UpdateView):
         return reverse("tasks:session_overview", args=(self.object.study.pk,))
 
 
-
 class SessionOverview(UpdateView):
 
     model = Study
@@ -171,4 +170,3 @@ class SessionOverview(UpdateView):
 
     def get_back_url(self):
         return reverse("tasks:session_start", args=(self.object.pk,))
-
