@@ -32,10 +32,10 @@
         {% include "tasks/task_list.html" %}
     </div>
 {% empty %}
-    <div class="alert alert-primary" role="alert">{% trans "Nog geen sessies. Tijd om er één aan te maken!" %}</div>
+    <div class="alert alert-info" role="alert">{% trans "Nog geen sessies. Tijd om er één aan te maken!" %}</div>
 {% endfor %}
 {% if can_edit_sessions %}
-    <div class="mt-3">
+    <div class="mt-3 mb-3">
         <a href="{% url 'tasks:session_create' study.pk %}">
             <h5 class = "pt-2 text-center">
                 {% trans "Nieuwe sessie tevoegen" %}
