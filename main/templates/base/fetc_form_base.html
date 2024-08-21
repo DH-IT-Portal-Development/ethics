@@ -31,7 +31,10 @@
                     </div>
                 {% endblock %}
 
-                {{ form }}
+                {% block auto-form-render %}
+                    {{ form }}
+                {% endblock %}
+
                 {% block form-buttons %}
                     {% block post-form-pre-buttons %}{% endblock %}
 
