@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from studies.models import Study
 from studies.utils import get_study_progress
+from studies.mixins import StudyFromURLMixin
 from proposals.mixins import StepperContextMixin
 
 from .forms import InterventionForm
@@ -59,17 +60,18 @@ class InterventionMixin(StepperContextMixin):
         raise NotImplementedError
 
 
-class InterventionCreate(InterventionMixin, AllowErrorsOnBackbuttonMixin, CreateView):
+class InterventionCreate(
+        StudyFromURLMixin,
+        InterventionMixin,
+        AllowErrorsOnBackbuttonMixin,
+        CreateView,
+):
     """Creates a Intervention from a InterventionForm"""
 
     def form_valid(self, form):
         """Sets the Study on the Intervention before starting validation."""
         form.instance.study = self.get_study()
         return super(InterventionCreate, self).form_valid(form)
-
-    def get_study(self):
-        """Retrieves the Study from the pk kwarg"""
-        return Study.objects.get(pk=self.kwargs["pk"])
 
 
 class InterventionUpdate(InterventionMixin, AllowErrorsOnBackbuttonMixin, UpdateView):

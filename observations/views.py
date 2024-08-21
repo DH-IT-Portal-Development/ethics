@@ -3,8 +3,8 @@ from django.utils.translation import gettext_lazy as _
 
 from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from fetc import settings
-from studies.models import Study
 from studies.utils import get_study_progress
+from studies.mixins import StudyFromURLMixin
 from proposals.mixins import StepperContextMixin
 
 from .forms import ObservationForm, ObservationUpdateAttachmentsForm
@@ -68,17 +68,18 @@ class AttachmentsUpdate(UpdateView):
     group_required = settings.GROUP_SECRETARY
 
 
-class ObservationCreate(ObservationMixin, AllowErrorsOnBackbuttonMixin, CreateView):
+class ObservationCreate(
+        StudyFromURLMixin,
+        ObservationMixin,
+        AllowErrorsOnBackbuttonMixin,
+        CreateView,
+):
     """Creates an Observation from a ObservationForm"""
 
     def form_valid(self, form):
         """Sets the Study on the Observation before starting validation."""
         form.instance.study = self.get_study()
         return super(ObservationCreate, self).form_valid(form)
-
-    def get_study(self):
-        """Retrieves the Study from the pk kwarg"""
-        return Study.objects.get(pk=self.kwargs["pk"])
 
 
 class ObservationUpdate(ObservationMixin, AllowErrorsOnBackbuttonMixin, UpdateView):

@@ -139,7 +139,11 @@ class StudyDesign(StudyMixin, AllowErrorsOnBackbuttonMixin, UpdateView, generic.
         return reverse("studies:update", args=(self.kwargs["pk"],))
 
 
-class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
+class StudyEnd(
+        StudyMixin,
+        AllowErrorsOnBackbuttonMixin,
+        UpdateView,
+):
     """
     Completes a Study
     """
