@@ -162,7 +162,6 @@ class SessionEndForm(SoftValidationMixin, ConditionalModelForm):
         model = Session
         fields = ["tasks_duration"]
 
-
     def __init__(self, *args, **kwargs):
         """
         - Set the tasks_duration label
@@ -179,15 +178,17 @@ class SessionEndForm(SoftValidationMixin, ConditionalModelForm):
         tasks_duration = self.cleaned_data.get("tasks_duration")
 
         if tasks_duration is not None and tasks_duration < self.instance.net_duration():
-            self.add_error("tasks_duration",
+            self.add_error(
+                "tasks_duration",
                 _("Totale sessieduur moet minstens gelijk zijn aan netto sessieduur."),
             )
 
         if self.instance.tasks_number == 0:
-            self.add_error(None,
-                _(
-                    "Sessie {} bevat nog geen taken. Voeg minstens één taak toe."
-                ).format(self.instance.order),
+            self.add_error(
+                None,
+                _("Sessie {} bevat nog geen taken. Voeg minstens één taak toe.").format(
+                    self.instance.order
+                ),
             )
 
         return cleaned_data

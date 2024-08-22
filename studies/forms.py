@@ -225,11 +225,11 @@ class StudyDesignForm(TemplatedModelForm):
         - at least one of the fields has to be checked
         """
         cleaned_data = super(StudyDesignForm, self).clean()
-        #This solution is a bit funky, but by using add_error(), it appends our
-        #error msg to a built-in required error message.
+        # This solution is a bit funky, but by using add_error(), it appends our
+        # error msg to a built-in required error message.
         if not cleaned_data:
             msg = _("Je dient minstens één van de opties te selecteren.")
-            self.errors["study_types"]=[msg]
+            self.errors["study_types"] = [msg]
 
 
 class StudyConsentForm(ConditionalModelForm):
