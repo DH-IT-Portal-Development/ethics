@@ -524,6 +524,44 @@ class DesignChecker(
             args=[self.study.pk,],
         )
 
+class UpdateOrCreateChecker(
+        ModelFormChecker,
+):
+    """
+    A variation on the ModelFormChecker designed for
+    forms like the InterventionForm, which link either
+    to a create or update view depending on if they exist
+    already.
+
+    If the object in question exists, this class acts like
+    a normal ModelFormChecker. Otherwise it provides a factory
+    for a PlaceholderItem that links to the CreateView.
+    """
+
+    def make_stepper_item(self,):
+        if self.object_exists():
+            return super().make_stepper_item()
+        return self.make_placeholder_item()
+
+    def make_placeholder_item(self,):
+        item = PlaceholderItem(
+            self.stepper,
+            title=self.title,
+            parent=self.parent,
+        )
+        item.get_url = self.get_create_url()
+
+    def object_exists(self,):
+        # By default, assume the object exists
+        return True
+
+    def get_create_url(self,):
+        return ""
+
+    def get_update_url(self,):
+        return ""
+
+
 class InterventionChecker(
         Checker,
 ):
