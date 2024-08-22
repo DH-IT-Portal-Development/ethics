@@ -296,7 +296,7 @@ def get_form_errors(proposal: Proposal) -> list:
             instance = form_class(**kwargs)
 
             for field, error in instance.errors.items():
-                if field in instance.fields:
+                if field in instance.fields or field == "__all__":
                     troublesome_pages.append(
                         {
                             "url": url,
