@@ -147,12 +147,12 @@ class ReviewDiscontinueForm(forms.ModelForm):
         return super().__init__(*args, **kwargs)
 
 
-class DecisionForm(forms.ModelForm):
+class DecisionForm(TemplatedModelForm):
     class Meta:
         model = Decision
         fields = ["go", "comments"]
         widgets = {
-            "go": forms.RadioSelect(),
+            "go": BootstrapRadioSelect(),
         }
 
     def __init__(self, *args, **kwargs):

@@ -1,4 +1,4 @@
-{% extends "base/fetc_base.html" %}
+{% extends "base/fetc_form_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -7,102 +7,96 @@
     {% trans "Aanvraag beoordelen" %} - {{ block.super }}
 {% endblock %}
 
-{% block content %}
-    <div class="uu-container">
-        {% with review=decision.review %}
-            {% include "reviews/review_detail_sidebar.html" %}
-        {% endwith %}
-        <div class="col-12 col-md-9">
-            <h2>{% trans "Aanvraag beoordelen" %}</h2>
-            {% with proposal=decision.review.proposal %}
-                {% url 'proposals:pdf' proposal.id as pdf_url %}
-                {% if user != proposal.supervisor %}
-                    <p>
-                        {% blocktrans trimmed with title=proposal.title refnum=proposal.reference_number chamber=proposal.reviewing_committee %}
-                            Je kunt nu een go of no-go geven voor de aanvraag <em>{{ title }}</em>,
-                            {{ refnum }} in {{ chamber }}.
-                            De aanvraag is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
-                        {% endblocktrans %}
-                    </p>
-                    {% if decision.is_final_decision %}
-                        <div class="alert alert-info">
-                            {% blocktrans trimmed %}
-                                <strong>Attentie:</strong> jij bent de laatste beoordelaar van deze aanvraag. Daarom kun je na het versturen je oordeel en commentaar niet meer bewerken. Controleer je antwoorden goed.
-                            {% endblocktrans %}
-                        </div>
-                    {% endif %}
-                {% else %}
-                    <p>
-                        {% blocktrans trimmed with title=proposal.title %}
-                            Je kunt nu de aanvraag <em>{{ title }}</em> bekijken.
-                            <br />
-                        {% endblocktrans %}
-                    </p>
-                    <p>
-                        {% blocktrans trimmed %}
-                            Als de aanvraag (incl. geïnformeerde toestemmingsformulieren) in orde is, klik dan op
-                            ‘goedgekeurd’ en ‘Beslissing opslaan’ hieronder; dan wordt de aanvraag ingediend
-                            bij de FETC-GW.
-                        {% endblocktrans %}
-                    </p>
-                    <p>
-                        {% blocktrans trimmed %}
-                            Als de aanvraag nog niet in orde is, dan zijn er twee mogelijkheden om de aanvraag aan te
-                            passen:
-                        {% endblocktrans %}
-                    </p>
-                    <ol>
-                        <li>
-                            {% blocktrans trimmed %}
-                                door de supervisor (jijzelf)
-                                <br />
-                                Als supervisor kan je deze aanvraag <a href="{{ update_url }}" target="_blank">hier</a>
-                                aanpassen. Daarna word je teruggeleid naar deze pagina en kun je hieronder de aanvraag
-                                goedkeuren; dat betekent dat de aanvraag wordt ingediend bij de FETC-GW.
-                            {% endblocktrans %}
-                        </li>
-                        <li class="mt-2">
-                            {% blocktrans trimmed %}
-                                door de indiener (je student of promovendus)
-                                <br />
-                                Indien je wilt dat de indiener de aanvraag zelf aanpast voordat je de studie
-                                kunt goedkeuren en daarmee bij de FETC-GW indient, selecteer dan 'revisie noodzakelijk'
-                                of ‘niet goedgekeurd’ hieronder, voeg eventuele opmerkingen toe, en klik op 'Beslissing
-                                opslaan'. Zodra je dit gedaan hebt kan de indiener weer aanpassingen doen.
-                                <br />
-                            {% endblocktrans %}
-                        </li>
-                        {# This list item is a somewhat hacky way to simulate a p tag, as you can't use those in a li #}
-                        <li class="mt-2 list-unstyled">
-                            {% blocktrans trimmed %}
-                                Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw heeft verstuurd,
-                                zal je de aangepaste aanvraag opnieuw moeten beoordelen.
-                            {% endblocktrans %}
-                        </li>
-                    </ol>
-                {% endif %}
-                {% if proposal.is_revision %}
-                    <p class="warning">
-                        {% url 'proposals:diff' proposal.id as diff_url %}
-                        {% blocktrans trimmed %}
-                            Dit is een revisie van of amendement op een vorige aanvraag. De verschillen met de vorige
-                            aanvraag zijn <a href="{{ diff_url }}">hier</a> in te zien.
-                        {% endblocktrans %}
-                    </p>
-                {% endif %}
-                <form action="" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <table>
-                        {{ form.as_table }}
-                    </table>
-                    <div class="float-end">
-                        <a class="btn btn-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
-                        <input class="btn btn-primary"
-                               type="submit"
-                               value="{% trans 'Beslissing opslaan' %}" />
-                    </div>
-                </form>
-            {% endwith %}
-        </div>
-    </div>
+{% block sidebar %}
+    {% with review=decision.review %}
+        {% include "reviews/review_detail_sidebar.html" %}
+    {% endwith %}
+{% endblock %}
+
+{% block pre-form-text %}
+    <h2>{% trans "Aanvraag beoordelen" %}</h2>
+    {% with proposal=decision.review.proposal %}
+        {% url 'proposals:pdf' proposal.id as pdf_url %}
+        {% if user != proposal.supervisor %}
+            <p>
+                {% blocktrans trimmed with title=proposal.title refnum=proposal.reference_number chamber=proposal.reviewing_committee %}
+                    Je kunt nu een go of no-go geven voor de aanvraag <em>{{ title }}</em>,
+                    {{ refnum }} in {{ chamber }}.
+                    De aanvraag is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
+                {% endblocktrans %}
+            </p>
+            {% if decision.is_final_decision %}
+                <div class="alert alert-info">
+                    {% blocktrans trimmed %}
+                        <strong>Attentie:</strong> jij bent de laatste beoordelaar van deze aanvraag. Daarom kun je na het versturen je oordeel en commentaar niet meer bewerken. Controleer je antwoorden goed.
+                    {% endblocktrans %}
+                </div>
+            {% endif %}
+        {% else %}
+            <p>
+                {% blocktrans trimmed with title=proposal.title %}
+                    Je kunt nu de aanvraag <em>{{ title }}</em> bekijken.
+                    <br />
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    Als de aanvraag (incl. geïnformeerde toestemmingsformulieren) in orde is, klik dan op
+                    ‘goedgekeurd’ en ‘Beslissing opslaan’ hieronder; dan wordt de aanvraag ingediend
+                    bij de FETC-GW.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    Als de aanvraag nog niet in orde is, dan zijn er twee mogelijkheden om de aanvraag aan te
+                    passen:
+                {% endblocktrans %}
+            </p>
+            <ol>
+                <li>
+                    {% blocktrans trimmed %}
+                        door de supervisor (jijzelf)
+                        <br />
+                        Als supervisor kan je deze aanvraag <a href="{{ update_url }}" target="_blank">hier</a>
+                        aanpassen. Daarna word je teruggeleid naar deze pagina en kun je hieronder de aanvraag
+                        goedkeuren; dat betekent dat de aanvraag wordt ingediend bij de FETC-GW.
+                    {% endblocktrans %}
+                </li>
+                <li class="mt-2">
+                    {% blocktrans trimmed %}
+                        door de indiener (je student of promovendus)
+                        <br />
+                        Indien je wilt dat de indiener de aanvraag zelf aanpast voordat je de studie
+                        kunt goedkeuren en daarmee bij de FETC-GW indient, selecteer dan 'revisie noodzakelijk'
+                        of ‘niet goedgekeurd’ hieronder, voeg eventuele opmerkingen toe, en klik op 'Beslissing
+                        opslaan'. Zodra je dit gedaan hebt kan de indiener weer aanpassingen doen.
+                        <br />
+                    {% endblocktrans %}
+                </li>
+                {# This list item is a somewhat hacky way to simulate a p tag, as you can't use those in a li #}
+                <li class="mt-2 list-unstyled">
+                    {% blocktrans trimmed %}
+                        Als de indiener de gevraagde wijzigingen heeft doorgevoerd en opnieuw heeft verstuurd,
+                        zal je de aangepaste aanvraag opnieuw moeten beoordelen.
+                    {% endblocktrans %}
+                </li>
+            </ol>
+        {% endif %}
+        {% if proposal.is_revision %}
+            <p class="warning">
+                {% url 'proposals:diff' proposal.id as diff_url %}
+                {% blocktrans trimmed %}
+                    Dit is een revisie van of amendement op een vorige aanvraag. De verschillen met de vorige
+                    aanvraag zijn <a href="{{ diff_url }}">hier</a> in te zien.
+                {% endblocktrans %}
+            </p>
+        {% endif %}
+    {% endwith %}
+{% endblock %}
+
+{% block form-buttons %}
+<a class="btn btn-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+<input class="btn btn-primary ms-auto"
+       type="submit"
+       value="{% trans 'Beslissing opslaan' %}" />
 {% endblock %}
