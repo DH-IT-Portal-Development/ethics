@@ -1,4 +1,4 @@
-{% extends "base/fetc_base.html" %}
+{% extends "base/fetc_form_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -7,37 +7,22 @@
     {% trans "Bevestigingsbrief versturen" %} - {{ block.super }}
 {% endblock %}
 
-{% block html_head %}
-    <script>
-        $(function () {
-            var date_format = '{{ LANGUAGE_CODE }}' === 'nl' ? 'dd-mm-yy' : 'mm/dd/yy';
-            $("#id_date_confirmed").datepicker({
-                dateFormat: date_format,
-                maxDate: 'now',
-            });
-        });
-    </script>
+{% block sidebar %}
+<!--override the stepper-->
 {% endblock %}
 
-{% block content %}
-    <div class="uu-container">
-        <div class="col-12">
-            <h2>{% trans "Bevestigingsbrief versturen" %}</h2>
-            <p>
-                {% blocktrans trimmed with title=review.proposal.title %}
-                    Geef hieronder aan wanneer de bevestigingsbrief voor de aanvraag <em>{{ title }}</em> is verstuurd.
-                {% endblocktrans %}
-            </p>
-            <form action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                <a class="btn btn-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
-                <input class="btn btn-secondary"
-                       type="submit"
-                       value="{% trans 'Bevestigingsbrief verstuurd' %}" />
-            </form>
-        </div>
-    </div>
+{% block pre-form-text %}
+    <h2>{% trans "Bevestigingsbrief versturen" %}</h2>
+    <p>
+        {% blocktrans trimmed with title=review.proposal.title %}
+            Geef hieronder aan wanneer de bevestigingsbrief voor de aanvraag <em>{{ title }}</em> is verstuurd.
+        {% endblocktrans %}
+    </p>
+{% endblock %}
+
+{% block form-buttons %}
+    <a class="btn btn-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+    <input class="btn btn-primary ms-auto"
+        type="submit"
+        value="{% trans 'Bevestigingsbrief verstuurd' %}" />
 {% endblock %}

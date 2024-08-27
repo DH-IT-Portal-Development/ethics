@@ -530,6 +530,7 @@ class ProposalConfirmationForm(TemplatedModelForm):
     class Meta:
         model = Proposal
         fields = ["date_confirmed", "confirmation_comments"]
+        widgets = {"date_confirmed": DateInput}
 
 
 class WmoForm(SoftValidationMixin, ConditionalModelForm):
