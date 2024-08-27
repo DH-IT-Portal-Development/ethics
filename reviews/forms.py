@@ -41,7 +41,7 @@ class ReviewAssignForm(ConditionalModelForm):
         model = Review
         fields = ["short_route"]
         widgets = {
-            "short_route": forms.RadioSelect(choices=SHORT_LONG_REVISE),
+            "short_route": BootstrapRadioSelect(choices=SHORT_LONG_REVISE),
         }
 
     def __init__(self, *args, **kwargs):
@@ -64,11 +64,11 @@ class ReviewAssignForm(ConditionalModelForm):
         self.fields["reviewers"] = forms.ModelMultipleChoiceField(
             initial=self.instance.current_reviewers(),
             queryset=reviewers,
-            widget=forms.SelectMultiple(
-                attrs={"data-placeholder": _("Selecteer de commissieleden")}
-            ),
+            widget=SearchableSelectWidget(),
             required=False,
         )
+
+        self.fields["reviewers"].widget.allow_multiple_selected = True
 
     def clean_reviewers(self):
         reviewers = self.cleaned_data["reviewers"]
