@@ -771,7 +771,7 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
             )
 
 
-class ProposalUpdateDataManagementForm(forms.ModelForm):
+class ProposalUpdateDataManagementForm(TemplatedModelForm):
     class Meta:
         model = Proposal
         fields = ["dmp_file"]
