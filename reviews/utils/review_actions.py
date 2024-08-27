@@ -85,7 +85,7 @@ class DecideAction(ReviewAction):
         user = self.user
         review = self.review
 
-        if review.stage in (review.Stages.COMMISSION, review.Stages.SUPERVISOR):
+        if review.stage not in (Review.Stages.COMMISSION, Review.Stages.SUPERVISOR):
             return False
 
         try:
@@ -100,10 +100,10 @@ class DecideAction(ReviewAction):
 
     def is_available(self):
         review = self.review
-
+        
         if not self.get_available_decision():
             return False
-
+        
         return True
 
     def action_url(self):
@@ -182,11 +182,10 @@ class ChangeAssignment(ReviewAction):
         user_groups = user.groups.values_list("name", flat=True)
         if not settings.GROUP_SECRETARY in user_groups:
             return False
-
-        if self.review.stage not in [
-            Review.Continuations.REVISION,
-            Review.Continuations.NO_GO,
+        
+        if self.review.stage in [
             Review.Stages.CLOSING,
+            Review.Stages.CLOSED,
         ]:
             return False
 
