@@ -1,17 +1,15 @@
 {% load i18n %}
 
-<div class="mt-4 mb-3 w-100 d-flex">
-    {% if not no_back %}
-        <input class="btn btn-secondary"
-               type="submit"
-               name="save_back"
-               value="{% trans '<< Opslaan en vorige stap' %}" />
-    {% endif %}
-    {% if not no_forward %}
-        {% trans 'Opslaan en volgende stap >>' as default_next_text %}
-        <input class="btn btn-primary continue-button ms-auto"
-               type="submit"
-               name="save_continue"
-               value="{{ next_text|default:default_next_text }}" />
-    {% endif %}
-</div>
+{% if not no_back %}
+    <input class="btn btn-secondary"
+            type="submit"
+            name="save_back"
+            value="{% trans '<< Opslaan en vorige stap' %}" />
+{% endif %}
+{% if not no_forward %}
+    {% trans 'Opslaan en volgende stap >>' as default_next_text %}
+    <input class="btn btn-primary continue-button ms-auto"
+            type="submit"
+            name="save_continue"
+            value="{{ next_text|default:default_next_text }}" />
+{% endif %}
