@@ -7,7 +7,13 @@ from main.utils import YES_NO, get_reviewers_from_groups, is_secretary
 from proposals.models import Proposal
 from .models import Review, Decision
 
-from cdh.core.forms import DateField
+from cdh.core.forms import (
+    DateField,
+    BootstrapRadioSelect,
+    SearchableSelectWidget,
+    TemplatedModelForm,
+    BootstrapCheckboxInput,
+)
 
 from django.core.exceptions import ValidationError
 
@@ -83,7 +89,7 @@ class ReviewAssignForm(ConditionalModelForm):
         return self.cleaned_data["reviewers"]
 
 
-class ReviewCloseForm(forms.ModelForm):
+class ReviewCloseForm(ConditionalModelForm):
     in_archive = forms.BooleanField(initial=True, required=False)
     has_minor_revision = forms.BooleanField(initial=False, required=False)
     minor_revision_description = forms.Field(required=False)
@@ -97,7 +103,7 @@ class ReviewCloseForm(forms.ModelForm):
             "in_archive",
         ]
         widgets = {
-            "continuation": forms.RadioSelect(),
+            "continuation": BootstrapRadioSelect(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -117,12 +123,12 @@ class ReviewCloseForm(forms.ModelForm):
             ]
 
         self.fields["in_archive"].label = _("Voeg deze aanvraag toe aan het archief")
-        self.fields["in_archive"].widget = forms.RadioSelect(choices=YES_NO)
+        self.fields["in_archive"].widget = BootstrapRadioSelect(choices=YES_NO)
 
         self.fields["has_minor_revision"].label = _(
             "Is er een revisie geweest na het indienen van deze aanvraag?"
         )
-        self.fields["has_minor_revision"].widget = forms.RadioSelect(choices=YES_NO)
+        self.fields["has_minor_revision"].widget = BootstrapRadioSelect(choices=YES_NO)
 
         self.fields["minor_revision_description"].label = _("Opmerkingen over revisie")
         self.fields["minor_revision_description"].widget = forms.Textarea()
