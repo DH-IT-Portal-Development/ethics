@@ -18,9 +18,11 @@
         </div>
     </div>
     <div class="uu-container">
-        {% with review=review %}
-            {% include "reviews/review_detail_sidebar.html" %}
-        {% endwith %}
+        <div class="col-3">
+            {% with review=review %}
+                {% include "reviews/review_detail_sidebar.html" %}
+            {% endwith %}
+        </div>
         <div class="col-12 col-md-9">
             <h4>{% trans "Reviewers" %}</h4>
             {% include "reviews/review_table.html" %}
