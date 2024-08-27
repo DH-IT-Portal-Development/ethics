@@ -145,12 +145,8 @@ class ReviewDiscontinueForm(forms.ModelForm):
             "confirm_discontinue",
         ]
 
-    def __init__(self, *args, **kwargs):
-        """
-        - Check that this review can be discontinued
-        """
+        widgets = {"confirm_discontinue": BootstrapCheckboxInput()}       
 
-        return super().__init__(*args, **kwargs)
 
 
 class DecisionForm(TemplatedModelForm):
