@@ -777,7 +777,7 @@ class ProposalUpdateDataManagementForm(forms.ModelForm):
         fields = ["dmp_file"]
 
 
-class ProposalUpdateDateStartForm(forms.ModelForm):
+class ProposalUpdateDateStartForm(TemplatedModelForm):
     date_start = DateField(label=_("Nieuwe beoogde startdatum"))
 
     class Meta:
