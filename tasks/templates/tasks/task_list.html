@@ -31,7 +31,8 @@
                     <td>{{ task.repeats }}</td>
                     {% if can_edit_tasks %}
                         <td>
-                            <a href="{% url 'tasks:update' task.id %}">
+                            <!-- This inline style prevent a stupid "underscore" between the links -->
+                            <a style="text-decoration:none;" href="{% url 'tasks:update' task.id %}">
                                 <img src="{% static 'proposals/images/pencil.png' %}"
                                      title="{% trans 'Taak bewerken' %}">
                             </a>

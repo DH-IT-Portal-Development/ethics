@@ -711,7 +711,9 @@ class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
         for field, name in self._get_study_names().items():
             self.fields[field].initial = name
 
-    def _get_study_names(self,):
+    def _get_study_names(
+        self,
+    ):
         names = {}
         for n, study in enumerate(self.proposal.study_set.all()):
             study_name = "study_name_" + str(n + 1)

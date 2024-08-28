@@ -7,7 +7,7 @@ from django.utils.translation import gettext_lazy as _
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView, CreateView
 from proposals.mixins import StepperContextMixin
-from studies.mixins import StudyFromURLMixin
+from studies.mixins import StudyFromURLMixin, StudyMixin
 from ..forms import SessionUpdateForm, SessionEndForm, SessionOverviewForm
 from ..models import Session, Study
 
@@ -140,7 +140,6 @@ class SessionUpdate(SessionMixin, UpdateView):
 class SessionEnd(SessionMixin, UpdateView):
     """Completes a Session"""
 
-    model = Session
     form_class = SessionEndForm
     template_name = "tasks/session_end.html"
 
@@ -164,11 +163,8 @@ class SessionEnd(SessionMixin, UpdateView):
     def get_back_url(self):
         return reverse("tasks:session_overview", args=(self.object.study.pk,))
 
-    def get_study(self):
-        return self.object.study
 
-
-class SessionOverview(SessionMixin, UpdateView):
+class SessionOverview(StudyMixin, UpdateView):
 
     model = Study
     form_class = SessionOverviewForm
@@ -177,6 +173,7 @@ class SessionOverview(SessionMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["can_edit_sessions"] = True
+        context["proposal"] = self.object.proposal
         return context
 
     def get_next_url(self):
@@ -184,9 +181,3 @@ class SessionOverview(SessionMixin, UpdateView):
 
     def get_back_url(self):
         return reverse("tasks:session_start", args=(self.object.pk,))
-
-    def get_study(self):
-        return self.object
-
-    def get_proposal(self,):
-        return self.get_object().proposal
