@@ -41,6 +41,7 @@ class Stepper(renderable):
         self.check_all(self.starting_checkers)
 
     def get_context_data(self):
+        context = super().get_context_data()
         bubble_list = [
             "stepper-bubble-largest",
             "stepper-bubble-large",
@@ -48,10 +49,11 @@ class Stepper(renderable):
             "stepper-bubble-small",
             "stepper-bubble-smallest",
         ]
-        return {
+        context.update({
             "stepper": self,
             "bubble_size": bubble_list,
-        }
+        })
+        return context
 
     def get_resume_url(self):
         """

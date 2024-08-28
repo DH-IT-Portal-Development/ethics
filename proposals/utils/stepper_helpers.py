@@ -2,7 +2,7 @@ from copy import copy
 
 from django.utils.translation import gettext as _
 from django.urls import reverse
-from django.template import loader, Template
+from django.template import loader, Template, Context
 
 class StepperItem:
     """
@@ -79,11 +79,13 @@ def flatten(lst):
 class renderable:
 
     def get_context_data(self):
-        return {}
+        context = Context()
+        return context
 
-    def render(self, context={}):
+    def render(self, extra_context={}):
+        context = self.get_context_data()
         template = loader.get_template(self.template_name)
-        context.update(self.get_context_data())
+        context.update(extra_context)
         return template.render(context.flatten())
 
 
