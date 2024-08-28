@@ -69,7 +69,7 @@ class SessionMixin(
         return reverse("tasks:session_end", args=(self.object.pk,))
 
     def get_proposal(self,):
-        return self.get_object().proposal
+        return self.get_object().study.proposal
 
 
 class SessionStart(SessionMixin, UpdateView):
