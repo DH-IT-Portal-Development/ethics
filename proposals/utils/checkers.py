@@ -6,6 +6,12 @@ from django.urls import reverse
 
 from proposals import forms as proposal_forms
 from studies import forms as study_forms
+from interventions import forms as intervention_forms
+from observations import forms as observation_forms
+from tasks import forms as tasks_forms
+
+from tasks.views import task_views, session_views
+from tasks.models import Task, Session
 
 from .stepper_helpers import RegularProposalLayout, PlaceholderItem, StepperItem
 
@@ -549,11 +555,15 @@ class UpdateOrCreateChecker(
             title=self.title,
             parent=self.parent,
         )
-        item.get_url = self.get_create_url()
+        item.get_url = self.get_create_url
+        return item
 
     def object_exists(self,):
         # By default, assume the object exists
         return True
+
+    def get_url(self):
+        return self.get_update_url()
 
     def get_create_url(self,):
         return ""
@@ -563,33 +573,168 @@ class UpdateOrCreateChecker(
 
 
 class InterventionChecker(
-        Checker,
+        UpdateOrCreateChecker,
 ):
+    form_class = intervention_forms.InterventionForm
+    title = _("Interventie")
+    
     def __init__(self, *args, **kwargs,):
         self.study = kwargs.pop("study")
         return super().__init__(*args, **kwargs)
 
     def check(self,):
+        self.stepper.items.append(
+            self.make_stepper_item(),
+        )
         return []
+
+    def object_exists(self,):
+        return hasattr(
+            self.study, "intervention",
+        )
+
+    def get_form_object(self,):
+        return self.study.intervention
+
+    def get_create_url(self,):
+        return reverse(
+            "interventions:create",
+            args=[self.study.pk],
+        )
+
+    def get_update_url(self,):
+        return reverse(
+            "interventions:update",
+            args=[self.study.intervention.pk],
+        )
 
 
 class ObservationChecker(
-        Checker,
+        UpdateOrCreateChecker,
 ):
+
+    form_class = observation_forms.ObservationForm
+    title = _("Observatie")
+    
     def __init__(self, *args, **kwargs,):
         self.study = kwargs.pop("study")
         return super().__init__(*args, **kwargs)
 
     def check(self,):
+        self.stepper.items.append(
+            self.make_stepper_item(),
+        )
         return []
+
+    def object_exists(self,):
+        return hasattr(
+            self.study, "observation",
+        )
+
+    def get_create_url(self,):
+        return reverse(
+            "observations:create",
+            args=[self.study.pk],
+        )
+
+    def get_update_url(self,):
+        return reverse(
+            "observations:update",
+            args=[self.study.observation.pk],
+        )
+
+    def get_form_object(self,):
+        return self.study.observation
 
 
 class SessionsChecker(
-        Checker,
+        ModelFormChecker,
 ):
+
+    form_class = tasks_forms.SessionOverviewForm
+    title = _("Sessies")
+
     def __init__(self, *args, **kwargs,):
         self.study = kwargs.pop("study")
         return super().__init__(*args, **kwargs)
 
     def check(self,):
+        self.stepper.items.append(
+            self.make_stepper_item(),
+        )
         return []
+
+    def make_stepper_item(self,):
+        """
+        An absolutely ridiculous piece of work just to have the right
+        stepper item be bold for all underlying task/session views.
+        Don't ask me how much time I spent on this.
+        """
+        item = super().make_stepper_item()
+
+        def modified_is_current(self, request):
+            if request.path_info == self.get_url():
+                return True
+            # Strip beginning of request path
+            subpath = request.path_info.replace(
+                "/tasks/", "", 1,
+            )
+
+            # Define function to match PK
+            def pk_matches_study(view, given_pk, study):
+                # These views have a Study object
+                if view in [
+                        session_views.SessionCreate,
+                        session_views.SessionOverview,
+                ]:
+                    return given_pk == study.pk
+                # These have a Task object
+                if view in [
+                        task_views.TaskUpdate,
+                        task_views.TaskDelete,
+                ]:
+                    return Task.objects.filter(
+                        pk=given_pk,
+                        session__in=study.session_set,
+                    ).exists()
+                # Everything else has a Session object
+                else:
+                    return Session.objects.filter(
+                        pk=given_pk,
+                        study__pk=study.pk,
+                    ).exists()
+
+            # Check tasks URL patterns
+            from tasks.urls import urlpatterns
+            for pat in urlpatterns:
+                # If any of them match, check the PK
+                if (match := pat.resolve(subpath)):
+                    view = match.func.view_class
+                    pk = match.kwargs["pk"]
+                    return pk_matches_study(view, pk, self.study)
+            # If all else fails, guess we're not current
+            return False
+        # Overwrite method at the instance level
+        # Strategy taken from types.MethodType and copied verbatim
+        # here for clarity
+        class _C: # NoQA
+            def _m(self,):
+                pass
+        MethodType = type(_C()._m)
+        # The type of _m is a method, bound to class instance _C, and
+        # MethodType is its constructor. MethodType takes a function
+        # and a class instance and returns a method bound to that instance,
+        # allowing for self-reference as expected.
+        item.is_current = MethodType(modified_is_current, item)
+        # Provide study to the modified is_current
+        item.study = self.study
+        return item
+
+    def get_form_object(self,):
+        return self.study
+
+    def get_url(self,):
+        return reverse(
+            "tasks:session_overview",
+            args=[self.study.pk],
+        )
