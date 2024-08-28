@@ -467,7 +467,12 @@ class StudyChecker(
                 parent=self.current_parent,
             ),
         ]
-        return checkers + self.determine_study_checkers(self.study)
+        end_checker = StudyEndChecker(
+            self.stepper,
+            study=self.study,
+            parent=self.current_parent,
+        )
+        return checkers + self.determine_study_checkers(self.study) + [end_checker]
 
     def determine_study_checkers(self, study):
         tests = {
@@ -543,6 +548,29 @@ class DesignChecker(
     def get_url(self,):
         return reverse(
             "studies:design",
+            args=[self.study.pk,],
+        )
+
+
+class StudyEndChecker(
+        ModelFormChecker,
+):
+    title = _("Afronding")
+    form_class = study_forms.StudyEndForm
+
+    def __init__(self, *args, **kwargs,):
+        self.study = kwargs.pop("study")
+        return super().__init__(*args, **kwargs)
+
+    def check(self,):
+        self.stepper.items.append(
+            self.make_stepper_item()
+        )
+        return []
+
+    def get_url(self,):
+        return reverse(
+            "studies:design_end",
             args=[self.study.pk,],
         )
 
