@@ -16,6 +16,7 @@ from .stepper_helpers import (
     renderable,
     Layout,
 )
+
 from .checkers import ProposalTypeChecker
 
 class Stepper(renderable):

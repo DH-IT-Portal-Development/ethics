@@ -133,4 +133,3 @@ RegularProposalLayout = [
     ("data_management", _("Datamanagement")),
     ("submit", _("Indienen")),
 ]
-

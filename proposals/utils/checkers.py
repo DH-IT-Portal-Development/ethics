@@ -48,6 +48,7 @@ class ModelFormChecker(
 
     form_class = None
     title = None
+    location = None
 
     def __init__(self, *args, **kwargs):
         if not self.form_class:
@@ -68,6 +69,7 @@ class ModelFormChecker(
             form_object=self.get_form_object(),
             form_class=self.form_class,
             url_func=self.get_url,
+            location=self.location,
         )
         return stepper_item
 
@@ -411,7 +413,11 @@ class TrajectoriesChecker(
         )
 
     def remaining_checkers(self,):
-        return []
+        return [
+            DocumentsChecker,
+            DataManagementChecker,
+            SubmitChecker,
+        ]
 
     def get_studies(self,):
         proposal = self.stepper.proposal
@@ -737,4 +743,103 @@ class SessionsChecker(
         return reverse(
             "tasks:session_overview",
             args=[self.study.pk],
+        )
+
+class DocumentsChecker(
+        Checker,
+):
+    def make_stepper_item(self,):
+        return ContainerItem(
+            self.stepper,
+            title=_("Documenten"),
+            location="attachments",
+        )
+    def check(self,):
+        item = self.make_stepper_item()
+        self.stepper.items.append(item)
+        return [
+            TranslationChecker(
+                self.stepper,
+                parent=item,
+            ), 
+            AttachmentsChecker(
+                self.stepper,
+                parent=item,
+            ),
+        ]
+
+class TranslationChecker(
+        ModelFormChecker,
+):
+    form_class = proposal_forms.TranslatedConsentForms
+    title = _("Vertalingen")
+    location = "data_management"
+
+    def check(self,):
+        self.stepper.items.append(self.make_stepper_item())
+        return []
+
+    def get_url(self,):
+        return reverse(
+            "proposals:translated",
+            args=[self.stepper.proposal.pk,],
+        )
+
+class AttachmentsChecker(
+        Checker,
+):
+
+    def check(self,):
+        self.stepper.items.append(self.make_stepper_item())
+        return []
+
+    def make_stepper_item(self):
+        url = reverse(
+            "proposals:consent",
+            args=[self.stepper.proposal.pk],
+        )
+        item = PlaceholderItem(
+            self.stepper,
+            title=_("Documenten beheren"),
+            parent=self.parent,
+        )
+        item.get_url = lambda: url
+        return item
+
+class DataManagementChecker(
+    ModelFormChecker,
+):
+    title = _("Data management")
+    form_class = proposal_forms.ProposalDataManagementForm
+    location = "data_management"
+
+    def check(self,):
+        self.stepper.items.append(
+            self.make_stepper_item(),
+        )
+        return []
+
+    def get_url(self,):
+        return reverse(
+            "proposals:data_management",
+            args=[self.stepper.proposal.pk,],
+        )
+
+class SubmitChecker(
+    ModelFormChecker,
+):
+    title = _("Indienen")
+    form_class = proposal_forms.ProposalSubmitForm
+    location = "submit"
+
+    def check(self,):
+        self.stepper.items.append(
+            self.make_stepper_item(),
+        )
+        return []
+
+    def get_url(self,):
+        return reverse(
+            "proposals:submit",
+            args=[self.stepper.proposal.pk,],
         )

@@ -480,7 +480,7 @@ class ProposalPreApprovedFormView(
         return reverse("proposals:research_goal", args=(self.object.pk,))
 
 
-class TranslatedConsentFormsView(UpdateView):
+class TranslatedConsentFormsView(ProposalContextMixin, UpdateView):
     model = Proposal
     form_class = TranslatedConsentForms
     template_name = "proposals/translated_consent_forms.html"
@@ -494,7 +494,7 @@ class TranslatedConsentFormsView(UpdateView):
         return reverse("studies:design_end", args=(self.object.last_study().pk,))
 
 
-class ProposalDataManagement(UpdateView):
+class ProposalDataManagement(ProposalContextMixin, UpdateView):
     model = Proposal
     form_class = ProposalDataManagementForm
     template_name = "proposals/proposal_data_management.html"
