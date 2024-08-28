@@ -13,6 +13,7 @@ from cdh.core.forms import (
     SearchableSelectWidget,
     TemplatedModelForm,
     BootstrapCheckboxInput,
+    TemplatedForm,
 )
 
 from django.core.exceptions import ValidationError
@@ -165,6 +166,6 @@ class DecisionForm(TemplatedModelForm):
         self.fields["go"].required = True
 
 
-class StartEndDateForm(forms.Form):
+class StartEndDateForm(TemplatedForm):
     start_date = DateField(label=_("Start datum periode:"))
     end_date = DateField(label=_("Eind datum periode:"))
