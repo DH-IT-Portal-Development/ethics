@@ -10,14 +10,18 @@ class StepperItem:
     """
 
     title = "Stepper item"
+    location = None
 
-    def __init__(self, stepper, parent=None, disabled=False, title=None):
+    def __init__(self, stepper, parent=None, disabled=False, title=None, location=None):
         self.stepper = stepper
         self.proposal = stepper.proposal
         self.children = []
         self.parent = parent
         self.available = False
         self.disabled = disabled
+        # Don't override default location if not provided explicitly
+        if location:
+            self.location = location
         if title:
             self.title = title
 
@@ -56,7 +60,6 @@ class StepperItem:
 class PlaceholderItem(StepperItem):
 
     def __init__(self, *args, **kwargs):
-        self.location = kwargs.pop("location", None)
         return super().__init__(*args, **kwargs)
 
     def get_url(self,):
