@@ -270,6 +270,9 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
         context["no_back"] = True
         return context
 
+    def get_next_url(self):
+        return reverse("proposals:researcher", args=(self.object.pk,))
+
 
 class ProposalUpdate(
     ProposalMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView

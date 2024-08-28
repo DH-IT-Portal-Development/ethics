@@ -118,7 +118,7 @@ class ModelFormItem(
             raise ImproperlyConfigured(
                 "form_class must be defined"
             )
-        if not hasattr(self, instantiated_form):
+        if not hasattr(self, "instantiated_form"):
             self.instantiated_form = self.instantiate_form()
         return self.instantiated_form
 
@@ -208,6 +208,16 @@ class ProposalCreateChecker(
             PlaceholderItem(
                 self.stepper,
                 title=_("Andere onderzoekers"),
+                parent=self.parent,
+            ),
+            PlaceholderItem(
+                self.stepper,
+                title=_("Financiering"),
+                parent=self.parent,
+            ),
+            PlaceholderItem(
+                self.stepper,
+                title=_("Onderzoeksdoel"),
                 parent=self.parent,
             ),
         ]
