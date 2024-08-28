@@ -4,6 +4,7 @@ from django.utils.translation import gettext as _
 from django.urls import reverse
 from django.template import loader, Template, Context
 
+
 class StepperItem:
     """
     Represents an item in the stepper
@@ -31,7 +32,9 @@ class StepperItem:
     def get_errors(self):
         return []
 
-    def css_classes(self,):
+    def css_classes(
+        self,
+    ):
         classes = []
         if self.is_current(self.stepper.request):
             classes.append(
@@ -45,7 +48,10 @@ class StepperItem:
             classes,
         )
 
-    def _concat_css_classes(self, classes,):
+    def _concat_css_classes(
+        self,
+        classes,
+    ):
         return " ".join(classes)
 
     def is_current(self, request):
@@ -57,12 +63,15 @@ class StepperItem:
             return True
         return False
 
+
 class PlaceholderItem(StepperItem):
 
     def __init__(self, *args, **kwargs):
         return super().__init__(*args, **kwargs)
 
-    def get_url(self,):
+    def get_url(
+        self,
+    ):
         return ""
 
 

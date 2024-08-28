@@ -23,6 +23,7 @@ class StepperContextMixin:
     def get_context_data(self, *args, **kwargs):
         # Importing here to prevent circular import
         from .utils.stepper import Stepper
+
         context = super().get_context_data(*args, **kwargs)
         # Try to determine proposal
         proposal = Proposal()
@@ -38,12 +39,14 @@ class StepperContextMixin:
 
 
 class ProposalContextMixin(
-        StepperContextMixin,
+    StepperContextMixin,
 ):
     def current_user_is_supervisor(self):
         return self.get_proposal().supervisor == self.request.user
 
-    def get_proposal(self,):
+    def get_proposal(
+        self,
+    ):
         try:
             if self.model is Proposal:
                 return self.get_object()
@@ -60,11 +63,13 @@ class ProposalContextMixin(
 
 
 class ProposalMixin(
-        ProposalContextMixin,
+    ProposalContextMixin,
 ):
     model = Proposal
 
-    def get_proposal(self,):
+    def get_proposal(
+        self,
+    ):
         return self.get_object()
 
 
@@ -166,4 +171,3 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
         response["Content-Disposition"] = self.get_content_disposition()
 
         return self.get_pdf_response(context, **response_kwargs, dest=response)
-

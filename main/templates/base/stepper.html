@@ -6,7 +6,7 @@
         {% for item in stepper.collect_items %}
             <li>
                 <a class="stepper-item {{ item.css_classes }}" href="{{ item.get_url }}">
-                    <span class="stepper-bubble {{bubble_size.0}}">{% counter counter value %}</span>
+                    <span class="stepper-bubble {{ bubble_size.0 }}">{% counter counter value %}</span>
                     <span>{{ item.title }}</span>
                 </a>
                 {% counter depth create 1 %}

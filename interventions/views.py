@@ -61,10 +61,10 @@ class InterventionMixin(StepperContextMixin):
 
 
 class InterventionCreate(
-        StudyFromURLMixin,
-        InterventionMixin,
-        AllowErrorsOnBackbuttonMixin,
-        CreateView,
+    StudyFromURLMixin,
+    InterventionMixin,
+    AllowErrorsOnBackbuttonMixin,
+    CreateView,
 ):
     """Creates a Intervention from a InterventionForm"""
 

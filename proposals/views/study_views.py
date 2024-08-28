@@ -13,9 +13,9 @@ from ..models import Proposal
 
 
 class StudyStart(
-        ProposalContextMixin,
-        AllowErrorsOnBackbuttonMixin,
-        UpdateView,
+    ProposalContextMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
 ):
     model = Proposal
     form_class = StudyStartForm

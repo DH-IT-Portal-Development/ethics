@@ -19,6 +19,7 @@ from .stepper_helpers import (
 
 from .checkers import ProposalTypeChecker
 
+
 class Stepper(renderable):
 
     template_name = "base/stepper.html"
@@ -49,10 +50,12 @@ class Stepper(renderable):
             "stepper-bubble-small",
             "stepper-bubble-smallest",
         ]
-        context.update({
-            "stepper": self,
-            "bubble_size": bubble_list,
-        })
+        context.update(
+            {
+                "stepper": self,
+                "bubble_size": bubble_list,
+            }
+        )
         return context
 
     def get_resume_url(self):
@@ -89,7 +92,9 @@ class Stepper(renderable):
         # Recurse until next_checkers is empty
         return self.check_all(next_checkers)
 
-    def has_multiple_studies(self,):
+    def has_multiple_studies(
+        self,
+    ):
         """
         Returns True if the proposal has more than one trajectory (study).
         """

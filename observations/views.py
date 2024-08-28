@@ -69,10 +69,10 @@ class AttachmentsUpdate(UpdateView):
 
 
 class ObservationCreate(
-        StudyFromURLMixin,
-        ObservationMixin,
-        AllowErrorsOnBackbuttonMixin,
-        CreateView,
+    StudyFromURLMixin,
+    ObservationMixin,
+    AllowErrorsOnBackbuttonMixin,
+    CreateView,
 ):
     """Creates an Observation from a ObservationForm"""
 

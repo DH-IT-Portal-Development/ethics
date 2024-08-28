@@ -245,7 +245,9 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
     proposal_type_hint = "regular"
     form_class = ProposalForm
 
-    def get_proposal(self,):
+    def get_proposal(
+        self,
+    ):
         return self.get_form().instance
 
     def form_valid(self, form):
@@ -404,10 +406,10 @@ class ProposalResearcherFormView(
 
 
 class ProposalOtherResearchersFormView(
-        UserFormKwargsMixin,
-        AllowErrorsOnBackbuttonMixin,
-        ProposalMixin,
-        UpdateView,
+    UserFormKwargsMixin,
+    AllowErrorsOnBackbuttonMixin,
+    ProposalMixin,
+    UpdateView,
 ):
     model = Proposal
     form_class = OtherResearchersForm

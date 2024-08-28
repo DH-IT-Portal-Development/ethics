@@ -30,9 +30,9 @@ from ..mixins import StudyMixin
 # CRUD actions on Study
 #######################
 class StudyUpdate(
-        StudyMixin,
-        AllowErrorsOnBackbuttonMixin,
-        UpdateView,
+    StudyMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
 ):
     """Updates a Study from a StudyForm"""
 
@@ -70,7 +70,9 @@ class StudyUpdate(
 ###############
 # Other actions
 ###############
-class StudyDesign(StudyMixin, AllowErrorsOnBackbuttonMixin, UpdateView, generic.edit.FormMixin):
+class StudyDesign(
+    StudyMixin, AllowErrorsOnBackbuttonMixin, UpdateView, generic.edit.FormMixin
+):
     model = Study
     form_class = StudyDesignForm
     success_message = _("Traject opgeslagen")
@@ -140,9 +142,9 @@ class StudyDesign(StudyMixin, AllowErrorsOnBackbuttonMixin, UpdateView, generic.
 
 
 class StudyEnd(
-        StudyMixin,
-        AllowErrorsOnBackbuttonMixin,
-        UpdateView,
+    StudyMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
 ):
     """
     Completes a Study

@@ -47,8 +47,8 @@ class SessionDelete(DeleteView):
 
 
 class SessionMixin(
-        StepperContextMixin,
-        AllowErrorsOnBackbuttonMixin,
+    StepperContextMixin,
+    AllowErrorsOnBackbuttonMixin,
 ):
 
     model = Session
@@ -68,7 +68,9 @@ class SessionMixin(
     def get_next_url(self):
         return reverse("tasks:session_end", args=(self.object.pk,))
 
-    def get_proposal(self,):
+    def get_proposal(
+        self,
+    ):
         return self.get_object().study.proposal
 
 
@@ -98,14 +100,16 @@ class SessionStart(SessionMixin, UpdateView):
     def get_study(self):
         return self.object
 
-    def get_proposal(self,):
+    def get_proposal(
+        self,
+    ):
         return self.get_object().proposal
 
 
 class SessionCreate(
-        StudyFromURLMixin,
-        SessionMixin,
-        CreateView,
+    StudyFromURLMixin,
+    SessionMixin,
+    CreateView,
 ):
 
     def get_form_kwargs(self):

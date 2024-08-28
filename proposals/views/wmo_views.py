@@ -54,9 +54,9 @@ class WmoMixin(AllowErrorsOnBackbuttonMixin, object):
 
 
 class WmoCreate(
-        StepperContextMixin,
-        WmoMixin,
-        CreateView,
+    StepperContextMixin,
+    WmoMixin,
+    CreateView,
 ):
     success_message = _("WMO-gegevens opgeslagen")
 
@@ -71,9 +71,9 @@ class WmoCreate(
 
 
 class WmoUpdate(
-        StepperContextMixin,
-        WmoMixin,
-        UpdateView,
+    StepperContextMixin,
+    WmoMixin,
+    UpdateView,
 ):
     success_message = _("WMO-gegevens bewerkt")
 
@@ -86,8 +86,8 @@ class WmoUpdate(
 # Other actions on WMO
 ######################
 class WmoApplication(
-        UpdateView,
-        StepperContextMixin,
+    UpdateView,
+    StepperContextMixin,
 ):
     model = Wmo
     form_class = WmoApplicationForm
