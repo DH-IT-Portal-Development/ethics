@@ -100,10 +100,10 @@ class DecideAction(ReviewAction):
 
     def is_available(self):
         review = self.review
-        
+
         if not self.get_available_decision():
             return False
-        
+
         return True
 
     def action_url(self):
@@ -182,7 +182,7 @@ class ChangeAssignment(ReviewAction):
         user_groups = user.groups.values_list("name", flat=True)
         if not settings.GROUP_SECRETARY in user_groups:
             return False
-        
+
         if self.review.stage in [
             Review.Stages.CLOSING,
             Review.Stages.CLOSED,

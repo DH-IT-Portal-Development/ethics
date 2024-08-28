@@ -146,8 +146,7 @@ class ReviewDiscontinueForm(forms.ModelForm):
             "confirm_discontinue",
         ]
 
-        widgets = {"confirm_discontinue": BootstrapCheckboxInput()}       
-
+        widgets = {"confirm_discontinue": BootstrapCheckboxInput()}
 
 
 class DecisionForm(TemplatedModelForm):

@@ -7,26 +7,24 @@
     {% trans "Formulieren aanpassen" %}
 {% endblock %}
 
-{% block sidebar %}
-<!--Empty to override stepper-->
-{% endblock %}
+{% block sidebar %}<!--Empty to override stepper-->{% endblock %}
 
 {% block pre-form-text %}
-            <h2>{% trans "Startdatum aanpassen" %}</h2>
-            <p>
-                {% blocktrans trimmed with title=proposal.title ref_number=proposal.reference_number %}
-                    Op deze pagina kan de startdatum worden aangepast van de aanvraag {{ title }}
-                    (referentienummer <em>{{ ref_number }}</em>). <b>Let op!</b> Als de review al is afgerond,
-                    wordt de nieuwe startdatum niet automatisch weergegeven in de PDF. Mocht je de PDF
-                    opnieuw willen genereren, neem hierover dan contact op met
-                {% endblocktrans %}
-                <a href="mailto:portalsupport.gw@uu.nl">portalsupport.gw@uu.nl</a>.
-            </p>
+    <h2>{% trans "Startdatum aanpassen" %}</h2>
+    <p>
+        {% blocktrans trimmed with title=proposal.title ref_number=proposal.reference_number %}
+            Op deze pagina kan de startdatum worden aangepast van de aanvraag {{ title }}
+            (referentienummer <em>{{ ref_number }}</em>). <b>Let op!</b> Als de review al is afgerond,
+            wordt de nieuwe startdatum niet automatisch weergegeven in de PDF. Mocht je de PDF
+            opnieuw willen genereren, neem hierover dan contact op met
+        {% endblocktrans %}
+        <a href="mailto:portalsupport.gw@uu.nl">portalsupport.gw@uu.nl</a>.
+    </p>
 {% endblock %}
 
 {% block form-buttons %}
     <a class="btn btn-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
     <input class="btn btn-primary ms-auto"
-    type="submit"
-    value="{% trans 'Startdatum aanpassen' %}" />
+           type="submit"
+           value="{% trans 'Startdatum aanpassen' %}" />
 {% endblock %}

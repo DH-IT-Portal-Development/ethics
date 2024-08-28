@@ -20,20 +20,21 @@ div{% extends "base/fetc_form_base.html" %}
 {% endblock %}
 
 {% block pre-form %}
-        <h2>{% trans "Review afsluiten" %}</h2>
-        <p>
-            {% blocktrans trimmed with title=review.proposal.title %}
-                Sluit hier de beoordeling van de aanvraag <em>{{ title }}</em> af. Hieronder volgen de individuele
-                beslissingen.
-            {% endblocktrans %}
-        </p>
-        <h3>{% trans "Individuele beslissingen" %}</h3>
-        {% include "reviews/review_table.html" %}
-        <h3>{% trans "Uiteindelijk besluit" %}</h3>
+    <h2>{% trans "Review afsluiten" %}</h2>
+    <p>
+        {% blocktrans trimmed with title=review.proposal.title %}
+            Sluit hier de beoordeling van de aanvraag <em>{{ title }}</em> af. Hieronder volgen de individuele
+            beslissingen.
+        {% endblocktrans %}
+    </p>
+    <h3>{% trans "Individuele beslissingen" %}</h3>
+    {% include "reviews/review_table.html" %}
+    <h3>{% trans "Uiteindelijk besluit" %}</h3>
 {% endblock %}
 
 {% block form-buttons %}
     <a class="btn btn-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
-    <input class="btn btn-primary ms-auto" type="submit" value="{% trans 'Review afsluiten' %}" />
+    <input class="btn btn-primary ms-auto"
+           type="submit"
+           value="{% trans 'Review afsluiten' %}" />
 {% endblock %}
-    
