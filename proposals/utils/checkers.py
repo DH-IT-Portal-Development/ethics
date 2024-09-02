@@ -395,32 +395,16 @@ class WMOChecker(
         return []  # TODO next item
 
 
-class TrajectoriesItem(
-    StepperItem,
-):
-    title = _("Trajecten")
-    location = "studies"
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
-    def get_url(
-        self,
-    ):
-        return reverse(
-            "proposals:study_start",
-            args=[self.proposal.pk],
-        )
-
-
 class TrajectoriesChecker(
-    Checker,
+    ModelFormChecker,
 ):
+    form_class = proposal_forms.StudyStartForm
+    title = _("Trajecten")
 
     def check(
         self,
     ):
-        self.item = TrajectoriesItem(self.stepper)
+        self.item = self.make_stepper_item()
         self.stepper.items.append(self.item)
         sub_items = [self.make_study_checker(s) for s in self.get_studies()]
         return sub_items + self.remaining_checkers()
@@ -447,6 +431,14 @@ class TrajectoriesChecker(
         proposal = self.stepper.proposal
         return list(
             proposal.study_set.all(),
+        )
+
+    def get_url(
+        self,
+    ):
+        return reverse(
+            "proposals:study_start",
+            args=[self.proposal.pk],
         )
 
 
