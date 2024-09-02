@@ -44,14 +44,6 @@ class StepperItem:
             classes.append(
                 "disabled",
             )
-        return self._concat_css_classes(
-            classes,
-        )
-
-    def _concat_css_classes(
-        self,
-        classes,
-    ):
         return " ".join(classes)
 
     def is_current(self, request):
