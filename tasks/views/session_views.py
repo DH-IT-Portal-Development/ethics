@@ -74,7 +74,7 @@ class SessionMixin(
         return self.get_object().study.proposal
 
 
-class SessionStart(SessionMixin, UpdateView):
+class SessionStart(StudyMixin, UpdateView):
 
     model = Study
     # This form is just a placeholder to make navigation work. It does not do
@@ -96,14 +96,6 @@ class SessionStart(SessionMixin, UpdateView):
             next_url = "interventions:update"
             pk = study.intervention.pk
         return reverse(next_url, args=(pk,))
-
-    def get_study(self):
-        return self.object
-
-    def get_proposal(
-        self,
-    ):
-        return self.get_object().proposal
 
 
 class SessionCreate(

@@ -44,7 +44,7 @@ class StudyUpdate(
         """Setting the progress on the context"""
         context = super(StudyUpdate, self).get_context_data(**kwargs)
         context["progress"] = get_study_progress(self.object)
-        context["proposal"] = self.object.proposal
+        context["proposal"] = self.get_proposal()
         return context
 
     def get_form_kwargs(self):
