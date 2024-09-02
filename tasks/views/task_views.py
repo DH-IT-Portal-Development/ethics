@@ -8,6 +8,7 @@ from django.utils.translation import gettext_lazy as _
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView, CreateView
 from ..forms import TaskForm
 from ..models import Task, Session
+from proposals.mixins import StepperContextMixin
 
 
 ######################
@@ -15,7 +16,10 @@ from ..models import Task, Session
 ######################
 
 
-class TaskMixin(AllowErrorsOnBackbuttonMixin):
+class TaskMixin(
+        StepperContextMixin,
+        AllowErrorsOnBackbuttonMixin,
+):
     model = Task
     form_class = TaskForm
     template_name = "tasks/task_update.html"
@@ -25,7 +29,7 @@ class TaskMixin(AllowErrorsOnBackbuttonMixin):
         context = super().get_context_data(**kwargs)
         session = self.get_session()
         context["session"] = session
-        context["proposal"] = session.study.proposal
+        context["proposal"] = self.get_proposal()
         try:
             context["order"] = self.object.order
         except AttributeError:
@@ -37,7 +41,10 @@ class TaskMixin(AllowErrorsOnBackbuttonMixin):
         return context
 
     def get_session(self):
-        return self.object.session
+        return self.get_object().session
+
+    def get_proposal(self):
+        return self.get_object().session.study.proposal
 
     def get_next_url(self):
         return reverse("tasks:session_end", args=(self.object.session.pk,))

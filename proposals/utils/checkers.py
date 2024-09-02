@@ -824,7 +824,7 @@ class SessionsChecker(
                 ]:
                     return Task.objects.filter(
                         pk=given_pk,
-                        session__in=study.session_set,
+                        session__in=study.session_set.all(),
                     ).exists()
                 # Everything else has a Session object
                 else:
