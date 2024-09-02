@@ -81,7 +81,6 @@ class ModelFormChecker(
 
 class ProposalTypeChecker(
     Checker,
-    BaseStepperComponent,
 ):
 
     def check(self):
