@@ -11,7 +11,7 @@ from braces.forms import UserKwargModelFormMixin
 
 from interventions.forms import InterventionForm
 from observations.forms import ObservationForm
-from studies.forms import StudyForm, StudyDesignForm
+from studies.forms import StudyForm, StudyDesignForm, StudyEndForm
 from tasks.forms import SessionUpdateForm, SessionEndForm, TaskForm, SessionOverviewForm
 from ..forms import (
     ProposalForm,
@@ -131,6 +131,14 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
             StudyDesignForm,
             reverse("studies:design", args=[study.pk]),
             _("De onderzoekstype(n) (traject {})").format(study.order),
+            study,
+        )
+
+        end_key = "{}_end".format(key_base)
+        forms[end_key] = (
+            StudyEndForm,
+            reverse("studies:design_end", args=[study.pk]),
+            _("Trajectoverzicht (traject {})").format(study.order),
             study,
         )
 
