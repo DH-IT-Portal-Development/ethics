@@ -287,7 +287,6 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         - Remove empty label from deception/negativity/stressful/risk field and reset the choices
         - mark_safe the labels of negativity/stressful/risk
         """
-        self.study = kwargs.pop("study", None)
 
         super(StudyEndForm, self).__init__(*args, **kwargs)
 
@@ -304,7 +303,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         self.fields["stressful"].label = mark_safe(self.fields["stressful"].label)
         self.fields["risk"].label = mark_safe(self.fields["risk"].label)
 
-        if not self.study.has_sessions:
+        if not self.instance.has_sessions:
             del self.fields["deception"]
             del self.fields["deception_details"]
 
