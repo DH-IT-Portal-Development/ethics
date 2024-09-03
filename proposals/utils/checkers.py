@@ -13,7 +13,11 @@ from tasks import forms as tasks_forms
 from tasks.views import task_views, session_views
 from tasks.models import Task, Session
 
-from .stepper_helpers import RegularProposalLayout, PlaceholderItem, StepperItem
+from .stepper_helpers import (
+    PlaceholderItem,
+    StepperItem,
+    ContainerItem,
+)
 
 
 class BaseStepperComponent:
@@ -89,7 +93,8 @@ class ProposalTypeChecker(
         return self.regular_proposal()
 
     def regular_proposal(self):
-        self.stepper.base_layout = RegularProposalLayout
+        from .stepper import RegularProposalLayout
+        self.stepper.layout = RegularProposalLayout
         return [ProposalCreateChecker]
 
 
@@ -140,29 +145,6 @@ class ModelFormItem(
 
     def get_errors(self):
         return self.form_errors
-
-
-class ContainerItem(
-    StepperItem,
-):
-    """
-    A basic stepper item that is nothing more than a parent for its
-    children. Its url will try to redirect to its first child.
-    """
-
-    def get_url(self):
-        try:
-            url = self.children[0].get_url()
-            return url
-        except:
-            return ""
-
-    def is_current(self, request):
-        """
-        Because container items by default refer to their first child,
-        we say they are never current. The child is.
-        """
-        return False
 
 
 class BasicDetailsItem(

@@ -79,59 +79,25 @@ class PlaceholderItem(StepperItem):
         return ""
 
 
-def flatten(lst):
-    if lst == []:
-        return lst
-    first_item = lst[0]
-    rest = lst[1:]
-    if type(first_item) is list:
-        return flatten(first_item) + flatten(rest)
-    return [first_item] + flatten(rest)
+class ContainerItem(
+    StepperItem,
+):
+    """
+    A basic stepper item that is nothing more than a parent for its
+    children. Its url will try to redirect to its first child.
+    """
 
+    def get_url(self):
+        try:
+            url = self.children[0].get_url()
+            return url
+        except:
+            return ""
 
-class Layout:
+    def is_current(self, request):
+        """
+        Because container items by default refer to their first child,
+        we say they are never current. The child is.
+        """
+        return False
 
-    def __init__(self, stepper, base_layout):
-        self.stepper = stepper
-        self.layout = copy(base_layout)
-
-    def insert_item(self, new_item):
-        if new_item.parent:
-            return self.insert_child(new_item)
-        location = new_item.location
-        for index, item in enumerate(copy(self.layout)):
-            if type(item) is not tuple:
-                continue
-            if location == item[0]:
-                self.layout.insert(index, new_item)
-                self.layout.remove(item)
-                return
-        self.layout.append(new_item)
-
-    def insert_placeholders(self):
-        for index, item in enumerate(copy(self.layout)):
-            if isinstance(item, StepperItem):
-                continue
-            placeholder = PlaceholderItem(
-                self.stepper,
-                title=item[1],
-            )
-            self.layout.insert(index, placeholder)
-            self.layout.remove(item)
-
-    def insert_child(self, item):
-        item.parent.children.append(item)
-
-    def make_stepper(self):
-        self.insert_placeholders()
-        return self.layout
-
-
-RegularProposalLayout = [
-    ("create", _("Basisgegevens")),
-    ("wmo", _("WMO")),
-    ("studies", _("Trajecten")),
-    ("attachments", _("Documenten")),
-    ("data_management", _("Datamanagement")),
-    ("submit", _("Indienen")),
-]

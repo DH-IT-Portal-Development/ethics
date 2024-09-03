@@ -1,21 +1,10 @@
-from copy import copy
-
-from django.urls import reverse
-from django.template import loader, Template
-from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext as _
 
-from proposals.models import Proposal
-from proposals.forms import ProposalForm
-from proposals.views.proposal_views import ProposalUpdate
 from main.utils import renderable
 
 from .stepper_helpers import (
     PlaceholderItem,
     StepperItem,
-    flatten,
-    renderable,
-    Layout,
 )
 
 from .checkers import ProposalTypeChecker
@@ -154,3 +143,13 @@ class Stepper(renderable):
         """
         num_studies = self.proposal.study_set.count()
         return num_studies > 1
+
+
+RegularProposalLayout = [
+    ("create", _("Basisgegevens")),
+    ("wmo", _("WMO")),
+    ("studies", _("Trajecten")),
+    ("attachments", _("Documenten")),
+    ("data_management", _("Datamanagement")),
+    ("submit", _("Indienen")),
+]
