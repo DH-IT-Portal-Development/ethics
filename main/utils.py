@@ -164,6 +164,7 @@ def can_view_archive(user):
     # check for Humanities affiliation
     return is_member_of_humanities(user)
 
+
 class renderable:
 
     def get_context_data(self):
@@ -175,4 +176,3 @@ class renderable:
         template = loader.get_template(self.template_name)
         context.update(extra_context)
         return template.render(context.flatten())
-

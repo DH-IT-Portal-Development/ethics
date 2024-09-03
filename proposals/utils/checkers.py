@@ -35,6 +35,7 @@ class ProposalTypeChecker(
 
     def regular_proposal(self):
         from .stepper import RegularProposalLayout
+
         self.stepper.layout = RegularProposalLayout
         return [ProposalCreateChecker]
 

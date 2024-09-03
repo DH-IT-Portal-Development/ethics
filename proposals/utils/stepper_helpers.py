@@ -36,7 +36,7 @@ class Checker(
 
 
 class StepperItem(
-        renderable,
+    renderable,
 ):
     """
     Represents an item in the stepper
@@ -184,7 +184,7 @@ class ModelFormItem(
         get_url = kwargs.pop(
             "url_func",
             None,
-        ) 
+        )
         self.errors = []
         if get_url:
             self.get_url = get_url
@@ -288,4 +288,3 @@ class UpdateOrCreateChecker(
         self,
     ):
         return ""
-

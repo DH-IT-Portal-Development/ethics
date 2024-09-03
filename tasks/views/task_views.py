@@ -17,8 +17,8 @@ from proposals.mixins import StepperContextMixin
 
 
 class TaskMixin(
-        StepperContextMixin,
-        AllowErrorsOnBackbuttonMixin,
+    StepperContextMixin,
+    AllowErrorsOnBackbuttonMixin,
 ):
     model = Task
     form_class = TaskForm

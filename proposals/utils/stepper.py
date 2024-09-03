@@ -62,7 +62,9 @@ class Stepper(renderable):
             if not item.is_complete:
                 return item.get_url()
 
-    def build_stepper(self,):
+    def build_stepper(
+        self,
+    ):
         """
         The meat and potatoes of the stepper. Returns a list of top-level
         StepperItems to be rendered in the template.
