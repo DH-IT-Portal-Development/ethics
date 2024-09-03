@@ -217,7 +217,12 @@ class StudyDesignForm(TemplatedModelForm):
 
     class Meta:
         model = Study
-        fields = []
+        fields = ["has_intervention", "has_observation", "has_sessions",]
+        widgets = {
+            "has_intervention": forms.HiddenInput(),
+            "has_observation": forms.HiddenInput(),
+            "has_sessions": forms.HiddenInput(),
+        }
 
     def clean(self):
         """
@@ -225,11 +230,17 @@ class StudyDesignForm(TemplatedModelForm):
         - at least one of the fields has to be checked
         """
         cleaned_data = super(StudyDesignForm, self).clean()
+
         # This solution is a bit funky, but by using add_error(), it appends our
         # error msg to a built-in required error message.
-        if not cleaned_data:
-            msg = _("Je dient minstens één van de opties te selecteren.")
-            self.errors["study_types"] = [msg]
+        if not "study_types" in cleaned_data:
+            error = forms.ValidationError(_("Je dient minstens één van de opties te selecteren."), code="required")
+            self.errors["study_types"] = error
+        
+        #this checks the hidden fields, and could be used for validating this
+        #form elsewhere
+        if not any(cleaned_data.values()):
+            self.add_error(None, _("Er is nog geen onderzoekstype geselecteerd."))
 
 
 class StudyConsentForm(ConditionalModelForm):
@@ -347,7 +358,6 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             "risk_details",
             f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
         )
-
 
 class StudyUpdateAttachmentsForm(forms.ModelForm):
     class Meta:
