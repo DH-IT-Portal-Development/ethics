@@ -5,11 +5,14 @@ from django.urls import reverse
 
 from main.utils import renderable
 
-class StepperItem:
+class StepperItem(
+        renderable,
+):
     """
     Represents an item in the stepper
     """
 
+    template_name = "base/stepper_item.html"
     title = "Stepper item"
     location = None
 
@@ -25,6 +28,15 @@ class StepperItem:
             self.location = location
         if title:
             self.title = title
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context.update(
+            {
+                "item": self,
+            }
+        )
+        return context
 
     def get_url(self):
         return "#"
