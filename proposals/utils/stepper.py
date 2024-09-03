@@ -28,22 +28,27 @@ class Stepper(renderable):
     def __init__(
         self,
         proposal,
-        current=None,
         proposal_type_hint=None,
         request=None,
     ):
         self.proposal = proposal
-        self.current = current
         self.starting_checkers = [
             ProposalTypeChecker,
         ]
+        # The stepper keeps track of the request to determine
+        # which item is current
         self.request = request
+        # The type can be provided by the view for the case in which
+        # the proposal has not yet been created but we need to determine
+        # its type, i.e. the ProposalCreateViews
         self.proposal_type_hint = proposal_type_hint
         self.items = []
         self.check_all(self.starting_checkers)
 
     def get_context_data(self):
         context = super().get_context_data()
+        # Provide the stepper bubble classes in order
+        # of descending size
         bubble_list = [
             "stepper-bubble-largest",
             "stepper-bubble-large",
@@ -64,19 +69,67 @@ class Stepper(renderable):
         Returns the url of the first page that requires attention,
         that being either a page with an error or an incomplete page.
         """
-        for item in flatten(self.items):
+        for item in self.items:
             if not item.is_complete:
                 return item.get_url()
 
-    def collect_items(self):
-        if not hasattr(self, "base_layout"):
+    def build_stepper(self,):
+        """
+        The meat and potatoes of the stepper. Returns a list of top-level
+        StepperItems to be rendered in the template.
+        """
+        layout = getattr(self, "layout", False)
+        if not layout:
+            # Layout should be set before building the stepper
+            # by something like ProposalTypeChecker
             raise RuntimeError(
                 "Base layout was never defined for this stepper",
             )
-        self.layout = Layout(self, self.base_layout)
+        # First, insert all items into the layout
         for item in self.items:
-            self.layout.insert_item(item)
-        return self.layout.make_stepper()
+            self._insert_item(layout, item)
+        # Second, replace all remaining empty slots in the layout
+        # by PlaceholderItems
+        self._insert_placeholders(layout)
+        return layout
+
+    def _insert_item(self, layout, new_item):
+        """
+        Inserts a stepper item into a layout, in-place.
+        """
+        # We're only concerned with top-level items, children can sort
+        # themselves out
+        if new_item.parent:
+            return new_item.parent.children.append(
+                new_item,
+            )
+        # Step through the layout looking for empty slots, which are
+        # represented by tuples of locations and titles
+        for index, slot in enumerate(layout):
+            # If the slot is already filled with an actual item, just
+            # skip it
+            if type(slot) is not tuple:
+                continue
+            # If the slot location matches that of our new_item, replace
+            # this slot with the item
+            if new_item.location == slot[0]:
+                layout.insert(index, new_item)
+                layout.remove(slot)
+
+    def _insert_placeholders(self, layout):
+        # Step through the remaining slots in the layout
+        for index, slot in enumerate(layout):
+            # Skip slots that are already items
+            if isinstance(slot, StepperItem):
+                continue
+            # Remaining empty slots are replaced by placeholders
+            placeholder = PlaceholderItem(
+                self.stepper,
+                title=slot[1],
+            )
+            layout.insert(index, placeholder)
+            layout.remove(slot)
+        return layout
 
     def check_all(self, next_checkers):
         # No more checkers means we are done
