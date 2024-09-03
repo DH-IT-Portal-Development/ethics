@@ -288,7 +288,6 @@ def get_form_errors(proposal: Proposal) -> list:
                     InterventionForm,
                     ObservationForm,
                     SessionUpdateForm,
-                    SessionOverviewForm,
                 ),
             ):
                 kwargs["study"] = obj.study
