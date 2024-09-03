@@ -382,6 +382,7 @@ class TrajectoriesChecker(
 ):
     form_class = proposal_forms.StudyStartForm
     title = _("Trajecten")
+    location = "studies"
 
     def check(
         self,
