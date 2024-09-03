@@ -135,6 +135,10 @@ class ContainerItem(
 class ModelFormChecker(
     Checker,
 ):
+    """
+    A checker base that makes it as easy as possible to go from checking
+    a ModelForm to making a stepper item.
+    """
 
     form_class = None
     title = None
@@ -180,39 +184,58 @@ class ModelFormItem(
         get_url = kwargs.pop(
             "url_func",
             None,
-        )
+        ) 
+        self.errors = []
         if get_url:
             self.get_url = get_url
         return super().__init__(*args, **kwargs)
 
     @property
     def model_form(self):
-        if not self.form_class:
-            raise ImproperlyConfigured("form_class must be defined")
+        """
+        This property is used to access the bound ModelForm and its errors.
+        self.instantiated_form can be set by hand (e.g. by a checker) to bypass
+        default form instantiation.
+        """
         if not hasattr(self, "instantiated_form"):
             self.instantiated_form = self.instantiate_form()
         return self.instantiated_form
 
     def get_form_object(self):
+        """
+        Override this for modelforms that don't relate to a
+        Proposal model.
+        """
         return self.proposal
 
     def get_form_kwargs(self):
+        """
+        This method can be overidden to provide extra kwargs to the form. But
+        kwargs that pop up often can also be added to this base class.
+        """
         kwargs = {}
         if issubclass(self.form_class, UserKwargModelFormMixin):
             kwargs["user"] = self.stepper.request.user
         return kwargs
 
     def instantiate_form(self):
+        if not self.form_class:
+            raise ImproperlyConfigured("form_class must be defined")
         kwargs = self.get_form_kwargs()
         model_form = self.form_class(
             instance=self.get_form_object(),
             **kwargs,
         )
-        self.form_errors = model_form.errors
         return model_form
 
     def get_errors(self):
-        return self.form_errors
+        """
+        This is a placeholder that just returns the form errors for now.
+        But once we've figured out what we want exactly this method should
+        return both the form errors and any extra errors that a Checker
+        might insert into this item.
+        """
+        return self.model_form.errors
 
 
 class UpdateOrCreateChecker(
