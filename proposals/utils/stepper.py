@@ -8,6 +8,7 @@ from django.utils.translation import gettext as _
 from proposals.models import Proposal
 from proposals.forms import ProposalForm
 from proposals.views.proposal_views import ProposalUpdate
+from main.utils import renderable
 
 from .stepper_helpers import (
     PlaceholderItem,

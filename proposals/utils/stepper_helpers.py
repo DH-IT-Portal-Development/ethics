@@ -2,8 +2,8 @@ from copy import copy
 
 from django.utils.translation import gettext as _
 from django.urls import reverse
-from django.template import loader, Template, Context
 
+from main.utils import renderable
 
 class StepperItem:
     """
@@ -75,19 +75,6 @@ def flatten(lst):
     if type(first_item) is list:
         return flatten(first_item) + flatten(rest)
     return [first_item] + flatten(rest)
-
-
-class renderable:
-
-    def get_context_data(self):
-        context = Context()
-        return context
-
-    def render(self, extra_context={}):
-        context = self.get_context_data()
-        template = loader.get_template(self.template_name)
-        context.update(extra_context)
-        return template.render(context.flatten())
 
 
 class Layout:
