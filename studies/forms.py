@@ -239,7 +239,7 @@ class StudyDesignForm(TemplatedModelForm):
         # error msg to a built-in required error message.
         if not "study_types" in cleaned_data:
             error = forms.ValidationError(
-                _("Je dient minstens één van de opties te selecteren."), code="required"
+                _("Je dient minstens een van de opties te selecteren."), code="required"
             )
             self.errors["study_types"] = error
 
