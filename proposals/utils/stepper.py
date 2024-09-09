@@ -115,7 +115,7 @@ class Stepper(renderable):
                 continue
             # Remaining empty slots are replaced by placeholders
             placeholder = PlaceholderItem(
-                self.stepper,
+                self,
                 title=slot[1],
             )
             layout.insert(index, placeholder)
