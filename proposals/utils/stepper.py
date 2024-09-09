@@ -1,3 +1,5 @@
+from copy import copy
+
 from django.utils.translation import gettext as _
 
 from main.utils import renderable
@@ -69,7 +71,11 @@ class Stepper(renderable):
         The meat and potatoes of the stepper. Returns a list of top-level
         StepperItems to be rendered in the template.
         """
-        layout = getattr(self, "layout", False)
+        # In building the stepper we will be editing this layout in-place,
+        # which means we need to make a copy. Otherwise we're editing the
+        # original RegularProposalLayout which causes strange behaviour
+        # when it is in use by any other steppers.
+        layout = copy(getattr(self, "layout", False))
         if not layout:
             # Layout should be set before building the stepper
             # by something like ProposalTypeChecker
