@@ -7,6 +7,10 @@
     {% trans "Review afsluiten" %} - {{ block.super }}
 {% endblock %}
 
+{% block sidebar %}
+    {% include "reviews/review_detail_sidebar.html" %}
+{% endblock %}
+
 {% block html_head %}
     {{ block.super }}
     <script>
