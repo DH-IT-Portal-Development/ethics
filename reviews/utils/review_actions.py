@@ -184,7 +184,7 @@ class ChangeAssignment(ReviewAction):
             return False
 
         if self.review.stage in [
-            Review.Stages.CLOSING,
+            Review.Stages.SUPERVISOR,
             Review.Stages.CLOSED,
         ]:
             return False
