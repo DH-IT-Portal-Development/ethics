@@ -36,34 +36,34 @@
                 {% block form-buttons %}
                     {% block post-form-pre-buttons %}{% endblock %}
 
-                <div class="uu-form-text-row">
-                    <div class="uu-form-text">
-                        <div class="mt-4 mb-3 w-100 d-flex">
-                            {% block form-buttons %}
-                                {% include "base/form_buttons.html" %}
-                            {% endblock %}
-
-                        </div>
-                    </div>
-                </div>
-                {# A block one can use to add stuff after the form, but still next to the stepper #}
-                {% block post-form %}
                     <div class="uu-form-text-row">
                         <div class="uu-form-text">
-                            {% block post-form-text %}{% endblock %}
+                            <div class="mt-4 mb-3 w-100 d-flex">
+                                {% block form-buttons %}
+                                    {% include "base/form_buttons.html" %}
+                                {% endblock %}
 
+                            </div>
                         </div>
-                        <aside class="uu-form-text-aside">
-                            {% block post-form-aside %}{% endblock %}
-
-                        </aside>
                     </div>
-                {% endblock %}
+                    {# A block one can use to add stuff after the form, but still next to the stepper #}
+                    {% block post-form %}
+                        <div class="uu-form-text-row">
+                            <div class="uu-form-text">
+                                {% block post-form-text %}{% endblock %}
 
-            </form>
+                            </div>
+                            <aside class="uu-form-text-aside">
+                                {% block post-form-aside %}{% endblock %}
+
+                            </aside>
+                        </div>
+                    {% endblock %}
+
+                </form>
+            </div>
+            {# A block one can use to insert content after the stepper/form container #}
+            {% block post-form-container-content %}{% endblock %}
+
         </div>
-        {# A block one can use to insert content after the stepper/form container #}
-        {% block post-form-container-content %}{% endblock %}
-
-    </div>
-{% endblock %}
+    {% endblock %}
