@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 from main.models import YesNoDoubt
 from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from main.utils import get_secretary
+from proposals.mixins import StepperContextMixin
 
 from ..models import Proposal, Wmo
 from ..forms import WmoForm, WmoApplicationForm, WmoCheckForm
@@ -52,7 +53,11 @@ class WmoMixin(AllowErrorsOnBackbuttonMixin, object):
         raise NotImplementedError
 
 
-class WmoCreate(WmoMixin, CreateView):
+class WmoCreate(
+    StepperContextMixin,
+    WmoMixin,
+    CreateView,
+):
     success_message = _("WMO-gegevens opgeslagen")
 
     def form_valid(self, form):
@@ -65,7 +70,11 @@ class WmoCreate(WmoMixin, CreateView):
         return Proposal.objects.get(pk=self.kwargs["pk"])
 
 
-class WmoUpdate(WmoMixin, UpdateView):
+class WmoUpdate(
+    StepperContextMixin,
+    WmoMixin,
+    UpdateView,
+):
     success_message = _("WMO-gegevens bewerkt")
 
     def get_proposal(self):
@@ -76,7 +85,10 @@ class WmoUpdate(WmoMixin, UpdateView):
 ######################
 # Other actions on WMO
 ######################
-class WmoApplication(UpdateView):
+class WmoApplication(
+    UpdateView,
+    StepperContextMixin,
+):
     model = Wmo
     form_class = WmoApplicationForm
     template_name = "proposals/wmo_application.html"

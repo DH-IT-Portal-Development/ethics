@@ -4,6 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from main.views import CreateView, UpdateView, AllowErrorsOnBackbuttonMixin
 from studies.models import Study
 from studies.utils import get_study_progress
+from studies.mixins import StudyFromURLMixin
+from proposals.mixins import StepperContextMixin
 
 from .forms import InterventionForm
 from .models import Intervention
@@ -12,7 +14,7 @@ from .models import Intervention
 ##############################
 # CRUD actions on Intervention
 ##############################
-class InterventionMixin(object):
+class InterventionMixin(StepperContextMixin):
     """Mixin for an Intervention, to use in both InterventionCreate and InterventionUpdate below"""
 
     model = Intervention
@@ -48,6 +50,9 @@ class InterventionMixin(object):
             next_url = "tasks:session_start"
         return reverse(next_url, args=(pk,))
 
+    def get_proposal(self):
+        return self.get_object().study.proposal
+
     def get_back_url(self):
         return reverse("studies:design", args=(self.get_study().pk,))
 
@@ -55,17 +60,18 @@ class InterventionMixin(object):
         raise NotImplementedError
 
 
-class InterventionCreate(InterventionMixin, AllowErrorsOnBackbuttonMixin, CreateView):
+class InterventionCreate(
+    StudyFromURLMixin,
+    InterventionMixin,
+    AllowErrorsOnBackbuttonMixin,
+    CreateView,
+):
     """Creates a Intervention from a InterventionForm"""
 
     def form_valid(self, form):
         """Sets the Study on the Intervention before starting validation."""
         form.instance.study = self.get_study()
         return super(InterventionCreate, self).form_valid(form)
-
-    def get_study(self):
-        """Retrieves the Study from the pk kwarg"""
-        return Study.objects.get(pk=self.kwargs["pk"])
 
 
 class InterventionUpdate(InterventionMixin, AllowErrorsOnBackbuttonMixin, UpdateView):

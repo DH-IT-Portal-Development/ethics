@@ -5,6 +5,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
 from django.utils.translation import gettext_lazy as _
+from django.template import loader, Template, Context
 
 import magic  # whoooooo
 import pdftotext
@@ -162,3 +163,16 @@ def can_view_archive(user):
     # If our tests are inconclusive,
     # check for Humanities affiliation
     return is_member_of_humanities(user)
+
+
+class renderable:
+
+    def get_context_data(self):
+        context = Context()
+        return context
+
+    def render(self, extra_context={}):
+        context = self.get_context_data()
+        template = loader.get_template(self.template_name)
+        context.update(extra_context)
+        return template.render(context.flatten())
