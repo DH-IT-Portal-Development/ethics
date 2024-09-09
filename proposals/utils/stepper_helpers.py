@@ -1,7 +1,5 @@
-from copy import copy
-
-from django.utils.translation import gettext as _
-from django.urls import reverse
+from django.core.exceptions import ImproperlyConfigured
+from braces.forms import UserKwargModelFormMixin
 
 from main.utils import renderable
 
