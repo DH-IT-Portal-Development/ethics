@@ -21,9 +21,7 @@
 {% endblock %}
 
 {% block sidebar %}
-    {% with review=review %}
-        {% include "reviews/review_detail_sidebar.html" %}
-    {% endwith %}
+    {% include "reviews/review_detail_sidebar.html" %}
 {% endblock %}
 
 {% block pre-form-text %}
