@@ -31,8 +31,10 @@
                     </div>
                 {% endblock %}
 
-                {{ form }}
-                {% block post-form-pre-buttons %}{% endblock %}
+                {% block auto-form-render %}{{ form }}{% endblock %}
+
+                {% block form-buttons %}
+                    {% block post-form-pre-buttons %}{% endblock %}
 
                 <div class="uu-form-text-row">
                     <div class="uu-form-text">

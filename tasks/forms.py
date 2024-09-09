@@ -162,14 +162,9 @@ class SessionEndForm(SoftValidationMixin, ConditionalModelForm):
         model = Session
         fields = ["tasks_duration"]
 
-    _soft_validation_fields = [
-        "tasks_duration",
-    ]
-
     def __init__(self, *args, **kwargs):
         """
         - Set the tasks_duration label
-        - Set the tasks_duration as required
         """
         super(SessionEndForm, self).__init__(*args, **kwargs)
 
@@ -177,29 +172,26 @@ class SessionEndForm(SoftValidationMixin, ConditionalModelForm):
         label = tasks_duration.label % self.instance.net_duration()
         tasks_duration.label = mark_safe(label)
 
-    def is_initial_visit(self) -> bool:
-        return True
-
     def clean(self):
         cleaned_data = super(SessionEndForm, self).clean()
 
-        self.mark_soft_required(cleaned_data, "tasks_duration")
-
-        return cleaned_data
-
-    def clean_tasks_duration(self):
-        """
-        Check that the net duration is at least equal to the gross duration
-        """
         tasks_duration = self.cleaned_data.get("tasks_duration")
 
-        if tasks_duration and tasks_duration < self.instance.net_duration():
-            raise forms.ValidationError(
+        if tasks_duration is not None and tasks_duration < self.instance.net_duration():
+            self.add_error(
+                "tasks_duration",
                 _("Totale sessieduur moet minstens gelijk zijn aan netto sessieduur."),
-                code="comparison",
             )
 
-        return tasks_duration
+        if self.instance.tasks_number == 0:
+            self.add_error(
+                None,
+                _("Sessie {} bevat nog geen taken. Voeg minstens één taak toe.").format(
+                    self.instance.order
+                ),
+            )
+
+        return cleaned_data
 
 
 class SessionOverviewForm(SoftValidationMixin, ModelForm):

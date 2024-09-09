@@ -217,7 +217,16 @@ class StudyDesignForm(TemplatedModelForm):
 
     class Meta:
         model = Study
-        fields = []
+        fields = [
+            "has_intervention",
+            "has_observation",
+            "has_sessions",
+        ]
+        widgets = {
+            "has_intervention": forms.HiddenInput(),
+            "has_observation": forms.HiddenInput(),
+            "has_sessions": forms.HiddenInput(),
+        }
 
     def clean(self):
         """
@@ -225,9 +234,19 @@ class StudyDesignForm(TemplatedModelForm):
         - at least one of the fields has to be checked
         """
         cleaned_data = super(StudyDesignForm, self).clean()
-        if not cleaned_data:
-            msg = _("Je dient minstens één van de opties te selecteren")
-            self.add_error("study_types", forms.ValidationError(msg, code="required"))
+
+        # This solution is a bit funky, but by using add_error(), it appends our
+        # error msg to a built-in required error message.
+        if not "study_types" in cleaned_data:
+            error = forms.ValidationError(
+                _("Je dient minstens een van de opties te selecteren."), code="required"
+            )
+            self.errors["study_types"] = error
+
+        # this checks the hidden fields, and could be used for validating this
+        # form elsewhere
+        if not any(cleaned_data.values()):
+            self.add_error(None, _("Er is nog geen onderzoekstype geselecteerd."))
 
 
 class StudyConsentForm(ConditionalModelForm):
@@ -285,7 +304,6 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         - Remove empty label from deception/negativity/stressful/risk field and reset the choices
         - mark_safe the labels of negativity/stressful/risk
         """
-        self.study = kwargs.pop("study", None)
 
         super(StudyEndForm, self).__init__(*args, **kwargs)
 
@@ -302,7 +320,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         self.fields["stressful"].label = mark_safe(self.fields["stressful"].label)
         self.fields["risk"].label = mark_safe(self.fields["risk"].label)
 
-        if not self.study.has_sessions:
+        if not self.instance.has_sessions:
             del self.fields["deception"]
             del self.fields["deception_details"]
 

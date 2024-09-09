@@ -150,12 +150,6 @@ class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
         context["proposal"] = self.object.proposal
         return context
 
-    def get_form_kwargs(self):
-        """Sets the Study as a form kwarg"""
-        kwargs = super(StudyEnd, self).get_form_kwargs()
-        kwargs["study"] = self.object
-        return kwargs
-
     def get_next_url(self):
         """
         If there is another Study in this Proposal, continue to that one.
