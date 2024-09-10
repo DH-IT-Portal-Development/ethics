@@ -37,3 +37,21 @@
     {% endif %}
     {% include 'base/tool_language_box.html' %}
 {% endblock %}
+
+{% block site-footer %}
+    {% get_current_language as LANGUAGE_CODE %}
+    <div class="uu-footer">
+        <div class="col-10">
+            {% with 'cdh.core/images/logo-footer-'|add:LANGUAGE_CODE|add:'.svg' as header_image %}
+                <img src="{% static header_image %}" alt="{% trans 'cdh.core:uu' %}" title="{% trans 'cdh.core:uu' %}"/>
+            {% endwith %}
+        </div>
+        <div class="col-2 d-none d-md-block">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'logout' %}">{% trans 'Log uit' %}</a><br/>
+            {% else %}
+            <a href="{% url 'login' %}">{% trans 'Log in' %}</a><br/>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
