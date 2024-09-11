@@ -274,8 +274,12 @@ class WMOApplicationChecker(ModelFormChecker):
         return [TrajectoriesChecker]
     
     def get_url(self):
+        if self.proposal.is_pre_assessment:
+            pre_suffix = "_pre"
+        else:
+            pre_suffix = ""
         return reverse(
-            "proposals:wmo_application",
+            f"proposals:wmo_application{pre_suffix}",
             args=(self.proposal.wmo.pk,),
         )
     
