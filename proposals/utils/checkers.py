@@ -155,6 +155,11 @@ class GoalChecker(
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
+        if self.proposal.is_pre_approved:
+            return [PreApprovedChecker(
+                self.stepper,
+                parent=self.parent,
+            )]
         return [WMOChecker]
 
     def get_url(self):
@@ -163,6 +168,22 @@ class GoalChecker(
             args=(self.proposal.pk,),
         )
 
+class PreApprovedChecker(
+    ModelFormChecker,
+):
+    
+    title = _("Eerdere toetsing")
+    form_class = proposal_forms.PreApprovedForm
+
+    def check(self):
+        self.stepper.items.append(self.make_stepper_item())
+        return [SubmitChecker]
+    
+    def get_url(self):
+        return reverse(
+            "proposals:pre_approved",
+            args=(self.proposal.pk,),
+        )
 
 class WMOItem(
     StepperItem,
