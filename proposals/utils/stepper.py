@@ -1,0 +1,163 @@
+from copy import copy
+
+from django.utils.translation import gettext as _
+
+from main.utils import renderable
+
+from .stepper_helpers import (
+    PlaceholderItem,
+    StepperItem,
+)
+
+from .checkers import ProposalTypeChecker
+
+
+class Stepper(renderable):
+
+    template_name = "base/stepper.html"
+
+    def __init__(
+        self,
+        proposal,
+        proposal_type_hint=None,
+        request=None,
+    ):
+        self.proposal = proposal
+        self.starting_checkers = [
+            ProposalTypeChecker,
+        ]
+        # The stepper keeps track of the request to determine
+        # which item is current
+        self.request = request
+        # The type can be provided by the view for the case in which
+        # the proposal has not yet been created but we need to determine
+        # its type, i.e. the ProposalCreateViews
+        self.proposal_type_hint = proposal_type_hint
+        self.items = []
+        self.check_all(self.starting_checkers)
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        # Provide the stepper bubble classes in order
+        # of descending size
+        bubble_list = [
+            "stepper-bubble-largest",
+            "stepper-bubble-large",
+            "stepper-bubble-medium",
+            "stepper-bubble-small",
+            "stepper-bubble-smallest",
+        ]
+        context.update(
+            {
+                "stepper": self,
+                "bubble_size": bubble_list,
+            }
+        )
+        return context
+
+    def get_resume_url(self):
+        """
+        Returns the url of the first page that requires attention,
+        that being either a page with an error or an incomplete page.
+        """
+        for item in self.items:
+            if not item.is_complete:
+                return item.get_url()
+
+    def build_stepper(
+        self,
+    ):
+        """
+        The meat and potatoes of the stepper. Returns a list of top-level
+        StepperItems to be rendered in the template.
+        """
+        # In building the stepper we will be editing this layout in-place,
+        # which means we need to make a copy. Otherwise we're editing the
+        # original RegularProposalLayout which causes strange behaviour
+        # when it is in use by any other steppers.
+        layout = copy(getattr(self, "layout", False))
+        if not layout:
+            # Layout should be set before building the stepper
+            # by something like ProposalTypeChecker
+            raise RuntimeError(
+                "Base layout was never defined for this stepper",
+            )
+        # First, insert all items into the layout
+        for item in self.items:
+            self._insert_item(layout, item)
+        # Second, replace all remaining empty slots in the layout
+        # by PlaceholderItems
+        self._insert_placeholders(layout)
+        return layout
+
+    def _insert_item(self, layout, new_item):
+        """
+        Inserts a stepper item into a layout, in-place.
+        """
+        # We're only concerned with top-level items, children can sort
+        # themselves out
+        if new_item.parent:
+            return new_item.parent.children.append(
+                new_item,
+            )
+        # Step through the layout looking for empty slots, which are
+        # represented by tuples of locations and titles
+        for index, slot in enumerate(layout):
+            # If the slot is already filled with an actual item, just
+            # skip it
+            if type(slot) is not tuple:
+                continue
+            # If the slot location matches that of our new_item, replace
+            # this slot with the item
+            if new_item.location == slot[0]:
+                layout.insert(index, new_item)
+                layout.remove(slot)
+
+    def _insert_placeholders(self, layout):
+        # Step through the remaining slots in the layout
+        for index, slot in enumerate(layout):
+            # Skip slots that are already items
+            if isinstance(slot, StepperItem):
+                continue
+            # Remaining empty slots are replaced by placeholders
+            placeholder = PlaceholderItem(
+                self,
+                title=slot[1],
+            )
+            layout.insert(index, placeholder)
+            layout.remove(slot)
+        return layout
+
+    def check_all(self, next_checkers):
+        # No more checkers means we are done
+        if next_checkers == []:
+            return True
+        # Instantiate next checker
+        # and give it access to the stepper
+        current = next_checkers.pop(0)(self)
+        # Run the check method
+        # and gather new checkers from its output
+        new_checkers = current.check()
+        # Combine the lists, new checkers come first
+        next_checkers = new_checkers + next_checkers
+        # Recurse until next_checkers is empty
+        return self.check_all(next_checkers)
+
+    def has_multiple_studies(
+        self,
+    ):
+        """
+        Returns True if the proposal has more than one trajectory (study).
+        """
+        num_studies = self.proposal.study_set.count()
+        return num_studies > 1
+
+
+RegularProposalLayout = [
+    ("create", _("Basisgegevens")),
+    ("wmo", _("WMO")),
+    ("studies", _("Trajecten")),
+    ("attachments", _("Documenten")),
+    ("data_management", _("Datamanagement")),
+    ("submit", _("Indienen")),
+]

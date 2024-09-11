@@ -16,6 +16,8 @@
     {% include "tasks/session_list.html" %}
 {% endblock %}
 
+{% block auto-form-render %}<!--Override rendering of the form-->{% endblock %}
+
 {% block form-buttons %}
     {% include "base/form_buttons.html" %}
 {% endblock %}

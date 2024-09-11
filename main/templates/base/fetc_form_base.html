@@ -9,7 +9,7 @@
         {# todo: responsive design #}
         <div class="col-3">
             {% block stepper %}
-                {% include "base/stepper.html" %}
+                {% include stepper %}
             {% endblock %}
 
         </div>
@@ -31,7 +31,8 @@
                     </div>
                 {% endblock %}
 
-                {{ form }}
+                {% block auto-form-render %}{{ form }}{% endblock %}
+
                 {% block form-buttons %}
                     {% block post-form-pre-buttons %}{% endblock %}
 

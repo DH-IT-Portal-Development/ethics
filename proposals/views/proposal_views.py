@@ -47,6 +47,7 @@ from ..forms import (
     ResearchGoalForm,
     PreApprovedForm,
     TranslatedConsentForms,
+    ProposalForm,
 )
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
@@ -241,6 +242,13 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
     # Note: template_name is auto-generated to proposal_form.html
 
     success_message = _("Aanvraag %(title)s aangemaakt")
+    proposal_type_hint = "regular"
+    form_class = ProposalForm
+
+    def get_proposal(
+        self,
+    ):
+        return self.get_form().instance
 
     def form_valid(self, form):
         """
@@ -264,10 +272,15 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
         context["no_back"] = True
         return context
 
+    def get_next_url(self):
+        return reverse("proposals:researcher", args=(self.object.pk,))
+
 
 class ProposalUpdate(
     ProposalMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
 ):
+    form_class = ProposalForm
+
     def form_valid(self, form):
         """Sets created_by to current user and generates a reference number"""
         form.instance.reviewing_committee = form.instance.institution.reviewing_chamber
@@ -280,6 +293,9 @@ class ProposalUpdate(
         context["no_back"] = True
 
         return context
+
+    def get_next_url(self):
+        return reverse("proposals:researcher", args=(self.object.pk,))
 
 
 class ProposalDelete(DeleteView):
@@ -372,7 +388,11 @@ class ProposalStart(generic.TemplateView):
 
 
 class ProposalResearcherFormView(
-    UserFormKwargsMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+    ProposalMixin,
+    UserFormKwargsMixin,
+    ProposalContextMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
 ):
     model = Proposal
     form_class = ResearcherForm
@@ -386,7 +406,10 @@ class ProposalResearcherFormView(
 
 
 class ProposalOtherResearchersFormView(
-    UserFormKwargsMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+    UserFormKwargsMixin,
+    AllowErrorsOnBackbuttonMixin,
+    ProposalMixin,
+    UpdateView,
 ):
     model = Proposal
     form_class = OtherResearchersForm
@@ -462,7 +485,7 @@ class ProposalPreApprovedFormView(
         return reverse("proposals:research_goal", args=(self.object.pk,))
 
 
-class TranslatedConsentFormsView(UpdateView):
+class TranslatedConsentFormsView(ProposalContextMixin, UpdateView):
     model = Proposal
     form_class = TranslatedConsentForms
     template_name = "proposals/translated_consent_forms.html"
@@ -476,7 +499,7 @@ class TranslatedConsentFormsView(UpdateView):
         return reverse("studies:design_end", args=(self.object.last_study().pk,))
 
 
-class ProposalDataManagement(UpdateView):
+class ProposalDataManagement(ProposalContextMixin, UpdateView):
     model = Proposal
     form_class = ProposalDataManagementForm
     template_name = "proposals/proposal_data_management.html"

@@ -5,6 +5,7 @@ from django.conf import settings
 from django.utils.translation import gettext_lazy as _
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, FormSetUpdateView
+from proposals.mixins import ProposalContextMixin
 from studies.models import Documents, Study
 from studies.forms import StudyConsentForm
 from studies.utils import create_documents_for_study
@@ -12,7 +13,11 @@ from ..forms import StudyStartForm
 from ..models import Proposal
 
 
-class StudyStart(AllowErrorsOnBackbuttonMixin, UpdateView):
+class StudyStart(
+    ProposalContextMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
+):
     model = Proposal
     form_class = StudyStartForm
     template_name = "proposals/study_start.html"

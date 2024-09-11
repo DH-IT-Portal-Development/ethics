@@ -3,21 +3,17 @@
 <div class="stepper">
     <ul>
         {% counter counter create 1 %}
-        {% for url in proposal.available_urls %}
+        {% for item in stepper.build_stepper %}
             <li>
-                <a class="stepper-item" href="{{ url.url }}">
-                    <span class="stepper-bubble stepper-bubble-largest">{% counter counter value %}</span>
-                    <span>{{ url.title }}</span>
+                <a class="stepper-item {{ item.css_classes }}" href="{{ item.get_url }}">
+                    <span class="stepper-bubble {{ bubble_size.0 }}">{% counter counter value %}</span>
+                    <span>{{ item.title }}</span>
                 </a>
-                {% if url.children %}
+                {% counter depth create 1 %}
+                {% if item.children %}
                     <ul>
-                        {% for child in url.children %}
-                            <li>
-                                <a class="stepper-item" href="{{ child.url }}">
-                                    <span class="stepper-bubble stepper-bubble-normal"></span>
-                                    <span>{{ child.title }}</span>
-                                </a>
-                            </li>
+                        {% for child in item.children %}
+                            {% include child with bubble_size=bubble_size|slice:"1:" %}
                         {% endfor %}
                     </ul>
                 {% endif %}

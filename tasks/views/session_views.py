@@ -6,6 +6,8 @@ from django.http import HttpResponseRedirect
 from django.utils.translation import gettext_lazy as _
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView, CreateView
+from proposals.mixins import StepperContextMixin
+from studies.mixins import StudyFromURLMixin, StudyMixin
 from ..forms import SessionUpdateForm, SessionEndForm, SessionOverviewForm
 from ..models import Session, Study
 
@@ -44,7 +46,10 @@ class SessionDelete(DeleteView):
 ##################
 
 
-class SessionMixin(AllowErrorsOnBackbuttonMixin):
+class SessionMixin(
+    StepperContextMixin,
+    AllowErrorsOnBackbuttonMixin,
+):
 
     model = Session
     form_class = SessionUpdateForm
@@ -63,8 +68,13 @@ class SessionMixin(AllowErrorsOnBackbuttonMixin):
     def get_next_url(self):
         return reverse("tasks:session_end", args=(self.object.pk,))
 
+    def get_proposal(
+        self,
+    ):
+        return self.get_object().study.proposal
 
-class SessionStart(SessionMixin, UpdateView):
+
+class SessionStart(StudyMixin, UpdateView):
 
     model = Study
     # This form is just a placeholder to make navigation work. It does not do
@@ -87,11 +97,12 @@ class SessionStart(SessionMixin, UpdateView):
             pk = study.intervention.pk
         return reverse(next_url, args=(pk,))
 
-    def get_study(self):
-        return self.object
 
-
-class SessionCreate(SessionMixin, CreateView):
+class SessionCreate(
+    StudyFromURLMixin,
+    SessionMixin,
+    CreateView,
+):
 
     def get_form_kwargs(self):
         """Sets the Study as a form kwarg"""
@@ -105,10 +116,6 @@ class SessionCreate(SessionMixin, CreateView):
         form.instance.study = study
         form.instance.order = study.session_set.count() + 1
         return super(SessionCreate, self).form_valid(form)
-
-    def get_study(self):
-        """Retrieves the Study from the pk kwarg"""
-        return Study.objects.get(pk=self.kwargs["pk"])
 
     def get_back_url(self):
         return reverse("tasks:session_overview", args=(self.object.study.pk,))
@@ -153,7 +160,7 @@ class SessionEnd(SessionMixin, UpdateView):
         return reverse("tasks:session_overview", args=(self.object.study.pk,))
 
 
-class SessionOverview(UpdateView):
+class SessionOverview(StudyMixin, UpdateView):
 
     model = Study
     form_class = SessionOverviewForm
