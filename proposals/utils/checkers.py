@@ -31,13 +31,11 @@ class ProposalTypeChecker(
 
         if self.proposal.is_pre_approved:
             self.stepper.layout = PreApprProposalLayout
-            return [PreApprProposalCreateChecker]
         elif self.proposal.is_pre_assessment:
             self.stepper.layout = PreAssProposalLayout
-            return [PreAssProposalCreateChecker]
         else:
             self.stepper.layout = RegularProposalLayout
-            return [ProposalCreateChecker]
+        return [ProposalCreateChecker]
 
 
 class BasicDetailsItem(
