@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -20,7 +20,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{% trans "Bevestigingsbrief versturen" %}</h2>
             <p>
@@ -33,8 +33,8 @@
                 <table>
                     {{ form.as_table }}
                 </table>
-                <a class="button" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
-                <input class="button"
+                <a class="btn btn-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+                <input class="btn btn-secondary"
                        type="submit"
                        value="{% trans 'Bevestigingsbrief verstuurd' %}" />
             </form>

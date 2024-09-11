@@ -1,18 +1,38 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.utils import YES_NO
 from .models import Intervention
 
+from cdh.core.forms import (
+    BootstrapCheckboxSelectMultiple,
+    BootstrapRadioSelect,
+    TemplatedFormTextField,
+)
+
 
 class InterventionForm(SoftValidationMixin, ConditionalModelForm):
+
+    setting_header = TemplatedFormTextField(header=_("Setting"), header_element="h4")
+
+    period_header = TemplatedFormTextField(
+        header=_("Beschrijving van de interventie"), header_element="h4"
+    )
+
+    extra_task_header = TemplatedFormTextField(
+        header=_("Extra taak"), header_element="h4"
+    )
+
     class Meta:
         model = Intervention
         fields = [
+            "setting_header",
             "setting",
             "setting_details",
             "supervision",
             "leader_has_coc",
+            "period_header",
             "period",
             "multiple_sessions",
             "session_frequency",
@@ -22,15 +42,16 @@ class InterventionForm(SoftValidationMixin, ConditionalModelForm):
             "has_controls",
             "controls_description",
             "measurement",
+            "extra_task_header",
             "extra_task",
         ]
         widgets = {
-            "setting": forms.CheckboxSelectMultiple(),
-            "supervision": forms.RadioSelect(choices=YES_NO),
-            "multiple_sessions": forms.RadioSelect(choices=YES_NO),
-            "leader_has_coc": forms.RadioSelect(choices=YES_NO),
-            "has_controls": forms.RadioSelect(choices=YES_NO),
-            "extra_task": forms.RadioSelect(choices=YES_NO),
+            "setting": BootstrapCheckboxSelectMultiple(),
+            "supervision": BootstrapRadioSelect(choices=YES_NO),
+            "multiple_sessions": BootstrapRadioSelect(choices=YES_NO),
+            "leader_has_coc": BootstrapRadioSelect(choices=YES_NO),
+            "has_controls": BootstrapRadioSelect(choices=YES_NO),
+            "extra_task": BootstrapRadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):

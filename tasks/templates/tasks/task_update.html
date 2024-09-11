@@ -1,0 +1,25 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Het takenonderzoek en/of interviews" %} - {{ block.super }}
+{% endblock %}
+
+{% block html_head %}
+    {{ block.super }}
+    <script>
+$(function() {
+    check_field_required('registrations', 'needs_kind', 'registration_kinds', 'tasks', 'Registration');
+    check_field_required('registrations', 'needs_details', 'registrations_details', 'tasks', 'Registration');
+    check_field_required('registration_kinds', 'needs_details', 'registration_kinds_details', 'tasks', 'RegistrationKind');
+    depends_on_value('feedback', 'True', 'feedback_details');
+});
+    </script>
+{% endblock %}
+
+{% block pre-form-text %}
+    <h2>{% trans "Het takenonderzoek en/of interviews" %}</h2>
+    {% include "tasks/task_title.html" %}
+{% endblock %}

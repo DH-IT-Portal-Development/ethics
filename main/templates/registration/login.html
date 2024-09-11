@@ -1,20 +1,16 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load i18n %}
 {% load static %}
 
+{% block pre-messages-content %}
+    <div class="uu-hero">
+        <h2>{% trans "Inloggen" %}</h2>
+    </div>
+{% endblock %}
+
 {% block content %}
-    {# TODO: when migration to SAML, this template needs to become a TemplateView #}
-    <div class="coverimage">
-        <img src="{% static 'main/images/coverimage-summer_Kim_Oleary.jpg' %}" />
-    </div>
-    {# Very ugly imitation of uu-hero #}
-    <div style="background: #FFCD00; margin: -10px -15px; padding:1rem;">
-        <div class="uu-inner-container" style="padding-left: 15px">
-            <h2 style="font-weight: 500">{% trans "Inloggen" %}</h2>
-        </div>
-    </div>
-    <div class="uu-inner-container mt-4">
+    <div class="uu-container">
         <div class="col-12 col-md-4">
             {% if form.errors %}
                 <p class="form-errors">{% trans "Gebruikersnaam of wachtwoord incorrect. Probeer het alstublieft opnieuw." %}</p>
@@ -34,7 +30,7 @@
                        type="password"
                        placeholder="{% trans 'Wachtwoord' %}">
                 <br />
-                <input class="mt-3 mb-3" type="submit" value="{% trans 'Inloggen' %}" />
+                <button class="btn btn-primary mt-2" type="submit">{% trans 'Inloggen' %}</button>
                 <input type="hidden" name="next" value="{{ next }}" />
             </form>
         </div>

@@ -44,7 +44,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{% trans 'Vergelijk documenten' %}</h2>
             <p>
@@ -68,11 +68,11 @@
             <div class="warning" style="display: none; clear: both;">
                 {% trans 'Er zijn geen wijzigingen gevonden in dit document!' %}
             </div>
-            <button id="button-split" class="float-right">{% trans 'Bekijk apart' %}</button>
-            <button id="button-combined" style="display: none" class="float-right">{% trans 'Bekijk gecombineerd' %}</button>
+            <button id="button-split" class="float-end">{% trans 'Bekijk apart' %}</button>
+            <button id="button-combined" style="display: none" class="float-end">{% trans 'Bekijk gecombineerd' %}</button>
         </div>
     </div>
-    <div class="uu-inner-container document-compare">
+    <div class="uu-container document-compare">
         <div class="col-6">
             <p>
                 <strong>{% trans "Oud" %}:</strong>
@@ -86,7 +86,7 @@
             </p>
         </div>
     </div>
-    <div class="uu-inner-container compare">
+    <div class="uu-container compare">
         <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
             <img src="{% static 'main/images/loading.gif' %}" />
         </div>

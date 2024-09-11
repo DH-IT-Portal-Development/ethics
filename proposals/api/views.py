@@ -1,12 +1,10 @@
 from braces.views import LoginRequiredMixin
 from django.db.models import Q
-from django.utils.decorators import method_decorator
-from django.utils.translation import ugettext_lazy as _
-from django.views.decorators.cache import cache_page
+from django.utils.translation import gettext_lazy as _
 from rest_framework.authentication import SessionAuthentication
 
 from reviews.mixins import CommitteeMixin
-from uil.vue.rest import FancyListApiView
+from cdh.vue.rest import FancyListApiView
 
 from main.utils import is_secretary
 from reviews.models import Review

@@ -154,7 +154,7 @@
 <span></span><span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="k">import</span> <span class="n">ValidationError</span>
 <span class="kn">from</span> <span class="nn">django.core.files.uploadedfile</span> <span class="k">import</span> <span class="n">UploadedFile</span>
 <span class="kn">from</span> <span class="nn">django.core.validators</span> <span class="k">import</span> <span class="n">BaseValidator</span>
-<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">ugettext_lazy</span><span class="p">,</span> <span class="n">ungettext_lazy</span>
+<span class="kn">from</span> <span class="nn">django.utils.translation</span> <span class="k">import</span> <span class="n">gettext_lazy</span><span class="p">,</span> <span class="n">ungettext_lazy</span>
 
 <span class="n">ALLOWED_CONTENT_TYPES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;application/pdf&#39;</span><span class="p">,</span> <span class="s1">&#39;application/msword&#39;</span><span class="p">,</span>
                          <span class="s1">&#39;application/vnd.openxmlformats-officedocument.wordprocessingml.document&#39;</span><span class="p">]</span>
@@ -173,7 +173,7 @@
 <div class="viewcode-block" id="validate_pdf_or_doc"><a class="viewcode-back" href="../../reference/core.validators.html#core.validators.validate_pdf_or_doc">[docs]</a><span class="k">def</span> <span class="nf">validate_pdf_or_doc</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
     <span class="n">f</span> <span class="o">=</span> <span class="n">value</span><span class="o">.</span><span class="n">file</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">UploadedFile</span><span class="p">)</span> <span class="ow">and</span> <span class="n">f</span><span class="o">.</span><span class="n">content_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">ALLOWED_CONTENT_TYPES</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="n">ugettext_lazy</span><span class="p">(</span><span class="s1">&#39;Alleen .pdf- of .doc(x)-bestanden zijn toegestaan.&#39;</span><span class="p">))</span></div>
+        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="n">gettext_lazy</span><span class="p">(</span><span class="s1">&#39;Alleen .pdf- of .doc(x)-bestanden zijn toegestaan.&#39;</span><span class="p">))</span></div>
 </pre></div>
 
            </div>

@@ -6,12 +6,10 @@ from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from django.utils.functional import lazy
-from django.utils.safestring import mark_safe
-
-from datetime import date, timedelta
+from django.utils.safestring import mark_safe, SafeString
 
 mark_safe_lazy = lazy(mark_safe, str)
 
@@ -45,11 +43,11 @@ class ProposalQuerySet(models.QuerySet):
     def no_embargo(self):
         return self.filter(
             models.Q(embargo_end_date__isnull=True)
-            | models.Q(embargo_end_date__lt=date.today())
+            | models.Q(embargo_end_date__lt=timezone.today())
         )
 
     def public_archive(self):
-        two_years_ago = date.today() - timedelta(weeks=104)
+        two_years_ago = timezone.today() - timezone.timedelta(weeks=104)
         return (
             self.archive_pre_filter()
             .no_embargo()

@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.db.models import Q, Count
 
@@ -555,20 +555,9 @@ class DecisionUpdateView(
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Supervisors get the chance to update the proposal, but we have
-        # multiple update views for different types of proposals.
-        if self.object.review.proposal.is_pre_approved:
-            context["update_url"] = reverse(
-                "proposals:update_pre_approved", args=[self.object.review.proposal.pk]
-            )
-        elif self.object.review.proposal.is_pre_assessment:
-            context["update_url"] = reverse(
-                "proposals:update_pre", args=[self.object.review.proposal.pk]
-            )
-        else:
-            context["update_url"] = reverse(
-                "proposals:update", args=[self.object.review.proposal.pk]
-            )
+        context["update_url"] = reverse(
+            "proposals:update", args=[self.object.review.proposal.pk]
+        )
 
         return context
 

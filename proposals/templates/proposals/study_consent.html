@@ -1,7 +1,9 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
+
 {% load static %}
 {% load i18n %}
-{% load uil_filters %}
+{% load cdh_filters %}
+
 {% block header_title %}
     {% trans "Informed consent formulieren" %} - {{ block.super }}
 {% endblock %}
@@ -60,7 +62,7 @@
     </script>
 {% endblock %}
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             {% with nav_items=proposal.available_urls active=4 %}
                 {% include 'base/navigation.html' %}
@@ -131,7 +133,7 @@
                         {% else %}
                             {% set used = 0 %}
                             {# We only add the add link if the form is empty, as this simplifies the JS #}
-                            <div style="float:right;">
+                            <div class="float-end">
                                 <a href="#"
                                    id="new-{% counter extra_form_counter value %}"
                                    class="new"

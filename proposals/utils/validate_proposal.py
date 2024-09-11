@@ -11,10 +11,15 @@ from braces.forms import UserKwargModelFormMixin
 
 from interventions.forms import InterventionForm
 from observations.forms import ObservationForm
-from studies.forms import StudyForm, StudyDesignForm, SessionStartForm
-from tasks.forms import TaskStartForm, TaskEndForm, TaskForm
+from studies.forms import StudyForm, StudyDesignForm
+from tasks.forms import SessionUpdateForm, SessionEndForm, TaskForm, SessionOverviewForm
 from ..forms import (
     ProposalForm,
+    ResearcherForm,
+    OtherResearchersForm,
+    FundingForm,
+    ResearchGoalForm,
+    PreApprovedForm,
     WmoForm,
     StudyStartForm,
     WmoApplicationForm,
@@ -23,7 +28,7 @@ from ..forms import (
 )
 from ..models import Proposal
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy as reverse
 
 
@@ -33,36 +38,50 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
     wmo_update_url = "proposals:wmo_update"
     wmo_application_url = "proposals:wmo_application"
 
-    # Get the correct URL for the
-    if proposal.is_pre_assessment:
-        forms["start"] = (
-            ProposalForm,
-            reverse("proposals:update_pre", args=[proposal.pk]),
-            _("Algemene informatie over de aanvraag"),
+    forms["start"] = (
+        ProposalForm,
+        reverse("proposals:update", args=[proposal.pk]),
+        _("Algemene informatie over de aanvraag"),
+        proposal,
+    )
+
+    forms["Researcher"] = (
+        ResearcherForm,
+        reverse("proposals:researcher", args=[proposal.pk]),
+        _("Informatie over de onderzoeker"),
+        proposal,
+    )
+
+    forms["OtherResearchers"] = (
+        OtherResearchersForm,
+        reverse("proposals:other_researchers", args=[proposal.pk]),
+        _("Informatie over betrokken onderzoekers"),
+        proposal,
+    )
+
+    if not proposal.is_pre_assessment:
+        forms["Funding"] = (
+            FundingForm,
+            reverse("proposals:funding", args=[proposal.pk]),
+            _("Informatie over financiering"),
             proposal,
         )
 
-        wmo_create_url = "proposals:wmo_create_pro"
-        wmo_update_url = "proposals:wmo_update_pro"
-    elif proposal.is_pre_approved:
-        forms["start"] = (
-            ProposalForm,
-            reverse("proposals:update_pre_approved", args=[proposal.pk]),
-            _("Algemene informatie over de aanvraag"),
-            proposal,
-        )
-    elif proposal.is_practice():
-        forms["start"] = (
-            ProposalForm,
-            reverse("proposals:update_practice", args=[proposal.pk]),
-            _("Algemene informatie over de aanvraag"),
-            proposal,
-        )
-    else:
-        forms["start"] = (
-            ProposalForm,
-            reverse("proposals:update", args=[proposal.pk]),
-            _("Algemene informatie over de aanvraag"),
+    forms["ResearchGoal"] = (
+        ResearchGoalForm,
+        reverse("proposals:research_goal", args=[proposal.pk]),
+        _("Informatie over het onderzoeksdoel"),
+        proposal,
+    )
+
+    if proposal.is_pre_assessment:
+        wmo_update_url = "proposals:wmo_update_pre"
+
+    if proposal.is_pre_approved:
+        forms["PreApproved"] = (
+            PreApprovedForm,
+            reverse("proposals:pre_approved", args=[proposal.pk]),
+            _("Informatie over eerdere toetsing"),
             proposal,
         )
 
@@ -157,17 +176,24 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                     None,
                 )
 
-        if study.has_sessions:
-            taskbased_key = "{}_task_start".format(key_base)
-            forms[taskbased_key] = (
-                SessionStartForm,
-                reverse("studies:session_start", args=[study.pk]),
-                _("Het takenonderzoek (traject {})").format(
+        if study.has_no_sessions():
+            session_overview_key = "{}_session_overview".format(
+                key_base,
+            )
+            forms[session_overview_key] = (
+                SessionOverviewForm,
+                reverse(
+                    "tasks:session_overview",
+                    args=[
+                        study.pk,
+                    ],
+                ),
+                _("Overzicht van het takenonderzoek (traject {})").format(
                     study.order,
                 ),
                 study,
             )
-
+        elif study.has_sessions:
             for session in study.session_set.all():
                 session_start_key = "{}_session_{}_start".format(
                     key_base,
@@ -175,8 +201,8 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                 )
 
                 forms[session_start_key] = (
-                    TaskStartForm,
-                    reverse("tasks:start", args=[session.pk]),
+                    SessionUpdateForm,
+                    reverse("tasks:session_update", args=[session.pk]),
                     _("Het takenonderzoek: sessie {} (traject {})").format(
                         session.order,
                         study.order,
@@ -209,8 +235,8 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
                 )
 
                 forms[session_end_key] = (
-                    TaskEndForm,
-                    reverse("tasks:end", args=[session.pk]),
+                    SessionEndForm,
+                    reverse("tasks:session_end", args=[session.pk]),
                     _("Overzicht van takenonderzoek: sessie {} (traject {})").format(
                         session.order,
                         study.order,
@@ -257,7 +283,13 @@ def get_form_errors(proposal: Proposal) -> list:
                 kwargs["proposal"] = proposal
 
             if issubclass(
-                form_class, (InterventionForm, ObservationForm, TaskStartForm)
+                form_class,
+                (
+                    InterventionForm,
+                    ObservationForm,
+                    SessionUpdateForm,
+                    SessionOverviewForm,
+                ),
             ):
                 kwargs["study"] = obj.study
 

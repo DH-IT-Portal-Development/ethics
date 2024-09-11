@@ -13,7 +13,7 @@ from django.core.mail import send_mail
 from django.db.models import Q
 from django.urls import reverse
 from django.template.loader import render_to_string
-from django.utils.translation import activate, get_language, ugettext as _
+from django.utils.translation import activate, get_language, gettext as _
 from django.utils.deconstruct import deconstructible
 
 from main.utils import AvailableURL, get_secretary
@@ -40,13 +40,43 @@ def available_urls(proposal):
     """
     urls = list()
 
-    if proposal.is_pre_assessment:
+    urls.append(
+        AvailableURL(
+            url=reverse("proposals:update", args=(proposal.pk,)),
+            title=_("Algemene informatie over de aanvraag"),
+        )
+    )
+
+    urls.append(
+        AvailableURL(
+            url=reverse("proposals:researcher", args=(proposal.pk,)),
+            title=_("Informatie over de onderzoeker"),
+        )
+    )
+
+    urls.append(
+        AvailableURL(
+            url=reverse("proposals:other_researchers", args=(proposal.pk,)),
+            title=_("Informatie over betrokken onderzoekers"),
+        )
+    )
+
+    if not proposal.is_pre_assessment:
         urls.append(
             AvailableURL(
-                url=reverse("proposals:update_pre", args=(proposal.pk,)),
-                title=_("Algemene informatie over de aanvraag"),
+                url=reverse("proposals:funding", args=(proposal.pk,)),
+                title=_("Informatie over financiering"),
             )
         )
+
+    urls.append(
+        AvailableURL(
+            url=reverse("proposals:research_goal", args=(proposal.pk,)),
+            title=_("Informatie over het onderzoeksdoel"),
+        )
+    )
+
+    if proposal.is_pre_assessment:
 
         wmo_url = AvailableURL(title=_("Ethische toetsing nodig door een METC?"))
         if hasattr(proposal, "wmo"):
@@ -64,8 +94,8 @@ def available_urls(proposal):
     elif proposal.is_pre_approved:
         urls.append(
             AvailableURL(
-                url=reverse("proposals:update_pre_approved", args=(proposal.pk,)),
-                title=_("Algemene informatie over de aanvraag"),
+                url=reverse("proposals:pre_approved", args=(proposal.pk,)),
+                title=_("Informatie over eerdere toetsing"),
             )
         )
 
@@ -76,18 +106,6 @@ def available_urls(proposal):
         )
         urls.append(submit_url)
     else:
-        update_url = (
-            "proposals:update_practice"
-            if proposal.is_practice()
-            else "proposals:update"
-        )
-        urls.append(
-            AvailableURL(
-                url=reverse(update_url, args=(proposal.pk,)),
-                title=_("Algemeen"),
-            )
-        )
-
         wmo_url = AvailableURL(title=_("METC"))
         if hasattr(proposal, "wmo"):
             wmo_url.url = reverse("proposals:wmo_update", args=(proposal.wmo.pk,))

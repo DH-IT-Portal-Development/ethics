@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load fetc_filters %}
 {% load get_field_name %}
@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h3 class="mb-3">{% trans 'Lopende reviews' %} {{ committee }}</h3>
             <table class="dt w-100" data-language="{% datatables_lang %}">

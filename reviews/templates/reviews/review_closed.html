@@ -1,11 +1,11 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load static %}
 {% load proposal_filters %}
 {% load fetc_filters %}
 {% load i18n %}
 {% load compare_tags %}
-{% load uil_filters %}
+{% load cdh_filters %}
 
 {% block header_title %}
     {% trans 'Aanvraag al beoordeeld' %}
@@ -14,7 +14,7 @@
 
 {% block content %}
     {% url 'proposals:my_supervised' as my_supervised_url %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12 col-md-9">
             <h2>
                 {% trans 'Aanvraag al beoordeeld' %}
