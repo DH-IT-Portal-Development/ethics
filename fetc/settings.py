@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "cdh.core",
     "cdh.vue",
     "cdh.rest",
+    "cdh.files",
     # Django supplied apps
     "django.contrib.auth",
     "django.contrib.contenttypes",
