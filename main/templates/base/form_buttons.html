@@ -11,6 +11,9 @@
                 {% if proposal.is_pre_assessment %}
                     <a class="button js-submit-redirect"
                        href="{% url 'proposals:update_pre' proposal.pk %}">{% trans "Terug naar begin aanvraag" %}</a>
+                {% elif proposal.is_pre_approved %}
+                    <a class="button js-submit-redirect"
+                       href="{% url 'proposals:update_pre_approved' proposal.pk %}">{% trans "Terug naar begin aanvraag" %}</a>
                 {% elif proposal.is_practice %}
                     <a class="button js-submit-redirect"
                        href="{% url 'proposals:update_practice' proposal.pk %}">

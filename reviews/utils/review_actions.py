@@ -85,14 +85,13 @@ class DecideAction(ReviewAction):
         user = self.user
         review = self.review
 
-        if review.stage != review.Stages.COMMISSION:
+        if review.stage not in (review.Stages.COMMISSION, review.Stages.SUPERVISOR):
             return False
 
         try:
             decision = Decision.objects.get(
                 review=review,
                 reviewer=user,
-                go="",
             )
         except Decision.DoesNotExist:
             return None
@@ -115,7 +114,10 @@ class DecideAction(ReviewAction):
     def description(self):
         decision = self.get_available_decision()
 
-        return _("Geef jouw beslissing en/of commentaar door")
+        if decision.go != "":
+            return _("Pas jouw beslissing en/of commentaar aan")
+        else:
+            return _("Geef jouw beslissing en/of commentaar door")
 
 
 class CloseReview(ReviewAction):

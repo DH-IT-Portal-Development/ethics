@@ -286,7 +286,7 @@ class RowValue:
     def handle_field_file(self, field_file):
         if field_file:
             output = format_html(
-                "<a href=https://{}>{}</a>",
+                '<a href="{}">{}</a>',
                 f"{settings.BASE_URL}{field_file.url}",
                 _("Download"),
             )
@@ -1103,7 +1103,7 @@ def create_context_diff(context, old_proposal, new_proposal):
             DiffSection(WMOSection(old_proposal.wmo), WMOSection(new_proposal.wmo))
         )
 
-        if new_proposal.is_pre_assessment:
+        if not new_proposal.is_pre_assessment:
             if (
                 new_proposal.wmo.status != new_proposal.wmo.WMOStatuses.NO_WMO
                 or old_proposal.wmo.status != old_proposal.wmo.WMOStatuses.NO_WMO

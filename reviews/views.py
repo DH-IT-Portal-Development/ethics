@@ -132,7 +132,8 @@ class CommitteeMembersWorkloadView(
 
     def get_committee_decisions(self):
         decisions = Decision.objects.filter(
-            review__proposal__reviewing_committee=self.committee
+            review__proposal__reviewing_committee=self.committee,
+            review__is_committee_review=True,
         ).select_related(
             "reviewer",
             "review",
@@ -159,11 +160,15 @@ class CommitteeMembersWorkloadView(
 
         decisions = self.get_committee_decisions()
 
+        # This is done to include in the base_filter, decisions which are taken
+        # today. The comparison was having some troubles due to different
+        # time formats.
+        end_date = self.end_date + timedelta(days=1)
+
         reviewers = get_user_model().objects.filter(decision__in=decisions)
         base_filter = Q(
             decision__review__date_start__gt=self.start_date,
-            decision__review__date_start__lt=self.end_date,
-            decision__review__stage__gt=Review.Stages.SUPERVISOR,
+            decision__review__date_start__lte=end_date,
         )
         return reviewers.annotate(
             total=Count("decision", filter=base_filter),
@@ -187,7 +192,7 @@ class CommitteeMembersWorkloadView(
                 "decision",
                 filter=base_filter & Q(decision__review__proposal__is_revision=True),
             ),
-        )
+        ).exclude(total=0)
 
 
 class SupervisorDecisionOpenView(BaseDecisionListView):

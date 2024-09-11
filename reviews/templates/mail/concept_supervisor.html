@@ -4,21 +4,21 @@
     Beste collega,
     <br />
     <br />
-    {{ creator }} heeft binnen de FETC-GW-webportal een concept-aanvraag opgesteld voor een onderzoek waarbij u als de eindverantwoordelijke onderzoeker bent aangewezen.
+    {{ creator }} heeft in de FETC-GW portal een concept-aanvraag opgesteld voor een aanvraag waarbij je als de eindverantwoordelijke onderzoeker staat genoemd.
     <br />
     <p>{{ proposal.reference_number }}: {{ proposal.title }}</p>
-    U kunt deze concept-aanmelding <a href="{{ proposal_url }}">hier</a> bekijken, eventueel na aanpassingen van uzelf of {{ creator }}, formeel ter toetsing bij de FETC-GW indienen.
+    Je kunt deze concept-aanvraag <a href="{{ proposal_url }}">hier</a> bekijken. Je kunt deze, eventueel na aanpassingen door jezelf of door {{ creator }}, formeel ter toetsing indienen bij de FETC-GW.
     <br />
-    Indien {{ creator }} wordt geacht de aanpassingen te maken, dient u de aanvraag formeel af te keuren en zelf {{ creator }} hiervan op de hoogte stellen.
+    Als {{ creator }} de aanpassingen moet maken, dan moet je de aanvraag formeel afkeuren en zelf {{ creator }} hiervan op de hoogte stellen.
     <br />
     <br />
-    U kunt al uw aanmeldingen als supervisor en hun status <a href="{{ my_supervised }}">hier</a> bekijken.
+    Je kunt al je aanvragen als eindverantwoordelijke onderzoeker en hun status <a href="{{ my_supervised }}">hier</a> bekijken.
     <br />
     <br />
     {% if revision %}
-        <strong>Let op:</strong> het gaat hierbij om een {{ revision_type|lower }} van een eerdere aanmelding.
+        <strong>Let op:</strong> het gaat hierbij om een {{ revision_type|lower }} van een eerdere aanvraag.
         <br />
-        Op het webportaal kunt u de wijzigingen ten opzichte van de vorige aanmelding inzien.
+        In de portal kun je de wijzigingen ten opzichte van de vorige aanvraag inzien.
         <br />
     {% endif %}
 {% endblock %}
@@ -27,21 +27,21 @@
     Dear colleague,
     <br />
     <br />
-    {{ creator }} has created, within the portal of the FEtC-H, a draft application for a study for which you are appointed as the supervisor.
+    {{ creator }} has created, within the portal of the FEtC-H, a draft application for a study for which you are appointed as the researcher with final responsibility.
     <br />
     <p>{{ proposal.reference_number }}: {{ proposal.title }}</p>
-    You can review this draft application <a href="{{ proposal_url }}">here</a> and submit this study to the FEtC-H after you have approved it. Note that in case minor revisions are necessary, you can adjust the study yourself before submitting it.
+    You can review this draft application <a href="{{ proposal_url }}">here</a> and submit this application to the FEtC-H after you have approved it. Note that in case minor revisions are necessary, you can adjust the application yourself before submitting it.
     <br />
     In case the application needs to be revised more substantially by {{ creator }}, we ask you to formally disapprove it in order for {{ creator }} to be able to revise it. In such a case, we ask you to inform {{ creator }} about this.
     <br />
     <br />
-    You can view all your supervised applications and their status <a href="{{ my_supervised }}">here</a>.
+    You can view all applications and their statuses, for which you are the researcher with final responsibility, <a href="{{ my_supervised }}">here</a>.
     <br />
     <br />
     {% if revision %}
         <strong>Please note</strong> that this involves a {{ revision_type | lower }} of a previous application.
         <br />
-        On the web portal you can check the differences between the current and previous application.
+        In the portal, you can check the differences between the current and previous application.
         <br />
     {% endif %}
 {% endblock %}

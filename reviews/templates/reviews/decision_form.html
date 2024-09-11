@@ -24,6 +24,13 @@
                             De aanvraag is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
                         {% endblocktrans %}
                     </p>
+                    {% if decision.is_final_decision and not decision.go %}
+                        <div class="alert alert-info">
+                            {% blocktrans trimmed %}
+                                <strong>Attentie:</strong> jij bent de laatste beoordelaar van deze aanvraag. Daarom kun je na het versturen je oordeel en commentaar niet meer bewerken. Controleer je antwoorden goed.
+                            {% endblocktrans %}
+                        </div>
+                    {% endif %}
                 {% else %}
                     <p>
                         {% blocktrans trimmed with title=proposal.title %}

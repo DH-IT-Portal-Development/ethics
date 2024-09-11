@@ -3,7 +3,7 @@
 {% block content_nl %}
 {% endblock %}
 
-Namens de FETC-GW, met de vriendelijke groeten,
+Namens de FETC-GW, met vriendelijke groeten,
 
 de FETC-GW secretaris,
 {{ secretary }}
