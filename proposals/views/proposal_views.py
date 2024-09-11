@@ -457,7 +457,7 @@ class ProposalResearchGoalFormView(
         if proposal.is_pre_approved:
             return reverse("proposals:pre_approved", args=(self.object.pk,))
         elif hasattr(proposal, "wmo"):
-            return reverse(f"proposals:wmo_update{pre_suffix}", args=(proposal.pk,))
+            return reverse(f"proposals:wmo_update{pre_suffix}", args=(proposal.wmo.pk,))
         else:
             return reverse(f"proposals:wmo_create{pre_suffix}", args=(proposal.pk,))
 

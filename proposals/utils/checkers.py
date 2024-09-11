@@ -209,14 +209,6 @@ class WMOItem(
                 args=[self.proposal.pk],
             )
 
-    def wmo_exists(
-        self,
-    ):
-        return hasattr(
-            self.proposal,
-            "wmo",
-        )
-
 
 class WMOChecker(
     Checker,
