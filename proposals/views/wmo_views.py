@@ -146,9 +146,12 @@ class WmoUpdatePreAssessment(PreAssessmentMixin, WmoUpdate):
 
 class WmoApplicationPreAssessment(PreAssessmentMixin, WmoApplication):
     def get_next_url(self):
-        """Different continue URL for pre-assessment Proposals"""
-        return reverse("proposals:submit_pre", args=(self.object.proposal.pk,))
-
+        """Continue to the definition of a Study if we have completed the Wmo application"""
+        wmo = self.object
+        if wmo.status == Wmo.WMOStatuses.WAITING:
+            return reverse("proposals:wmo_application", args=(wmo.pk,))
+        else:
+            return reverse("proposals:submit_pre", args=(wmo.proposal.pk,))
 
 ################
 # AJAX callbacks
