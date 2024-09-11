@@ -106,6 +106,13 @@ class OtherResearchersChecker(
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
+        if self.proposal.is_pre_assessment:
+            return [
+                GoalChecker(
+                    self.stepper,
+                    parent=self.parent,
+                )
+            ]
         return [
             FundingChecker(
                 self.stepper,
@@ -187,14 +194,18 @@ class WMOItem(
     def get_url(
         self,
     ):
+        if self.proposal.is_pre_assessment:
+            pre_suffix = "_pre"
+        else:
+            pre_suffix = ""
         if self.wmo:
             return reverse(
-                "proposals:wmo_update",
+                f"proposals:wmo_update{pre_suffix}",
                 args=[self.wmo.pk],
             )
         else:
             return reverse(
-                "proposals:wmo_create",
+                f"proposals:wmo_create{pre_suffix}",
                 args=[self.proposal.pk],
             )
 
@@ -228,10 +239,11 @@ class WMOChecker(
         This method should check the correctness of the
         WMO object.
         """
+        #TODO: implement WmoApplicationChecker
         # Just assume any WMO is correct as long as it exists
-        if self.item.wmo:
-            return [TrajectoriesChecker]
-        return []  # TODO next item
+        if self.proposal.is_pre_assessment:
+            return [SubmitChecker]
+        return [TrajectoriesChecker]
 
 
 class TrajectoriesChecker(
