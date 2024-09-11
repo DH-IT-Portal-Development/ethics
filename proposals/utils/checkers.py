@@ -2,6 +2,7 @@ from django.utils.translation import gettext as _
 from django.urls import reverse
 
 from proposals import forms as proposal_forms
+from proposals.models import Wmo
 from studies import forms as study_forms
 from interventions import forms as intervention_forms
 from observations import forms as observation_forms
@@ -250,11 +251,36 @@ class WMOChecker(
         This method should check the correctness of the
         WMO object.
         """
-        #TODO: implement WmoApplicationChecker
-        # Just assume any WMO is correct as long as it exists
+        if self.item.wmo.status != Wmo.WMOStatuses.NO_WMO:
+            return [WMOApplicationChecker(
+                self.stepper,
+                parent=self.item,
+            )]
         if self.proposal.is_pre_assessment:
             return [SubmitChecker]
         return [TrajectoriesChecker]
+
+class WMOApplicationChecker(ModelFormChecker):
+
+    title = _("WMO applicatie")
+    form_class = proposal_forms.WmoApplicationForm
+
+    def check(self):
+        self.stepper.items.append(self.make_stepper_item())
+        if self.proposal.wmo.status == Wmo.WMOStatuses.WAITING:
+            return []
+        if self.proposal.is_pre_assessment:
+            return [SubmitChecker]
+        return [TrajectoriesChecker]
+    
+    def get_url(self):
+        return reverse(
+            "proposals:wmo_application",
+            args=(self.proposal.wmo.pk,),
+        )
+    
+    def get_form_object(self):
+        return self.proposal.wmo
 
 
 class TrajectoriesChecker(
