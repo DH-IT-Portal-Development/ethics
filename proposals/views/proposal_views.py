@@ -238,11 +238,11 @@ class ChangeArchiveStatusView(GroupRequiredMixin, generic.RedirectView):
 ##########################
 
 
-class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
+class ProposalCreate(AllowErrorsOnBackbuttonMixin, CreateView):
     # Note: template_name is auto-generated to proposal_form.html
 
     success_message = _("Aanvraag %(title)s aangemaakt")
-    proposal_type_hint = "regular"
+    template_name = "proposals/proposal_form.html"
     form_class = ProposalForm
 
     def get_proposal(
@@ -270,6 +270,7 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
         context = super(ProposalCreate, self).get_context_data(**kwargs)
         context["create"] = True
         context["no_back"] = True
+        context["is_practice"] = self.get_proposal().is_practice()
         return context
 
     def get_next_url(self):
@@ -277,7 +278,7 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
 
 
 class ProposalUpdate(
-    ProposalMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+    ProposalMixin, AllowErrorsOnBackbuttonMixin, UpdateView
 ):
     form_class = ProposalForm
 

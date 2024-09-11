@@ -26,15 +26,18 @@ class ProposalTypeChecker(
 ):
 
     def check(self):
-        # TODO: check stepper.proposal_type_hint
-        # and proposal.is_pre_approved etc. for non-standard layouts
-        return self.regular_proposal()
+        """Each proposal type receives a specific create checker and layout"""
+        from .stepper import RegularProposalLayout, PreApprProposalLayout, PreAssProposalLayout
 
-    def regular_proposal(self):
-        from .stepper import RegularProposalLayout
-
-        self.stepper.layout = RegularProposalLayout
-        return [ProposalCreateChecker]
+        if self.proposal.is_pre_approved:
+            self.stepper.layout = PreApprProposalLayout
+            return [PreApprProposalCreateChecker]
+        elif self.proposal.is_pre_assessment:
+            self.stepper.layout = PreAssProposalLayout
+            return [PreAssProposalCreateChecker]
+        else:
+            self.stepper.layout = RegularProposalLayout
+            return [ProposalCreateChecker]
 
 
 class BasicDetailsItem(
@@ -51,50 +54,14 @@ class ProposalCreateChecker(
     form_class = proposal_forms.ProposalForm
 
     def get_url(self):
-        if self.proposal.pk:
-            return reverse(
-                "proposals:update",
-                args=[self.proposal.pk],
-            )
         return reverse(
-            "proposals:create",
+            "proposals:update",
+            args=[self.proposal.pk],
         )
 
     def check(self):
         self.parent = BasicDetailsItem(self.stepper)
         self.stepper.items.append(self.parent)
-        if self.proposal.pk:
-            return self.proposal_exists()
-        return self.new_proposal()
-
-    def new_proposal(self):
-        self.stepper.items.append(self.make_stepper_item())
-        placeholders = [
-            PlaceholderItem(
-                self.stepper,
-                title=_("Onderzoeker"),
-                parent=self.parent,
-            ),
-            PlaceholderItem(
-                self.stepper,
-                title=_("Andere onderzoekers"),
-                parent=self.parent,
-            ),
-            PlaceholderItem(
-                self.stepper,
-                title=_("Financiering"),
-                parent=self.parent,
-            ),
-            PlaceholderItem(
-                self.stepper,
-                title=_("Onderzoeksdoel"),
-                parent=self.parent,
-            ),
-        ]
-        self.stepper.items += placeholders
-        return []
-
-    def proposal_exists(self):
         stepper_item = ModelFormItem(
             self.stepper,
             title=self.title,

@@ -19,7 +19,6 @@ class Stepper(renderable):
     def __init__(
         self,
         proposal,
-        proposal_type_hint=None,
         request=None,
     ):
         self.proposal = proposal
@@ -29,10 +28,6 @@ class Stepper(renderable):
         # The stepper keeps track of the request to determine
         # which item is current
         self.request = request
-        # The type can be provided by the view for the case in which
-        # the proposal has not yet been created but we need to determine
-        # its type, i.e. the ProposalCreateViews
-        self.proposal_type_hint = proposal_type_hint
         self.items = []
         self.check_all(self.starting_checkers)
 
@@ -160,4 +155,15 @@ RegularProposalLayout = [
     ("attachments", _("Documenten")),
     ("data_management", _("Datamanagement")),
     ("submit", _("Indienen")),
+]
+
+PreApprProposalLayout = [
+    ("create", _("Basisgegevens")),
+    ("submit", _("Indienen")),
+]
+
+PreAssProposalLayout = [
+    ("create", _("Basisgegevens")),
+    ("wmo", _("WMO")),
+    ("submit", _("Indienen")),    
 ]
