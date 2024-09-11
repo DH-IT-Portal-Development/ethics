@@ -579,27 +579,6 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
         )
 
 
-class WmoCheckForm(TemplatedModelForm):
-    class Meta:
-        model = Wmo
-        fields = [
-            "metc",
-            "is_medical",
-        ]
-        widgets = {
-            "metc": BootstrapRadioSelect(),
-            "is_medical": BootstrapRadioSelect(),
-        }
-
-    def __init__(self, *args, **kwargs):
-        """
-        - Remove empty label from is_medical/is_behavioristic field and reset the choices
-        """
-        super(WmoCheckForm, self).__init__(*args, **kwargs)
-        self.fields["is_medical"].empty_label = None
-        self.fields["is_medical"].choices = YesNoDoubt.choices
-
-
 class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Wmo

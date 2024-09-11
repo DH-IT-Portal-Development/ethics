@@ -12,7 +12,7 @@ from main.utils import get_secretary
 from proposals.mixins import StepperContextMixin
 
 from ..models import Proposal, Wmo
-from ..forms import WmoForm, WmoApplicationForm, WmoCheckForm
+from ..forms import WmoForm, WmoApplicationForm
 
 
 #####################
@@ -110,11 +110,6 @@ class WmoApplication(
     def get_back_url(self):
         """Return to the Wmo overview"""
         return reverse("proposals:wmo_update", args=(self.object.pk,))
-
-
-class WmoCheck(generic.FormView):
-    form_class = WmoCheckForm
-    template_name = "proposals/wmo_check.html"
 
 
 ########################
