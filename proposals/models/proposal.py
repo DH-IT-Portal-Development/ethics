@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe, SafeString
 
-mark_safe_lazy = lazy(mark_safe, str)
+mark_safe_lazy = lazy(mark_safe, SafeString)
 
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from proposals.utils import available_urls, FilenameFactory, OverwriteStorage
