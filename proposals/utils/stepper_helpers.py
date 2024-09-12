@@ -180,10 +180,6 @@ class ModelFormChecker(
         # Overwrite for specific form_kwargs
 
         return {}
-    
-    def get_title(self):
-        # Overwrite for custom title (eg. studies, sessions etc.)
-        return self.title
 
 
 class ModelFormItem(
