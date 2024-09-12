@@ -16,7 +16,7 @@ from django.urls import reverse_lazy as reverse
 
 
 def validate_sessions_tasks(study):
-    """As we do currently not have individual tasks and sessions in the 
+    """As we do currently not have individual tasks and sessions in the
     stepper, these forms get instantiated and checked for errors separately
     in this function."""
 

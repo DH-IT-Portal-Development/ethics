@@ -277,9 +277,7 @@ class ProposalCreate(AllowErrorsOnBackbuttonMixin, CreateView):
         return reverse("proposals:researcher", args=(self.object.pk,))
 
 
-class ProposalUpdate(
-    ProposalMixin, AllowErrorsOnBackbuttonMixin, UpdateView
-):
+class ProposalUpdate(ProposalMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
     form_class = ProposalForm
 
     def form_valid(self, form):

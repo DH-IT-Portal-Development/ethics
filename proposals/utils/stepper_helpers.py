@@ -128,7 +128,7 @@ class ContainerItem(
         we say they are never current. The child is.
         """
         return False
-    
+
     def css_classes(self):
         css_classes = super().css_classes()
         if self.children[0].get_errors():
@@ -175,7 +175,7 @@ class ModelFormChecker(
     ):
         # Overwrite method for other objects
         return self.proposal
-    
+
     def get_form_kwargs(self):
         # Overwrite for specific form_kwargs
 
@@ -251,7 +251,7 @@ class ModelFormItem(
         might insert into this item.
         """
         return self.model_form.errors
-    
+
     def css_classes(self):
         css_classes = super().css_classes()
 
@@ -260,8 +260,6 @@ class ModelFormItem(
         else:
             css_classes += " complete"
         return css_classes
-        
-
 
 
 class UpdateOrCreateChecker(

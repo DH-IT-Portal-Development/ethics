@@ -165,5 +165,5 @@ PreApprProposalLayout = [
 PreAssProposalLayout = [
     ("create", _("Basisgegevens")),
     ("wmo", _("WMO")),
-    ("submit", _("Indienen")),    
+    ("submit", _("Indienen")),
 ]

@@ -110,9 +110,10 @@ class WmoApplication(
     def get_back_url(self):
         """Return to the Wmo overview"""
         return reverse("proposals:wmo_update", args=(self.object.pk,))
-    
+
     def get_proposal(self):
         return self.object.proposal
+
 
 class WmoCheck(generic.FormView):
     form_class = WmoCheckForm
@@ -152,6 +153,7 @@ class WmoApplicationPreAssessment(PreAssessmentMixin, WmoApplication):
             return reverse("proposals:wmo_application", args=(wmo.pk,))
         else:
             return reverse("proposals:submit_pre", args=(wmo.proposal.pk,))
+
 
 ################
 # AJAX callbacks

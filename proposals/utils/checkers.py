@@ -28,7 +28,11 @@ class ProposalTypeChecker(
 
     def check(self):
         """Each proposal type receives a specific create checker and layout"""
-        from .stepper import RegularProposalLayout, PreApprProposalLayout, PreAssProposalLayout
+        from .stepper import (
+            RegularProposalLayout,
+            PreApprProposalLayout,
+            PreAssProposalLayout,
+        )
 
         if self.proposal.is_pre_approved:
             self.stepper.layout = PreApprProposalLayout
@@ -67,7 +71,7 @@ class ProposalCreateChecker(
             parent=self.parent,
             form_object=self.proposal,
             form_class=self.form_class,
-            form_kwargs = {},
+            form_kwargs={},
             url_func=self.get_url,
         )
         self.stepper.items.append(
@@ -158,10 +162,12 @@ class GoalChecker(
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
         if self.proposal.is_pre_approved:
-            return [PreApprovedChecker(
-                self.stepper,
-                parent=self.parent,
-            )]
+            return [
+                PreApprovedChecker(
+                    self.stepper,
+                    parent=self.parent,
+                )
+            ]
         return [WMOChecker]
 
     def get_url(self):
@@ -170,27 +176,27 @@ class GoalChecker(
             args=(self.proposal.pk,),
         )
 
+
 class PreApprovedChecker(
     ModelFormChecker,
 ):
-    
+
     title = _("Eerdere toetsing")
     form_class = proposal_forms.PreApprovedForm
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
         return [SubmitChecker]
-    
+
     def get_url(self):
         return reverse(
             "proposals:pre_approved",
             args=(self.proposal.pk,),
         )
 
-class WMOChecker(
-    ModelFormChecker
-):
-    
+
+class WMOChecker(ModelFormChecker):
+
     title = "WMO"
     form_class = proposal_forms.WmoForm
     location = "wmo"
@@ -215,20 +221,22 @@ class WMOChecker(
         WMO object.
         """
         if self.proposal.wmo.status != Wmo.WMOStatuses.NO_WMO:
-            return [WMOApplicationChecker(
-                self.stepper,
-                parent=self.item,
-            )]
+            return [
+                WMOApplicationChecker(
+                    self.stepper,
+                    parent=self.item,
+                )
+            ]
         if self.proposal.is_pre_assessment:
             return [SubmitChecker]
         return [TrajectoriesChecker]
-    
+
     def get_url(self):
         if self.object_exists():
             return self.get_update_url()
         else:
             return self.get_create_url()
-    
+
     def object_exists(
         self,
     ):
@@ -269,6 +277,7 @@ class WMOChecker(
         else:
             return None
 
+
 class WMOApplicationChecker(ModelFormChecker):
 
     title = _("WMO applicatie")
@@ -281,7 +290,7 @@ class WMOApplicationChecker(ModelFormChecker):
         if self.proposal.is_pre_assessment:
             return [SubmitChecker]
         return [TrajectoriesChecker]
-    
+
     def get_url(self):
         if self.proposal.is_pre_assessment:
             pre_suffix = "_pre"
@@ -291,7 +300,7 @@ class WMOApplicationChecker(ModelFormChecker):
             f"proposals:wmo_application{pre_suffix}",
             args=(self.proposal.wmo.pk,),
         )
-    
+
     def get_form_object(self):
         return self.proposal.wmo
 
@@ -342,11 +351,12 @@ class TrajectoriesChecker(
             "proposals:study_start",
             args=[self.proposal.pk],
         )
-    
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["proposal"] = self.proposal
         return kwargs
+
 
 class StudyChecker(
     Checker,
@@ -451,14 +461,15 @@ class ParticipantsChecker(
                 self.study.pk,
             ],
         )
-    
+
     def get_form_object(self):
         return self.study
-    
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["proposal"] = self.proposal
         return kwargs
+
 
 class DesignChecker(
     ModelFormChecker,
@@ -520,7 +531,7 @@ class StudyEndChecker(
                 self.study.pk,
             ],
         )
-    
+
     def get_form_object(self):
         return self.study
 
@@ -559,7 +570,7 @@ class InterventionChecker(
         self,
     ):
         return self.study.intervention
-    
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["study"] = self.study
@@ -633,7 +644,7 @@ class ObservationChecker(
         self,
     ):
         return self.study.observation
-    
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["study"] = self.study
@@ -879,7 +890,7 @@ class SubmitChecker(
                 self.stepper.proposal.pk,
             ],
         )
-    
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["proposal"] = self.proposal

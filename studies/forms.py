@@ -233,8 +233,8 @@ class StudyDesignForm(TemplatedModelForm):
         Check for conditional requirements:
         - at least one of the fields has to be checked
         """
-        #NOTE: this clean still does not get called during validation ...
-        #WHYYYY????
+        # NOTE: this clean still does not get called during validation ...
+        # WHYYYY????
         cleaned_data = super(StudyDesignForm, self).clean()
 
         # This solution is a bit funky, but by using add_error(), it appends our
