@@ -115,9 +115,6 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
             "feedback": BootstrapRadioSelect(choices=YES_NO),
         }
 
-    def __init__(self, *args, **kwargs):
-        super(TaskForm, self).__init__(*args, **kwargs)
-
     def get_soft_validation_fields(self):
         # All fields should be validated softly
         return self.fields.keys()
