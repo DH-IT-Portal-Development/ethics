@@ -156,6 +156,7 @@ class ModelFormChecker(
             parent=self.parent,
             form_object=self.get_form_object(),
             form_class=self.form_class,
+            form_kwargs=self.get_form_kwargs(),
             url_func=self.get_url,
             location=self.location,
         )
@@ -166,6 +167,15 @@ class ModelFormChecker(
     ):
         # Overwrite method for other objects
         return self.proposal
+    
+    def get_form_kwargs(self):
+        # Overwrite for specific form_kwargs
+
+        return {}
+    
+    def get_title(self):
+        # Overwrite for custom title (eg. studies, sessions etc.)
+        return self.title
 
 
 class ModelFormItem(
@@ -178,6 +188,9 @@ class ModelFormItem(
         )
         self.form_object = kwargs.pop(
             "form_object",
+        )
+        self.form_kwargs = kwargs.pop(
+            "form_kwargs",
         )
         get_url = kwargs.pop(
             "url_func",
@@ -211,7 +224,7 @@ class ModelFormItem(
         This method can be overidden to provide extra kwargs to the form. But
         kwargs that pop up often can also be added to this base class.
         """
-        kwargs = {}
+        kwargs = self.form_kwargs
         if issubclass(self.form_class, UserKwargModelFormMixin):
             kwargs["user"] = self.stepper.request.user
         return kwargs
@@ -221,7 +234,7 @@ class ModelFormItem(
             raise ImproperlyConfigured("form_class must be defined")
         kwargs = self.get_form_kwargs()
         model_form = self.form_class(
-            instance=self.get_form_object(),
+            instance=self.form_object,
             **kwargs,
         )
         return model_form

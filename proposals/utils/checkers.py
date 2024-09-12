@@ -67,6 +67,7 @@ class ProposalCreateChecker(
             parent=self.parent,
             form_object=self.proposal,
             form_class=self.form_class,
+            form_kwargs = {},
             url_func=self.get_url,
         )
         self.stepper.items.append(
@@ -333,7 +334,11 @@ class TrajectoriesChecker(
             "proposals:study_start",
             args=[self.proposal.pk],
         )
-
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["proposal"] = self.proposal
+        return kwargs
 
 class StudyChecker(
     Checker,
@@ -438,7 +443,14 @@ class ParticipantsChecker(
                 self.study.pk,
             ],
         )
-
+    
+    def get_form_object(self):
+        return self.study
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["proposal"] = self.proposal
+        return kwargs
 
 class DesignChecker(
     ModelFormChecker,
@@ -500,6 +512,9 @@ class StudyEndChecker(
                 self.study.pk,
             ],
         )
+    
+    def get_form_object(self):
+        return self.study
 
 
 class InterventionChecker(
@@ -536,6 +551,11 @@ class InterventionChecker(
         self,
     ):
         return self.study.intervention
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["study"] = self.study
+        return kwargs
 
     def get_create_url(
         self,
@@ -605,6 +625,11 @@ class ObservationChecker(
         self,
     ):
         return self.study.observation
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["study"] = self.study
+        return kwargs
 
 
 class SessionsChecker(
@@ -846,3 +871,9 @@ class SubmitChecker(
                 self.stepper.proposal.pk,
             ],
         )
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["proposal"] = self.proposal
+        kwargs["request"] = self.stepper.request
+        return kwargs

@@ -13,20 +13,9 @@ from interventions.forms import InterventionForm
 from observations.forms import ObservationForm
 from studies.forms import StudyForm, StudyDesignForm, StudyEndForm
 from tasks.forms import SessionUpdateForm, SessionEndForm, TaskForm, SessionOverviewForm
-from ..forms import (
-    ProposalForm,
-    ResearcherForm,
-    OtherResearchersForm,
-    FundingForm,
-    ResearchGoalForm,
-    PreApprovedForm,
-    WmoForm,
-    StudyStartForm,
-    WmoApplicationForm,
-    TranslatedConsentForms,
-    ProposalDataManagementForm,
-)
+
 from ..models import Proposal
+from proposals.utils.stepper import Stepper
 
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy as reverse
@@ -269,54 +258,22 @@ def _build_forms(proposal: Proposal) -> OrderedDict:
     return forms
 
 
-def get_form_errors(proposal: Proposal) -> list:
-    forms = _build_forms(proposal)
+def get_form_errors(stepper: Stepper) -> list:
 
     troublesome_pages = []
+    study_titles = [study.name for study in stepper.proposal.study_set.all()]
 
-    for key, form in forms.items():
-        form_class, url, page_name, obj = form
-        try:
-            kwargs = {
-                "instance": obj,
-            }
-
-            if issubclass(form_class, UserKwargModelFormMixin):
-                # This is a bit ugly of course, as we should be getting the
-                # authenticated used. But as only the owner will use this method,
-                # it's the same thing.
-                kwargs["user"] = proposal.created_by
-
-            if issubclass(form_class, (StudyStartForm, StudyForm)):
-                kwargs["proposal"] = proposal
-
-            if issubclass(
-                form_class,
-                (
-                    InterventionForm,
-                    ObservationForm,
-                    SessionUpdateForm,
-                ),
-            ):
-                kwargs["study"] = obj.study
-
-            instance = form_class(**kwargs)
-
-            for field, error in instance.errors.items():
-                if field in instance.fields or field == "__all__":
-                    troublesome_pages.append(
-                        {
-                            "url": url,
-                            "page_name": page_name,
-                        }
-                    )
-                    break  # prevent duplicates for this field
-        except:
-            # If for some reason validation completely fails, we can assume
-            # _something_ is not right and the page contains an error.
+    for item in stepper.items:
+        if hasattr(item, "form_class") and item.form_class == SessionOverviewForm:
+            troublesome_pages.extend(validate_sessions_tasks(item.study))
+        if item.get_errors():
+            if item.parent and item.parent.title in study_titles:
+                page_name = f"{item.parent.title}: {item.title}"
+            else:
+                page_name = item.title
             troublesome_pages.append(
                 {
-                    "url": url,
+                    "url": item.get_url(),
                     "page_name": page_name,
                 }
             )

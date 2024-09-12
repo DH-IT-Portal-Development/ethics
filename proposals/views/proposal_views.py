@@ -588,7 +588,7 @@ class ProposalSubmit(
     def get_context_data(self, **kwargs):
         context = super(ProposalSubmit, self).get_context_data(**kwargs)
 
-        context["troublesome_pages"] = get_form_errors(self.get_object())
+        context["troublesome_pages"] = get_form_errors(context["stepper"])
         context["pagenr"] = self._get_page_number()
         context["is_supervisor_edit_phase"] = self.is_supervisor_edit_phase()
         context["start_date_warning"] = self.check_start_date()
