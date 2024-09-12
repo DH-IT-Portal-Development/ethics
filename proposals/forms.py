@@ -881,9 +881,6 @@ class TranslatedConsentForms(SoftValidationMixin, ConditionalModelForm):
 
     _soft_validation_fields = ["translated_forms", "translated_forms_languages"]
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     def clean(self):
         cleaned_data = super(TranslatedConsentForms, self).clean()
 
