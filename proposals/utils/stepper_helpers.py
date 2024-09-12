@@ -67,7 +67,7 @@ class StepperItem(
         return context
 
     def get_url(self):
-        return "#"
+        return ""
 
     def get_errors(self):
         return []
@@ -80,7 +80,7 @@ class StepperItem(
             classes.append(
                 "active",
             )
-        if self.disabled:
+        if not self.get_url():
             classes.append(
                 "disabled",
             )
