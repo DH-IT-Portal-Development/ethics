@@ -187,60 +187,22 @@ class PreApprovedChecker(
             args=(self.proposal.pk,),
         )
 
-class WMOItem(
-    StepperItem,
-):
-    location = "wmo"
-    title = _("WMO")
-
-    def __init__(
-        self,
-        *args,
-        **kwargs,
-    ):
-        super().__init__(*args, **kwargs)
-        self.proposal = self.stepper.proposal
-        self.wmo = self.get_wmo()
-
-    def get_wmo(
-        self,
-    ):
-        if hasattr(
-            self.proposal,
-            "wmo",
-        ):
-            return self.proposal.wmo
-        return None
-
-    def get_url(
-        self,
-    ):
-        if self.proposal.is_pre_assessment:
-            pre_suffix = "_pre"
-        else:
-            pre_suffix = ""
-        if self.wmo:
-            return reverse(
-                f"proposals:wmo_update{pre_suffix}",
-                args=[self.wmo.pk],
-            )
-        else:
-            return reverse(
-                f"proposals:wmo_create{pre_suffix}",
-                args=[self.proposal.pk],
-            )
-
-
 class WMOChecker(
-    Checker,
+    ModelFormChecker
 ):
+    
+    title = "WMO"
+    form_class = proposal_forms.WmoForm
+    location = "wmo"
 
     def check(
         self,
     ):
-        self.item = WMOItem(self.stepper)
-        self.stepper.items.append(self.item)
-        if self.item.wmo:
+        self.item = self.make_stepper_item()
+        self.stepper.items.append(
+            self.item,
+        )
+        if self.object_exists():
             return self.check_wmo()
         else:
             return []
@@ -252,7 +214,7 @@ class WMOChecker(
         This method should check the correctness of the
         WMO object.
         """
-        if self.item.wmo.status != Wmo.WMOStatuses.NO_WMO:
+        if self.proposal.wmo.status != Wmo.WMOStatuses.NO_WMO:
             return [WMOApplicationChecker(
                 self.stepper,
                 parent=self.item,
@@ -260,6 +222,52 @@ class WMOChecker(
         if self.proposal.is_pre_assessment:
             return [SubmitChecker]
         return [TrajectoriesChecker]
+    
+    def get_url(self):
+        if self.object_exists():
+            return self.get_update_url()
+        else:
+            return self.get_create_url()
+    
+    def object_exists(
+        self,
+    ):
+        return hasattr(
+            self.proposal,
+            "wmo",
+        )
+
+    def get_create_url(
+        self,
+    ):
+        if self.proposal.is_pre_assessment:
+            url = "proposals:wmo_create_pre"
+        else:
+            url = "proposals:wmo_create"
+        return reverse(
+            url,
+            args=[self.proposal.pk],
+        )
+
+    def get_update_url(
+        self,
+    ):
+        if self.proposal.is_pre_assessment:
+            url = "proposals:wmo_update_pre"
+        else:
+            url = "proposals:wmo_update"
+        return reverse(
+            url,
+            args=[self.proposal.wmo.pk],
+        )
+
+    def get_form_object(
+        self,
+    ):
+        if self.object_exists():
+            return self.proposal.wmo
+        else:
+            return None
 
 class WMOApplicationChecker(ModelFormChecker):
 
