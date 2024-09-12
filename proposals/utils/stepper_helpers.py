@@ -80,7 +80,7 @@ class StepperItem(
             classes.append(
                 "active",
             )
-        if not self.get_url():
+        elif not self.get_url():
             classes.append(
                 "disabled",
             )
@@ -128,6 +128,14 @@ class ContainerItem(
         we say they are never current. The child is.
         """
         return False
+    
+    def css_classes(self):
+        css_classes = super().css_classes()
+        if self.children[0].get_errors():
+            css_classes += " incomplete"
+        else:
+            css_classes += " complete"
+        return css_classes
 
 
 class ModelFormChecker(
@@ -247,6 +255,17 @@ class ModelFormItem(
         might insert into this item.
         """
         return self.model_form.errors
+    
+    def css_classes(self):
+        css_classes = super().css_classes()
+
+        if self.get_errors():
+            css_classes += " incomplete"
+        else:
+            css_classes += " complete"
+        return css_classes
+        
+
 
 
 class UpdateOrCreateChecker(
