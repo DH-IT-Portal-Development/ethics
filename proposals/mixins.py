@@ -15,23 +15,62 @@ from .forms import ProposalForm
 from .utils.proposal_utils import pdf_link_callback
 
 
-class ProposalMixin(UserFormKwargsMixin):
-    model = Proposal
-    form_class = ProposalForm
+class StepperContextMixin:
+    """
+    Includes a stepper object in the view's context
+    """
 
-    def get_next_url(self):
-        return reverse("proposals:researcher", args=(self.object.pk,))
+    def get_context_data(self, *args, **kwargs):
+        # Importing here to prevent circular import
+        from .utils.stepper import Stepper
+
+        context = super().get_context_data(*args, **kwargs)
+        # Try to determine proposal
+        proposal = Proposal()
+        if hasattr(self, "get_proposal"):
+            proposal = self.get_proposal()
+        # Initialize and insert stepper object
+        stepper = Stepper(
+            proposal,
+            request=self.request,
+        )
+        context["stepper"] = stepper
+        return context
 
 
-class ProposalContextMixin:
+class ProposalContextMixin(
+    StepperContextMixin,
+):
     def current_user_is_supervisor(self):
-        return self.object.supervisor == self.request.user
+        return self.get_proposal().supervisor == self.request.user
+
+    def get_proposal(
+        self,
+    ):
+        try:
+            if self.model is Proposal:
+                return self.get_object()
+        except AttributeError:
+            raise RuntimeError(
+                "Couldn't find proposal object for ProposalContextMixin",
+            )
 
     def get_context_data(self, **kwargs):
         context = super(ProposalContextMixin, self).get_context_data(**kwargs)
         context["is_supervisor"] = self.current_user_is_supervisor()
-        context["is_practice"] = self.object.is_practice()
+        context["is_practice"] = self.get_proposal().is_practice()
         return context
+
+
+class ProposalMixin(
+    ProposalContextMixin,
+):
+    model = Proposal
+
+    def get_proposal(
+        self,
+    ):
+        return self.get_object()
 
 
 class PDFTemplateResponseMixin(TemplateResponseMixin):

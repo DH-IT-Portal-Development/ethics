@@ -23,12 +23,17 @@ from ..forms import (
 )
 from ..models import Study, Documents
 from ..utils import check_has_adults, check_necessity_required, get_study_progress
+from ..mixins import StudyMixin
 
 
 #######################
 # CRUD actions on Study
 #######################
-class StudyUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
+class StudyUpdate(
+    StudyMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
+):
     """Updates a Study from a StudyForm"""
 
     model = Study
@@ -39,7 +44,7 @@ class StudyUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
         """Setting the progress on the context"""
         context = super(StudyUpdate, self).get_context_data(**kwargs)
         context["progress"] = get_study_progress(self.object)
-        context["proposal"] = self.object.proposal
+        context["proposal"] = self.get_proposal()
         return context
 
     def get_form_kwargs(self):
@@ -65,7 +70,9 @@ class StudyUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
 ###############
 # Other actions
 ###############
-class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView, generic.edit.FormMixin):
+class StudyDesign(
+    StudyMixin, AllowErrorsOnBackbuttonMixin, UpdateView, generic.edit.FormMixin
+):
     model = Study
     form_class = StudyDesignForm
     success_message = _("Traject opgeslagen")
@@ -134,7 +141,11 @@ class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView, generic.edit.FormMix
         return reverse("studies:update", args=(self.kwargs["pk"],))
 
 
-class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
+class StudyEnd(
+    StudyMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
+):
     """
     Completes a Study
     """
