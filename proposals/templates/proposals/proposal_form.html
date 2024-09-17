@@ -8,10 +8,10 @@
 {% endblock %}
 
 {% block stepper %}
-    {% if create %}
-        <!--No stepper on creation-->
-    {% else %}
+    {% if stepper %}
         {% include stepper %}
+    {% else %}
+        <!--No stepper on creation-->
     {% endif %}
 {% endblock %}
 
