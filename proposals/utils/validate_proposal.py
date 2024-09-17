@@ -75,8 +75,6 @@ def get_form_errors(stepper: Stepper) -> list:
     multiple_studies = len(stepper.proposal.study_set.all()) > 1 
 
     for item in stepper.items:
-        if hasattr(item, "form_class") and item.form_class == SessionOverviewForm:
-            troublesome_pages.extend(validate_sessions_tasks(item.study, multiple_studies))
         if item.get_errors():
             if multiple_studies and item.form_class in study_forms:
                 page_name = f"{item.parent.title}: {item.title}"
@@ -88,5 +86,7 @@ def get_form_errors(stepper: Stepper) -> list:
                     "page_name": page_name,
                 }
             )
+        if hasattr(item, "form_class") and item.form_class == SessionOverviewForm:
+            troublesome_pages.extend(validate_sessions_tasks(item.study, multiple_studies))
 
     return troublesome_pages
