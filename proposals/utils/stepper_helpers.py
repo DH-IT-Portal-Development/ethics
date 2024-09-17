@@ -44,13 +44,12 @@ class StepperItem(
     title = "Stepper item"
     location = None
 
-    def __init__(self, stepper, parent=None, disabled=False, title=None, location=None):
+    def __init__(self, stepper, parent=None, title=None, location=None):
         self.stepper = stepper
         self.proposal = stepper.proposal
         self.children = []
         self.parent = parent
         self.available = False
-        self.disabled = disabled
         # Don't override default location if not provided explicitly
         if location:
             self.location = location
@@ -80,10 +79,6 @@ class StepperItem(
             classes.append(
                 "active",
             )
-        elif not self.get_url():
-            classes.append(
-                "disabled",
-            )
         return " ".join(classes)
 
     def is_current(self, request):
@@ -92,6 +87,11 @@ class StepperItem(
         is currently on.
         """
         if request.path == self.get_url():
+            return True
+        return False
+    
+    def is_disabled(self):
+        if not self.get_url():
             return True
         return False
 
