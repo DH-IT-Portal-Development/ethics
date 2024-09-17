@@ -7,6 +7,9 @@ Used for the submit page, to check if a user has completed the proposal.
 """
 
 from tasks.forms import SessionUpdateForm, SessionEndForm, TaskForm, SessionOverviewForm
+from studies.forms import StudyForm, StudyDesignForm, StudyEndForm
+from observations.forms import ObservationForm
+from interventions.forms import InterventionForm
 
 from ..models import Proposal
 from proposals.utils.stepper import Stepper
@@ -15,7 +18,7 @@ from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy as reverse
 
 
-def validate_sessions_tasks(study):
+def validate_sessions_tasks(study, multiple_studies):
     """As we do currently not have individual tasks and sessions in the
     stepper, these forms get instantiated and checked for errors separately
     in this function."""
@@ -29,8 +32,7 @@ def validate_sessions_tasks(study):
             troublesome_session_pages.append(
                 {
                     "url": reverse("tasks:session_update", args=[session.pk]),
-                    "page_name": _("{}: sessie {}").format(
-                        study.name,
+                    "page_name": _("Sessie {}").format(
                         session.order,
                     ),
                 }
@@ -40,8 +42,7 @@ def validate_sessions_tasks(study):
                     troublesome_session_pages.append(
                         {
                             "url": reverse("tasks:update", args=[task.pk]),
-                            "page_name": _("{}: sessie {}, taak {}").format(
-                                study.name,
+                            "page_name": _("Sessie {}, taak {}").format(
                                 session.order,
                                 task.order,
                             ),
@@ -52,11 +53,17 @@ def validate_sessions_tasks(study):
             troublesome_session_pages.append(
                 {
                     "url": reverse("tasks:session_end", args=[session.pk]),
-                    "page_name": _("{}: sessie {} overzicht").format(
-                        study.name,
+                    "page_name": _("Sessie {} overzicht").format(
                         session.order,
                     ),
                 }
+            )
+            
+    if multiple_studies:
+        for dict in troublesome_session_pages:
+            dict["page_name"] = "{}: {}".format(
+                study.name,
+                dict["page_name"],
             )
     return troublesome_session_pages
 
@@ -64,13 +71,14 @@ def validate_sessions_tasks(study):
 def get_form_errors(stepper: Stepper) -> list:
 
     troublesome_pages = []
-    study_titles = [study.name for study in stepper.proposal.study_set.all()]
+    study_forms = [StudyForm, StudyEndForm, StudyDesignForm, InterventionForm, ObservationForm, SessionOverviewForm]
+    multiple_studies = len(stepper.proposal.study_set.all()) > 1 
 
     for item in stepper.items:
         if hasattr(item, "form_class") and item.form_class == SessionOverviewForm:
-            troublesome_pages.extend(validate_sessions_tasks(item.study))
+            troublesome_pages.extend(validate_sessions_tasks(item.study, multiple_studies))
         if item.get_errors():
-            if item.parent and item.parent.title in study_titles:
+            if multiple_studies and item.form_class in study_forms:
                 page_name = f"{item.parent.title}: {item.title}"
             else:
                 page_name = item.title
