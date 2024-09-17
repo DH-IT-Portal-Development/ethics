@@ -1034,8 +1034,7 @@ def create_context_pdf(context, model):
                 for num, document in enumerate(extra_documents):
                     sections.append(ExtraDocumentsSection(document, num))
 
-                if model.dmp_file:
-                    sections.append(DMPFileSection(model))
+                sections.append(DMPFileSection(model))
 
     sections.append(EmbargoSection(model))
     sections.append(CommentsSection(model))
@@ -1209,14 +1208,13 @@ def create_context_diff(context, old_proposal, new_proposal):
                             )
                         )
 
-                if old_proposal.dmp_file or new_proposal.dmp_file:
-                    sections.append(
-                        DiffSection(
-                            *multi_sections(
-                                DMPFileSection, [old_proposal, new_proposal]
-                            )
+                sections.append(
+                    DiffSection(
+                        *multi_sections(
+                            DMPFileSection, [old_proposal, new_proposal]
                         )
                     )
+                )
 
     sections.append(
         DiffSection(EmbargoSection(old_proposal), EmbargoSection(new_proposal))
