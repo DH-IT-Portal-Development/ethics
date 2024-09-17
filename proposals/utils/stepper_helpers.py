@@ -131,8 +131,11 @@ class ContainerItem(
 
     def css_classes(self):
         css_classes = super().css_classes()
-        if self.children[0].get_errors():
-            css_classes += " incomplete"
+        child_errors = []
+        for child in self.children:
+            child_errors += child.get_errors()
+        if child_errors != []:
+            css_classes += "incomplete"
         else:
             css_classes += " complete"
         return css_classes
