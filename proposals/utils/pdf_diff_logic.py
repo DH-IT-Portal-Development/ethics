@@ -1210,9 +1210,7 @@ def create_context_diff(context, old_proposal, new_proposal):
 
                 sections.append(
                     DiffSection(
-                        *multi_sections(
-                            DMPFileSection, [old_proposal, new_proposal]
-                        )
+                        *multi_sections(DMPFileSection, [old_proposal, new_proposal])
                     )
                 )
 
