@@ -1,0 +1,15 @@
+.sass-cache/
+*.css.map
+*.sass.map
+*.scss.map
+!dist/css/*.css.map
+
+node_modules
+vite.config.d.ts
+*.log*
+.cache
+.output
+.env
+generated
+
+.idea

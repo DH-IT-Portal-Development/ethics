@@ -2,11 +2,6 @@ from django.urls import path, include
 
 from .views.proposal_views import (
     CompareDocumentsView,
-    MyConceptsView,
-    MyPracticeView,
-    MySubmittedView,
-    MyCompletedView,
-    MySupervisedView,
     MyProposalsView,
     ProposalCreate,
     ProposalUpdate,
@@ -95,12 +90,7 @@ urlpatterns = [
             ]
         ),
     ),
-    path("my_concepts/", MyConceptsView.as_view(), name="my_concepts"),
-    path("my_practice/", MyPracticeView.as_view(), name="my_practice"),
-    path("my_submitted/", MySubmittedView.as_view(), name="my_submitted"),
-    path("my_completed/", MyCompletedView.as_view(), name="my_completed"),
-    path("my_supervised/", MySupervisedView.as_view(), name="my_supervised"),
-    path("my_archive/", MyProposalsView.as_view(), name="my_archive"),
+    path("my_proposals/", MyProposalsView.as_view(), name="my_proposals"),
     # Proposal
     path(
         "create/",

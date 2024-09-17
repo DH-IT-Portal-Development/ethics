@@ -42,7 +42,7 @@
                 {% endfor %}
                 <div class="text-end">
                     <a class="btn btn-sm btn-outline-secondary btn-arrow-right"
-                       href="{% url 'proposals:my_archive' %}">{% trans "Bekijk al mijn aanvragen" %}</a>
+                       href="{% url 'proposals:my_proposals' %}">{% trans "Bekijk al mijn aanvragen" %}</a>
                 </div>
             {% endif %}
         </div>
@@ -87,7 +87,7 @@
         </div>
         <div class="uu-hero text-bg-light justify-content-md-between justify-content-center flex-wrap gap-3">
             <a class="btn btn-outline-secondary"
-               href="{% url 'proposals:my_archive' %}">{% trans "Bekijk mijn aanvragen" %}</a>
+               href="{% url 'proposals:my_proposals' %}">{% trans "Bekijk mijn aanvragen" %}</a>
             <a class="btn btn-outline-secondary" href="{% url 'proposals:start' %}">{% trans "Nieuwe aanvraag starten" %}</a>
             <a class="btn btn-outline-secondary"
                href="{% url 'proposals:copy_revision' %}">{% trans "Nieuwe revisie starten" %}</a>

@@ -7,7 +7,7 @@ from braces.views import GroupRequiredMixin, LoginRequiredMixin, UserFormKwargsM
 from django.conf import settings
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django.http import FileResponse
@@ -15,6 +15,7 @@ from django.http import FileResponse
 # from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
 
+from cdh.vue3.components.uu_list import DDVDate, DDVListView, DDVString
 from main.utils import get_document_contents, get_secretary, is_secretary
 from main.views import (
     AllowErrorsOnBackbuttonMixin,
@@ -30,6 +31,7 @@ from proposals.utils.pdf_diff_logic import create_context_pdf, create_context_di
 from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
 from studies.models import Documents
+from ..api.views import ProposalApiView
 from ..copy import copy_proposal
 from ..forms import (
     ProposalConfirmationForm,
@@ -84,7 +86,22 @@ class BaseProposalsView(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
-class MyProposalsView(BaseProposalsView):
+class MyProposalsView(LoginRequiredMixin, DDVListView):
+    template_name = "proposals/proposal_list.html"
+    model = Proposal
+    data_uri = reverse_lazy("proposals:api:my_proposals")
+    data_view = ProposalApiView
+    columns = [
+        DDVString(
+            field="title",
+            label="Project",
+        ),
+        DDVString(
+            field="reference_number",
+            label="Ref.Num",
+            css_classes="fw-bold text-danger",
+        ),
+    ]
     title = _("Mijn aanvraag")
     body = _("Dit overzicht toont al je aanvragen.")
     is_modifiable = True
@@ -93,84 +110,14 @@ class MyProposalsView(BaseProposalsView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # TODO: WHAAAA
+        context["title"] = self.title
+        context["body"] = self.body
+        context["modifiable"] = self.is_modifiable
+        context["submitted"] = self.is_submitted
+        context["supervised"] = self.contains_supervised
         context["data_url"] = reverse(
-            "proposals:api:my_archive",
-        )
-        return context
-
-
-class MyConceptsView(BaseProposalsView):
-    title = _("Mijn conceptaanvragen")
-    body = _("Dit overzicht toont al je nog niet ingediende aanvragen.")
-    is_modifiable = True
-    is_submitted = False
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["data_url"] = reverse(
-            "proposals:api:my_concepts",
-        )
-        return context
-
-
-class MySubmittedView(BaseProposalsView):
-    title = _("Mijn ingediende aanvragen")
-    body = _("Dit overzicht toont al je ingediende aanvragen.")
-    is_modifiable = False
-    is_submitted = True
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["data_url"] = reverse(
-            "proposals:api:my_submitted",
-        )
-        return context
-
-
-class MyCompletedView(BaseProposalsView):
-    title = _("Mijn afgehandelde aanvragen")
-    body = _("Dit overzicht toont al je beoordeelde aanvragen.")
-    is_modifiable = False
-    is_submitted = True
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["data_url"] = reverse(
-            "proposals:api:my_completed",
-        )
-        return context
-
-
-class MySupervisedView(BaseProposalsView):
-    title = _("Mijn aanvragen als eindverantwoordelijke")
-    body = _(
-        "Dit overzicht toont alle aanvragen waarvan je eindverantwoordelijke " "bent."
-    )
-    is_modifiable = True
-    is_submitted = True
-    contains_supervised = True
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["data_url"] = reverse(
-            "proposals:api:my_supervised",
-        )
-        return context
-
-
-class MyPracticeView(BaseProposalsView):
-    title = _("Mijn oefenaanvragen")
-    body = _(
-        "Dit overzicht toont alle oefenaanvragen waar je als student, \
-onderzoeker of eindverantwoordelijke bij betrokken bent."
-    )
-    is_modifiable = True
-    is_submitted = False
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["data_url"] = reverse(
-            "proposals:api:my_practice",
+            "proposals:api:my_proposals",
         )
         return context
 

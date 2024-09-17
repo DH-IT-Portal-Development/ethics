@@ -680,7 +680,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         """
         Returns the type of a Study: either normal, revision, amendment, preliminary assessment or practice
         """
-        result = _("Normaal")
+        result = None
         amendment_or_revision = self.amendment_or_revision()
         if amendment_or_revision is not None:
             result = amendment_or_revision
@@ -692,6 +692,17 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
             result = _("Extern getoetst")
 
         return result
+
+    def short_status(self):
+        """Returns a short status for this Proposal"""
+        return {
+            self.Statuses.DRAFT: _("Concept"),
+            self.Statuses.SUBMITTED_TO_SUPERVISOR: _("Naar eindverantwoordelijke"),
+            self.Statuses.SUBMITTED: _("Naar FETC-GW"),
+            self.Statuses.DECISION_MADE: _("Beoordeeld"),
+            self.Statuses.WMO_DECISION_MADE: _("Beoordeeld"),
+        }[self.status]
+
 
     def supervisor_decision(self):
         """Returns the Decision of the supervisor for this Proposal (if any and in current stage)"""

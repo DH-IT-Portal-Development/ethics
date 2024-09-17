@@ -1,0 +1,47 @@
+{
+    "root": true,
+    "extends": [
+        "eslint:recommended",
+        "plugin:vue/vue3-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+    ],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "parser": "@typescript-eslint/parser",
+        "sourceType": "module",
+        "extraFileExtensions": [".vue"]
+    },
+    "overrides": [
+        {
+          "files": ["*.ts"],
+
+          "parserOptions": {
+            "project": ["./tsconfig.json"] // Specify it only for TypeScript files
+          }
+        }
+      ],
+    "plugins": [
+        "vue",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/no-inferrable-types": "off",
+        "vue/html-self-closing": ["error", {
+            "html": {
+                "void": "any",
+                "normal": "always",
+                "component": "always"
+            },
+            "svg": "always",
+            "math": "always"
+        }],
+        "@typescript-eslint/no-unused-vars": ["warn", {
+            "varsIgnorePattern": "(props)|(emits?)|_"
+        }],
+        "vue/require-v-for-key": "warn",
+        "vue/no-v-model-argument": "off" // NO idea why this rule exists
+    },
+    "ignorePatterns": ["**/*.test.ts", "dist/*", "node_modules/*"]
+}

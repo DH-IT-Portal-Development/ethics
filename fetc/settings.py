@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     # CDH Core libraries
     "cdh.core",
     "cdh.vue",
+    "cdh.vue3",
     "cdh.rest",
     # Django supplied apps
     "django.contrib.auth",
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "django_extensions",
     "rest_framework",
+    "django_filters",
     "django.contrib.admin",
     "django_user_agents",
     "modeltranslation",

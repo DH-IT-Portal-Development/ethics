@@ -90,6 +90,7 @@ class ProposalSerializer(ProposalInlineSerializer):
             "supervisor_decision",
             "applicants",
             "status",
+            "short_status",
             "supervisor",
             "continue_url",
             "pdf",
