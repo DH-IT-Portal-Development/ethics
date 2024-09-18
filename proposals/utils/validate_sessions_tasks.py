@@ -1,18 +1,10 @@
 """
-This file contains code for validating a proposal by using all the relevant
-forms and their validation code. This is mostly handled by the Stepper, except
-for sessions and tasks.
-
-Used for the submit page, to check if a user has completed the proposal.
+This file contains code for validating a proposal's sessions and tasks by using 
+all the relevant forms and their validation code. The proposal validation is 
+mostly handled by the Stepper, except for sessions and tasks.
 """
 
-from tasks.forms import SessionUpdateForm, SessionEndForm, TaskForm, SessionOverviewForm
-from studies.forms import StudyForm, StudyDesignForm, StudyEndForm
-from observations.forms import ObservationForm
-from interventions.forms import InterventionForm
-
-from ..models import Proposal
-from proposals.utils.stepper import Stepper
+from tasks.forms import SessionUpdateForm, SessionEndForm, TaskForm
 
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy as reverse
@@ -66,27 +58,3 @@ def validate_sessions_tasks(study, multiple_studies):
                 dict["page_name"],
             )
     return troublesome_session_pages
-
-
-def get_form_errors(stepper: Stepper) -> list:
-
-    troublesome_pages = []
-    study_forms = [StudyForm, StudyEndForm, StudyDesignForm, InterventionForm, ObservationForm, SessionOverviewForm]
-    multiple_studies = len(stepper.proposal.study_set.all()) > 1 
-
-    for item in stepper.items:
-        if item.get_errors():
-            if multiple_studies and item.form_class in study_forms:
-                page_name = f"{item.parent.title}: {item.title}"
-            else:
-                page_name = item.title
-            troublesome_pages.append(
-                {
-                    "url": item.get_url(),
-                    "page_name": page_name,
-                }
-            )
-        if hasattr(item, "form_class") and item.form_class == SessionOverviewForm:
-            troublesome_pages.extend(validate_sessions_tasks(item.study, multiple_studies))
-
-    return troublesome_pages

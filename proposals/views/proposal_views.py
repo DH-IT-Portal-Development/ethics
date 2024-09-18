@@ -25,7 +25,6 @@ from main.views import (
     UserAllowedMixin,
 )
 from observations.models import Observation
-from proposals.utils.validate_proposal import get_form_errors
 from proposals.utils.pdf_diff_logic import create_context_pdf, create_context_diff
 from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
@@ -586,7 +585,6 @@ class ProposalSubmit(
     def get_context_data(self, **kwargs):
         context = super(ProposalSubmit, self).get_context_data(**kwargs)
 
-        context["troublesome_pages"] = get_form_errors(context["stepper"])
         context["pagenr"] = self._get_page_number()
         context["is_supervisor_edit_phase"] = self.is_supervisor_edit_phase()
         context["start_date_warning"] = self.check_start_date()
