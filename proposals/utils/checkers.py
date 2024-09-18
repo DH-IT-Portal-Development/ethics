@@ -767,8 +767,8 @@ class SessionsChecker(
         from proposals.utils.validate_sessions_tasks import validate_sessions_tasks
 
         if validate_sessions_tasks(self.study, self.stepper.has_multiple_studies()):
-            return True
-        return
+            return ["sub_page_errors"]
+        return []
 
 
 class DocumentsChecker(
