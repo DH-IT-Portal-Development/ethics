@@ -120,4 +120,3 @@ class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
         """Return to the Study design view"""
         proposal = Proposal.objects.get(pk=self.kwargs.get("pk"))
         return reverse("studies:design_end", args=(proposal.last_study().pk,))
-

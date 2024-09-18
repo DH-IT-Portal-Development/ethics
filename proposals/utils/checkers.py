@@ -42,6 +42,7 @@ class ProposalTypeChecker(
             self.stepper.layout = RegularProposalLayout
         return [ProposalCreateChecker]
 
+
 class ProposalCreateChecker(
     ModelFormChecker,
 ):
@@ -63,7 +64,7 @@ class ProposalCreateChecker(
             form_class=self.form_class,
             form_kwargs={},
             url_func=self.get_url,
-            location=self.location
+            location=self.location,
         )
         self.stepper.items.append(
             self.item,
@@ -681,7 +682,7 @@ class SessionsChecker(
             form_class=self.form_class,
             form_kwargs=self.get_form_kwargs(),
             url_func=self.get_url,
-            error_func = self.get_checker_errors
+            error_func=self.get_checker_errors,
         )
 
         def modified_is_current(self, request):
@@ -761,14 +762,13 @@ class SessionsChecker(
             "tasks:session_overview",
             args=[self.study.pk],
         )
-    
+
     def get_checker_errors(self):
         from proposals.utils.validate_sessions_tasks import validate_sessions_tasks
 
         if validate_sessions_tasks(self.study, self.stepper.has_multiple_studies()):
             return True
-        return 
-
+        return
 
 
 class DocumentsChecker(
@@ -786,7 +786,6 @@ class DocumentsChecker(
             ),
         ]
 
-
     def make_stepper_item(self):
         url = reverse(
             "proposals:consent",
@@ -795,7 +794,8 @@ class DocumentsChecker(
         item = PlaceholderItem(
             self.stepper,
             title=_("Documenten"),
-            location="attachments",        )
+            location="attachments",
+        )
         item.get_url = lambda: url
         return item
 

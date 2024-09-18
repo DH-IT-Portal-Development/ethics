@@ -153,7 +153,7 @@ class Stepper(renderable):
         """
         num_studies = self.proposal.study_set.count()
         return num_studies > 1
-    
+
     def get_form_errors(self):
         """
         A method providing validation of all the forms making up the proposal.
@@ -162,7 +162,14 @@ class Stepper(renderable):
         """
 
         troublesome_pages = []
-        study_forms = [StudyForm, StudyEndForm, StudyDesignForm, InterventionForm, ObservationForm, SessionOverviewForm]
+        study_forms = [
+            StudyForm,
+            StudyEndForm,
+            StudyDesignForm,
+            InterventionForm,
+            ObservationForm,
+            SessionOverviewForm,
+        ]
 
         for item in self.items:
             if item.get_errors():
@@ -176,10 +183,12 @@ class Stepper(renderable):
                         "page_name": page_name,
                     }
                 )
-            #As individual sessions and tasks are not represented in the 
-            #stepper, these are validated through an external function. 
+            # As individual sessions and tasks are not represented in the
+            # stepper, these are validated through an external function.
             if hasattr(item, "form_class") and item.form_class == SessionOverviewForm:
-                troublesome_pages.extend(validate_sessions_tasks(item.study, self.has_multiple_studies()))
+                troublesome_pages.extend(
+                    validate_sessions_tasks(item.study, self.has_multiple_studies())
+                )
 
         return troublesome_pages
 

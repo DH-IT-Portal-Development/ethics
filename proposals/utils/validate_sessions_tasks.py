@@ -50,7 +50,7 @@ def validate_sessions_tasks(study, multiple_studies):
                     ),
                 }
             )
-            
+
     if multiple_studies:
         for dict in troublesome_session_pages:
             dict["page_name"] = "{}: {}".format(

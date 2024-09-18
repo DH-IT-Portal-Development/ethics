@@ -89,7 +89,7 @@ class StepperItem(
         if request.path == self.get_url():
             return True
         return False
-    
+
     def is_disabled(self):
         if not self.get_url():
             return True
