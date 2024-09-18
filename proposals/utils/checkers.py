@@ -42,18 +42,11 @@ class ProposalTypeChecker(
             self.stepper.layout = RegularProposalLayout
         return [ProposalCreateChecker]
 
-
-class BasicDetailsItem(
-    ContainerItem,
-):
-    title = _("Basisgegevens")
-    location = "create"
-
-
 class ProposalCreateChecker(
     ModelFormChecker,
 ):
-    title = _("Start")
+    title = _("Basisgegevens")
+    location = "create"
     form_class = proposal_forms.ProposalForm
 
     def get_url(self):
@@ -63,24 +56,22 @@ class ProposalCreateChecker(
         )
 
     def check(self):
-        self.parent = BasicDetailsItem(self.stepper)
-        self.stepper.items.append(self.parent)
-        stepper_item = ModelFormItem(
+        self.item = ModelFormItem(
             self.stepper,
             title=self.title,
-            parent=self.parent,
             form_object=self.proposal,
             form_class=self.form_class,
             form_kwargs={},
             url_func=self.get_url,
+            location=self.location
         )
         self.stepper.items.append(
-            stepper_item,
+            self.item,
         )
         return [
             ResearcherChecker(
                 self.stepper,
-                parent=self.parent,
+                parent=self.item,
             )
         ]
 
@@ -766,15 +757,6 @@ class SessionsChecker(
 class DocumentsChecker(
     Checker,
 ):
-    def make_stepper_item(
-        self,
-    ):
-        return ContainerItem(
-            self.stepper,
-            title=_("Documenten"),
-            location="attachments",
-        )
-
     def check(
         self,
     ):
@@ -785,11 +767,20 @@ class DocumentsChecker(
                 self.stepper,
                 parent=item,
             ),
-            AttachmentsChecker(
-                self.stepper,
-                parent=item,
-            ),
         ]
+
+
+    def make_stepper_item(self):
+        url = reverse(
+            "proposals:consent",
+            args=[self.stepper.proposal.pk],
+        )
+        item = PlaceholderItem(
+            self.stepper,
+            title=_("Documenten"),
+            location="attachments",        )
+        item.get_url = lambda: url
+        return item
 
 
 class TranslationChecker(
@@ -814,30 +805,6 @@ class TranslationChecker(
                 self.stepper.proposal.pk,
             ],
         )
-
-
-class AttachmentsChecker(
-    Checker,
-):
-
-    def check(
-        self,
-    ):
-        self.stepper.items.append(self.make_stepper_item())
-        return []
-
-    def make_stepper_item(self):
-        url = reverse(
-            "proposals:consent",
-            args=[self.stepper.proposal.pk],
-        )
-        item = PlaceholderItem(
-            self.stepper,
-            title=_("Documenten beheren"),
-            parent=self.parent,
-        )
-        item.get_url = lambda: url
-        return item
 
 
 class DataManagementChecker(
