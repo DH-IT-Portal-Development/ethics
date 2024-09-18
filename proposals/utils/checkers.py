@@ -673,7 +673,16 @@ class SessionsChecker(
         stepper item be bold for all underlying task/session views.
         Don't ask me how much time I spent on this.
         """
-        item = super().make_stepper_item()
+        item = ModelFormItem(
+            self.stepper,
+            title=self.title,
+            parent=self.parent,
+            form_object=self.get_form_object(),
+            form_class=self.form_class,
+            form_kwargs=self.get_form_kwargs(),
+            url_func=self.get_url,
+            error_func = self.get_checker_errors
+        )
 
         def modified_is_current(self, request):
             if request.path_info == self.get_url():
@@ -752,6 +761,14 @@ class SessionsChecker(
             "tasks:session_overview",
             args=[self.study.pk],
         )
+    
+    def get_checker_errors(self):
+        from proposals.utils.validate_sessions_tasks import validate_sessions_tasks
+
+        if validate_sessions_tasks(self.study, self.stepper.has_multiple_studies()):
+            return True
+        return 
+
 
 
 class DocumentsChecker(
