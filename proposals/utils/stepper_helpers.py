@@ -203,9 +203,14 @@ class ModelFormItem(
             "url_func",
             None,
         )
-        self.errors = []
+        get_checker_errors = kwargs.pop(
+            "error_func",
+            None,
+        )
         if get_url:
             self.get_url = get_url
+        if get_checker_errors:
+            self.get_checker_errors = get_checker_errors
         return super().__init__(*args, **kwargs)
 
     @property
@@ -248,11 +253,12 @@ class ModelFormItem(
 
     def get_errors(self):
         """
-        This is a placeholder that just returns the form errors for now.
-        But once we've figured out what we want exactly this method should
-        return both the form errors and any extra errors that a Checker
-        might insert into this item.
+        By default, this returns the errors of the instantiated form, which get
+        evaluated as a boolean. By passing a custom get_checker_errors function
+        from the checker, custom errors can be specified also.
         """
+        if hasattr(self, "get_checker_errors"):
+            return self.get_checker_errors() or self.model_form.errors
         return self.model_form.errors
 
     def css_classes(self):
