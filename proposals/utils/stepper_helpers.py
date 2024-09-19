@@ -50,6 +50,7 @@ class StepperItem(
         self.children = []
         self.parent = parent
         self.available = False
+        self.css_classes = ""
         # Don't override default location if not provided explicitly
         if location:
             self.location = location
@@ -70,23 +71,34 @@ class StepperItem(
 
     def get_errors(self):
         return []
-
-    def css_classes(
-        self,
-    ):
-        classes = []
-        if self.is_current(self.stepper.request):
-            classes.append(
-                "active",
-            )
-        return " ".join(classes)
+    
+    def get_ancestor(self):
+        """
+        Returns the top level parent, or ancestor
+        """
+        ancestor = self
+        while ancestor.parent:
+            ancestor = ancestor.parent
+        return ancestor
+    
+    def get_family(self):
+        """
+        Returns all items with the same ancestor
+        """
+        family = []
+        if not self.parent:
+            return family
+        
 
     def is_current(self, request):
         """
         Returns True if this item represents the page the user
-        is currently on.
+        is currently on and appends the active class to the item's
+        css_classes attribute. This gets called when building the stepper,
+        until is_current returns True.
         """
         if request.path == self.get_url():
+            self.css_classes += "active "
             return True
         return False
 
@@ -94,6 +106,13 @@ class StepperItem(
         if not self.get_url():
             return True
         return False
+    
+    def get_css_classes(self):
+        """
+        A method to be overwritten by child classes to append to an item's
+        self.css_classes attribute. This gets called when building the stepper.
+        """
+        pass
 
 
 class PlaceholderItem(StepperItem):
@@ -129,16 +148,14 @@ class ContainerItem(
         """
         return False
 
-    def css_classes(self):
-        css_classes = super().css_classes()
+    def get_css_classes(self):
         child_errors = []
         for child in self.children:
             child_errors += child.get_errors()
         if child_errors != []:
-            css_classes += "incomplete"
+            self.css_classes += "incomplete"
         else:
-            css_classes += " complete"
-        return css_classes
+            self.css_classes += " complete"
 
 
 class ModelFormChecker(
@@ -261,14 +278,11 @@ class ModelFormItem(
             return self.get_checker_errors() or self.model_form.errors
         return self.model_form.errors
 
-    def css_classes(self):
-        css_classes = super().css_classes()
-
+    def get_css_classes(self):
         if self.get_errors():
-            css_classes += " incomplete"
+            self.css_classes += " incomplete"
         else:
-            css_classes += " complete"
-        return css_classes
+            self.css_classes += " complete"
 
 
 class UpdateOrCreateChecker(
