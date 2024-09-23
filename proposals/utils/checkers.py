@@ -2,6 +2,7 @@ from django.utils.translation import gettext as _
 from django.urls import reverse
 
 from proposals import forms as proposal_forms
+from proposals.models import Wmo
 from studies import forms as study_forms
 from interventions import forms as intervention_forms
 from observations import forms as observation_forms
@@ -26,90 +27,52 @@ class ProposalTypeChecker(
 ):
 
     def check(self):
-        # TODO: check stepper.proposal_type_hint
-        # and proposal.is_pre_approved etc. for non-standard layouts
-        return self.regular_proposal()
+        """Each proposal type receives a specific create checker and layout"""
+        from .stepper import (
+            RegularProposalLayout,
+            PreApprProposalLayout,
+            PreAssProposalLayout,
+        )
 
-    def regular_proposal(self):
-        from .stepper import RegularProposalLayout
-
-        self.stepper.layout = RegularProposalLayout
+        if self.proposal.is_pre_approved:
+            self.stepper.layout = PreApprProposalLayout
+        elif self.proposal.is_pre_assessment:
+            self.stepper.layout = PreAssProposalLayout
+        else:
+            self.stepper.layout = RegularProposalLayout
         return [ProposalCreateChecker]
-
-
-class BasicDetailsItem(
-    ContainerItem,
-):
-    title = _("Basisgegevens")
-    location = "create"
 
 
 class ProposalCreateChecker(
     ModelFormChecker,
 ):
-    title = _("Start")
+    title = _("Basisgegevens")
+    location = "create"
     form_class = proposal_forms.ProposalForm
 
     def get_url(self):
-        if self.proposal.pk:
-            return reverse(
-                "proposals:update",
-                args=[self.proposal.pk],
-            )
         return reverse(
-            "proposals:create",
+            "proposals:update",
+            args=[self.proposal.pk],
         )
 
     def check(self):
-        self.parent = BasicDetailsItem(self.stepper)
-        self.stepper.items.append(self.parent)
-        if self.proposal.pk:
-            return self.proposal_exists()
-        return self.new_proposal()
-
-    def new_proposal(self):
-        self.stepper.items.append(self.make_stepper_item())
-        placeholders = [
-            PlaceholderItem(
-                self.stepper,
-                title=_("Onderzoeker"),
-                parent=self.parent,
-            ),
-            PlaceholderItem(
-                self.stepper,
-                title=_("Andere onderzoekers"),
-                parent=self.parent,
-            ),
-            PlaceholderItem(
-                self.stepper,
-                title=_("Financiering"),
-                parent=self.parent,
-            ),
-            PlaceholderItem(
-                self.stepper,
-                title=_("Onderzoeksdoel"),
-                parent=self.parent,
-            ),
-        ]
-        self.stepper.items += placeholders
-        return []
-
-    def proposal_exists(self):
-        stepper_item = ModelFormItem(
+        self.item = ModelFormItem(
             self.stepper,
             title=self.title,
-            parent=self.parent,
             form_object=self.proposal,
             form_class=self.form_class,
+            form_kwargs={},
             url_func=self.get_url,
+            location=self.location,
         )
         self.stepper.items.append(
-            stepper_item,
+            self.item,
         )
         return [
             ResearcherChecker(
                 self.stepper,
-                parent=self.parent,
+                parent=self.item,
             )
         ]
 
@@ -139,6 +102,13 @@ class OtherResearchersChecker(
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
+        if self.proposal.is_pre_assessment:
+            return [
+                GoalChecker(
+                    self.stepper,
+                    parent=self.parent,
+                )
+            ]
         return [
             FundingChecker(
                 self.stepper,
@@ -183,6 +153,13 @@ class GoalChecker(
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
+        if self.proposal.is_pre_approved:
+            return [
+                PreApprovedChecker(
+                    self.stepper,
+                    parent=self.parent,
+                )
+            ]
         return [WMOChecker]
 
     def get_url(self):
@@ -192,64 +169,38 @@ class GoalChecker(
         )
 
 
-class WMOItem(
-    StepperItem,
+class PreApprovedChecker(
+    ModelFormChecker,
 ):
-    location = "wmo"
-    title = _("WMO")
 
-    def __init__(
-        self,
-        *args,
-        **kwargs,
-    ):
-        super().__init__(*args, **kwargs)
-        self.proposal = self.stepper.proposal
-        self.wmo = self.get_wmo()
+    title = _("Eerdere toetsing")
+    form_class = proposal_forms.PreApprovedForm
 
-    def get_wmo(
-        self,
-    ):
-        if hasattr(
-            self.proposal,
-            "wmo",
-        ):
-            return self.proposal.wmo
-        return None
+    def check(self):
+        self.stepper.items.append(self.make_stepper_item())
+        return [SubmitChecker]
 
-    def get_url(
-        self,
-    ):
-        if self.wmo:
-            return reverse(
-                "proposals:wmo_update",
-                args=[self.wmo.pk],
-            )
-        else:
-            return reverse(
-                "proposals:wmo_create",
-                args=[self.proposal.pk],
-            )
-
-    def wmo_exists(
-        self,
-    ):
-        return hasattr(
-            self.proposal,
-            "wmo",
+    def get_url(self):
+        return reverse(
+            "proposals:pre_approved",
+            args=(self.proposal.pk,),
         )
 
 
-class WMOChecker(
-    Checker,
-):
+class WMOChecker(ModelFormChecker):
+
+    title = "WMO"
+    form_class = proposal_forms.WmoForm
+    location = "wmo"
 
     def check(
         self,
     ):
-        self.item = WMOItem(self.stepper)
-        self.stepper.items.append(self.item)
-        if self.item.wmo:
+        self.item = self.make_stepper_item()
+        self.stepper.items.append(
+            self.item,
+        )
+        if self.object_exists():
             return self.check_wmo()
         else:
             return []
@@ -261,10 +212,89 @@ class WMOChecker(
         This method should check the correctness of the
         WMO object.
         """
-        # Just assume any WMO is correct as long as it exists
-        if self.item.wmo:
-            return [TrajectoriesChecker]
-        return []  # TODO next item
+        if self.proposal.wmo.status != Wmo.WMOStatuses.NO_WMO:
+            return [
+                WMOApplicationChecker(
+                    self.stepper,
+                    parent=self.item,
+                )
+            ]
+        if self.proposal.is_pre_assessment:
+            return [SubmitChecker]
+        return [TrajectoriesChecker]
+
+    def get_url(self):
+        if self.object_exists():
+            return self.get_update_url()
+        else:
+            return self.get_create_url()
+
+    def object_exists(
+        self,
+    ):
+        return hasattr(
+            self.proposal,
+            "wmo",
+        )
+
+    def get_create_url(
+        self,
+    ):
+        if self.proposal.is_pre_assessment:
+            url = "proposals:wmo_create_pre"
+        else:
+            url = "proposals:wmo_create"
+        return reverse(
+            url,
+            args=[self.proposal.pk],
+        )
+
+    def get_update_url(
+        self,
+    ):
+        if self.proposal.is_pre_assessment:
+            url = "proposals:wmo_update_pre"
+        else:
+            url = "proposals:wmo_update"
+        return reverse(
+            url,
+            args=[self.proposal.wmo.pk],
+        )
+
+    def get_form_object(
+        self,
+    ):
+        if self.object_exists():
+            return self.proposal.wmo
+        else:
+            return None
+
+
+class WMOApplicationChecker(ModelFormChecker):
+
+    title = _("WMO applicatie")
+    form_class = proposal_forms.WmoApplicationForm
+
+    def check(self):
+        self.stepper.items.append(self.make_stepper_item())
+        if self.proposal.wmo.status == Wmo.WMOStatuses.WAITING:
+            return []
+        if self.proposal.is_pre_assessment:
+            return [SubmitChecker]
+        return [TrajectoriesChecker]
+
+    def get_url(self):
+        if self.proposal.is_pre_assessment:
+            pre_suffix = "_pre"
+        else:
+            pre_suffix = ""
+        return reverse(
+            f"proposals:wmo_application{pre_suffix}",
+            args=(self.proposal.wmo.pk,),
+        )
+
+    def get_form_object(self):
+        return self.proposal.wmo
 
 
 class TrajectoriesChecker(
@@ -313,6 +343,11 @@ class TrajectoriesChecker(
             "proposals:study_start",
             args=[self.proposal.pk],
         )
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["proposal"] = self.proposal
+        return kwargs
 
 
 class StudyChecker(
@@ -419,6 +454,14 @@ class ParticipantsChecker(
             ],
         )
 
+    def get_form_object(self):
+        return self.study
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["proposal"] = self.proposal
+        return kwargs
+
 
 class DesignChecker(
     ModelFormChecker,
@@ -481,6 +524,9 @@ class StudyEndChecker(
             ],
         )
 
+    def get_form_object(self):
+        return self.study
+
 
 class InterventionChecker(
     UpdateOrCreateChecker,
@@ -516,6 +562,11 @@ class InterventionChecker(
         self,
     ):
         return self.study.intervention
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["study"] = self.study
+        return kwargs
 
     def get_create_url(
         self,
@@ -586,6 +637,11 @@ class ObservationChecker(
     ):
         return self.study.observation
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["study"] = self.study
+        return kwargs
+
 
 class SessionsChecker(
     ModelFormChecker,
@@ -618,7 +674,16 @@ class SessionsChecker(
         stepper item be bold for all underlying task/session views.
         Don't ask me how much time I spent on this.
         """
-        item = super().make_stepper_item()
+        item = ModelFormItem(
+            self.stepper,
+            title=self.title,
+            parent=self.parent,
+            form_object=self.get_form_object(),
+            form_class=self.form_class,
+            form_kwargs=self.get_form_kwargs(),
+            url_func=self.get_url,
+            error_func=self.get_checker_errors,
+        )
 
         def modified_is_current(self, request):
             if request.path_info == self.get_url():
@@ -698,19 +763,17 @@ class SessionsChecker(
             args=[self.study.pk],
         )
 
+    def get_checker_errors(self):
+        from proposals.utils.validate_sessions_tasks import validate_sessions_tasks
+
+        if validate_sessions_tasks(self.study, self.stepper.has_multiple_studies()):
+            return ["sub_page_errors"]
+        return []
+
 
 class DocumentsChecker(
     Checker,
 ):
-    def make_stepper_item(
-        self,
-    ):
-        return ContainerItem(
-            self.stepper,
-            title=_("Documenten"),
-            location="attachments",
-        )
-
     def check(
         self,
     ):
@@ -721,11 +784,20 @@ class DocumentsChecker(
                 self.stepper,
                 parent=item,
             ),
-            AttachmentsChecker(
-                self.stepper,
-                parent=item,
-            ),
         ]
+
+    def make_stepper_item(self):
+        url = reverse(
+            "proposals:consent",
+            args=[self.stepper.proposal.pk],
+        )
+        item = PlaceholderItem(
+            self.stepper,
+            title=_("Documenten"),
+            location="attachments",
+        )
+        item.get_url = lambda: url
+        return item
 
 
 class TranslationChecker(
@@ -750,30 +822,6 @@ class TranslationChecker(
                 self.stepper.proposal.pk,
             ],
         )
-
-
-class AttachmentsChecker(
-    Checker,
-):
-
-    def check(
-        self,
-    ):
-        self.stepper.items.append(self.make_stepper_item())
-        return []
-
-    def make_stepper_item(self):
-        url = reverse(
-            "proposals:consent",
-            args=[self.stepper.proposal.pk],
-        )
-        item = PlaceholderItem(
-            self.stepper,
-            title=_("Documenten beheren"),
-            parent=self.parent,
-        )
-        item.get_url = lambda: url
-        return item
 
 
 class DataManagementChecker(
@@ -826,3 +874,9 @@ class SubmitChecker(
                 self.stepper.proposal.pk,
             ],
         )
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["proposal"] = self.proposal
+        kwargs["request"] = self.stepper.request
+        return kwargs

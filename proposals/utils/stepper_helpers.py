@@ -44,13 +44,12 @@ class StepperItem(
     title = "Stepper item"
     location = None
 
-    def __init__(self, stepper, parent=None, disabled=False, title=None, location=None):
+    def __init__(self, stepper, parent=None, title=None, location=None):
         self.stepper = stepper
         self.proposal = stepper.proposal
         self.children = []
         self.parent = parent
         self.available = False
-        self.disabled = disabled
         # Don't override default location if not provided explicitly
         if location:
             self.location = location
@@ -67,7 +66,7 @@ class StepperItem(
         return context
 
     def get_url(self):
-        return "#"
+        return ""
 
     def get_errors(self):
         return []
@@ -80,10 +79,6 @@ class StepperItem(
             classes.append(
                 "active",
             )
-        if self.disabled:
-            classes.append(
-                "disabled",
-            )
         return " ".join(classes)
 
     def is_current(self, request):
@@ -92,6 +87,11 @@ class StepperItem(
         is currently on.
         """
         if request.path == self.get_url():
+            return True
+        return False
+
+    def is_disabled(self):
+        if not self.get_url():
             return True
         return False
 
@@ -129,6 +129,17 @@ class ContainerItem(
         """
         return False
 
+    def css_classes(self):
+        css_classes = super().css_classes()
+        child_errors = []
+        for child in self.children:
+            child_errors += child.get_errors()
+        if child_errors != []:
+            css_classes += "incomplete"
+        else:
+            css_classes += " complete"
+        return css_classes
+
 
 class ModelFormChecker(
     Checker,
@@ -156,6 +167,7 @@ class ModelFormChecker(
             parent=self.parent,
             form_object=self.get_form_object(),
             form_class=self.form_class,
+            form_kwargs=self.get_form_kwargs(),
             url_func=self.get_url,
             location=self.location,
         )
@@ -166,6 +178,11 @@ class ModelFormChecker(
     ):
         # Overwrite method for other objects
         return self.proposal
+
+    def get_form_kwargs(self):
+        # Overwrite for specific form_kwargs
+
+        return {}
 
 
 class ModelFormItem(
@@ -179,13 +196,21 @@ class ModelFormItem(
         self.form_object = kwargs.pop(
             "form_object",
         )
+        self.form_kwargs = kwargs.pop(
+            "form_kwargs",
+        )
         get_url = kwargs.pop(
             "url_func",
             None,
         )
-        self.errors = []
+        get_checker_errors = kwargs.pop(
+            "error_func",
+            None,
+        )
         if get_url:
             self.get_url = get_url
+        if get_checker_errors:
+            self.get_checker_errors = get_checker_errors
         return super().__init__(*args, **kwargs)
 
     @property
@@ -211,7 +236,7 @@ class ModelFormItem(
         This method can be overidden to provide extra kwargs to the form. But
         kwargs that pop up often can also be added to this base class.
         """
-        kwargs = {}
+        kwargs = self.form_kwargs
         if issubclass(self.form_class, UserKwargModelFormMixin):
             kwargs["user"] = self.stepper.request.user
         return kwargs
@@ -221,19 +246,29 @@ class ModelFormItem(
             raise ImproperlyConfigured("form_class must be defined")
         kwargs = self.get_form_kwargs()
         model_form = self.form_class(
-            instance=self.get_form_object(),
+            instance=self.form_object,
             **kwargs,
         )
         return model_form
 
     def get_errors(self):
         """
-        This is a placeholder that just returns the form errors for now.
-        But once we've figured out what we want exactly this method should
-        return both the form errors and any extra errors that a Checker
-        might insert into this item.
+        By default, this returns the errors of the instantiated form, which get
+        evaluated as a boolean. By passing a custom get_checker_errors function
+        from the checker, custom errors can be specified also.
         """
+        if hasattr(self, "get_checker_errors"):
+            return self.get_checker_errors() or self.model_form.errors
         return self.model_form.errors
+
+    def css_classes(self):
+        css_classes = super().css_classes()
+
+        if self.get_errors():
+            css_classes += " incomplete"
+        else:
+            css_classes += " complete"
+        return css_classes
 
 
 class UpdateOrCreateChecker(

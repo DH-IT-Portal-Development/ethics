@@ -11,6 +11,13 @@ from .stepper_helpers import (
 
 from .checkers import ProposalTypeChecker
 
+from tasks.forms import SessionOverviewForm
+from studies.forms import StudyForm, StudyDesignForm, StudyEndForm
+from observations.forms import ObservationForm
+from interventions.forms import InterventionForm
+
+from proposals.utils.validate_sessions_tasks import validate_sessions_tasks
+
 
 class Stepper(renderable):
 
@@ -19,7 +26,6 @@ class Stepper(renderable):
     def __init__(
         self,
         proposal,
-        proposal_type_hint=None,
         request=None,
     ):
         self.proposal = proposal
@@ -29,10 +35,6 @@ class Stepper(renderable):
         # The stepper keeps track of the request to determine
         # which item is current
         self.request = request
-        # The type can be provided by the view for the case in which
-        # the proposal has not yet been created but we need to determine
-        # its type, i.e. the ProposalCreateViews
-        self.proposal_type_hint = proposal_type_hint
         self.items = []
         self.check_all(self.starting_checkers)
 
@@ -152,6 +154,44 @@ class Stepper(renderable):
         num_studies = self.proposal.study_set.count()
         return num_studies > 1
 
+    def get_form_errors(self):
+        """
+        A method providing validation of all the forms making up the proposal.
+        It return a list of dicts, with url's and formatted page name's
+        for pages with errors on them.
+        """
+
+        troublesome_pages = []
+        study_forms = [
+            StudyForm,
+            StudyEndForm,
+            StudyDesignForm,
+            InterventionForm,
+            ObservationForm,
+            SessionOverviewForm,
+        ]
+
+        for item in self.items:
+            if item.get_errors():
+                if self.has_multiple_studies() and item.form_class in study_forms:
+                    page_name = f"{item.parent.title}: {item.title}"
+                else:
+                    page_name = item.title
+                troublesome_pages.append(
+                    {
+                        "url": item.get_url(),
+                        "page_name": page_name,
+                    }
+                )
+            # As individual sessions and tasks are not represented in the
+            # stepper, these are validated through an external function.
+            if hasattr(item, "form_class") and item.form_class == SessionOverviewForm:
+                troublesome_pages.extend(
+                    validate_sessions_tasks(item.study, self.has_multiple_studies())
+                )
+
+        return troublesome_pages
+
 
 RegularProposalLayout = [
     ("create", _("Basisgegevens")),
@@ -159,5 +199,16 @@ RegularProposalLayout = [
     ("studies", _("Trajecten")),
     ("attachments", _("Documenten")),
     ("data_management", _("Datamanagement")),
+    ("submit", _("Indienen")),
+]
+
+PreApprProposalLayout = [
+    ("create", _("Basisgegevens")),
+    ("submit", _("Indienen")),
+]
+
+PreAssProposalLayout = [
+    ("create", _("Basisgegevens")),
+    ("wmo", _("WMO")),
     ("submit", _("Indienen")),
 ]
