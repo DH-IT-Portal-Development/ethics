@@ -56,36 +56,38 @@
             <br />
             <h3 class="mb-3">{% trans 'Werkverdeling overzicht van afgelopen periode' %}</h3>
             <p>{% trans 'Vul hieronder een start- en einddatum in voor de periode van dit overzicht.' %}</p>
-            <form action="" method="post">
+            <form action=""
+                  method="post"
+                  class="uu-form uu-form-no-gap "
+                  enctype="multipart/form-data">
                 {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                <input type="submit" value="{% trans 'Periode toepassen' %}">
-            </form>
-            <br />
-            <table class="dt w-100" data-language="{% datatables_lang %}">
-                <thead>
-                    <tr>
-                        <th>{% trans "Reviewer" %}</th>
-                        <th>{% trans "Totaal" %}</th>
-                        <th>{% trans "Korte route" %}</th>
-                        <th>{% trans "Lange Route" %}</th>
-                        <th>{% trans "Revisie" %}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for reviewer in reviewers %}
+                {{ form }}
+                <input class="btn btn-primary mb-3 mt-3"
+                       type="submit"
+                       value="{% trans 'Periode toepassen' %}">
+                <br />
+                <table class="dt w-100" data-language="{% datatables_lang %}">
+                    <thead>
                         <tr>
-                            <th scope="row">{{ reviewer.get_full_name }}</th>
-                            <td>{{ reviewer.total }}</td>
-                            <td>{{ reviewer.num_short_route }}</td>
-                            <td>{{ reviewer.num_long_route }}</td>
-                            <td>{{ reviewer.num_revision }}</td>
+                            <th>{% trans "Reviewer" %}</th>
+                            <th>{% trans "Totaal" %}</th>
+                            <th>{% trans "Korte route" %}</th>
+                            <th>{% trans "Lange Route" %}</th>
+                            <th>{% trans "Revisie" %}</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {% for reviewer in reviewers %}
+                            <tr>
+                                <th scope="row">{{ reviewer.get_full_name }}</th>
+                                <td>{{ reviewer.total }}</td>
+                                <td>{{ reviewer.num_short_route }}</td>
+                                <td>{{ reviewer.num_long_route }}</td>
+                                <td>{{ reviewer.num_revision }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-{% endblock %}
+    {% endblock %}
