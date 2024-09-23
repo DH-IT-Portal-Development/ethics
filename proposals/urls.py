@@ -52,7 +52,6 @@ from .views.wmo_views import (
     WmoCreate,
     WmoUpdate,
     WmoApplication,
-    WmoCheck,
     check_wmo,
     WmoCreatePreAssessment,
     WmoUpdatePreAssessment,
@@ -270,7 +269,6 @@ urlpatterns = [
             ]
         ),
     ),
-    path("wmo/check/", WmoCheck.as_view(), name="wmo_check"),
     path("wmo/check_js/", check_wmo, name="check_wmo"),
     path(
         "compare/",
