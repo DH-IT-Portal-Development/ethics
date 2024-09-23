@@ -85,7 +85,7 @@ class DecideAction(ReviewAction):
         user = self.user
         review = self.review
 
-        if review.stage in (review.Stages.COMMISSION, review.Stages.SUPERVISOR):
+        if review.stage not in (Review.Stages.COMMISSION, Review.Stages.SUPERVISOR):
             return False
 
         try:
@@ -183,10 +183,9 @@ class ChangeAssignment(ReviewAction):
         if not settings.GROUP_SECRETARY in user_groups:
             return False
 
-        if self.review.stage not in [
-            Review.Continuations.REVISION,
-            Review.Continuations.NO_GO,
-            Review.Stages.CLOSING,
+        if self.review.stage in [
+            Review.Stages.SUPERVISOR,
+            Review.Stages.CLOSED,
         ]:
             return False
 

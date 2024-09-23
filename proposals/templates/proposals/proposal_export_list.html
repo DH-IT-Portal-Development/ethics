@@ -2,42 +2,47 @@
 
 {% load static %}
 {% load i18n %}
+{% load datatables %}
 
 {% block header_title %}Goedgekeurde aanvragen - {{ block.super }}{% endblock %}
 
 {% block content %}
     <div class="uu-container">
         <div class="col-12">
-            <h2>Approved proposals</h2>
-            <table class="display exportTable w-100">
-                <tr>
-                    {# No translations here, as the table should be in English #}
-                    <th>Reference Number</th>
-                    <th>Title</th>
-                    <th>Applicant</th>
-                    <th>Researcher with final responsibility</th>
-                    <th>Approval Date</th>
-                    <th>FEtC-H chamber</th>
-                </tr>
-                {% for proposal in proposals %}
+            <h2 class="mb-3">Approved proposals</h2>
+            <table class="dt w-100" data-language="{% datatables_lang %}">
+                <thead>
                     <tr>
-                        <td>{{ proposal.reference_number }}</td>
-                        <td>{{ proposal.title }}</td>
-                        <td>{{ proposal.created_by.get_full_name }}</td>
-                        <td>
-                            {% if proposal.supervisor %}{{ proposal.supervisor.get_full_name }}{% endif %}
-                        </td>
-                        <td>{{ proposal.date_confirmed|date:"d M Y" }}</td>
-                        <td>
-                            {# Bad translation hack #}
-                            {% if proposal.reviewing_committee.name == "AK" %}
-                                GC
-                            {% else %}
-                                LC
-                            {% endif %}
-                        </td>
+                        {# No translations here, as the table should be in English #}
+                        <th>Reference Number</th>
+                        <th>Title</th>
+                        <th>Applicant</th>
+                        <th>Researcher with final responsibility</th>
+                        <th>Approval Date</th>
+                        <th>FEtC-H chamber</th>
                     </tr>
-                {% endfor %}
+                </thead>
+                <tbody>
+                    {% for proposal in proposals %}
+                        <tr>
+                            <td>{{ proposal.reference_number }}</td>
+                            <td>{{ proposal.title }}</td>
+                            <td>{{ proposal.created_by.get_full_name }}</td>
+                            <td>
+                                {% if proposal.supervisor %}{{ proposal.supervisor.get_full_name }}{% endif %}
+                            </td>
+                            <td>{{ proposal.date_confirmed|date:"d M Y" }}</td>
+                            <td>
+                                {# Bad translation hack #}
+                                {% if proposal.reviewing_committee.name == "AK" %}
+                                    GC
+                                {% else %}
+                                    LC
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
             </table>
             <br />
         </div>

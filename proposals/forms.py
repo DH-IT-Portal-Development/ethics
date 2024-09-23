@@ -530,6 +530,7 @@ class ProposalConfirmationForm(TemplatedModelForm):
     class Meta:
         model = Proposal
         fields = ["date_confirmed", "confirmation_comments"]
+        widgets = {"date_confirmed": DateInput}
 
 
 class WmoForm(SoftValidationMixin, ConditionalModelForm):
@@ -577,27 +578,6 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
             "is_medical",
             f1_value_list=[YesNoDoubt.NO, YesNoDoubt.DOUBT],
         )
-
-
-class WmoCheckForm(TemplatedModelForm):
-    class Meta:
-        model = Wmo
-        fields = [
-            "metc",
-            "is_medical",
-        ]
-        widgets = {
-            "metc": BootstrapRadioSelect(),
-            "is_medical": BootstrapRadioSelect(),
-        }
-
-    def __init__(self, *args, **kwargs):
-        """
-        - Remove empty label from is_medical/is_behavioristic field and reset the choices
-        """
-        super(WmoCheckForm, self).__init__(*args, **kwargs)
-        self.fields["is_medical"].empty_label = None
-        self.fields["is_medical"].choices = YesNoDoubt.choices
 
 
 class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
@@ -770,13 +750,13 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
             )
 
 
-class ProposalUpdateDataManagementForm(forms.ModelForm):
+class ProposalUpdateDataManagementForm(TemplatedModelForm):
     class Meta:
         model = Proposal
         fields = ["dmp_file"]
 
 
-class ProposalUpdateDateStartForm(forms.ModelForm):
+class ProposalUpdateDateStartForm(TemplatedModelForm):
     date_start = DateField(label=_("Nieuwe beoogde startdatum"))
 
     class Meta:
