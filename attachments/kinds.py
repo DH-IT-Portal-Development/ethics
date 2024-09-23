@@ -17,12 +17,23 @@ class AttachmentKind:
     def __init__(self, obj):
         self.object = obj
 
+    def get_slots(self):
+        slots = []
+        for inst in self.get_instances_for_object():
+            slots.append(AttachmentSlot(self, inst,))
+        for i in range(self.still_required()):
+            slots.append(AttachmentSlot(self, inst,))
+        return slots
+
     def get_instances_for_object(self):
         manager = getattr(self.object, self.attached_field)
         return manager.filter(kind=self.db_name)
 
     def num_required(self):
-        return 1
+        return 0
+
+    def num_suggested(self):
+        return 0
 
     def num_provided(self):
         return self.get_instances_for_proposal().count()
@@ -55,11 +66,14 @@ class StudyAttachmentKind(AttachmentKind):
 
     attached_object = Study
 
-class InformationLetter(AttachmentKind):
+class InformationLetter(StudyAttachmentKind):
 
     db_name = "information_letter"
     name = _("Informatiebrief")
     description = _("Omschrijving informatiebrief")
+
+    def num_required(self,):
+        return 1
 
 class ConsentForm(AttachmentKind):
 
@@ -85,11 +99,17 @@ class OtherProposalAttachment(ProposalAttachmentKind):
     def num_required(self):
         return 0
 
+    def num_suggested(self):
+        """
+        You may always add another miscellaneous file."""
+        return self.num_provided + 1
+
 
 STUDY_ATTACHMENTS = [
     InformationLetter,
     ConsentForm,
 ]
+
 
 PROPOSAL_ATTACHMENTS = [
     DataManagementPlan,
@@ -104,12 +124,17 @@ ATTACHMENT_CHOICES = [
 
 class AttachmentSlot(renderable):
 
-    template_name = "proposals/attachments/slot.html"
+    template_name = "attachments/slot.html"
 
-    def __init__(self, object, kind, attachment=None):
-        self.object = object
+    def __init__(self, kind, attachment=None):
         self.kind = kind
         self.attachment = attachment
+
+    def get_attach_url(self,):
+        return "#"
+
+    def get_delete_url(self,):
+        return "#"
 
 class ProposalAttachments:
     """
@@ -129,18 +154,21 @@ class ProposalAttachments:
         self.proposal = proposal
         self.proposal_kinds = self.walk_proposal()
         self.study_kinds = self.walk_all_studies()
+        self.match_slots()
 
-    def match_proposal(self):
+    def match_slots(self,):
+        self.proposal_slots = []
         for kind in self.proposal_kinds:
-            if kind.match(att):
-                return kind(att)
-        raise RuntimeError(
-            "Couldn't match attachment to kind",
-        )
+            self.proposal_slots += kind.get_slots()
+        self.study_slots = {}
+        for study, kinds in self.study_kinds:
+            self.study_slots[study] = []
+            for kind in kinds:
+                self.study_slots[study] += kind.get_slots()
 
     def walk_proposal(self):
         kinds = []
-        for kind in self.proposal_kinds:
+        for kind in PROPOSAL_ATTACHMENTS:
             kinds.append(
                 kind(self.proposal),
             )
@@ -154,7 +182,7 @@ class ProposalAttachments:
 
     def walk_study(self, study):
         kinds = []
-        for kind in self.study_kinds:
+        for kind in STUDY_ATTACHMENTS:
             kinds.append(
                 kind(study),
             )

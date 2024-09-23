@@ -1,13 +1,16 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
+from main.utils import renderable
 from .kinds import ATTACHMENT_CHOICES
 
 from cdh.files.db import FileField as CDHFileField
 
 # Create your models here.
 
-class Attachment():
+class Attachment(models.Model, renderable):
+
+    template_name = "attachment/attachment_model.html"
     upload = CDHFileField()
     parent = models.ForeignKey(
         "attachments.attachment",
@@ -39,13 +42,13 @@ class Attachment():
         )
     )
 
-class ProposalAttachment(Attachment, models.Model):
+class ProposalAttachment(Attachment,):
     attached_to = models.ManyToManyField(
         "proposals.Proposal",
         related_name="attachments",
     )
 
-class StudyAttachment(Attachment, models.Model):
+class StudyAttachment(Attachment,):
     attached_to = models.ManyToManyField(
         "studies.Study",
         related_name="attachments",

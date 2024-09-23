@@ -58,6 +58,8 @@ from proposals.mixins import (
 )
 from proposals.utils.proposal_utils import FilenameFactory
 
+from attachments.kinds import ProposalAttachments
+
 
 ############
 # List views
@@ -373,6 +375,27 @@ class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
 
         return getattr(old, attribute, None), getattr(new, attribute, None)
 
+
+class ProposalAttachmentsView(
+        ProposalContextMixin,
+        generic.DetailView,
+):
+
+    template_name = "proposals/attachments.html"
+    model = Proposal
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        proposal = self.get_object()
+
+        manager = ProposalAttachments(
+            self.get_proposal(),
+        )
+        context["manager"] = manager
+
+        context["study_slots"] = manager.study_slots
+
+        return context
 
 ###########################
 # Other actions on Proposal

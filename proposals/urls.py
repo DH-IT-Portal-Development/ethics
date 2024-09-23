@@ -17,6 +17,7 @@ from .views.proposal_views import (
     ProposalFundingFormView,
     ProposalResearchGoalFormView,
     ProposalPreApprovedFormView,
+    ProposalAttachmentsView,
     ProposalDataManagement,
     ProposalSubmit,
     ProposalSubmitted,
@@ -164,6 +165,11 @@ urlpatterns = [
         "pre_approved/<int:pk>/",
         ProposalPreApprovedFormView.as_view(),
         name="pre_approved",
+    ),
+    path(
+        "attachments/<int:pk>/",
+        ProposalAttachmentsView.as_view(),
+        name="attachments",
     ),
     path(
         "data_management/<int:pk>/",

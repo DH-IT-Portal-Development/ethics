@@ -1,0 +1,12 @@
+<div class="row">
+
+    <div class="col-3">
+        {{ slot.desiredness }}
+    </div>
+    <div class="col-6">
+        {% include slot.attachment %}        
+    </div>
+    <div class="col-3">
+        <a class="btn btn-primary" href="{{slot.get_attach_url}}">Voeg toe</a>
+    </div>
+</div>
