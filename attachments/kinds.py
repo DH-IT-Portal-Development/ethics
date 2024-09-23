@@ -20,9 +20,9 @@ class AttachmentKind:
     def get_slots(self):
         slots = []
         for inst in self.get_instances_for_object():
-            slots.append(AttachmentSlot(self, inst,))
+            slots.append(AttachmentSlot(self, attachment=inst,))
         for i in range(self.still_required()):
-            slots.append(AttachmentSlot(self, inst,))
+            slots.append(AttachmentSlot(self,))
         return slots
 
     def get_instances_for_object(self):
@@ -36,7 +36,7 @@ class AttachmentKind:
         return 0
 
     def num_provided(self):
-        return self.get_instances_for_proposal().count()
+        return self.get_instances_for_object().count()
 
     def still_required(self):
         return self.num_required() - self.num_provided()
@@ -161,7 +161,7 @@ class ProposalAttachments:
         for kind in self.proposal_kinds:
             self.proposal_slots += kind.get_slots()
         self.study_slots = {}
-        for study, kinds in self.study_kinds:
+        for study, kinds in self.study_kinds.items():
             self.study_slots[study] = []
             for kind in kinds:
                 self.study_slots[study] += kind.get_slots()
