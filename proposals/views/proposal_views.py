@@ -519,7 +519,7 @@ class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
     """
 
     model = Proposal
-    template_name = "proposals/proposal_update_attachments.html"
+    template_name = "proposals/proposal_update_dmp.html"
     form_class = ProposalUpdateDataManagementForm
     group_required = settings.GROUP_SECRETARY
 

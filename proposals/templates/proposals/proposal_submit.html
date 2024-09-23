@@ -152,21 +152,17 @@
 {% endblock %}
 
 {% block form-buttons %}
-    <div class="uu-form-text-row">
-        <div class="uu-form-text">
-            {% if troublesome_pages or is_practice %}
-                {% include "base/form_buttons.html" with no_forward=1 %}
-            {% else %}
-                {% if proposal.is_pre_assessment %}
-                    {% include "base/form_buttons.html" with next_text=_("Aanvraag voor voortoetsing versturen") %}
-                {% elif is_supervisor_edit_phase and is_supervisor %}
-                    {% include "base/form_buttons.html" with next_text=_("Terug naar beoordeling >>") %}
-                {% elif proposal.relation.needs_supervisor %}
-                    {% include "base/form_buttons.html" with next_text=_("Concept-aanmelding versturen") %}
-                {% else %}
-                    {% include "base/form_buttons.html" with next_text=_("Aanmelding versturen") %}
-                {% endif %}
-            {% endif %}
-        </div>
-    </div>
+    {% if troublesome_pages or is_practice %}
+        {% include "base/form_buttons.html" with no_forward=1 %}
+    {% else %}
+        {% if proposal.is_pre_assessment %}
+            {% include "base/form_buttons.html" with next_text=_("Aanvraag voor voortoetsing versturen") %}
+        {% elif is_supervisor_edit_phase and is_supervisor %}
+            {% include "base/form_buttons.html" with next_text=_("Terug naar beoordeling >>") %}
+        {% elif proposal.relation.needs_supervisor %}
+            {% include "base/form_buttons.html" with next_text=_("Concept-aanmelding versturen") %}
+        {% else %}
+            {% include "base/form_buttons.html" with next_text=_("Aanmelding versturen") %}
+        {% endif %}
+    {% endif %}
 {% endblock %}

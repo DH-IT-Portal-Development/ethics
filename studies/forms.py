@@ -366,17 +366,13 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         )
 
 
-class StudyUpdateAttachmentsForm(forms.ModelForm):
+class StudyUpdateAttachmentsForm(TemplatedModelForm):
     class Meta:
         model = Documents
         fields = [
-            # 'passive_consent',
             "informed_consent",
             "briefing",
             "director_consent_declaration",
             "director_consent_information",
             "parents_information",
         ]
-        widgets = {
-            # 'passive_consent': forms.HiddenInput
-        }
