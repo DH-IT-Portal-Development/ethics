@@ -154,7 +154,7 @@
 {% block form-buttons %}
     <div class="uu-form-text-row">
         <div class="uu-form-text">
-            {% if troublesome_pages or is_practice %}
+            {% if stepper.get_form_errors or is_practice %}
                 {% include "base/form_buttons.html" with no_forward=1 %}
             {% else %}
                 {% if proposal.is_pre_assessment %}
