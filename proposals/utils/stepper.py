@@ -86,10 +86,10 @@ class Stepper(renderable):
             raise RuntimeError(
                 "Base layout was never defined for this stepper",
             )
-        # First, insert all items into the layout & let them figure out their 
-        #own styling
+        # First, insert all items into the layout & let them figure out their
+        # own styling
         for item in self.items:
-            #Only check item.is_current until there is a current item found
+            # Only check item.is_current until there is a current item found
             self.item_is_current_check(item)
             self._insert_item(layout, item)
         # Second, replace all remaining empty slots in the layout
@@ -146,11 +146,11 @@ class Stepper(renderable):
         next_checkers = new_checkers + next_checkers
         # Recurse until next_checkers is empty
         return self.check_all(next_checkers)
-    
+
     def item_is_current_check(self, item):
         """
-        Sets current_item and current_item_ancestor attributes, when these 
-        are found, and set the is_available attribute to True for these 
+        Sets current_item and current_item_ancestor attributes, when these
+        are found, and set the is_available attribute to True for these
         items.
         """
         if not self.current_item_ancestors:

@@ -71,7 +71,7 @@ class StepperItem(
 
     def get_errors(self, include_children=False):
         return []
-    
+
     def get_ancestors(self):
         """
         Returns a list of all ancestors, including itself, from young to old.
@@ -87,7 +87,7 @@ class StepperItem(
                 parent = parent.parent
                 ancestors.append(parent)
         return ancestors
-        
+
     def is_current(self, request):
         """
         Returns True if this item represents the page the user
@@ -104,7 +104,7 @@ class StepperItem(
         if not self.get_url():
             return True
         return False
-    
+
     def build_css_classes(self):
         """
         A method to be overwritten by child classes to append to an item's
@@ -115,7 +115,7 @@ class StepperItem(
 
     def get_css_classes(self):
         """
-        A methods that calls self.build_css_classes, to complete the list 
+        A methods that calls self.build_css_classes, to complete the list
         self.css_classes and formats this list as a space-seperated string,
         to be used for rendering.
         """
@@ -155,15 +155,15 @@ class ContainerItem(
         we say they are never current. The child is.
         """
         return False
-    
+
     def get_errors(self, include_children=True):
         """
-        ContainerItems will only check its children for errors. 
+        ContainerItems will only check its children for errors.
         """
         errors = []
         if include_children:
             for child in self.children:
-                errors += (child.get_errors(include_children=True))
+                errors += child.get_errors(include_children=True)
         return errors
 
     def build_css_classes(self):
@@ -283,31 +283,31 @@ class ModelFormItem(
         )
         return model_form
 
-    def get_errors(self, include_children = False):
+    def get_errors(self, include_children=False):
         """
-        By default, this returns the errors of the instantiated form and, 
-        optionally, its children. This then gets evaluated as a boolean. 
+        By default, this returns the errors of the instantiated form and,
+        optionally, its children. This then gets evaluated as a boolean.
         By passing a custom get_checker_errors function
         from the checker, custom errors also be added.
         """
         errors = []
-        errors += (self.model_form.errors)
+        errors += self.model_form.errors
 
         if hasattr(self, "get_checker_errors"):
-            errors += (self.get_checker_errors())
+            errors += self.get_checker_errors()
         if include_children and self.children:
             for child in self.children:
-                errors += (child.get_errors(include_children=True))
+                errors += child.get_errors(include_children=True)
         return errors
 
     def build_css_classes(self):
         """
         If an item is collapsed, its completeness also depends on
-        its children, otherwise, it only depends on the form the 
+        its children, otherwise, it only depends on the form the
         the item represents.
         """
         if not self.is_available and self.children:
-            if self.get_errors(include_children = True):
+            if self.get_errors(include_children=True):
                 self.css_classes.add("incomplete")
             else:
                 self.css_classes.add("complete")

@@ -5,7 +5,8 @@
             <span>{{ item.title }}</span>
         </div>
     {% else %}
-        <a class="stepper-item {{ item.get_css_classes }}" href="{{ item.get_url }}">
+        <a class="stepper-item {{ item.get_css_classes }}"
+           href="{{ item.get_url }}">
             <span class="stepper-bubble {{ bubble_size.0 }}"></span>
             <span>{{ item.title }}</span>
         </a>
