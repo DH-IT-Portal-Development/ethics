@@ -129,6 +129,12 @@ class AttachmentSlot(renderable):
     def __init__(self, kind, attachment=None):
         self.kind = kind
         self.attachment = attachment
+        self.desiredness = _("Verplicht")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["slot"] = self
+        return context
 
     def get_attach_url(self,):
         return "#"

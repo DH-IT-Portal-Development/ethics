@@ -167,8 +167,9 @@ def can_view_archive(user):
 
 class renderable:
 
-    def get_context_data(self):
+    def get_context_data(self, **kwargs):
         context = Context()
+        context.update(kwargs)
         return context
 
     def render(self, extra_context={}):
