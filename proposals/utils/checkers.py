@@ -803,7 +803,7 @@ class DocumentsChecker(
 class TranslationChecker(
     ModelFormChecker,
 ):
-    form_class = proposal_forms.TranslatedConsentForms
+    form_class = proposal_forms.TranslatedConsentForm
     title = _("Vertalingen")
     location = "data_management"
 

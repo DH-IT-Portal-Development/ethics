@@ -45,7 +45,7 @@ from ..forms import (
     FundingForm,
     ResearchGoalForm,
     PreApprovedForm,
-    TranslatedConsentForms,
+    TranslatedConsentForm,
     ProposalForm,
 )
 from ..models import Proposal, Wmo
@@ -485,7 +485,7 @@ class ProposalPreApprovedFormView(
 
 class TranslatedConsentFormsView(ProposalContextMixin, UpdateView):
     model = Proposal
-    form_class = TranslatedConsentForms
+    form_class = TranslatedConsentForm
     template_name = "proposals/translated_consent_forms.html"
 
     def get_next_url(self):

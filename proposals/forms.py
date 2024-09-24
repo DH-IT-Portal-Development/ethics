@@ -851,7 +851,7 @@ class ProposalSubmitForm(ConditionalModelForm):
                 )
 
 
-class TranslatedConsentForms(SoftValidationMixin, ConditionalModelForm):
+class TranslatedConsentForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = ["translated_forms", "translated_forms_languages"]
@@ -862,7 +862,7 @@ class TranslatedConsentForms(SoftValidationMixin, ConditionalModelForm):
     _soft_validation_fields = ["translated_forms", "translated_forms_languages"]
 
     def clean(self):
-        cleaned_data = super(TranslatedConsentForms, self).clean()
+        cleaned_data = super(TranslatedConsentForm, self).clean()
 
         if cleaned_data["translated_forms"] is None:
             self.add_error(
