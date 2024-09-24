@@ -36,8 +36,7 @@ class Stepper(renderable):
         # which item is current
         self.request = request
         self.items = []
-        self.current_item = None
-        self.current_item_parent = None
+        self.current_item_ancestors = None
 
         self.check_all(self.starting_checkers)
 
@@ -91,13 +90,7 @@ class Stepper(renderable):
         #own styling
         for item in self.items:
             #Only check item.is_current until there is a current item found
-            while not self.current_item:
-                if item.is_current(self.request):
-                    self.current_item = item
-                    self.current_item_ancestor = item.get_ancestor()
-                else:
-                    break
-            item.get_css_classes()
+            self.item_is_current_check(item)
             self._insert_item(layout, item)
         # Second, replace all remaining empty slots in the layout
         # by PlaceholderItems
@@ -105,21 +98,12 @@ class Stepper(renderable):
         return layout
 
     def _insert_item(self, layout, new_item):
-        """
-        Inserts a stepper item into a layout, in-place.
-        """
-        if not self.current_item:
-            # We're only concerned with top-level items, children can sort
-            # themselves out
-            if new_item.parent:
-                return new_item.parent.children.append(
-                    new_item,
-                )
-        elif new_item.get_ancestor() == self.current_item_ancestor:
-            if new_item.parent:
-                return new_item.parent.children.append(
-                    new_item,
-                )
+        # We're only concerned with top-level items, children can sort
+        # themselves out
+        if new_item.parent:
+            return new_item.parent.children.append(
+                new_item,
+            )
         # Step through the layout looking for empty slots, which are
         # represented by tuples of locations and titles
         for index, slot in enumerate(layout):
@@ -138,8 +122,6 @@ class Stepper(renderable):
         for index, slot in enumerate(layout):
             # Skip slots that are already items
             if isinstance(slot, StepperItem):
-                if slot != self.current_item_ancestor:
-                    slot.children = []
                 continue
             # Remaining empty slots are replaced by placeholders
             placeholder = PlaceholderItem(
@@ -164,6 +146,18 @@ class Stepper(renderable):
         next_checkers = new_checkers + next_checkers
         # Recurse until next_checkers is empty
         return self.check_all(next_checkers)
+    
+    def item_is_current_check(self, item):
+        """
+        Sets current_item and current_item_ancestor attributes, when these 
+        are found, and set the is_available attribute to True for these 
+        items.
+        """
+        if not self.current_item_ancestors:
+            if item.is_current(self.request):
+                self.current_item_ancestors = item.get_ancestors()
+                for item in self.current_item_ancestors:
+                    item.is_available = True
 
     def has_multiple_studies(
         self,
@@ -192,7 +186,7 @@ class Stepper(renderable):
         ]
 
         for item in self.items:
-            if item.get_errors():
+            if item.get_errors(include_children=False):
                 if self.has_multiple_studies() and item.form_class in study_forms:
                     page_name = f"{item.parent.title}: {item.title}"
                 else:

@@ -1,16 +1,16 @@
 <li>
     {% if item.is_disabled %}
-        <div class="stepper-item disabled {{ item.css_classes }}">
+        <div class="stepper-item disabled {{ item.get_css_classes }}">
             <span class="stepper-bubble {{ bubble_size.0 }}"></span>
             <span>{{ item.title }}</span>
         </div>
     {% else %}
-        <a class="stepper-item {{ item.css_classes }}" href="{{ item.get_url }}">
+        <a class="stepper-item {{ item.get_css_classes }}" href="{{ item.get_url }}">
             <span class="stepper-bubble {{ bubble_size.0 }}"></span>
             <span>{{ item.title }}</span>
         </a>
     {% endif %}
-    {% if item.children %}
+    {% if item.children and item.is_available %}
         <ul>
             {% for child in item.children %}
                 {% include "base/stepper_item.html" with item=child bubble_size=bubble_size|slice:"1:" %}
