@@ -323,17 +323,17 @@ cadeautje."
 
     risk = models.CharField(
         _(
-            "Zijn er kwesties rondom de veiligheid van, of risico's voor de \
-            deelnemers <em>tijdens of na</em> deelname aan het onderzoek?"
+            "Zijn er kwesties rondom de veiligheid van, of risico's voor de "
+            "deelnemers <em>tijdens of na</em> deelname aan het onderzoek?"
         ),
         help_text=mark_safe_lazy(
             _(
-                "Houd hierbij niet alleen rekening met mogelijke psychische \
-                of fysieke schadelijke gevolgen, maar ook met andere \
-                mogelijke schade, zoals bijv. stigmatisering, \
-                (re-)traumatisering, aantasting van zelfbeeld, verlies van \
-                privacy, toevalsbevindingen, juridische vervolging of \
-                aansprakelijkheid, e.d."
+                "Houd hierbij niet alleen rekening met mogelijke psychische "
+                "of fysieke schadelijke gevolgen, maar ook met andere "
+                "mogelijke schade, zoals bijv. stigmatisering, "
+                "(re-)traumatisering, aantasting van zelfbeeld, verlies van "
+                "privacy, toevalsbevindingen, juridische vervolging of "
+                "aansprakelijkheid, e.d."
             )
         ),
         max_length=1,
