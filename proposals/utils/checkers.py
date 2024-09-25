@@ -323,7 +323,7 @@ class TrajectoriesChecker(
         self,
     ):
         return [
-            TrajectoriesEndChecker(
+            KnowledgeSecurityChecker(
                 self.stepper,
                 parent=self.item
             ),
@@ -353,7 +353,7 @@ class TrajectoriesChecker(
         kwargs["proposal"] = self.proposal
         return kwargs
     
-class TrajectoriesEndChecker(
+class KnowledgeSecurityChecker(
     ModelFormChecker,
 ):
     form_class = proposal_forms.KnowledgeSecurityForm
