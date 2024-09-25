@@ -277,15 +277,12 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             "deception_details",
             "negativity",
             "negativity_details",
-            "stressful",
-            "stressful_details",
             "risk",
             "risk_details",
         ]
         widgets = {
             "deception": BootstrapRadioSelect(),
             "negativity": BootstrapRadioSelect(),
-            "stressful": BootstrapRadioSelect(),
             "risk": BootstrapRadioSelect(),
         }
 
@@ -303,23 +300,22 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Set the Study for later reference
-        - Remove empty label from deception/negativity/stressful/risk field and reset the choices
-        - mark_safe the labels of negativity/stressful/risk
+        - Remove empty label from deception/negativity/risk field and reset the choices
+        - mark_safe the labels of negativity/risk
         """
 
         super(StudyEndForm, self).__init__(*args, **kwargs)
 
-        self.fields["deception"].empty_label = None
-        self.fields["deception"].choices = YesNoDoubt.choices
-        self.fields["negativity"].empty_label = None
-        self.fields["negativity"].choices = YesNoDoubt.choices
-        self.fields["stressful"].empty_label = None
-        self.fields["stressful"].choices = YesNoDoubt.choices
-        self.fields["risk"].empty_label = None
-        self.fields["risk"].choices = YesNoDoubt.choices
+        self.base_fields = (
+            "deception",
+            "negativity",
+            "risk",
+        )
+        for field in self.base_fields:
+            self.fields[field].empty_label = None
+            self.fields[field].choices = YesNoDoubt.choices
 
         self.fields["negativity"].label = mark_safe(self.fields["negativity"].label)
-        self.fields["stressful"].label = mark_safe(self.fields["stressful"].label)
         self.fields["risk"].label = mark_safe(self.fields["risk"].label)
 
         if not self.instance.has_sessions:
@@ -337,36 +333,19 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         cleaned_data = super(StudyEndForm, self).clean()
 
         # TODO: find a way to hide this on the first view
-        self.mark_soft_required(cleaned_data, "negativity", "stressful", "risk")
+        self.mark_soft_required(cleaned_data, "negativity", "risk")
 
         if "deception" in self.fields:
             self.mark_soft_required(cleaned_data, "deception")
 
-        self.check_dependency_list(
-            cleaned_data,
-            "deception",
-            "deception_details",
-            f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
-        )
-        self.check_dependency_list(
-            cleaned_data,
-            "negativity",
-            "negativity_details",
-            f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
-        )
-        self.check_dependency_list(
-            cleaned_data,
-            "stressful",
-            "stressful_details",
-            f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
-        )
-        self.check_dependency_list(
-            cleaned_data,
-            "risk",
-            "risk_details",
-            f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
-        )
-
+        for field in self.base_fields:
+            self.check_dependency_list(
+                cleaned_data,
+                f"{field}",
+                f"{field}_details",
+                f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
+            )
+            
 
 class StudyUpdateAttachmentsForm(TemplatedModelForm):
     class Meta:
