@@ -483,16 +483,20 @@ class ProposalPreApprovedFormView(
         """Return to the Proposal Form page"""
         return reverse("proposals:research_goal", args=(self.object.pk,))
 
-class ProposalKnowledgeSecurity(ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
+
+class ProposalKnowledgeSecurity(
+    ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
     model = Proposal
     form_class = KnowledgeSecurityForm
     template_name = "proposals/knowledge_security_form.html"
 
     def get_next_url(self):
         return reverse("proposals:consent", args=(self.object.pk,))
-    
+
     def get_back_url(self):
         return reverse("studies:design_end", args=(self.object.last_study().pk,))
+
 
 class TranslatedConsentFormsView(ProposalContextMixin, UpdateView):
     model = Proposal

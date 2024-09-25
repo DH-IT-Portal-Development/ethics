@@ -502,9 +502,9 @@ trajecten."
         help_text=mark_safe_lazy(
             _(
                 "Kennisveiligheid gaat over het tijdig signaleren en mitigeren "
-            "van veiligheidsrisico's bij wetenschappelijk onderzoek. Klik "
-            "<a href='https://intranet.uu.nl/kennisbank/kennisveiligheid'>hier</a> "
-            "voor meer informatie."
+                "van veiligheidsrisico's bij wetenschappelijk onderzoek. Klik "
+                "<a href='https://intranet.uu.nl/kennisbank/kennisveiligheid'>hier</a> "
+                "voor meer informatie."
             )
         ),
         max_length=1,
@@ -533,7 +533,6 @@ trajecten."
     researcher_risk_details = models.TextField(
         _("Licht toe"), max_length=200, blank=True
     )
-
 
     # References to other models
     relation = models.ForeignKey(

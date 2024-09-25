@@ -345,7 +345,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
                 f"{field}_details",
                 f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
             )
-            
+
 
 class StudyUpdateAttachmentsForm(TemplatedModelForm):
     class Meta:

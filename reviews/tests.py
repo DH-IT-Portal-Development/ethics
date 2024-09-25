@@ -275,7 +275,7 @@ class AutoReviewTests(BaseReviewTestCase):
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 8)
-        
+
     def test_auto_review_age_groups(self):
         self.study.has_sessions = True
         self.study.age_groups.set(AgeGroup.objects.filter(pk=2))  # toddlers

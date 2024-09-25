@@ -275,16 +275,16 @@ cadeautje."
     deception = models.CharField(
         _(
             "Is er binnen bovenstaand onderzoekstraject sprake van "
-"misleiding van de deelnemer?"
+            "misleiding van de deelnemer?"
         ),
         help_text=_(
-            'Misleiding is het doelbewust verschaffen van inaccurate '
-'informatie over het doel en/of belangrijke aspecten van de gang van zaken '
-'tijdens het onderzoek. Denk aan zaken als een bewust misleidende "cover story" '
-'voor het experiment; het ten onrechte suggereren dat er door de deelnemer met andere '
-'deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale '
-'geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: '
-'het gaat hierbij niet om fillers in bijv. taalwetenschappelijk onderzoek.'
+            "Misleiding is het doelbewust verschaffen van inaccurate "
+            "informatie over het doel en/of belangrijke aspecten van de gang van zaken "
+            'tijdens het onderzoek. Denk aan zaken als een bewust misleidende "cover story" '
+            "voor het experiment; het ten onrechte suggereren dat er door de deelnemer met andere "
+            "deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale "
+            "geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: "
+            "het gaat hierbij niet om fillers in bijv. taalwetenschappelijk onderzoek."
         ),
         max_length=1,
         choices=YesNoDoubt.choices,
@@ -293,7 +293,7 @@ cadeautje."
     deception_details = models.TextField(
         _(
             "Geef een toelichting en beschrijf hoe en wanneer de deelnemer "
-"zal worden gedebrieft."
+            "zal worden gedebrieft."
         ),
         blank=True,
     )

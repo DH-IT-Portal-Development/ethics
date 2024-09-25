@@ -887,7 +887,7 @@ class KnowledgeSecurityForm(SoftValidationMixin, ConditionalModelForm):
         for field in self.base_fields:
             self.fields[field].empty_label = None
             self.fields[field].choices = YesNoDoubt.choices
-        
+
     def clean(self):
         """
         Check for conditional requirements:
@@ -897,9 +897,7 @@ class KnowledgeSecurityForm(SoftValidationMixin, ConditionalModelForm):
         """
         cleaned_data = super(KnowledgeSecurityForm, self).clean()
 
-        self.mark_soft_required(
-            cleaned_data, "knowledge_security", "researcher_risk"
-        )
+        self.mark_soft_required(cleaned_data, "knowledge_security", "researcher_risk")
 
         for field in self.base_fields:
             self.check_dependency_list(

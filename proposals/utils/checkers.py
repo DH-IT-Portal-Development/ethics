@@ -323,10 +323,7 @@ class TrajectoriesChecker(
         self,
     ):
         return [
-            KnowledgeSecurityChecker(
-                self.stepper,
-                parent=self.item
-            ),
+            KnowledgeSecurityChecker(self.stepper, parent=self.item),
             DocumentsChecker,
             DataManagementChecker,
             SubmitChecker,
@@ -352,7 +349,8 @@ class TrajectoriesChecker(
         kwargs = super().get_form_kwargs()
         kwargs["proposal"] = self.proposal
         return kwargs
-    
+
+
 class KnowledgeSecurityChecker(
     ModelFormChecker,
 ):
@@ -364,10 +362,11 @@ class KnowledgeSecurityChecker(
             self.title = _("Trajecten afronding")
         self.stepper.items.append(self.make_stepper_item())
         return []
-    
-    def get_url(self,):
-        return reverse("proposals:knowledge_security",
-                       args=[self.proposal.pk])
+
+    def get_url(
+        self,
+    ):
+        return reverse("proposals:knowledge_security", args=[self.proposal.pk])
 
 
 class StudyChecker(
