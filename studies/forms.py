@@ -29,7 +29,7 @@ from cdh.core.forms import (
 class StudyForm(SoftValidationMixin, ConditionalModelForm):
 
     age_groups_header = TemplatedFormTextField(
-        header=_("De leeftijdsgroup van je deelnemers"), header_element="h4"
+        header=_("De leeftijdsgroep van je deelnemers"), header_element="h4"
     )
 
     legally_incapable_header = TemplatedFormTextField(
