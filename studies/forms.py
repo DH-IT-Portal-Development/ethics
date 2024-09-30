@@ -302,15 +302,15 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         - mark_safe the labels of negativity/risk
         """
 
-        super(StudyEndForm, self).__init__(*args, **kwargs)
-
         self.base_fields = (
             "deception",
             "negativity",
             "risk",
         )
+
+        super(StudyEndForm, self).__init__(*args, **kwargs)
+
         for field in self.base_fields:
-            self.fields[field].empty_label = None
             self.fields[field].choices = YesNoDoubt.choices
 
         self.fields["negativity"].label = mark_safe(self.fields["negativity"].label)
