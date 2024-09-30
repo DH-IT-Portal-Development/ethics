@@ -9,7 +9,9 @@
         {# todo: responsive design #}
         <div class="col-3">
             {% block sidebar %}
-                {% include stepper %}
+                {% if stepper %}
+                    {% include stepper %}
+                {% endif %}
             {% endblock %}
 
         </div>
