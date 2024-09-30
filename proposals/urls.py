@@ -220,9 +220,7 @@ urlpatterns = [
         name="knowledge_security",
     ),
     path("consent/<int:pk>/", StudyConsent.as_view(), name="consent"),
-    path(
-        "translated/<int:pk>/", TranslatedConsentView.as_view(), name="translated"
-    ),
+    path("translated/<int:pk>/", TranslatedConsentView.as_view(), name="translated"),
     path(
         "copy/",
         include(
