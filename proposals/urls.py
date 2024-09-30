@@ -42,7 +42,7 @@ from .views.proposal_views import (
     ProposalCopyAmendment,
     ProposalsPublicArchiveView,
     ProposalUpdateDataManagement,
-    TranslatedConsentFormsView,
+    TranslatedConsentView,
     ProposalUpdateDateStart,
     ProposalKnowledgeSecurity,
 )
@@ -221,7 +221,7 @@ urlpatterns = [
     ),
     path("consent/<int:pk>/", StudyConsent.as_view(), name="consent"),
     path(
-        "translated/<int:pk>/", TranslatedConsentFormsView.as_view(), name="translated"
+        "translated/<int:pk>/", TranslatedConsentView.as_view(), name="translated"
     ),
     path(
         "copy/",

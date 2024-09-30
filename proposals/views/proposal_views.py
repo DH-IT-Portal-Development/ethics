@@ -498,7 +498,7 @@ class ProposalKnowledgeSecurity(
         return reverse("studies:design_end", args=(self.object.last_study().pk,))
 
 
-class TranslatedConsentFormsView(ProposalContextMixin, UpdateView):
+class TranslatedConsentView(ProposalContextMixin, UpdateView):
     model = Proposal
     form_class = TranslatedConsentForm
     template_name = "proposals/translated_consent_forms.html"
