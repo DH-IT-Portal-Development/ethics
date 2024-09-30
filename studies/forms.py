@@ -291,8 +291,6 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         "deception_details",
         "negativity",
         "negativity_details",
-        "stressful",
-        "stressful_details",
         "risk",
         "risk_detail",
     ]
