@@ -10,6 +10,17 @@
 
 {% block html_head %}
     <script src="{% static 'main/js/htmldiff.js' %}"></script>
+    <style>
+        del {
+            text-decoration: none;
+            background-color: #ff6565;
+        }
+        
+        ins {
+            text-decoration: none;
+            background-color: #73ff73;
+        }
+    </style>
     <script defer>
         $(function () {
 
