@@ -17,7 +17,7 @@
     <tbody>
         {% if warning %}
             {% for row in rows|slice:":1" %}
-                <tr>
+                <tr class="diff-ignore">
                     <th>{{ row.verbose_name }}</th>
                     {# If the first object is missing, place a warning on the first TD #}
                     {% if missing_object == 'old' %}
@@ -35,7 +35,7 @@
                 </tr>
             {% endfor %}
             {% for row in rows|slice:"1:" %}
-                <tr>
+                <tr class="diff-ignore">
                     <th>{{ row.verbose_name }}</th>
                     <td>{{ row.value }}</td>
                 </tr>
