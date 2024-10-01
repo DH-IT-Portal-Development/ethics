@@ -1,0 +1,47 @@
+{% extends "base/fetc_form_base.html" %}
+{% load i18n %}
+{% load static %}
+
+{% block header_title %}
+    {% trans "Voeg een bestand toe" %} - {{ block.super }}
+{% endblock %}
+
+{% block pre-form-text %}
+    <h3>{% trans "Maak of wijzig een bestand" %}</h3>
+    <p>
+        {% blocktrans trimmed %}
+            Je voegt een bestand toe aan het volgende:
+        {% endblocktrans %}
+    </p>
+    <p class="ml-5">
+        {% if study %}
+            {% blocktrans with order=study.order name=study.name trimmed %}
+                Traject {{order}}: <em>{{name}}</em> van
+            {% endblocktrans %}
+        {% endif %}
+        {% trans "de aanvraag" %} <em>{{ proposal.title }}</em>.
+    </p>
+    {% blocktrans with name=kind_name trimmed %}
+        Je gaat hier een {{name}} aan toevoegen. Wil je een ander soort bestand toevoegen? Ga dan terug naar de vorige pagina.
+    {% endblocktrans %}
+
+
+    </p>
+{% endblock %}
+
+{% block form-buttons %}
+
+    <div class="mt-4 mb-3 w-100 d-flex">
+
+    <a class="btn btn-secondary" href="{% url "proposals:attachments" pk=proposal.pk %}">
+        {% trans '<< Ga terug' %}
+    </a>
+    
+    <input class="btn btn-primary continue-button ms-auto"
+           type="submit"
+           name="save"
+           value="{% trans "Opslaan" %}" />
+    
+</div>
+
+{% endblock %}
