@@ -14,8 +14,20 @@ class AttachmentKind:
     max_num = None
     attached_field = "attachments"
 
-    def __init__(self, obj):
-        self.owner = obj
+    def __init__(self, owner=None):
+        self.owner = owner
+
+    @classmethod
+    def from_proposal(cls, proposal, attachment):
+        kind = get_kind_from_str(attachment.kind)
+        if kind.model is Proposal:
+            return kind(owner=proposal)
+        # This might be more efficient in a QS
+        for study in proposal.studies:
+            if attachment in study.attachments:
+                return kind(owner=study)
+        msg = f"Attachment {attachment.pk} not found for proposal {proposal}"
+        raise KeyError(msg)
 
     def get_slots(self):
         slots = []
