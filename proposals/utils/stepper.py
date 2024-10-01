@@ -150,14 +150,14 @@ class Stepper(renderable):
     def item_is_current_check(self, item):
         """
         Sets current_item and current_item_ancestor attributes, when these
-        are found, and set the is_available attribute to True for these
+        are found, and set the is_expanded attribute to True for these
         items.
         """
         if not self.current_item_ancestors:
             if item.is_current(self.request):
                 self.current_item_ancestors = item.get_ancestors()
                 for item in self.current_item_ancestors:
-                    item.is_available = True
+                    item.is_expanded = True
 
     def has_multiple_studies(
         self,

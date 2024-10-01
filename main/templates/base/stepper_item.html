@@ -11,7 +11,7 @@
             <span>{{ item.title }}</span>
         </a>
     {% endif %}
-    {% if item.children and item.is_available %}
+    {% if item.children and item.is_expanded %}
         <ul>
             {% for child in item.children %}
                 {% include "base/stepper_item.html" with item=child bubble_size=bubble_size|slice:"1:" %}

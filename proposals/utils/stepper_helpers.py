@@ -49,7 +49,7 @@ class StepperItem(
         self.proposal = stepper.proposal
         self.children = []
         self.parent = parent
-        self.is_available = False
+        self.is_expanded = False
         self.css_classes = set()
         # Don't override default location if not provided explicitly
         if location:
@@ -306,7 +306,7 @@ class ModelFormItem(
         its children, otherwise, it only depends on the form the
         the item represents.
         """
-        if not self.is_available and self.children:
+        if not self.is_expanded and self.children:
             if self.get_errors(include_children=True):
                 self.css_classes.add("incomplete")
             else:

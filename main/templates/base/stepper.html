@@ -17,7 +17,7 @@
                         <span>{{ item.title }}</span>
                     </a>
                 {% endif %}
-                {% if item.children and item.is_available %}
+                {% if item.children and item.is_expanded %}
                     <ul>
                         {% for child in item.children %}
                             {% include child with bubble_size=bubble_size|slice:"1:" %}
