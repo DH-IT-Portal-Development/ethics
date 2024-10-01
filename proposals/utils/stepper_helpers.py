@@ -96,7 +96,6 @@ class StepperItem(
         until is_current returns True.
         """
         if request.path == self.get_url():
-            self.css_classes.add("active")
             return True
         return False
 

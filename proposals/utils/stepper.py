@@ -155,6 +155,7 @@ class Stepper(renderable):
         """
         if not self.current_item_ancestors:
             if item.is_current(self.request):
+                item.css_classes.add("active")
                 self.current_item_ancestors = item.get_ancestors()
                 for item in self.current_item_ancestors:
                     item.is_expanded = True
