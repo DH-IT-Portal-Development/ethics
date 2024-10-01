@@ -65,7 +65,7 @@ class TaskCreate(TaskMixin, CreateView):
     def get_session(self):
         """Retrieves the Study from the pk kwarg"""
         return Session.objects.get(pk=self.kwargs["pk"])
-    
+
     def get_proposal(self):
         return self.get_session().study.proposal
 

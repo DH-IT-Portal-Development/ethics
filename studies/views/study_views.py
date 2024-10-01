@@ -106,13 +106,15 @@ class StudyDesign(
         for study_type in form.fields["study_types"].choices:
             form_value = study_type[0] in form.data.getlist("study_types")
             form.instance.__setattr__(study_type[0], form_value)
-        if not form.instance.has_intervention and hasattr(form.instance, "intervention"):
+        if not form.instance.has_intervention and hasattr(
+            form.instance, "intervention"
+        ):
             form.instance.intervention.delete()
         if not form.instance.has_observation and hasattr(form.instance, "observation"):
             form.instance.observation.delete()
         if not form.instance.has_sessions and form.instance.session_set.all():
             for session in form.instance.session_set.all():
-                session.delete()       
+                session.delete()
         form.instance.save()
 
         return super(StudyDesign, self).form_valid(form)
