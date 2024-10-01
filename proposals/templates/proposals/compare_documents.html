@@ -9,18 +9,8 @@
 {% endblock %}
 
 {% block html_head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/diff.css' %}">
     <script src="{% static 'main/js/htmldiff.js' %}"></script>
-    <style>
-        del {
-            text-decoration: none;
-            background-color: #ff6565;
-        }
-        
-        ins {
-            text-decoration: none;
-            background-color: #73ff73;
-        }
-    </style>
     <script defer>
         $(function () {
 
@@ -101,8 +91,8 @@
         <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
             <img src="{% static 'main/images/loading.gif' %}" />
         </div>
-        <div style="display: none" class="col-6 split_view" id="old_text">{{ old_text|linebreaks }}</div>
-        <div style="display: none" class="col-6 split_view" id="new_text">{{ new_text|linebreaks }}</div>
-        <div class="col-12" id="combined_text"></div>
+        <div style="display: none" class="col-6 split_view diff" id="old_text">{{ old_text|linebreaks }}</div>
+        <div style="display: none" class="col-6 split_view diff" id="new_text">{{ new_text|linebreaks }}</div>
+        <div class="col-12 diff" id="combined_text"></div>
     </div>
 {% endblock %}

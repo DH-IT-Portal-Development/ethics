@@ -1,17 +1,6 @@
 {% load diff_tags %}
 {% load i18n %}
-
-<style>
-    .diff-row del {
-        text-decoration: none;
-        background-color: #ff6565;
-    }
-    
-    .diff-row ins {
-        text-decoration: none;
-        background-color: #73ff73;
-    }
-</style>
+{% load static %}
 
 {% if section_title %}
     <h2 class="mt-5 mb-1">{% trans section_title %}</h2>
@@ -28,7 +17,7 @@
     <tbody>
         {% if warning %}
             {% for row in rows|slice:":1" %}
-                <tr class="diff-ignore">
+                <tr>
                     <th>{{ row.verbose_name }}</th>
                     {# If the first object is missing, place a warning on the first TD #}
                     {% if missing_object == 'old' %}
@@ -46,14 +35,14 @@
                 </tr>
             {% endfor %}
             {% for row in rows|slice:"1:" %}
-                <tr class="diff-ignore">
+                <tr>
                     <th>{{ row.verbose_name }}</th>
                     <td>{{ row.value }}</td>
                 </tr>
             {% endfor %}
         {% else %}
             {% for row in rows %}
-                <tr class="diff-row">
+                <tr class="diff">
                     <th>{{ row.verbose_name }}</th>
                     <td>{{ row.old_value }}</td>
                     <td>{{ row.new_value }}</td>
