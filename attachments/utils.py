@@ -104,7 +104,7 @@ class ProposalAttachments():
         return self.provided + self.complement
 
     def _fetch(self,):
-        qs = self.proposal.attachments_set.all()
+        qs = self.proposal.attachments.all()
         return list(qs)
 
     def _provided_of_kind(self, kind,):

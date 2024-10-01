@@ -11,7 +11,10 @@ from cdh.files.db import FileField as CDHFileField
 class Attachment(models.Model, renderable):
 
     template_name = "attachment/attachment_model.html"
-    upload = CDHFileField()
+    upload = CDHFileField(
+        verbose_name=_("Bestand"),
+        help_text=_("Selecteer hier het bestand om toe te voegen."),
+    )
     parent = models.ForeignKey(
         "attachments.attachment",
         related_name="children",
