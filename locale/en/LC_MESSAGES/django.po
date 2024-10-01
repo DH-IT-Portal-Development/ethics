@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-30 16:10+0200\n"
+"POT-Creation-Date: 2024-10-01 10:14+0200\n"
 "PO-Revision-Date: 2024-04-03 12:32+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: faqs/menus.py:7 main/templates/main/index.html:137
+#: faqs/menus.py:7 main/templates/main/index.html:132
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
@@ -34,7 +34,7 @@ msgstr "Regulations FEtC-H"
 msgid "https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"
 msgstr "https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"
 
-#: faqs/menus.py:17 main/templates/main/index.html:145
+#: faqs/menus.py:17 main/templates/main/index.html:140
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/translated_consent_forms.html:7
 #: proposals/utils/pdf_diff_logic.py:884
@@ -577,13 +577,13 @@ msgstr ""
 
 #: main/templates/main/index.html:64
 msgid ""
-"Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
-"algemene-kamer/\" target=\"blank\">Algemene Kamer (AK)</a> of dat van de <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\" "
-"target=\"blank\">Linguïstiek Kamer (LK)</a>."
+"Het <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/\" "
+"target=\"blank\"> reglement van de FETC-GW </a>."
 msgstr ""
+"The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\" "
+"target=\"_blank\">regulations of the FEtC-H</a>."
 
-#: main/templates/main/index.html:77
+#: main/templates/main/index.html:72
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\" "
@@ -595,65 +595,65 @@ msgstr ""
 "target=\"_blank\">model documents</a> for <em>informed consent</em>. (Latest "
 "version: <u>December 2021</u>)"
 
-#: main/templates/main/index.html:90
+#: main/templates/main/index.html:85
 msgid "Bekijk mijn aanvragen"
 msgstr "View my applications"
 
-#: main/templates/main/index.html:91 proposals/menus.py:9
+#: main/templates/main/index.html:86 proposals/menus.py:9
 msgid "Nieuwe aanvraag starten"
 msgstr "Start a new application"
 
-#: main/templates/main/index.html:93
+#: main/templates/main/index.html:88
 msgid "Nieuwe revisie starten"
 msgstr "Create new revision"
 
-#: main/templates/main/index.html:95
+#: main/templates/main/index.html:90
 msgid "Nieuw amendement starten"
 msgstr "Create new amendment"
 
-#: main/templates/main/index.html:97 proposals/menus.py:112
+#: main/templates/main/index.html:92 proposals/menus.py:112
 #: proposals/views/proposal_views.py:190
 msgid "Archief"
 msgstr "Archive"
 
-#: main/templates/main/index.html:102
+#: main/templates/main/index.html:97
 msgid "Ondersteuning"
 msgstr "Support"
 
-#: main/templates/main/index.html:104
+#: main/templates/main/index.html:99
 msgid ""
 "<strong>FETC-GW secretaris</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
 msgstr "<strong>FEtC-H secretary</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
 
-#: main/templates/main/index.html:111
+#: main/templates/main/index.html:106
 msgid "<strong>Data Management advies</strong> <br /> datamanagement.gw@uu.nl"
 msgstr "<strong>Data Management advice</strong> <br /> datamanagement.gw@uu.nl"
 
-#: main/templates/main/index.html:118
+#: main/templates/main/index.html:113
 msgid "<strong>Privacy kwesties/vragen</strong> <br /> privacy.gw@uu.nl"
 msgstr "<strong>Privacy issues/questions</strong> <br /> privacy.gw@uu.nl"
 
-#: main/templates/main/index.html:125
+#: main/templates/main/index.html:120
 msgid "<strong>Technical support</strong> <br /> portalsupport.gw@uu.nl"
 msgstr "<strong>Technical support</strong> <br /> portalsupport.gw@uu.nl"
 
-#: main/templates/main/index.html:133
+#: main/templates/main/index.html:128
 msgid "Resources"
 msgstr "Resources"
 
-#: main/templates/main/index.html:141
+#: main/templates/main/index.html:136
 msgid "Reglement van de FETC-GW"
 msgstr "Regulations of the FEtC-H"
 
-#: main/templates/main/index.html:148
+#: main/templates/main/index.html:143
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: main/templates/main/index.html:153
+#: main/templates/main/index.html:148
 msgid "Feedback"
 msgstr "Feedback"
 
-#: main/templates/main/index.html:155
+#: main/templates/main/index.html:150
 msgid ""
 "Heb je een vraag over de werking van de portal, ontdek je een foutje, "
 "missende functionaliteit, of verkeerde vertaling? Neem dan contact op met <a "
@@ -4928,7 +4928,8 @@ msgstr ""
 
 #: tasks/forms.py:191
 msgid "Sessie {} bevat nog geen taken. Voeg minstens één taak toe."
-msgstr "Session {} does not yet contain tasks. Please create at least one task."
+msgstr ""
+"Session {} does not yet contain tasks. Please create at least one task."
 
 #: tasks/forms.py:218
 msgid ""
@@ -5293,139 +5294,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:78
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid "De interventie vindt plaats binnen het schooljaar 2018-2019"
-#~ msgstr "The intervention will take place in the academic year 2018-2019"
-
-#~ msgid "Algemeen"
-#~ msgstr "General"
-
-#~ msgid "De deelnemers (traject {})"
-#~ msgstr "Participants (trajectory {})"
-
-#~ msgid "De onderzoekstype(n) (traject {})"
-#~ msgstr "Type(s) of research (trajectory {})"
-
-#~ msgid "Het interventieonderzoek (traject {})"
-#~ msgstr "Intervention study (trajectory {})"
-
-#~ msgid "Het observatieonderzoek (traject {})"
-#~ msgstr "Observational study (trajectory {})"
-
-#~ msgid "Overzicht van het takenonderzoek (traject {})"
-#~ msgstr "Overview of task-based research (trajectory {})"
-
-#~ msgid "Het takenonderzoek: sessie {} (traject {})"
-#~ msgstr "Task-based research: session {} trajectory {}"
-
-#~ msgid "Het takenonderzoek: sessie {} taak {} (traject {})"
-#~ msgstr "Task-based research: session {} task {} (trajectory {})"
-
-#~ msgid "Overzicht van takenonderzoek: sessie {} (traject {})"
-#~ msgstr "Overview of task-based research: session {} (trajectory {})"
-
-#~ msgid "AVG en Data Management"
-#~ msgstr "AVG and Data Management"
-
-#~ msgid "Selecteer de commissieleden"
-#~ msgstr "Select committee members"
-
-#~ msgid ""
-#~ "De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op "
-#~ "onderdelen of als geheel zodanig belastend is dat deze ondanks de "
-#~ "verkregen informed consent vragen zou kunnen oproepen."
-#~ msgstr ""
-#~ "The researcher states (or considers it possible) that participation in "
-#~ "the study, in part or in its entirety, is so burdensome that despite "
-#~ "acquiring informed consent it might raise questions."
-
-#~ msgid ""
-#~ "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
-#~ "psychische of fysieke schade bij deelname aan het onderzoek meer dan "
-#~ "minimaal zijn."
-#~ msgstr ""
-#~ "The researcher states (or considers it possible) that the risks of "
-#~ "psychological or physical harm in participating in the study are more "
-#~ "than minimal."
-
-#~ msgid ""
-#~ "Bevat bovenstaand onderzoekstraject elementen die <em>tijdens</em> de "
-#~ "deelname niet-triviale negatieve emoties kunnen opwekken? Denk hierbij "
-#~ "bijvoorbeeld aan emotioneel indringende vragen, kwetsende uitspraken, "
-#~ "negatieve feedback, frustrerende, zware, (heel) lange en/of (heel) saaie "
-#~ "taken."
-#~ msgstr ""
-#~ "Does the above research trajectory include elements which could arouse "
-#~ "non-trivially negative emotions <em>during</em> participation? For "
-#~ "example, consider emotionally probing questions, insulting utterances, "
-#~ "negative feedback, and frustrating, difficult, (very) long and/or (very) "
-#~ "boring tasks."
-
-#~ msgid "Licht je antwoord toe."
-#~ msgstr "Explain your answer."
-
-#~ msgid ""
-#~ "Dit zou bijvoorbeeld het geval kunnen zijn bij een 'onmenselijk' lange en "
-#~ "uitputtende taak, een zeer confronterende vragenlijst, of voortdurend "
-#~ "vernietigende feedback, maar ook bij een ervaren inbreuk op de privacy, "
-#~ "of een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag "
-#~ "om de door de deelnemer ervaren belasting tijdens het onderzoek, niet om "
-#~ "de opgelopen psychische of fysieke schade door het onderzoek."
-#~ msgstr ""
-#~ "This could be the case with an inhumanely long or exhausting task, an "
-#~ "extremely provocative questionnaire, or excessive destructive feedback on "
-#~ "participant performance. Also consider a significant breach of privacy or "
-#~ "lack of respect towards the participant as examples for this question. "
-#~ "Please note that this question refers to distress during experimental "
-#~ "sessions, not distress at a later date which was caused by the research "
-#~ "project."
-
-#~ msgid ""
-#~ "Zijn de risico's op psychische, fysieke, of andere (bijv. economische, "
-#~ "juridische) schade door deelname aan bovenstaand onderzoekstraject "
-#~ "<em>meer dan</em> minimaal? D.w.z. ligt de kans op en/of omvang van "
-#~ "mogelijke schade bij de deelnemers duidelijk <em>boven</em> het "
-#~ "\"achtergrondrisico\"?"
-#~ msgstr ""
-#~ "Are the risks of psychological, physical or other (e.g. economic, legal) "
-#~ "damage due to participation in the research trajectory above <em>more "
-#~ "than</em> minimal? I.e. is the chance of and/or magnitude of potential "
-#~ "damage to participants clearly <em>above</em> that of the \"background "
-#~ "risk\"?"
-
-#~ msgid ""
-#~ "Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de "
-#~ "relevante leeftijdscategorie normaalgesproken in het dagelijks leven ten "
-#~ "deel valt. Denk bij schade ook aan de gevolgen die het voor de deelnemer "
-#~ "of anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. op "
-#~ "het vlak van zelfbeeld, stigmatisering door anderen, economische schade "
-#~ "door data-koppeling, et cetera. Het achtergrondrisico voor psychische en "
-#~ "fysieke schade omvat bijvoorbeeld ook de risico's van \"routine\"-tests, -"
-#~ "onderzoeken of -procedures die in alledaagse didactische, psychologische "
-#~ "of medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, "
-#~ "een stressbestendigheids-<em>assessment</em>, een intelligentie- of "
-#~ "persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit "
-#~ "alles, waar relevant, onder begeleiding van adequaat geschoolde "
-#~ "specialisten)."
-#~ msgstr ""
-#~ "Background risk is the risk experienced by average, healthy people in the "
-#~ "relevant age group during daily life. Damage to be considered includes, "
-#~ "but is not limited to: physical or psychological harm, damage by means of "
-#~ "gathered information which might affect self-image or cause "
-#~ "stigmatisation by others, economic damage through linked data, and so "
-#~ "forth. To determine potential physical and psychological harm in relation "
-#~ "to the background risk, you may compare your study to \"routine\" tests "
-#~ "which take place during daily life, such as a driving test, job interview "
-#~ "or performance evaluation, intelligence test, or heart rate measurement "
-#~ "after physical exercise, all of which performed under professional "
-#~ "supervision."
-
-#~ msgid ""
-#~ "Voor elk door jou aangekruiste type onderzoek kan je op de hiernavolgende "
-#~ "pagina's de relevante informatie verschaffen."
-#~ msgstr ""
-#~ "For each type of research selected you can supply the relevant "
-#~ "information on the following pages."
-
-#~ msgid "Vergoeding"
-#~ msgstr "Compensation"
