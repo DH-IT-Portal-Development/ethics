@@ -1,13 +1,13 @@
 {% load i18n %}
 
-<div class="row p-3">
+<div class="row mt-4 mb-4">
 
-    <div class="col-3 align-middle">
+    <div class="col-2 align-middle">
         {{ slot.desiredness }}
     </div>
-    <div class="col-6 align-middle">
-        Bestand:
+    <div class="col-7 align-middle">
         {% if slot.attachment %}
+        <h4>{{slot.kind.name}}</h4>
             {% include slot.attachment %}
         {% else %}
             Nog toe te voegen
@@ -17,7 +17,7 @@
     <div class="col-3 align-middle">
         {% if slot.attachment %}
             <a class="btn btn-primary" href="{{slot.get_attach_url}}">
-                {% trans "Bewerk" %}
+                {% trans "Wijzig" %}
             </a>
         {% else %}
             <a class="btn btn-primary" href="{{slot.get_attach_url}}">

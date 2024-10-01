@@ -54,6 +54,7 @@ class ProposalAttachView(
         super().__init__(*args, **kwargs)
 
     def set_upload_field_label(self, form):
+        # Remind the user of what they're uploading
         upload_field = form.fields["upload"]
         kind = self.get_kind()
         upload_field.label += f" ({kind.name})"
