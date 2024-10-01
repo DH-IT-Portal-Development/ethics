@@ -36,7 +36,7 @@ class Stepper(renderable):
         # which item is current
         self.request = request
         self.items = []
-        self.current_item_ancestors = None
+        self.current_item_ancestors = []
 
         self.check_all(self.starting_checkers)
 
