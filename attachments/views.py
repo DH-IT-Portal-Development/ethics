@@ -69,9 +69,6 @@ class AttachmentCreateView(generic.CreateView):
         other_object.save()
 
     def get_success_url(self):
-        return reverse(
-            "proposals:attachments",
-            kwargs={
-                "pk": self.kwargs.get(self.other_pk_kwarg),
-            }
+        raise ImproperlyConfigured(
+            "Please define get_success_url()"
         )

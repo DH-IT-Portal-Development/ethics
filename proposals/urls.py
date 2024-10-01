@@ -17,7 +17,6 @@ from .views.proposal_views import (
     ProposalFundingFormView,
     ProposalResearchGoalFormView,
     ProposalPreApprovedFormView,
-    ProposalAttachmentsView,
     ProposalDataManagement,
     ProposalSubmit,
     ProposalSubmitted,
@@ -46,6 +45,13 @@ from .views.proposal_views import (
     TranslatedConsentFormsView,
     ProposalUpdateDateStart,
 )
+
+from .views.attachment_views import (
+    ProposalAttachView,
+    ProposalAttachmentsView,
+    ProposalUpdateAttachmentView
+)
+
 
 from .views.study_views import StudyStart, StudyConsent
 from .views.wmo_views import (
@@ -169,6 +175,16 @@ urlpatterns = [
         "attachments/<int:pk>/",
         ProposalAttachmentsView.as_view(),
         name="attachments",
+    ),
+    path(
+        "attach/<str:kind>/<int:other_pk>/",
+        ProposalAttachView.as_view(),
+        name="attach_file",
+    ),
+    path(
+        "attachment/<int:pk>/edit/",
+        ProposalUpdateAttachmentView.as_view(),
+        name="update_attachment",
     ),
     path(
         "data_management/<int:pk>/",
