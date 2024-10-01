@@ -264,7 +264,7 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 6)
 
-        self.study.researcher_risk = YesNoDoubt.YES
+        self.study.proposal.researcher_risk = YesNoDoubt.YES
         self.study.save()
 
         reasons = auto_review(self.proposal)
