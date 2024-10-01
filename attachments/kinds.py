@@ -15,7 +15,7 @@ class AttachmentKind:
     attached_field = "attachments"
 
     def __init__(self, obj):
-        self.object = obj
+        self.owner = obj
 
     def get_slots(self):
         slots = []
@@ -26,7 +26,7 @@ class AttachmentKind:
         return slots
 
     def get_instances_for_object(self):
-        manager = getattr(self.object, self.attached_field)
+        manager = getattr(self.owner, self.attached_field)
         return manager.filter(kind=self.db_name)
 
     def num_required(self):
@@ -53,7 +53,7 @@ class AttachmentKind:
 
     def get_attach_url(self):
         url_kwargs = {
-            "other_pk": self.object.pk,
+            "other_pk": self.owner.pk,
             "kind": self.db_name,
         }
         return reverse("proposals:attach_file", kwargs=url_kwargs)
@@ -122,6 +122,13 @@ ATTACHMENT_CHOICES = [
     (a.db_name, a.name) for a in ATTACHMENTS
 ]
 
+def get_kind_from_str(db_name):
+    kinds = {
+        kind.db_name: kind
+        for kind in ATTACHMENTS
+    }
+    return kinds[db_name]
+
 class AttachmentSlot(renderable):
 
     template_name = "attachments/slot.html"
@@ -137,23 +144,13 @@ class AttachmentSlot(renderable):
         return context
 
     def get_attach_url(self,):
-        return "#"
+        return self.kind.get_attach_url()
 
     def get_delete_url(self,):
         return "#"
 
 class ProposalAttachments:
     """
-    A utility class that provides most functions related to a proposal's
-    attachments. The algorithm with which required attachments are determined
-    is as follows:
-
-    1. Collect all existing attachments for proposal and studies
-    2. Match all existing attachments to kinds
-    3. Complement existing attachments with additional kind instances to
-       represent yet to be fulfilled requirements
-
-    This happens for the proposal as a whole and each of its studies.
     """
 
     def __init__(self, proposal):
