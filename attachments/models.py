@@ -10,7 +10,14 @@ from cdh.files.db import FileField as CDHFileField
 
 class Attachment(models.Model, renderable):
 
-    template_name = "attachment/attachment_model.html"
+    template_name = "attachments/attachment_model.html"
+    author = models.ForeignKey(
+        get_user_model(),
+        related_name="created_attachments",
+        null=True,
+        on_delete=models.SET_NULL,
+        default=None,
+    )
     upload = CDHFileField(
         verbose_name=_("Bestand"),
         help_text=_("Selecteer hier het bestand om toe te voegen."),
@@ -44,6 +51,11 @@ class Attachment(models.Model, renderable):
             "opmerkingen voor de FETC kun je hier ook kwijt."
         )
     )
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["attachment"] = self
+        return context
 
 class ProposalAttachment(Attachment,):
     attached_to = models.ManyToManyField(
