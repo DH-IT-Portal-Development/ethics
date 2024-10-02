@@ -91,9 +91,8 @@ class StepperItem(
     def is_current(self, request):
         """
         Returns True if this item represents the page the user
-        is currently on and adds the active class to the item's
-        self.css_classes set. This gets called when building the stepper,
-        until is_current returns True.
+        is currently on. This gets called when building the stepper,
+        from Stepper.item_is_current_check(), until is_current returns True.
         """
         if request.path == self.get_url():
             return True
