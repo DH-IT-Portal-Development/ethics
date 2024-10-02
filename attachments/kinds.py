@@ -29,12 +29,12 @@ class AttachmentKind:
         msg = f"Attachment {attachment.pk} not found for proposal {proposal}"
         raise KeyError(msg)
 
-    def get_slots(self):
+    def get_slots(self, manager=None):
         slots = []
         for inst in self.get_instances_for_object():
-            slots.append(AttachmentSlot(self, attachment=inst,))
+            slots.append(AttachmentSlot(self, attachment=inst, manager=manager,))
         for i in range(self.still_required()):
-            slots.append(AttachmentSlot(self,))
+            slots.append(AttachmentSlot(self, manager=manager,))
         return slots
 
     def get_instances_for_object(self):
@@ -145,10 +145,11 @@ class AttachmentSlot(renderable):
 
     template_name = "attachments/slot.html"
 
-    def __init__(self, kind, attachment=None):
+    def __init__(self, kind, attachment=None, manager=None):
         self.kind = kind
         self.attachment = attachment
         self.desiredness = _("Verplicht")
+        self.manager = manager
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -174,12 +175,12 @@ class ProposalAttachments:
     def match_slots(self,):
         self.proposal_slots = []
         for kind in self.proposal_kinds:
-            self.proposal_slots += kind.get_slots()
+            self.proposal_slots += kind.get_slots(manager=self)
         self.study_slots = {}
         for study, kinds in self.study_kinds.items():
             self.study_slots[study] = []
             for kind in kinds:
-                self.study_slots[study] += kind.get_slots()
+                self.study_slots[study] += kind.get_slots(manager=self)
 
     def walk_proposal(self):
         kinds = []

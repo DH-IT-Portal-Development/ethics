@@ -8,7 +8,7 @@
     <div class="col-7 align-middle">
         {% if slot.attachment %}
         <h4>{{slot.kind.name}}</h4>
-            {% include slot.attachment %}
+            {% include slot.attachment with manager=manager %}
         {% else %}
             Nog toe te voegen
         {% endif %}

@@ -14,7 +14,7 @@
 {% for study, slots in study_slots.items %}
     <h3>{% trans "Traject " %} {{ study.order }} {% if study.name %}: <em>{{ study.name }}</em> {% endif %}</h3>
     {% for slot in slots %}
-        {% include slot %}
+        {% include slot with manager=manager %}
     {% endfor %}
 {% endfor %}
 <h4>{% trans "Overig" %}</h4>

@@ -1,1 +1,5 @@
-Filename goes here
+
+
+<a href="{% url "proposals:download_attachment_original" proposal_pk=manager.proposal.pk attachment_pk=attachment.pk %}">
+
+{{attachment.upload.original_filename}}</a>
