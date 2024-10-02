@@ -8,6 +8,8 @@ from attachments.kinds import ProposalAttachments, get_kind_from_str
 from attachments.models import Attachment, ProposalAttachment, StudyAttachment
 from main.forms import ConditionalModelForm
 from cdh.core import forms as cdh_forms
+from django.http import FileResponse
+from attachments.kinds import ATTACHMENTS, AttachmentKind
 
 
 class AttachForm(
@@ -144,3 +146,43 @@ class ProposalAttachmentsView(
         context["study_slots"] = manager.study_slots
 
         return context
+
+
+class ProposalAttachmentDownloadView(
+        generic.View,
+):
+    original_filename = False
+
+    def __init__(self, *args, **kwargs,):
+        self.original_filename = kwargs.pop("original_filename", False)
+        super().__init__(*args, **kwargs)
+
+    def get(self, request, proposal_pk, attachment_pk,):
+        self.attachment = Attachment.objects.get(
+            pk=attachment_pk,
+        )
+        self.proposal = Proposal.objects.get(
+            pk=self.kwargs.get("proposal_pk"),
+        )
+        return self.get_file_response()
+
+    def get_filename(self):
+        if self.original_filename:
+            return self.attachment.upload.original_filename
+        else:
+            return self.get_filename_from_kind()
+
+    def get_filename_from_kind(self):
+        self.kind = AttachmentKind.from_proposal(
+            self.proposal,
+            self.attachment,
+        )
+        return self.kind.name
+
+    def get_file_response(self):
+        attachment_file = self.attachment.upload.file
+        return FileResponse(
+            attachment_file,
+            filename=self.get_filename(),
+            as_attachment=True,
+        )

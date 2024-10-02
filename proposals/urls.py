@@ -49,7 +49,8 @@ from .views.proposal_views import (
 from .views.attachment_views import (
     ProposalAttachView,
     ProposalAttachmentsView,
-    ProposalUpdateAttachmentView
+    ProposalUpdateAttachmentView,
+    ProposalAttachmentDownloadView,
 )
 
 
@@ -182,9 +183,21 @@ urlpatterns = [
         name="attach_file",
     ),
     path(
-        "attachment/<int:pk>/edit/",
+        "attachments/<int:proposal_pk>/edit/<int:attachment_pk>/",
         ProposalUpdateAttachmentView.as_view(),
         name="update_attachment",
+    ),
+    path(
+        "attachments/<int:proposal_pk>/download/<int:attachment_pk>/",
+        ProposalAttachmentDownloadView.as_view(),
+        name="download_attachment",
+    ),
+    path(
+        "attachments/<int:proposal_pk>/download_original/<int:attachment_pk>/",
+        ProposalAttachmentDownloadView.as_view(
+            original_filename=True,
+        ),
+        name="download_attachment_original",
     ),
     path(
         "data_management/<int:pk>/",
