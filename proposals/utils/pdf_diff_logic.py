@@ -1047,7 +1047,7 @@ def create_context_pdf(context, proposal):
                             sections.append(SessionSection(session))
                             for task in session.task_set.all():
                                 sections.append(TaskSection(task))
-                        sections.append(TasksOverviewSection(session))
+                            sections.append(TasksOverviewSection(session))
                     sections.append(StudyOverviewSection(study))
                     sections.append(InformedConsentFormsSection(study.documents))
 
@@ -1199,11 +1199,11 @@ def create_context_diff(context, old_proposal, new_proposal):
                                     )
                                 )
 
-                        sections.append(
-                            DiffSection(
-                                *multi_sections(TasksOverviewSection, both_sessions)
+                            sections.append(
+                                DiffSection(
+                                    *multi_sections(TasksOverviewSection, both_sessions)
+                                )
                             )
-                        )
 
                     sections.append(
                         DiffSection(*multi_sections(StudyOverviewSection, both_studies))
