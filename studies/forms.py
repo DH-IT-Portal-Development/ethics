@@ -302,7 +302,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         - mark_safe the labels of negativity/risk
         """
 
-        self.base_fields = (
+        self.choice_fields = (
             "deception",
             "negativity",
             "risk",
@@ -310,7 +310,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
 
         super(StudyEndForm, self).__init__(*args, **kwargs)
 
-        for field in self.base_fields:
+        for field in self.choice_fields:
             self.fields[field].choices = YesNoDoubt.choices
 
         self.fields["negativity"].label = mark_safe(self.fields["negativity"].label)
@@ -336,7 +336,7 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         if "deception" in self.fields:
             self.mark_soft_required(cleaned_data, "deception")
 
-        for field in self.base_fields:
+        for field in self.choice_fields:
             self.check_dependency_list(
                 cleaned_data,
                 f"{field}",
