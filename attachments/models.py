@@ -52,6 +52,12 @@ class Attachment(models.Model, renderable):
         )
     )
 
+    def get_correct_submodel(self):
+        from .kinds import get_kind_from_str
+        kind = get_kind_from_str(self.kind)
+        key = kind.attachment_class.__name__
+        return getattr(self, key)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["attachment"] = self

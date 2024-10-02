@@ -43,18 +43,12 @@ class AttachForm(
         return super().save()
 
 
-class ProposalAttachView(
-        ProposalContextMixin,
-        generic.CreateView,
-):
+class AttachFormView():
 
     model = Attachment
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
+    
     def set_upload_field_label(self, form):
         # Remind the user of what they're uploading
         upload_field = form.fields["upload"]
@@ -80,10 +74,6 @@ class ProposalAttachView(
         else:
             return obj.proposal
 
-    def get_owner_object(self):
-        owner_model = self.get_kind().attached_object
-        return owner_model.objects.get(pk=self.kwargs.get("other_pk"))
-
     def get_kind(self):
         kind_str = self.kwargs.get("kind")
         return get_kind_from_str(kind_str)
@@ -102,29 +92,43 @@ class ProposalAttachView(
         })
         return kwargs
 
+
+class ProposalAttachView(
+        ProposalContextMixin,
+        AttachFormView,
+        generic.CreateView,
+):
+
+    model = Attachment
+    form_class = AttachForm
+    template_name = "proposals/attach_form.html"
+
+    def get_kind(self):
+        kind_str = self.kwargs.get("kind")
+        return get_kind_from_str(kind_str)
+
 class ProposalUpdateAttachmentView(
         ProposalContextMixin,
+        AttachFormView,
         generic.UpdateView,
 ):
     model = Attachment
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
 
-    def get_proposal(self):
-        obj = self.get_owner_object()
-        if type(obj) is Proposal:
-            return obj
-        else:
-            return obj.proposal
+    def get_object(self,):
+        attachment_pk = self.kwargs.get("attachment_pk")
+        attachment = Attachment.objects.get(pk=attachment_pk)
+        obj = attachment.get_correct_submodel()
+        return obj
 
     def get_owner_object(self):
-        owner_model = self.get_kind().attached_object
-        return owner_model.objects.get(pk=self.kwargs.get("other_pk"))
+        return self.get_object().attached_to
 
     def get_kind(self):
-        kind_str = self.kwargs.get("kind")
+        obj = self.get_object()
+        kind_str = obj.kind
         return get_kind_from_str(kind_str)
-
 
 
 class ProposalAttachmentsView(
@@ -142,7 +146,7 @@ class ProposalAttachmentsView(
             self.get_proposal(),
         )
         context["manager"] = manager
-
+        context["proposal"] = self.get_proposal()
         context["study_slots"] = manager.study_slots
 
         return context

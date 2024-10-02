@@ -2,7 +2,9 @@ from django.views import generic
 from django.forms import forms, ModelForm
 from django.core.exceptions import ImproperlyConfigured
 from django.urls import reverse
+from proposals.models import Proposal
 from .models import Attachment
+from attachments.kinds import ATTACHMENTS, AttachmentKind
 
 # Create your views here.
 

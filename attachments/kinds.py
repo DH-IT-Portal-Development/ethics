@@ -4,6 +4,7 @@ from django.urls import reverse
 from proposals.models import Proposal
 from studies.models import Study
 from main.utils import renderable
+from attachments.models import ProposalAttachment, StudyAttachment
 
 class AttachmentKind:
     """Defines a kind of file attachment and when it is required."""
@@ -73,10 +74,12 @@ class AttachmentKind:
 class ProposalAttachmentKind(AttachmentKind):
 
     attached_object = Proposal
+    attachment_class = ProposalAttachment
 
 class StudyAttachmentKind(AttachmentKind):
 
     attached_object = Study
+    attachment_class = StudyAttachment
 
 class InformationLetter(StudyAttachmentKind):
 
@@ -161,6 +164,15 @@ class AttachmentSlot(renderable):
 
     def get_delete_url(self,):
         return "#"
+
+    def get_edit_url(self,):
+        return reverse(
+            "proposals:update_attachment",
+            kwargs={
+                "attachment_pk": self.attachment.pk,
+                "proposal_pk": self.manager.proposal.pk,
+            }
+        )
 
 class ProposalAttachments:
     """
