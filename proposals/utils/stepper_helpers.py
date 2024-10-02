@@ -304,12 +304,7 @@ class ModelFormItem(
         its children, otherwise, it only depends on the form the
         the item represents.
         """
-        if not self.is_expanded and self.children:
-            if self.get_errors(include_children=True):
-                self.css_classes.add("incomplete")
-            else:
-                self.css_classes.add("complete")
-        elif self.get_errors():
+        if self.get_errors(include_children=not self.is_expanded):
             self.css_classes.add("incomplete")
         else:
             self.css_classes.add("complete")
