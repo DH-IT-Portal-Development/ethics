@@ -144,7 +144,14 @@ class ProposalAttachmentsView(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
+        all_slots = self.get_stepper().attachment_slots
+        study_slots = {}
+        for study in self.get_proposal().study_set.all():
+            study_slots[study] = []
+        for slot in all_slots:
+            if type(slot.attached_object) is Study:
+                study_slots[slot.attached_object].append(slot)
+        context["study_slots"] = study_slots
         return context
 
 
