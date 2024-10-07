@@ -63,6 +63,7 @@ class ProposalContextMixin(
         context = super(ProposalContextMixin, self).get_context_data(**kwargs)
         context["is_supervisor"] = self.current_user_is_supervisor()
         context["is_practice"] = self.get_proposal().is_practice()
+        context["proposal"] = self.get_proposal()
         return context
 
 

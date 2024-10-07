@@ -10,6 +10,7 @@ from main.forms import ConditionalModelForm
 from cdh.core import forms as cdh_forms
 from django.http import FileResponse
 from attachments.kinds import ATTACHMENTS
+from attachments.utils import AttachmentKind
 
 
 class AttachForm(
@@ -108,8 +109,8 @@ class ProposalAttachView(
         return get_kind_from_str(kind_str)
 
 class ProposalUpdateAttachmentView(
-        ProposalContextMixin,
         AttachFormView,
+        ProposalContextMixin,
         generic.UpdateView,
 ):
     model = Attachment

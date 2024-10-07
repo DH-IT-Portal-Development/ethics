@@ -183,7 +183,7 @@ urlpatterns = [
         name="attach_file",
     ),
     path(
-        "attachments/<int:proposal_pk>/edit/<int:attachment_pk>/",
+        "attachments/<int:other_pk>/edit/<int:attachment_pk>/",
         ProposalUpdateAttachmentView.as_view(),
         name="update_attachment",
     ),
