@@ -51,15 +51,15 @@
             <p>
                 {% blocktrans trimmed %}
                     Hier kan je twee versies van een document vergelijken. Standaard
-                    geeft hij een <i>gecombineerde</i> versie weer, waarbij tekst
+                    geeft hij een <i>gesplitse</i> versie weer, waarbij tekst
                     die verwijderd is in het rood is gemarkeerd en nieuwe tekst
                     in het groen is gemarkeerd.
                 {% endblocktrans %}
             </p>
             <p>
                 {% blocktrans trimmed %}
-                    Je kan ook de bestanden naast elkaar bekijken, met dezelfde
-                    markeringen. Klik hiervoor op 'Bekijk apart'.
+                    Je kan ook de bestanden gecombineerd bekijken, met dezelfde
+                    markeringen. Klik hiervoor op 'Bekijk gecombineerd'.
                 {% endblocktrans %}
             </p>
             <h4>
@@ -69,8 +69,8 @@
             <div class="warning" style="display: none; clear: both;">
                 {% trans 'Er zijn geen wijzigingen gevonden in dit document!' %}
             </div>
-            <button id="button-split" class="float-end">{% trans 'Bekijk apart' %}</button>
-            <button id="button-combined" style="display: none" class="float-end">{% trans 'Bekijk gecombineerd' %}</button>
+            <button id="button-split" class="float-end"  style="display: none">{% trans 'Bekijk apart' %}</button>
+            <button id="button-combined" class="float-end">{% trans 'Bekijk gecombineerd' %}</button>
         </div>
     </div>
     <div class="uu-container document-compare">
@@ -91,8 +91,8 @@
         <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
             <img src="{% static 'main/images/loading.gif' %}" />
         </div>
-        <div style="display: none" class="col-6 split_view diff" id="old_text">{{ old_text|linebreaks }}</div>
-        <div style="display: none" class="col-6 split_view diff" id="new_text">{{ new_text|linebreaks }}</div>
-        <div class="col-12 diff" id="combined_text"></div>
+        <div class="col-6 split_view diff" id="old_text">{{ old_text|linebreaks }}</div>
+        <div class="col-6 split_view diff" id="new_text">{{ new_text|linebreaks }}</div>
+        <div class="col-12 diff" id="combined_text" style="display: none"></div>
     </div>
 {% endblock %}
