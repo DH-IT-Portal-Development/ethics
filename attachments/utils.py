@@ -180,72 +180,39 @@ class AttachmentContainer(
         return self.proposal in self.attachment.attached_to.all()
 
 
-class ProposalAttachments():
-
-    def __init__(self, proposal):
-
-        # Setup
-        self.proposal = proposal
-        from attachments.kinds import ATTACHMENTS
-        self.available_kinds = ATTACHMENTS
-
-        # Populate lists
-        self.all_attachments = self._populate()
-
-    def _populate(self,):
-        # These are the Attachments that actually exist
-        self.provided = self._fetch()
-        # These are the Attachments that are still required
-        # (we create placeholders for them)
-        self.complement = self._complement_all()
-        return self.provided + self.complement
-
-    def _fetch(self,):
-        qs = self.proposal.attachments.all()
-        return list(qs)
-
-    def _provided_of_kind(self, kind,):
-        out = filter(
-            lambda a: a.kind == kind.db_name,
-            self.provided,
-        )
-        return list(out)
-
-    def _complement_of_kind(self, kind,):
-        required = kind.num_required(self.proposal)
-        provided = len(self._provided_of_kind(kind))
-        for i in range(required - provided):
-            new_attachment = Attachment()
-            new_attachment.kind = kind.db_name
-            self.complement.append(new_attachment)
-
-    def _complement_all(self,):
-        self.complement = []
-        for kind in self.available_kinds:
-            self._complement_of_kind(kind)
-        return self.complement
-
-    def as_containers(self,):
-        return [
-            AttachmentContainer(a, proposal=self.propsal)
-            for a in self.all_attachments
-        ]
-
-
 class AttachmentSlot(renderable):
 
     template_name = "attachments/slot.html"
 
     def __init__(self, kind, attached_object, attachment=None, manager=None):
-        self.kind = kind
         self.attachment = attachment
+        self.attached_object = attached_object
         self.desiredness = _("Verplicht")
         self.manager = manager
+        self.kind = kind
+        if not isinstance(self.kind, AttachmentKind):
+            self.kind = self.kind(self.attached_object)
+        self.match_attachment()
+
+    def match_attachment(self):
+        """
+        Tries to fill this slot with an existing attachment.
+        """
+        for instance in self.kind.get_instances_for_object():
+            self.attachment = instance
+            break
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["slot"] = self
+        context["proposal"] = self.get_proposal()
         return context
+
+    def get_proposal(self):
+        if type(self.attached_object) is Proposal:
+            return self.attached_object
+        else:
+            return self.attached_object.proposal
 
     def get_attach_url(self,):
         return self.kind.get_attach_url()
@@ -258,7 +225,7 @@ class AttachmentSlot(renderable):
             "proposals:update_attachment",
             kwargs={
                 "attachment_pk": self.attachment.pk,
-                "proposal_pk": self.manager.proposal.pk,
+                "other_pk": self.attached_object.pk,
             }
         )
 
