@@ -236,7 +236,7 @@ class AttachmentSlot(renderable):
 
     template_name = "attachments/slot.html"
 
-    def __init__(self, kind, attachment=None, manager=None):
+    def __init__(self, kind, attached_object, attachment=None, manager=None):
         self.kind = kind
         self.attachment = attachment
         self.desiredness = _("Verplicht")
