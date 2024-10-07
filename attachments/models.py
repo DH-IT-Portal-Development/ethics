@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
 from main.utils import renderable
-from .kinds import ATTACHMENT_CHOICES
 
 from cdh.files.db import FileField as CDHFileField
 
@@ -31,7 +30,6 @@ class Attachment(models.Model, renderable):
     )
     kind = models.CharField(
         max_length=100,
-        choices=ATTACHMENT_CHOICES,
         default=("", _("Gelieve selecteren")),
     )
     name = models.CharField(
@@ -53,7 +51,7 @@ class Attachment(models.Model, renderable):
     )
 
     def get_correct_submodel(self):
-        from .kinds import get_kind_from_str
+        from attachments.utils import get_kind_from_str
         kind = get_kind_from_str(self.kind)
         key = kind.attachment_class.__name__
         return getattr(self, key)
