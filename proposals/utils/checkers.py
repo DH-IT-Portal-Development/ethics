@@ -11,6 +11,9 @@ from tasks import forms as tasks_forms
 from tasks.views import task_views, session_views
 from tasks.models import Task, Session
 
+from attachments.utils import AttachmentSlot
+from attachments.kinds import InformationLetter
+
 from .stepper_helpers import (
     Checker,
     PlaceholderItem,
@@ -384,12 +387,18 @@ class StudyChecker(
                 parent=self.current_parent,
             ),
         ]
-        end_checker = StudyEndChecker(
-            self.stepper,
-            study=self.study,
-            parent=self.current_parent,
-        )
-        return checkers + self.determine_study_checkers(self.study) + [end_checker]
+        final_checkers = [
+            StudyEndChecker(
+                self.stepper,
+                study=self.study,
+                parent=self.current_parent,
+            ),
+            StudyAttachmentsChecker(
+                self.stepper,
+                study=self.study,
+            ),
+        ]
+        return checkers + self.determine_study_checkers(self.study) + final_checkers
 
     def determine_study_checkers(self, study):
         tests = {
@@ -423,6 +432,24 @@ class StudyChecker(
             parent=self.current_parent,
         )
 
+class StudyAttachmentsChecker(
+    Checker,
+):
+
+    def __init__(self, *args, **kwargs,):
+        self.study = kwargs.pop("study")
+        super().__init__(*args, **kwargs)
+
+    def check(
+            self,
+    ):
+        kind = InformationLetter
+        info_slot = AttachmentSlot(
+            kind,
+            self.study,
+        )
+        self.stepper.attachment_slots.append(info_slot)
+        return []
 
 class ParticipantsChecker(
     ModelFormChecker,

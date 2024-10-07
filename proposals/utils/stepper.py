@@ -36,6 +36,7 @@ class Stepper(renderable):
         # which item is current
         self.request = request
         self.items = []
+        self.attachment_slots = []
         self.check_all(self.starting_checkers)
 
     def get_context_data(self):
