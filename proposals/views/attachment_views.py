@@ -4,12 +4,12 @@ from django.urls import reverse
 from proposals.mixins import ProposalContextMixin
 from proposals.models import Proposal
 from studies.models import Study
-from attachments.kinds import ProposalAttachments, get_kind_from_str
+from attachments.utils import ProposalAttachments, get_kind_from_str
 from attachments.models import Attachment, ProposalAttachment, StudyAttachment
 from main.forms import ConditionalModelForm
 from cdh.core import forms as cdh_forms
 from django.http import FileResponse
-from attachments.kinds import ATTACHMENTS, AttachmentKind
+from attachments.kinds import ATTACHMENTS
 
 
 class AttachForm(
@@ -141,13 +141,6 @@ class ProposalAttachmentsView(
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
-        manager = ProposalAttachments(
-            self.get_proposal(),
-        )
-        context["manager"] = manager
-        context["proposal"] = self.get_proposal()
-        context["study_slots"] = manager.study_slots
 
         return context
 
