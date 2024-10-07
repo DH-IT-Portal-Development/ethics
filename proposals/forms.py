@@ -530,6 +530,7 @@ class ProposalConfirmationForm(TemplatedModelForm):
     class Meta:
         model = Proposal
         fields = ["date_confirmed", "confirmation_comments"]
+        widgets = {"date_confirmed": DateInput}
 
 
 class WmoForm(SoftValidationMixin, ConditionalModelForm):
@@ -749,13 +750,13 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
             )
 
 
-class ProposalUpdateDataManagementForm(forms.ModelForm):
+class ProposalUpdateDataManagementForm(TemplatedModelForm):
     class Meta:
         model = Proposal
         fields = ["dmp_file"]
 
 
-class ProposalUpdateDateStartForm(forms.ModelForm):
+class ProposalUpdateDateStartForm(TemplatedModelForm):
     date_start = DateField(label=_("Nieuwe beoogde startdatum"))
 
     class Meta:
@@ -859,9 +860,6 @@ class TranslatedConsentForms(SoftValidationMixin, ConditionalModelForm):
         }
 
     _soft_validation_fields = ["translated_forms", "translated_forms_languages"]
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
 
     def clean(self):
         cleaned_data = super(TranslatedConsentForms, self).clean()

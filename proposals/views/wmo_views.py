@@ -86,8 +86,8 @@ class WmoUpdate(
 # Other actions on WMO
 ######################
 class WmoApplication(
-    UpdateView,
     StepperContextMixin,
+    UpdateView,
 ):
     model = Wmo
     form_class = WmoApplicationForm
@@ -96,7 +96,7 @@ class WmoApplication(
     def get_context_data(self, **kwargs):
         """Setting the Proposal on the context"""
         context = super(WmoApplication, self).get_context_data(**kwargs)
-        context["proposal"] = self.object.proposal
+        context["proposal"] = self.get_proposal()
         return context
 
     def get_next_url(self):
@@ -110,6 +110,9 @@ class WmoApplication(
     def get_back_url(self):
         """Return to the Wmo overview"""
         return reverse("proposals:wmo_update", args=(self.object.pk,))
+
+    def get_proposal(self):
+        return self.object.proposal
 
 
 ########################
@@ -126,7 +129,7 @@ class PreAssessmentMixin(object):
 
     def get_back_url(self):
         """Different return URL for pre-assessment Proposals"""
-        return reverse("proposals:update", args=(self.object.proposal.pk,))
+        return reverse("proposals:research_goal", args=(self.object.proposal.pk,))
 
 
 class WmoCreatePreAssessment(PreAssessmentMixin, WmoCreate):
@@ -139,8 +142,12 @@ class WmoUpdatePreAssessment(PreAssessmentMixin, WmoUpdate):
 
 class WmoApplicationPreAssessment(PreAssessmentMixin, WmoApplication):
     def get_next_url(self):
-        """Different continue URL for pre-assessment Proposals"""
-        return reverse("proposals:submit_pre", args=(self.object.proposal.pk,))
+        """Continue to the definition of a Study if we have completed the Wmo application"""
+        wmo = self.object
+        if wmo.status == Wmo.WMOStatuses.WAITING:
+            return reverse("proposals:wmo_application", args=(wmo.pk,))
+        else:
+            return reverse("proposals:submit_pre", args=(wmo.proposal.pk,))
 
 
 ################

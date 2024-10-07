@@ -233,6 +233,8 @@ class StudyDesignForm(TemplatedModelForm):
         Check for conditional requirements:
         - at least one of the fields has to be checked
         """
+        # NOTE: this clean still does not get called during validation ...
+        # WHYYYY????
         cleaned_data = super(StudyDesignForm, self).clean()
 
         # This solution is a bit funky, but by using add_error(), it appends our
@@ -366,17 +368,13 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         )
 
 
-class StudyUpdateAttachmentsForm(forms.ModelForm):
+class StudyUpdateAttachmentsForm(TemplatedModelForm):
     class Meta:
         model = Documents
         fields = [
-            # 'passive_consent',
             "informed_consent",
             "briefing",
             "director_consent_declaration",
             "director_consent_information",
             "parents_information",
         ]
-        widgets = {
-            # 'passive_consent': forms.HiddenInput
-        }

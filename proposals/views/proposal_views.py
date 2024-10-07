@@ -25,7 +25,6 @@ from main.views import (
     UserAllowedMixin,
 )
 from observations.models import Observation
-from proposals.utils.validate_proposal import get_form_errors
 from proposals.utils.pdf_diff_logic import create_context_pdf, create_context_diff
 from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
@@ -240,11 +239,11 @@ class ChangeArchiveStatusView(GroupRequiredMixin, generic.RedirectView):
 ##########################
 
 
-class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
+class ProposalCreate(AllowErrorsOnBackbuttonMixin, CreateView):
     # Note: template_name is auto-generated to proposal_form.html
 
     success_message = _("Aanvraag %(title)s aangemaakt")
-    proposal_type_hint = "regular"
+    template_name = "proposals/proposal_form.html"
     form_class = ProposalForm
 
     def get_proposal(
@@ -272,15 +271,14 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
         context = super(ProposalCreate, self).get_context_data(**kwargs)
         context["create"] = True
         context["no_back"] = True
+        context["is_practice"] = self.get_proposal().is_practice()
         return context
 
     def get_next_url(self):
         return reverse("proposals:researcher", args=(self.object.pk,))
 
 
-class ProposalUpdate(
-    ProposalMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
-):
+class ProposalUpdate(ProposalMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
     form_class = ProposalForm
 
     def form_valid(self, form):
@@ -458,7 +456,7 @@ class ProposalResearchGoalFormView(
         if proposal.is_pre_approved:
             return reverse("proposals:pre_approved", args=(self.object.pk,))
         elif hasattr(proposal, "wmo"):
-            return reverse(f"proposals:wmo_update{pre_suffix}", args=(proposal.pk,))
+            return reverse(f"proposals:wmo_update{pre_suffix}", args=(proposal.wmo.pk,))
         else:
             return reverse(f"proposals:wmo_create{pre_suffix}", args=(proposal.pk,))
 
@@ -494,11 +492,11 @@ class TranslatedConsentFormsView(ProposalContextMixin, UpdateView):
 
     def get_next_url(self):
         """Go to the consent form upload page"""
-        return reverse("proposals:consent", args=(self.object.pk,))
+        return reverse("proposals:data_management", args=(self.object.pk,))
 
     def get_back_url(self):
         """Return to the overview of the last Study"""
-        return reverse("studies:design_end", args=(self.object.last_study().pk,))
+        return reverse("proposals:consent", args=(self.object.pk,))
 
 
 class ProposalDataManagement(ProposalContextMixin, UpdateView):
@@ -512,7 +510,7 @@ class ProposalDataManagement(ProposalContextMixin, UpdateView):
 
     def get_back_url(self):
         """Return to the consent form overview of the last Study"""
-        return reverse("proposals:consent", args=(self.object.pk,))
+        return reverse("proposals:translated", args=(self.object.pk,))
 
 
 class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
@@ -521,7 +519,7 @@ class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
     """
 
     model = Proposal
-    template_name = "proposals/proposal_update_attachments.html"
+    template_name = "proposals/proposal_update_dmp.html"
     form_class = ProposalUpdateDataManagementForm
     group_required = settings.GROUP_SECRETARY
 
@@ -589,7 +587,6 @@ class ProposalSubmit(
     def get_context_data(self, **kwargs):
         context = super(ProposalSubmit, self).get_context_data(**kwargs)
 
-        context["troublesome_pages"] = get_form_errors(self.get_object())
         context["pagenr"] = self._get_page_number()
         context["is_supervisor_edit_phase"] = self.is_supervisor_edit_phase()
         context["start_date_warning"] = self.check_start_date()
