@@ -279,6 +279,11 @@ class FundingForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModel
     def clean(self):
         cleaned_data = super(FundingForm, self).clean()
 
+        if not cleaned_data["funding"]:
+            self.add_error(
+                "funding", _("Je dient minstens een van de opties te selecteren.")
+            )
+
         self.check_dependency_multiple(
             cleaned_data, "funding", "needs_details", "funding_details"
         )
