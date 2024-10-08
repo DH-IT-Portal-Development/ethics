@@ -177,30 +177,31 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
                 )
                 self.add_error("necessity_reason", error)
 
+
 class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
 
     class Meta:
-        model=Study
-        fields=[
+        model = Study
+        fields = [
             "has_special_details",
             "special_details",
             "traits",
             "traits_details",
-            "legal_basis",  
+            "legal_basis",
         ]
         widgets = {
             "has_special_details": BootstrapRadioSelect(choices=YES_NO),
             "special_details": BootstrapCheckboxSelectMultiple(),
             "traits": BootstrapCheckboxSelectMultiple(),
-            "legal_basis": BootstrapRadioSelect()
+            "legal_basis": BootstrapRadioSelect(),
         }
-    
+
     _soft_validation_fields = [
         "has_special_details",
         "special_details",
         "traits",
         "traits_details",
-        "legal_basis",  
+        "legal_basis",
     ]
 
     def __init__(self, *args, **kwargs):
@@ -210,7 +211,6 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
         self.fields["legal_basis"].empty_label = None
         self.fields["legal_basis"].choices = Study.LegalBases.choices
 
-
     def clean(self):
         """
         Check for conditional requirements:
@@ -219,12 +219,10 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
         cleaned_data = super(PersonalDataForm, self).clean()
 
         if not cleaned_data["has_special_details"]:
-            self.add_error("has_special_details",
-                           _("Dit veld is verplicht."))
-        
+            self.add_error("has_special_details", _("Dit veld is verplicht."))
+
         if not cleaned_data["legal_basis"]:
-            self.add_error("legal_basis",
-                           _("Selecteer een van de opties."))
+            self.add_error("legal_basis", _("Selecteer een van de opties."))
 
         self.check_dependency_multiple(
             cleaned_data,
@@ -243,6 +241,7 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
         self.check_dependency_multiple(
             cleaned_data, "traits", "needs_details", "traits_details"
         )
+
 
 class StudyDesignForm(TemplatedModelForm):
 

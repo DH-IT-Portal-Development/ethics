@@ -139,6 +139,7 @@ class Study(models.Model):
     A model to store a study within a Proposal.
     A Study consists of participant details, experiment design and consent forms.
     """
+
     class LegalBases(models.IntegerChoices):
         ANONYMOUS = 0, _("Dit traject is volledig anoniem.")
         CONSENT = 1, _("De deelnemers geven toestemming.")
@@ -184,9 +185,10 @@ vertegenwoordiger te worden verkregen."
     )
 
     legal_basis = models.PositiveIntegerField(
-        verbose_name = _("Wat is de AVG grondslag voor het verzamelen van "
-                         "persoonsgegevens?"),
-        help_text = _(
+        verbose_name=_(
+            "Wat is de AVG grondslag voor het verzamelen van " "persoonsgegevens?"
+        ),
+        help_text=_(
             "Voor meer informatie over welk AVG grondslag op jouw onderzoek van "
             "toepassing is, zie de flowchart in het "
             "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/choose-legal-basis.html'"

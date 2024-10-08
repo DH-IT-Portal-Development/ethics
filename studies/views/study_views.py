@@ -71,12 +71,13 @@ class StudyUpdate(
 # Other actions
 ###############
 class StudyPersonalData(
-    StudyMixin, AllowErrorsOnBackbuttonMixin, UpdateView,
+    StudyMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
 ):
     model = Study
     form_class = PersonalDataForm
     template_name = "studies/study_personal_data.html"
-
 
     def get_back_url(self):
         """
@@ -87,6 +88,7 @@ class StudyPersonalData(
     def get_next_url(self):
         """Continue to the Study design overview"""
         return reverse("studies:design", args=(self.object.pk,))
+
 
 class StudyDesign(
     StudyMixin, AllowErrorsOnBackbuttonMixin, UpdateView, generic.edit.FormMixin

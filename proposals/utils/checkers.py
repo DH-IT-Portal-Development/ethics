@@ -485,7 +485,8 @@ class ParticipantsChecker(
         kwargs = super().get_form_kwargs()
         kwargs["proposal"] = self.proposal
         return kwargs
-    
+
+
 class PersonalDataChecker(ModelFormChecker):
     title = _("Persoonlijke gegevens")
     form_class = study_forms.PersonalDataForm
@@ -516,7 +517,8 @@ class PersonalDataChecker(ModelFormChecker):
 
     def get_form_object(self):
         return self.study
-    
+
+
 class DesignChecker(
     ModelFormChecker,
 ):
