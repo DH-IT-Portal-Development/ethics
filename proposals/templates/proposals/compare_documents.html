@@ -67,33 +67,35 @@
                     <strong>{% trans "Je vergelijkt" %}:</strong>
                     {% describe_file new_file %}
                 </h4>
-                <button id="button-split" class="float-end btn btn-secondary"  style="display: none">{% trans 'Bekijk apart' %}</button>
+                <button id="button-split"
+                        class="float-end btn btn-secondary"
+                        style="display: none">{% trans 'Bekijk apart' %}</button>
                 <button id="button-combined" class="float-end btn btn-secondary">{% trans 'Bekijk gecombineerd' %}</button>
             </div>
-            <div class="warning alert alert-info mt-4" style="display: none; clear: both;">
-                {% trans 'Er zijn geen wijzigingen gevonden in dit document!' %}
+            <div class="warning alert alert-info mt-4"
+                 style="display: none;
+                        clear: both">{% trans 'Er zijn geen wijzigingen gevonden in dit document!' %}</div>
+        </div>
+        <div class="uu-container document-compare">
+            <div class="col-6">
+                <p>
+                    <strong>{% trans "Oud" %}:</strong>
+                    <a href="{{ old_file.url }}" download="{{ old_file.name }}">{{ old_name }}</a>
+                </p>
+            </div>
+            <div class="col-6">
+                <p>
+                    <strong>{% trans "Nieuw" %}:</strong>
+                    <a href="{{ new_file.url }}" download="{{ new_file.name }}">{{ new_name }}</a>
+                </p>
             </div>
         </div>
-    <div class="uu-container document-compare">
-        <div class="col-6">
-            <p>
-                <strong>{% trans "Oud" %}:</strong>
-                <a href="{{ old_file.url }}" download="{{ old_file.name }}">{{ old_name }}</a>
-            </p>
+        <div class="uu-container compare">
+            <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
+                <img src="{% static 'main/images/loading.gif' %}" />
+            </div>
+            <div class="col-6 split_view diff" id="old_text">{{ old_text|linebreaks }}</div>
+            <div class="col-6 split_view diff" id="new_text">{{ new_text|linebreaks }}</div>
+            <div class="col-12 diff" id="combined_text" style="display: none"></div>
         </div>
-        <div class="col-6">
-            <p>
-                <strong>{% trans "Nieuw" %}:</strong>
-                <a href="{{ new_file.url }}" download="{{ new_file.name }}">{{ new_name }}</a>
-            </p>
-        </div>
-    </div>
-    <div class="uu-container compare">
-        <div class="col-12 text-center mt-5 mb-5" id="loading-icon">
-            <img src="{% static 'main/images/loading.gif' %}" />
-        </div>
-        <div class="col-6 split_view diff" id="old_text">{{ old_text|linebreaks }}</div>
-        <div class="col-6 split_view diff" id="new_text">{{ new_text|linebreaks }}</div>
-        <div class="col-12 diff" id="combined_text" style="display: none"></div>
-    </div>
-{% endblock %}
+    {% endblock %}
