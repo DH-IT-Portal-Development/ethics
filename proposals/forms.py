@@ -856,7 +856,64 @@ class ProposalSubmitForm(ConditionalModelForm):
                 )
 
 
-class TranslatedConsentForms(SoftValidationMixin, ConditionalModelForm):
+class KnowledgeSecurityForm(SoftValidationMixin, ConditionalModelForm):
+
+    class Meta:
+        model = Proposal
+        fields = [
+            "knowledge_security",
+            "knowledge_security_details",
+            "researcher_risk",
+            "researcher_risk_details",
+        ]
+        widgets = {
+            "knowledge_security": BootstrapRadioSelect(),
+            "researcher_risk": BootstrapRadioSelect(),
+        }
+
+    _soft_validation_fields = [
+        "knowledge_security",
+        "knowledge_security_details",
+        "researcher_risk",
+        "researcher_risk_details",
+    ]
+
+    def __init__(self, *args, **kwargs):
+        """
+        - Set the Study for later reference
+        - Remove empty label from fields and reset the choices
+        """
+        super(KnowledgeSecurityForm, self).__init__(*args, **kwargs)
+
+        self.base_fields = (
+            "knowledge_security",
+            "researcher_risk",
+        )
+        for field in self.base_fields:
+            self.fields[field].empty_label = None
+            self.fields[field].choices = YesNoDoubt.choices
+
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If deception is set to yes, make sure deception_details has been filled out
+        - If negativity is set to yes, make sure negativity_details has been filled out
+        - If risk is set to yes, make sure risk_details has been filled out
+        """
+        cleaned_data = super(KnowledgeSecurityForm, self).clean()
+
+        self.mark_soft_required(cleaned_data, "knowledge_security", "researcher_risk")
+
+        for field in self.base_fields:
+            self.check_dependency_list(
+                cleaned_data,
+                f"{field}",
+                f"{field}_details",
+                f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
+            )
+
+
+class TranslatedConsentForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = ["translated_forms", "translated_forms_languages"]
@@ -867,7 +924,7 @@ class TranslatedConsentForms(SoftValidationMixin, ConditionalModelForm):
     _soft_validation_fields = ["translated_forms", "translated_forms_languages"]
 
     def clean(self):
-        cleaned_data = super(TranslatedConsentForms, self).clean()
+        cleaned_data = super(TranslatedConsentForm, self).clean()
 
         if cleaned_data["translated_forms"] is None:
             self.add_error(

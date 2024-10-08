@@ -827,8 +827,6 @@ class StudyOverviewSection(BaseSection):
         "deception_details",
         "negativity",
         "negativity_details",
-        "stressful",
-        "stressful_details",
         "risk",
         "risk_details",
     ]
@@ -842,7 +840,7 @@ class StudyOverviewSection(BaseSection):
         obj = self.obj
 
         rows_to_remove = []
-        for x in range(0, 7, 2):
+        for x in range(0, len(self.row_fields), 2):
             if getattr(obj, rows[x]) == "N":
                 rows_to_remove.append(rows[x + 1])
         rows = [row for row in rows if row not in rows_to_remove]
@@ -852,6 +850,30 @@ class StudyOverviewSection(BaseSection):
             rows.remove("deception_details")
         elif not obj.has_sessions:
             rows.remove("deception")
+
+        return rows
+
+
+class KnowledgeSecuritySection(BaseSection):
+    """This class receives a Proposal object."""
+
+    section_title = _("Kennisveiligheid en risico onderzoekers")
+    row_fields = [
+        "knowledge_security",
+        "knowledge_security_details",
+        "researcher_risk",
+        "researcher_risk_details",
+    ]
+
+    def get_row_fields(self):
+        rows = copy(self.row_fields)
+        obj = self.obj
+
+        rows_to_remove = []
+        for x in range(0, len(self.row_fields), 2):
+            if getattr(obj, rows[x]) == "N":
+                rows_to_remove.append(rows[x + 1])
+        rows = [row for row in rows if row not in rows_to_remove]
 
         return rows
 
@@ -997,24 +1019,24 @@ def get_extra_documents(obj):
     return extra_documents
 
 
-def create_context_pdf(context, model):
+def create_context_pdf(context, proposal):
     """A function to create the context for the PDF, which gets called in the ProposalAsPdf view."""
 
     sections = []
 
-    sections.append(GeneralSection(model))
+    sections.append(GeneralSection(proposal))
 
-    if hasattr(model, "wmo"):
-        sections.append(WMOSection(model.wmo))
+    if hasattr(proposal, "wmo"):
+        sections.append(WMOSection(proposal.wmo))
 
-        if not model.is_pre_assessment:
-            if model.wmo.status != model.wmo.WMOStatuses.NO_WMO:
-                sections.append(METCSection(model.wmo))
+        if not proposal.is_pre_assessment:
+            if proposal.wmo.status != proposal.wmo.WMOStatuses.NO_WMO:
+                sections.append(METCSection(proposal.wmo))
 
-            sections.append(TrajectoriesSection(model))
+            sections.append(TrajectoriesSection(proposal))
 
-            if model.wmo.status == model.wmo.WMOStatuses.NO_WMO:
-                for study in model.study_set.all():
+            if proposal.wmo.status == proposal.wmo.WMOStatuses.NO_WMO:
+                for study in proposal.study_set.all():
                     sections.append(StudySection(study))
                     if study.has_intervention:
                         sections.append(InterventionSection(study.intervention))
@@ -1025,19 +1047,21 @@ def create_context_pdf(context, model):
                             sections.append(SessionSection(session))
                             for task in session.task_set.all():
                                 sections.append(TaskSection(task))
-                        sections.append(TasksOverviewSection(session))
+                            sections.append(TasksOverviewSection(session))
                     sections.append(StudyOverviewSection(study))
                     sections.append(InformedConsentFormsSection(study.documents))
 
-                extra_documents = get_extra_documents(model)
+                sections.append(KnowledgeSecuritySection(proposal))
+
+                extra_documents = get_extra_documents(proposal)
 
                 for num, document in enumerate(extra_documents):
                     sections.append(ExtraDocumentsSection(document, num))
 
-                sections.append(DMPFileSection(model))
+                sections.append(DMPFileSection(proposal))
 
-    sections.append(EmbargoSection(model))
-    sections.append(CommentsSection(model))
+    sections.append(EmbargoSection(proposal))
+    sections.append(CommentsSection(proposal))
 
     context["sections"] = sections
 
@@ -1175,11 +1199,11 @@ def create_context_diff(context, old_proposal, new_proposal):
                                     )
                                 )
 
-                        sections.append(
-                            DiffSection(
-                                *multi_sections(TasksOverviewSection, both_sessions)
+                            sections.append(
+                                DiffSection(
+                                    *multi_sections(TasksOverviewSection, both_sessions)
+                                )
                             )
-                        )
 
                     sections.append(
                         DiffSection(*multi_sections(StudyOverviewSection, both_studies))
@@ -1192,6 +1216,13 @@ def create_context_diff(context, old_proposal, new_proposal):
                             *multi_sections(InformedConsentFormsSection, both_documents)
                         )
                     )
+
+                sections.append(
+                    DiffSection(
+                        KnowledgeSecuritySection(old_proposal),
+                        KnowledgeSecuritySection(new_proposal),
+                    )
+                )
 
                 old_extra_docs = get_extra_documents(old_proposal)
                 new_extra_docs = get_extra_documents(new_proposal)
@@ -1210,7 +1241,7 @@ def create_context_diff(context, old_proposal, new_proposal):
 
                 sections.append(
                     DiffSection(
-                        *multi_sections(DMPFileSection, [old_proposal, new_proposal])
+                        DMPFileSection(old_proposal), DMPFileSection(new_proposal)
                     )
                 )
 

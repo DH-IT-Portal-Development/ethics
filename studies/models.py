@@ -274,17 +274,17 @@ cadeautje."
     # Fields with respect to Sessions
     deception = models.CharField(
         _(
-            "Is er binnen bovenstaand onderzoekstraject sprake van \
-misleiding van de deelnemer?"
+            "Is er binnen bovenstaand onderzoekstraject sprake van "
+            "misleiding van de deelnemer?"
         ),
         help_text=_(
-            'Misleiding is het doelbewust verschaffen van inaccurate \
-informatie over het doel en/of belangrijke aspecten van de gang van zaken \
-tijdens het onderzoek. Denk aan zaken als een bewust misleidende "cover story" \
-voor het experiment; het ten onrechte suggereren dat er met andere \
-deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale \
-geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: \
-het gaat hierbij niet om fillers.'
+            "Misleiding is het doelbewust verschaffen van inaccurate "
+            "informatie over het doel en/of belangrijke aspecten van de gang van zaken "
+            'tijdens het onderzoek. Denk aan zaken als een bewust misleidende "cover story" '
+            "voor het experiment; het ten onrechte suggereren dat er door de deelnemer met andere "
+            "deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale "
+            "geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: "
+            "het gaat hierbij niet om fillers in bijv. taalwetenschappelijk onderzoek."
         ),
         max_length=1,
         choices=YesNoDoubt.choices,
@@ -292,81 +292,48 @@ het gaat hierbij niet om fillers.'
     )
     deception_details = models.TextField(
         _(
-            "Geef een toelichting en beschrijf hoe en wanneer de deelnemer \
-zal worden gedebrieft."
+            "Geef een toelichting en beschrijf hoe en wanneer de deelnemer "
+            "zal worden gedebrieft."
         ),
         blank=True,
     )
     negativity = models.CharField(
         _(
-            "Bevat bovenstaand onderzoekstraject elementen die \
-<em>tijdens</em> de deelname niet-triviale negatieve emoties kunnen opwekken? \
-Denk hierbij bijvoorbeeld aan emotioneel indringende vragen, kwetsende \
-uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of \
-(heel) saaie taken."
+            "Bevat bovenstaand onderzoekstraject elementen die <em>tijdens"
+            "</em> de deelname zodanig belastend zijn dat deze vragen, "
+            "weerstand, of zelfs verontwaardiging zouden kunnen oproepen, "
+            "bijvoorbeeld bij collega-onderzoekers, bij de deelnemers zelf, "
+            "of bij ouders of andere vertegenwoordigers?"
         ),
         max_length=1,
         choices=YesNoDoubt.choices,
         blank=True,
     )
-    negativity_details = models.TextField(_("Licht je antwoord toe."), blank=True)
-    stressful = models.CharField(
-        _(
-            "Bevat bovenstaand onderzoekstraject elementen die tijdens de \
-deelname zodanig belastend zijn dat deze <em>ondanks de verkregen \
-informed consent</em> vragen zou kunnen oproepen (of zelfs \
-verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers \
-zelf, of bij ouders of andere vertegenwoordigers?"
-        ),
-        help_text=mark_safe_lazy(
-            _(
-                "Dit zou bijvoorbeeld het geval kunnen zijn \
-bij een 'onmenselijk' lange en uitputtende taak, een zeer confronterende \
-vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren \
-inbreuk op de privacy, of een ander ervaren gebrek aan respect. \
-Let op, het gaat bij deze vraag om de door de deelnemer ervaren belasting \
-tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade \
-door het onderzoek."
-            )
-        ),
-        max_length=1,
-        choices=YesNoDoubt.choices,
-        blank=True,
-    )
-    stressful_details = models.TextField(
-        _(
-            "Licht je antwoord toe. Geef concrete voorbeelden van de relevante \
-aspecten van jouw onderzoek (bijv. representatieve voorbeelden van mogelijk zeer \
-kwetsende woorden of uitspraken in de taak, of van zeer confronterende \
-vragen in een vragenlijst), zodat de commissie zich een goed beeld kan \
-vormen."
+    negativity_details = models.TextField(
+        _("Licht toe"),
+        help_text=_(
+            "Geef concrete voorbeelden van de relevante aspecten van jouw "
+            "onderzoek (bijv. voorbeelden van mogelijk zeer kwetsende woorden "
+            "of uitspraken in de taak; zeer confronterende vragen in een "
+            "vragenlijst; negatieve feedback), zodat de commissie zich een "
+            "goed beeld kan vormen."
         ),
         blank=True,
     )
+
     risk = models.CharField(
         _(
-            'Zijn de risico\'s op psychische, fysieke, of andere (bijv. \
-economische, juridische) schade door deelname aan bovenstaand \
-onderzoekstraject <em>meer dan</em> minimaal? \
-D.w.z. ligt de kans op en/of omvang van mogelijke schade \
-bij de deelnemers duidelijk <em>boven</em> het "achtergrondrisico"?'
+            "Zijn er kwesties rondom de veiligheid van, of risico's voor de "
+            "deelnemers <em>tijdens of na</em> deelname aan het onderzoek?"
         ),
         help_text=mark_safe_lazy(
             _(
-                'Achtergrondrisico is datgene dat gezonde, \
-gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken \
-in het dagelijks leven ten deel valt. \
-Denk bij schade ook aan de gevolgen die het voor de deelnemer of \
-anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. \
-op het vlak van zelfbeeld, stigmatisering door anderen, economische \
-schade door data-koppeling, et cetera. Het achtergrondrisico voor \
-psychische en fysieke schade omvat bijvoorbeeld ook de risico\'s van \
-"routine"-tests, -onderzoeken of -procedures die in alledaagse didactische, \
-psychologische of medische contexten plaatsvinden (zoals een eindexamen, \
-een rijexamen, een stressbestendigheids-<em>assessment</em>, een \
-intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke \
-inspanning; dit alles, waar relevant, onder begeleiding van adequaat \
-geschoolde specialisten).'
+                "Houd hierbij niet alleen rekening met mogelijke psychische "
+                "of fysieke schadelijke gevolgen, maar ook met andere "
+                "mogelijke schade, zoals bijv. stigmatisering, "
+                "(re-)traumatisering, aantasting van zelfbeeld, verlies van "
+                "privacy, toevalsbevindingen, juridische vervolging of "
+                "aansprakelijkheid, e.d."
             )
         ),
         max_length=1,
