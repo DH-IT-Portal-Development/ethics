@@ -397,6 +397,11 @@ class StudyChecker(
                 study=self.study,
                 parent=self.current_parent,
             ),
+            PersonalDataChecker(
+                self.stepper,
+                study=self.study,
+                parent=self.current_parent,
+            ),
             DesignChecker(
                 self.stepper,
                 study=self.study,
@@ -480,8 +485,38 @@ class ParticipantsChecker(
         kwargs = super().get_form_kwargs()
         kwargs["proposal"] = self.proposal
         return kwargs
+    
+class PersonalDataChecker(ModelFormChecker):
+    title = _("Persoonlijke gegevens")
+    form_class = study_forms.PersonalDataForm
 
+    def __init__(
+        self,
+        *args,
+        **kwargs,
+    ):
+        self.study = kwargs.pop("study")
+        return super().__init__(*args, **kwargs)
 
+    def check(
+        self,
+    ):
+        self.stepper.items.append(self.make_stepper_item())
+        return []
+
+    def get_url(
+        self,
+    ):
+        return reverse(
+            "studies:personal_data",
+            args=[
+                self.study.pk,
+            ],
+        )
+
+    def get_form_object(self):
+        return self.study
+    
 class DesignChecker(
     ModelFormChecker,
 ):
