@@ -61,6 +61,23 @@ class Attachment(models.Model, renderable):
         key = kind.attachment_class.__name__.lower()
         return getattr(self, key)
 
+    def detach(self, other_object):
+        """
+        This method is simple enough to define for all submodels,
+        assuming they use the attached_to attribute name. However,
+        base Attachments do not have an attached_to attribute, so
+        we have to defer to the submodel if detach is called on a
+        base Attachment instance.
+        """
+        if self.__name__ == "Attachment":
+            attachment = self.get_correct_submodel()
+            return attachment.detach(other_object)
+        # The following part only runs if called from a submodel
+        if self.attached_to.count > 1:
+            self.attached_to.remove(other_object)
+        else:
+            self.delete()
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["attachment"] = self
@@ -72,8 +89,21 @@ class ProposalAttachment(Attachment,):
         related_name="attachments",
     )
 
+    def get_owner_for_proposal(self, proposal,):
+        """
+        This method doesn't do much, it's just here to provide
+        a consistent interface for getting owner objects.
+        """
+        return proposal
+
 class StudyAttachment(Attachment,):
     attached_to = models.ManyToManyField(
         "studies.Study",
         related_name="attachments",
     )
+
+    def get_owner_for_proposal(self, proposal,):
+        """
+        Gets the owner study based on given proposal.
+        """
+        return self.attached_to.get(proposal=proposal)
