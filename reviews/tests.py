@@ -258,17 +258,23 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 5)
 
-        self.study.stressful = YesNoDoubt.YES
+        self.study.risk = YesNoDoubt.YES
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 6)
 
-        self.study.risk = YesNoDoubt.YES
-        self.study.save()
+        self.study.proposal.researcher_risk = YesNoDoubt.YES
+        self.study.proposal.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 7)
+
+        self.study.negativity = YesNoDoubt.YES
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 8)
 
     def test_auto_review_age_groups(self):
         self.study.has_sessions = True

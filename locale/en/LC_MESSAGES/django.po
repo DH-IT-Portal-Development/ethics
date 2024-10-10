@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 13:19+0200\n"
+"POT-Creation-Date: 2024-10-01 10:14+0200\n"
 "PO-Revision-Date: 2024-04-03 12:32+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: faqs/menus.py:7 main/templates/main/index.html:137
+#: faqs/menus.py:7 main/templates/main/index.html:132
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
@@ -34,10 +34,10 @@ msgstr "Regulations FEtC-H"
 msgid "https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"
 msgstr "https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"
 
-#: faqs/menus.py:17 main/templates/main/index.html:145
+#: faqs/menus.py:17 main/templates/main/index.html:140
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/translated_consent_forms.html:7
-#: proposals/utils/pdf_diff_logic.py:862
+#: proposals/utils/pdf_diff_logic.py:884
 msgid "Informed consent formulieren"
 msgstr "Informed consent forms"
 
@@ -378,13 +378,11 @@ msgstr "Log out"
 
 #: main/templates/base/fetc_base.html:47 main/templates/base/fetc_base.html:48
 msgid "cdh.core:uu"
-msgstr ""
+msgstr "cdh.core.uu"
 
 #: main/templates/base/fetc_base.html:56
-#, fuzzy
-#| msgid "Log uit"
 msgid "Log in"
-msgstr "Log out"
+msgstr "Log in"
 
 #: main/templates/base/form_buttons.html:7
 msgid "<< Opslaan en vorige stap"
@@ -579,13 +577,13 @@ msgstr ""
 
 #: main/templates/main/index.html:64
 msgid ""
-"Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
-"algemene-kamer/\" target=\"blank\">Algemene Kamer (AK)</a> of dat van de <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/reglement-linguistiek-kamer/\" "
-"target=\"blank\">Linguïstiek Kamer (LK)</a>."
+"Het <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/\" "
+"target=\"blank\"> reglement van de FETC-GW </a>."
 msgstr ""
+"The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\" "
+"target=\"_blank\">regulations of the FEtC-H</a>."
 
-#: main/templates/main/index.html:77
+#: main/templates/main/index.html:72
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\" "
@@ -597,65 +595,65 @@ msgstr ""
 "target=\"_blank\">model documents</a> for <em>informed consent</em>. (Latest "
 "version: <u>December 2021</u>)"
 
-#: main/templates/main/index.html:90
+#: main/templates/main/index.html:85
 msgid "Bekijk mijn aanvragen"
 msgstr "View my applications"
 
-#: main/templates/main/index.html:91 proposals/menus.py:9
+#: main/templates/main/index.html:86 proposals/menus.py:9
 msgid "Nieuwe aanvraag starten"
 msgstr "Start a new application"
 
-#: main/templates/main/index.html:93
+#: main/templates/main/index.html:88
 msgid "Nieuwe revisie starten"
 msgstr "Create new revision"
 
-#: main/templates/main/index.html:95
+#: main/templates/main/index.html:90
 msgid "Nieuw amendement starten"
 msgstr "Create new amendment"
 
-#: main/templates/main/index.html:97 proposals/menus.py:112
-#: proposals/views/proposal_views.py:189
+#: main/templates/main/index.html:92 proposals/menus.py:112
+#: proposals/views/proposal_views.py:190
 msgid "Archief"
 msgstr "Archive"
 
-#: main/templates/main/index.html:102
+#: main/templates/main/index.html:97
 msgid "Ondersteuning"
 msgstr "Support"
 
-#: main/templates/main/index.html:104
+#: main/templates/main/index.html:99
 msgid ""
 "<strong>FETC-GW secretaris</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
 msgstr "<strong>FEtC-H secretary</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
 
-#: main/templates/main/index.html:111
+#: main/templates/main/index.html:106
 msgid "<strong>Data Management advies</strong> <br /> datamanagement.gw@uu.nl"
 msgstr "<strong>Data Management advice</strong> <br /> datamanagement.gw@uu.nl"
 
-#: main/templates/main/index.html:118
+#: main/templates/main/index.html:113
 msgid "<strong>Privacy kwesties/vragen</strong> <br /> privacy.gw@uu.nl"
 msgstr "<strong>Privacy issues/questions</strong> <br /> privacy.gw@uu.nl"
 
-#: main/templates/main/index.html:125
+#: main/templates/main/index.html:120
 msgid "<strong>Technical support</strong> <br /> portalsupport.gw@uu.nl"
 msgstr "<strong>Technical support</strong> <br /> portalsupport.gw@uu.nl"
 
-#: main/templates/main/index.html:133
+#: main/templates/main/index.html:128
 msgid "Resources"
 msgstr "Resources"
 
-#: main/templates/main/index.html:141
+#: main/templates/main/index.html:136
 msgid "Reglement van de FETC-GW"
 msgstr "Regulations of the FEtC-H"
 
-#: main/templates/main/index.html:148
+#: main/templates/main/index.html:143
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: main/templates/main/index.html:153
+#: main/templates/main/index.html:148
 msgid "Feedback"
 msgstr "Feedback"
 
-#: main/templates/main/index.html:155
+#: main/templates/main/index.html:150
 msgid ""
 "Heb je een vraag over de werking van de portal, ontdek je een foutje, "
 "missende functionaliteit, of verkeerde vertaling? Neem dan contact op met <a "
@@ -895,8 +893,9 @@ msgid ""
 msgstr "As might happen on forums where the researcher also has an account."
 
 #: observations/models.py:69 observations/models.py:79
-#: observations/models.py:94 proposals/models.py:793 studies/models.py:170
-#: studies/models.py:232 studies/models.py:376
+#: observations/models.py:94 proposals/models.py:515 proposals/models.py:534
+#: proposals/models.py:829 studies/models.py:170 studies/models.py:232
+#: studies/models.py:313 studies/models.py:343
 msgid "Licht toe"
 msgstr "Explain"
 
@@ -1008,7 +1007,7 @@ msgstr ""
 
 #: observations/templates/observations/observation_update_attachments.html:42
 #: proposals/templates/proposals/proposal_confirmation.html:22
-#: proposals/templates/proposals/proposal_diff.html:56
+#: proposals/templates/proposals/proposal_diff.html:55
 #: proposals/templates/proposals/proposal_update_date_start.html:26
 #: proposals/templates/proposals/proposal_update_dmp.html:23
 #: reviews/templates/reviews/change_chamber_form.html:20
@@ -1111,11 +1110,11 @@ msgstr ""
 msgid "Ik maak een oefenaanvraag aan"
 msgstr "I am creating a practice application"
 
-#: proposals/forms.py:425 proposals/models.py:586
+#: proposals/forms.py:425 proposals/models.py:622
 msgid "Te kopiëren aanvraag"
 msgstr "Application to be copied"
 
-#: proposals/forms.py:427 proposals/models.py:588
+#: proposals/forms.py:427 proposals/models.py:624
 msgid "Dit veld toont enkel aanvragen waar je zelf een medeuitvoerende bent."
 msgstr "This field shows only applications in which you are involved."
 
@@ -1142,7 +1141,7 @@ msgid ""
 msgstr "This field shows only approved applications in which you are involved."
 
 #: proposals/forms.py:563 proposals/forms.py:717 proposals/forms.py:749
-#: proposals/forms.py:869
+#: proposals/forms.py:926
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
@@ -1228,7 +1227,7 @@ msgstr ""
 "The embargo-period can last a maximum of 2 years. Pick a date within 2 years "
 "from today."
 
-#: proposals/forms.py:878
+#: proposals/forms.py:935
 msgid "Vul in in welke talen de formulieren worden vertaald."
 msgstr "Please fill in the languages"
 
@@ -1268,23 +1267,23 @@ msgstr "New application"
 msgid "Al mijn aanvragen"
 msgstr "All my applications"
 
-#: proposals/menus.py:58 proposals/views/proposal_views.py:102
+#: proposals/menus.py:58 proposals/views/proposal_views.py:103
 msgid "Mijn conceptaanvragen"
 msgstr "My draft applications"
 
-#: proposals/menus.py:62 proposals/views/proposal_views.py:161
+#: proposals/menus.py:62 proposals/views/proposal_views.py:162
 msgid "Mijn oefenaanvragen"
 msgstr "My practice applications"
 
-#: proposals/menus.py:66 proposals/views/proposal_views.py:116
+#: proposals/menus.py:66 proposals/views/proposal_views.py:117
 msgid "Mijn ingediende aanvragen"
 msgstr "My submitted applications"
 
-#: proposals/menus.py:70 proposals/views/proposal_views.py:130
+#: proposals/menus.py:70 proposals/views/proposal_views.py:131
 msgid "Mijn afgehandelde aanvragen"
 msgstr "My processed applications"
 
-#: proposals/menus.py:74 proposals/views/proposal_views.py:144
+#: proposals/menus.py:74 proposals/views/proposal_views.py:145
 msgid "Mijn aanvragen als eindverantwoordelijke"
 msgstr "My supervised applications"
 
@@ -1573,7 +1572,7 @@ msgstr ""
 "include it here. Supplying a DMP can expedite ethical assessment of "
 "proposals."
 
-#: proposals/models.py:462 proposals/utils/pdf_diff_logic.py:983
+#: proposals/models.py:462 proposals/utils/pdf_diff_logic.py:1005
 #: reviews/models.py:163
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
@@ -1599,23 +1598,55 @@ msgstr ""
 "please describe briefly how you will address them. Use a maximum of a 1000 "
 "words."
 
-#: proposals/models.py:505
+#: proposals/models.py:501
+msgid "Zijn er kwesties rondom kennisveiligheid?"
+msgstr "Are there concerns about knowledge security?"
+
+#: proposals/models.py:504
+msgid ""
+"Kennisveiligheid gaat over het tijdig signaleren en mitigeren van "
+"veiligheidsrisico's bij wetenschappelijk onderzoek. Klik <a href='https://"
+"intranet.uu.nl/kennisbank/kennisveiligheid'>hier</a> voor meer informatie."
+msgstr ""
+"Knowledge security is about the prompt detection and mitigation of security "
+"risks in academic research. For more information, click <a href='https://"
+"intranet.uu.nl/en/knowledgebase/knowledge-security'>here</a>. "
+
+#: proposals/models.py:519
+msgid ""
+"Zijn er kwesties rondom de veiligheid van of risico's voor de onderzoeker(s)?"
+msgstr "Are there concerns about the safety of, or risks to researcher(s)?"
+
+#: proposals/models.py:522
+msgid ""
+"Houd hierbij niet alleen rekening met mogelijke psychische of fysieke "
+"schade, maar ook met andere mogelijke schade, zoals bijv. hiërarchische "
+"machtsverhoudingen in veldwerk, mogelijke negatieve gevolgen voor de "
+"zichtbaarheid/vindbaarheid van de onderzoeker in in het publieke domein, "
+"juridische vervolging of aansprakelijkheid, e.d."
+msgstr ""
+"Consider not only potential psychological or physical harm, but also other "
+"forms of harm, such as stigmatisation, (re)traumatisation, negative effect "
+"on self-image, loss of privacy, coincidental findings, and legal prosecution "
+"or liability."
+
+#: proposals/models.py:541
 msgid "In welke hoedanigheid ben je betrokken bij dit onderzoek?"
 msgstr "In what capacity are you involved in this application?"
 
-#: proposals/models.py:514
+#: proposals/models.py:550
 msgid "Wat is je studierichting?"
 msgstr "What is your course of study?"
 
-#: proposals/models.py:521
+#: proposals/models.py:557
 msgid "In welke context doe je dit onderzoek?"
 msgstr "In what capacity are you involved in this application?"
 
-#: proposals/models.py:528
+#: proposals/models.py:564
 msgid "Namelijk:"
 msgstr "Please specify:"
 
-#: proposals/models.py:536
+#: proposals/models.py:572
 msgid ""
 "Studenten (die mensgebonden onderzoek uitvoeren binnen hun studieprogramma) "
 "hoeven in principe geen aanvraag in te dienen bij de FETC-GW. Bespreek met "
@@ -1629,7 +1660,7 @@ msgstr ""
 "do not not, you can terminate your proposal now. If you do, please explain "
 "what the reason is:"
 
-#: proposals/models.py:555
+#: proposals/models.py:591
 msgid ""
 "Uitvoerenden, inclusief uzelf. Let op! De andere onderzoekers moeten         "
 "ten minste één keer zijn ingelogd op dit portaal om ze te kunnen selecteren."
@@ -1638,13 +1669,13 @@ msgstr ""
 "researchers need to have logged into this portal at least once, in order to "
 "be selectable here."
 
-#: proposals/models.py:563
+#: proposals/models.py:599
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:115
 #: proposals/templates/proposals/vue_templates/proposal_list.html:174
 msgid "Promotor/Begeleider"
 msgstr "Promotor/Supervisor"
 
-#: proposals/models.py:567
+#: proposals/models.py:603
 msgid ""
 "Je aanvraag moet, als je alles hebt ingevuld, via de portal \n"
 "                    naar je promotor of begeleider gestuurd worden. Deze "
@@ -1674,53 +1705,53 @@ msgstr ""
 "you wait for them to do this, but remember to come back and fill in this "
 "field before submitting."
 
-#: proposals/models.py:594
+#: proposals/models.py:630
 msgid ""
 "Is deze aanvraag een revisie van of amendement op een ingediende aanvraag?"
 msgstr ""
 "Is this application a revision or an amendment of a previously submitted "
 "application?"
 
-#: proposals/models.py:677
+#: proposals/models.py:713
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:677 reviews/api/views.py:41 reviews/api/views.py:332
+#: proposals/models.py:713 reviews/api/views.py:41 reviews/api/views.py:332
 #: reviews/templates/reviews/committee_members_workload.html:35
 #: reviews/templates/reviews/committee_members_workload.html:76
 #: reviews/templates/reviews/review_detail_sidebar.html:108
 msgid "Revisie"
 msgstr "Revision"
 
-#: proposals/models.py:683
+#: proposals/models.py:719
 msgid "Normaal"
 msgstr "Normal"
 
-#: proposals/models.py:688
+#: proposals/models.py:724
 msgid "Voortoetsing"
 msgstr "Preliminary assessment"
 
-#: proposals/models.py:690
+#: proposals/models.py:726
 msgid "Oefening"
 msgstr "Practice"
 
-#: proposals/models.py:692
+#: proposals/models.py:728
 msgid "Extern getoetst"
 msgstr "External approval"
 
-#: proposals/models.py:777
+#: proposals/models.py:813
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: proposals/models.py:778
+#: proposals/models.py:814
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: proposals/models.py:779
+#: proposals/models.py:815
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: proposals/models.py:783
+#: proposals/models.py:819
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -1728,11 +1759,11 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: proposals/models.py:798
+#: proposals/models.py:834
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:805
+#: proposals/models.py:841
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -1740,7 +1771,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: proposals/models.py:809
+#: proposals/models.py:845
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -1761,7 +1792,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: proposals/models.py:826
+#: proposals/models.py:862
 msgid ""
 "Je onderzoek moet beoordeeld worden door een METC, maar dient nog wel bij de "
 "FETC-GW te worden geregistreerd. Is dit onderzoek al aangemeld bij een METC?"
@@ -1770,15 +1801,15 @@ msgstr ""
 "registered with the FEtC-H. Has an application for this project already been "
 "submitted to an METC?"
 
-#: proposals/models.py:834
+#: proposals/models.py:870
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: proposals/models.py:840
+#: proposals/models.py:876
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: proposals/models.py:886
+#: proposals/models.py:922
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -1833,18 +1864,19 @@ msgstr "New"
 #: proposals/templates/proposals/funding_form.html:7
 #: proposals/templates/proposals/funding_form.html:21
 #: proposals/utils/proposal_utils.py:68
-#, fuzzy
-#| msgid "Informatiebrief"
 msgid "Informatie over financiering"
-msgstr "Information letter"
+msgstr "Funding information"
+
+#: proposals/templates/proposals/knowledge_security_form.html:7
+#: proposals/templates/proposals/knowledge_security_form.html:21
+msgid "Afronding trajecten"
+msgstr "Trajectories conclusion"
 
 #: proposals/templates/proposals/other_researchers_form.html:7
 #: proposals/templates/proposals/other_researchers_form.html:21
 #: proposals/utils/proposal_utils.py:60
-#, fuzzy
-#| msgid "Informatiebrief ouders"
 msgid "Informatie over betrokken onderzoekers"
-msgstr "Information letter for the parents"
+msgstr "Information about other researchers"
 
 #: proposals/templates/proposals/practice_or_supervisor_warning.html:7
 msgid ""
@@ -1867,11 +1899,11 @@ msgstr ""
 #: proposals/templates/proposals/pre_approved_form.html:7
 #: proposals/utils/proposal_utils.py:98
 msgid "Informatie over eerdere toetsing"
-msgstr ""
+msgstr "Information about prior approval"
 
 #: proposals/templates/proposals/pre_approved_form.html:11
 msgid "Informatie over eerdere toesting"
-msgstr ""
+msgstr "Information about prior approval"
 
 #: proposals/templates/proposals/proposal_confirm_delete.html:6
 #: proposals/templates/proposals/proposal_confirm_delete.html:12
@@ -2034,7 +2066,7 @@ msgstr ""
 "follow with regard to data."
 
 #: proposals/templates/proposals/proposal_data_management.html:17
-#: proposals/utils/pdf_diff_logic.py:958
+#: proposals/utils/pdf_diff_logic.py:980
 #: reviews/templatetags/documents_list.py:224
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
@@ -2185,14 +2217,14 @@ msgstr ""
 "to the original application."
 
 #: proposals/templates/proposals/proposal_form.html:7
-#: proposals/templates/proposals/proposal_form.html:57
+#: proposals/templates/proposals/proposal_form.html:65
 #: proposals/templates/proposals/proposal_form_pre_approved.html:7
 #: proposals/templates/proposals/proposal_form_pre_approved.html:83
 #: proposals/utils/pdf_diff_logic.py:417 proposals/utils/proposal_utils.py:46
 msgid "Algemene informatie over de aanvraag"
 msgstr "General information about the application"
 
-#: proposals/templates/proposals/proposal_form.html:20
+#: proposals/templates/proposals/proposal_form.html:28
 msgid ""
 "Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag "
 "ligt, kan de FETC geen officiële goedkeuring meer geven."
@@ -2490,10 +2522,8 @@ msgstr ""
 #: proposals/templates/proposals/proposal_start.html:76
 #: proposals/templates/proposals/proposal_start_pre_approved.html:37
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:43
-#, fuzzy
-#| msgid "Naar volgende stap"
 msgid "Volgende stap >>"
-msgstr "To next step"
+msgstr "Next step >>"
 
 #: proposals/templates/proposals/proposal_start_practice.html:7
 #: proposals/templates/proposals/proposal_start_practice.html:13
@@ -2730,7 +2760,7 @@ msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
 #: proposals/templates/proposals/proposal_submit.html:165
-#: proposals/utils/pdf_diff_logic.py:966
+#: proposals/utils/pdf_diff_logic.py:988
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -2806,18 +2836,14 @@ msgstr ""
 #: proposals/templates/proposals/research_goal_form.html:7
 #: proposals/templates/proposals/research_goal_form.html:26
 #: proposals/utils/proposal_utils.py:75
-#, fuzzy
-#| msgid "Informatiebrief ouders"
 msgid "Informatie over het onderzoeksdoel"
-msgstr "Information letter for the parents"
+msgstr "Information about the reseach goal"
 
 #: proposals/templates/proposals/researcher_form.html:7
 #: proposals/templates/proposals/researcher_form.html:24
 #: proposals/utils/proposal_utils.py:53
-#, fuzzy
-#| msgid "Informatiebrief ouders"
 msgid "Informatie over de onderzoeker"
-msgstr "Information letter for the parents"
+msgstr "Information about the researcher"
 
 #: proposals/templates/proposals/study_consent.html:27
 msgid "Toestemmingsverklaring van de schoolleider/hoofd van het departement"
@@ -3043,100 +3069,86 @@ msgstr ""
 #: proposals/utils/checkers.py:49 proposals/utils/stepper.py:197
 #: proposals/utils/stepper.py:206 proposals/utils/stepper.py:211
 msgid "Basisgegevens"
-msgstr ""
+msgstr "Basic details"
 
 #: proposals/utils/checkers.py:83
-#, fuzzy
-#| msgid "Onderzoekstype(n)"
 msgid "Onderzoeker"
-msgstr "Type(s) of research"
+msgstr "Researcher"
 
 #: proposals/utils/checkers.py:100
-#, fuzzy
-#| msgid "Interventieonderzoek"
 msgid "Andere onderzoekers"
-msgstr "Interventional research"
+msgstr "Other researchers"
 
 #: proposals/utils/checkers.py:129
 msgid "Financiering"
-msgstr ""
+msgstr "Funding"
 
 #: proposals/utils/checkers.py:151
-#, fuzzy
-#| msgid "Onderzoekstype(n)"
 msgid "Onderzoeksdoel"
-msgstr "Type(s) of research"
+msgstr "Research goal"
 
 #: proposals/utils/checkers.py:176
-#, fuzzy
-#| msgid "Eerdere goedkeuring"
 msgid "Eerdere toetsing"
 msgstr "Prior approval"
 
 #: proposals/utils/checkers.py:275
 msgid "WMO applicatie"
-msgstr ""
+msgstr "WMO application"
 
 #: proposals/utils/checkers.py:304 proposals/utils/proposal_utils.py:116
 #: proposals/utils/stepper.py:199
 msgid "Trajecten"
 msgstr "Trajectories"
 
-#: proposals/utils/checkers.py:430 studies/utils.py:67
+#: proposals/utils/checkers.py:358
+msgid "Traject afronding"
+msgstr "Conclusion trajectory"
+
+#: proposals/utils/checkers.py:362
+msgid "Trajecten afronding"
+msgstr "Conclusion trajectories"
+
+#: proposals/utils/checkers.py:449 studies/utils.py:67
 msgid "Deelnemers"
 msgstr "Participants"
 
-#: proposals/utils/checkers.py:469
+#: proposals/utils/checkers.py:488
 msgid "Ontwerp"
-msgstr ""
+msgstr "Design"
 
-#: proposals/utils/checkers.py:500
-#, fuzzy
-#| msgid "Aanmelding"
-msgid "Afronding"
-msgstr "Application"
+#: proposals/utils/checkers.py:519
+msgid "Traject overzicht"
+msgstr "Trajectory overview"
 
-#: proposals/utils/checkers.py:535
-#, fuzzy
-#| msgid "Interventieonderzoek"
+#: proposals/utils/checkers.py:554
 msgid "Interventie"
-msgstr "Interventional research"
+msgstr "Intervention"
 
-#: proposals/utils/checkers.py:593
-#, fuzzy
-#| msgid "Observatieonderzoek"
+#: proposals/utils/checkers.py:612
 msgid "Observatie"
-msgstr "Observational research"
+msgstr "Observation"
 
-#: proposals/utils/checkers.py:651
-#, fuzzy
-#| msgid "Sessie"
+#: proposals/utils/checkers.py:670
 msgid "Sessies"
-msgstr "Session"
+msgstr "Sessions"
 
-#: proposals/utils/checkers.py:796 proposals/utils/stepper.py:200
+#: proposals/utils/checkers.py:815 proposals/utils/stepper.py:200
 #: reviews/templates/reviews/review_detail_sidebar.html:124
 msgid "Documenten"
 msgstr "Documents"
 
-#: proposals/utils/checkers.py:807
-#, fuzzy
-#| msgid "Vertaling"
+#: proposals/utils/checkers.py:826
 msgid "Vertalingen"
-msgstr "Translation"
+msgstr "Translations"
 
-#: proposals/utils/checkers.py:830
-#, fuzzy
-#| msgid "Datamanagement"
+#: proposals/utils/checkers.py:849
 msgid "Data management"
 msgstr "Data management"
 
-#: proposals/utils/checkers.py:856 proposals/utils/stepper.py:202
+#: proposals/utils/checkers.py:875 proposals/utils/stepper.py:202
 #: proposals/utils/stepper.py:207 proposals/utils/stepper.py:213
-#, fuzzy
-#| msgid "Indiener"
 msgid "Indienen"
-msgstr "Applicant"
+msgstr "Submit"
 
 #: proposals/utils/pdf_diff_logic.py:94
 msgid ""
@@ -3202,7 +3214,11 @@ msgstr "Task-based research and interviews"
 msgid "Overzicht en eigen beoordeling van het gehele onderzoek"
 msgstr "Overview and self-assessment of the entire study"
 
-#: proposals/utils/pdf_diff_logic.py:934
+#: proposals/utils/pdf_diff_logic.py:860
+msgid "Kennisveiligheid en risico onderzoekers"
+msgstr "Knowledge security and researcher risk"
+
+#: proposals/utils/pdf_diff_logic.py:956
 msgid "Extra formulieren "
 msgstr "Additional forms "
 
@@ -3240,58 +3256,54 @@ msgstr "FEtC-H: New application uses lab facilities"
 
 #: proposals/utils/stepper.py:198 proposals/utils/stepper.py:212
 msgid "WMO"
-msgstr ""
+msgstr "WMO"
 
 #: proposals/utils/validate_sessions_tasks.py:27 tasks/models.py:69
 msgid "Sessie {}"
 msgstr "Session {}"
 
 #: proposals/utils/validate_sessions_tasks.py:37
-#, fuzzy
-#| msgid "Sessie {}"
 msgid "Sessie {}, taak {}"
-msgstr "Session {}"
+msgstr "Session {}, task {}"
 
 #: proposals/utils/validate_sessions_tasks.py:48
-#, fuzzy
-#| msgid "Sessie overzicht"
 msgid "Sessie {} overzicht"
-msgstr "Session overview"
+msgstr "Session {} overview"
 
-#: proposals/views/proposal_views.py:67
+#: proposals/views/proposal_views.py:68
 msgid "Publiek archief"
 msgstr "Public archive"
 
-#: proposals/views/proposal_views.py:68
+#: proposals/views/proposal_views.py:69
 msgid "Dit overzicht toont alle goedgekeurde aanvragen."
 msgstr "This overview shows all approved applications."
 
-#: proposals/views/proposal_views.py:87
+#: proposals/views/proposal_views.py:88
 msgid "Mijn aanvraag"
 msgstr "My application"
 
-#: proposals/views/proposal_views.py:88
+#: proposals/views/proposal_views.py:89
 msgid "Dit overzicht toont al je aanvragen."
 msgstr "This overview shows all your applications."
 
-#: proposals/views/proposal_views.py:103
+#: proposals/views/proposal_views.py:104
 msgid "Dit overzicht toont al je nog niet ingediende aanvragen."
 msgstr "This overview shows all the applications you have not yet submitted."
 
-#: proposals/views/proposal_views.py:117
+#: proposals/views/proposal_views.py:118
 msgid "Dit overzicht toont al je ingediende aanvragen."
 msgstr "This overview shows all the applications you have submitted."
 
-#: proposals/views/proposal_views.py:131
+#: proposals/views/proposal_views.py:132
 msgid "Dit overzicht toont al je beoordeelde aanvragen."
 msgstr "This overview shows all your applications that have been assessed."
 
-#: proposals/views/proposal_views.py:146
+#: proposals/views/proposal_views.py:147
 msgid ""
 "Dit overzicht toont alle aanvragen waarvan je eindverantwoordelijke bent."
 msgstr "This overview shows all your supervised applications."
 
-#: proposals/views/proposal_views.py:163
+#: proposals/views/proposal_views.py:164
 msgid ""
 "Dit overzicht toont alle oefenaanvragen waar je als student, onderzoeker of "
 "eindverantwoordelijke bij betrokken bent."
@@ -3299,21 +3311,20 @@ msgstr ""
 "This overview shows all practice applications in which you are involved as a "
 "student, researcher or accountable researcher."
 
-#: proposals/views/proposal_views.py:243
-#, fuzzy, python-format
-#| msgid "Aanvraag %(title)s bewerkt"
+#: proposals/views/proposal_views.py:244
+#, python-format
 msgid "Aanvraag %(title)s aangemaakt"
-msgstr "Application %(title)s edited"
+msgstr "Application %(title)s created"
 
-#: proposals/views/proposal_views.py:301
+#: proposals/views/proposal_views.py:302
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:572
+#: proposals/views/proposal_views.py:587
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:675
+#: proposals/views/proposal_views.py:690
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -3793,10 +3804,8 @@ msgstr ""
 
 #: reviews/templates/reviews/review_assign_form.html:45
 #: reviews/templates/reviews/review_discontinue_form.html:68
-#, fuzzy
-#| msgid "Bevestig beëindiging"
 msgid "Bevestigen"
-msgstr "Confirm termination of this review"
+msgstr "Confirm"
 
 #: reviews/templates/reviews/review_close_form.html:7
 #: reviews/templates/reviews/review_close_form.html:27
@@ -3876,7 +3885,7 @@ msgstr "Applicant"
 
 #: reviews/templates/reviews/review_detail_sidebar.html:43
 msgid "Supervisor"
-msgstr ""
+msgstr "Supervisor"
 
 #: reviews/templates/reviews/review_detail_sidebar.html:46
 #, python-format
@@ -4156,25 +4165,23 @@ msgstr ""
 
 #: reviews/utils/review_utils.py:488
 msgid ""
-"De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op "
-"onderdelen of als geheel zodanig belastend is dat deze ondanks de verkregen "
-"informed consent vragen zou kunnen oproepen."
+"De onderzoeker geeft aan dat sommige vragen binnen het onderzoek mogelijk "
+"dermate belastend kunnen zijn dat ze negatieve reacties bij de deelnemers en/"
+"of onderzoekers kunnen veroorzaken."
 msgstr ""
-"The researcher states (or considers it possible) that participation in the "
-"study, in part or in its entirety, is so burdensome that despite acquiring "
-"informed consent it might raise questions."
+"The applicant notes that some questions within the study are possibly taxing "
+"to the extent that they could result in negative responses from participants "
+"and/or other researchers."
 
-#: reviews/utils/review_utils.py:496
+#: reviews/utils/review_utils.py:497
 msgid ""
-"De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op "
-"psychische of fysieke schade bij deelname aan het onderzoek meer dan "
-"minimaal zijn."
+"De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid "
+"van de deelnemers tijdens of na het onderzoek."
 msgstr ""
-"The researcher states (or considers it possible) that the risks of "
-"psychological or physical harm in participating in the study are more than "
-"minimal."
+"The applicant notes that there are possible concerns about the safety of "
+"participants during or after the study."
 
-#: reviews/utils/review_utils.py:507
+#: reviews/utils/review_utils.py:508
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4185,14 +4192,30 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:533
+#: reviews/utils/review_utils.py:521
+msgid ""
+"De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom "
+"kennisveiligheid."
+msgstr ""
+"The applicant notes that there are possible concerns about knowledge "
+"security."
+
+#: reviews/utils/review_utils.py:529
+msgid ""
+"De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid "
+"van de betrokken onderzoekers."
+msgstr ""
+"The applicant notes that there are possible concerns about knowledge "
+"security."
+
+#: reviews/utils/review_utils.py:549
 #, python-brace-format
 msgid "Het onderzoek observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The application contains sessions with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:541
+#: reviews/utils/review_utils.py:557
 msgid ""
 "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met "
 "informed consent achteraf."
@@ -4200,7 +4223,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective informed consent."
 
-#: reviews/utils/review_utils.py:547
+#: reviews/utils/review_utils.py:563
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4210,11 +4233,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils/review_utils.py:554
+#: reviews/utils/review_utils.py:570
 msgid "De aanvraag bevat het gebruik van {}"
 msgstr "The application makes use of {}"
 
-#: reviews/utils/review_utils.py:580
+#: reviews/utils/review_utils.py:596
 msgid ""
 "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
 msgstr ""
@@ -4242,9 +4265,7 @@ msgstr ""
 "assessment"
 
 #: studies/forms.py:32
-#, fuzzy
-#| msgid "De leeftijdsgroep van je deelnemers"
-msgid "De leeftijdsgroup van je deelnemers"
+msgid "De leeftijdsgroep van je deelnemers"
 msgstr "The age group of your participants"
 
 #: studies/forms.py:36
@@ -4265,7 +4286,7 @@ msgstr "Recruitment"
 
 #: studies/forms.py:52
 msgid "Compensatie"
-msgstr ""
+msgstr "Compensation"
 
 #: studies/forms.py:56
 msgid "Hiërarchie"
@@ -4301,15 +4322,6 @@ msgid "Taakonderzoek en interviews"
 msgstr "Task-based research and interviews"
 
 #: studies/forms.py:206
-#, fuzzy
-#| msgid ""
-#| "Dit is bijvoorbeeld het geval wanneer je een observatiedeel combineert "
-#| "met een taakonderzoeksdeel, of met een interventiedeel (in dezelfde "
-#| "sessie, of verspreid over dagen). Wanneer je in interventieonderzoek "
-#| "<em>extra</em> taken inzet om de effecten van de interventie te bemeten "
-#| "(bijvoorbeeld een speciale voor- en nameting met een vragenlijst die "
-#| "anders niet zou worden afgenomen) dien je die apart als taakonderzoek te "
-#| "specificeren."
 msgid ""
 "Dit is bijvoorbeeld het geval wanneer je een observatiedeel combineert met "
 "een taakonderzoeksdeel, of met een interventiedeel (in dezelfde sessie, of "
@@ -4327,14 +4339,10 @@ msgstr ""
 "task-based research."
 
 #: studies/forms.py:244
-#, fuzzy
-#| msgid "Je dient minstens één van de opties te selecteren"
 msgid "Je dient minstens een van de opties te selecteren."
 msgstr "You must select at least one of the options"
 
 #: studies/forms.py:251
-#, fuzzy
-#| msgid "Je hebt geen andere onderzoekers geselecteerd."
 msgid "Er is nog geen onderzoekstype geselecteerd."
 msgstr "You have not selected any other researchers."
 
@@ -4506,10 +4514,10 @@ msgid ""
 "Misleiding is het doelbewust verschaffen van inaccurate informatie over het "
 "doel en/of belangrijke aspecten van de gang van zaken tijdens het onderzoek. "
 "Denk aan zaken als een bewust misleidende \"cover story\" voor het "
-"experiment; het ten onrechte suggereren dat er met andere deelnemers wordt "
-"samengewerkt; het onaangekondigd aanbieden van een cruciale geheugentaak of "
-"het geven van gefingeerde feedback. Wellicht ten overvloede: het gaat "
-"hierbij niet om fillers."
+"experiment; het ten onrechte suggereren dat er door de deelnemer met andere "
+"deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale "
+"geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: "
+"het gaat hierbij niet om fillers in bijv. taalwetenschappelijk onderzoek."
 msgstr ""
 "Misrepresentation is intentional provision of inaccurate information as to "
 "the aim and/or important aspects of proceedings during the study. Examples "
@@ -4529,112 +4537,58 @@ msgstr ""
 #: studies/models.py:302
 msgid ""
 "Bevat bovenstaand onderzoekstraject elementen die <em>tijdens</em> de "
-"deelname niet-triviale negatieve emoties kunnen opwekken? Denk hierbij "
-"bijvoorbeeld aan emotioneel indringende vragen, kwetsende uitspraken, "
-"negatieve feedback, frustrerende, zware, (heel) lange en/of (heel) saaie "
-"taken."
+"deelname zodanig belastend zijn dat deze vragen, weerstand, of zelfs "
+"verontwaardiging zouden kunnen oproepen, bijvoorbeeld bij collega-"
+"onderzoekers, bij de deelnemers zelf, of bij ouders of andere "
+"vertegenwoordigers?"
 msgstr ""
 "Does the above research trajectory include elements which could arouse non-"
 "trivially negative emotions <em>during</em> participation? For example, "
 "consider emotionally probing questions, insulting utterances, negative "
 "feedback, and frustrating, difficult, (very) long and/or (very) boring tasks."
 
-#: studies/models.py:312
-msgid "Licht je antwoord toe."
-msgstr "Explain your answer."
-
 #: studies/models.py:315
 msgid ""
-"Bevat bovenstaand onderzoekstraject elementen die tijdens de deelname "
-"zodanig belastend zijn dat deze <em>ondanks de verkregen informed consent</"
-"em> vragen zou kunnen oproepen (of zelfs verontwaardiging), bijvoorbeeld bij "
-"collega-onderzoekers, bij de deelnemers zelf, of bij ouders of andere "
-"vertegenwoordigers?"
+"Geef concrete voorbeelden van de relevante aspecten van jouw onderzoek "
+"(bijv. voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de "
+"taak; zeer confronterende vragen in een vragenlijst; negatieve feedback), "
+"zodat de commissie zich een goed beeld kan vormen."
 msgstr ""
-"Does the research trajectory above contain elements which are so burdensome "
-"that, <em>despite having obtained informed consent</em>, they could raise "
-"questions (or even cause outrage), for example from colleagues, the "
-"participants themselves, or parents or other representatives?"
+"Give concrete examples of such elements (e.g. examples of potentially "
+"extremely offensive words or statements in a task; extremely confronting "
+"questions in a questionnaire; negative feedback), so that the commission has "
+"a clear idea of what is involved."
 
-#: studies/models.py:323
+#: studies/models.py:326
 msgid ""
-"Dit zou bijvoorbeeld het geval kunnen zijn bij een 'onmenselijk' lange en "
-"uitputtende taak, een zeer confronterende vragenlijst, of voortdurend "
-"vernietigende feedback, maar ook bij een ervaren inbreuk op de privacy, of "
-"een ander ervaren gebrek aan respect. Let op, het gaat bij deze vraag om de "
-"door de deelnemer ervaren belasting tijdens het onderzoek, niet om de "
-"opgelopen psychische of fysieke schade door het onderzoek."
+"Zijn er kwesties rondom de veiligheid van, of risico's voor de deelnemers "
+"<em>tijdens of na</em> deelname aan het onderzoek?"
 msgstr ""
-"This could be the case with an inhumanely long or exhausting task, an "
-"extremely provocative questionnaire, or excessive destructive feedback on "
-"participant performance. Also consider a significant breach of privacy or "
-"lack of respect towards the participant as examples for this question. "
-"Please note that this question refers to distress during experimental "
-"sessions, not distress at a later date which was caused by the research "
-"project."
+"Are there concerns relating to the safety of, or risks to, participants "
+"<em>during or after</em> participation in the research?"
 
-#: studies/models.py:338
+#: studies/models.py:331
 msgid ""
-"Licht je antwoord toe. Geef concrete voorbeelden van de relevante aspecten "
-"van jouw onderzoek (bijv. representatieve voorbeelden van mogelijk zeer "
-"kwetsende woorden of uitspraken in de taak, of van zeer confronterende "
-"vragen in een vragenlijst), zodat de commissie zich een goed beeld kan "
-"vormen."
-msgstr ""
-"Explain your answer. Give concrete examples of the relevant aspects of your "
-"study (e.g. representative examples of potentially very offensive words or "
-"utterances in the task, or of very confrontational questions in a "
-"questionnaire), so that the committee can form a proper picture."
-
-#: studies/models.py:348
-msgid ""
-"Zijn de risico's op psychische, fysieke, of andere (bijv. economische, "
-"juridische) schade door deelname aan bovenstaand onderzoekstraject <em>meer "
-"dan</em> minimaal? D.w.z. ligt de kans op en/of omvang van mogelijke schade "
-"bij de deelnemers duidelijk <em>boven</em> het \"achtergrondrisico\"?"
+"Houd hierbij niet alleen rekening met mogelijke psychische of fysieke "
+"schadelijke gevolgen, maar ook met andere mogelijke schade, zoals bijv. "
+"stigmatisering, (re-)traumatisering, aantasting van zelfbeeld, verlies van "
+"privacy, toevalsbevindingen, juridische vervolging of aansprakelijkheid, e.d."
 msgstr ""
 "Are the risks of psychological, physical or other (e.g. economic, legal) "
 "damage due to participation in the research trajectory above <em>more than</"
 "em> minimal? I.e. is the chance of and/or magnitude of potential damage to "
 "participants clearly <em>above</em> that of the \"background risk\"?"
 
-#: studies/models.py:356
-msgid ""
-"Achtergrondrisico is datgene dat gezonde, gemiddelde burgers in de relevante "
-"leeftijdscategorie normaalgesproken in het dagelijks leven ten deel valt. "
-"Denk bij schade ook aan de gevolgen die het voor de deelnemer of anderen "
-"beschikbaar komen van bepaalde informatie kan hebben, bijv. op het vlak van "
-"zelfbeeld, stigmatisering door anderen, economische schade door data-"
-"koppeling, et cetera. Het achtergrondrisico voor psychische en fysieke "
-"schade omvat bijvoorbeeld ook de risico's van \"routine\"-tests, -"
-"onderzoeken of -procedures die in alledaagse didactische, psychologische of "
-"medische contexten plaatsvinden (zoals een eindexamen, een rijexamen, een "
-"stressbestendigheids-<em>assessment</em>, een intelligentie- of "
-"persoonlijkheidstest, of een hartslagmeting na fysieke inspanning; dit "
-"alles, waar relevant, onder begeleiding van adequaat geschoolde "
-"specialisten)."
-msgstr ""
-"Background risk is the risk experienced by average, healthy people in the "
-"relevant age group during daily life. Damage to be considered includes, but "
-"is not limited to: physical or psychological harm, damage by means of "
-"gathered information which might affect self-image or cause stigmatisation "
-"by others, economic damage through linked data, and so forth. To determine "
-"potential physical and psychological harm in relation to the background "
-"risk, you may compare your study to \"routine\" tests which take place "
-"during daily life, such as a driving test, job interview or performance "
-"evaluation, intelligence test, or heart rate measurement after physical "
-"exercise, all of which performed under professional supervision."
-
-#: studies/models.py:470
+#: studies/models.py:437
 #, python-format
 msgid "Study details for proposal %s"
 msgstr "Study details for proposal %s"
 
-#: studies/models.py:475
+#: studies/models.py:442
 msgid "Maak je gebruik van passieve informed consent?"
 msgstr "Will you use passive informed consent?"
 
-#: studies/models.py:478
+#: studies/models.py:445
 msgid ""
 "Wanneer je kinderen via een instelling (dus ook school) werft en je de "
 "ouders niet laat ondertekenen, maar in plaats daarvan de leiding van die "
@@ -4650,7 +4604,7 @@ msgstr ""
 "a>."
 
 # studies/models.py:229
-#: studies/models.py:491
+#: studies/models.py:458
 msgid ""
 "Licht je antwoord toe. Wij willen je wijzen op het reglement, sectie 3.1 'd' "
 "en 'e'. Passive consent is slechts in enkele gevallen toegestaan en draagt "
@@ -4660,16 +4614,16 @@ msgstr ""
 "'d' and 'e'. Passive consent is allowed under certain situations but is not "
 "preferred by the committee."
 
-#: studies/models.py:508
+#: studies/models.py:475
 msgid "Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"
 msgstr ""
 "Please upload the declaration of consent here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:516
+#: studies/models.py:483
 msgid "Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the information letter here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:525
+#: studies/models.py:492
 msgid ""
 "Upload hier de toestemmingsverklaring voor de leiding of het management van "
 "de instelling (in .pdf of .doc(x)-format)"
@@ -4677,7 +4631,7 @@ msgstr ""
 "Please upload the declaration of consent for the management of the school or "
 "institution (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:530
+#: studies/models.py:497
 msgid ""
 "Upload indien mogelijk een ondertekende versie van het document. Upload als "
 "deze nog niet bestaat een blanco versie, en stuur de ondertekende versie "
@@ -4688,7 +4642,7 @@ msgstr ""
 "and follow up by sending a signed copy to the secretary of the FEtC-H once "
 "available."
 
-#: studies/models.py:538
+#: studies/models.py:505
 msgid ""
 "Upload hier de informatiebrief voor de leiding of het management van de "
 "instelling (in .pdf of .doc(x)-formaat)"
@@ -4696,7 +4650,7 @@ msgstr ""
 "Please upload the the information letter for the management of the school or "
 "institution (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:548
+#: studies/models.py:515
 msgid ""
 "Upload hier de informatiebrief voor de ouders of verzorgers (in .pdf of ."
 "doc(x)-formaat)"
@@ -4964,7 +4918,7 @@ msgstr ""
 
 #: tasks/forms.py:180
 msgid "Totale sessieduur is nog niet ingevuld."
-msgstr ""
+msgstr "Total duration of session has not yet been filled in."
 
 #: tasks/forms.py:185
 msgid "Totale sessieduur moet minstens gelijk zijn aan netto sessieduur."
@@ -4975,6 +4929,7 @@ msgstr ""
 #: tasks/forms.py:191
 msgid "Sessie {} bevat nog geen taken. Voeg minstens één taak toe."
 msgstr ""
+"Session {} does not yet contain tasks. Please create at least one task."
 
 #: tasks/forms.py:218
 msgid ""
@@ -5173,8 +5128,6 @@ msgstr ""
 "%(repeats)s"
 
 #: tasks/templates/tasks/session_list.html:35
-#, fuzzy
-#| msgid "Nog geen sessies. Tijd om er één aan te maken!"
 msgid "Nog geen sessies. Tijd om er een aan te maken!"
 msgstr "No sessions yet. Time to create one!"
 
@@ -5292,10 +5245,8 @@ msgid "Taak bewerken"
 msgstr "Edit task"
 
 #: tasks/templates/tasks/task_list.html:51
-#, fuzzy
-#| msgid "Nog geen sessies. Tijd om er één aan te maken!"
 msgid "Deze sessie bevat nog geen taken. Tijd om er een aan te maken!"
-msgstr "No sessions yet. Time to create one!"
+msgstr "This session does not yet contain tasks. Time to create one!"
 
 #: tasks/templates/tasks/task_list.html:58
 #, python-format
@@ -5340,7 +5291,7 @@ msgstr "Session deleted"
 msgid "Taak bewerkt"
 msgstr "Task edited"
 
-#: tasks/views/task_views.py:81
+#: tasks/views/task_views.py:78
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
