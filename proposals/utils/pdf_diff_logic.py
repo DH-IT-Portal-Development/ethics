@@ -1145,7 +1145,7 @@ def create_context_diff(context, old_proposal, new_proposal):
                         or new_study is not None
                         and new_study.has_intervention
                     ):
-                        interventions = get_all_related(both_studies, "intervention")
+                        interventions = get_all_related(both_studies, "get_intervention")
 
                         sections.append(
                             DiffSection(
@@ -1159,7 +1159,7 @@ def create_context_diff(context, old_proposal, new_proposal):
                         or new_study is not None
                         and new_study.has_observation
                     ):
-                        observations = get_all_related(both_studies, "observation")
+                        observations = get_all_related(both_studies, "get_observation")
 
                         sections.append(
                             DiffSection(
@@ -1174,7 +1174,7 @@ def create_context_diff(context, old_proposal, new_proposal):
                         and new_study.has_sessions
                     ):
                         old_sessions_set, new_sessions_set = get_all_related_set(
-                            both_studies, "session_set"
+                            both_studies, "get_sessions"
                         )
 
                         for both_sessions in zip_equalize_lists(
