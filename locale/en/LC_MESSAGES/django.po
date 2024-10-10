@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-01 10:14+0200\n"
+"POT-Creation-Date: 2024-10-10 11:43+0200\n"
 "PO-Revision-Date: 2024-04-03 12:32+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: faqs/menus.py:7 main/templates/main/index.html:132
+#: faqs/menus.py:7 main/templates/main/index.html:130
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
@@ -34,7 +34,7 @@ msgstr "Regulations FEtC-H"
 msgid "https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"
 msgstr "https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"
 
-#: faqs/menus.py:17 main/templates/main/index.html:140
+#: faqs/menus.py:17 main/templates/main/index.html:138
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/translated_consent_forms.html:7
 #: proposals/utils/pdf_diff_logic.py:884
@@ -181,7 +181,7 @@ msgstr "Intervention saved"
 #: main/forms/conditional_form.py:12 main/forms/conditional_form.py:21
 #: main/forms/conditional_form.py:32 main/forms/conditional_form.py:43
 #: main/forms/conditional_form.py:59 main/forms/mixins.py:84
-#: proposals/forms.py:733 proposals/forms.py:819 proposals/forms.py:840
+#: proposals/forms.py:738 proposals/forms.py:824 proposals/forms.py:845
 #: studies/forms.py:188
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
@@ -578,12 +578,12 @@ msgstr ""
 #: main/templates/main/index.html:64
 msgid ""
 "Het <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/\" "
-"target=\"blank\"> reglement van de FETC-GW </a>."
+"target=\"blank\">reglement van de FETC-GW</a>."
 msgstr ""
 "The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\" "
 "target=\"_blank\">regulations of the FEtC-H</a>."
 
-#: main/templates/main/index.html:72
+#: main/templates/main/index.html:70
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\" "
@@ -595,65 +595,65 @@ msgstr ""
 "target=\"_blank\">model documents</a> for <em>informed consent</em>. (Latest "
 "version: <u>December 2021</u>)"
 
-#: main/templates/main/index.html:85
+#: main/templates/main/index.html:83
 msgid "Bekijk mijn aanvragen"
 msgstr "View my applications"
 
-#: main/templates/main/index.html:86 proposals/menus.py:9
+#: main/templates/main/index.html:84 proposals/menus.py:9
 msgid "Nieuwe aanvraag starten"
 msgstr "Start a new application"
 
-#: main/templates/main/index.html:88
+#: main/templates/main/index.html:86
 msgid "Nieuwe revisie starten"
 msgstr "Create new revision"
 
-#: main/templates/main/index.html:90
+#: main/templates/main/index.html:88
 msgid "Nieuw amendement starten"
 msgstr "Create new amendment"
 
-#: main/templates/main/index.html:92 proposals/menus.py:112
+#: main/templates/main/index.html:90 proposals/menus.py:112
 #: proposals/views/proposal_views.py:190
 msgid "Archief"
 msgstr "Archive"
 
-#: main/templates/main/index.html:97
+#: main/templates/main/index.html:95
 msgid "Ondersteuning"
 msgstr "Support"
 
-#: main/templates/main/index.html:99
+#: main/templates/main/index.html:97
 msgid ""
 "<strong>FETC-GW secretaris</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
 msgstr "<strong>FEtC-H secretary</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
 
-#: main/templates/main/index.html:106
+#: main/templates/main/index.html:104
 msgid "<strong>Data Management advies</strong> <br /> datamanagement.gw@uu.nl"
 msgstr "<strong>Data Management advice</strong> <br /> datamanagement.gw@uu.nl"
 
-#: main/templates/main/index.html:113
+#: main/templates/main/index.html:111
 msgid "<strong>Privacy kwesties/vragen</strong> <br /> privacy.gw@uu.nl"
 msgstr "<strong>Privacy issues/questions</strong> <br /> privacy.gw@uu.nl"
 
-#: main/templates/main/index.html:120
+#: main/templates/main/index.html:118
 msgid "<strong>Technical support</strong> <br /> portalsupport.gw@uu.nl"
 msgstr "<strong>Technical support</strong> <br /> portalsupport.gw@uu.nl"
 
-#: main/templates/main/index.html:128
+#: main/templates/main/index.html:126
 msgid "Resources"
 msgstr "Resources"
 
-#: main/templates/main/index.html:136
+#: main/templates/main/index.html:134
 msgid "Reglement van de FETC-GW"
 msgstr "Regulations of the FEtC-H"
 
-#: main/templates/main/index.html:143
+#: main/templates/main/index.html:141
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: main/templates/main/index.html:148
+#: main/templates/main/index.html:146
 msgid "Feedback"
 msgstr "Feedback"
 
-#: main/templates/main/index.html:150
+#: main/templates/main/index.html:148
 msgid ""
 "Heb je een vraag over de werking van de portal, ontdek je een foutje, "
 "missende functionaliteit, of verkeerde vertaling? Neem dan contact op met <a "
@@ -1007,7 +1007,7 @@ msgstr ""
 
 #: observations/templates/observations/observation_update_attachments.html:42
 #: proposals/templates/proposals/proposal_confirmation.html:22
-#: proposals/templates/proposals/proposal_diff.html:55
+#: proposals/templates/proposals/proposal_diff.html:56
 #: proposals/templates/proposals/proposal_update_date_start.html:26
 #: proposals/templates/proposals/proposal_update_dmp.html:23
 #: reviews/templates/reviews/change_chamber_form.html:20
@@ -1085,7 +1085,11 @@ msgstr "You have not selected yourself."
 msgid "Je hebt geen andere onderzoekers geselecteerd."
 msgstr "You have not selected any other researchers."
 
-#: proposals/forms.py:338
+#: proposals/forms.py:284 studies/forms.py:244
+msgid "Je dient minstens een van de opties te selecteren."
+msgstr "You must select at least one of the options"
+
+#: proposals/forms.py:343
 msgid ""
 "Dit veld is verplicht, maar je kunt later terugkomen om "
 "hem                     verder in te vullen."
@@ -1093,7 +1097,7 @@ msgstr ""
 "This field is required, but you may choose to come back to this page later "
 "to fill it in."
 
-#: proposals/forms.py:393
+#: proposals/forms.py:398
 msgid ""
 "Indien je geen toestemming hebt van een andere ethische commissie, dien je "
 "het normale formulier in te vullen. Ga terug naar de startpagina, en "
@@ -1106,23 +1110,23 @@ msgstr ""
 "page, and select \"Submit a new application that is completely new in this "
 "portal\" or \"from a copy of an old application.\""
 
-#: proposals/forms.py:408
+#: proposals/forms.py:413
 msgid "Ik maak een oefenaanvraag aan"
 msgstr "I am creating a practice application"
 
-#: proposals/forms.py:425 proposals/models.py:622
+#: proposals/forms.py:430 proposals/models.py:622
 msgid "Te kopiëren aanvraag"
 msgstr "Application to be copied"
 
-#: proposals/forms.py:427 proposals/models.py:624
+#: proposals/forms.py:432 proposals/models.py:624
 msgid "Dit veld toont enkel aanvragen waar je zelf een medeuitvoerende bent."
 msgstr "This field shows only applications in which you are involved."
 
-#: proposals/forms.py:469
+#: proposals/forms.py:474
 msgid "Te reviseren aanvraag"
 msgstr "Application to be revised"
 
-#: proposals/forms.py:471
+#: proposals/forms.py:476
 msgid ""
 "Dit veld toont enkel ingediende, (nog) niet goedgekeurde aanvragen waar jij "
 "een medeuitvoerende bent."
@@ -1130,76 +1134,76 @@ msgstr ""
 "This field only shows submitted applications that have not been approved "
 "(yet) in which you are involved."
 
-#: proposals/forms.py:502
+#: proposals/forms.py:507
 msgid "Te amenderen aanvraag"
 msgstr "Application to be amended"
 
-#: proposals/forms.py:504
+#: proposals/forms.py:509
 msgid ""
 "Dit veld toont enkel goedgekeurde aanvragen waar je zelf een medeuitvoerende "
 "bent."
 msgstr "This field shows only approved applications in which you are involved."
 
-#: proposals/forms.py:563 proposals/forms.py:717 proposals/forms.py:749
-#: proposals/forms.py:926
+#: proposals/forms.py:568 proposals/forms.py:722 proposals/forms.py:754
+#: proposals/forms.py:931
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
-#: proposals/forms.py:573
+#: proposals/forms.py:578
 msgid "Je dient een instelling op te geven."
 msgstr "You are required to specify an institution."
 
-#: proposals/forms.py:618
+#: proposals/forms.py:623
 msgid "In dit geval is een beslissing van een METC vereist"
 msgstr "In this case, a decision by a METC is required"
 
-#: proposals/forms.py:627
+#: proposals/forms.py:632
 msgid "Naam traject 1"
 msgstr "Title of trajectory 1"
 
-#: proposals/forms.py:631
+#: proposals/forms.py:636
 msgid ""
 "Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters."
 msgstr ""
 "Give each trajectory below a descriptive title of a maximum of 15 characters."
 
-#: proposals/forms.py:635
+#: proposals/forms.py:640
 msgid "Naam traject 2"
 msgstr "Title of trajectory 2"
 
-#: proposals/forms.py:638
+#: proposals/forms.py:643
 msgid "Naam traject 3"
 msgstr "Title of trajectory 3"
 
-#: proposals/forms.py:641
+#: proposals/forms.py:646
 msgid "Naam traject 4"
 msgstr "Title of trajectory 4"
 
-#: proposals/forms.py:644
+#: proposals/forms.py:649
 msgid "Naam traject 5"
 msgstr "Title of trajectory 5"
 
-#: proposals/forms.py:647
+#: proposals/forms.py:652
 msgid "Naam traject 6"
 msgstr "Title of trajectory 6"
 
-#: proposals/forms.py:650
+#: proposals/forms.py:655
 msgid "Naam traject 7"
 msgstr "Title of trajectory 7"
 
-#: proposals/forms.py:653
+#: proposals/forms.py:658
 msgid "Naam traject 8"
 msgstr "Title of trajectory 8"
 
-#: proposals/forms.py:656
+#: proposals/forms.py:661
 msgid "Naam traject 9"
 msgstr "Title of trajectory 9"
 
-#: proposals/forms.py:659
+#: proposals/forms.py:664
 msgid "Naam traject 10"
 msgstr "Title of trajectory 10"
 
-#: proposals/forms.py:725
+#: proposals/forms.py:730
 msgid ""
 "Als niet dezelfde trajecten worden doorlopen, moeten er minstens twee "
 "verschillende trajecten zijn."
@@ -1207,19 +1211,19 @@ msgstr ""
 "If different trajectories are used, at least two different trajectories "
 "should be filled in."
 
-#: proposals/forms.py:760
+#: proposals/forms.py:765
 msgid "Nieuwe beoogde startdatum"
 msgstr "New intended start date"
 
-#: proposals/forms.py:828
+#: proposals/forms.py:833
 msgid "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
 msgstr "Declaration of consent for trajectory {} not yet added."
 
-#: proposals/forms.py:835
+#: proposals/forms.py:840
 msgid "Informatiebrief voor traject {} nog niet toegevoegd."
 msgstr "Information letter for trajectory {} not yet added."
 
-#: proposals/forms.py:849
+#: proposals/forms.py:854
 msgid ""
 "De embargo-periode kan maximaal 2 jaar zijn. Kies een datum binnen 2 jaar "
 "van vandaag."
@@ -1227,7 +1231,7 @@ msgstr ""
 "The embargo-period can last a maximum of 2 years. Pick a date within 2 years "
 "from today."
 
-#: proposals/forms.py:935
+#: proposals/forms.py:940
 msgid "Vul in in welke talen de formulieren worden vertaald."
 msgstr "Please fill in the languages"
 
@@ -1822,28 +1826,24 @@ msgstr "Compare documents"
 #: proposals/templates/proposals/compare_documents.html:52
 msgid ""
 "Hier kan je twee versies van een document vergelijken. Standaard geeft hij "
-"een <i>gesplitse</i> versie weer, waarbij tekst die verwijderd is in het "
+"een <i>gesplitste</i> versie weer, waarbij tekst die verwijderd is in het "
 "rood is gemarkeerd en nieuwe tekst in het groen is gemarkeerd."
 msgstr ""
 "This tool allows you to compare two documents. By default, you are presented "
-"with a <i>split</i> view where removed text is marked in red and added "
-"text is marked in green."
+"with a <i>split</i> view where removed text is marked in red and added text "
+"is marked in green."
 
 #: proposals/templates/proposals/compare_documents.html:60
 msgid ""
 "Je kan ook de bestanden gecombineerd bekijken, met dezelfde markeringen. "
 "Klik hiervoor op 'Bekijk gecombineerd'."
 msgstr ""
-"Documents can also be compared with a combined view, with markings. To do so,"
-" click 'View combined'."
+"Documents can also be compared with a combined view, with markings. To do "
+"so, click 'View combined'."
 
-#: proposals/templates/proposals/compare_documents.html:66
+#: proposals/templates/proposals/compare_documents.html:67
 msgid "Je vergelijkt"
 msgstr "Comparing:"
-
-#: proposals/templates/proposals/compare_documents.html:70
-msgid "Er zijn geen wijzigingen gevonden in dit document!"
-msgstr "No changes were found in this document!"
 
 #: proposals/templates/proposals/compare_documents.html:72
 msgid "Bekijk apart"
@@ -1853,11 +1853,15 @@ msgstr "View separately"
 msgid "Bekijk gecombineerd"
 msgstr "View combined"
 
-#: proposals/templates/proposals/compare_documents.html:79
+#: proposals/templates/proposals/compare_documents.html:77
+msgid "Er zijn geen wijzigingen gevonden in dit document!"
+msgstr "No changes were found in this document!"
+
+#: proposals/templates/proposals/compare_documents.html:82
 msgid "Oud"
 msgstr "Old"
 
-#: proposals/templates/proposals/compare_documents.html:85
+#: proposals/templates/proposals/compare_documents.html:88
 msgid "Nieuw"
 msgstr "New"
 
@@ -2045,7 +2049,7 @@ msgid "Kopiëren"
 msgstr "Copy"
 
 #: proposals/templates/proposals/proposal_data_management.html:7
-#: proposals/utils/proposal_utils.py:136 proposals/utils/stepper.py:201
+#: proposals/utils/proposal_utils.py:136 proposals/utils/stepper.py:216
 msgid "Datamanagement"
 msgstr "Data management"
 
@@ -2217,14 +2221,14 @@ msgstr ""
 "to the original application."
 
 #: proposals/templates/proposals/proposal_form.html:7
-#: proposals/templates/proposals/proposal_form.html:65
+#: proposals/templates/proposals/proposal_form.html:57
 #: proposals/templates/proposals/proposal_form_pre_approved.html:7
 #: proposals/templates/proposals/proposal_form_pre_approved.html:83
 #: proposals/utils/pdf_diff_logic.py:417 proposals/utils/proposal_utils.py:46
 msgid "Algemene informatie over de aanvraag"
 msgstr "General information about the application"
 
-#: proposals/templates/proposals/proposal_form.html:28
+#: proposals/templates/proposals/proposal_form.html:20
 msgid ""
 "Als de beoogde startdatum binnen twee weken van het indienen van de aanvraag "
 "ligt, kan de FETC geen officiële goedkeuring meer geven."
@@ -3066,8 +3070,8 @@ msgid ""
 msgstr ""
 "Ethical assessment by a Medical Ethical Testing Committee (METC) required?"
 
-#: proposals/utils/checkers.py:49 proposals/utils/stepper.py:197
-#: proposals/utils/stepper.py:206 proposals/utils/stepper.py:211
+#: proposals/utils/checkers.py:49 proposals/utils/stepper.py:212
+#: proposals/utils/stepper.py:221 proposals/utils/stepper.py:226
 msgid "Basisgegevens"
 msgstr "Basic details"
 
@@ -3096,7 +3100,7 @@ msgid "WMO applicatie"
 msgstr "WMO application"
 
 #: proposals/utils/checkers.py:304 proposals/utils/proposal_utils.py:116
-#: proposals/utils/stepper.py:199
+#: proposals/utils/stepper.py:214
 msgid "Trajecten"
 msgstr "Trajectories"
 
@@ -3132,7 +3136,7 @@ msgstr "Observation"
 msgid "Sessies"
 msgstr "Sessions"
 
-#: proposals/utils/checkers.py:815 proposals/utils/stepper.py:200
+#: proposals/utils/checkers.py:815 proposals/utils/stepper.py:215
 #: reviews/templates/reviews/review_detail_sidebar.html:124
 msgid "Documenten"
 msgstr "Documents"
@@ -3145,8 +3149,8 @@ msgstr "Translations"
 msgid "Data management"
 msgstr "Data management"
 
-#: proposals/utils/checkers.py:875 proposals/utils/stepper.py:202
-#: proposals/utils/stepper.py:207 proposals/utils/stepper.py:213
+#: proposals/utils/checkers.py:875 proposals/utils/stepper.py:217
+#: proposals/utils/stepper.py:222 proposals/utils/stepper.py:228
 msgid "Indienen"
 msgstr "Submit"
 
@@ -3254,7 +3258,7 @@ msgstr "FEtC-H: A revised application uses lab facilities"
 msgid "FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: New application uses lab facilities"
 
-#: proposals/utils/stepper.py:198 proposals/utils/stepper.py:212
+#: proposals/utils/stepper.py:213 proposals/utils/stepper.py:227
 msgid "WMO"
 msgstr "WMO"
 
@@ -4338,10 +4342,6 @@ msgstr ""
 "otherwise would not be carried out) you should specify this separately as "
 "task-based research."
 
-#: studies/forms.py:244
-msgid "Je dient minstens een van de opties te selecteren."
-msgstr "You must select at least one of the options"
-
 #: studies/forms.py:251
 msgid "Er is nog geen onderzoekstype geselecteerd."
 msgstr "You have not selected any other researchers."
@@ -5291,7 +5291,7 @@ msgstr "Session deleted"
 msgid "Taak bewerkt"
 msgstr "Task edited"
 
-#: tasks/views/task_views.py:78
+#: tasks/views/task_views.py:81
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
