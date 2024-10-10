@@ -353,10 +353,12 @@ cadeautje."
     def get_intervention(self):
         if self.has_intervention and hasattr(self, "intervention"):
             return self.intervention
+
     @property
     def get_observation(self):
         if self.has_observation and hasattr(self, "observation"):
             return self.observation
+
     @property
     def get_sessions(self):
         if self.has_sessions:
