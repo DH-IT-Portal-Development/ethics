@@ -49,7 +49,7 @@ instructies per taak, pauzes tussen taken, en debriefing? \
         if duration := self.task_set.annotate(
             total_duration=models.F("duration") * models.F("repeats")
         ).aggregate(models.Sum("total_duration"))["total_duration__sum"]:
-            return duration * self.repeats
+            return duration
 
         return 0
 
