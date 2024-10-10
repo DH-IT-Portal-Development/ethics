@@ -14,30 +14,44 @@
     {% if not is_humanities %}
         <div class="uu-inner-container mt-1">
             <div class="col-12 alert alert-warning text-body">
-                <p>
-                    {% blocktrans trimmed %}
-                        Deze portal is bedoeld voor medewerkers (en studenten) van de Faculteit Geesteswetenschappen.
-                    {% endblocktrans %}
-                    {% if user.faculties.all %}
-                        {# Filters do not like blocktrans, so that value is just outside... #}
+                {% if user.faculties.all %}
+                    {# Non-humanities faculty known #}
+                    <p>
                         {% blocktrans trimmed %}
+                            Deze portal is bedoeld voor medewerkers (en studenten) van de Faculteit Geesteswetenschappen.
                             Volgens onze gegevens werk/studeer je bij de
                         {% endblocktrans %}
                         {{ user.faculties.all|join:',' }}.
-                    {% else %}
+                    </p>
+                    <p>
                         {% blocktrans trimmed %}
-                            Volgens onze gegevens werk/studeer je bij een andere faculteit of dienst.
+                            Controleer of je inderdaad een aanvraag wilt indienen bij de Facultaire Ethische
+                            Toetsingscommissie van Geesteswetenschappen. Indien dat het geval is kan je de portal
+                            gewoon gebruiken.
                         {% endblocktrans %}
-                    {% endif %}
-                    {% blocktrans trimmed %}
-                        Controleer of je inderdaad een aanvraag wilt indienen bij de Facultaire Ethische Toetsingscommissie van Geesteswetenschappen.
-                    {% endblocktrans %}
-                </p>
-                <p class="mb-0">
-                    {% blocktrans trimmed %}
-                        Als je vermoedt dat dit incorrect is, neem dan contact op met <a href="mailto:portalsupport.gw@uu.nl">portalsupport.gw@uu.nl</a>.
-                    {% endblocktrans %}
-                </p>
+                    </p>
+                    <p class="mb-0">
+                        {% blocktrans trimmed %}
+                            Als je vermoedt dat dit incorrect is, neem dan contact op met <a href="mailto:portalsupport.gw@uu.nl">portalsupport.gw@uu.nl</a>.
+                        {% endblocktrans %}
+                    </p>
+                {% else %}
+                    {# No faculty data #}
+                    <p>
+                        {% blocktrans trimmed %}
+                            Wij konden niet verifiëren bij welke faculteit je werkt/studeert. Deze portal is bedoeld
+                            voor medewerkers en studenten van de Faculteit Geesteswetenschappen. Controleer of je
+                            inderdaad een aanvraag wilt indienen bij de Facultaire Ethische Toetsingscommissie van
+                            Geesteswetenschappen.
+                        {% endblocktrans %}
+                    </p>
+                    <p class="mb-0">
+                        {% blocktrans trimmed %}
+                            Indien dat het geval is kan je de portal gewoon gebruiken. Voor vragen kan je contact
+                            opnemen met <a href="mailto:portalsupport.gw@uu.nl">portalsupport.gw@uu.nl</a>.
+                        {% endblocktrans %}
+                    </p>
+                {% endif %}
             </div>
         </div>
     {% endif %}

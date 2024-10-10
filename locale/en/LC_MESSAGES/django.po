@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-15 11:16+0200\n"
+"POT-Creation-Date: 2024-06-18 15:35+0200\n"
 "PO-Revision-Date: 2024-04-03 12:32+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -17,7 +17,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: faqs/menus.py:7 main/templates/main/index.html:187
+#: faqs/menus.py:7 main/templates/main/index.html:201
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
@@ -29,12 +29,12 @@ msgstr "https://fetc-gw.wp.hum.uu.nl/en/"
 msgid "Reglement FETC-GW"
 msgstr "Regulations FEtC-H"
 
-#: faqs/menus.py:13 main/templates/main/index.html:190
+#: faqs/menus.py:13 main/templates/main/index.html:204
 #: proposals/templates/proposals/proposal_start_pre_approved.html:11
 msgid "https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"
 msgstr "https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/"
 
-#: faqs/menus.py:17 main/templates/main/index.html:194
+#: faqs/menus.py:17 main/templates/main/index.html:208
 #: proposals/templates/proposals/study_consent.html:8
 #: proposals/templates/proposals/translated_consent_forms.html:7
 #: proposals/utils/pdf_diff_logic.py:878
@@ -149,7 +149,7 @@ msgid "Het interventieonderzoek"
 msgstr "Intervention study"
 
 #: interventions/templates/interventions/intervention_form.html:17
-#: main/models.py:50
+#: main/models.py:54
 #: observations/templates/observations/observation_form.html:26
 #: studies/templates/studies/study_end.html:65
 #: studies/templates/studies/study_end.html:96
@@ -192,7 +192,7 @@ msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
 #: main/menus.py:6 main/templates/main/index.html:7
-#: main/templates/main/index.html:53 main/templates/main/landing.html:33
+#: main/templates/main/index.html:67 main/templates/main/landing.html:33
 msgid "Startpagina"
 msgstr "Start page"
 
@@ -204,29 +204,29 @@ msgstr "Log in"
 msgid "Log uit"
 msgstr "Log out"
 
-#: main/models.py:8 main/utils.py:16 proposals/utils/pdf_diff_logic.py:244
+#: main/models.py:12 main/utils.py:16 proposals/utils/pdf_diff_logic.py:244
 msgid "ja"
 msgstr "yes"
 
-#: main/models.py:9 main/utils.py:16 proposals/utils/pdf_diff_logic.py:244
+#: main/models.py:13 main/utils.py:16 proposals/utils/pdf_diff_logic.py:244
 msgid "nee"
 msgstr "no"
 
-#: main/models.py:10
+#: main/models.py:14
 msgid "twijfel"
 msgstr "uncertain"
 
-#: main/models.py:59
+#: main/models.py:63
 msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
-#: main/models.py:63 observations/models.py:139 proposals/models.py:282
+#: main/models.py:67 observations/models.py:139 proposals/models.py:282
 #: studies/models.py:211 studies/models.py:253 tasks/models.py:169
 #: tasks/models.py:181
 msgid "Namelijk"
 msgstr "Please specify"
 
-#: main/models.py:69
+#: main/models.py:73
 msgid ""
 "Vindt het afnemen van de taak plaats onder het toeziend oog van de leraar of "
 "een ander persoon die bevoegd is?"
@@ -234,13 +234,13 @@ msgstr ""
 "Will the task be conducted under the supervision of the teacher or another "
 "qualified person?"
 
-#: main/models.py:76
+#: main/models.py:80
 msgid "Is de testleider in het bezit van een VOG?"
 msgstr ""
 "Does the test leader hold a Certificate of Conduct (Verklaring Omtrent "
 "Gedrag, VOG)?"
 
-#: main/models.py:78
+#: main/models.py:82
 msgid ""
 "Iedereen die op een school werkt moet in het bezit         zijn van een "
 "Verklaring Omtrent Gedrag (VOG, zie         <a href=\"https://www.justis.nl/"
@@ -557,40 +557,55 @@ msgstr ""
 "Try to explain what you were doing and note the page that you were on, if "
 "you can."
 
-#: main/templates/main/index.html:18
+#: main/templates/main/index.html:20
 msgid ""
 "Deze portal is bedoeld voor medewerkers (en studenten) van de Faculteit "
-"Geesteswetenschappen."
+"Geesteswetenschappen. Volgens onze gegevens werk/studeer je bij de"
 msgstr ""
 "This portal is intended for employees (and students) of the Faculty of "
-"Humanities."
+"Humanities. According to our information, you work/study at the"
 
-#: main/templates/main/index.html:23
-msgid "Volgens onze gegevens werk/studeer je bij de"
-msgstr "According to our information, you work/study at the"
-
-#: main/templates/main/index.html:28
-msgid ""
-"Volgens onze gegevens werk/studeer je bij een andere faculteit of dienst."
-msgstr "According to our data, you work/study at another faculty or service."
-
-#: main/templates/main/index.html:32
+#: main/templates/main/index.html:27
 msgid ""
 "Controleer of je inderdaad een aanvraag wilt indienen bij de Facultaire "
-"Ethische Toetsingscommissie van Geesteswetenschappen."
+"Ethische Toetsingscommissie van Geesteswetenschappen. Indien dat het geval "
+"is kan je de portal gewoon gebruiken."
 msgstr ""
 "Please check whether you indeed want to submit an application to the Faculty "
-"Ethics Assessment Committee – Humanities."
+"Ethics Assessment Committee – Humanities. If that is the case, you can still "
+"use the portal."
 
-#: main/templates/main/index.html:37
+#: main/templates/main/index.html:34
 msgid ""
 "Als je vermoedt dat dit incorrect is, neem dan contact op met <a "
 "href=\"mailto:portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</a>."
 msgstr ""
-"If you suspect this is incorrect, please contact support at <a href=\"mailto:"
-"portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</a>. "
+"If you suspect this is incorrect, please contact <a href=\"mailto:"
+"portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</a>"
 
-#: main/templates/main/index.html:59
+#: main/templates/main/index.html:41
+msgid ""
+"Wij konden niet verifiëren bij welke faculteit je werkt/studeert. Deze "
+"portal is bedoeld voor medewerkers en studenten van de Faculteit "
+"Geesteswetenschappen. Controleer of je inderdaad een aanvraag wilt indienen "
+"bij de Facultaire Ethische Toetsingscommissie van Geesteswetenschappen."
+msgstr ""
+"We could not verify which faculty you are affiliated with. This portal is "
+"intended for employees and students of the Faculty of Humanities. Please "
+"check if you indeed want to submit an application to the Faculty Ethics "
+"Assessment Committee of Humanities."
+
+#: main/templates/main/index.html:49
+msgid ""
+"Indien dat het geval is kan je de portal gewoon gebruiken. Voor vragen kan "
+"je contact opnemen met <a href=\"mailto:portalsupport.gw@uu."
+"nl\">portalsupport.gw@uu.nl</a>."
+msgstr ""
+"If that is the case, you can still use the portal. If you have any "
+"questions, you can contact <a href=\"mailto:portalsupport.gw@uu."
+"nl\">portalsupport.gw@uu.nl</a>"
+
+#: main/templates/main/index.html:73
 msgid ""
 "Formele goedkeuring door één van beide kamers van de FETC-GW (middels een "
 "formele goedkeuringsbrief) is vereist voor mensgebonden onderzoek binnen de "
@@ -605,7 +620,7 @@ msgstr ""
 "even to recruiting participants. Therefore, always wait for the letter of "
 "approval before starting research activities."
 
-#: main/templates/main/index.html:64
+#: main/templates/main/index.html:78
 msgid ""
 "NB: Goedgekeurde aanvragen komen in het archief van deze portal te staan, "
 "zie het menu hierboven. Dit archief is toegankelijk voor iedereen met een "
@@ -615,7 +630,7 @@ msgstr ""
 "studying or working at the Faculty of Humanities with a Solis-ID can access "
 "this archive through the menu bar above."
 
-#: main/templates/main/index.html:69
+#: main/templates/main/index.html:83
 msgid ""
 "Heb je een vraag over de werking van de portal, ontdek je een foutje, "
 "missende functionaliteit, of verkeerde vertaling? Neem dan contact op met  "
@@ -626,13 +641,13 @@ msgstr ""
 "email to <a href=\"mailto:portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</"
 "a>."
 
-#: main/templates/main/index.html:75
+#: main/templates/main/index.html:89
 #: proposals/templates/proposals/proposal_start.html:16
 #: proposals/templates/proposals/proposal_start_practice.html:16
 msgid "Check voor het indienen:"
 msgstr "Before submitting an application, please consult:"
 
-#: main/templates/main/index.html:78
+#: main/templates/main/index.html:92
 #: proposals/templates/proposals/proposal_start.html:19
 #: proposals/templates/proposals/proposal_start_practice.html:19
 msgid ""
@@ -642,7 +657,7 @@ msgstr ""
 "The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/\"  target=\"_blank\">UU-"
 "webpage of the FEtC-H</a> for news and upcoming dates."
 
-#: main/templates/main/index.html:84
+#: main/templates/main/index.html:98
 msgid ""
 "Het <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/\" "
 "target=\"blank\">reglement van de FETC-GW</a>."
@@ -650,7 +665,7 @@ msgstr ""
 "The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\"  "
 "target=\"_blank\">regulations of the FEtC-H </a>."
 
-#: main/templates/main/index.html:90
+#: main/templates/main/index.html:104
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\" "
@@ -662,7 +677,7 @@ msgstr ""
 "target=\"_blank\">model documents</a> for <em>informed consent</em>. (Latest "
 "version: <u>December 2021</u>)"
 
-#: main/templates/main/index.html:96
+#: main/templates/main/index.html:110
 msgid ""
 "<li> Voor advies over data management (plannen): <a href=\"mailto:"
 "datamanagement.gw@uu.nl\">datamanagement.gw@uu.nl</a>. </li> <li> Voor "
@@ -679,93 +694,93 @@ msgstr ""
 "itself: <a href=\"mailto:portalsupport.gw@uu.nl\">portalsupport.gw@uu.nl</a>."
 "</li>"
 
-#: main/templates/main/index.html:112
+#: main/templates/main/index.html:126
 msgid "In deze portal kan je het volgende doen:"
 msgstr "In this portal you can do the following:"
 
-#: main/templates/main/index.html:120
+#: main/templates/main/index.html:134
 msgid "Dien een nieuwe aanvraag in"
 msgstr "Submit a new proposal"
 
-#: main/templates/main/index.html:124
+#: main/templates/main/index.html:138
 msgid "die volledig nieuw is in deze portal;"
 msgstr "that is completely new in this portal;"
 
-#: main/templates/main/index.html:127
+#: main/templates/main/index.html:141
 msgid "op basis van een kopie van een oude aanvraag;"
 msgstr "from a copy of an old proposal;"
 
-#: main/templates/main/index.html:130
+#: main/templates/main/index.html:144
 msgid "voor (al dan niet goedgekeurde) subsidieaanvragen;"
 msgstr "to supplement a grant application"
 
-#: main/templates/main/index.html:133
+#: main/templates/main/index.html:147
 msgid "die al goedgekeurd is door een andere ethische toetsingscomissie."
 msgstr "that has been approved by another ethics committee."
 
-#: main/templates/main/index.html:138
+#: main/templates/main/index.html:152
 msgid "Een aanvraag reviseren"
 msgstr "Revise a proposal"
 
-#: main/templates/main/index.html:142
+#: main/templates/main/index.html:156
 msgid "als een revisie, gebaseerd op opmerkingen van de FETC-GW;"
 msgstr "as a revision, based on comments of the FEtC-H;"
 
-#: main/templates/main/index.html:145
+#: main/templates/main/index.html:159
 msgid "als amendement, wanneer de aanvraag al goedgekeurd is door de FETC-GW."
 msgstr ""
 "as an amendment, after your proposal has already been approved by the FEtC-H."
 
-#: main/templates/main/index.html:152
+#: main/templates/main/index.html:166
 msgid "Bekijk"
 msgstr "View"
 
-#: main/templates/main/index.html:155
+#: main/templates/main/index.html:169
 msgid "mijn conceptaanvragen;"
 msgstr "my draft applications;"
 
-#: main/templates/main/index.html:158
+#: main/templates/main/index.html:172
 msgid "mijn oefenaanvragen;"
 msgstr "my practice applications;"
 
-#: main/templates/main/index.html:161
+#: main/templates/main/index.html:175
 msgid "mijn ingediende aanvragen;"
 msgstr "my submitted applications;"
 
-#: main/templates/main/index.html:164
+#: main/templates/main/index.html:178
 msgid "mijn afgehandelde aanvragen;"
 msgstr "my processed applications;"
 
-#: main/templates/main/index.html:167
+#: main/templates/main/index.html:181
 msgid "mijn aanvragen als eindverantwoordelijke;"
 msgstr "my supervised applications;"
 
-#: main/templates/main/index.html:170
+#: main/templates/main/index.html:184
 msgid "al mijn aanvragen."
 msgstr "all my applications"
 
-#: main/templates/main/index.html:173
+#: main/templates/main/index.html:187
 msgid "FETC-GW archief"
 msgstr "FEtC-H archive"
 
-#: main/templates/main/index.html:176
+#: main/templates/main/index.html:190
 msgid "Alle goedgekeurde aanvragen bekijken van de Algemene Kamer"
 msgstr "View all processed and approved applications of the General Chamber"
 
-#: main/templates/main/index.html:179
+#: main/templates/main/index.html:193
 msgid "Alle goedgekeurde aanvragen bekijken van de Linguïstiek Kamer"
 msgstr ""
 "View all processed and approved applications of the Linguistics Chamber"
 
-#: main/templates/main/index.html:190
+#: main/templates/main/index.html:204
 msgid "Reglement van de FETC-GW"
 msgstr "Regulations of the FEtC-H"
 
-#: main/templates/main/index.html:197
+#: main/templates/main/index.html:211
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: main/templates/main/index.html:204
+#: main/templates/main/index.html:218
 msgid "Bannerfoto door Kim O'leary"
 msgstr "Cover image by Kim O'leary"
 
@@ -2176,21 +2191,32 @@ msgid "Nuttige informatie:"
 msgstr "Useful information:"
 
 #: proposals/templates/proposals/proposal_data_management.html:87
+#, fuzzy
+#| msgid ""
+#| "Voor vragen over privacy, zoals: \"Wat zijn persoonlijke gegevens?\" of "
+#| "\"Wanneer mag ik mijn onderzoek anoniem noemen?\", raden we je aan het <a "
+#| "href=\"https://utrechtuniversity.github.io/dataprivacyhandbook/\">Data "
+#| "Privacy Handboek</a> te raadplegen."
 msgid ""
 "Voor vragen over privacy, zoals: \"Wat zijn persoonlijke gegevens?\" of "
 "\"Wanneer mag ik mijn onderzoek anoniem noemen?\", raden we je aan het <a "
-"href=\"https://utrechtuniversity.github.io/dataprivacyhandbook/\">Data "
-"Privacy Handboek</a> te raadplegen."
+"href=\"https://utrechtuniversity.github.io/dataprivacyhandbook/\" "
+"target=\"_blank\">Data Privacy Handboek</a> te raadplegen."
 msgstr ""
 "For all your questions regarding privacy, e.g.: \"What are personal data?\" "
 "or \"When may I call my research anonymous?\", consult the <a href=\"https://"
 "utrechtuniversity.github.io/dataprivacyhandbook/\">Data Privacy Handbook</a>."
 
-#: proposals/templates/proposals/proposal_data_management.html:93
+#: proposals/templates/proposals/proposal_data_management.html:94
+#, fuzzy
+#| msgid ""
+#| "Voor advies op het gebied van privacy en de AVG kun je contact opnemen "
+#| "met de privacy officer van GW via <a href=\"mailto:privacy.gw@uu."
+#| "nl\">privacy.gw@uu.nl</a>."
 msgid ""
 "Voor advies op het gebied van privacy en de AVG kun je contact opnemen met "
-"de privacy officer van GW via <a href=\"mailto:privacy.gw@uu.nl\">privacy."
-"gw@uu.nl</a>."
+"de privacy officer van GW via <a href=\"mailto:privacy.gw@uu.nl\" "
+"target=\"_blank\">privacy.gw@uu.nl</a>."
 msgstr ""
 "For advice relating to privacy and the AVG, you can contact the privacy "
 "officer of the humanities at <a href=\"mailto:privacy.gw@uu.nl\">privacy."
@@ -5244,3 +5270,11 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:56
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Volgens onze gegevens werk/studeer je bij de"
+#~ msgstr "According to our information, you work/study at the"
+
+#~ msgid ""
+#~ "Volgens onze gegevens werk/studeer je bij een andere faculteit of dienst."
+#~ msgstr ""
+#~ "According to our data, you work/study at another faculty or service."
