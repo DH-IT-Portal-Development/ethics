@@ -18,7 +18,7 @@
         {% if warning %}
             {% for row in rows|slice:":1" %}
                 <tr class="diff-ignore">
-                    <th>{{ row.verbose_name }}</th>
+                    <td>{{ row.verbose_name }}</td>
                     {# If the first object is missing, place a warning on the first TD #}
                     {% if missing_object == 'old' %}
                         <td rowspan='{{ rows|length }}' class="align-middle">
@@ -36,14 +36,14 @@
             {% endfor %}
             {% for row in rows|slice:"1:" %}
                 <tr class="diff-ignore">
-                    <th>{{ row.verbose_name }}</th>
+                    <td>{{ row.verbose_name }}</td>
                     <td>{{ row.value }}</td>
                 </tr>
             {% endfor %}
         {% else %}
             {% for row in rows %}
                 <tr class="diff">
-                    <th>{{ row.verbose_name }}</th>
+                    <td>{{ row.verbose_name }}</td>
                     <td>{{ row.old_value }}</td>
                     <td>{{ row.new_value }}</td>
                 </tr>
