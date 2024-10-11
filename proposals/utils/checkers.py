@@ -12,7 +12,7 @@ from tasks.views import task_views, session_views
 from tasks.models import Task, Session
 
 from attachments.utils import AttachmentSlot
-from attachments.kinds import InformationLetter
+from attachments.kinds import InformationLetter, DataManagementPlan
 
 from .stepper_helpers import (
     Checker,
@@ -326,7 +326,7 @@ class TrajectoriesChecker(
         self,
     ):
         return [
-            DocumentsChecker,
+            AttachmentsChecker,
             DataManagementChecker,
             SubmitChecker,
         ]
@@ -445,8 +445,8 @@ class StudyAttachmentsChecker(
     ):
         kind = InformationLetter
         info_slot = AttachmentSlot(
-            kind,
             self.study,
+            kind=kind,
         )
         self.stepper.attachment_slots.append(info_slot)
         return []
@@ -798,12 +798,13 @@ class SessionsChecker(
         return []
 
 
-class DocumentsChecker(
+class AttachmentsChecker(
     Checker,
 ):
     def check(
         self,
     ):
+        self.add_dmp_slot()
         item = self.make_stepper_item()
         self.stepper.items.append(item)
         return [
@@ -813,9 +814,16 @@ class DocumentsChecker(
             ),
         ]
 
+    def add_dmp_slot(self):
+        slot = AttachmentSlot(
+            self.stepper.proposal,
+            kind=DataManagementPlan,
+        )
+        self.stepper.attachment_slots.append(slot)
+
     def make_stepper_item(self):
         url = reverse(
-            "proposals:consent",
+            "proposals:attachments",
             args=[self.stepper.proposal.pk],
         )
         item = PlaceholderItem(
@@ -825,6 +833,7 @@ class DocumentsChecker(
         )
         item.get_url = lambda: url
         return item
+        return [TranslationChecker]
 
 
 class TranslationChecker(

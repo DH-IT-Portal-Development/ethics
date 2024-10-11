@@ -9,8 +9,11 @@
 
 
 {% block pre-form-text %}
-<h3>{% trans "Documenten" %}</h3>
-<h4>{% trans "Algemeen" %}</h4>
+<h2>{% trans "Documenten" %}</h2>
+<h3>{% trans "Algemeen" %}</h3>
+{% for slot in proposal_slots %}
+    {% include slot %}
+{% endfor %}
 {% for study, slots in study_slots.items %}
     <h3>{% trans "Traject " %} {{ study.order }} {% if study.name %}: <em>{{ study.name }}</em> {% endif %}</h3>
     {% for slot in slots %}

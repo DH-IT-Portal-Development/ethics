@@ -21,12 +21,13 @@ class AttachForm(
     class Meta:
         model = Attachment
         fields = [
+            "kind",
             "upload",
             "name",
             "comments",
         ]
 
-    def __init__(self, kind=None, other_object=None, **kwargs):
+    def __init__(self, kind=None, other_object=None, extra=False, **kwargs):
         self.kind = kind
         self.other_object = other_object
         # Set the correct model based on other_object
@@ -34,7 +35,9 @@ class AttachForm(
             self._meta.model = ProposalAttachment
         elif type(other_object) is Study:
             self._meta.model = StudyAttachment
-        return super().__init__(**kwargs)
+        super().__init__(**kwargs)
+        if not extra:
+            del self.fields["kind"]
 
     def save(self,):
         self.instance.kind = self.kind.db_name
@@ -50,7 +53,7 @@ class AttachFormView():
     model = Attachment
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
-    
+
     def set_upload_field_label(self, form):
         # Remind the user of what they're uploading
         upload_field = form.fields["upload"]
@@ -76,6 +79,11 @@ class AttachFormView():
         else:
             return obj.proposal
 
+    def get_owner_object(self):
+        owner_class = self.owner_model
+        other_pk = self.kwargs.get("other_pk")
+        return owner_class.objects.get(pk=other_pk)
+
     def get_kind(self):
         kind_str = self.kwargs.get("kind")
         return get_kind_from_str(kind_str)
@@ -96,14 +104,16 @@ class AttachFormView():
 
 
 class ProposalAttachView(
-        ProposalContextMixin,
         AttachFormView,
+        ProposalContextMixin,
         generic.CreateView,
 ):
 
     model = Attachment
+    owner_model = None
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
+    extra = False
 
     def get_kind(self):
         kind_str = self.kwargs.get("kind")
@@ -117,6 +127,7 @@ class ProposalUpdateAttachmentView(
     model = Attachment
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
+    editing = True
 
     def get_object(self,):
         attachment_pk = self.kwargs.get("attachment_pk")
@@ -140,10 +151,12 @@ class DetachForm(
     confirmation = forms.BooleanField()
 
 class ProposalDetachView(
+        ProposalContextMixin,
         generic.detail.SingleObjectMixin,
         generic.FormView,
 ):
     form_class = DetachForm
+    model = Attachment
     template_name = "proposals/detach_form.html"
     pk_url_kwarg = "attachment_pk"
 
@@ -152,6 +165,15 @@ class ProposalDetachView(
         return attachment.get_owner_for_proposal(
             self.get_proposal(),
         )
+
+    def get_context_data(self, *args, **kwargs):
+        self.object = self.get_object()
+        context = super().get_context_data(*args, **kwargs)
+        return context
+
+    def get_object(self,):
+        obj = super().get_object()
+        return obj.get_correct_submodel()
 
     def get_proposal(self,):
         proposal_pk = self.kwargs.get("proposal_pk")
@@ -185,6 +207,9 @@ class ProposalAttachmentsView(
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         all_slots = self.get_stepper().attachment_slots
+        proposal_slots = [
+            slot for slot in all_slots if type(slot.attached_object) is Proposal
+        ]
         study_slots = {}
         for study in self.get_proposal().study_set.all():
             study_slots[study] = []
@@ -192,6 +217,7 @@ class ProposalAttachmentsView(
             if type(slot.attached_object) is Study:
                 study_slots[slot.attached_object].append(slot)
         context["study_slots"] = study_slots
+        context["proposal_slots"] = proposal_slots
         return context
 
 
