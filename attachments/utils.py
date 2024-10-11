@@ -6,7 +6,13 @@ from main.utils import renderable
 from proposals.models import Proposal
 from studies.models import Study
 
-from attachments.models import Attachment
+
+class desiredness:
+    REQUIRED = _("Verplicht")
+    RECOMMENDED = _("Aangeraden")
+    OPTIONAL = _("Optioneel")
+    EXTRA = _("Extra")
+
 
 class AttachmentKind:
     """Defines a kind of file attachment and when it is required."""
@@ -16,58 +22,7 @@ class AttachmentKind:
     description = ""
     max_num = None
     attached_field = "attachments"
-
-    def __init__(self, owner=None):
-        self.owner = owner
-
-    @classmethod
-    def from_proposal(cls, proposal, attachment):
-        kind = get_kind_from_str(attachment.kind)
-        if kind.model is Proposal:
-            return kind(owner=proposal)
-        # This might be more efficient in a QS
-        for study in proposal.studies:
-            if attachment in study.attachments:
-                return kind(owner=study)
-        msg = f"Attachment {attachment.pk} not found for proposal {proposal}"
-        raise KeyError(msg)
-
-    def get_slots(self, manager=None):
-        slots = []
-        for inst in self.get_instances_for_object():
-            slots.append(AttachmentSlot(self, attachment=inst, manager=manager,))
-        for i in range(self.still_required()):
-            slots.append(AttachmentSlot(self, manager=manager,))
-        return slots
-
-    def num_required(self):
-        return 0
-
-    def num_suggested(self):
-        return 0
-
-    def num_provided(self):
-        return self.get_instances_for_object().count()
-
-    def still_required(self):
-        return self.num_required() - self.num_provided()
-
-    def test_required(self):
-        """Returns False if the given proposal requires this kind
-        of attachment"""
-        return self.num_required() > self.num_provided()
-
-    def test_recommended(self):
-        """Returns True if the given proposal recommends, but does not
-        necessarily require this kind of attachment"""
-        return True
-
-    def get_attach_url(self):
-        url_kwargs = {
-            "other_pk": self.owner.pk,
-            "kind": self.db_name,
-        }
-        return reverse("proposals:attach_file", kwargs=url_kwargs)
+    desiredness = desiredness.OPTIONAL
 
 
 class AttachmentSlot(renderable):
@@ -78,15 +33,13 @@ class AttachmentSlot(renderable):
             self,
             attached_object,
             attachment=None,
-            manager=None,
             kind=None,
+            force_desiredness=None,
     ):
         self.attachment = attachment
         self.attached_object = attached_object
-        self.desiredness = _("Verplicht")
-        self.manager = manager
         self.kind = kind
-        self.match_attachment()
+        self.force_desiredness = force_desiredness
 
     def match_attachment(self):
         """
@@ -96,9 +49,11 @@ class AttachmentSlot(renderable):
             self.attachment = instance
             break
 
+    @property
     def desiredness(self):
-        if self.force_required:
+        if self.force_desiredness:
             return self.force_desiredness
+        return self.kind.desiredness
 
     def get_instances_for_slot(self,):
         manager = getattr(

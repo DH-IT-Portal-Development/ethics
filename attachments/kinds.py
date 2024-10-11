@@ -5,7 +5,7 @@ from proposals.models import Proposal
 from studies.models import Study
 from main.utils import renderable
 from attachments.models import ProposalAttachment, StudyAttachment
-from attachments.utils import AttachmentKind
+from attachments.utils import AttachmentKind, desiredness
 
 
 class ProposalAttachmentKind(AttachmentKind):
@@ -23,14 +23,7 @@ class InformationLetter(StudyAttachmentKind):
     db_name = "information_letter"
     name = _("Informatiebrief")
     description = _("Omschrijving informatiebrief")
-
-    def __init__(self, *args, **kwargs):
-        # Information letters are required by default
-        self.is_required = True
-        return super().__init__(*args, **kwargs,)
-
-    def num_required(self,):
-        return 1
+    desiredness = desiredness.REQUIRED
 
 class ConsentForm(AttachmentKind):
 
