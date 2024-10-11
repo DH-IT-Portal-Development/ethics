@@ -6,7 +6,7 @@
         {{ slot.desiredness }}
     </div>
     <div class="col-7 align-middle">
-        <h4>{{slot.kind.name}}</h4>
+        <h5>{{slot.kind.name}}</h5>
         {% if slot.attachment %}
             {% include slot.attachment with proposal=proposal %}
         {% else %}

@@ -57,9 +57,6 @@ from proposals.mixins import (
 )
 from proposals.utils.proposal_utils import FilenameFactory
 
-from attachments.utils import ProposalAttachments
-
-
 ############
 # List views
 ############

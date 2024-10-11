@@ -5,7 +5,7 @@ from django import forms
 from proposals.mixins import ProposalContextMixin
 from proposals.models import Proposal
 from studies.models import Study
-from attachments.utils import ProposalAttachments, get_kind_from_str
+from attachments.utils import get_kind_from_str
 from attachments.models import Attachment, ProposalAttachment, StudyAttachment
 from main.forms import ConditionalModelForm
 from cdh.core import forms as cdh_forms
