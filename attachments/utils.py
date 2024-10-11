@@ -4,6 +4,7 @@ from django.urls import reverse
 
 from main.utils import renderable
 from proposals.models import Proposal
+from studies.models import Study
 
 from attachments.models import Attachment
 
@@ -39,10 +40,6 @@ class AttachmentKind:
             slots.append(AttachmentSlot(self, manager=manager,))
         return slots
 
-    def get_instances_for_object(self):
-        manager = getattr(self.owner, self.attached_field)
-        return manager.filter(kind=self.db_name)
-
     def num_required(self):
         return 0
 
@@ -73,134 +70,44 @@ class AttachmentKind:
         return reverse("proposals:attach_file", kwargs=url_kwargs)
 
 
-class ProposalAttachments:
-    """
-    """
-
-    def __init__(self, proposal):
-        self.proposal = proposal
-        self.proposal_kinds = self.walk_proposal()
-        self.study_kinds = self.walk_all_studies()
-        self.match_slots()
-
-    def match_slots(self,):
-        self.proposal_slots = []
-        for kind in self.proposal_kinds:
-            self.proposal_slots += kind.get_slots(manager=self)
-        self.study_slots = {}
-        for study, kinds in self.study_kinds.items():
-            self.study_slots[study] = []
-            for kind in kinds:
-                self.study_slots[study] += kind.get_slots(manager=self)
-
-    def walk_proposal(self):
-        kinds = []
-        for kind in PROPOSAL_ATTACHMENTS:
-            kinds.append(
-                kind(self.proposal),
-            )
-        return kinds
-
-    def walk_all_studies(self):
-        study_dict = {}
-        for study in self.proposal.study_set.all():
-            study_dict[study] = self.walk_study(study)
-        return study_dict
-
-    def walk_study(self, study):
-        kinds = []
-        for kind in STUDY_ATTACHMENTS:
-            kinds.append(
-                kind(study),
-            )
-        return kinds
-
-
-class AttachmentContainer(
-        renderable,
-):
-    outer_css_classes = []
-    template_name = "attachments/base_single_attachment.html"
-
-    def __init__(self, attachment, proposal=None):
-        self.proposal = proposal
-        self.attachment = attachment
-
-    def get_outer_css_classes(self,):
-        classes = self.outer_css_classes
-        if self.is_active:
-            classes += ["attachment-active"]
-        return " ".join(classes)
-
-    def get_context_data(self):
-        return {
-            "ac": self,
-            "proposal": self.proposal,
-        }
-
-    @property
-    def is_from_previous_proposal(self,):
-        if not self.proposal.parent:
-            return False
-        pp = self.proposal.parent
-        return self.attachment in pp.attachments_set.all()
-
-    @property
-    def is_revised_file(self,):
-        if not all(
-            self.attachment.parent,
-            self.proposal.parent,
-        ):
-            return False
-        pa = self.attachment.parent
-        pp = self.proposal.parent
-        return pa in pp.attachments_set.all()
-
-    @property
-    def is_brand_new(self,):
-        if self.attachment.parent:
-            return False
-        return True
-
-    def get_origin_display(self):
-        if not self.attachment.upload:
-            return _("Nog toe te voegen")
-        if self.is_from_previous_proposal:
-            return _("Van vorige revisie")
-        if self.is_revised_file:
-            return _("Nieuwe versie")
-        if self.is_brand_new:
-            return _("Nieuw aangeleverd bestand")
-        return _("Herkomst onbekend")
-
-    @property
-    def is_active(self):
-        if not self.proposal:
-            return True
-        return self.proposal in self.attachment.attached_to.all()
-
-
 class AttachmentSlot(renderable):
 
     template_name = "attachments/slot.html"
 
-    def __init__(self, kind, attached_object, attachment=None, manager=None):
+    def __init__(
+            self,
+            attached_object,
+            attachment=None,
+            manager=None,
+            kind=None,
+    ):
         self.attachment = attachment
         self.attached_object = attached_object
         self.desiredness = _("Verplicht")
         self.manager = manager
         self.kind = kind
-        if not isinstance(self.kind, AttachmentKind):
-            self.kind = self.kind(self.attached_object)
         self.match_attachment()
 
     def match_attachment(self):
         """
         Tries to fill this slot with an existing attachment.
         """
-        for instance in self.kind.get_instances_for_object():
+        for instance in self.get_instances_for_slot():
             self.attachment = instance
             break
+
+    def desiredness(self):
+        if self.force_required:
+            return self.force_desiredness
+
+    def get_instances_for_slot(self,):
+        manager = getattr(
+            self.attached_object,
+            "attachments",
+        )
+        if self.kind:
+            manager = manager.filter(kind=self.kind.db_name)
+        return manager.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -215,10 +122,28 @@ class AttachmentSlot(renderable):
             return self.attached_object.proposal
 
     def get_attach_url(self,):
-        return self.kind.get_attach_url()
+        url_name = {
+            Proposal: "proposals:attach_proposal",
+            Study: "proposals:attach_study",
+        }[type(self.attached_object)]
+        reverse_kwargs = {
+            "other_pk": self.attached_object.pk,
+        }
+        if self.kind:
+            reverse_kwargs["kind"] = self.kind.db_name
+        return reverse(
+            url_name,
+            kwargs=reverse_kwargs,
+        )
 
     def get_delete_url(self,):
-        return "#"
+        return reverse(
+            "proposals:detach",
+            kwargs={
+                "attachment_pk": self.attachment.pk,
+                "other_pk": self.attached_object.pk,
+            }
+        )
 
     def get_edit_url(self,):
         return reverse(
