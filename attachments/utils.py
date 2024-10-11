@@ -41,13 +41,15 @@ class AttachmentSlot(renderable):
         self.kind = kind
         self.force_desiredness = force_desiredness
 
-    def match_attachment(self):
+    def match(self, exclude):
         """
-        Tries to fill this slot with an existing attachment.
+        Tries to fill this slot with an existing attachment that is not
+        in the exclusion set of already matched attachments.
         """
         for instance in self.get_instances_for_slot():
-            self.attachment = instance
-            break
+            if instance not in exclude:
+                self.attachment = instance
+                break
 
     @property
     def desiredness(self):
@@ -56,6 +58,10 @@ class AttachmentSlot(renderable):
         return self.kind.desiredness
 
     def get_instances_for_slot(self,):
+        """
+        Returns a QS of existing Attachments that potentially
+        could fit in this slot.
+        """
         manager = getattr(
             self.attached_object,
             "attachments",

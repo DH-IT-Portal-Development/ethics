@@ -11,7 +11,7 @@ from tasks import forms as tasks_forms
 from tasks.views import task_views, session_views
 from tasks.models import Task, Session
 
-from attachments.utils import AttachmentSlot
+from attachments.utils import AttachmentSlot, desiredness
 from attachments.kinds import InformationLetter, DataManagementPlan
 
 from .stepper_helpers import (
@@ -448,7 +448,7 @@ class StudyAttachmentsChecker(
             self.study,
             kind=kind,
         )
-        self.stepper.attachment_slots.append(info_slot)
+        self.stepper.add_slot(info_slot)
         return []
 
 class ParticipantsChecker(
@@ -819,7 +819,7 @@ class AttachmentsChecker(
             self.stepper.proposal,
             kind=DataManagementPlan,
         )
-        self.stepper.attachment_slots.append(slot)
+        self.stepper.add_slot(slot)
 
     def make_stepper_item(self):
         url = reverse(
