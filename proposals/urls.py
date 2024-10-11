@@ -1,5 +1,8 @@
 from django.urls import path, include
 
+from proposals.models import Proposal
+from studies.models import Study
+
 from .views.proposal_views import (
     CompareDocumentsView,
     MyConceptsView,
@@ -179,14 +182,39 @@ urlpatterns = [
         name="attachments",
     ),
     path(
-        "attach/<str:kind>/<int:other_pk>/",
-        ProposalAttachView.as_view(),
-        name="attach_file",
+        "attach_proposal/<str:kind>/<int:other_pk>/",
+        ProposalAttachView.as_view(
+            owner_model=Proposal,
+        ),
+        name="attach_proposal",
     ),
     path(
-        "<in:proposal_pk>/detach/<int:attachment_pk>/",
+        "attach_study/<str:kind>/<int:other_pk>/",
+        ProposalAttachView.as_view(
+            owner_model=Study,
+        ),
+        name="attach_study",
+    ),
+    path(
+        "attach_proposal/extra/<int:other_pk>/",
+        ProposalAttachView.as_view(
+            owner_model=Proposal,
+            extra=True
+        ),
+        name="attach_proposal",
+    ),
+    path(
+        "attach_study/extra/<int:other_pk>/",
+        ProposalAttachView.as_view(
+            owner_model=Study,
+            extra=True
+        ),
+        name="attach_study",
+    ),
+    path(
+        "<int:proposal_pk>/detach/<int:attachment_pk>/",
         ProposalDetachView.as_view(),
-        name="attach_file",
+        name="detach_file",
     ),
     path(
         "attachments/<int:other_pk>/edit/<int:attachment_pk>/",
