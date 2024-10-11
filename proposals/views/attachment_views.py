@@ -1,6 +1,7 @@
 from django.views import generic
 from django import forms
 from django.urls import reverse
+from django import forms
 from proposals.mixins import ProposalContextMixin
 from proposals.models import Proposal
 from studies.models import Study
@@ -133,6 +134,45 @@ class ProposalUpdateAttachmentView(
         kind_str = obj.kind
         return get_kind_from_str(kind_str)
 
+class DetachForm(
+        forms.Form,
+):
+    confirmation = forms.BooleanField()
+
+class ProposalDetachView(
+        generic.detail.SingleObjectMixin,
+        generic.FormView,
+):
+    form_class = DetachForm
+    template_name = "proposals/detach_form.html"
+    pk_url_kwarg = "attachment_pk"
+
+    def get_owner_object(self,):
+        attachment = self.get_object()
+        return attachment.get_owner_for_proposal(
+            self.get_proposal(),
+        )
+
+    def get_proposal(self,):
+        proposal_pk = self.kwargs.get("proposal_pk")
+        return Proposal.objects.get(pk=proposal_pk)
+
+    def form_valid(self, form):
+        attachment = self.get_object()
+        attachment.detach(self.get_owner_object())
+        return super().form_valid(form)
+
+    def get_success_url(self,):
+        return reverse(
+            "proposals:attachments",
+            kwargs={"pk": self.get_proposal().pk},
+        )
+
+class AttachmentDetailView(
+        generic.DetailView,
+):
+    template_name = "proposals/attachment_detail.html"
+    model = Attachment
 
 class ProposalAttachmentsView(
         ProposalContextMixin,

@@ -48,6 +48,7 @@ from .views.proposal_views import (
 
 from .views.attachment_views import (
     ProposalAttachView,
+    ProposalDetachView,
     ProposalAttachmentsView,
     ProposalUpdateAttachmentView,
     ProposalAttachmentDownloadView,
@@ -180,6 +181,11 @@ urlpatterns = [
     path(
         "attach/<str:kind>/<int:other_pk>/",
         ProposalAttachView.as_view(),
+        name="attach_file",
+    ),
+    path(
+        "<in:proposal_pk>/detach/<int:attachment_pk>/",
+        ProposalDetachView.as_view(),
         name="attach_file",
     ),
     path(
