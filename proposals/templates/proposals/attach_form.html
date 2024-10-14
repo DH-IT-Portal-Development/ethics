@@ -1,4 +1,5 @@
 {% extends "base/fetc_form_base.html" %}
+
 {% load i18n %}
 {% load static %}
 
@@ -15,7 +16,7 @@
             {% endblocktrans %}
         {% else %}
             {% blocktrans trimmed %}
-                Je bewerkt het volgende bestand: 
+                Je bewerkt het volgende bestand:
             {% endblocktrans %}
             <p>{% include object with proposal=view.get_proposal %}</p>
             {% blocktrans trimmed %}
@@ -26,39 +27,34 @@
     <p class="ml-5">
         {% if study %}
             {% blocktrans with order=study.order name=study.name trimmed %}
-                Traject {{order}}: <em>{{name}}</em> van
+                Traject {{ order }}: <em>{{ name }}</em> van
             {% endblocktrans %}
         {% endif %}
         {% trans "de aanvraag" %} <em>{{ proposal.title }}</em>.
     </p>
     {% if not view.editing %}
-    {% blocktrans with name=kind_name trimmed %}
-        Je gaat hier een {{name}} aan toevoegen. Wil je een ander soort bestand toevoegen? Ga dan terug naar de vorige pagina.
-    {% endblocktrans %}
+        {% blocktrans with name=kind_name trimmed %}
+            Je gaat hier een {{ name }} aan toevoegen. Wil je een ander soort bestand toevoegen? Ga dan terug naar de vorige pagina.
+        {% endblocktrans %}
     {% endif %}
-
-
-    </p>
+</p>
 {% endblock %}
 
 {% block form-buttons %}
-
     <div class="mt-4 mb-3 w-100 d-flex">
-
-        <a class="btn btn-secondary" href="{% url "proposals:attachments" pk=proposal.pk %}">
+        <a class="btn btn-secondary"
+           href="{% url "proposals:attachments" pk=proposal.pk %}">
             {% trans '<< Ga terug' %}
         </a>
-{% if view.editing %}
-        <a class="btn btn-danger" href="{% url "proposals:detach_file" attachment_pk=form.instance.pk proposal_pk=view.get_proposal.pk %}">
-            {% trans 'Bestand verwijderen' %}
-        </a>
-{% endif %}
-
+        {% if view.editing %}
+            <a class="btn btn-danger"
+               href="{% url "proposals:detach_file" attachment_pk=form.instance.pk proposal_pk=view.get_proposal.pk %}">
+                {% trans 'Bestand verwijderen' %}
+            </a>
+        {% endif %}
         <input class="btn btn-primary continue-button ms-auto"
                type="submit"
                name="save"
                value="{% trans "Opslaan" %}" />
-
     </div>
-
 {% endblock %}

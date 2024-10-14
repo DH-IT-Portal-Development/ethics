@@ -4,23 +4,24 @@
 {% load i18n %}
 
 {% block header_title %}
-{% trans "Informatie over betrokken onderzoekers" %} - {{ block.super }}
+    {% trans "Informatie over betrokken onderzoekers" %} - {{ block.super }}
 {% endblock %}
-
 
 {% block pre-form-text %}
-<h2>{% trans "Documenten" %}</h2>
-<h3 class="mt-4">{% trans "Algemeen" %}</h3>
-{% for slot in proposal_slots %}
-    {% include slot %}
-{% endfor %}
-{% for study, slots in study_slots.items %}
-    <hr />
-    <h3>{% trans "Traject " %} {{ study.order }} {% if study.name %}: <em>{{ study.name }}</em> {% endif %}</h3>
-    {% for slot in slots %}
-        {% include slot with manager=manager %}
+    <h2>{% trans "Documenten" %}</h2>
+    <h3 class="mt-4">{% trans "Algemeen" %}</h3>
+    {% for slot in proposal_slots %}
+        {% include slot %}
     {% endfor %}
-{% endfor %}
-{% block auto-form-render %}
-{% endblock %}
+    {% for study, slots in study_slots.items %}
+        <hr />
+        <h3>
+            {% trans "Traject " %} {{ study.order }}
+            {% if study.name %}: <em>{{ study.name }}</em>{% endif %}
+        </h3>
+        {% for slot in slots %}
+            {% include slot with manager=manager %}
+        {% endfor %}
+    {% endfor %}
+    {% block auto-form-render %}{% endblock %}
 {% endblock %}
