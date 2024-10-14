@@ -30,11 +30,11 @@ class AttachmentSlot(renderable):
     template_name = "attachments/slot.html"
 
     def __init__(
-            self,
-            attached_object,
-            attachment=None,
-            kind=None,
-            force_desiredness=None,
+        self,
+        attached_object,
+        attachment=None,
+        kind=None,
+        force_desiredness=None,
     ):
         self.attachment = attachment
         self.attached_object = attached_object
@@ -57,7 +57,9 @@ class AttachmentSlot(renderable):
             return self.force_desiredness
         return self.kind.desiredness
 
-    def get_instances_for_slot(self,):
+    def get_instances_for_slot(
+        self,
+    ):
         """
         Returns a QS of existing Attachments that potentially
         could fit in this slot.
@@ -82,7 +84,9 @@ class AttachmentSlot(renderable):
         else:
             return self.attached_object.proposal
 
-    def get_attach_url(self,):
+    def get_attach_url(
+        self,
+    ):
         url_name = {
             Proposal: "proposals:attach_proposal",
             Study: "proposals:attach_study",
@@ -97,28 +101,31 @@ class AttachmentSlot(renderable):
             kwargs=reverse_kwargs,
         )
 
-    def get_delete_url(self,):
+    def get_delete_url(
+        self,
+    ):
         return reverse(
             "proposals:detach",
             kwargs={
                 "attachment_pk": self.attachment.pk,
                 "other_pk": self.attached_object.pk,
-            }
+            },
         )
 
-    def get_edit_url(self,):
+    def get_edit_url(
+        self,
+    ):
         return reverse(
             "proposals:update_attachment",
             kwargs={
                 "attachment_pk": self.attachment.pk,
                 "other_pk": self.attached_object.pk,
-            }
+            },
         )
+
 
 def get_kind_from_str(db_name):
     from attachments.kinds import ATTACHMENTS
-    kinds = {
-        kind.db_name: kind
-        for kind in ATTACHMENTS
-    }
+
+    kinds = {kind.db_name: kind for kind in ATTACHMENTS}
     return kinds[db_name]

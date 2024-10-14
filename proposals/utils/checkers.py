@@ -432,16 +432,21 @@ class StudyChecker(
             parent=self.current_parent,
         )
 
+
 class StudyAttachmentsChecker(
     Checker,
 ):
 
-    def __init__(self, *args, **kwargs,):
+    def __init__(
+        self,
+        *args,
+        **kwargs,
+    ):
         self.study = kwargs.pop("study")
         super().__init__(*args, **kwargs)
 
     def check(
-            self,
+        self,
     ):
         kind = InformationLetter
         info_slot = AttachmentSlot(
@@ -450,6 +455,7 @@ class StudyAttachmentsChecker(
         )
         self.stepper.add_slot(info_slot)
         return []
+
 
 class ParticipantsChecker(
     ModelFormChecker,
