@@ -40,8 +40,31 @@ class AttachForm(
             del self.fields["kind"]
 
     def save(self,):
-        self.instance.kind = self.kind.db_name
-        self.instance.save()
+        # Set the kind if enforced by the view.
+        if self.kind:
+            self.instance.kind = self.kind.db_name
+        # Check we're not editing an attachment that is still in use
+        # by another object.
+        if self.instance.attached_to.count() > 1:
+            # Saving this instance might remove historical data. So
+            # we create a "revision" of sorts. First we save the old
+            # pk:
+            old_pk = self.instance.pk + 0
+            # The following means this instance will get saved under a
+            # new pk, effectively creating a copy.
+            self.instance.pk = None
+            self.instance.id = None
+            self.instance._state.adding = True
+            self.instance.save()
+            # Retrieve and fix the old attachment.
+            instance_manager = type(self.instance).objects
+            old_attachment = instance_manager.get(pk=old_pk)
+            old_attachment.attached_to.remove(self.other_object)
+            self.instance.parent = old_attachment
+            # Clear the attached_to set, we add other_object back
+            # afterwards.
+            self.instance.attached_to.set([])
+        # Attach the instance to the owner object.
         self.instance.attached_to.add(
             self.other_object,
         )
