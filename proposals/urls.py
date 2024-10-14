@@ -197,18 +197,12 @@ urlpatterns = [
     ),
     path(
         "attach_proposal/extra/<int:other_pk>/",
-        ProposalAttachView.as_view(
-            owner_model=Proposal,
-            extra=True
-        ),
+        ProposalAttachView.as_view(owner_model=Proposal, extra=True),
         name="attach_proposal",
     ),
     path(
         "attach_study/extra/<int:other_pk>/",
-        ProposalAttachView.as_view(
-            owner_model=Study,
-            extra=True
-        ),
+        ProposalAttachView.as_view(owner_model=Study, extra=True),
         name="attach_study",
     ),
     path(

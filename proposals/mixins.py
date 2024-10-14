@@ -25,8 +25,13 @@ class StepperContextMixin:
         context["stepper"] = self.get_stepper()
         return context
 
-    def get_stepper(self,):
-        if hasattr(self, "stepper",):
+    def get_stepper(
+        self,
+    ):
+        if hasattr(
+            self,
+            "stepper",
+        ):
             return self.stepper
         # Try to determine proposal
         proposal = Proposal()
@@ -34,6 +39,7 @@ class StepperContextMixin:
             proposal = self.get_proposal()
         # Importing here to prevent circular import
         from .utils.stepper import Stepper
+
         # Initialize and insert stepper object
         self.stepper = Stepper(
             proposal,

@@ -7,6 +7,7 @@ from cdh.files.db import FileField as CDHFileField
 
 # Create your models here.
 
+
 class Attachment(models.Model, renderable):
 
     template_name = "attachments/attachment_model.html"
@@ -42,9 +43,8 @@ class Attachment(models.Model, renderable):
         max_length=50,
         default="",
         help_text=_(
-            "Geef je bestand een omschrijvende naam, het liefst "
-            "maar enkele woorden."
-        )
+            "Geef je bestand een omschrijvende naam, het liefst " "maar enkele woorden."
+        ),
     )
     comments = models.TextField(
         max_length=2000,
@@ -54,7 +54,7 @@ class Attachment(models.Model, renderable):
             "waar "
             "je het voor gaat gebruiken tijdens je onderzoek. Eventuele "
             "opmerkingen voor de FETC kun je hier ook kwijt."
-        )
+        ),
     )
 
     def get_correct_submodel(self):
@@ -71,9 +71,7 @@ class Attachment(models.Model, renderable):
             key = submodel.__name__.lower()
             if hasattr(self, key):
                 return getattr(self, key)
-        raise KeyError(
-            "Couldn't find a matching submodel."
-        )
+        raise KeyError("Couldn't find a matching submodel.")
 
     def detach(self, other_object):
         """
@@ -100,26 +98,38 @@ class Attachment(models.Model, renderable):
         context["attachment"] = self
         return context
 
-class ProposalAttachment(Attachment,):
+
+class ProposalAttachment(
+    Attachment,
+):
     attached_to = models.ManyToManyField(
         "proposals.Proposal",
         related_name="attachments",
     )
 
-    def get_owner_for_proposal(self, proposal,):
+    def get_owner_for_proposal(
+        self,
+        proposal,
+    ):
         """
         This method doesn't do much, it's just here to provide
         a consistent interface for getting owner objects.
         """
         return proposal
 
-class StudyAttachment(Attachment,):
+
+class StudyAttachment(
+    Attachment,
+):
     attached_to = models.ManyToManyField(
         "studies.Study",
         related_name="attachments",
     )
 
-    def get_owner_for_proposal(self, proposal,):
+    def get_owner_for_proposal(
+        self,
+        proposal,
+    ):
         """
         Gets the owner study based on given proposal.
         """

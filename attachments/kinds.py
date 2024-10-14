@@ -13,10 +13,12 @@ class ProposalAttachmentKind(AttachmentKind):
     attached_object = Proposal
     attachment_class = ProposalAttachment
 
+
 class StudyAttachmentKind(AttachmentKind):
 
     attached_object = Study
     attachment_class = StudyAttachment
+
 
 class InformationLetter(StudyAttachmentKind):
 
@@ -25,11 +27,13 @@ class InformationLetter(StudyAttachmentKind):
     description = _("Omschrijving informatiebrief")
     desiredness = desiredness.REQUIRED
 
+
 class ConsentForm(AttachmentKind):
 
     db_name = "consent_form"
     name = _("Toestemmingsverklaring")
     description = _("Omschrijving toestemmingsverklaring")
+
 
 class DataManagementPlan(ProposalAttachmentKind):
 
@@ -39,6 +43,7 @@ class DataManagementPlan(ProposalAttachmentKind):
 
     def num_recommended(self):
         return 1
+
 
 class OtherProposalAttachment(ProposalAttachmentKind):
 
@@ -55,7 +60,6 @@ class OtherProposalAttachment(ProposalAttachmentKind):
         return self.num_provided + 1
 
 
-
 STUDY_ATTACHMENTS = [
     InformationLetter,
     ConsentForm,
@@ -67,4 +71,3 @@ PROPOSAL_ATTACHMENTS = [
 ]
 
 ATTACHMENTS = PROPOSAL_ATTACHMENTS + STUDY_ATTACHMENTS
-

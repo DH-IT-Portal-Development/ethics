@@ -8,6 +8,7 @@ from attachments.kinds import ATTACHMENTS, AttachmentKind
 
 # Create your views here.
 
+
 class AttachmentForm(ModelForm):
 
     class Meta:
@@ -28,6 +29,7 @@ class AttachmentForm(ModelForm):
         if self.kind:
             initial["kind"] = self.kind
         return initial
+
 
 class AttachmentCreateView(generic.CreateView):
     """Generic create view to create a new attachment. Both other_model and
@@ -59,18 +61,13 @@ class AttachmentCreateView(generic.CreateView):
     def attach(self, attachment):
         if self.other_model is None:
             raise ImproperlyConfigured(
-                "Please provide an other_model as a target for "
-                "this attachment."
+                "Please provide an other_model as a target for " "this attachment."
             )
         other_pk = self.kwargs.get(self.other_pk_kwarg)
-        other_object = self.other_model.objects.get(
-            pk=other_pk
-        )
+        other_object = self.other_model.objects.get(pk=other_pk)
         manager = getattr(other_object, self.other_field_name)
         manager.add(attachment)
         other_object.save()
 
     def get_success_url(self):
-        raise ImproperlyConfigured(
-            "Please define get_success_url()"
-        )
+        raise ImproperlyConfigured("Please define get_success_url()")

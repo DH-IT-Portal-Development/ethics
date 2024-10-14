@@ -15,7 +15,7 @@ from attachments.utils import AttachmentKind
 
 
 class AttachForm(
-        cdh_forms.TemplatedModelForm,
+    cdh_forms.TemplatedModelForm,
 ):
 
     class Meta:
@@ -39,7 +39,9 @@ class AttachForm(
         if not extra:
             del self.fields["kind"]
 
-    def save(self,):
+    def save(
+        self,
+    ):
         self.instance.kind = self.kind.db_name
         self.instance.save()
         self.instance.attached_to.add(
@@ -48,7 +50,7 @@ class AttachForm(
         return super().save()
 
 
-class AttachFormView():
+class AttachFormView:
 
     model = Attachment
     form_class = AttachForm
@@ -88,25 +90,31 @@ class AttachFormView():
         kind_str = self.kwargs.get("kind")
         return get_kind_from_str(kind_str)
 
-    def get_success_url(self,):
+    def get_success_url(
+        self,
+    ):
         return reverse(
             "proposals:attachments",
             kwargs={"pk": self.get_proposal().pk},
         )
 
-    def get_form_kwargs(self,):
+    def get_form_kwargs(
+        self,
+    ):
         kwargs = super().get_form_kwargs()
-        kwargs.update({
-            "kind": self.get_kind(),
-            "other_object": self.get_owner_object(),
-        })
+        kwargs.update(
+            {
+                "kind": self.get_kind(),
+                "other_object": self.get_owner_object(),
+            }
+        )
         return kwargs
 
 
 class ProposalAttachView(
-        AttachFormView,
-        ProposalContextMixin,
-        generic.CreateView,
+    AttachFormView,
+    ProposalContextMixin,
+    generic.CreateView,
 ):
 
     model = Attachment
@@ -119,17 +127,20 @@ class ProposalAttachView(
         kind_str = self.kwargs.get("kind")
         return get_kind_from_str(kind_str)
 
+
 class ProposalUpdateAttachmentView(
-        AttachFormView,
-        ProposalContextMixin,
-        generic.UpdateView,
+    AttachFormView,
+    ProposalContextMixin,
+    generic.UpdateView,
 ):
     model = Attachment
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
     editing = True
 
-    def get_object(self,):
+    def get_object(
+        self,
+    ):
         attachment_pk = self.kwargs.get("attachment_pk")
         attachment = Attachment.objects.get(pk=attachment_pk)
         obj = attachment.get_correct_submodel()
@@ -145,22 +156,26 @@ class ProposalUpdateAttachmentView(
         kind_str = obj.kind
         return get_kind_from_str(kind_str)
 
+
 class DetachForm(
-        forms.Form,
+    forms.Form,
 ):
     confirmation = forms.BooleanField()
 
+
 class ProposalDetachView(
-        ProposalContextMixin,
-        generic.detail.SingleObjectMixin,
-        generic.FormView,
+    ProposalContextMixin,
+    generic.detail.SingleObjectMixin,
+    generic.FormView,
 ):
     form_class = DetachForm
     model = Attachment
     template_name = "proposals/detach_form.html"
     pk_url_kwarg = "attachment_pk"
 
-    def get_owner_object(self,):
+    def get_owner_object(
+        self,
+    ):
         attachment = self.get_object()
         return attachment.get_owner_for_proposal(
             self.get_proposal(),
@@ -171,11 +186,15 @@ class ProposalDetachView(
         context = super().get_context_data(*args, **kwargs)
         return context
 
-    def get_object(self,):
+    def get_object(
+        self,
+    ):
         obj = super().get_object()
         return obj.get_correct_submodel()
 
-    def get_proposal(self,):
+    def get_proposal(
+        self,
+    ):
         proposal_pk = self.kwargs.get("proposal_pk")
         return Proposal.objects.get(pk=proposal_pk)
 
@@ -184,21 +203,25 @@ class ProposalDetachView(
         attachment.detach(self.get_owner_object())
         return super().form_valid(form)
 
-    def get_success_url(self,):
+    def get_success_url(
+        self,
+    ):
         return reverse(
             "proposals:attachments",
             kwargs={"pk": self.get_proposal().pk},
         )
 
+
 class AttachmentDetailView(
-        generic.DetailView,
+    generic.DetailView,
 ):
     template_name = "proposals/attachment_detail.html"
     model = Attachment
 
+
 class ProposalAttachmentsView(
-        ProposalContextMixin,
-        generic.DetailView,
+    ProposalContextMixin,
+    generic.DetailView,
 ):
 
     template_name = "proposals/attachments.html"
@@ -222,15 +245,24 @@ class ProposalAttachmentsView(
 
 
 class ProposalAttachmentDownloadView(
-        generic.View,
+    generic.View,
 ):
     original_filename = False
 
-    def __init__(self, *args, **kwargs,):
+    def __init__(
+        self,
+        *args,
+        **kwargs,
+    ):
         self.original_filename = kwargs.pop("original_filename", False)
         super().__init__(*args, **kwargs)
 
-    def get(self, request, proposal_pk, attachment_pk,):
+    def get(
+        self,
+        request,
+        proposal_pk,
+        attachment_pk,
+    ):
         self.attachment = Attachment.objects.get(
             pk=attachment_pk,
         )
