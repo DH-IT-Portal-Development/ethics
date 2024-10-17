@@ -140,6 +140,11 @@ class Study(models.Model):
     A Study consists of participant details, experiment design and consent forms.
     """
 
+    class LegalBases(models.IntegerChoices):
+        ANONYMOUS = 0, _("Dit traject is volledig anoniem.")
+        CONSENT = 1, _("De deelnemers geven toestemming.")
+        PUBLIC_INTEREST = 2, _("De AVG grondslag is algemeen belang.")
+
     order = models.PositiveIntegerField()
     name = models.CharField(_("Naam traject"), max_length=15, blank=True)
 
@@ -175,6 +180,21 @@ vertegenwoordiger te worden verkregen."
             "zie de <a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw' \
             target='_blank'>Richtlijnen</a>"
         ),
+        null=True,
+        blank=True,
+    )
+
+    legal_basis = models.PositiveIntegerField(
+        verbose_name=_(
+            "Wat is de AVG grondslag voor het verzamelen van " "persoonsgegevens?"
+        ),
+        help_text=_(
+            "Voor meer informatie over welk AVG grondslag op jouw onderzoek van "
+            "toepassing is, zie de flowchart in het "
+            "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/choose-legal-basis.html'"
+            " target='_blank'>Data Privacy Handbook</a>"
+        ),
+        choices=LegalBases.choices,
         null=True,
         blank=True,
     )

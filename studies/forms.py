@@ -36,10 +36,6 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         header=_("Wilsonbekwaamheid"), header_element="h4"
     )
 
-    has_special_details_header = TemplatedFormTextField(
-        header=_("Bijzondere persoonsgegevens"), header_element="h4"
-    )
-
     necessity_header = TemplatedFormTextField(
         header=_("Noodzakelijkheid"), header_element="h4"
     )
@@ -64,11 +60,6 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
             "legally_incapable_header",
             "legally_incapable",
             "legally_incapable_details",
-            "has_special_details_header",
-            "has_special_details",
-            "special_details",
-            "traits",
-            "traits_details",
             "necessity_header",
             "necessity",
             "necessity_reason",
@@ -85,10 +76,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         widgets = {
             "age_groups": BootstrapCheckboxSelectMultiple(),
             "legally_incapable": BootstrapRadioSelect(choices=YES_NO),
-            "has_special_details": BootstrapRadioSelect(choices=YES_NO),
             "hierarchy": BootstrapRadioSelect(choices=YES_NO),
-            "special_details": BootstrapCheckboxSelectMultiple(),
-            "traits": BootstrapCheckboxSelectMultiple(),
             "necessity": BootstrapRadioSelect(),
             "recruitment": BootstrapCheckboxSelectMultiple(),
             "compensation": BootstrapRadioSelect(),
@@ -188,6 +176,71 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
                     _("Dit veld is verplicht."), code="required"
                 )
                 self.add_error("necessity_reason", error)
+
+
+class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
+
+    class Meta:
+        model = Study
+        fields = [
+            "legal_basis",
+            "has_special_details",
+            "special_details",
+            "traits",
+            "traits_details",
+        ]
+        widgets = {
+            "has_special_details": BootstrapRadioSelect(choices=YES_NO),
+            "special_details": BootstrapCheckboxSelectMultiple(),
+            "traits": BootstrapCheckboxSelectMultiple(),
+            "legal_basis": BootstrapRadioSelect(),
+        }
+
+    _soft_validation_fields = [
+        "legal_basis",
+        "has_special_details",
+        "special_details",
+        "traits",
+        "traits_details",
+    ]
+
+    def __init__(self, *args, **kwargs):
+
+        super(PersonalDataForm, self).__init__(*args, **kwargs)
+
+        self.fields["legal_basis"].empty_label = None
+        self.fields["legal_basis"].choices = Study.LegalBases.choices
+
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If a trait which needs details has been checked, make sure the details are filled
+        """
+        cleaned_data = super(PersonalDataForm, self).clean()
+
+        if cleaned_data["has_special_details"] is None:
+            self.add_error("has_special_details", _("Dit veld is verplicht."))
+
+        if not cleaned_data["legal_basis"]:
+            self.add_error("legal_basis", _("Selecteer een van de opties."))
+
+        self.check_dependency_multiple(
+            cleaned_data,
+            "special_details",
+            "medical_traits",
+            "traits",
+            _("Je dient minimaal een bijzonder kenmerk te selecteren."),
+        )
+        self.check_dependency(
+            cleaned_data,
+            "has_special_details",
+            "special_details",
+            True,
+            _("Je dient minimaal één type gegevens te selecteren."),
+        )
+        self.check_dependency_multiple(
+            cleaned_data, "traits", "needs_details", "traits_details"
+        )
 
 
 class StudyDesignForm(TemplatedModelForm):
