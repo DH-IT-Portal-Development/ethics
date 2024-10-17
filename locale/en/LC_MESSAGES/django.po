@@ -4436,8 +4436,9 @@ msgid ""
 "Privacy Handbook</a>"
 msgstr ""
 "For more information regarding the legal justification of your study"
-",please consult the <a href=\"https://"
-"utrechtuniversity.github.io/dataprivacyhandbook/\">Data Privacy Handbook</a>."
+",please consult the <a href='https://utrechtuniversity.github.io/"
+"dataprivacyhandbook/choose-legal-basis.html' target='_blank'>Data"
+" Privacy Handbook</a>."
 
 #: studies/models.py:203
 msgid "Geef aan welke bijzondere persoonsgegevens worden verzameld:"

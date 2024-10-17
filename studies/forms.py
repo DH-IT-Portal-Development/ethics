@@ -183,11 +183,11 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Study
         fields = [
+            "legal_basis",
             "has_special_details",
             "special_details",
             "traits",
             "traits_details",
-            "legal_basis",
         ]
         widgets = {
             "has_special_details": BootstrapRadioSelect(choices=YES_NO),
@@ -197,11 +197,11 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
         }
 
     _soft_validation_fields = [
+        "legal_basis",
         "has_special_details",
         "special_details",
         "traits",
         "traits_details",
-        "legal_basis",
     ]
 
     def __init__(self, *args, **kwargs):
@@ -218,7 +218,7 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
         """
         cleaned_data = super(PersonalDataForm, self).clean()
 
-        if not cleaned_data["has_special_details"]:
+        if cleaned_data["has_special_details"] is None:
             self.add_error("has_special_details", _("Dit veld is verplicht."))
 
         if not cleaned_data["legal_basis"]:
