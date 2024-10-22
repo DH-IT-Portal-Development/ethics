@@ -13,9 +13,6 @@
 $(function() {
     $('input[name=age_groups]').change();
 
-    depends_on_value('has_special_details', 'True', 'special_details');
-    check_field_required('special_details', 'medical_traits', 'traits', 'studies', 'SpecialDetail');
-    check_field_required('traits', 'needs_details', 'traits_details', 'studies', 'Trait');
     check_field_required('compensation', 'needs_details', 'compensation_details', 'studies');
     check_field_required('recruitment', 'needs_details', 'recruitment_details', 'studies');
     depends_on_value('hierarchy', 'True', 'hierarchy_details');
