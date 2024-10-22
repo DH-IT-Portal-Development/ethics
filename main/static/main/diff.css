@@ -1,0 +1,9 @@
+.diff del {
+    text-decoration: none;
+    background-color: #ff6565;
+}
+
+.diff ins {
+    text-decoration: none;
+    background-color: #73ff73;
+}
