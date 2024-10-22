@@ -199,6 +199,7 @@ except ImportError:
 if DEBUG is True:
     try:
         from debug_settings import *
+
         print("Loaded debug_settings.py")
     except ImportError:
         print("No debug_settings.py found, proceeding...")
