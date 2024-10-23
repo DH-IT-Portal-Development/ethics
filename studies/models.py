@@ -383,6 +383,7 @@ cadeautje."
     def get_sessions(self):
         if self.has_sessions:
             return self.session_set.all()
+        return []
 
     @property
     def sessions_number(self):
