@@ -11,6 +11,9 @@ from tasks import forms as tasks_forms
 from tasks.views import task_views, session_views
 from tasks.models import Task, Session
 
+from attachments.utils import AttachmentSlot, desiredness
+from attachments.kinds import InformationLetter, DataManagementPlan
+
 from .stepper_helpers import (
     Checker,
     PlaceholderItem,
@@ -324,7 +327,7 @@ class TrajectoriesChecker(
     ):
         return [
             KnowledgeSecurityChecker(self.stepper, parent=self.item),
-            DocumentsChecker,
+            AttachmentsChecker,
             DataManagementChecker,
             SubmitChecker,
         ]
@@ -408,12 +411,18 @@ class StudyChecker(
                 parent=self.current_parent,
             ),
         ]
-        end_checker = StudyEndChecker(
-            self.stepper,
-            study=self.study,
-            parent=self.current_parent,
-        )
-        return checkers + self.determine_study_checkers(self.study) + [end_checker]
+        final_checkers = [
+            StudyEndChecker(
+                self.stepper,
+                study=self.study,
+                parent=self.current_parent,
+            ),
+            StudyAttachmentsChecker(
+                self.stepper,
+                study=self.study,
+            ),
+        ]
+        return checkers + self.determine_study_checkers(self.study) + final_checkers
 
     def determine_study_checkers(self, study):
         tests = {
@@ -446,6 +455,30 @@ class StudyChecker(
             study=study,
             parent=self.current_parent,
         )
+
+
+class StudyAttachmentsChecker(
+    Checker,
+):
+
+    def __init__(
+        self,
+        *args,
+        **kwargs,
+    ):
+        self.study = kwargs.pop("study")
+        super().__init__(*args, **kwargs)
+
+    def check(
+        self,
+    ):
+        kind = InformationLetter
+        info_slot = AttachmentSlot(
+            self.study,
+            kind=kind,
+        )
+        self.stepper.add_slot(info_slot)
+        return []
 
 
 class ParticipantsChecker(
@@ -827,12 +860,13 @@ class SessionsChecker(
         return []
 
 
-class DocumentsChecker(
+class AttachmentsChecker(
     Checker,
 ):
     def check(
         self,
     ):
+        self.add_dmp_slot()
         item = self.make_stepper_item()
         self.stepper.items.append(item)
         return [
@@ -842,9 +876,16 @@ class DocumentsChecker(
             ),
         ]
 
+    def add_dmp_slot(self):
+        slot = AttachmentSlot(
+            self.stepper.proposal,
+            kind=DataManagementPlan,
+        )
+        self.stepper.add_slot(slot)
+
     def make_stepper_item(self):
         url = reverse(
-            "proposals:consent",
+            "proposals:attachments",
             args=[self.stepper.proposal.pk],
         )
         item = PlaceholderItem(
@@ -854,6 +895,7 @@ class DocumentsChecker(
         )
         item.get_url = lambda: url
         return item
+        return [TranslationChecker]
 
 
 class TranslationChecker(

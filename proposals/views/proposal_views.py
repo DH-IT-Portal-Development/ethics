@@ -58,7 +58,6 @@ from proposals.mixins import (
 )
 from proposals.utils.proposal_utils import FilenameFactory
 
-
 ############
 # List views
 ############
