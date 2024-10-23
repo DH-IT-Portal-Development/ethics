@@ -2,11 +2,9 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
 from main.utils import renderable
+from attachments.utils import attachment_filename_generator
 
 from cdh.files.db import FileField as CDHFileField
-
-# Create your models here.
-
 
 class Attachment(models.Model, renderable):
 
@@ -21,6 +19,7 @@ class Attachment(models.Model, renderable):
     upload = CDHFileField(
         verbose_name=_("Bestand"),
         help_text=_("Selecteer hier het bestand om toe te voegen."),
+        filename_generator=attachment_filename_generator,
     )
     parent = models.ForeignKey(
         "attachments.attachment",
@@ -41,10 +40,6 @@ class Attachment(models.Model, renderable):
     )
     name = models.CharField(
         max_length=50,
-        default="",
-        help_text=_(
-            "Geef je bestand een omschrijvende naam, het liefst " "maar enkele woorden."
-        ),
     )
     comments = models.TextField(
         max_length=2000,
