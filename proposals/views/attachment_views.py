@@ -43,31 +43,44 @@ class AttachForm(
         # Set the kind if enforced by the view.
         if self.kind:
             self.instance.kind = self.kind.db_name
-        # Check we're not editing an attachment that is still in use
-        # by another object.
-        if self.instance.attached_to.count() > 1:
-            # Saving this instance might remove historical data. So
-            # we create a "revision" of sorts. First we save the old
-            # pk:
-            old_pk = self.instance.pk + 0
-            # The following means this instance will get saved under a
-            # new pk, effectively creating a copy.
-            self.instance.pk = None
-            self.instance.id = None
-            self.instance._state.adding = True
+        # Check if we're creating a new attachment
+        if self.instance._state.adding is True:
+            # If we're creating, we need to save before we can
+            # adjust M2M attributes.
             self.instance.save()
-            # Retrieve and fix the old attachment.
-            instance_manager = type(self.instance).objects
-            old_attachment = instance_manager.get(pk=old_pk)
-            old_attachment.attached_to.remove(self.other_object)
-            self.instance.parent = old_attachment
-            # Clear the attached_to set, we add other_object back
-            # afterwards.
-            self.instance.attached_to.set([])
+        else:
+            # Check we're not editing an attachment that is still in use
+            # by another object.
+            if self.instance.attached_to.count() > 1:
+                # Saving this instance might remove historical data. So
+                # we create a revision.
+                return self.save_revision()
         # Attach the instance to the owner object.
         self.instance.attached_to.add(
             self.other_object,
         )
+        return super().save()
+
+    def save_revision(self,):
+        # Remember the old pk
+        # Adding zero creates a new copy of the integer
+        old_pk = self.instance.pk + 0
+        # The following means this instance will get saved under a
+        # new pk, effectively creating a copy.
+        self.instance.pk = None
+        self.instance.id = None
+        self.instance._state.adding = True
+        self.instance.save()
+        # Retrieve and detach it from the current other_object.
+        instance_manager = type(self.instance).objects
+        old_attachment = instance_manager.get(pk=old_pk)
+        old_attachment.attached_to.remove(self.other_object)
+        old_attachment.save()
+        # Remove all other instances in the attached_to
+        # of the copy except for the current other_object.
+        self.instance.attached_to.set([self.other_object])
+        # Set the old attachment as our parent.
+        self.instance.parent = old_attachment
         return super().save()
 
 
