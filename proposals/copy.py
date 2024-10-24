@@ -69,13 +69,14 @@ def copy_proposal(original_proposal, is_revision, created_by_user):
 
     return copy_proposal
 
+
 def copy_attachments(old, new):
     for att in old.attachments.all():
         att.attached_to.add(new)
         att.save()
     for old_study, new_study in zip(
-            old.study_set.all(),
-            new.study_set.all(),
+        old.study_set.all(),
+        new.study_set.all(),
     ):
         for att in old_study.attachments.all():
             att.attached_to.add(new_study)

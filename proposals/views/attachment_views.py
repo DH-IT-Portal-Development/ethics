@@ -39,7 +39,9 @@ class AttachForm(
         if not extra:
             del self.fields["kind"]
 
-    def save(self,):
+    def save(
+        self,
+    ):
         # Set the kind if enforced by the view.
         if self.kind:
             self.instance.kind = self.kind.db_name
@@ -61,7 +63,9 @@ class AttachForm(
         )
         return super().save()
 
-    def save_revision(self,):
+    def save_revision(
+        self,
+    ):
         # Remember the old pk
         # Adding zero creates a new copy of the integer
         old_pk = self.instance.pk + 0
@@ -75,7 +79,6 @@ class AttachForm(
         instance_manager = type(self.instance).objects
         old_attachment = instance_manager.get(pk=old_pk)
         old_attachment.attached_to.remove(self.other_object)
-        old_attachment.save()
         # Remove all other instances in the attached_to
         # of the copy except for the current other_object.
         self.instance.attached_to.set([self.other_object])
