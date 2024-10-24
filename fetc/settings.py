@@ -194,3 +194,12 @@ try:
 
 except ImportError:
     print("Proceeding without SAML settings")
+
+# Debug / local development settings
+if DEBUG is True:
+    try:
+        from debug_settings import *
+
+        print("Loaded debug_settings.py")
+    except ImportError:
+        print("No debug_settings.py found, proceeding...")

@@ -13,6 +13,7 @@ certs/
 fetc/ldap_settings.py
 fetc/saml_settings.py
 *.sqlite3
+debug_settings.py
 
 ### Coverage ###
 .coverage
