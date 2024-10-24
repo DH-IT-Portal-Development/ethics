@@ -4,9 +4,12 @@ from django.urls import reverse
 from proposals import forms as proposal_forms
 from proposals.models import Wmo
 from studies import forms as study_forms
+from studies.models import Study
 from interventions import forms as intervention_forms
 from observations import forms as observation_forms
+from observations.models import Registration as observation_registration
 from tasks import forms as tasks_forms
+from tasks.models import Registration as task_registration
 
 from tasks.views import task_views, session_views
 from tasks.models import Task, Session
@@ -479,7 +482,40 @@ class StudyAttachmentsChecker(
                 kind=kind,
             )
             self.stepper.add_slot(info_slot)
+
+        if self.check_has_AV_registration:
+            # Add "agreement video/audio recordings" slot or "script for verbal consent recordings"
+            # Maybe if one has been fulfilled, change the orther's desiredness
+            pass
         return []
+    
+    def check_has_AV_registration(self):
+        """
+        A function that checks whether a study features audio or video
+        registration.
+        """
+        if self.study.legal_basis == Study.LegalBases.CONSENT:
+            has_AV_registration = False
+            if self.study.has_observation:
+                #gather all AV observation_registraions
+                AV_registrations = observation_registration.objects.filter(
+                    description__in=["audio-opname", "video-opname"]
+                )
+                if self.study.observation.registration in AV_registrations:
+                    has_AV_registration = True
+            if self.study.has_sessions:
+                # gather all the tasks
+                all_tasks = [
+                    session.task_set.all() for session in self.study.session_set.all()
+                ]
+                #gather all AV task_registrations
+                AV_registrations = task_registration.objects.filter(
+                    description__in=["audio-opname", "video-opname"]
+                )
+                if all_tasks.filter(registration__in=AV_registrations):
+                    has_AV_registration = True
+        return has_AV_registration
+
 
 
 class ParticipantsChecker(
