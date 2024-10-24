@@ -12,7 +12,7 @@ from tasks.views import task_views, session_views
 from tasks.models import Task, Session
 
 from attachments.utils import AttachmentSlot, desiredness
-from attachments.kinds import InformationLetter, DataManagementPlan
+from attachments.kinds import DataManagementPlan, LEGAL_BASIS_KIND_DICT
 
 from .stepper_helpers import (
     Checker,
@@ -472,12 +472,13 @@ class StudyAttachmentsChecker(
     def check(
         self,
     ):
-        kind = InformationLetter
-        info_slot = AttachmentSlot(
-            self.study,
-            kind=kind,
-        )
-        self.stepper.add_slot(info_slot)
+        if self.study.legal_basis is not None:
+            kind = LEGAL_BASIS_KIND_DICT[self.study.legal_basis]
+            info_slot = AttachmentSlot(
+                self.study,
+                kind=kind,
+            )
+            self.stepper.add_slot(info_slot)
         return []
 
 
