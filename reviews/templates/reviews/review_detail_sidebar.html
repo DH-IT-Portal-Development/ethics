@@ -121,6 +121,8 @@ Remember to include it in a with statement if the view does not provide it.
             </p>
         {% endif %}
     {% endif %}
-    <h3>{% trans "Documenten" %}</h3>
+    <h3>{% trans "Documenten (oude systeem)" %}</h3>
     {% documents_list review user %}
+    <h3>{% trans "Documenten" %}</h3>
+    {% attachments_list review user %}
 </div>
