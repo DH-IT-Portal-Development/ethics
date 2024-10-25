@@ -11,6 +11,8 @@ from django.utils.safestring import mark_safe
 
 from django.core.exceptions import ObjectDoesNotExist
 
+from proposals.utils.stepper import Stepper
+from proposals.models import Proposal
 from proposals.utils.proposal_utils import FilenameFactory
 
 register = template.Library()
@@ -182,6 +184,54 @@ class DocItem:
 
         return self.field.url
 
+
+class DocList(list):
+
+    def as_containers(self):
+        containers = []
+        per_item = self.per_item()
+        for item in per_item.keys():
+            if type(item) is Proposal:
+                container = self.make_proposal_container(item)
+            else:
+                # This must be a Study object
+                container = Container(_("Traject {}").format(item.order))
+            container.items += [
+                self.make_docitem(slot) for slot in per_item[item]
+            ]
+            containers.append(container)
+        return containers
+
+    def per_item(self):
+        items = set([slot.attached_object for slot in self])
+        item_dict = {
+            item: [] for item in items
+        }
+        for slot in self:
+            item_dict[slot.attached_object].append(slot)
+        return item_dict
+
+    def make_proposal_container(self, proposal):
+        container = Container(_("Aanvraag"))
+        return container
+
+    def make_docitem(self, slot):
+        docitem = DocItem(
+            slot.kind.name,
+        )
+        return docitem
+        
+
+
+@register.inclusion_tag("reviews/documents_list.html")
+def attachments_list(review, user):
+    stepper = Stepper(review.proposal)
+    filled_slots = [
+        slot for slot in stepper.attachment_slots
+        if slot.attachment
+    ]
+    containers = DocList(filled_slots).as_containers()
+    return {"review": review, "containers": containers, "proposal": review.proposal}
 
 @register.inclusion_tag("reviews/documents_list.html")
 def documents_list(review, user):
