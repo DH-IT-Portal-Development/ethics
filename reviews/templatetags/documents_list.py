@@ -1,6 +1,6 @@
 from django import template
 
-from main.utils import is_secretary
+from main.utils import is_secretary, renderable
 from studies.models import Documents
 from proposals.models import Proposal, Wmo
 from observations.models import Observation
@@ -158,6 +158,7 @@ class Container:
         self.dmp_edit_link = False
         self.header = header
         self.items = []
+        self.order = 0
 
         self.__dict__.update(kwargs)
 
@@ -165,9 +166,9 @@ class Container:
 class DocItem:
     def __init__(self, name, **kwargs):
         self.name = name
-        self.comparable = False
         self.filename = None
         self.link_url = None
+        self.field = None
         self.sets_content_disposition = False
 
         self.__dict__.update(kwargs)
@@ -175,14 +176,38 @@ class DocItem:
     def get_filename(self):
         if self.filename:
             return self.filename
-
         return self.field.name
 
     def get_link_url(self):
         if self.link_url:
             return self.link_url
-
         return self.field.url
+
+
+class AttachmentItem(DocItem):
+
+    @property
+    def comparable(self):
+        if not self.attachment.parent:
+            return False
+        ancestor_proposal = self.slot.get_proposal().parent
+        if not ancestor_proposal.parent:
+            return False
+        direct_ancestors = [ancestor_proposal] + ancestor_proposal.study_set.all()
+        if self.attachment.parent.attached_to in direct_ancestors:
+            return True
+
+    @property
+    def attachment(self,):
+        return self.slot.attachment
+
+    def get_link_url(self,):
+        return self.slot.attachment.get_download_url(
+            self.slot.get_proposal(),
+        )
+
+    def get_filename(self,):
+        return self.attachment.upload.original_filename
 
 
 class DocList(list):
@@ -196,11 +221,12 @@ class DocList(list):
             else:
                 # This must be a Study object
                 container = Container(_("Traject {}").format(item.order))
+                container.order = 200 + item.order
             container.items += [
                 self.make_docitem(slot) for slot in per_item[item]
             ]
             containers.append(container)
-        return containers
+        return sorted(containers, key=lambda c: c.order)
 
     def per_item(self):
         items = set([slot.attached_object for slot in self])
@@ -213,14 +239,48 @@ class DocList(list):
 
     def make_proposal_container(self, proposal):
         container = Container(_("Aanvraag"))
+        container.order = 100
+        # The proposal PDF isn't an attachment, so we add it manually
+        proposal_pdf = DocItem(_("Aanvraag in PDF-vorm"))
+        proposal_pdf.link_url = reverse("proposals:pdf", args=(proposal.pk,))
+        container.items.append(proposal_pdf)
         return container
 
     def make_docitem(self, slot):
-        docitem = DocItem(
+        docitem = AttachmentItem(
             slot.kind.name,
+            slot=slot,
         )
         return docitem
-        
+
+
+class AttachmentsList(renderable):
+
+    def __init__(
+            self,
+            review=None,
+            proposal=None,
+    ):
+        if not (review or proposal):
+            raise RuntimeError(
+                "AttachmentsList needs either a review "
+                "or a proposal."
+            )
+        if review:
+            proposal = review.proposal
+        self.proposal = proposal
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        stepper = Stepper(self.proposal)
+        filled_slots = [
+            slot for slot in stepper.attachment_slots
+            if slot.attachment
+        ]
+        context["containers"] = DocList(
+            filled_slots,
+        ).as_containers()
+        return context
 
 
 @register.inclusion_tag("reviews/documents_list.html")
@@ -230,7 +290,9 @@ def attachments_list(review, user):
         slot for slot in stepper.attachment_slots
         if slot.attachment
     ]
-    containers = DocList(filled_slots).as_containers()
+    containers = DocList(
+        filled_slots,
+    ).as_containers()
     return {"review": review, "containers": containers, "proposal": review.proposal}
 
 @register.inclusion_tag("reviews/documents_list.html")
