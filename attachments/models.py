@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
+from django.urls import reverse
 from main.utils import renderable
 
 from cdh.files.db import FileField as CDHFileField
@@ -92,6 +93,15 @@ class Attachment(models.Model, renderable):
             self.attached_to.remove(other_object)
         else:
             self.delete()
+
+    def get_download_url(self, proposal):
+        return reverse(
+            "proposals:download_attachment_original",
+            kwargs={
+                "proposal_pk": proposal.pk,
+                "attachment_pk": self.pk,
+            }
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
