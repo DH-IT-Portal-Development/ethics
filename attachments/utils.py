@@ -2,9 +2,10 @@ from django.template.loader import get_template
 from django.utils.translation import gettext as _
 from django.urls import reverse
 
-from main.utils import renderable
+from main.utils import renderable, is_secretary
 from proposals.models import Proposal
 from studies.models import Study
+from reviews.templatetags.documents_list import DocList
 
 
 class desiredness:
