@@ -326,8 +326,8 @@ class TrajectoriesChecker(
         self,
     ):
         return [
-            AttachmentsChecker,
             KnowledgeSecurityChecker(self.stepper, parent=self.item),
+            AttachmentsChecker,
             DataManagementChecker,
             SubmitChecker,
         ]

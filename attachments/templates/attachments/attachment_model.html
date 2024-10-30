@@ -1,1 +1,2 @@
-<a href="{{ attachment.get_download_url }}">{{ attachment.upload.original_filename }}</a>
+<a href="{% url "proposals:download_attachment_original" proposal_pk=proposal.pk attachment_pk=attachment.pk %}">
+{{ attachment.upload.original_filename }}</a>
