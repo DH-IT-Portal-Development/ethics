@@ -130,7 +130,7 @@ def get_document_contents(file: FieldFile) -> str:
         with file.open(mode="rb") as f:
             return docx2txt.process(f)
 
-    return "No text found"
+    return f"No text found, or document not supported: ({mime})"
 
 
 def is_member_of_faculty(user, faculty):
