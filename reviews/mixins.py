@@ -11,6 +11,18 @@ from main.utils import is_secretary
 
 from .models import Decision, Review
 from .utils.review_utils import auto_review
+from attachments.utils import AttachmentsList
+
+
+class ReviewSidebarMixin():
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["attachments_list"] = AttachmentsList(
+            review=self.get_object(),
+            request=self.request,
+        )
+        return context
 
 
 class UserAllowedToDecisionMixin(SingleObjectMixin):

@@ -27,6 +27,7 @@ from .mixins import (
     UserAllowedToDecisionMixin,
     CommitteeMixin,
     UsersOrGroupsAllowedMixin,
+    ReviewSidebarMixin,
 )
 from .models import Decision, Review
 from .utils.review_utils import (
@@ -36,6 +37,7 @@ from .utils.review_utils import (
     assign_reviewers,
 )
 from .utils.review_actions import ReviewActions
+from attachments.utils import AttachmentsList
 
 
 class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
@@ -305,7 +307,7 @@ class AllProposalReviewsView(BaseReviewListView):
 
 
 class ReviewDetailView(
-    LoginRequiredMixin, AutoReviewMixin, UsersOrGroupsAllowedMixin, generic.DetailView
+        ReviewSidebarMixin, LoginRequiredMixin, AutoReviewMixin, UsersOrGroupsAllowedMixin, generic.DetailView
 ):
     """
     Shows the Decisions for a Review
@@ -343,7 +345,7 @@ class ChangeChamberView(LoginRequiredMixin, GroupRequiredMixin, generic.UpdateVi
         return reverse("reviews:detail", args=[self.object.latest_review().pk])
 
 
-class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
+class ReviewAssignView(ReviewSidebarMixin, GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
     """
     Allows a User of the SECRETARY group to assign reviewers.
     """

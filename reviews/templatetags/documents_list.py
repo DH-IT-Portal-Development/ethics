@@ -11,8 +11,6 @@ from django.utils.safestring import mark_safe
 
 from django.core.exceptions import ObjectDoesNotExist
 
-from proposals.utils.stepper import Stepper
-from proposals.models import Proposal
 from proposals.utils.proposal_utils import FilenameFactory
 
 register = template.Library()
@@ -186,20 +184,39 @@ class DocItem:
 
 class AttachmentItem(DocItem):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # self.attachment = self.slot.attachment.get_correct_submodel()
+
     @property
     def comparable(self):
         if not self.attachment.parent:
             return False
         ancestor_proposal = self.slot.get_proposal().parent
-        if not ancestor_proposal.parent:
+        if not ancestor_proposal:
             return False
-        direct_ancestors = [ancestor_proposal] + ancestor_proposal.study_set.all()
-        if self.attachment.parent.attached_to in direct_ancestors:
+        direct_ancestors = (
+            [ancestor_proposal] +
+            list(ancestor_proposal.study_set.all())
+        )
+        parent_attachment = self.attachment.parent.get_correct_submodel()
+        if set(parent_attachment.attached_to.all()) & set(direct_ancestors):
             return True
 
     @property
+    def compare_url(self,):
+        return reverse(
+            "proposals:compare_attachments",
+            kwargs={
+                "proposal_pk": self.slot.get_proposal().pk,
+                "old_pk": self.attachment.parent.pk,
+                "new_pk": self.attachment.pk,
+            }
+        )
+
+    @property
     def attachment(self,):
-        return self.slot.attachment
+        return self.slot.attachment.get_correct_submodel()
 
     def get_link_url(self,):
         return self.slot.attachment.get_download_url(
@@ -252,35 +269,6 @@ class DocList(list):
             slot=slot,
         )
         return docitem
-
-
-class AttachmentsList(renderable):
-
-    def __init__(
-            self,
-            review=None,
-            proposal=None,
-    ):
-        if not (review or proposal):
-            raise RuntimeError(
-                "AttachmentsList needs either a review "
-                "or a proposal."
-            )
-        if review:
-            proposal = review.proposal
-        self.proposal = proposal
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        stepper = Stepper(self.proposal)
-        filled_slots = [
-            slot for slot in stepper.attachment_slots
-            if slot.attachment
-        ]
-        context["containers"] = DocList(
-            filled_slots,
-        ).as_containers()
-        return context
 
 
 @register.inclusion_tag("reviews/documents_list.html")

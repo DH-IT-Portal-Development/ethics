@@ -124,6 +124,49 @@ class AttachmentSlot(renderable):
         )
 
 
+class AttachmentsList(renderable):
+
+    template_name = "attachments/attachments_list.html"
+
+    def __init__(
+            self,
+            review=None,
+            proposal=None,
+            request=None,
+    ):
+        if not (review or proposal):
+            raise RuntimeError(
+                "AttachmentsList needs either a review "
+                "or a proposal."
+            )
+        if review:
+            proposal = review.proposal
+        self.proposal = proposal
+        self.containers = self.get_containers()
+        self.request = request
+
+    def get_containers(self,):
+        from proposals.utils.stepper import Stepper
+        stepper = Stepper(self.proposal)
+        filled_slots = [
+            slot for slot in stepper.attachment_slots
+            if slot.attachment
+        ]
+        containers = DocList(
+            filled_slots,
+        ).as_containers()
+        return containers
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["proposal"] = self.proposal
+        context["containers"] = self.containers
+        if self.request:
+            if is_secretary(self.request.user):
+                context["attachments_edit_link"] = True
+        return context
+
+
 def get_kind_from_str(db_name):
     from attachments.kinds import ATTACHMENTS
 

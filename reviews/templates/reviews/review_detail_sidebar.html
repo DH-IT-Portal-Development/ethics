@@ -122,8 +122,7 @@ Remember to include it in a with statement if the view does not provide it.
         {% endif %}
     {% endif %}
     <br />
-    <h4>{% trans "Documenten" %}</h4>
-    {% attachments_list review user %}
+    {% include attachments_list %}
     <br />
     <h4>{% trans "Documenten (oude systeem)" %}</h4>
     {% documents_list review user %}
