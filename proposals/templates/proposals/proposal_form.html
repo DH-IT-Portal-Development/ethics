@@ -7,14 +7,6 @@
     {% trans "Algemene informatie over de aanvraag" %} - {{ block.super }}
 {% endblock %}
 
-{% block stepper %}
-    {% if stepper %}
-        {% include stepper %}
-    {% else %}
-        <!--No stepper on creation-->
-    {% endif %}
-{% endblock %}
-
 {% block html_head %}
     {{ block.super }}
     <script>

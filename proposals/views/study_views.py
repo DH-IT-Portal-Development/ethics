@@ -119,4 +119,4 @@ class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
     def get_back_url(self):
         """Return to the Study design view"""
         proposal = Proposal.objects.get(pk=self.kwargs.get("pk"))
-        return reverse("studies:design_end", args=(proposal.last_study().pk,))
+        return reverse("proposals:knowledge_security", args=(proposal.pk,))

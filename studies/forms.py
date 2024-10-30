@@ -29,15 +29,11 @@ from cdh.core.forms import (
 class StudyForm(SoftValidationMixin, ConditionalModelForm):
 
     age_groups_header = TemplatedFormTextField(
-        header=_("De leeftijdsgroup van je deelnemers"), header_element="h4"
+        header=_("De leeftijdsgroep van je deelnemers"), header_element="h4"
     )
 
     legally_incapable_header = TemplatedFormTextField(
         header=_("Wilsonbekwaamheid"), header_element="h4"
-    )
-
-    has_special_details_header = TemplatedFormTextField(
-        header=_("Bijzondere persoonsgegevens"), header_element="h4"
     )
 
     necessity_header = TemplatedFormTextField(
@@ -64,11 +60,6 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
             "legally_incapable_header",
             "legally_incapable",
             "legally_incapable_details",
-            "has_special_details_header",
-            "has_special_details",
-            "special_details",
-            "traits",
-            "traits_details",
             "necessity_header",
             "necessity",
             "necessity_reason",
@@ -85,10 +76,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         widgets = {
             "age_groups": BootstrapCheckboxSelectMultiple(),
             "legally_incapable": BootstrapRadioSelect(choices=YES_NO),
-            "has_special_details": BootstrapRadioSelect(choices=YES_NO),
             "hierarchy": BootstrapRadioSelect(choices=YES_NO),
-            "special_details": BootstrapCheckboxSelectMultiple(),
-            "traits": BootstrapCheckboxSelectMultiple(),
             "necessity": BootstrapRadioSelect(),
             "recruitment": BootstrapCheckboxSelectMultiple(),
             "compensation": BootstrapRadioSelect(),
@@ -190,6 +178,71 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
                 self.add_error("necessity_reason", error)
 
 
+class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
+
+    class Meta:
+        model = Study
+        fields = [
+            "legal_basis",
+            "has_special_details",
+            "special_details",
+            "traits",
+            "traits_details",
+        ]
+        widgets = {
+            "has_special_details": BootstrapRadioSelect(choices=YES_NO),
+            "special_details": BootstrapCheckboxSelectMultiple(),
+            "traits": BootstrapCheckboxSelectMultiple(),
+            "legal_basis": BootstrapRadioSelect(),
+        }
+
+    _soft_validation_fields = [
+        "legal_basis",
+        "has_special_details",
+        "special_details",
+        "traits",
+        "traits_details",
+    ]
+
+    def __init__(self, *args, **kwargs):
+
+        super(PersonalDataForm, self).__init__(*args, **kwargs)
+
+        self.fields["legal_basis"].empty_label = None
+        self.fields["legal_basis"].choices = Study.LegalBases.choices
+
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If a trait which needs details has been checked, make sure the details are filled
+        """
+        cleaned_data = super(PersonalDataForm, self).clean()
+
+        if cleaned_data["has_special_details"] is None:
+            self.add_error("has_special_details", _("Dit veld is verplicht."))
+
+        if not cleaned_data["legal_basis"]:
+            self.add_error("legal_basis", _("Selecteer een van de opties."))
+
+        self.check_dependency_multiple(
+            cleaned_data,
+            "special_details",
+            "medical_traits",
+            "traits",
+            _("Je dient minimaal een bijzonder kenmerk te selecteren."),
+        )
+        self.check_dependency(
+            cleaned_data,
+            "has_special_details",
+            "special_details",
+            True,
+            _("Je dient minimaal één type gegevens te selecteren."),
+        )
+        self.check_dependency_multiple(
+            cleaned_data, "traits", "needs_details", "traits_details"
+        )
+
+
 class StudyDesignForm(TemplatedModelForm):
 
     study_types = forms.MultipleChoiceField(
@@ -277,15 +330,12 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             "deception_details",
             "negativity",
             "negativity_details",
-            "stressful",
-            "stressful_details",
             "risk",
             "risk_details",
         ]
         widgets = {
             "deception": BootstrapRadioSelect(),
             "negativity": BootstrapRadioSelect(),
-            "stressful": BootstrapRadioSelect(),
             "risk": BootstrapRadioSelect(),
         }
 
@@ -294,8 +344,6 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         "deception_details",
         "negativity",
         "negativity_details",
-        "stressful",
-        "stressful_details",
         "risk",
         "risk_detail",
     ]
@@ -303,23 +351,22 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
     def __init__(self, *args, **kwargs):
         """
         - Set the Study for later reference
-        - Remove empty label from deception/negativity/stressful/risk field and reset the choices
-        - mark_safe the labels of negativity/stressful/risk
+        - Remove empty label from deception/negativity/risk field and reset the choices
+        - mark_safe the labels of negativity/risk
         """
+
+        self.choice_fields = (
+            "deception",
+            "negativity",
+            "risk",
+        )
 
         super(StudyEndForm, self).__init__(*args, **kwargs)
 
-        self.fields["deception"].empty_label = None
-        self.fields["deception"].choices = YesNoDoubt.choices
-        self.fields["negativity"].empty_label = None
-        self.fields["negativity"].choices = YesNoDoubt.choices
-        self.fields["stressful"].empty_label = None
-        self.fields["stressful"].choices = YesNoDoubt.choices
-        self.fields["risk"].empty_label = None
-        self.fields["risk"].choices = YesNoDoubt.choices
+        for field in self.choice_fields:
+            self.fields[field].choices = YesNoDoubt.choices
 
         self.fields["negativity"].label = mark_safe(self.fields["negativity"].label)
-        self.fields["stressful"].label = mark_safe(self.fields["stressful"].label)
         self.fields["risk"].label = mark_safe(self.fields["risk"].label)
 
         if not self.instance.has_sessions:
@@ -337,35 +384,18 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         cleaned_data = super(StudyEndForm, self).clean()
 
         # TODO: find a way to hide this on the first view
-        self.mark_soft_required(cleaned_data, "negativity", "stressful", "risk")
+        self.mark_soft_required(cleaned_data, "negativity", "risk")
 
         if "deception" in self.fields:
             self.mark_soft_required(cleaned_data, "deception")
 
-        self.check_dependency_list(
-            cleaned_data,
-            "deception",
-            "deception_details",
-            f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
-        )
-        self.check_dependency_list(
-            cleaned_data,
-            "negativity",
-            "negativity_details",
-            f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
-        )
-        self.check_dependency_list(
-            cleaned_data,
-            "stressful",
-            "stressful_details",
-            f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
-        )
-        self.check_dependency_list(
-            cleaned_data,
-            "risk",
-            "risk_details",
-            f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
-        )
+        for field in self.choice_fields:
+            self.check_dependency_list(
+                cleaned_data,
+                f"{field}",
+                f"{field}_details",
+                f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
+            )
 
 
 class StudyUpdateAttachmentsForm(TemplatedModelForm):

@@ -37,6 +37,7 @@ class Stepper(renderable):
         self.request = request
         self.items = []
         self.attachment_slots = []
+        self.current_item_ancestors = []
         self.check_all(self.starting_checkers)
 
     def get_context_data(self):
@@ -85,8 +86,11 @@ class Stepper(renderable):
             raise RuntimeError(
                 "Base layout was never defined for this stepper",
             )
-        # First, insert all items into the layout
+        # First, insert all items into the layout & let them figure out their
+        # own styling
         for item in self.items:
+            # Only check item.is_current until there is a current item found
+            self.item_is_current_check(item)
             self._insert_item(layout, item)
         # Second, replace all remaining empty slots in the layout
         # by PlaceholderItems
@@ -94,9 +98,6 @@ class Stepper(renderable):
         return layout
 
     def _insert_item(self, layout, new_item):
-        """
-        Inserts a stepper item into a layout, in-place.
-        """
         # We're only concerned with top-level items, children can sort
         # themselves out
         if new_item.parent:
@@ -157,6 +158,19 @@ class Stepper(renderable):
         slot.match(exclude)
         self.attachment_slots.append(slot)
 
+    def item_is_current_check(self, item):
+        """
+        Sets current_item and current_item_ancestor attributes, when these
+        are found, and set the is_expanded attribute to True for these
+        items.
+        """
+        if not self.current_item_ancestors:
+            if item.is_current(self.request):
+                item.css_classes.add("active")
+                self.current_item_ancestors = item.get_ancestors()
+                for item in self.current_item_ancestors:
+                    item.is_expanded = True
+
     def has_multiple_studies(
         self,
     ):
@@ -184,7 +198,7 @@ class Stepper(renderable):
         ]
 
         for item in self.items:
-            if item.get_errors():
+            if item.get_errors(include_children=False):
                 if self.has_multiple_studies() and item.form_class in study_forms:
                     page_name = f"{item.parent.title}: {item.title}"
                 else:

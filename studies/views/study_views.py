@@ -17,7 +17,7 @@ from observations.models import Observation
 from ..forms import (
     StudyForm,
     StudyDesignForm,
-    StudyConsentForm,
+    PersonalDataForm,
     StudyEndForm,
     StudyUpdateAttachmentsForm,
 )
@@ -64,12 +64,32 @@ class StudyUpdate(
 
     def get_next_url(self):
         """Continue to the Study design overview"""
-        return reverse("studies:design", args=(self.object.pk,))
+        return reverse("studies:personal_data", args=(self.object.pk,))
 
 
 ###############
 # Other actions
 ###############
+class StudyPersonalData(
+    StudyMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
+):
+    model = Study
+    form_class = PersonalDataForm
+    template_name = "studies/study_personal_data.html"
+
+    def get_back_url(self):
+        """
+        Return to the Study overview
+        """
+        return reverse("studies:update", args=(self.object.pk,))
+
+    def get_next_url(self):
+        """Continue to the Study design overview"""
+        return reverse("studies:design", args=(self.object.pk,))
+
+
 class StudyDesign(
     StudyMixin, AllowErrorsOnBackbuttonMixin, UpdateView, generic.edit.FormMixin
 ):
@@ -138,7 +158,7 @@ class StudyDesign(
         """
         Return to the Study overview
         """
-        return reverse("studies:update", args=(self.kwargs["pk"],))
+        return reverse("studies:personal_data", args=(self.kwargs["pk"],))
 
 
 class StudyEnd(
@@ -172,7 +192,7 @@ class StudyEnd(
             next_study = Study.objects.get(proposal=proposal, order=next_order)
             return reverse("studies:update", args=(next_study.pk,))
         else:
-            return reverse("proposals:consent", args=(proposal.pk,))
+            return reverse("proposals:knowledge_security", args=(proposal.pk,))
 
     def get_back_url(self):
         study = self.object
