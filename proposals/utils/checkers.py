@@ -328,7 +328,6 @@ class TrajectoriesChecker(
         return [
             AttachmentsChecker,
             KnowledgeSecurityChecker(self.stepper, parent=self.item),
-            DocumentsChecker,
             DataManagementChecker,
             SubmitChecker,
         ]
