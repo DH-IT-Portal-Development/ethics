@@ -138,35 +138,40 @@ class AttachmentItem(DocItem):
         ancestor_proposal = self.slot.get_proposal().parent
         if not ancestor_proposal:
             return False
-        direct_ancestors = (
-            [ancestor_proposal] +
-            list(ancestor_proposal.study_set.all())
-        )
+        direct_ancestors = [ancestor_proposal] + list(ancestor_proposal.study_set.all())
         parent_attachment = self.attachment.parent.get_correct_submodel()
         if set(parent_attachment.attached_to.all()) & set(direct_ancestors):
             return True
 
     @property
-    def compare_url(self,):
+    def compare_url(
+        self,
+    ):
         return reverse(
             "proposals:compare_attachments",
             kwargs={
                 "proposal_pk": self.slot.get_proposal().pk,
                 "old_pk": self.attachment.parent.pk,
                 "new_pk": self.attachment.pk,
-            }
+            },
         )
 
     @property
-    def attachment(self,):
+    def attachment(
+        self,
+    ):
         return self.slot.attachment.get_correct_submodel()
 
-    def get_link_url(self,):
+    def get_link_url(
+        self,
+    ):
         return self.slot.attachment.get_download_url(
             self.slot.get_proposal(),
         )
 
-    def get_filename(self,):
+    def get_filename(
+        self,
+    ):
         return self.attachment.upload.original_filename
 
 
@@ -186,17 +191,13 @@ class DocList(list):
                 # This must be a Study object
                 container = Container(_("Traject {}").format(item.order))
                 container.order = 200 + item.order
-            container.items += [
-                self.make_docitem(slot) for slot in per_item[item]
-            ]
+            container.items += [self.make_docitem(slot) for slot in per_item[item]]
             containers.append(container)
         return sorted(containers, key=lambda c: c.order)
 
     def per_item(self):
         items = set([slot.attached_object for slot in self])
-        item_dict = {
-            item: [] for item in items
-        }
+        item_dict = {item: [] for item in items}
         for slot in self:
             item_dict[slot.attached_object].append(slot)
         return item_dict
@@ -223,15 +224,14 @@ class AttachmentsList(renderable):
     template_name = "attachments/attachments_list.html"
 
     def __init__(
-            self,
-            review=None,
-            proposal=None,
-            request=None,
+        self,
+        review=None,
+        proposal=None,
+        request=None,
     ):
         if not (review or proposal):
             raise RuntimeError(
-                "AttachmentsList needs either a review "
-                "or a proposal."
+                "AttachmentsList needs either a review " "or a proposal."
             )
         if review:
             proposal = review.proposal
@@ -239,13 +239,13 @@ class AttachmentsList(renderable):
         self.containers = self.get_containers()
         self.request = request
 
-    def get_containers(self,):
+    def get_containers(
+        self,
+    ):
         from proposals.utils.stepper import Stepper
+
         stepper = Stepper(self.proposal)
-        filled_slots = [
-            slot for slot in stepper.attachment_slots
-            if slot.attachment
-        ]
+        filled_slots = [slot for slot in stepper.attachment_slots if slot.attachment]
         containers = DocList(
             filled_slots,
         ).as_containers()

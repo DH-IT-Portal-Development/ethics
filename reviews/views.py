@@ -307,7 +307,11 @@ class AllProposalReviewsView(BaseReviewListView):
 
 
 class ReviewDetailView(
-        ReviewSidebarMixin, LoginRequiredMixin, AutoReviewMixin, UsersOrGroupsAllowedMixin, generic.DetailView
+    ReviewSidebarMixin,
+    LoginRequiredMixin,
+    AutoReviewMixin,
+    UsersOrGroupsAllowedMixin,
+    generic.DetailView,
 ):
     """
     Shows the Decisions for a Review
@@ -345,7 +349,9 @@ class ChangeChamberView(LoginRequiredMixin, GroupRequiredMixin, generic.UpdateVi
         return reverse("reviews:detail", args=[self.object.latest_review().pk])
 
 
-class ReviewAssignView(ReviewSidebarMixin, GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
+class ReviewAssignView(
+    ReviewSidebarMixin, GroupRequiredMixin, AutoReviewMixin, generic.UpdateView
+):
     """
     Allows a User of the SECRETARY group to assign reviewers.
     """

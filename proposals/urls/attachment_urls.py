@@ -69,8 +69,7 @@ attachment_urls = [
     ),
     path(
         "compare/<int:proposal_pk>/<int:old_pk>/<int:new_pk>/",
-        CompareAttachmentsView.as_view(
-        ),
+        CompareAttachmentsView.as_view(),
         name="compare_attachments",
     ),
 ]

@@ -14,7 +14,7 @@ from .utils.review_utils import auto_review
 from attachments.utils import AttachmentsList
 
 
-class ReviewSidebarMixin():
+class ReviewSidebarMixin:
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

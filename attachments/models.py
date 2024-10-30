@@ -100,7 +100,7 @@ class Attachment(models.Model, renderable):
             kwargs={
                 "proposal_pk": proposal.pk,
                 "attachment_pk": self.pk,
-            }
+            },
         )
 
     def get_context_data(self, **kwargs):

@@ -146,6 +146,7 @@ class Review(models.Model):
 
     def get_attachments_list(self, request=None):
         from attachments.utils import AttachmentsList
+
         attachments_list = AttachmentsList(
             review=self,
             request=request,

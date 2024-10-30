@@ -373,6 +373,7 @@ class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
 
         return getattr(old, attribute, None), getattr(new, attribute, None)
 
+
 class CompareAttachmentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
 
     template_name = "proposals/compare_attachments.html"
@@ -385,16 +386,21 @@ class CompareAttachmentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-    def get_proposal(self,):
+    def get_proposal(
+        self,
+    ):
         proposal = Proposal.objects.get(
             pk=self.kwargs.get("proposal_pk"),
         )
         return proposal
 
-    def get_allowed_users(self,):
+    def get_allowed_users(
+        self,
+    ):
         self._get_attachments()
         proposal = self.get_proposal()
         allowed_users = set()
+
         # Users allowed to compare these files must be allowed to see both
         # attachments individually.
         def allowed_for_attachment(proposal, attachment):
@@ -402,10 +408,10 @@ class CompareAttachmentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
             allowed.add(attachment.author)
             allowed.add(proposal.applicants.all())
             return allowed
-        intersection = (
-            allowed_for_attachment(proposal, self.new) &
-            allowed_for_attachment(proposal.parent, self.old)
-        )
+
+        intersection = allowed_for_attachment(
+            proposal, self.new
+        ) & allowed_for_attachment(proposal.parent, self.old)
         allowed_users = allowed_users | intersection
         # The current supervisor gets a pass. If they try to access files
         # other than those in the parent proposal get_attachments should raise
@@ -426,7 +432,9 @@ class CompareAttachmentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
         context["new_text"] = get_document_contents(self.new.upload)
         return context
 
-    def _get_attachments(self,):
+    def _get_attachments(
+        self,
+    ):
         # Fetch relevant objects
         self.old = Attachment.objects.get(
             pk=self.kwargs.get("old_pk"),
@@ -441,15 +449,11 @@ class CompareAttachmentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
         )
         # Check the old attachment is within scope
         if type(self.old) is StudyAttachment:
-            old_proposals = [
-                ao.proposal for ao in self.old.attached_to.all()
-            ]
+            old_proposals = [ao.proposal for ao in self.old.attached_to.all()]
         else:
             old_proposals = self.old.attached_to.all()
         if self.proposal.parent not in old_proposals:
-            raise PermissionDenied(
-                "Couldn't find old_pk in proposal's ancestors!"
-            )
+            raise PermissionDenied("Couldn't find old_pk in proposal's ancestors!")
 
 
 ###########################

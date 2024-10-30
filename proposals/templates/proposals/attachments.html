@@ -27,13 +27,11 @@
 {% endblock %}
 
 {% block form-buttons %}
-    <a href="{% url "proposals:study_start" pk=proposal.pk%}"
+    <a href="{% url "proposals:study_start" pk=proposal.pk %}"
        class="btn btn-secondary continue-button ms-auto p-2 m-1">
         {% trans '<< Opslaan en vorige stap' %}
     </a>
-        {% trans 'Opslaan en volgende stap >>' as default_next_text %}
-    <a href="{% url "proposals:translated" pk=proposal.pk%}"
-       class="btn btn-primary continue-button ms-auto p-2 m-1">
-        {{ next_text|default:default_next_text }}
-    </a>
+    {% trans 'Opslaan en volgende stap >>' as default_next_text %}
+    <a href="{% url "proposals:translated" pk=proposal.pk %}"
+       class="btn btn-primary continue-button ms-auto p-2 m-1">{{ next_text|default:default_next_text }}</a>
 {% endblock %}
