@@ -133,6 +133,8 @@ class AttachmentItem(DocItem):
 
     @property
     def new(self,):
+        if not self.slot.get_proposal.parent:
+            return True
         return not self.attachment.parent
 
     @property
