@@ -132,6 +132,10 @@ class AttachmentItem(DocItem):
         # self.attachment = self.slot.attachment.get_correct_submodel()
 
     @property
+    def new(self,):
+        return not self.attachment.parent
+
+    @property
     def comparable(self):
         if not self.attachment.parent:
             return False

@@ -21,30 +21,35 @@
             <li>
                 {% if item.link_url %}
                     <a href="{{ item.link_url }}" target="_blank">
-                    {% else %}
+                {% else %}
                         <a href="{{ item.get_link_url }}"
                            target="_blank"
                            {% if not item.sets_content_disposition %}download="{{ item.get_filename }}"{% endif %}>
+                {% endif %}
+                {{ item.name }}
+                        </a>
+                        {% if item.comparable %}
+                            {% if item.compare_url %}
+                                <a href="{{ item.compare_url }}" target="_blank" class="icon-link">
+                                    <img src="{% static 'proposals/images/arrow_divide.png' %}"
+                                         title="{% trans 'Toon verschillen' %}">
+                                </a>
+                            {% endif %}
                         {% endif %}
-                        {{ item.name }}
+                        {% if item.new %}
+                            <img src="{% static 'proposals/images/weather-clear.png' %}"
+                                 title="{% trans 'Nieuw bestand' %}">
                     </a>
-                    {% if item.comparable %}
-                        {% if item.compare_url %}
-                            <a href="{{ item.compare_url }}" target="_blank" class="icon-link">
-                                <img src="{% static 'proposals/images/arrow_divide.png' %}"
-                                     title="{% trans 'Toon verschillen' %}">
-                            </a>
                         {% endif %}
-                    {% endif %}
-                </li>
-            {% endfor %}
-        </ul>
-        {% if container.dmp_edit_link %}
-            <a href="{{ container.dmp_edit_link }}" class="d-block mb-3">
-                {% trans "Data Management Plan wijzigen" %}
-                <img src="{% static 'proposals/images/pencil.png' %}"
-                     title="{% trans 'Data Management Plan wijzigen' %}" />
-            </a>
-        {% endif %}
-        {% if container.edit_link %}{% endif %}
-    {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+    {% if container.dmp_edit_link %}
+        <a href="{{ container.dmp_edit_link }}" class="d-block mb-3">
+            {% trans "Data Management Plan wijzigen" %}
+            <img src="{% static 'proposals/images/pencil.png' %}"
+                 title="{% trans 'Data Management Plan wijzigen' %}" />
+        </a>
+    {% endif %}
+    {% if container.edit_link %}{% endif %}
+{% endfor %}
