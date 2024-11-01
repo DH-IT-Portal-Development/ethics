@@ -70,6 +70,9 @@ class StepperItem(
         return ""
 
     def get_errors(self, include_children=False):
+        """
+        Overwrite for adding errors to stepper validation.
+        """
         return []
 
     def get_ancestors(self):
