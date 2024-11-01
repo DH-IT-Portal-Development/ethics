@@ -12,6 +12,8 @@ from cdh.core import forms as cdh_forms
 from django.http import FileResponse
 from attachments.kinds import ATTACHMENTS
 from attachments.utils import AttachmentKind
+from reviews.templatetags.documents_list import get_legacy_documents, DocItem
+from django.utils.translation import gettext as _
 
 
 class AttachForm(
@@ -278,7 +280,19 @@ class ProposalAttachmentsView(
                 study_slots[slot.attached_object].append(slot)
         context["study_slots"] = study_slots
         context["proposal_slots"] = proposal_slots
+        context["legacy_documents"] = self.legacy_documents()
         return context
+
+    def legacy_documents(self,):
+        containers = get_legacy_documents(self.get_proposal())
+        for container in containers:
+            if container.items == []:
+                container.items.append(
+                    DocItem(
+                        _("Geen bestanden gevonden"),
+                    )
+                )
+        return containers
 
 
 class ProposalAttachmentDownloadView(
