@@ -859,13 +859,16 @@ class SessionsChecker(
             return ["sub_page_errors"]
         return []
 
+
 class AttachmentsItem(
-        StepperItem,
+    StepperItem,
 ):
     title = _("Documenten")
     location = "attachments"
 
-    def get_url(self,):
+    def get_url(
+        self,
+    ):
         url = reverse(
             "proposals:attachments",
             args=[self.stepper.proposal.pk],
@@ -880,6 +883,7 @@ class AttachmentsItem(
                     slot.kind.name,
                 )
         return errors
+
 
 class AttachmentsChecker(
     Checker,

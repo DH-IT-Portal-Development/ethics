@@ -200,8 +200,8 @@ class Stepper(renderable):
         for item in self.items:
             if item.get_errors(include_children=False):
                 if (
-                        self.has_multiple_studies() and
-                        getattr(item, "form_class", None) in study_forms
+                    self.has_multiple_studies()
+                    and getattr(item, "form_class", None) in study_forms
                 ):
                     page_name = f"{item.parent.title}: {item.title}"
                 else:
