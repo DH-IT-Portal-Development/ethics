@@ -21,26 +21,26 @@
             <li>
                 {% if item.link_url %}
                     <a href="{{ item.link_url }}" target="_blank">
-                {% else %}
+                    {% else %}
                         <a href="{{ item.get_link_url }}"
                            target="_blank"
                            {% if not item.sets_content_disposition %}download="{{ item.get_filename }}"{% endif %}>
-                {% endif %}
-                {{ item.name }}
-                        </a>
-                        {% if item.comparable %}
-                            {% if item.compare_url %}
-                                <a href="{{ item.compare_url }}" target="_blank" class="icon-link">
-                                    <img src="{% static 'proposals/images/arrow_divide.png' %}"
-                                         title="{% trans 'Toon verschillen' %}">
-                                </a>
-                            {% endif %}
                         {% endif %}
-                        {% if item.new %}
-                            <img src="{% static 'proposals/images/weather-clear.png' %}"
-                                 title="{% trans 'Nieuw bestand' %}">
+                        {{ item.name }}
                     </a>
+                    {% if item.comparable %}
+                        {% if item.compare_url %}
+                            <a href="{{ item.compare_url }}" target="_blank" class="icon-link">
+                                <img src="{% static 'proposals/images/arrow_divide.png' %}"
+                                     title="{% trans 'Toon verschillen' %}">
+                            </a>
                         {% endif %}
+                    {% endif %}
+                    {% if item.new %}
+                        <img src="{% static 'proposals/images/weather-clear.png' %}"
+                             title="{% trans 'Nieuw bestand' %}">
+                    </a>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>

@@ -132,7 +132,9 @@ class AttachmentItem(DocItem):
         # self.attachment = self.slot.attachment.get_correct_submodel()
 
     @property
-    def new(self,):
+    def new(
+        self,
+    ):
         if not self.slot.get_proposal().parent:
             return True
         return not self.attachment.parent

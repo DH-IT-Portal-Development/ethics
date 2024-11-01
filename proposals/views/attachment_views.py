@@ -283,7 +283,9 @@ class ProposalAttachmentsView(
         context["legacy_documents"] = self.legacy_documents()
         return context
 
-    def legacy_documents(self,):
+    def legacy_documents(
+        self,
+    ):
         containers = get_legacy_documents(self.get_proposal())
         for container in containers:
             if container.items == []:

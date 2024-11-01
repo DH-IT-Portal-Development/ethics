@@ -253,7 +253,7 @@ def documents_list(review, user):
 
     # Finally, append the container
     containers.append(pdf_container)
-    
+
     containers += get_legacy_documents(proposal, user=user)
 
     # Finally, return template context
