@@ -1,0 +1,32 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block header_title %}
+    {% trans "Verwijder een bestand" %} - {{ block.super }}
+{% endblock %}
+
+{% block pre-form-text %}
+    <h3>{% trans "Verwijder een bestand" %}</h3>
+    <p>
+        {% blocktrans trimmed %}
+            Je verwijdert het volgende bestand:
+        {% endblocktrans %}
+        {% include object with proposal=proposal %}
+    </p>
+</p>
+{% endblock %}
+
+{% block form-buttons %}
+    <div class="mt-4 mb-3 w-100 d-flex">
+        <a class="btn btn-secondary"
+           href="{% url "proposals:attachments" pk=proposal.pk %}">
+            {% trans '<< Ga terug' %}
+        </a>
+        <input class="btn btn-danger continue-button ms-auto"
+               type="submit"
+               name="save"
+               value="{% trans "Verwijderen" %}" />
+    </div>
+{% endblock %}
