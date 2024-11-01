@@ -253,8 +253,17 @@ def documents_list(review, user):
 
     # Finally, append the container
     containers.append(pdf_container)
+    
+    containers += get_legacy_documents(proposal, user=user)
 
-    # Now get all trajectories / extra documents
+    # Finally, return template context
+    return {"review": review, "containers": containers, "proposal": proposal}
+
+
+def get_legacy_documents(proposal, user=None):
+
+    containers = []
+    # Fetch all trajectories / extra documents
     # First we get all objects attached to a study, then we append those
     # without. This way we get the ordering we want.
     qs = Documents.objects.filter(proposal=proposal).exclude(
@@ -305,10 +314,13 @@ def documents_list(review, user):
                 documents_container.items.append(item)
 
         # Only the secretary gets an edit link
-        if is_secretary(user):
-            documents_container.edit_link = reverse("studies:attachments", args=[d.pk])
+        if user:
+            if is_secretary(user):
+                documents_container.edit_link = reverse(
+                    "studies:attachments",
+                    args=[d.pk],
+                )
 
         containers.append(documents_container)
 
-    # Finally, return template context
-    return {"review": review, "containers": containers, "proposal": proposal}
+    return containers
