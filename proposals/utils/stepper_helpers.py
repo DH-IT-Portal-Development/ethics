@@ -108,11 +108,14 @@ class StepperItem(
 
     def build_css_classes(self):
         """
-        A method to be overwritten by child classes to append to an item's
-        self.css_classes attribute. It returns nothing but appends to the set
-        self.css_classes. It gets called in self.get_css_classes.
+        If an item is collapsed, its completeness also depends on
+        its children, otherwise, it only depends on the form the
+        the item represents.
         """
-        pass
+        if self.get_errors(include_children=not self.is_expanded):
+            self.css_classes.add("incomplete")
+        else:
+            self.css_classes.add("complete")
 
     def get_css_classes(self):
         """
@@ -300,17 +303,6 @@ class ModelFormItem(
             for child in self.children:
                 errors += child.get_errors(include_children=True)
         return errors
-
-    def build_css_classes(self):
-        """
-        If an item is collapsed, its completeness also depends on
-        its children, otherwise, it only depends on the form the
-        the item represents.
-        """
-        if self.get_errors(include_children=not self.is_expanded):
-            self.css_classes.add("incomplete")
-        else:
-            self.css_classes.add("complete")
 
 
 class UpdateOrCreateChecker(
