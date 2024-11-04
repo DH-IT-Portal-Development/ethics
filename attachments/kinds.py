@@ -48,7 +48,7 @@ class DataManagementPlan(ProposalAttachmentKind):
 class OtherProposalAttachment(ProposalAttachmentKind):
 
     db_name = "other"
-    name = _("Overige bestanden")
+    name = _("Overig bestand")
     description = _("Voor alle overige soorten bestanden")
 
     def num_required(self):
@@ -71,3 +71,5 @@ PROPOSAL_ATTACHMENTS = [
 ]
 
 ATTACHMENTS = PROPOSAL_ATTACHMENTS + STUDY_ATTACHMENTS
+
+KIND_CHOICES = list(((kind.db_name, kind.name) for kind in ATTACHMENTS))

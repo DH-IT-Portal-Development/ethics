@@ -10,8 +10,10 @@ from attachments.models import Attachment, ProposalAttachment, StudyAttachment
 from main.forms import ConditionalModelForm
 from cdh.core import forms as cdh_forms
 from django.http import FileResponse
-from attachments.kinds import ATTACHMENTS
+from attachments.kinds import ATTACHMENTS, KIND_CHOICES
 from attachments.utils import AttachmentKind
+from cdh.core import forms as cdh_forms
+from django.utils.translation import gettext as _
 
 
 class AttachForm(
@@ -26,6 +28,11 @@ class AttachForm(
             "name",
             "comments",
         ]
+        widgets = {
+            "kind": cdh_forms.BootstrapSelect(
+                choices=KIND_CHOICES,
+            )
+        }
 
     def __init__(self, kind=None, other_object=None, extra=False, **kwargs):
         self.kind = kind
@@ -36,8 +43,10 @@ class AttachForm(
         elif type(other_object) is Study:
             self._meta.model = StudyAttachment
         super().__init__(**kwargs)
-        if not extra:
+        if kind is not None:
             del self.fields["kind"]
+        else:
+            self.fields["kind"].default = ("other", _("Overig bestand"))
 
     def save(
         self,
