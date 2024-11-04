@@ -49,7 +49,9 @@ class AttachmentSlot(renderable):
         for instance in self.get_instances_for_slot():
             if instance not in exclude:
                 self.attachment = instance
-                break
+                self.kind = get_kind_from_str(instance.kind)
+                return True
+        return False
 
     @property
     def desiredness(self):
