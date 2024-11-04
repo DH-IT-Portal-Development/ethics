@@ -183,6 +183,16 @@ urlpatterns = [
         name="attachments",
     ),
     path(
+        "attach_proposal/<int:other_pk>/",
+        ProposalAttachView.as_view(owner_model=Proposal, extra=True),
+        name="attach_proposal",
+    ),
+    path(
+        "attach_study/<int:other_pk>/",
+        ProposalAttachView.as_view(owner_model=Study, extra=True),
+        name="attach_study",
+    ),
+    path(
         "attach_proposal/<str:kind>/<int:other_pk>/",
         ProposalAttachView.as_view(
             owner_model=Proposal,
@@ -194,16 +204,6 @@ urlpatterns = [
         ProposalAttachView.as_view(
             owner_model=Study,
         ),
-        name="attach_study",
-    ),
-    path(
-        "attach_proposal/extra/<int:other_pk>/",
-        ProposalAttachView.as_view(owner_model=Proposal, extra=True),
-        name="attach_proposal",
-    ),
-    path(
-        "attach_study/extra/<int:other_pk>/",
-        ProposalAttachView.as_view(owner_model=Study, extra=True),
         name="attach_study",
     ),
     path(
