@@ -51,7 +51,8 @@ class AttachForm(
     def save(
         self,
     ):
-        self.instance.kind = self.kind.db_name
+        if self.kind:
+            self.instance.kind = self.kind.db_name
         self.instance.save()
         self.instance.attached_to.add(
             self.other_object,
@@ -69,7 +70,8 @@ class AttachFormView:
         # Remind the user of what they're uploading
         upload_field = form.fields["upload"]
         kind = self.get_kind()
-        upload_field.label += f" ({kind.name})"
+        if kind:
+            upload_field.label += f" ({kind.name})"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -78,7 +80,6 @@ class AttachFormView:
         if type(owner_object) is not Proposal:
             context["study"] = self.get_owner_object()
         context["kind"] = self.get_kind()
-        context["kind_name"] = self.get_kind().name
         form = context["form"]
         self.set_upload_field_label(form)
         return context
@@ -96,6 +97,8 @@ class AttachFormView:
         return owner_class.objects.get(pk=other_pk)
 
     def get_kind(self):
+        if self.extra:
+            return None
         kind_str = self.kwargs.get("kind")
         return get_kind_from_str(kind_str)
 
@@ -113,10 +116,11 @@ class AttachFormView:
         kwargs = super().get_form_kwargs()
         kwargs.update(
             {
-                "kind": self.get_kind(),
                 "other_object": self.get_owner_object(),
             }
         )
+        if not self.extra:
+            kwargs["kind"] = self.get_kind()
         return kwargs
 
 
@@ -131,10 +135,6 @@ class ProposalAttachView(
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
     extra = False
-
-    def get_kind(self):
-        kind_str = self.kwargs.get("kind")
-        return get_kind_from_str(kind_str)
 
 
 class ProposalUpdateAttachmentView(
