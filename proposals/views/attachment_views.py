@@ -2,6 +2,7 @@ from django.views import generic
 from django import forms
 from django.urls import reverse
 from django import forms
+from django.conf import settings
 from proposals.mixins import ProposalContextMixin
 from proposals.models import Proposal
 from studies.models import Study
@@ -14,6 +15,7 @@ from attachments.kinds import ATTACHMENTS, KIND_CHOICES
 from attachments.utils import AttachmentKind
 from cdh.core import forms as cdh_forms
 from django.utils.translation import gettext as _
+from reviews.mixins import UsersOrGroupsAllowedMixin
 
 
 class AttachForm(
@@ -250,6 +252,7 @@ class ProposalAttachmentsView(
 
 
 class ProposalAttachmentDownloadView(
+    UsersOrGroupsAllowedMixin,
     generic.View,
 ):
     original_filename = False
@@ -270,9 +273,6 @@ class ProposalAttachmentDownloadView(
     ):
         self.attachment = Attachment.objects.get(
             pk=attachment_pk,
-        )
-        self.proposal = Proposal.objects.get(
-            pk=self.kwargs.get("proposal_pk"),
         )
         return self.get_file_response()
 
@@ -296,3 +296,25 @@ class ProposalAttachmentDownloadView(
             filename=self.get_filename(),
             as_attachment=True,
         )
+
+    def get_allowed_users(self):
+
+        self.proposal = Proposal.objects.get(
+            pk=self.kwargs.get("proposal_pk"),
+        )
+        allowed_users = list(self.proposal.applicants.all())
+        if self.proposal.supervisor:
+            allowed_users.append(self.proposal.supervisor)
+        return allowed_users
+
+    def get_group_required(self):
+        group_required = [
+            settings.GROUP_SECRETARY,
+            settings.GROUP_CHAIR,
+        ]
+        if self.proposal.reviewing_committee.name == "AK":
+            group_required += [settings.GROUP_GENERAL_CHAMBER]
+        if self.proposal.reviewing_committee.name == "LK":
+            group_required += [settings.GROUP_LINGUISTICS_CHAMBER]
+
+        return group_required

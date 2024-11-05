@@ -128,8 +128,6 @@ class UsersOrGroupsAllowedMixin:
 
     def check_membership(self, groups):
         """Check required group(s)"""
-        if self.current_user.is_superuser:
-            return True
         return set(groups).intersection(set(self.current_user_groups))
 
     def dispatch(self, request, *args, **kwargs):
