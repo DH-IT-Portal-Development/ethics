@@ -44,8 +44,9 @@ from ..forms import (
     FundingForm,
     ResearchGoalForm,
     PreApprovedForm,
-    TranslatedConsentForms,
+    TranslatedConsentForm,
     ProposalForm,
+    KnowledgeSecurityForm,
 )
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
@@ -481,9 +482,23 @@ class ProposalPreApprovedFormView(
         return reverse("proposals:research_goal", args=(self.object.pk,))
 
 
-class TranslatedConsentFormsView(ProposalContextMixin, UpdateView):
+class ProposalKnowledgeSecurity(
+    ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
     model = Proposal
-    form_class = TranslatedConsentForms
+    form_class = KnowledgeSecurityForm
+    template_name = "proposals/knowledge_security_form.html"
+
+    def get_next_url(self):
+        return reverse("proposals:consent", args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse("studies:design_end", args=(self.object.last_study().pk,))
+
+
+class TranslatedConsentView(ProposalContextMixin, UpdateView):
+    model = Proposal
+    form_class = TranslatedConsentForm
     template_name = "proposals/translated_consent_forms.html"
 
     def get_next_url(self):

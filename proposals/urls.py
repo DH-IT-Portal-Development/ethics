@@ -45,8 +45,9 @@ from .views.proposal_views import (
     ProposalCopyAmendment,
     ProposalsPublicArchiveView,
     ProposalUpdateDataManagement,
-    TranslatedConsentFormsView,
+    TranslatedConsentView,
     ProposalUpdateDateStart,
+    ProposalKnowledgeSecurity,
 )
 
 from .views.attachment_views import (
@@ -276,10 +277,13 @@ urlpatterns = [
     ),
     path("confirm/<int:pk>/", ProposalConfirmation.as_view(), name="confirmation"),
     path("study_start/<int:pk>/", StudyStart.as_view(), name="study_start"),
-    path("consent/<int:pk>/", StudyConsent.as_view(), name="consent"),
     path(
-        "translated/<int:pk>/", TranslatedConsentFormsView.as_view(), name="translated"
+        "knowledge_security/<int:pk>/",
+        ProposalKnowledgeSecurity.as_view(),
+        name="knowledge_security",
     ),
+    path("consent/<int:pk>/", StudyConsent.as_view(), name="consent"),
+    path("translated/<int:pk>/", TranslatedConsentView.as_view(), name="translated"),
     path(
         "copy/",
         include(

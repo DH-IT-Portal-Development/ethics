@@ -12,7 +12,7 @@
 {% block pre-form-text %}
     <h2>{% trans "Bevestigingsbrief versturen" %}</h2>
     <p>
-        {% blocktrans trimmed with title=review.proposal.title %}
+        {% blocktrans trimmed with title=proposal.title %}
             Geef hieronder aan wanneer de bevestigingsbrief voor de aanvraag <em>{{ title }}</em> is verstuurd.
         {% endblocktrans %}
     </p>

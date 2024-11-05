@@ -326,6 +326,7 @@ class TrajectoriesChecker(
         self,
     ):
         return [
+            KnowledgeSecurityChecker(self.stepper, parent=self.item),
             AttachmentsChecker,
             DataManagementChecker,
             SubmitChecker,
@@ -353,6 +354,24 @@ class TrajectoriesChecker(
         return kwargs
 
 
+class KnowledgeSecurityChecker(
+    ModelFormChecker,
+):
+    form_class = proposal_forms.KnowledgeSecurityForm
+    title = _("Traject afronding")
+
+    def check(self):
+        if self.stepper.has_multiple_studies():
+            self.title = _("Trajecten afronding")
+        self.stepper.items.append(self.make_stepper_item())
+        return []
+
+    def get_url(
+        self,
+    ):
+        return reverse("proposals:knowledge_security", args=[self.proposal.pk])
+
+
 class StudyChecker(
     Checker,
 ):
@@ -377,6 +396,11 @@ class StudyChecker(
         # We always have a Participants and StudyDesign item
         checkers = [
             ParticipantsChecker(
+                self.stepper,
+                study=self.study,
+                parent=self.current_parent,
+            ),
+            PersonalDataChecker(
                 self.stepper,
                 study=self.study,
                 parent=self.current_parent,
@@ -496,6 +520,38 @@ class ParticipantsChecker(
         return kwargs
 
 
+class PersonalDataChecker(ModelFormChecker):
+    title = _("Persoonlijke gegevens")
+    form_class = study_forms.PersonalDataForm
+
+    def __init__(
+        self,
+        *args,
+        **kwargs,
+    ):
+        self.study = kwargs.pop("study")
+        return super().__init__(*args, **kwargs)
+
+    def check(
+        self,
+    ):
+        self.stepper.items.append(self.make_stepper_item())
+        return []
+
+    def get_url(
+        self,
+    ):
+        return reverse(
+            "studies:personal_data",
+            args=[
+                self.study.pk,
+            ],
+        )
+
+    def get_form_object(self):
+        return self.study
+
+
 class DesignChecker(
     ModelFormChecker,
 ):
@@ -530,7 +586,7 @@ class DesignChecker(
 class StudyEndChecker(
     ModelFormChecker,
 ):
-    title = _("Afronding")
+    title = _("Traject overzicht")
     form_class = study_forms.StudyEndForm
 
     def __init__(
@@ -845,7 +901,7 @@ class AttachmentsChecker(
 class TranslationChecker(
     ModelFormChecker,
 ):
-    form_class = proposal_forms.TranslatedConsentForms
+    form_class = proposal_forms.TranslatedConsentForm
     title = _("Vertalingen")
     location = "data_management"
 
