@@ -155,7 +155,9 @@ class ProposalUpdateAttachmentView(
         return obj
 
     def get_owner_object(self):
-        other_class = self.get_kind().attached_object
+        instance = self.get_object().get_correct_submodel()
+        attached_field = instance._meta.get_field("attached_to")
+        other_class = attached_field.related_model
         other_pk = self.kwargs.get("other_pk")
         return other_class.objects.get(pk=other_pk)
 

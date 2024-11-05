@@ -44,7 +44,8 @@ class AttachmentSlot(renderable):
     def match(self, exclude):
         """
         Tries to fill this slot with an existing attachment that is not
-        in the exclusion set of already matched attachments.
+        in the exclusion set of already matched attachments. Returns True
+        or False depending on if the slot was succesfully matched.
         """
         for instance in self.get_instances_for_slot():
             if instance not in exclude:
