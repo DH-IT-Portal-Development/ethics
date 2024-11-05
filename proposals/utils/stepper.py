@@ -43,7 +43,9 @@ class Stepper(renderable):
         self.check_all(self.starting_checkers)
 
     @property
-    def attachment_slots(self,):
+    def attachment_slots(
+        self,
+    ):
         """
         Appends unmatched attachments as extra slots to the internal
         list _attachment_slots.
@@ -53,9 +55,7 @@ class Stepper(renderable):
         for obj in objects:
             success = True
             while success:
-                exclude = [
-                    s.attachment for s in self._attachment_slots
-                ] + [
+                exclude = [s.attachment for s in self._attachment_slots] + [
                     s.attachment for s in extra_slots
                 ]
                 empty_slot = AttachmentSlot(

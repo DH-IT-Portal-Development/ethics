@@ -38,7 +38,7 @@ class Attachment(models.Model, renderable):
         # From Django 5 onwards we can define a callable to get
         # the choices which would be the preferred solution.
         default=("other", _("Overig bestand")),
-        verbose_name=_("Type bestand")
+        verbose_name=_("Type bestand"),
     )
     name = models.CharField(
         max_length=50,

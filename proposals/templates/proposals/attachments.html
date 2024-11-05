@@ -16,7 +16,8 @@
     <p class="text-center">
         <a href="{% url "proposals:attach_proposal" proposal.pk %}">Voeg extra bestand toe
             <img src="{% static 'proposals/images/add.png' %}"
-                 title="{% trans 'Toevoegen' %}" /></a>
+                 title="{% trans 'Toevoegen' %}" />
+        </a>
     </p>
     {% for study, slots in study_slots.items %}
         <hr />
@@ -27,11 +28,11 @@
         {% for slot in slots %}
             {% include slot with manager=manager %}
         {% endfor %}
-
         <p class="text-center">
             <a href="{% url "proposals:attach_study" proposal.pk %}">Voeg extra bestand toe
                 <img src="{% static 'proposals/images/add.png' %}"
-                     title="{% trans 'Toevoegen' %}" /></a>
+                     title="{% trans 'Toevoegen' %}" />
+            </a>
         </p>
     {% endfor %}
     {% block auto-form-render %}{% endblock %}
