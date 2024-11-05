@@ -305,6 +305,7 @@ class ProposalAttachmentDownloadView(
     def get_group_required(self):
         group_required = [
             settings.GROUP_SECRETARY,
+            settings.GROUP_CHAIR,
         ]
         if self.proposal.reviewing_committee.name == "AK":
             group_required += [settings.GROUP_GENERAL_CHAMBER]
