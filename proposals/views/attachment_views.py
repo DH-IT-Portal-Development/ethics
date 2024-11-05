@@ -97,10 +97,10 @@ class AttachFormView:
         return owner_class.objects.get(pk=other_pk)
 
     def get_kind(self):
-        if self.extra:
-            return None
-        kind_str = self.kwargs.get("kind")
-        return get_kind_from_str(kind_str)
+        kind_str = self.kwargs.get("kind", None)
+        if kind_str:
+            return get_kind_from_str(kind_str)
+        return None
 
     def get_success_url(
         self,
@@ -119,8 +119,7 @@ class AttachFormView:
                 "other_object": self.get_owner_object(),
             }
         )
-        if not self.extra:
-            kwargs["kind"] = self.get_kind()
+        kwargs["kind"] = self.get_kind()
         return kwargs
 
 
@@ -159,11 +158,6 @@ class ProposalUpdateAttachmentView(
         other_class = self.get_kind().attached_object
         other_pk = self.kwargs.get("other_pk")
         return other_class.objects.get(pk=other_pk)
-
-    def get_kind(self):
-        obj = self.get_object()
-        kind_str = obj.kind
-        return get_kind_from_str(kind_str)
 
 
 class DetachForm(
