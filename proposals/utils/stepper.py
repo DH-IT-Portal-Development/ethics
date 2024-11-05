@@ -51,10 +51,14 @@ class Stepper(renderable):
         list _attachment_slots.
         """
         extra_slots = []
+        # Get all attachable objects
         objects = [self.proposal] + list(self.proposal.study_set.all())
         for obj in objects:
             success = True
             while success:
+                # Keep appending extra slots as long as they can be matched to
+                # to an attachment for this object. We update the exclude list
+                # as we go to not duplicate them or end up in an infinite loop.
                 exclude = [s.attachment for s in self._attachment_slots] + [
                     s.attachment for s in extra_slots
                 ]
