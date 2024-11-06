@@ -2057,7 +2057,7 @@ msgstr ""
 #: proposals/templates/proposals/compare_attachments.html:67
 #: proposals/templates/proposals/compare_documents.html:67
 msgid "Je vergelijkt"
-msgstr "Comparing:"
+msgstr "Comparing"
 
 #: proposals/templates/proposals/compare_attachments.html:72
 #: proposals/templates/proposals/compare_documents.html:72
