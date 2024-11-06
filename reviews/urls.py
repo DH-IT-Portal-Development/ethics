@@ -20,7 +20,7 @@ from .views import (
     CommitteeMembersWorkloadView,
 )
 
-from proposals.views.attachment_views import ReviewAttachmentsView
+from reviews.views import ReviewAttachmentsView
 
 app_name = "reviews"
 

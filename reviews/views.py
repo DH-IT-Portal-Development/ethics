@@ -396,7 +396,7 @@ class ReviewAssignView(
         return super(ReviewAssignView, self).form_valid(form)
 
 
-class ReviewDiscontinueView(GroupRequiredMixin, generic.UpdateView):
+class ReviewDiscontinueView(ReviewSidebarMixin, GroupRequiredMixin, generic.UpdateView):
     model = Review
     form_class = ReviewDiscontinueForm
     template_name = "reviews/review_discontinue_form.html"
@@ -427,7 +427,7 @@ class ReviewDiscontinueView(GroupRequiredMixin, generic.UpdateView):
         return super().form_valid(form)
 
 
-class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
+class ReviewCloseView(GroupRequiredMixin, ReviewSidebarMixin, generic.UpdateView):
     model = Review
     form_class = ReviewCloseForm
     template_name = "reviews/review_close_form.html"
@@ -552,7 +552,10 @@ class CreateDecisionRedirectView(
 
 
 class DecisionUpdateView(
-    LoginRequiredMixin, UserAllowedToDecisionMixin, generic.UpdateView
+    ReviewSidebarMixin,
+    LoginRequiredMixin,
+    UserAllowedToDecisionMixin,
+    generic.UpdateView,
 ):
     """
     Allows a User to make a Decision on a Review.
@@ -567,8 +570,12 @@ class DecisionUpdateView(
         context["update_url"] = reverse(
             "proposals:update", args=[self.object.review.proposal.pk]
         )
-
         return context
+
+    def get_review(
+        self,
+    ):
+        return self.get_object().review
 
     def get_success_url(self):
         obj = self.get_object()
@@ -610,7 +617,10 @@ class DecisionUpdateView(
 
 
 class ReviewClosedDecisionView(
-    LoginRequiredMixin, UserAllowedToDecisionMixin, generic.DetailView
+    ReviewSidebarMixin,
+    LoginRequiredMixin,
+    UserAllowedToDecisionMixin,
+    generic.DetailView,
 ):
     """Custom page for supervisors visiting links to already concluded
     supervisor reviews

@@ -17,9 +17,13 @@ from .utils import AttachmentsList
 class ReviewSidebarMixin:
 
     def get_context_data(self, **kwargs):
+        if self.model is Review:
+            review = self.get_object()
+        else:
+            review = self.get_review()
         context = super().get_context_data(**kwargs)
         context["attachments_list"] = AttachmentsList(
-            review=self.get_object(),
+            review=review,
             request=self.request,
         )
         return context
