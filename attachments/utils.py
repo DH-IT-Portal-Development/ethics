@@ -98,23 +98,6 @@ class AttachmentSlot(renderable):
             },
         )
 
-    @property
-    def provision(
-        self,
-    ):
-        proposal = self.get_proposal()
-        if not proposal.parent:
-            return "new"
-        if self.comparable:
-            return "revised"
-        # Find all attachments belonging to the parent proposal
-        parent_attachments = []
-        for obj in [proposal.parent] + list(proposal.parent.study_set.all()):
-            parent_attachments += list(obj.attachments.all())
-        if self.attachment in parent_attachments:
-            return "existing"
-        return "new"
-
     def get_instances_for_slot(
         self,
     ):
