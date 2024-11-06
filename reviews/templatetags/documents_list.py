@@ -183,16 +183,6 @@ class DocItem:
 
 
 @register.inclusion_tag("reviews/documents_list.html")
-def attachments_list(review, user):
-    stepper = Stepper(review.proposal)
-    filled_slots = [slot for slot in stepper.attachment_slots if slot.attachment]
-    containers = DocList(
-        filled_slots,
-    ).as_containers()
-    return {"review": review, "containers": containers, "proposal": review.proposal}
-
-
-@register.inclusion_tag("reviews/documents_list.html")
 def documents_list(review, user):
     """This retrieves all files associated with
     a certain review and its proposal and returns them as a
