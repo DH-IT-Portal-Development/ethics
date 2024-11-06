@@ -20,6 +20,8 @@ from .views import (
     CommitteeMembersWorkloadView,
 )
 
+from proposals.views.attachment_views import ReviewAttachmentsView
+
 app_name = "reviews"
 
 urlpatterns = [
@@ -68,5 +70,10 @@ urlpatterns = [
         "decide/new/<int:review>/",
         CreateDecisionRedirectView.as_view(),
         name="decide_new",
+    ),
+    path(
+        "attachments/<int:review_pk>/",
+        ReviewAttachmentsView.as_view(),
+        name="attachments",
     ),
 ]
