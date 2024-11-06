@@ -58,6 +58,63 @@ class AttachmentSlot(renderable):
             return self.force_desiredness
         return self.kind.desiredness
 
+    @property
+    def is_new(self):
+        proposal = self.get_proposal()
+        ancestor_proposal = self.get_proposal().parent
+        if not ancestor_proposal:
+            return True
+        return not self.attachment.parent
+
+    @property
+    def comparable(self):
+        # No parent, no comparison
+        if not self.attachment.parent:
+            return False
+        # If this is a new proposal, comparison
+        ancestor_proposal = self.get_proposal().parent
+        if not ancestor_proposal:
+            return False
+        # Only if we have a parent and it's a direct ancestor, i.e. the current
+        # attachment hasn't been seen by the committee before, do we return True
+        direct_ancestors = [ancestor_proposal] + list(ancestor_proposal.study_set.all())
+        parent_attachment = self.attachment.parent.get_correct_submodel()
+        if set(parent_attachment.attached_to.all()) & set(direct_ancestors):
+            return True
+        return False
+
+    @property
+    def compare_url(
+        self,
+    ):
+        if not self.comparable:
+            return False
+        return reverse(
+            "proposals:compare_attachments",
+            kwargs={
+                "proposal_pk": self.get_proposal().pk,
+                "old_pk": self.attachment.parent.pk,
+                "new_pk": self.attachment.pk,
+            },
+        )
+
+    @property
+    def provision(
+        self,
+    ):
+        proposal = self.get_proposal()
+        if not proposal.parent:
+            return "new"
+        if self.comparable:
+            return "revised"
+        # Find all attachments belonging to the parent proposal
+        parent_attachments = []
+        for obj in [proposal.parent] + list(proposal.parent.study_set.all()):
+            parent_attachments += list(obj.attachments.all())
+        if self.attachment in parent_attachments:
+            return "existing"
+        return "new"
+
     def get_instances_for_slot(
         self,
     ):
@@ -79,7 +136,9 @@ class AttachmentSlot(renderable):
         context["proposal"] = self.get_proposal()
         return context
 
-    def get_proposal(self):
+    def get_proposal(
+        self,
+    ):
         if type(self.attached_object) is Proposal:
             return self.attached_object
         else:
@@ -130,39 +189,6 @@ class AttachmentItem(DocItem):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # self.attachment = self.slot.attachment.get_correct_submodel()
-
-    @property
-    def new(
-        self,
-    ):
-        if not self.slot.get_proposal().parent:
-            return True
-        return not self.attachment.parent
-
-    @property
-    def comparable(self):
-        if not self.attachment.parent:
-            return False
-        ancestor_proposal = self.slot.get_proposal().parent
-        if not ancestor_proposal:
-            return False
-        direct_ancestors = [ancestor_proposal] + list(ancestor_proposal.study_set.all())
-        parent_attachment = self.attachment.parent.get_correct_submodel()
-        if set(parent_attachment.attached_to.all()) & set(direct_ancestors):
-            return True
-
-    @property
-    def compare_url(
-        self,
-    ):
-        return reverse(
-            "proposals:compare_attachments",
-            kwargs={
-                "proposal_pk": self.slot.get_proposal().pk,
-                "old_pk": self.attachment.parent.pk,
-                "new_pk": self.attachment.pk,
-            },
-        )
 
     @property
     def attachment(
@@ -233,17 +259,11 @@ class AttachmentsList(renderable):
 
     def __init__(
         self,
-        review=None,
-        proposal=None,
+        review,
         request=None,
     ):
-        if not (review or proposal):
-            raise RuntimeError(
-                "AttachmentsList needs either a review " "or a proposal."
-            )
-        if review:
-            proposal = review.proposal
-        self.proposal = proposal
+        self.review = review
+        self.proposal = review.proposal
         self.containers = self.get_containers()
         self.request = request
 
@@ -261,11 +281,9 @@ class AttachmentsList(renderable):
 
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
+        context["review"] = self.review
         context["proposal"] = self.proposal
         context["containers"] = self.containers
-        if self.request:
-            if is_secretary(self.request.user):
-                context["attachments_edit_link"] = True
         return context
 
 
