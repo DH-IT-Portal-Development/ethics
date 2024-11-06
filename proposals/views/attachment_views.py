@@ -255,57 +255,6 @@ class ProposalDetachView(
         )
 
 
-class ReviewAttachmentsView(
-    generic.TemplateView,
-):
-    template_name = "reviews/review_attachments.html"
-    model = Attachment
-
-    def __init__(self, *args, **kwargs):
-        self.review = None
-        return super().__init__(*args, **kwargs)
-
-    def get_slots(
-        self,
-    ):
-        proposal = self.get_review().proposal
-        stepper = Stepper(proposal)
-        return [slot for slot in stepper.attachment_slots if slot.attachment]
-
-    def per_object(
-        self,
-    ):
-        slots = self.get_slots()
-        proposal = self.get_review().proposal
-        # We want to fetch all *possible* objects, not just the ones
-        # that have actual attachments, so that we can explicitly show
-        # the reviewer that there's nothing attached to an object, rather
-        # than just ommitting said object.
-        objects = [proposal] + list(proposal.study_set.all())
-        slot_dict = {obj: [] for obj in objects}
-        for slot in slots:
-            relevant_owner = slot.attachment.get_owner_for_proposal(proposal)
-            slot_dict[relevant_owner].append(slot)
-        return slot_dict
-
-    def get_review(
-        self,
-    ):
-        if self.review:
-            return self.review
-        pk = self.kwargs.get("review_pk")
-        return Review.objects.get(pk=pk)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["slots"] = self.per_object()
-        context["review"] = self.get_review()
-        context["proposal"] = self.get_review().proposal
-        if is_secretary(self.request.user):
-            context["attachments_edit_link"] = True
-        return context
-
-
 class ProposalAttachmentsView(
     ProposalContextMixin,
     generic.DetailView,

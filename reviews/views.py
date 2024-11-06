@@ -12,8 +12,9 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.db.models import Q, Count
 
-from main.utils import get_reviewers, get_secretary
+from main.utils import get_reviewers, get_secretary, is_secretary
 from proposals.models import Proposal
+from proposals.utils.stepper import Stepper
 from .forms import (
     DecisionForm,
     ReviewAssignForm,
@@ -37,7 +38,7 @@ from .utils.review_utils import (
     assign_reviewers,
 )
 from .utils.review_actions import ReviewActions
-from attachments.utils import AttachmentsList
+from attachments.models import Attachment
 
 
 class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
@@ -629,3 +630,55 @@ class ReviewClosedDecisionView(
         # Do nothing; we only use the permission check, this page is only for
         # cases where the review is closed.
         return None
+
+
+class ReviewAttachmentsView(
+    ReviewSidebarMixin,
+    generic.TemplateView,
+):
+    template_name = "reviews/review_attachments.html"
+    model = Attachment
+
+    def __init__(self, *args, **kwargs):
+        self.review = None
+        return super().__init__(*args, **kwargs)
+
+    def get_slots(
+        self,
+    ):
+        proposal = self.get_review().proposal
+        stepper = Stepper(proposal)
+        return [slot for slot in stepper.attachment_slots if slot.attachment]
+
+    def per_object(
+        self,
+    ):
+        slots = self.get_slots()
+        proposal = self.get_review().proposal
+        # We want to fetch all *possible* objects, not just the ones
+        # that have actual attachments, so that we can explicitly show
+        # the reviewer that there's nothing attached to an object, rather
+        # than just ommitting said object.
+        objects = [proposal] + list(proposal.study_set.all())
+        slot_dict = {obj: [] for obj in objects}
+        for slot in slots:
+            relevant_owner = slot.attachment.get_owner_for_proposal(proposal)
+            slot_dict[relevant_owner].append(slot)
+        return slot_dict
+
+    def get_review(
+        self,
+    ):
+        if self.review:
+            return self.review
+        pk = self.kwargs.get("review_pk")
+        return Review.objects.get(pk=pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["slots"] = self.per_object()
+        context["review"] = self.get_review()
+        context["proposal"] = self.get_review().proposal
+        if is_secretary(self.request.user):
+            context["attachments_edit_link"] = True
+        return context

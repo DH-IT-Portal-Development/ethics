@@ -11,7 +11,7 @@ from main.utils import is_secretary
 
 from .models import Decision, Review
 from .utils.review_utils import auto_review
-from attachments.utils import AttachmentsList
+from .utils import AttachmentsList
 
 
 class ReviewSidebarMixin:
