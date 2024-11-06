@@ -7,9 +7,9 @@
 
 {% comment %}
 
-Please note that this template requires a review object.
+    Please note that this template requires a review object.
 
-Remember to include it in a with statement if the view does not provide it.
+    Remember to include it in a with statement if the view does not provide it.
 
 {% endcomment %}
 <div class="p-3">
@@ -122,7 +122,9 @@ Remember to include it in a with statement if the view does not provide it.
         {% endif %}
     {% endif %}
     <br />
-    {% include attachments_list %}
+    {% if attachments_list %}
+        {% include attachments_list %}
+    {% endif %}
     <br />
     <h4>{% trans "Documenten (oude systeem)" %}</h4>
     {% documents_list review user %}
