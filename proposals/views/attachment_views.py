@@ -2,6 +2,7 @@ from django.views import generic
 from django import forms
 from django.urls import reverse
 from django import forms
+from main.views import UpdateView
 from proposals.mixins import ProposalContextMixin
 from proposals.models import Proposal
 from studies.models import Study
@@ -218,14 +219,26 @@ class AttachmentDetailView(
     template_name = "proposals/attachment_detail.html"
     model = Attachment
 
+class ProposalAttachmentsForm(
+    forms.ModelForm,
+):
+    """
+    An empty form, needed to make the navigation work.
+    """
+    class Meta:
+        model = Proposal
+        fields = []
+
 
 class ProposalAttachmentsView(
     ProposalContextMixin,
-    generic.DetailView,
+    UpdateView,
 ):
 
     template_name = "proposals/attachments.html"
     model = Proposal
+    #this form does not do anything, it's just here to make navigation work
+    form_class = ProposalAttachmentsForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -242,6 +255,12 @@ class ProposalAttachmentsView(
         context["study_slots"] = study_slots
         context["proposal_slots"] = proposal_slots
         return context
+    
+    def get_next_url(self):
+        return reverse("proposals:translated", args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse("proposals:knowledge_security", args=(self.object.pk,))
 
 
 class ProposalAttachmentDownloadView(
