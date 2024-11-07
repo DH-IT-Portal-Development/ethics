@@ -15,7 +15,18 @@ from tasks.views import task_views, session_views
 from tasks.models import Task, Session
 
 from attachments.utils import AttachmentSlot, desiredness
-from attachments.kinds import DataManagementPlan, LEGAL_BASIS_KIND_DICT
+from attachments.kinds import (
+    DataManagementPlan,
+    LEGAL_BASIS_KIND_DICT,
+    ConsentForm,
+    AgreementRecordingsPublicInterest,
+    ScriptVerbalConsentRecordings,
+    ConsentPublicInterestSpecialDetails,
+    ConsentChildrenParents,
+    ConsentChildrenNoParents,
+    SchoolConsentForm,
+    SchoolInformationLetter,
+)
 
 from .stepper_helpers import (
     Checker,
@@ -483,39 +494,116 @@ class StudyAttachmentsChecker(
             )
             self.stepper.add_slot(info_slot)
 
-        if self.check_has_AV_registration:
-            # Add "agreement video/audio recordings" slot or "script for verbal consent recordings"
-            # Maybe if one has been fulfilled, change the orther's desiredness
-            pass
+        if self.study.legal_basis == Study.LegalBases.PUBLIC_INTEREST:
+
+            fulfilled_recording_slot = None
+
+            if self.check_has_recordings():
+                # if a study features registration, add two slots
+                recordings_slots = [
+                    AttachmentSlot(
+                        self.study,
+                        kind=AgreementRecordingsPublicInterest,
+                    ),
+                    AttachmentSlot(
+                        self.study,
+                        kind=ScriptVerbalConsentRecordings,
+                    ),
+                ]
+                # if one of them has been fulfilled, this becomes the fulfilled slot
+                fulfilled_recording_slot = self.at_least_one_fulfilled(recordings_slots)
+
+                for slot in recordings_slots:
+                    # if there is at least one, make the other one optional
+                    if (
+                        fulfilled_recording_slot
+                        and slot is not fulfilled_recording_slot
+                    ):
+                        slot.force_desiredness = desiredness.OPTIONAL
+                    self.stepper.add_slot(slot)
+
+            if self.study.has_special_details and not fulfilled_recording_slot:
+                self.stepper.add_slot(
+                    AttachmentSlot(
+                        self.study,
+                        kind=ConsentPublicInterestSpecialDetails,
+                    )
+                )
+
+        if self.study.legal_basis == Study.LegalBases.CONSENT:
+            fulfilled_children_slot = None
+            if self.study.has_children():
+                children_slots = [
+                    AttachmentSlot(
+                        self.study,
+                        kind=ConsentChildrenParents,
+                    ),
+                    AttachmentSlot(
+                        self.study,
+                        kind=ConsentChildrenNoParents,
+                    ),
+                ]
+
+                # if one of them has been fulfilled, this becomes the fulfilled slot
+                fulfilled_children_slot = self.at_least_one_fulfilled(children_slots)
+                for slot in children_slots:
+                    # if there is at least one, make the other one optional
+                    if fulfilled_children_slot and slot is not fulfilled_children_slot:
+                        slot.force_desiredness = desiredness.OPTIONAL
+                    self.stepper.add_slot(slot)
+
+            # Add a slot for a normal ConsentForm
+            self.stepper.add_slot(
+                AttachmentSlot(
+                    self.study,
+                    kind=ConsentForm,
+                    force_desiredness=(
+                        desiredness.REQUIRED
+                        if not fulfilled_children_slot
+                        else desiredness.OPTIONAL
+                    ),
+                )
+            )
+
         return []
-    
-    def check_has_AV_registration(self):
+
+    def check_has_recordings(self):
         """
         A function that checks whether a study features audio or video
         registration.
         """
-        if self.study.legal_basis == Study.LegalBases.CONSENT:
-            has_AV_registration = False
-            if self.study.has_observation:
-                #gather all AV observation_registraions
-                AV_registrations = observation_registration.objects.filter(
-                    description__in=["audio-opname", "video-opname"]
-                )
-                if self.study.observation.registration in AV_registrations:
-                    has_AV_registration = True
-            if self.study.has_sessions:
-                # gather all the tasks
-                all_tasks = [
-                    session.task_set.all() for session in self.study.session_set.all()
-                ]
-                #gather all AV task_registrations
-                AV_registrations = task_registration.objects.filter(
-                    description__in=["audio-opname", "video-opname"]
-                )
-                if all_tasks.filter(registration__in=AV_registrations):
-                    has_AV_registration = True
-        return has_AV_registration
+        has_recordings = False
+        if self.study.get_observation:
+            # gather all AV observation_registraions
+            recordings_observation = observation_registration.objects.filter(
+                description__in=["audio recording", "video recording"]
+            )
+            # check if there is an overlap between these two QS's
+            if self.study.observation.registrations.all() & recordings_observation:
+                has_recordings = True
+        if self.study.get_sessions:
+            # gather all the tasks
+            all_tasks = Task.objects.filter(session__study=self.study)
+            # gather all AV task_registrations
+            recordings_sessions = task_registration.objects.filter(
+                description__in=["audio recording", "video recording"]
+            )
+            if all_tasks.filter(registrations__in=recordings_sessions):
+                has_recordings = True
+        return has_recordings
 
+    def at_least_one_fulfilled(self, slots):
+        """
+        Function which receives a list of slots and checks if at least one has
+        been fullfilled. It returns None, or the fullfiled slot
+        """
+        fullfilled_slot = None
+        for slot in slots:
+            # check if any of these slots have been fullfilled yet using match()
+            slot.match(exclude=[])
+            if slot.attachment:
+                fullfilled_slot = slot
+        return fullfilled_slot
 
 
 class ParticipantsChecker(
@@ -904,6 +992,7 @@ class AttachmentsChecker(
         self,
     ):
         self.add_dmp_slot()
+        self.add_school_slots()
         item = self.make_stepper_item()
         self.stepper.items.append(item)
         return [
@@ -919,6 +1008,26 @@ class AttachmentsChecker(
             kind=DataManagementPlan,
         )
         self.stepper.add_slot(slot)
+
+    def add_school_slots(self):
+        studies_with_schools = [
+            study
+            for study in self.proposal.study_set.all()
+            if study.research_settings_contains_schools()
+        ]
+        if studies_with_schools:
+            self.stepper.add_slot(
+                AttachmentSlot(
+                    self.stepper.proposal,
+                    kind=SchoolInformationLetter,
+                )
+            )
+            self.stepper.add_slot(
+                AttachmentSlot(
+                    self.stepper.proposal,
+                    kind=SchoolConsentForm,
+                )
+            )
 
     def make_stepper_item(self):
         url = reverse(
