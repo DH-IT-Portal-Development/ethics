@@ -373,6 +373,9 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             del self.fields["deception"]
             del self.fields["deception_details"]
 
+        self._errors = None
+        self.full_clean()
+
     def clean(self):
         """
         Check for conditional requirements:

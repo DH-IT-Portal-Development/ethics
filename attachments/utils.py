@@ -57,6 +57,10 @@ class AttachmentSlot(renderable):
             return self.force_desiredness
         return self.kind.desiredness
 
+    @property
+    def required(self):
+        return self.desiredness is desiredness.REQUIRED
+
     def get_instances_for_slot(
         self,
     ):
