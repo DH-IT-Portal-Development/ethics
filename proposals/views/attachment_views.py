@@ -221,12 +221,14 @@ class AttachmentDetailView(
     template_name = "proposals/attachment_detail.html"
     model = Attachment
 
+
 class ProposalAttachmentsForm(
     forms.ModelForm,
 ):
     """
     An empty form, needed to make the navigation work.
     """
+
     class Meta:
         model = Proposal
         fields = []
@@ -239,7 +241,7 @@ class ProposalAttachmentsView(
 
     template_name = "proposals/attachments.html"
     model = Proposal
-    #this form does not do anything, it's just here to make navigation work
+    # this form does not do anything, it's just here to make navigation work
     form_class = ProposalAttachmentsForm
 
     def get_context_data(self, **kwargs):
@@ -257,7 +259,7 @@ class ProposalAttachmentsView(
         context["study_slots"] = study_slots
         context["proposal_slots"] = proposal_slots
         return context
-    
+
     def get_next_url(self):
         return reverse("proposals:translated", args=(self.object.pk,))
 

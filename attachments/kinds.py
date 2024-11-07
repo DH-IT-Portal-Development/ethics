@@ -24,6 +24,7 @@ class StudyAttachmentKind(AttachmentKind):
 # Information letters
 #####################
 
+
 class InformationLetterAnonymous(StudyAttachmentKind):
 
     db_name = "information_letter_anonymous"
@@ -78,6 +79,7 @@ LEGAL_BASIS_KIND_DICT = {
 # Consent forms
 ###############
 
+
 class ConsentForm(StudyAttachmentKind):
 
     db_name = "consent_form"
@@ -88,6 +90,7 @@ class ConsentForm(StudyAttachmentKind):
         " (16 jaar en ouder)."
     )
     desiredness = desiredness.REQUIRED
+
 
 class ConsentPublicInterestSpecialDetails(StudyAttachmentKind):
 
@@ -132,6 +135,7 @@ class ConsentChildrenNoParents(StudyAttachmentKind):
 # Recordings consent
 ####################
 
+
 class AgreementRecordingsPublicInterest(StudyAttachmentKind):
 
     db_name = "agreement_av_recordings"
@@ -163,6 +167,7 @@ class ScriptVerbalConsentRecordings(StudyAttachmentKind):
 # School stuff
 ##############
 
+
 class SchoolInformationLetter(ProposalAttachmentKind):
 
     db_name = "school_information_letter"
@@ -193,6 +198,7 @@ class SchoolConsentForm(ProposalAttachmentKind):
 #############
 # Other stuff
 #############
+
 
 class DataManagementPlan(ProposalAttachmentKind):
 
