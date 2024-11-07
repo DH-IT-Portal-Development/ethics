@@ -32,7 +32,7 @@
         {% include "tasks/task_list.html" %}
     </div>
 {% empty %}
-    <div class="alert alert-danger" role="alert">{% trans "Nog geen sessies. Tijd om er een aan te maken!" %}</div>
+    <div class="alert alert-danger text-center" role="alert">{% trans "Nog geen sessies. Tijd om er een aan te maken!" %}</div>
 {% endfor %}
 {% if can_edit_sessions %}
     <div class="mt-3 mb-3">
