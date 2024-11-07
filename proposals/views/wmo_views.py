@@ -168,7 +168,7 @@ def check_wmo(request):
 
     # Default message: OK.
     message = _("Je onderzoek hoeft niet te worden beoordeeld door de METC.")
-    message_class = "info"
+    message_class = "alert alert-info mt-2"
     needs_metc = False
 
     # On doubt, contact secretary.
@@ -177,13 +177,13 @@ def check_wmo(request):
         message = _(
             'Neem contact op met <a href="{link}">{secretary}</a> om de twijfels weg te nemen.'
         ).format(link="mailto:" + secretary.email, secretary=secretary.get_full_name())
-        message_class = "warning"
+        message_class = "alert alert-danger mt-2"
         needs_metc = True
     # Otherwise, METC review is necessary for METC studies (obviously) and
     # studies that have medical research questions or define user behavior
     elif is_metc or is_medical:
         message = _("Je onderzoek zal moeten worden beoordeeld door de METC.")
-        message_class = "warning"
+        message_class = "alert alert-danger mt-2"
         needs_metc = True
 
     return JsonResponse(
