@@ -7,8 +7,8 @@ from proposals.models import Proposal
 
 # The following is a copy of the DocItem class from
 # documents_list.py. I prefer to copy it here so that we
-# can in the future just delete said file entirely in
-# the future without thinking about it too much.
+# can in the future just delete said file entirely
+# without thinking about it too much.
 
 
 class DocItem:
@@ -80,6 +80,9 @@ class DocList(list):
     """
 
     def as_containers(self):
+        """
+        Return all slots contained within as a nice dictionary with headers.
+        """
         containers = []
         per_item = self.per_item()
         for item in per_item.keys():
@@ -94,6 +97,10 @@ class DocList(list):
         return sorted(containers, key=lambda c: c.order)
 
     def per_item(self):
+        """
+        Sorts all the slots into a dict with their owner object
+        as the key.
+        """
         items = set([slot.attached_object for slot in self])
         item_dict = {item: [] for item in items}
         for slot in self:
@@ -101,6 +108,10 @@ class DocList(list):
         return item_dict
 
     def make_proposal_container(self, proposal):
+        """
+        The proposal header needs custom entries that are not Attachment
+        models. The custom logic for that lives here.
+        """
         container = Container(_("Aanvraag"))
         container.order = 100
         # The proposal PDF isn't an attachment, so we add it manually
