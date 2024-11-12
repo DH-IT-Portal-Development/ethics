@@ -105,31 +105,6 @@ class StudyDesign(
         context["proposal"] = self.object.proposal
         return context
 
-    def get_initial(self):
-        """Fill in initial data"""
-
-        study_types = ["has_intervention", "has_observation", "has_sessions"]
-
-        initial = {
-            "study_types": [
-                study_type
-                for study_type in study_types
-                if getattr(self.object, study_type)
-            ]
-        }
-
-        return initial
-
-    def form_valid(self, form):
-        """Fill in the model attributes, using the form data"""
-
-        for study_type in form.fields["study_types"].choices:
-            form_value = study_type[0] in form.data.getlist("study_types")
-            form.instance.__setattr__(study_type[0], form_value)
-        form.instance.save()
-
-        return super(StudyDesign, self).form_valid(form)
-
     def get_next_url(self):
         """
         Depending on whether this Study contains an Observation, Intervention or Session part,
