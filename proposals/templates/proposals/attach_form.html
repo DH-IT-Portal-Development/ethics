@@ -33,11 +33,13 @@
         {% trans "de aanvraag" %} <em>{{ proposal.title }}</em>.
     </p>
     {% if not view.editing %}
-        {% blocktrans with name=kind.name trimmed %}
-            Je gaat hier een {{ name }} aan toevoegen. Wil je een ander soort bestand toevoegen? Ga dan terug naar de vorige pagina.
-        {% endblocktrans %}
+        {% if kind %}
+            {% blocktrans with name=kind.name trimmed %}
+                Je gaat hier een {{ name }} aan toevoegen. Wil je een ander soort bestand toevoegen? Ga dan terug naar de vorige pagina.
+            {% endblocktrans %}
+        {% endif %}
     {% endif %}
-</p>
+    </p>
 {% endblock %}
 
 {% block form-buttons %}

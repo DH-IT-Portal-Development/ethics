@@ -103,6 +103,9 @@ class AttachFormView:
     model = Attachment
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
+    # The editing variable is set in the URLconf to determine
+    # if we're editing an existing file or adding a new one.
+    editing = True
 
     def set_upload_field_label(self, form):
         # Remind the user of what they're uploading
@@ -182,7 +185,6 @@ class ProposalUpdateAttachmentView(
     model = Attachment
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
-    editing = True
 
     def get_object(
         self,
