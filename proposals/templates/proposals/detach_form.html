@@ -15,7 +15,11 @@
         {% endblocktrans %}
         {% include object with proposal=proposal %}
     </p>
-</p>
+    <p>
+        {% blocktrans trimmed %}
+            Als je een nieuwe versie van dit document wil aanleveren, verwijder het dan niet, maar ga dan terug naar de vorige pagina en wijzig het daar. Zo blijft de geschiedenis van het document bewaard, en dat vergemakkelijkt het beoordeelproces aanzienlijk.
+        {% endblocktrans %}
+    </p>
 {% endblock %}
 
 {% block form-buttons %}
