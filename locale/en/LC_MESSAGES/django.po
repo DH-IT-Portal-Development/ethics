@@ -5213,7 +5213,7 @@ msgid ""
 "<strong>Taak:</strong> Eén taak of onderdeel van je onderzoek. Bijvoorbeeld: "
 "het invullen van een vragenlijst, een interview, of een taaltest."
 msgstr ""
-"<strong>Task:</strong>:A task or procedure within your study. For example: "
+"<strong>Task:</strong> A task or procedure within your study. For example: "
 "completing an interview, questionnaire, or language test."
 
 #: tasks/templates/tasks/session_start.html:29
