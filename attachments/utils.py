@@ -55,6 +55,15 @@ class AttachmentSlot(renderable):
         return False
 
     @property
+    def classes(self):
+        if self.required:
+            if self.attachment:
+                return "border-success"
+            else:
+                return "border-warning"
+        return ""
+
+    @property
     def desiredness(self):
         if self.force_desiredness:
             return self.force_desiredness
@@ -83,6 +92,7 @@ class AttachmentSlot(renderable):
         context = super().get_context_data(**kwargs)
         context["slot"] = self
         context["proposal"] = self.get_proposal()
+        context["classes"] = self.classes
         return context
 
     def get_proposal(self):
