@@ -7,7 +7,7 @@
         {% if slot.attachment %}
             {% include slot.attachment with proposal=proposal %}
         {% else %}
-            Nog toe te voegen
+            {% trans "Nog toe te voegen" %}
         {% endif %}
         {{ kind.reason }}
     </div>
