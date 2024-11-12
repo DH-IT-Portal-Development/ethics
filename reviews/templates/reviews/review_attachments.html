@@ -1,0 +1,99 @@
+{% extends "reviews/review_detail.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    <div class="uu-container">
+        <div class="col-12">
+            <h2>{{ review.proposal.title }} - {{ review.proposal.reference_number }}</h2>
+        </div>
+    </div>
+    <div class="uu-container">
+        <div class="col-3">{% include "reviews/review_detail_sidebar.html" %}</div>
+        <div class="col-12 col-md-9">
+            <h3>{% trans "Aangeleverde documenten" %}</h3>
+            <p>
+                {% blocktrans trimmed %}
+                    Hieronder vind je de meegezonden documenten bij deze aanvraag. Deze zijn gesorteerd per object waar ze aan gekoppeld zijn. Dat kan een traject zijn of de aanvraag in het algemeen.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    Je kunt documenten downloaden met zowel de originele als de genormaliseerde bestandsnaam. Documenten die revisies zijn van vorige versies van hetzelfde bestand kunnen vergeleken worden.
+                {% endblocktrans %}
+            </p>
+            {% if attachments_edit_link %}
+                <a href="{% url "proposals:attachments" pk=proposal.pk %}"
+                   class="d-block mb-3">
+                    {% trans "Documenten wijzigen" %}
+                    <img src="{% static 'proposals/images/pencil.png' %}"
+                         title="{% trans 'Documenten wijzigen' %}" />
+                </a>
+            {% endif %}
+            {% for object, slots in slots.items %}
+                {% if object == proposal %}
+                    <h4 class="mt-6">{% trans "Aanvraag in het geheel" %}</h4>
+                {% else %}
+                    {% if proposal.study_set.count == 1 %}
+                        <h4 class="mt-6">{% trans "Het hoofdtraject" %}</h4>
+                    {% else %}
+                        <h4 class="mt-6">
+                            {% trans "Traject" %} {{ object.order }}:
+                            <em>{{ object.name }}</em>
+                        </h4>
+                    {% endif %}
+                {% endif %}
+                {% for slot in slots %}
+                    <div class="row ps-3 pt-1 pb-0 border-start border-3 border-primary m-4">
+                        <h6>{{ slot.kind.name }}</h6>
+                        <table class="table mt-2 mb-1">
+                            <tbody class="">
+                                <tr class="">
+                                    <td class="col-3">{% trans "Naam" %}</td>
+                                    <td>{{ slot.attachment.name }}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans "Aanlevering" %}</td>
+                                    <td>
+                                        {% if slot.is_new %}
+                                            {% if proposal.parent %}
+                                                <strong>{% trans "Nieuw bij deze aanvraag" %}</strong>
+                                            {% else %}
+                                                {% trans "Nieuw bij deze aanvraag" %}
+                                            {% endif %}
+                                        {% elif slot.comparable %}
+                                            <strong>{% trans "Gereviseerd bestand" %}</strong>
+                                            <a href="{{ slot.compare_url }}" target="_blank" class="icon-link">
+                                                <img src="{% static 'proposals/images/arrow_divide.png' %}"
+                                                     title="{% trans 'Toon verschillen' %}">
+                                            </a>
+                                        {% else %}
+                                            {% trans "Onveranderd" %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans "Bestand" %}</td>
+                                    <td>{% include slot.attachment with proposal=proposal include_normalized=True %}</td>
+                                </tr>
+                                <tr>
+                                    <td>{% trans "Commentaar" %}</td>
+                                    <td>
+                                        {% if slot.attachment.comments %}
+                                            {{ slot.attachment.comments }}
+                                        {% else %}
+                                            {% trans "Geen commentaar aangeleverd." %}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                {% empty %}
+                    <p>Geen documenten gevonden.</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

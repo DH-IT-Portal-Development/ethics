@@ -60,10 +60,12 @@ class AttachmentSlot(renderable):
 
     @property
     def is_new(self):
-        proposal = self.get_proposal()
         ancestor_proposal = self.get_proposal().parent
+        # If this is a fresh proposal we must be new, regardless
+        # of if we have a parent.
         if not ancestor_proposal:
             return True
+        # Otherwise, we're new only if we have no parent.
         return not self.attachment.parent
 
     @property
@@ -71,7 +73,7 @@ class AttachmentSlot(renderable):
         # No parent, no comparison
         if not self.attachment.parent:
             return False
-        # If this is a new proposal, comparison
+        # If this is a new proposal, no comparison
         ancestor_proposal = self.get_proposal().parent
         if not ancestor_proposal:
             return False
