@@ -12,8 +12,10 @@ from attachments.models import Attachment, ProposalAttachment, StudyAttachment
 from main.forms import ConditionalModelForm
 from cdh.core import forms as cdh_forms
 from django.http import FileResponse
-from attachments.kinds import ATTACHMENTS
+from attachments.kinds import ATTACHMENTS, KIND_CHOICES
 from attachments.utils import AttachmentKind
+from cdh.core import forms as cdh_forms
+from django.utils.translation import gettext as _
 from reviews.mixins import UsersOrGroupsAllowedMixin
 
 
@@ -29,6 +31,11 @@ class AttachForm(
             "name",
             "comments",
         ]
+        widgets = {
+            "kind": cdh_forms.BootstrapSelect(
+                choices=KIND_CHOICES,
+            )
+        }
 
     def __init__(self, kind=None, other_object=None, extra=False, **kwargs):
         self.kind = kind
@@ -39,17 +46,56 @@ class AttachForm(
         elif type(other_object) is Study:
             self._meta.model = StudyAttachment
         super().__init__(**kwargs)
-        if not extra:
+        if kind is not None:
             del self.fields["kind"]
+        else:
+            self.fields["kind"].default = ("other", _("Overig bestand"))
 
     def save(
         self,
     ):
-        self.instance.kind = self.kind.db_name
-        self.instance.save()
+        # Set the kind if enforced by the view.
+        if self.kind:
+            self.instance.kind = self.kind.db_name
+        # Check if we're creating a new attachment
+        if self.instance._state.adding is True:
+            # If we're creating, we need to save before we can
+            # adjust M2M attributes.
+            self.instance.save()
+        else:
+            # Check we're not editing an attachment that is still in use
+            # by another object.
+            if self.instance.attached_to.count() > 1:
+                # Saving this instance might remove historical data. So
+                # we create a revision.
+                return self.save_revision()
+        # Attach the instance to the owner object.
         self.instance.attached_to.add(
             self.other_object,
         )
+        return super().save()
+
+    def save_revision(
+        self,
+    ):
+        # Remember the old pk
+        # Adding zero creates a new copy of the integer
+        old_pk = self.instance.pk + 0
+        # The following means this instance will get saved under a
+        # new pk, effectively creating a copy.
+        self.instance.pk = None
+        self.instance.id = None
+        self.instance._state.adding = True
+        self.instance.save()
+        # Retrieve and detach it from the current other_object.
+        instance_manager = type(self.instance).objects
+        old_attachment = instance_manager.get(pk=old_pk)
+        old_attachment.attached_to.remove(self.other_object)
+        # Remove all other instances in the attached_to
+        # of the copy except for the current other_object.
+        self.instance.attached_to.set([self.other_object])
+        # Set the old attachment as our parent.
+        self.instance.parent = old_attachment
         return super().save()
 
 
@@ -58,12 +104,16 @@ class AttachFormView:
     model = Attachment
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
+    # The editing variable is set in the URLconf to determine
+    # if we're editing an existing file or adding a new one.
+    editing = True
 
     def set_upload_field_label(self, form):
         # Remind the user of what they're uploading
         upload_field = form.fields["upload"]
         kind = self.get_kind()
-        upload_field.label += f" ({kind.name})"
+        if kind:
+            upload_field.label += f" ({kind.name})"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -72,7 +122,6 @@ class AttachFormView:
         if type(owner_object) is not Proposal:
             context["study"] = self.get_owner_object()
         context["kind"] = self.get_kind()
-        context["kind_name"] = self.get_kind().name
         form = context["form"]
         self.set_upload_field_label(form)
         return context
@@ -90,8 +139,10 @@ class AttachFormView:
         return owner_class.objects.get(pk=other_pk)
 
     def get_kind(self):
-        kind_str = self.kwargs.get("kind")
-        return get_kind_from_str(kind_str)
+        kind_str = self.kwargs.get("kind", None)
+        if kind_str:
+            return get_kind_from_str(kind_str)
+        return None
 
     def get_success_url(
         self,
@@ -107,10 +158,10 @@ class AttachFormView:
         kwargs = super().get_form_kwargs()
         kwargs.update(
             {
-                "kind": self.get_kind(),
                 "other_object": self.get_owner_object(),
             }
         )
+        kwargs["kind"] = self.get_kind()
         return kwargs
 
 
@@ -126,10 +177,6 @@ class ProposalAttachView(
     template_name = "proposals/attach_form.html"
     extra = False
 
-    def get_kind(self):
-        kind_str = self.kwargs.get("kind")
-        return get_kind_from_str(kind_str)
-
 
 class ProposalUpdateAttachmentView(
     AttachFormView,
@@ -139,7 +186,6 @@ class ProposalUpdateAttachmentView(
     model = Attachment
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
-    editing = True
 
     def get_object(
         self,
@@ -150,14 +196,11 @@ class ProposalUpdateAttachmentView(
         return obj
 
     def get_owner_object(self):
-        other_class = self.get_kind().attached_object
+        instance = self.get_object().get_correct_submodel()
+        attached_field = instance._meta.get_field("attached_to")
+        other_class = attached_field.related_model
         other_pk = self.kwargs.get("other_pk")
         return other_class.objects.get(pk=other_pk)
-
-    def get_kind(self):
-        obj = self.get_object()
-        kind_str = obj.kind
-        return get_kind_from_str(kind_str)
 
 
 class DetachForm(
