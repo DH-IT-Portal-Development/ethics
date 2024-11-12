@@ -13,9 +13,7 @@
             {% endfor %}
             {% if errors %}
                 <div class="invalid-feedback" style="display: inline;">
-                    {% for error in errors %}
-                        {{ error }}
-                    {% endfor %}
+                    {% for error in errors %}{{ error }}{% endfor %}
                 </div>
             {% endif %}
         </div>

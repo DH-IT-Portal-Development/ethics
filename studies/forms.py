@@ -248,8 +248,8 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
 
 class StudyDesignForm(SoftValidationMixin, TemplatedModelForm):
 
-    #This form uses a custom template for rendering the form part.
-    #As it needs are a bit specific
+    # This form uses a custom template for rendering the form part.
+    # As it needs are a bit specific
     template_name = "studies/study_design_form.html"
 
     class Meta:
@@ -264,7 +264,7 @@ class StudyDesignForm(SoftValidationMixin, TemplatedModelForm):
             "has_observation": BootstrapCheckboxInput(),
             "has_sessions": BootstrapCheckboxInput(),
         }
-    
+
     def clean(self):
         """
         Check for conditional requirements:
@@ -357,7 +357,6 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
         - If risk is set to yes, make sure risk_details has been filled out
         """
         cleaned_data = super(StudyEndForm, self).clean()
-
 
         # TODO: find a way to hide this on the first view
         self.mark_soft_required(cleaned_data, "negativity", "risk")
