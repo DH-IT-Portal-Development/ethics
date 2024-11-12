@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load fetc_filters %}
 
-{% if study.has_intervention %}
+{% if study.get_intervention %}
     {% with intervention=study.intervention %}
         <h3 class="mb-3">
             {% trans "Interventieonderzoek" %}
