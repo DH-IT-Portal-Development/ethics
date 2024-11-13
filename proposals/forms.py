@@ -90,6 +90,10 @@ class ResearcherForm(
             "supervisor": SearchableSelectWidget(),
         }
 
+    _soft_validation_fields = [
+        "supervisor",
+    ]
+
     def __init__(self, *args, **kwargs):
         """
         - Remove empty label from relation field
