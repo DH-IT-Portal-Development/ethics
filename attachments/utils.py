@@ -54,7 +54,7 @@ class AttachmentSlot(renderable):
             if instance not in exclude:
                 return instance
         return False
-    
+
     def match_and_set(self, exclude):
         """
         Uses self.match() to find a matching attachment. If it finds one, it
@@ -64,7 +64,6 @@ class AttachmentSlot(renderable):
         if matched_attachment:
             self.attachment = matched_attachment
             self.kind = get_kind_from_str(matched_attachment.kind)
-
 
     @property
     def classes(self):

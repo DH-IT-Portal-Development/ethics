@@ -557,8 +557,8 @@ class StudyAttachmentsChecker(
                     if fulfilled_children_slot and slot is not fulfilled_children_slot:
                         slot.force_desiredness = desiredness.OPTIONAL
                     self.stepper.add_slot(slot)
-            
-            #if there is no children, make the normal consentform required
+
+            # if there is no children, make the normal consentform required
             if self.study.has_adults():
                 self.stepper.add_slot(
                     AttachmentSlot(
