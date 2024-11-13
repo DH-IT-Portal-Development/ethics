@@ -10,6 +10,8 @@ from django.urls import reverse
 
 from main.utils import is_secretary
 
+from reviews.templatetags.documents_list import get_legacy_documents
+
 from .models import Decision, Review
 from .utils.review_utils import auto_review
 from .utils import AttachmentsList
@@ -27,6 +29,7 @@ class ReviewSidebarMixin:
             review=review,
             request=self.request,
         )
+        context["legacy_documents"] = get_legacy_documents(review.proposal)
         return context
 
 
