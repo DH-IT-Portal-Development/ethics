@@ -211,3 +211,21 @@ class AutoReviewMixin(object):
         context["auto_review_go"] = len(reasons) == 0
         context["auto_review_reasons"] = reasons
         return context
+
+class HideStepperMixin():
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if is_secretary(self.request.user):
+            proposal = self.get_proposal()
+            editors = (
+                list(proposal.applicants.all()) +
+                [ proposal.supervisor ]
+            )
+            if self.request.user not in editors:
+                context["stepper"] = None
+                context["secretary_return_link"] = reverse(
+                    "reviews:detail",
+                    args=[proposal.latest_review().pk],
+                )
+        return context

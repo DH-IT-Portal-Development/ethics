@@ -155,6 +155,7 @@ class AttachFormView:
 
 
 class ProposalAttachView(
+    HideStepperMixin,
     AttachFormView,
     ProposalContextMixin,
     generic.CreateView,
@@ -172,6 +173,7 @@ class ProposalAttachView(
 
 
 class ProposalUpdateAttachmentView(
+    HideStepperMixin,
     AttachFormView,
     ProposalContextMixin,
     generic.UpdateView,
@@ -256,6 +258,7 @@ class ProposalDetachView(
 
 
 class ProposalAttachmentsView(
+    HideStepperMixin,
     ProposalContextMixin,
     generic.DetailView,
 ):
