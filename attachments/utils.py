@@ -144,6 +144,7 @@ class AttachmentSlot(renderable):
             },
         )
 
+
 class OptionalityGroup(renderable):
 
     template_name = "attachments/optionality_group.html"
@@ -152,13 +153,16 @@ class OptionalityGroup(renderable):
         self.members = set(members)
 
     @property
-    def count(self,):
+    def count(
+        self,
+    ):
         return len(self.members)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["group"] = self
         return context
+
 
 def merge_groups(slots):
     """
