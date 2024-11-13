@@ -210,7 +210,7 @@ class DataManagementPlan(ProposalAttachmentKind):
         return 1
 
 
-class OtherProposalAttachment(ProposalAttachmentKind):
+class OtherAttachment(ProposalAttachmentKind):
 
     db_name = "other"
     name = _("Overig bestand")
@@ -241,7 +241,7 @@ PROPOSAL_ATTACHMENTS = [
     SchoolInformationLetter,
     SchoolConsentForm,
     DataManagementPlan,
-    OtherProposalAttachment,
+    OtherAttachment,
 ]
 
 ATTACHMENTS = PROPOSAL_ATTACHMENTS + STUDY_ATTACHMENTS

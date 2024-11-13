@@ -142,10 +142,10 @@ class AttachmentSlot(renderable):
 
 
 def get_kind_from_str(db_name):
-    from attachments.kinds import ATTACHMENTS, OtherProposalAttachment
+    from attachments.kinds import ATTACHMENTS, OtherAttachment
 
     kinds = {kind.db_name: kind for kind in ATTACHMENTS}
     try:
         return kinds[db_name]
     except KeyError:
-        return OtherProposalAttachment
+        return OtherAttachment
