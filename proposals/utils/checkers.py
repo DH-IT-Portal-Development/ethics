@@ -525,7 +525,7 @@ class StudyAttachmentsChecker(
                         slot.force_desiredness = desiredness.OPTIONAL
                     self.stepper.add_slot(slot)
 
-            if self.study.has_special_details and not fulfilled_recording_slot:
+            elif self.study.has_special_details:
                 self.stepper.add_slot(
                     AttachmentSlot(
                         self.study,
@@ -557,19 +557,15 @@ class StudyAttachmentsChecker(
                     if fulfilled_children_slot and slot is not fulfilled_children_slot:
                         slot.force_desiredness = desiredness.OPTIONAL
                     self.stepper.add_slot(slot)
-
-            # Add a slot for a normal ConsentForm
-            self.stepper.add_slot(
-                AttachmentSlot(
-                    self.study,
-                    kind=ConsentForm,
-                    force_desiredness=(
-                        desiredness.REQUIRED
-                        if not fulfilled_children_slot
-                        else desiredness.OPTIONAL
-                    ),
+            
+            #if there is no children, make the normal consentform required
+            else:
+                self.stepper.add_slot(
+                    AttachmentSlot(
+                        self.study,
+                        kind=ConsentForm,
+                    )
                 )
-            )
 
         return []
 
