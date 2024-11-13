@@ -16,9 +16,7 @@
                 {% endif %}
                 {% if secretary_return_link %}
                     <div class="pt-4 sticky-top">
-                    <a href="{{ secretary_return_link }}" class="btn btn-primary sticky-top">
-                        {% trans "Terug naar beoordeling" %}
-                    </a>
+                        <a href="{{ secretary_return_link }}" class="btn btn-primary sticky-top">{% trans "Terug naar beoordeling" %}</a>
                     </div>
                 {% endif %}
             {% endblock %}
@@ -26,7 +24,7 @@
         </div>
         <div class="col-9">
             <form action="" method="post" class="uu-form {% block form-css-classes %}{% endblock %}
-                          " enctype="multipart/form-data">
+                 " enctype="multipart/form-data">
                 {% csrf_token %}
                 {# A block one can use to add stuff before the actual form, but next to the stepper #}
                 {% block pre-form %}
