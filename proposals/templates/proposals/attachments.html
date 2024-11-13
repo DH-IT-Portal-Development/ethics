@@ -9,32 +9,37 @@
 
 {% block pre-form-text %}
     <h2>{% trans "Documenten" %}</h2>
-    <h3 class="mt-4">{% trans "Algemeen" %}</h3>
-    {% for slot in proposal_slots %}
-        {% include slot %}
-    {% endfor %}
-        <div class="text-center mb-5 mt-3">
+    {% endblock %}
+    {% block auto-form-render %}
+        <h3 class="mt-4 mb-3">{% trans "Algemeen" %}</h3>
+            {% for slot in proposal_slots %}
+                {% include slot %}
+            {% endfor %}
+        <div class="uu-form-row mb-5 mt-3">
+            <div class="text-center">
             <a class="btn btn-light align-bottom" href="{% url "proposals:attach_proposal" proposal.pk %}">
                 <img class="mb-1 me-2" src="{% static 'proposals/images/add.png' %}"
                      title="{% trans 'Toevoegen' %}" />
                 <h6 class="d-inline" style="--bs-btn-font-weight: 200; ">Voeg optioneel bestand toe aan aanvraag</h6>
             </a>
+            </div>
         </div>
         {% for study, slots in study_slots.items %}
-        <h3>
-            {% trans "Traject " %} {{ study.order }}
-            {% if study.name %}: <em>{{ study.name }}</em>{% endif %}
-        </h3>
-        {% for slot in slots %}
-            {% include slot with manager=manager %}
+            <h3>
+                {% trans "Traject " %} {{ study.order }}
+                {% if study.name %}: <em>{{ study.name }}</em>{% endif %}
+            </h3>
+            {% for slot in slots %}
+                {% include slot with manager=manager %}
+            {% endfor %}
+            <div class="uu-form-row mb-5 mt-3">
+            <div class="text-center">
+                <a class="btn btn-light align-bottom" href="{% url "proposals:attach_study" study.pk %}">
+                    <img class="mb-1 me-2" src="{% static 'proposals/images/add.png' %}"
+                         title="{% trans 'Toevoegen' %}" />
+                    <h6 class="d-inline" style="--bs-btn-font-weight: 200; ">Voeg optioneel bestand toe aan traject {{study.order}}</h6>
+                </a>
+            </div>
+            </div>
         {% endfor %}
-        <div class="text-center mb-5 mt-3">
-            <a class="btn btn-light align-bottom" href="{% url "proposals:attach_study" study.pk %}">
-                <img class="mb-1 me-2" src="{% static 'proposals/images/add.png' %}"
-                     title="{% trans 'Toevoegen' %}" />
-                <h6 class="d-inline" style="--bs-btn-font-weight: 200; ">Voeg optioneel bestand toe aan traject {{study.order}}</h6>
-            </a>
-        </div>
-    {% endfor %}
-    {% block auto-form-render %}{% endblock %}
 {% endblock %}

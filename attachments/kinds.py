@@ -205,6 +205,7 @@ class DataManagementPlan(ProposalAttachmentKind):
     db_name = "dmp"
     name = _("Data Management Plan")
     description = _("Omschrijving DMP")
+    desiredness = desiredness.RECOMMENDED
 
     def num_recommended(self):
         return 1
