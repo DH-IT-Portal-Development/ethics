@@ -6,6 +6,7 @@ from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.utils.translation import gettext as _
 from django.views.generic.base import ContextMixin
 from django.views.generic.detail import SingleObjectMixin
+from django.urls import reverse
 
 from main.utils import is_secretary
 

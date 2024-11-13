@@ -1,22 +1,16 @@
 from django.views import generic
 from django import forms
 from django.urls import reverse
-from django import forms
-from django.utils.safestring import mark_safe
-from main.utils import is_secretary
 from proposals.mixins import ProposalContextMixin
 from proposals.models import Proposal
-from proposals.utils.stepper import Stepper
-from reviews.models import Review
 from studies.models import Study
 from attachments.utils import get_kind_from_str
 from attachments.models import Attachment, ProposalAttachment, StudyAttachment
-from main.forms import ConditionalModelForm
 from cdh.core import forms as cdh_forms
 from django.http import FileResponse
-from attachments.kinds import ATTACHMENTS
 from attachments.utils import AttachmentKind
 from reviews.templatetags.documents_list import get_legacy_documents, DocItem
+from reviews.mixins import HideStepperMixin
 from django.utils.translation import gettext as _
 
 
