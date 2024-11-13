@@ -203,6 +203,7 @@ class DetachForm(
 
 
 class ProposalDetachView(
+    HideStepperMixin,
     ProposalContextMixin,
     generic.detail.SingleObjectMixin,
     generic.FormView,
