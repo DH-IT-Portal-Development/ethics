@@ -559,7 +559,7 @@ class StudyAttachmentsChecker(
                     self.stepper.add_slot(slot)
             
             #if there is no children, make the normal consentform required
-            else:
+            if self.study.has_adults():
                 self.stepper.add_slot(
                     AttachmentSlot(
                         self.study,
