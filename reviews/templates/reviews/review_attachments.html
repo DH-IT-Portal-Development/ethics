@@ -23,6 +23,9 @@
                     Je kunt documenten downloaden met zowel de originele als de genormaliseerde bestandsnaam. Documenten die revisies zijn van vorige versies van hetzelfde bestand kunnen vergeleken worden.
                 {% endblocktrans %}
             </p>
+            <a href="{% url "reviews:detail" review.pk %}" class="btn btn-primary mt-1 mb-3">
+                {% trans "Terug naar beoordeling" %}
+            </a>
             {% if attachments_edit_link %}
                 <a href="{% url "proposals:attachments" pk=proposal.pk %}"
                    class="d-block mb-3">
@@ -94,6 +97,9 @@
                     <p>Geen documenten gevonden.</p>
                 {% endfor %}
             {% endfor %}
+            <a href="{% url "reviews:detail" review.pk %}" class="btn btn-primary mt-3 mb-3">
+                {% trans "Terug naar beoordeling" %}
+            </a>
         </div>
     </div>
 {% endblock %}
