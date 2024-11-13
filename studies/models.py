@@ -400,6 +400,10 @@ cadeautje."
     def has_children(self):
         """Returns whether the Study contains non-adult AgeGroups"""
         return self.age_groups.filter(is_adult=False).exists()
+    
+    def has_adults(self):
+        """Returns whether the Study contains adult AgeGroups"""
+        return self.age_groups.filter(is_adult=True).exists()
 
     def has_participants_below_age(self, age):
         """Returns whether the Study contains AgeGroups with ages below the specified age"""
