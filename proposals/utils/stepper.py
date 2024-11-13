@@ -66,7 +66,7 @@ class Stepper(renderable):
                     obj,
                     force_desiredness=desiredness.EXTRA,
                 )
-                success = empty_slot.match(exclude=exclude)
+                success = empty_slot.match_and_set(exclude=exclude)
                 if success:
                     extra_slots.append(empty_slot)
         return self._attachment_slots + extra_slots
@@ -199,7 +199,7 @@ class Stepper(renderable):
         attachments to be excluded from matching.
         """
         exclude = [slot.attachment for slot in self._attachment_slots]
-        slot.match(exclude)
+        slot.match_and_set(exclude)
         self._attachment_slots.append(slot)
 
     def has_multiple_studies(

@@ -602,8 +602,7 @@ class StudyAttachmentsChecker(
         fullfilled_slot = None
         for slot in slots:
             # check if any of these slots have been fullfilled yet using match()
-            slot.match(exclude=[])
-            if slot.attachment:
+            if slot.match():
                 fullfilled_slot = slot
         return fullfilled_slot
 

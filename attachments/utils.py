@@ -45,18 +45,26 @@ class AttachmentSlot(renderable):
         if self.optionality_group:
             self.optionality_group.members.add(self)
 
-    def match(self, exclude):
+    def match(self, exclude=[]):
         """
-        Tries to fill this slot with an existing attachment that is not
-        in the exclusion set of already matched attachments. Returns True
-        or False depending on if the slot was succesfully matched.
+        Tries to find a matching attachment for this slot. If it finds one,
+        it returns the attachment, otherwise it returns False.
         """
         for instance in self.get_instances_for_slot():
             if instance not in exclude:
-                self.attachment = instance
-                self.kind = get_kind_from_str(instance.kind)
-                return True
+                return instance
         return False
+    
+    def match_and_set(self, exclude):
+        """
+        Uses self.match() to find a matching attachment. If it finds one, it
+        sets self.attachment and self.kind
+        """
+        matched_attachment = self.match(exclude=exclude)
+        if matched_attachment:
+            self.attachment = matched_attachment
+            self.kind = get_kind_from_str(matched_attachment.kind)
+
 
     @property
     def classes(self):
