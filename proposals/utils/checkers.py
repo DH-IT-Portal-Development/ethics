@@ -14,7 +14,7 @@ from tasks.models import Registration as task_registration
 from tasks.views import task_views, session_views
 from tasks.models import Task, Session
 
-from attachments.utils import AttachmentSlot, desiredness
+from attachments.utils import AttachmentSlot, desiredness, OptionalityGroup
 from attachments.kinds import (
     DataManagementPlan,
     LEGAL_BASIS_KIND_DICT,
@@ -500,14 +500,17 @@ class StudyAttachmentsChecker(
 
             if self.check_has_recordings():
                 # if a study features registration, add two slots
+                recording_group = OptionalityGroup()
                 recordings_slots = [
                     AttachmentSlot(
                         self.study,
                         kind=AgreementRecordingsPublicInterest,
+                        optionality_group=recording_group,
                     ),
                     AttachmentSlot(
                         self.study,
                         kind=ScriptVerbalConsentRecordings,
+                        optionality_group=recording_group,
                     ),
                 ]
                 # if one of them has been fulfilled, this becomes the fulfilled slot
@@ -533,14 +536,17 @@ class StudyAttachmentsChecker(
         if self.study.legal_basis == Study.LegalBases.CONSENT:
             fulfilled_children_slot = None
             if self.study.has_children():
+                child_group = OptionalityGroup()
                 children_slots = [
                     AttachmentSlot(
                         self.study,
                         kind=ConsentChildrenParents,
+                        optionality_group=child_group,
                     ),
                     AttachmentSlot(
                         self.study,
                         kind=ConsentChildrenNoParents,
+                        optionality_group=child_group,
                     ),
                 ]
 

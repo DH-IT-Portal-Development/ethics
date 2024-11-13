@@ -205,12 +205,13 @@ class DataManagementPlan(ProposalAttachmentKind):
     db_name = "dmp"
     name = _("Data Management Plan")
     description = _("Omschrijving DMP")
+    desiredness = desiredness.RECOMMENDED
 
     def num_recommended(self):
         return 1
 
 
-class OtherProposalAttachment(ProposalAttachmentKind):
+class OtherAttachment(ProposalAttachmentKind):
 
     db_name = "other"
     name = _("Overig bestand")
@@ -241,7 +242,7 @@ PROPOSAL_ATTACHMENTS = [
     SchoolInformationLetter,
     SchoolConsentForm,
     DataManagementPlan,
-    OtherProposalAttachment,
+    OtherAttachment,
 ]
 
 ATTACHMENTS = PROPOSAL_ATTACHMENTS + STUDY_ATTACHMENTS

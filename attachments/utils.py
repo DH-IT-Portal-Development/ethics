@@ -35,11 +35,15 @@ class AttachmentSlot(renderable):
         attachment=None,
         kind=None,
         force_desiredness=None,
+        optionality_group=None,
     ):
         self.attachment = attachment
         self.attached_object = attached_object
         self.kind = kind
         self.force_desiredness = force_desiredness
+        self.optionality_group = optionality_group
+        if self.optionality_group:
+            self.optionality_group.members.add(self)
 
     def match(self, exclude):
         """
@@ -141,8 +145,60 @@ class AttachmentSlot(renderable):
         )
 
 
+class OptionalityGroup(renderable):
+
+    template_name = "attachments/optionality_group.html"
+
+    def __init__(self, members=set()):
+        self.members = set(members)
+
+    @property
+    def count(
+        self,
+    ):
+        return len(self.members)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["group"] = self
+        return context
+
+
+def merge_groups(slots):
+    """
+    Takes a list of slots and merges slots that belong to the same
+    optionality group together. This results in a mixed output list
+    of bare slots and optionality groups.
+    """
+    grouped = []
+    for slot in slots:
+        if not slot.optionality_group:
+            # No group, so we just append it
+            grouped.append(slot)
+            continue
+        if slot.optionality_group not in grouped:
+            # We only append the group if it's not already in the
+            # output list to avoid duplication
+            grouped.append(slot.optionality_group)
+    # Final pass to remove single-member groups
+    out = []
+    for item in grouped:
+        if type(item) is OptionalityGroup:
+            if item.count < 2:
+                # If we have fewer than two members, we just append
+                # the members. Addition allows for the empty list edge
+                # case to work.
+                out += item.members
+                continue
+        out.append(item)
+    return out
+
+
 def get_kind_from_str(db_name):
-    from attachments.kinds import ATTACHMENTS
+    from attachments.kinds import ATTACHMENTS, OtherAttachment
 
     kinds = {kind.db_name: kind for kind in ATTACHMENTS}
-    return kinds[db_name]
+    try:
+        return kinds[db_name]
+    except KeyError:
+        return OtherAttachment

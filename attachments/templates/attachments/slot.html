@@ -1,21 +1,31 @@
 {% load i18n %}
 
-<div class="row mt-4 mb-4 p-3 border-3 border-bottom rounded {{classes}} bg-light">
-    <div class="col-2 align-middle">{{ slot.desiredness }}</div>
-    <div class="col-7 align-middle">
-        <h5>{{ slot.kind.name }}</h5>
-        {% if slot.attachment %}
-            {% include slot.attachment with proposal=proposal %}
-        {% else %}
-            {% trans "Nog toe te voegen" %}
-        {% endif %}
-        {{ kind.reason }}
+<div class="uu-form-row mt-4 mb-4">
+    <div class="">
+        <div class="row border-3 p-3 border-bottom rounded {{ classes }} bg-light">
+            <div class="col-2 align-middle">{{ slot.desiredness }}</div>
+            <div class="col-7 align-middle">
+                <h5>{{ slot.kind.name }}</h5>
+                {% if slot.attachment %}
+                    {% include slot.attachment with proposal=proposal %}
+                {% else %}
+                    {% trans "Nog toe te voegen" %}
+                {% endif %}
+                {{ kind.reason }}
+            </div>
+            <div class="col-3 align-middle text-end flex-end">
+                {% if slot.attachment %}
+                    <a class="btn btn-primary" href="{{ slot.get_edit_url }}">{% trans "Wijzig" %}</a>
+                {% else %}
+                    <a class="btn btn-primary" href="{{ slot.get_attach_url }}">{% trans "Voeg toe" %}</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
-    <div class="col-3 align-middle text-end flex-end">
-        {% if slot.attachment %}
-            <a class="btn btn-primary" href="{{ slot.get_edit_url }}">{% trans "Wijzig" %}</a>
-        {% else %}
-            <a class="btn btn-primary" href="{{ slot.get_attach_url }}">{% trans "Voeg toe" %}</a>
-        {% endif %}
+    <div class="uu-form-help">
+        <details>
+            <summary class="text-muted">Meer info</summary>
+            {{ slot.kind.description }}
+        </details>
     </div>
 </div>

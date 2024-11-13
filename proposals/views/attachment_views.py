@@ -13,7 +13,7 @@ from main.forms import ConditionalModelForm
 from cdh.core import forms as cdh_forms
 from django.http import FileResponse
 from attachments.kinds import ATTACHMENTS, KIND_CHOICES
-from attachments.utils import AttachmentKind
+from attachments.utils import AttachmentKind, merge_groups
 from cdh.core import forms as cdh_forms
 from django.utils.translation import gettext as _
 from reviews.mixins import UsersOrGroupsAllowedMixin
@@ -299,8 +299,11 @@ class ProposalAttachmentsView(
         for slot in all_slots:
             if type(slot.attached_object) is Study:
                 study_slots[slot.attached_object].append(slot)
+        # Final step to merge optionality groups
+        for obj, slots in study_slots.items():
+            study_slots[obj] = merge_groups(slots)
         context["study_slots"] = study_slots
-        context["proposal_slots"] = proposal_slots
+        context["proposal_slots"] = merge_groups(proposal_slots)
         return context
 
     def get_next_url(self):
