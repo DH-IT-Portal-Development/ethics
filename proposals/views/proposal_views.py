@@ -414,9 +414,9 @@ class ProposalOtherResearchersFormView(
     form_class = OtherResearchersForm
     template_name = "proposals/other_researchers_form.html"
 
-    def form_valid(self,form):
+    def form_valid(self, form):
         """
-        Ensure: 
+        Ensure:
         - if other_applicants is False, only the user is in applicants
         - if other_applicants is True, always add current user to applicants
         """
