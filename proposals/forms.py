@@ -207,7 +207,7 @@ class OtherResearchersForm(
         }
 
     _soft_validation_fields = [
-        "other_applicants",
+        "applicants",
         "other_stakeholders",
         "stakeholders",
     ]
@@ -236,24 +236,18 @@ class OtherResearchersForm(
         Check for conditional requirements:
         - If other_applicants is checked, make sure applicants are set
         - If other_stakeholders is checked, make sure stakeholders is not empty
-        - Make sure the user is listed in applicants
         """
         cleaned_data = super(OtherResearchersForm, self).clean()
 
         other_applicants = cleaned_data.get("other_applicants")
         applicants = cleaned_data.get("applicants")
 
-        # Always make sure the applicant is actually in the applicants list
-        if self.user not in applicants and self.user != self.instance.supervisor:
-            error = forms.ValidationError(
-                _("Je hebt jezelf niet als onderzoekers geselecteerd."), code="required"
-            )
-            self.add_error("applicants", error)
-        elif other_applicants and len(applicants) == 1:
-            error = forms.ValidationError(
-                _("Je hebt geen andere onderzoekers geselecteerd."), code="required"
-            )
-            self.add_error("applicants", error)
+        if other_applicants:
+            if len(applicants) == 1 and self.user in applicants:
+                error = forms.ValidationError(
+                    _("Je hebt geen andere onderzoekers geselecteerd."), code="required"
+                )
+                self.add_error("other_applicants", error)
 
         self.check_dependency(cleaned_data, "other_stakeholders", "stakeholders")
 
