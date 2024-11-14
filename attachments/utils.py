@@ -197,7 +197,7 @@ def merge_groups(slots):
                 # If we have fewer than two members, we just append
                 # the members. Addition allows for the empty list edge
                 # case to work.
-                out += item.members
+                out += list(item.members)
                 continue
         out.append(item)
     return out
