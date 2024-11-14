@@ -92,6 +92,7 @@ class ResearcherForm(
 
     _soft_validation_fields = [
         "supervisor",
+        "relation",
     ]
 
     def __init__(self, *args, **kwargs):
@@ -151,7 +152,7 @@ van het FETC-GW worden opgenomen."
                 error = forms.ValidationError(
                     _("Je dient een promotor/begeleider op te geven."), code="required"
                 )
-                self.add_error("supervisor", error)
+                self.add_error("relation", error)
 
             if (
                 relation.needs_supervisor
@@ -161,7 +162,7 @@ van het FETC-GW worden opgenomen."
                 error = forms.ValidationError(
                     _("Je kunt niet jezelf als promotor/begeleider opgeven.")
                 )
-                self.add_error("supervisor", error)
+                self.add_error("relation", error)
 
             if relation.check_in_course:
                 self.mark_soft_required(cleaned_data, "student_context")
