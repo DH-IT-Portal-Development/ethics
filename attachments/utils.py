@@ -64,6 +64,8 @@ class AttachmentSlot(renderable):
         if matched_attachment:
             self.attachment = matched_attachment
             self.kind = get_kind_from_str(matched_attachment.kind)
+            return self.attachment
+        return False
 
     @property
     def classes(self):
