@@ -79,15 +79,26 @@ class DocList(list):
     separated per attached objects.
     """
 
+    def __init__(self, *args, proposal=None, **kwargs,):
+        if not proposal:
+            return RuntimeError(
+                "No proposal provided to DocList",
+            )
+        self.proposal = proposal
+        return super().__init__(*args, **kwargs)
+
     def as_containers(self):
         """
         Return all slots contained within as a nice dictionary with headers.
         """
         containers = []
+        # The proposal container must always show up and is handled separately
+        proposal_container = self.make_proposal_container(self.proposal)
+        containers.append(proposal_container)
         per_item = self.per_item()
         for item in per_item.keys():
             if type(item) is Proposal:
-                container = self.make_proposal_container(item)
+                container = proposal_container
             else:
                 # This must be a Study object
                 container = Container(_("Traject {}").format(item.order))
@@ -173,6 +184,7 @@ class AttachmentsList(renderable):
         filled_slots = [slot for slot in stepper.attachment_slots if slot.attachment]
         containers = DocList(
             filled_slots,
+            proposal=self.proposal,
         ).as_containers()
         return containers
 
