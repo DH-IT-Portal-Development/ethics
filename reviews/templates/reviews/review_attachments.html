@@ -97,12 +97,12 @@
             {% if supervisor_decision %}
                 <a href="{% url "reviews:decide" supervisor_decision.pk %}"
                    class="btn btn-primary mt-3 mb-3">
-            {% else %}
+                {% else %}
                     <a href="{% url "reviews:detail" review.pk %}"
                        class="btn btn-primary mt-3 mb-3">
-            {% endif %}
-            {% trans "Terug naar beoordeling" %}
-                    </a>
+                    {% endif %}
+                    {% trans "Terug naar beoordeling" %}
+                </a>
+            </div>
         </div>
-    </div>
-{% endblock %}
+    {% endblock %}

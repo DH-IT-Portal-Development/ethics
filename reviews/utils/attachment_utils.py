@@ -79,7 +79,12 @@ class DocList(list):
     separated per attached objects.
     """
 
-    def __init__(self, *args, proposal=None, **kwargs,):
+    def __init__(
+        self,
+        *args,
+        proposal=None,
+        **kwargs,
+    ):
         if not proposal:
             return RuntimeError(
                 "No proposal provided to DocList",
