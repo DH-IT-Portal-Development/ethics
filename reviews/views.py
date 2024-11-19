@@ -688,7 +688,9 @@ class ReviewAttachmentsView(
         context = super().get_context_data(**kwargs)
         context["slots"] = self.per_object()
         context["review"] = self.get_review()
-        context["proposal"] = self.get_review().proposal
+        proposal = self.get_review().proposal
+        context["proposal"] = proposal
         if is_secretary(self.request.user):
             context["attachments_edit_link"] = True
+        context["supervisor_decision"] = proposal.supervisor_decision()
         return context
