@@ -39,7 +39,10 @@ attachment_urls = [
     ),
     path(
         "attach_proposal/<int:other_pk>/",
-        ProposalAttachView.as_view(owner_model=Proposal, editing=False,),
+        ProposalAttachView.as_view(
+            owner_model=Proposal,
+            editing=False,
+        ),
         name="attach_proposal",
     ),
     path(

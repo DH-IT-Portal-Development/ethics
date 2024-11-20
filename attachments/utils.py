@@ -195,4 +195,5 @@ def get_kind_from_str(db_name):
         return kind
     except KeyError:
         from attachments.kinds import OtherProposalAttachment
+
         return OtherProposalAttachment
