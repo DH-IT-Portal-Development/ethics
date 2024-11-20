@@ -23,7 +23,6 @@ from main.views import (
     DeleteView,
     HumanitiesOrPrivilegeRequiredMixin,
     UpdateView,
-    UserAllowedMixin,
 )
 from observations.models import Observation
 from proposals.utils.pdf_diff_logic import create_context_pdf, create_context_diff

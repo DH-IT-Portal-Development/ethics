@@ -13,8 +13,14 @@
     {% for slot in proposal_slots %}
         {% include slot %}
     {% endfor %}
-    {% for study, slots in study_slots.items %}
-        <hr />
+        <div class="text-center mb-5 mt-3">
+            <a class="btn btn-light align-bottom" href="{% url "proposals:attach_proposal" proposal.pk %}">
+                <img class="mb-1 me-2" src="{% static 'proposals/images/add.png' %}"
+                     title="{% trans 'Toevoegen' %}" />
+                <h6 class="d-inline" style="--bs-btn-font-weight: 200; ">Voeg optioneel bestand toe aan aanvraag</h6>
+            </a>
+        </div>
+        {% for study, slots in study_slots.items %}
         <h3>
             {% trans "Traject " %} {{ study.order }}
             {% if study.name %}: <em>{{ study.name }}</em>{% endif %}
@@ -22,6 +28,13 @@
         {% for slot in slots %}
             {% include slot with manager=manager %}
         {% endfor %}
+        <div class="text-center mb-5 mt-3">
+            <a class="btn btn-light align-bottom" href="{% url "proposals:attach_study" study.pk %}">
+                <img class="mb-1 me-2" src="{% static 'proposals/images/add.png' %}"
+                     title="{% trans 'Toevoegen' %}" />
+                <h6 class="d-inline" style="--bs-btn-font-weight: 200; ">Voeg optioneel bestand toe aan traject {{study.order}}</h6>
+            </a>
+        </div>
     {% endfor %}
     {% block auto-form-render %}{% endblock %}
 

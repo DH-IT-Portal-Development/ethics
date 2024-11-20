@@ -108,8 +108,8 @@ class DocList(list):
                 # This must be a Study object
                 container = Container(_("Traject {}").format(item.order))
                 container.order = 200 + item.order
+                containers.append(container)
             container.items += [self.make_docitem(slot) for slot in per_item[item]]
-            containers.append(container)
         return sorted(containers, key=lambda c: c.order)
 
     def per_item(self):

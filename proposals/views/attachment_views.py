@@ -1,6 +1,8 @@
 from django.views import generic
 from django import forms
 from django.urls import reverse
+from django import forms
+from django.conf import settings
 from proposals.mixins import ProposalContextMixin
 from proposals.models import Proposal
 from studies.models import Study
@@ -12,6 +14,11 @@ from attachments.utils import AttachmentKind
 from reviews.templatetags.documents_list import get_legacy_documents, DocItem
 from reviews.mixins import HideStepperMixin
 from django.utils.translation import gettext as _
+from attachments.kinds import ATTACHMENTS, KIND_CHOICES
+from attachments.utils import AttachmentKind
+from cdh.core import forms as cdh_forms
+from django.utils.translation import gettext as _
+from reviews.mixins import UsersOrGroupsAllowedMixin
 
 
 class AttachForm(
@@ -26,8 +33,13 @@ class AttachForm(
             "name",
             "comments",
         ]
+        widgets = {
+            "kind": cdh_forms.BootstrapSelect(
+                choices=KIND_CHOICES,
+            )
+        }
 
-    def __init__(self, kind=None, other_object=None, extra=False, **kwargs):
+    def __init__(self, kind=None, other_object=None, **kwargs):
         self.kind = kind
         self.other_object = other_object
         # Set the correct model based on other_object
@@ -36,8 +48,10 @@ class AttachForm(
         elif type(other_object) is Study:
             self._meta.model = StudyAttachment
         super().__init__(**kwargs)
-        if not extra:
+        if kind is not None:
             del self.fields["kind"]
+        else:
+            self.fields["kind"].default = ("other", _("Overig bestand"))
 
     def save(
         self,
@@ -92,12 +106,16 @@ class AttachFormView:
     model = Attachment
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
+    # The editing variable is set in the URLconf to determine
+    # if we're editing an existing file or adding a new one.
+    editing = True
 
     def set_upload_field_label(self, form):
         # Remind the user of what they're uploading
         upload_field = form.fields["upload"]
         kind = self.get_kind()
-        upload_field.label += f" ({kind.name})"
+        if kind:
+            upload_field.label += f" ({kind.name})"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -106,7 +124,6 @@ class AttachFormView:
         if type(owner_object) is not Proposal:
             context["study"] = self.get_owner_object()
         context["kind"] = self.get_kind()
-        context["kind_name"] = self.get_kind().name
         form = context["form"]
         self.set_upload_field_label(form)
         return context
@@ -124,8 +141,10 @@ class AttachFormView:
         return owner_class.objects.get(pk=other_pk)
 
     def get_kind(self):
-        kind_str = self.kwargs.get("kind")
-        return get_kind_from_str(kind_str)
+        kind_str = self.kwargs.get("kind", None)
+        if kind_str:
+            return get_kind_from_str(kind_str)
+        return None
 
     def get_success_url(
         self,
@@ -141,10 +160,10 @@ class AttachFormView:
         kwargs = super().get_form_kwargs()
         kwargs.update(
             {
-                "kind": self.get_kind(),
                 "other_object": self.get_owner_object(),
             }
         )
+        kwargs["kind"] = self.get_kind()
         return kwargs
 
 
@@ -159,11 +178,6 @@ class ProposalAttachView(
     owner_model = None
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
-    extra = False
-
-    def get_kind(self):
-        kind_str = self.kwargs.get("kind")
-        return get_kind_from_str(kind_str)
 
 
 class ProposalUpdateAttachmentView(
@@ -175,7 +189,6 @@ class ProposalUpdateAttachmentView(
     model = Attachment
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
-    editing = True
 
     def get_object(
         self,
@@ -186,14 +199,11 @@ class ProposalUpdateAttachmentView(
         return obj
 
     def get_owner_object(self):
-        other_class = self.get_kind().attached_object
+        instance = self.get_object().get_correct_submodel()
+        attached_field = instance._meta.get_field("attached_to")
+        other_class = attached_field.related_model
         other_pk = self.kwargs.get("other_pk")
         return other_class.objects.get(pk=other_pk)
-
-    def get_kind(self):
-        obj = self.get_object()
-        kind_str = obj.kind
-        return get_kind_from_str(kind_str)
 
 
 class DetachForm(
@@ -293,6 +303,7 @@ class ProposalAttachmentsView(
 
 
 class ProposalAttachmentDownloadView(
+    UsersOrGroupsAllowedMixin,
     generic.View,
 ):
     original_filename = False
@@ -315,7 +326,7 @@ class ProposalAttachmentDownloadView(
             pk=attachment_pk,
         )
         self.proposal = Proposal.objects.get(
-            pk=self.kwargs.get("proposal_pk"),
+            pk=proposal_pk,
         )
         return self.get_file_response()
 
@@ -339,3 +350,25 @@ class ProposalAttachmentDownloadView(
             filename=self.get_filename(),
             as_attachment=True,
         )
+
+    def get_allowed_users(self):
+
+        self.proposal = Proposal.objects.get(
+            pk=self.kwargs.get("proposal_pk"),
+        )
+        allowed_users = list(self.proposal.applicants.all())
+        if self.proposal.supervisor:
+            allowed_users.append(self.proposal.supervisor)
+        return allowed_users
+
+    def get_group_required(self):
+        group_required = [
+            settings.GROUP_SECRETARY,
+            settings.GROUP_CHAIR,
+        ]
+        if self.proposal.reviewing_committee.name == "AK":
+            group_required += [settings.GROUP_GENERAL_CHAMBER]
+        if self.proposal.reviewing_committee.name == "LK":
+            group_required += [settings.GROUP_LINGUISTICS_CHAMBER]
+
+        return group_required

@@ -25,6 +25,7 @@ attachment_urls = [
         "attach_proposal/<str:kind>/<int:other_pk>/",
         ProposalAttachView.as_view(
             owner_model=Proposal,
+            editing=False,
         ),
         name="attach_proposal",
     ),
@@ -32,17 +33,18 @@ attachment_urls = [
         "attach_study/<str:kind>/<int:other_pk>/",
         ProposalAttachView.as_view(
             owner_model=Study,
+            editing=False,
         ),
         name="attach_study",
     ),
     path(
-        "attach_proposal/extra/<int:other_pk>/",
-        ProposalAttachView.as_view(owner_model=Proposal, extra=True),
+        "attach_proposal/<int:other_pk>/",
+        ProposalAttachView.as_view(owner_model=Proposal, editing=False,),
         name="attach_proposal",
     ),
     path(
-        "attach_study/extra/<int:other_pk>/",
-        ProposalAttachView.as_view(owner_model=Study, extra=True),
+        "attach_study/<int:other_pk>/",
+        ProposalAttachView.as_view(owner_model=Study, editing=False),
         name="attach_study",
     ),
     path(
@@ -52,7 +54,9 @@ attachment_urls = [
     ),
     path(
         "attachments/<int:other_pk>/edit/<int:attachment_pk>/",
-        ProposalUpdateAttachmentView.as_view(),
+        ProposalUpdateAttachmentView.as_view(
+            editing=True,
+        ),
         name="update_attachment",
     ),
     path(

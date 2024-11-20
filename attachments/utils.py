@@ -45,18 +45,24 @@ class AttachmentSlot(renderable):
     def match(self, exclude):
         """
         Tries to fill this slot with an existing attachment that is not
-        in the exclusion set of already matched attachments.
+        in the exclusion set of already matched attachments. Returns True
+        or False depending on if the slot was succesfully matched.
         """
         for instance in self.get_instances_for_slot():
             if instance not in exclude:
                 self.attachment = instance
-                break
+                self.kind = get_kind_from_str(instance.kind)
+                return True
+        return False
 
     @property
-    def desiredness(self):
-        if self.force_desiredness:
-            return self.force_desiredness
-        return self.kind.desiredness
+    def classes(self):
+        if self.required:
+            if self.attachment:
+                return "border-success"
+            else:
+                return "border-warning"
+        return ""
 
     @property
     def is_new(self):
@@ -100,6 +106,16 @@ class AttachmentSlot(renderable):
             },
         )
 
+    @property
+    def desiredness(self):
+        if self.force_desiredness:
+            return self.force_desiredness
+        return self.kind.desiredness
+
+    @property
+    def required(self):
+        return self.desiredness is desiredness.REQUIRED
+
     def get_instances_for_slot(
         self,
     ):
@@ -119,6 +135,7 @@ class AttachmentSlot(renderable):
         context = super().get_context_data(**kwargs)
         context["slot"] = self
         context["proposal"] = self.get_proposal()
+        context["classes"] = self.classes
         return context
 
     def get_proposal(
@@ -173,4 +190,9 @@ def get_kind_from_str(db_name):
     from attachments.kinds import ATTACHMENTS
 
     kinds = {kind.db_name: kind for kind in ATTACHMENTS}
-    return kinds[db_name]
+    try:
+        kind = kinds[db_name]
+        return kind
+    except KeyError:
+        from attachments.kinds import OtherProposalAttachment
+        return OtherProposalAttachment

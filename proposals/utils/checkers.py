@@ -860,6 +860,31 @@ class SessionsChecker(
         return []
 
 
+class AttachmentsItem(
+    StepperItem,
+):
+    title = _("Documenten")
+    location = "attachments"
+
+    def get_url(
+        self,
+    ):
+        url = reverse(
+            "proposals:attachments",
+            args=[self.stepper.proposal.pk],
+        )
+        return url
+
+    def get_errors(self, include_children=False):
+        errors = []
+        for slot in self.stepper.attachment_slots:
+            if slot.required and not slot.attachment:
+                errors.append(
+                    slot.kind.name,
+                )
+        return errors
+
+
 class AttachmentsChecker(
     Checker,
 ):
@@ -884,18 +909,10 @@ class AttachmentsChecker(
         self.stepper.add_slot(slot)
 
     def make_stepper_item(self):
-        url = reverse(
-            "proposals:attachments",
-            args=[self.stepper.proposal.pk],
-        )
-        item = PlaceholderItem(
+        item = AttachmentsItem(
             self.stepper,
-            title=_("Documenten"),
-            location="attachments",
         )
-        item.get_url = lambda: url
         return item
-        return [TranslationChecker]
 
 
 class TranslationChecker(
