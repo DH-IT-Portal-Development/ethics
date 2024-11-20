@@ -1,5 +1,7 @@
 {% extends 'base/fetc_base.html' %}
 
+{% load i18n %}
+
 {% block content %}
     <div class="uu-container">
         {# A block one can use to insert content before the stepper/form container #}
@@ -11,6 +13,11 @@
             {% block sidebar %}
                 {% if stepper %}
                     {% include stepper %}
+                {% endif %}
+                {% if secretary_return_link %}
+                    <div class="pt-4 sticky-top">
+                        <a href="{{ secretary_return_link }}" class="btn btn-primary sticky-top">{% trans "Terug naar beoordeling" %}</a>
+                    </div>
                 {% endif %}
             {% endblock %}
 

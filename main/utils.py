@@ -130,7 +130,7 @@ def get_document_contents(file: FieldFile) -> str:
         with file.open(mode="rb") as f:
             return docx2txt.process(f)
 
-    return "No text found"
+    return f"No text found, or document not supported: ({mime})"
 
 
 def is_member_of_faculty(user, faculty):
@@ -172,8 +172,10 @@ class renderable:
         context.update(kwargs)
         return context
 
-    def render(self, extra_context={}):
+    def render(self, extra_context={}, template_name=None):
+        if not template_name:
+            template_name = self.template_name
         context = self.get_context_data()
-        template = loader.get_template(self.template_name)
+        template = loader.get_template(template_name)
         context.update(extra_context)
         return template.render(context.flatten())

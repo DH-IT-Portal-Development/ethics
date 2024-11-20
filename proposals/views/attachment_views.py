@@ -9,9 +9,12 @@ from proposals.models import Proposal
 from studies.models import Study
 from attachments.utils import get_kind_from_str
 from attachments.models import Attachment, ProposalAttachment, StudyAttachment
-from main.forms import ConditionalModelForm
 from cdh.core import forms as cdh_forms
 from django.http import FileResponse
+from attachments.utils import AttachmentKind
+from reviews.templatetags.documents_list import get_legacy_documents, DocItem
+from reviews.mixins import HideStepperMixin
+from django.utils.translation import gettext as _
 from attachments.kinds import ATTACHMENTS, KIND_CHOICES
 from attachments.utils import AttachmentKind, merge_groups
 from cdh.core import forms as cdh_forms
@@ -37,7 +40,7 @@ class AttachForm(
             )
         }
 
-    def __init__(self, kind=None, other_object=None, extra=False, **kwargs):
+    def __init__(self, kind=None, other_object=None, **kwargs):
         self.kind = kind
         self.other_object = other_object
         # Set the correct model based on other_object
@@ -166,6 +169,7 @@ class AttachFormView:
 
 
 class ProposalAttachView(
+    HideStepperMixin,
     AttachFormView,
     ProposalContextMixin,
     generic.CreateView,
@@ -175,10 +179,10 @@ class ProposalAttachView(
     owner_model = None
     form_class = AttachForm
     template_name = "proposals/attach_form.html"
-    extra = False
 
 
 class ProposalUpdateAttachmentView(
+    HideStepperMixin,
     AttachFormView,
     ProposalContextMixin,
     generic.UpdateView,
@@ -210,6 +214,7 @@ class DetachForm(
 
 
 class ProposalDetachView(
+    HideStepperMixin,
     ProposalContextMixin,
     generic.detail.SingleObjectMixin,
     generic.FormView,
@@ -258,13 +263,6 @@ class ProposalDetachView(
         )
 
 
-class AttachmentDetailView(
-    generic.DetailView,
-):
-    template_name = "proposals/attachment_detail.html"
-    model = Attachment
-
-
 class ProposalAttachmentsForm(
     forms.ModelForm,
 ):
@@ -278,6 +276,7 @@ class ProposalAttachmentsForm(
 
 
 class ProposalAttachmentsView(
+    HideStepperMixin,
     ProposalContextMixin,
     UpdateView,
 ):
@@ -304,6 +303,7 @@ class ProposalAttachmentsView(
             study_slots[obj] = merge_groups(slots)
         context["study_slots"] = study_slots
         context["proposal_slots"] = merge_groups(proposal_slots)
+        context["legacy_documents"] = self.legacy_documents()
         return context
 
     def get_next_url(self):
@@ -311,6 +311,19 @@ class ProposalAttachmentsView(
 
     def get_back_url(self):
         return reverse("proposals:knowledge_security", args=(self.object.pk,))
+
+    def legacy_documents(
+        self,
+    ):
+        containers = get_legacy_documents(self.get_proposal())
+        for container in containers:
+            if container.items == []:
+                container.items.append(
+                    DocItem(
+                        _("Geen bestanden gevonden"),
+                    )
+                )
+        return containers
 
 
 class ProposalAttachmentDownloadView(
@@ -335,6 +348,9 @@ class ProposalAttachmentDownloadView(
     ):
         self.attachment = Attachment.objects.get(
             pk=attachment_pk,
+        )
+        self.proposal = Proposal.objects.get(
+            pk=proposal_pk,
         )
         return self.get_file_response()
 
