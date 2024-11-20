@@ -4,7 +4,7 @@
 {% load i18n %}
 
 {% block header_title %}
-    {% trans "Informatie over betrokken onderzoekers" %} - {{ block.super }}
+    {% trans "Documenten" %} - {{ block.super }}
 {% endblock %}
 
 {% block pre-form-text %}
@@ -13,14 +13,16 @@
     {% for slot in proposal_slots %}
         {% include slot %}
     {% endfor %}
-        <div class="text-center mb-5 mt-3">
-            <a class="btn btn-light align-bottom" href="{% url "proposals:attach_proposal" proposal.pk %}">
-                <img class="mb-1 me-2" src="{% static 'proposals/images/add.png' %}"
-                     title="{% trans 'Toevoegen' %}" />
-                <h6 class="d-inline" style="--bs-btn-font-weight: 200; ">Voeg optioneel bestand toe aan aanvraag</h6>
-            </a>
-        </div>
-        {% for study, slots in study_slots.items %}
+    <div class="text-center mb-5 mt-3">
+        <a class="btn btn-light align-bottom"
+           href="{% url "proposals:attach_proposal" proposal.pk %}">
+            <img class="mb-1 me-2"
+                 src="{% static 'proposals/images/add.png' %}"
+                 title="{% trans 'Toevoegen' %}" />
+            <h6 class="d-inline" style="--bs-btn-font-weight: 200; ">Voeg optioneel bestand toe aan aanvraag</h6>
+        </a>
+    </div>
+    {% for study, slots in study_slots.items %}
         <h3>
             {% trans "Traject " %} {{ study.order }}
             {% if study.name %}: <em>{{ study.name }}</em>{% endif %}
@@ -29,12 +31,48 @@
             {% include slot with manager=manager %}
         {% endfor %}
         <div class="text-center mb-5 mt-3">
-            <a class="btn btn-light align-bottom" href="{% url "proposals:attach_study" study.pk %}">
-                <img class="mb-1 me-2" src="{% static 'proposals/images/add.png' %}"
+            <a class="btn btn-light align-bottom"
+               href="{% url "proposals:attach_study" study.pk %}">
+                <img class="mb-1 me-2"
+                     src="{% static 'proposals/images/add.png' %}"
                      title="{% trans 'Toevoegen' %}" />
-                <h6 class="d-inline" style="--bs-btn-font-weight: 200; ">Voeg optioneel bestand toe aan traject {{study.order}}</h6>
+                <h6 class="d-inline" style="--bs-btn-font-weight: 200; ">Voeg optioneel bestand toe aan traject {{ study.order }}</h6>
             </a>
         </div>
     {% endfor %}
     {% block auto-form-render %}{% endblock %}
+
+    {% if legacy_documents %}
+        <h3 class="mt-5">
+            {% trans "Verouderde documenten" %}
+        </h4>
+        <p>
+            {% blocktrans trimmed %}
+                De portal heeft recent het systeem voor het toevoegen van documenten vernieuwd. Door de omvang van de veranderingen is het foutgevoelig om de documenten uit het oude systeem automatisch te importeren. Daarom verzoeken we je om eerder toegevoegde documenten vanuit het oude systeem zelf op de goede plek te zetten. Alle oude documenten bij deze aanvraag zijn hieronder weergegeven.
+            {% endblocktrans %}
+        </p>
+        <p>
+            {% blocktrans trimmed %}
+                Het opnieuw toevoegen van deze documenten hoeft maar één keer, en is alleen nodig voor aanvragen die lopen tijdens deze overgangsperiode.
+            {% endblocktrans %}
+        </p>
+        {% for container in legacy_documents %}
+            <h6>{{ container.header }}</h6>
+            <ul>
+                {% for item in container.items %}
+                    <li>
+                        {{ item.name }}
+                        {% if item.field %}
+                            :
+                            <a href="{{ item.get_link_url }}">{{ item.field }}</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block form-buttons %}
+    {% if not secretary_return_link %}{{ block.super }}{% endif %}
 {% endblock %}

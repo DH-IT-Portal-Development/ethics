@@ -6,11 +6,31 @@ from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.utils.translation import gettext as _
 from django.views.generic.base import ContextMixin
 from django.views.generic.detail import SingleObjectMixin
+from django.urls import reverse
 
 from main.utils import is_secretary
 
+from reviews.templatetags.documents_list import get_legacy_documents
+
 from .models import Decision, Review
 from .utils.review_utils import auto_review
+from .utils import AttachmentsList
+
+
+class ReviewSidebarMixin:
+
+    def get_context_data(self, **kwargs):
+        if self.model is Review:
+            review = self.get_object()
+        else:
+            review = self.get_review()
+        context = super().get_context_data(**kwargs)
+        context["attachments_list"] = AttachmentsList(
+            review=review,
+            request=self.request,
+        )
+        context["legacy_documents"] = get_legacy_documents(review.proposal)
+        return context
 
 
 class UserAllowedToDecisionMixin(SingleObjectMixin):
@@ -192,4 +212,20 @@ class AutoReviewMixin(object):
         reasons = auto_review(self.get_object().proposal)
         context["auto_review_go"] = len(reasons) == 0
         context["auto_review_reasons"] = reasons
+        return context
+
+
+class HideStepperMixin:
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if is_secretary(self.request.user):
+            proposal = self.get_proposal()
+            editors = list(proposal.applicants.all()) + [proposal.supervisor]
+            if self.request.user not in editors:
+                context["stepper"] = None
+                context["secretary_return_link"] = reverse(
+                    "reviews:detail",
+                    args=[proposal.latest_review().pk],
+                )
         return context

@@ -2,9 +2,10 @@ from django.template.loader import get_template
 from django.utils.translation import gettext as _
 from django.urls import reverse
 
-from main.utils import renderable
+from main.utils import renderable, is_secretary
 from proposals.models import Proposal
 from studies.models import Study
+from reviews.templatetags.documents_list import Container, DocItem
 
 
 class desiredness:
@@ -64,6 +65,48 @@ class AttachmentSlot(renderable):
         return ""
 
     @property
+    def is_new(self):
+        ancestor_proposal = self.get_proposal().parent
+        # If this is a fresh proposal we must be new, regardless
+        # of if we have a parent.
+        if not ancestor_proposal:
+            return True
+        # Otherwise, we're new only if we have no parent.
+        return not self.attachment.parent
+
+    @property
+    def comparable(self):
+        # No parent, no comparison
+        if not self.attachment.parent:
+            return False
+        # If this is a new proposal, no comparison
+        ancestor_proposal = self.get_proposal().parent
+        if not ancestor_proposal:
+            return False
+        # Only if we have a parent and it's a direct ancestor, i.e. the current
+        # attachment hasn't been seen by the committee before, do we return True
+        direct_ancestors = [ancestor_proposal] + list(ancestor_proposal.study_set.all())
+        parent_attachment = self.attachment.parent.get_correct_submodel()
+        if set(parent_attachment.attached_to.all()) & set(direct_ancestors):
+            return True
+        return False
+
+    @property
+    def compare_url(
+        self,
+    ):
+        if not self.comparable:
+            return False
+        return reverse(
+            "proposals:compare_attachments",
+            kwargs={
+                "proposal_pk": self.get_proposal().pk,
+                "old_pk": self.attachment.parent.pk,
+                "new_pk": self.attachment.pk,
+            },
+        )
+
+    @property
     def desiredness(self):
         if self.force_desiredness:
             return self.force_desiredness
@@ -95,7 +138,9 @@ class AttachmentSlot(renderable):
         context["classes"] = self.classes
         return context
 
-    def get_proposal(self):
+    def get_proposal(
+        self,
+    ):
         if type(self.attached_object) is Proposal:
             return self.attached_object
         else:
@@ -145,4 +190,10 @@ def get_kind_from_str(db_name):
     from attachments.kinds import ATTACHMENTS
 
     kinds = {kind.db_name: kind for kind in ATTACHMENTS}
-    return kinds[db_name]
+    try:
+        kind = kinds[db_name]
+        return kind
+    except KeyError:
+        from attachments.kinds import OtherProposalAttachment
+
+        return OtherProposalAttachment
