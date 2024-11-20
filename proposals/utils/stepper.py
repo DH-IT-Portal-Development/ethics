@@ -171,17 +171,6 @@ class Stepper(renderable):
                 for item in self.current_item_ancestors:
                     item.is_expanded = True
 
-    def add_slot(self, slot):
-        """
-        Append an attachment slot to the stepper. As an intermediate step,
-        we attempt to match the slot to an existing attachment. We do this
-        here because the stepper has ownership of the already matched
-        attachments to be excluded from matching.
-        """
-        exclude = [slot.attachment for slot in self.attachment_slots]
-        slot.match(exclude)
-        self.attachment_slots.append(slot)
-
     def has_multiple_studies(
         self,
     ):

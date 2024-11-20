@@ -1,18 +1,16 @@
 from django.views import generic
 from django import forms
 from django.urls import reverse
-from django import forms
 from proposals.mixins import ProposalContextMixin
 from proposals.models import Proposal
 from studies.models import Study
 from attachments.utils import get_kind_from_str
 from attachments.models import Attachment, ProposalAttachment, StudyAttachment
-from main.forms import ConditionalModelForm
 from cdh.core import forms as cdh_forms
 from django.http import FileResponse
-from attachments.kinds import ATTACHMENTS
 from attachments.utils import AttachmentKind
 from reviews.templatetags.documents_list import get_legacy_documents, DocItem
+from reviews.mixins import HideStepperMixin
 from django.utils.translation import gettext as _
 
 
@@ -151,6 +149,7 @@ class AttachFormView:
 
 
 class ProposalAttachView(
+    HideStepperMixin,
     AttachFormView,
     ProposalContextMixin,
     generic.CreateView,
@@ -168,6 +167,7 @@ class ProposalAttachView(
 
 
 class ProposalUpdateAttachmentView(
+    HideStepperMixin,
     AttachFormView,
     ProposalContextMixin,
     generic.UpdateView,
@@ -203,6 +203,7 @@ class DetachForm(
 
 
 class ProposalDetachView(
+    HideStepperMixin,
     ProposalContextMixin,
     generic.detail.SingleObjectMixin,
     generic.FormView,
@@ -251,14 +252,8 @@ class ProposalDetachView(
         )
 
 
-class AttachmentDetailView(
-    generic.DetailView,
-):
-    template_name = "proposals/attachment_detail.html"
-    model = Attachment
-
-
 class ProposalAttachmentsView(
+    HideStepperMixin,
     ProposalContextMixin,
     generic.DetailView,
 ):

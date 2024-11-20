@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-01 14:14+0100\n"
+"POT-Creation-Date: 2024-11-06 15:31+0100\n"
 "PO-Revision-Date: 2024-04-03 12:32+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -55,6 +55,7 @@ msgid "Voor alle overige soorten bestanden"
 msgstr "For miscellaneous files"
 
 #: attachments/models.py:23
+#: reviews/templates/reviews/review_attachments.html:87
 msgid "Bestand"
 msgstr "File"
 
@@ -75,7 +76,14 @@ msgid ""
 "Geef hier optioneel je motivatie om dit bestand toe te voegen en waar je het "
 "voor gaat gebruiken tijdens je onderzoek. Eventuele opmerkingen voor de FETC "
 "kun je hier ook kwijt."
-msgstr "Optionally motivate the inclusion of this document in your proposal, for example by describing how it will be used in your study. Other remarks or clarifications for the FETC-H can also be left here."
+msgstr ""
+"Optionally motivate the inclusion of this document in your proposal, for "
+"example by describing how it will be used in your study. Other remarks or "
+"clarifications for the FETC-H can also be left here."
+
+#: attachments/templates/attachments/attachment_model.html:6
+msgid "FETC-bestandsnaam"
+msgstr "FETC filename"
 
 #: attachments/templates/attachments/attachments_list.html:8
 #: proposals/templates/proposals/attachments.html:7
@@ -84,29 +92,27 @@ msgstr "Optionally motivate the inclusion of this document in your proposal, for
 msgid "Documenten"
 msgstr "Documents"
 
-#: attachments/templates/attachments/attachments_list.html:12
-#: attachments/templates/attachments/attachments_list.html:14
-#: reviews/templates/reviews/documents_list.html:37
-#: reviews/templates/reviews/documents_list.html:39
-msgid "Documenten wijzigen"
-msgstr "Edit documents"
+#: attachments/templates/attachments/attachments_list.html:11
+msgid "Bekijk uitgebreid"
+msgstr "View all"
 
-#: attachments/templates/attachments/attachments_list.html:35
+#: attachments/templates/attachments/attachments_list.html:30
 #: main/templatetags/compare_tags.py:63
 #: proposals/templates/proposals/vue_templates/proposal_list.html:51
-#: reviews/templates/reviews/review_detail_sidebar.html:30
+#: reviews/templates/reviews/review_attachments.html:78
+#: reviews/templates/reviews/review_detail_sidebar.html:31
 #: reviews/templates/reviews/simple_compare_link.html:7
 #: reviews/templates/reviews/vue_templates/decision_list.html:53
 #: reviews/templates/reviews/vue_templates/review_list.html:54
 msgid "Toon verschillen"
 msgstr "Show differences"
 
-#: attachments/templates/attachments/attachments_list.html:41
+#: attachments/templates/attachments/attachments_list.html:35
 msgid "Nieuw bestand"
 msgstr "New document"
 
-#: attachments/templates/attachments/attachments_list.html:49
-#: attachments/templates/attachments/attachments_list.html:51
+#: attachments/templates/attachments/attachments_list.html:43
+#: attachments/templates/attachments/attachments_list.html:45
 #: reviews/templates/reviews/documents_list.html:30
 #: reviews/templates/reviews/documents_list.html:32
 msgid "Data Management Plan wijzigen"
@@ -136,16 +142,16 @@ msgstr "Optional"
 msgid "Extra"
 msgstr "Extra"
 
-#: attachments/utils.py:200 studies/utils.py:96
+#: attachments/utils.py:212 studies/utils.py:96
 msgid "Traject {}"
 msgstr "Trajectory {}"
 
-#: attachments/utils.py:214
+#: attachments/utils.py:226
 #: reviews/templates/reviews/review_discontinue_form.html:57
 msgid "Aanvraag"
 msgstr "Application"
 
-#: attachments/utils.py:217 reviews/templatetags/documents_list.py:207
+#: attachments/utils.py:229 reviews/templatetags/documents_list.py:207
 msgid "Aanvraag in PDF-vorm"
 msgstr "Application in PDF format"
 
@@ -455,7 +461,7 @@ msgid "Aanvraag inzien"
 msgstr "Examine application"
 
 #: main/templates/auth/user_detail.html:73
-#: reviews/templates/reviews/review_detail_sidebar.html:16
+#: reviews/templates/reviews/review_detail_sidebar.html:17
 #: reviews/templates/reviews/vue_templates/decision_list.html:50
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:49
 #: reviews/templates/reviews/vue_templates/review_list.html:51
@@ -1838,7 +1844,7 @@ msgstr "Amendment"
 #: proposals/models.py:713 reviews/api/views.py:41 reviews/api/views.py:332
 #: reviews/templates/reviews/committee_members_workload.html:35
 #: reviews/templates/reviews/committee_members_workload.html:76
-#: reviews/templates/reviews/review_detail_sidebar.html:108
+#: reviews/templates/reviews/review_detail_sidebar.html:109
 msgid "Revisie"
 msgstr "Revision"
 
@@ -1954,10 +1960,9 @@ msgid "Dit bestand is gekoppeld aan het volgende:"
 msgstr "This file is attached to the following:"
 
 #: proposals/templates/proposals/attach_form.html:29
-#, fuzzy, python-format
-#| msgid "Traject %(order)s (<em>%(name)s</em>)"
+#, python-format
 msgid "Traject %(order)s: <em>%(name)s</em> van"
-msgstr "Trajectory %(order)s (<em>%(name)s</em>)"
+msgstr "Trajectory %(order)s (<em>%(name)s</em>) of"
 
 #: proposals/templates/proposals/attach_form.html:33
 msgid "de aanvraag"
@@ -1969,7 +1974,8 @@ msgid ""
 "Je gaat hier een %(name)s aan toevoegen. Wil je een ander soort bestand "
 "toevoegen? Ga dan terug naar de vorige pagina."
 msgstr ""
-"You will be attaching a %(name)s. If you wish to attach a different kind of document, please return to the previous page"
+"You will be attaching a %(name)s. If you wish to attach a different kind of "
+"document, please return to the previous page"
 
 #: proposals/templates/proposals/attach_form.html:47
 #: proposals/templates/proposals/detach_form.html:29
@@ -2007,14 +2013,19 @@ msgid ""
 "goede plek te zetten. Alle oude documenten bij deze aanvraag zijn hieronder "
 "weergegeven."
 msgstr ""
-"Recently the document and attachments system has been thoroughly revised. Because of the extent of the changes, automatically importing documents from the old system is somewhat error-prone. Therefore we ask that you manually reinsert your documents from the old system. Documents that were previously attached in the old system are displayed below."
+"Recently the document and attachments system has been thoroughly revised. "
+"Because of the extent of the changes, automatically importing documents from "
+"the old system is somewhat error-prone. Therefore we ask that you manually "
+"reinsert your documents from the old system. Documents that were previously "
+"attached in the old system are displayed below."
 
 #: proposals/templates/proposals/attachments.html:38
 msgid ""
 "Het opnieuw toevoegen van deze documenten hoeft maar één keer, en is alleen "
 "nodig voor aanvragen die lopen tijdens deze overgangsperiode."
 msgstr ""
-"You will only have to reattach these documents once, and only for applications that were running during the update."
+"You will only have to reattach these documents once, and only for "
+"applications that were running during the update."
 
 #: proposals/templates/proposals/compare_attachments.html:8
 #: proposals/templates/proposals/compare_attachments.html:50
@@ -2046,7 +2057,7 @@ msgstr ""
 #: proposals/templates/proposals/compare_attachments.html:67
 #: proposals/templates/proposals/compare_documents.html:67
 msgid "Je vergelijkt"
-msgstr "Comparing:"
+msgstr "Comparing"
 
 #: proposals/templates/proposals/compare_attachments.html:72
 #: proposals/templates/proposals/compare_documents.html:72
@@ -2089,7 +2100,10 @@ msgid ""
 "de geschiedenis van het document bewaard, en dat vergemakkelijkt het "
 "beoordeelproces aanzienlijk."
 msgstr ""
-"Do not delete this file if you merely want to attach a newer version of it. If that is the case, please return to the previous page to select and save the new version there. This allows us to track the history of documents which greatly facilitates the review process."
+"Do not delete this file if you merely want to attach a newer version of it. "
+"If that is the case, please return to the previous page to select and save "
+"the new version there. This allows us to track the history of documents "
+"which greatly facilitates the review process."
 
 #: proposals/templates/proposals/detach_form.html:34
 #: proposals/templates/proposals/proposal_confirm_delete.html:22
@@ -2603,6 +2617,7 @@ msgid "Indiener"
 msgstr "Applicant"
 
 #: proposals/templates/proposals/proposal_pdf.html:113
+#: reviews/templates/reviews/review_attachments.html:57
 msgid "Naam"
 msgstr "Name"
 
@@ -2688,6 +2703,7 @@ msgstr ""
 #: proposals/templates/proposals/study_start.html:67
 #: proposals/utils/pdf_diff_logic.py:326
 #: reviews/templates/reviews/committee_members_workload.html:23
+#: reviews/templates/reviews/review_attachments.html:45
 msgid "Traject"
 msgstr "Trajectory"
 
@@ -3491,7 +3507,7 @@ msgstr "Session {}, task {}"
 msgid "Sessie {} overzicht"
 msgstr "Session {} overview"
 
-#: proposals/views/attachment_views.py:294
+#: proposals/views/attachment_views.py:336
 msgid "Geen bestanden gevonden"
 msgstr "No documents found"
 
@@ -4001,6 +4017,13 @@ msgstr ""
 msgid "Beslissing opslaan"
 msgstr "Save decision"
 
+#: reviews/templates/reviews/documents_list.html:37
+#: reviews/templates/reviews/documents_list.html:39
+#: reviews/templates/reviews/review_attachments.html:30
+#: reviews/templates/reviews/review_attachments.html:32
+msgid "Documenten wijzigen"
+msgstr "Edit documents"
+
 #: reviews/templates/reviews/review_assign_form.html:7
 #: reviews/templates/reviews/review_assign_form.html:28
 msgid "Commissieleden aanstellen"
@@ -4021,6 +4044,59 @@ msgstr ""
 #: reviews/templates/reviews/review_discontinue_form.html:68
 msgid "Bevestigen"
 msgstr "Confirm"
+
+#: reviews/templates/reviews/review_attachments.html:16
+msgid "Aangeleverde documenten"
+msgstr "Attached documents"
+
+#: reviews/templates/reviews/review_attachments.html:18
+msgid ""
+"Hieronder vind je de meegezonden documenten bij deze aanvraag. Deze zijn "
+"gesorteerd per object waar ze aan gekoppeld zijn. Dat kan een traject zijn "
+"of de aanvraag in het algemeen."
+msgstr ""
+"Below you will find all documents attached to this review. These are listed per object that they are added to, either a trajectory or the proposal as a whole."
+
+#: reviews/templates/reviews/review_attachments.html:23
+msgid ""
+"Je kunt documenten downloaden met zowel de originele als de genormaliseerde "
+"bestandsnaam. Documenten die revisies zijn van vorige versies van hetzelfde "
+"bestand kunnen vergeleken worden."
+msgstr ""
+"You can download the attachments with either the original or the generated filename. Documents that are revised versions of previously attached documents can be compared."
+
+#: reviews/templates/reviews/review_attachments.html:38
+msgid "Aanvraag in het geheel"
+msgstr "Application in general"
+
+#: reviews/templates/reviews/review_attachments.html:42
+msgid "Het hoofdtraject"
+msgstr "The main trajectory"
+
+#: reviews/templates/reviews/review_attachments.html:65
+msgid "Aanlevering"
+msgstr "Provided as"
+
+#: reviews/templates/reviews/review_attachments.html:70
+msgid "Nieuw bij deze aanvraag"
+msgstr "New with this review"
+
+#: reviews/templates/reviews/review_attachments.html:75
+msgid "Gereviseerd bestand"
+msgstr "Revised file"
+
+#: reviews/templates/reviews/review_attachments.html:81
+msgid "Onveranderd"
+msgstr "Unchanged file"
+
+#: reviews/templates/reviews/review_attachments.html:96
+#: reviews/templates/reviews/review_table.html:11
+msgid "Commentaar"
+msgstr "Comments"
+
+#: reviews/templates/reviews/review_attachments.html:102
+msgid "Geen commentaar aangeleverd."
+msgstr "Not provided."
 
 #: reviews/templates/reviews/review_close_form.html:7
 #: reviews/templates/reviews/review_close_form.html:27
@@ -4081,70 +4157,70 @@ msgstr "Actions"
 msgid "Geen handelingen beschikbaar"
 msgstr "No actions available"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:18
+#: reviews/templates/reviews/review_detail_sidebar.html:19
 msgid "Referentie"
 msgstr "Reference"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:19
+#: reviews/templates/reviews/review_detail_sidebar.html:20
 msgid "Commissie"
 msgstr "Committee"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:23
+#: reviews/templates/reviews/review_detail_sidebar.html:24
 #, python-format
 msgid "%(r_or_a)s van <br /> %(parent)s"
 msgstr "%(r_or_a)s of <br/> %(parent)s"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:36
+#: reviews/templates/reviews/review_detail_sidebar.html:37
 msgid "Aanvrager(s)"
 msgstr "Applicant"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:43
+#: reviews/templates/reviews/review_detail_sidebar.html:44
 msgid "Supervisor"
 msgstr "Supervisor"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:46
+#: reviews/templates/reviews/review_detail_sidebar.html:47
 #, python-format
 msgid "Reviewronde gestart op <br /> %(date_start)s."
 msgstr "Reviewing round started on <br /> %(date_start)s."
 
-#: reviews/templates/reviews/review_detail_sidebar.html:54
+#: reviews/templates/reviews/review_detail_sidebar.html:55
 #, python-format
 msgid "Laatste beoordeling ontvangen op <br /> %(date_end)s."
 msgstr "Last decision received on <br /> %(date_end)s."
 
-#: reviews/templates/reviews/review_detail_sidebar.html:63
+#: reviews/templates/reviews/review_detail_sidebar.html:64
 #, python-format
 msgid "Afhandeling: <br /> %(continuation)s, <br /> %(date_reviewed)s."
 msgstr "Continuation: <br /> %(continuation)s, <br /> %(date_reviewed)s."
 
-#: reviews/templates/reviews/review_detail_sidebar.html:73
+#: reviews/templates/reviews/review_detail_sidebar.html:74
 #, python-format
 msgid "Bevestiging verzonden op <br /> %(date_confirmed)s."
 msgstr "Confirmation sent on <br /> %(date_confirmed)s."
 
-#: reviews/templates/reviews/review_detail_sidebar.html:79
+#: reviews/templates/reviews/review_detail_sidebar.html:80
 #, python-format
 msgid "Opmerkingen: <br /> %(comments)s."
 msgstr "Comments: <br /> %(comments)s."
 
-#: reviews/templates/reviews/review_detail_sidebar.html:91
+#: reviews/templates/reviews/review_detail_sidebar.html:92
 msgid "Dit is een aanvraag voor voortoetsing."
 msgstr "This is an application for preliminary assessment"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:100
+#: reviews/templates/reviews/review_detail_sidebar.html:101
 msgid "Dit is een beslissing van een eindverantwoordelijke"
 msgstr "This is a supervisor review"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:110
+#: reviews/templates/reviews/review_detail_sidebar.html:111
 msgid "Deze aanvraag heeft een revisie gehad tijdens het beslisproces."
 msgstr ""
 "A revision was made to this application after it was submitted to the FEtC-H"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:116
+#: reviews/templates/reviews/review_detail_sidebar.html:117
 msgid "Er zijn de volgende opmerkingen bijgevoegd: <br />"
 msgstr "The following comments have been provided: <br />"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:127
+#: reviews/templates/reviews/review_detail_sidebar.html:130
 msgid "Documenten (oude systeem)"
 msgstr "Documents (legacy)"
 
@@ -4201,10 +4277,6 @@ msgstr "<em>%(title)s</em> by %(author)s"
 #: reviews/templates/reviews/review_table.html:10
 msgid "Genomen op"
 msgstr "Decision made on"
-
-#: reviews/templates/reviews/review_table.html:11
-msgid "Commentaar"
-msgstr "Comments"
 
 #: reviews/templates/reviews/review_table.html:18
 msgid "open"

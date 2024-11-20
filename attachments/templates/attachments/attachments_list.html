@@ -6,14 +6,8 @@
 {% load documents_list %}
 
 <h4>{% trans "Documenten" %}</h4>
-{% if attachments_edit_link %}
-    <a href="{% url "proposals:attachments" pk=proposal.pk %}"
-       class="d-block mb-3">
-        {% trans "Documenten wijzigen" %}
-        <img src="{% static 'proposals/images/pencil.png' %}"
-             title="{% trans 'Documenten wijzigen' %}" />
-    </a>
-{% endif %}
+<a href="{% url "reviews:attachments" review_pk=review.pk %}"
+   class="d-block mb-3">{% trans "Bekijk uitgebreid" %}</a>
 {% for container in containers %}
     <h6>{{ container.header }}</h6>
     <ul>
@@ -28,15 +22,13 @@
                         {% endif %}
                         {{ item.name }}
                     </a>
-                    {% if item.comparable %}
-                        {% if item.compare_url %}
-                            <a href="{{ item.compare_url }}" target="_blank" class="icon-link">
-                                <img src="{% static 'proposals/images/arrow_divide.png' %}"
-                                     title="{% trans 'Toon verschillen' %}">
-                            </a>
-                        {% endif %}
+                    {% if item.slot.compare_url %}
+                        <a href="{{ item.slot.compare_url }}" target="_blank" class="icon-link">
+                            <img src="{% static 'proposals/images/arrow_divide.png' %}"
+                                 title="{% trans 'Toon verschillen' %}">
+                        </a>
                     {% endif %}
-                    {% if item.new %}
+                    {% if item.slot.is_new %}
                         <img src="{% static 'proposals/images/weather-clear.png' %}"
                              title="{% trans 'Nieuw bestand' %}">
                     </a>
@@ -44,12 +36,4 @@
             </li>
         {% endfor %}
     </ul>
-    {% if container.dmp_edit_link %}
-        <a href="{{ container.dmp_edit_link }}" class="d-block mb-3">
-            {% trans "Data Management Plan wijzigen" %}
-            <img src="{% static 'proposals/images/pencil.png' %}"
-                 title="{% trans 'Data Management Plan wijzigen' %}" />
-        </a>
-    {% endif %}
-    {% if container.edit_link %}{% endif %}
 {% endfor %}

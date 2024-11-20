@@ -55,3 +55,7 @@
         {% endfor %}
     {% endif %}
 {% endblock %}
+
+{% block form-buttons %}
+    {% if not secretary_return_link %}{{ block.super }}{% endif %}
+{% endblock %}

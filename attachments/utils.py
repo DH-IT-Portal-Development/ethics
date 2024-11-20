@@ -58,6 +58,48 @@ class AttachmentSlot(renderable):
             return self.force_desiredness
         return self.kind.desiredness
 
+    @property
+    def is_new(self):
+        ancestor_proposal = self.get_proposal().parent
+        # If this is a fresh proposal we must be new, regardless
+        # of if we have a parent.
+        if not ancestor_proposal:
+            return True
+        # Otherwise, we're new only if we have no parent.
+        return not self.attachment.parent
+
+    @property
+    def comparable(self):
+        # No parent, no comparison
+        if not self.attachment.parent:
+            return False
+        # If this is a new proposal, no comparison
+        ancestor_proposal = self.get_proposal().parent
+        if not ancestor_proposal:
+            return False
+        # Only if we have a parent and it's a direct ancestor, i.e. the current
+        # attachment hasn't been seen by the committee before, do we return True
+        direct_ancestors = [ancestor_proposal] + list(ancestor_proposal.study_set.all())
+        parent_attachment = self.attachment.parent.get_correct_submodel()
+        if set(parent_attachment.attached_to.all()) & set(direct_ancestors):
+            return True
+        return False
+
+    @property
+    def compare_url(
+        self,
+    ):
+        if not self.comparable:
+            return False
+        return reverse(
+            "proposals:compare_attachments",
+            kwargs={
+                "proposal_pk": self.get_proposal().pk,
+                "old_pk": self.attachment.parent.pk,
+                "new_pk": self.attachment.pk,
+            },
+        )
+
     def get_instances_for_slot(
         self,
     ):
@@ -79,7 +121,9 @@ class AttachmentSlot(renderable):
         context["proposal"] = self.get_proposal()
         return context
 
-    def get_proposal(self):
+    def get_proposal(
+        self,
+    ):
         if type(self.attached_object) is Proposal:
             return self.attached_object
         else:
@@ -123,150 +167,6 @@ class AttachmentSlot(renderable):
                 "other_pk": self.attached_object.pk,
             },
         )
-
-
-class AttachmentItem(DocItem):
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # self.attachment = self.slot.attachment.get_correct_submodel()
-
-    @property
-    def new(
-        self,
-    ):
-        if not self.slot.get_proposal().parent:
-            return True
-        return not self.attachment.parent
-
-    @property
-    def comparable(self):
-        if not self.attachment.parent:
-            return False
-        ancestor_proposal = self.slot.get_proposal().parent
-        if not ancestor_proposal:
-            return False
-        direct_ancestors = [ancestor_proposal] + list(ancestor_proposal.study_set.all())
-        parent_attachment = self.attachment.parent.get_correct_submodel()
-        if set(parent_attachment.attached_to.all()) & set(direct_ancestors):
-            return True
-
-    @property
-    def compare_url(
-        self,
-    ):
-        return reverse(
-            "proposals:compare_attachments",
-            kwargs={
-                "proposal_pk": self.slot.get_proposal().pk,
-                "old_pk": self.attachment.parent.pk,
-                "new_pk": self.attachment.pk,
-            },
-        )
-
-    @property
-    def attachment(
-        self,
-    ):
-        return self.slot.attachment.get_correct_submodel()
-
-    def get_link_url(
-        self,
-    ):
-        return self.slot.attachment.get_download_url(
-            self.slot.get_proposal(),
-        )
-
-    def get_filename(
-        self,
-    ):
-        return self.attachment.upload.original_filename
-
-
-class DocList(list):
-    """
-    A list-like of attachments that can output its contents as containers
-    separated per attached objects.
-    """
-
-    def as_containers(self):
-        containers = []
-        per_item = self.per_item()
-        for item in per_item.keys():
-            if type(item) is Proposal:
-                container = self.make_proposal_container(item)
-            else:
-                # This must be a Study object
-                container = Container(_("Traject {}").format(item.order))
-                container.order = 200 + item.order
-            container.items += [self.make_docitem(slot) for slot in per_item[item]]
-            containers.append(container)
-        return sorted(containers, key=lambda c: c.order)
-
-    def per_item(self):
-        items = set([slot.attached_object for slot in self])
-        item_dict = {item: [] for item in items}
-        for slot in self:
-            item_dict[slot.attached_object].append(slot)
-        return item_dict
-
-    def make_proposal_container(self, proposal):
-        container = Container(_("Aanvraag"))
-        container.order = 100
-        # The proposal PDF isn't an attachment, so we add it manually
-        proposal_pdf = DocItem(_("Aanvraag in PDF-vorm"))
-        proposal_pdf.link_url = reverse("proposals:pdf", args=(proposal.pk,))
-        container.items.append(proposal_pdf)
-        return container
-
-    def make_docitem(self, slot):
-        docitem = AttachmentItem(
-            slot.kind.name,
-            slot=slot,
-        )
-        return docitem
-
-
-class AttachmentsList(renderable):
-
-    template_name = "attachments/attachments_list.html"
-
-    def __init__(
-        self,
-        review=None,
-        proposal=None,
-        request=None,
-    ):
-        if not (review or proposal):
-            raise RuntimeError(
-                "AttachmentsList needs either a review " "or a proposal."
-            )
-        if review:
-            proposal = review.proposal
-        self.proposal = proposal
-        self.containers = self.get_containers()
-        self.request = request
-
-    def get_containers(
-        self,
-    ):
-        from proposals.utils.stepper import Stepper
-
-        stepper = Stepper(self.proposal)
-        filled_slots = [slot for slot in stepper.attachment_slots if slot.attachment]
-        containers = DocList(
-            filled_slots,
-        ).as_containers()
-        return containers
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context["proposal"] = self.proposal
-        context["containers"] = self.containers
-        if self.request:
-            if is_secretary(self.request.user):
-                context["attachments_edit_link"] = True
-        return context
 
 
 def get_kind_from_str(db_name):

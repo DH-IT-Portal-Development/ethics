@@ -183,16 +183,6 @@ class DocItem:
 
 
 @register.inclusion_tag("reviews/documents_list.html")
-def attachments_list(review, user):
-    stepper = Stepper(review.proposal)
-    filled_slots = [slot for slot in stepper.attachment_slots if slot.attachment]
-    containers = DocList(
-        filled_slots,
-    ).as_containers()
-    return {"review": review, "containers": containers, "proposal": review.proposal}
-
-
-@register.inclusion_tag("reviews/documents_list.html")
 def documents_list(review, user):
     """This retrieves all files associated with
     a certain review and its proposal and returns them as a
@@ -270,6 +260,8 @@ def get_legacy_documents(proposal, user=None):
         study=None
     ) | Documents.objects.filter(proposal=proposal, study=None)
 
+    no_files_found = True
+
     for d in qs:
         # Get a humanized name and create container item
         documents_container = Container(give_name(d))
@@ -312,6 +304,7 @@ def get_legacy_documents(proposal, user=None):
                 item.field = field
                 item.object = obj
                 documents_container.items.append(item)
+                no_files_found = False
 
         # Only the secretary gets an edit link
         if user:
@@ -322,5 +315,8 @@ def get_legacy_documents(proposal, user=None):
                 )
 
         containers.append(documents_container)
+
+    if no_files_found:
+        return []
 
     return containers
