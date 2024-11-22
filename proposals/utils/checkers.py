@@ -4,15 +4,29 @@ from django.urls import reverse
 from proposals import forms as proposal_forms
 from proposals.models import Wmo
 from studies import forms as study_forms
+from studies.models import Study
 from interventions import forms as intervention_forms
 from observations import forms as observation_forms
+from observations.models import Registration as observation_registration
 from tasks import forms as tasks_forms
+from tasks.models import Registration as task_registration
 
 from tasks.views import task_views, session_views
 from tasks.models import Task, Session
 
-from attachments.utils import AttachmentSlot, desiredness
-from attachments.kinds import InformationLetter, DataManagementPlan
+from attachments.utils import AttachmentSlot, desiredness, OptionalityGroup
+from attachments.kinds import (
+    DataManagementPlan,
+    LEGAL_BASIS_KIND_DICT,
+    ConsentForm,
+    AgreementRecordingsPublicInterest,
+    ScriptVerbalConsentRecordings,
+    ConsentPublicInterestSpecialDetails,
+    ConsentChildrenParents,
+    ConsentChildrenNoParents,
+    SchoolConsentForm,
+    SchoolInformationLetter,
+)
 
 from .stepper_helpers import (
     Checker,
@@ -472,13 +486,125 @@ class StudyAttachmentsChecker(
     def check(
         self,
     ):
-        kind = InformationLetter
-        info_slot = AttachmentSlot(
-            self.study,
-            kind=kind,
-        )
-        self.stepper.add_slot(info_slot)
+        if self.study.legal_basis is not None:
+            kind = LEGAL_BASIS_KIND_DICT[self.study.legal_basis]
+            info_slot = AttachmentSlot(
+                self.study,
+                kind=kind,
+            )
+            self.stepper.add_slot(info_slot)
+
+        if self.study.legal_basis == Study.LegalBases.PUBLIC_INTEREST:
+
+            fulfilled_recording_slot = None
+
+            if self.check_has_recordings():
+                # if a study features registration, add two slots
+                recording_group = OptionalityGroup()
+                recordings_slots = [
+                    AttachmentSlot(
+                        self.study,
+                        kind=AgreementRecordingsPublicInterest,
+                        optionality_group=recording_group,
+                    ),
+                    AttachmentSlot(
+                        self.study,
+                        kind=ScriptVerbalConsentRecordings,
+                        optionality_group=recording_group,
+                    ),
+                ]
+                # if one of them has been fulfilled, this becomes the fulfilled slot
+                fulfilled_recording_slot = self.at_least_one_fulfilled(recordings_slots)
+
+                for slot in recordings_slots:
+                    # if there is at least one, make the other one optional
+                    if (
+                        fulfilled_recording_slot
+                        and slot is not fulfilled_recording_slot
+                    ):
+                        slot.force_desiredness = desiredness.OPTIONAL
+                    self.stepper.add_slot(slot)
+
+            elif self.study.has_special_details:
+                self.stepper.add_slot(
+                    AttachmentSlot(
+                        self.study,
+                        kind=ConsentPublicInterestSpecialDetails,
+                    )
+                )
+
+        if self.study.legal_basis == Study.LegalBases.CONSENT:
+            fulfilled_children_slot = None
+            if self.study.has_children():
+                child_group = OptionalityGroup()
+                children_slots = [
+                    AttachmentSlot(
+                        self.study,
+                        kind=ConsentChildrenParents,
+                        optionality_group=child_group,
+                    ),
+                    AttachmentSlot(
+                        self.study,
+                        kind=ConsentChildrenNoParents,
+                        optionality_group=child_group,
+                    ),
+                ]
+
+                # if one of them has been fulfilled, this becomes the fulfilled slot
+                fulfilled_children_slot = self.at_least_one_fulfilled(children_slots)
+                for slot in children_slots:
+                    # if there is at least one, make the other one optional
+                    if fulfilled_children_slot and slot is not fulfilled_children_slot:
+                        slot.force_desiredness = desiredness.OPTIONAL
+                    self.stepper.add_slot(slot)
+
+            # if there is no children, make the normal consentform required
+            if self.study.has_adults():
+                self.stepper.add_slot(
+                    AttachmentSlot(
+                        self.study,
+                        kind=ConsentForm,
+                    )
+                )
+
         return []
+
+    def check_has_recordings(self):
+        """
+        A function that checks whether a study features audio or video
+        registration.
+        """
+        has_recordings = False
+        if self.study.get_observation:
+            # gather all AV observation_registraions
+            recordings_observation = observation_registration.objects.filter(
+                description__in=["audio recording", "video recording"]
+            )
+            # check if there is an overlap between these two QS's
+            if self.study.observation.registrations.all() & recordings_observation:
+                has_recordings = True
+        if self.study.get_sessions:
+            # gather all the tasks
+            all_tasks = Task.objects.filter(session__study=self.study)
+            # gather all AV task_registrations
+            recordings_sessions = task_registration.objects.filter(
+                description__in=["audio recording", "video recording"]
+            )
+            if all_tasks.filter(registrations__in=recordings_sessions):
+                has_recordings = True
+        return has_recordings
+
+    def at_least_one_fulfilled(self, slots):
+        """
+        Function which receives a list of slots and checks if at least one has
+        been fullfilled. It returns None, or the fullfiled slot
+        """
+        fullfilled_slot = None
+        for slot in slots:
+            # check if any of these slots have been fullfilled yet using match()
+            if slot.match():
+                fullfilled_slot = slot
+        return fullfilled_slot
 
 
 class ParticipantsChecker(
@@ -892,6 +1018,7 @@ class AttachmentsChecker(
         self,
     ):
         self.add_dmp_slot()
+        self.add_school_slots()
         item = self.make_stepper_item()
         self.stepper.items.append(item)
         return [
@@ -907,6 +1034,26 @@ class AttachmentsChecker(
             kind=DataManagementPlan,
         )
         self.stepper.add_slot(slot)
+
+    def add_school_slots(self):
+        studies_with_schools = [
+            study
+            for study in self.proposal.study_set.all()
+            if study.research_settings_contains_schools()
+        ]
+        if studies_with_schools:
+            self.stepper.add_slot(
+                AttachmentSlot(
+                    self.stepper.proposal,
+                    kind=SchoolInformationLetter,
+                )
+            )
+            self.stepper.add_slot(
+                AttachmentSlot(
+                    self.stepper.proposal,
+                    kind=SchoolConsentForm,
+                )
+            )
 
     def make_stepper_item(self):
         item = AttachmentsItem(

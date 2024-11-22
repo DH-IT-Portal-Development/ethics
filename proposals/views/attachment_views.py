@@ -3,6 +3,7 @@ from django import forms
 from django.urls import reverse
 from django import forms
 from django.conf import settings
+from main.views import UpdateView
 from proposals.mixins import ProposalContextMixin
 from proposals.models import Proposal
 from studies.models import Study
@@ -15,7 +16,7 @@ from reviews.templatetags.documents_list import get_legacy_documents, DocItem
 from reviews.mixins import HideStepperMixin
 from django.utils.translation import gettext as _
 from attachments.kinds import ATTACHMENTS, KIND_CHOICES
-from attachments.utils import AttachmentKind
+from attachments.utils import AttachmentKind, merge_groups
 from cdh.core import forms as cdh_forms
 from django.utils.translation import gettext as _
 from reviews.mixins import UsersOrGroupsAllowedMixin
@@ -262,14 +263,28 @@ class ProposalDetachView(
         )
 
 
+class ProposalAttachmentsForm(
+    forms.ModelForm,
+):
+    """
+    An empty form, needed to make the navigation work.
+    """
+
+    class Meta:
+        model = Proposal
+        fields = []
+
+
 class ProposalAttachmentsView(
     HideStepperMixin,
     ProposalContextMixin,
-    generic.DetailView,
+    UpdateView,
 ):
 
     template_name = "proposals/attachments.html"
     model = Proposal
+    # this form does not do anything, it's just here to make navigation work
+    form_class = ProposalAttachmentsForm
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -283,10 +298,19 @@ class ProposalAttachmentsView(
         for slot in all_slots:
             if type(slot.attached_object) is Study:
                 study_slots[slot.attached_object].append(slot)
+        # Final step to merge optionality groups
+        for obj, slots in study_slots.items():
+            study_slots[obj] = merge_groups(slots)
         context["study_slots"] = study_slots
-        context["proposal_slots"] = proposal_slots
+        context["proposal_slots"] = merge_groups(proposal_slots)
         context["legacy_documents"] = self.legacy_documents()
         return context
+
+    def get_next_url(self):
+        return reverse("proposals:translated", args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse("proposals:knowledge_security", args=(self.object.pk,))
 
     def legacy_documents(
         self,

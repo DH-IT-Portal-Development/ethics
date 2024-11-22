@@ -574,7 +574,7 @@ class ProposalKnowledgeSecurity(
     template_name = "proposals/knowledge_security_form.html"
 
     def get_next_url(self):
-        return reverse("proposals:consent", args=(self.object.pk,))
+        return reverse("proposals:attachments", args=(self.object.pk,))
 
     def get_back_url(self):
         return reverse("studies:design_end", args=(self.object.last_study().pk,))
@@ -591,7 +591,7 @@ class TranslatedConsentView(ProposalContextMixin, UpdateView):
 
     def get_back_url(self):
         """Return to the overview of the last Study"""
-        return reverse("proposals:consent", args=(self.object.pk,))
+        return reverse("proposals:attachments", args=(self.object.pk,))
 
 
 class ProposalDataManagement(ProposalContextMixin, UpdateView):
