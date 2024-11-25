@@ -1,0 +1,39 @@
+{% load static %}
+{% load proposal_filters %}
+{% load fetc_filters %}
+{% load i18n %}
+{% load compare_tags %}
+{% load documents_list %}
+
+<h4>{% trans "Documenten" %}</h4>
+<a href="{% url "reviews:attachments" review_pk=review.pk %}"
+   class="d-block mb-3">{% trans "Bekijk uitgebreid" %}</a>
+{% for container in containers %}
+    <h6>{{ container.header }}</h6>
+    <ul>
+        {% for item in container.items %}
+            <li>
+                {% if item.link_url %}
+                    <a href="{{ item.link_url }}" target="_blank">
+                    {% else %}
+                        <a href="{{ item.get_link_url }}"
+                           target="_blank"
+                           {% if not item.sets_content_disposition %}download="{{ item.get_filename }}"{% endif %}>
+                        {% endif %}
+                        {{ item.name }}
+                    </a>
+                    {% if item.slot.compare_url %}
+                        <a href="{{ item.slot.compare_url }}" target="_blank" class="icon-link">
+                            <img src="{% static 'proposals/images/arrow_divide.png' %}"
+                                 title="{% trans 'Toon verschillen' %}">
+                        </a>
+                    {% endif %}
+                    {% if item.slot.is_new %}
+                        <img src="{% static 'proposals/images/weather-clear.png' %}"
+                             title="{% trans 'Nieuw bestand' %}">
+                    </a>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endfor %}

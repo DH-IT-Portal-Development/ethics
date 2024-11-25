@@ -1,6 +1,6 @@
 from django.urls import path, include
 
-from .views.proposal_views import (
+from proposals.views.proposal_views import (
     CompareDocumentsView,
     MyConceptsView,
     MyPracticeView,
@@ -26,7 +26,6 @@ from .views.proposal_views import (
     ProposalDifference,
     ProposalAsPdf,
     ProposalCreatePreAssessment,
-    ProposalUpdate,
     ProposalStartPreAssessment,
     ProposalSubmitPreAssessment,
     ProposalSubmittedPreAssessment,
@@ -47,8 +46,8 @@ from .views.proposal_views import (
     ProposalKnowledgeSecurity,
 )
 
-from .views.study_views import StudyStart, StudyConsent
-from .views.wmo_views import (
+from proposals.views.study_views import StudyStart, StudyConsent
+from proposals.views.wmo_views import (
     WmoCreate,
     WmoUpdate,
     WmoApplication,
@@ -58,9 +57,7 @@ from .views.wmo_views import (
     WmoApplicationPreAssessment,
 )
 
-app_name = "proposals"
-
-urlpatterns = [
+proposal_urls = [
     path("api/", include("proposals.api.urls", namespace="api")),
     # List views
     path(

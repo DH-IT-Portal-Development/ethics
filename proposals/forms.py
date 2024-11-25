@@ -822,24 +822,6 @@ class ProposalSubmitForm(ConditionalModelForm):
             ):
                 self.add_error("inform_local_staff", _("Dit veld is verplicht."))
 
-            for study in self.instance.study_set.all():
-                documents = Documents.objects.get(study=study)
-
-                if not documents.informed_consent:
-                    self.add_error(
-                        "comments",
-                        _(
-                            "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
-                        ).format(study.order),
-                    )
-                if not documents.briefing:
-                    self.add_error(
-                        "comments",
-                        _(
-                            "Informatiebrief voor traject {} nog niet toegevoegd."
-                        ).format(study.order),
-                    )
-
             if cleaned_data["embargo"] is None:
                 self.add_error("embargo", _("Dit veld is verplicht."))
 
