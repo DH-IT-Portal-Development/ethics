@@ -221,7 +221,7 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
         if cleaned_data["has_special_details"] is None:
             self.add_error("has_special_details", _("Dit veld is verplicht."))
 
-        if not cleaned_data["legal_basis"]:
+        if cleaned_data["legal_basis"] is None:
             self.add_error("legal_basis", _("Selecteer een van de opties."))
 
         self.check_dependency_multiple(

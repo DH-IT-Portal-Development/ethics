@@ -1,6 +1,6 @@
 from django import template
 
-from main.utils import is_secretary
+from main.utils import is_secretary, renderable
 from studies.models import Documents
 from proposals.models import Proposal, Wmo
 from observations.models import Observation
@@ -156,6 +156,7 @@ class Container:
         self.dmp_edit_link = False
         self.header = header
         self.items = []
+        self.order = 0
 
         self.__dict__.update(kwargs)
 
@@ -163,9 +164,9 @@ class Container:
 class DocItem:
     def __init__(self, name, **kwargs):
         self.name = name
-        self.comparable = False
         self.filename = None
         self.link_url = None
+        self.field = None
         self.sets_content_disposition = False
 
         self.__dict__.update(kwargs)
@@ -173,13 +174,11 @@ class DocItem:
     def get_filename(self):
         if self.filename:
             return self.filename
-
         return self.field.name
 
     def get_link_url(self):
         if self.link_url:
             return self.link_url
-
         return self.field.url
 
 
@@ -245,12 +244,23 @@ def documents_list(review, user):
     # Finally, append the container
     containers.append(pdf_container)
 
-    # Now get all trajectories / extra documents
+    containers += get_legacy_documents(proposal, user=user)
+
+    # Finally, return template context
+    return {"review": review, "containers": containers, "proposal": proposal}
+
+
+def get_legacy_documents(proposal, user=None):
+
+    containers = []
+    # Fetch all trajectories / extra documents
     # First we get all objects attached to a study, then we append those
     # without. This way we get the ordering we want.
     qs = Documents.objects.filter(proposal=proposal).exclude(
         study=None
     ) | Documents.objects.filter(proposal=proposal, study=None)
+
+    no_files_found = True
 
     for d in qs:
         # Get a humanized name and create container item
@@ -294,12 +304,19 @@ def documents_list(review, user):
                 item.field = field
                 item.object = obj
                 documents_container.items.append(item)
+                no_files_found = False
 
         # Only the secretary gets an edit link
-        if is_secretary(user):
-            documents_container.edit_link = reverse("studies:attachments", args=[d.pk])
+        if user:
+            if is_secretary(user):
+                documents_container.edit_link = reverse(
+                    "studies:attachments",
+                    args=[d.pk],
+                )
 
         containers.append(documents_container)
 
-    # Finally, return template context
-    return {"review": review, "containers": containers, "proposal": proposal}
+    if no_files_found:
+        return []
+
+    return containers

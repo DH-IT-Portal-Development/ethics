@@ -144,6 +144,15 @@ class Review(models.Model):
     def current_reviewers(self):
         return get_user_model().objects.filter(decision__review=self)
 
+    def get_attachments_list(self, request=None):
+        from attachments.utils import AttachmentsList
+
+        attachments_list = AttachmentsList(
+            review=self,
+            request=request,
+        )
+        return attachments_list
+
     def __str__(self):
         return "Review of %s" % self.proposal
 
