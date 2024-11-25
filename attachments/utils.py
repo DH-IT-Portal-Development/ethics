@@ -250,7 +250,9 @@ def merge_groups(slots):
     return out
 
 def attachment_filename_generator(file):
-    #get the correct attachment
+    from attachments.kinds import ProposalAttachment, StudyAttachment
+
+    #try to get a Proposal attachment, otherwise, it must be a Study attachment
     try:
         attachment = ProposalAttachment.objects.get(upload=file.file_instance)
         proposal = attachment.attached_to.last()
