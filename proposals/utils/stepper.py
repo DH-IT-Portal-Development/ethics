@@ -257,8 +257,8 @@ RegularProposalLayout = [
     ("create", _("Basisgegevens")),
     ("wmo", _("WMO")),
     ("studies", _("Trajecten")),
-    ("attachments", _("Documenten")),
     ("data_management", _("Datamanagement")),
+    ("attachments", _("Documenten")),
     ("submit", _("Indienen")),
 ]
 
