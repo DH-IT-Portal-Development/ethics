@@ -1,10 +1,15 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
+from django.urls import reverse
 from main.utils import renderable
 from attachments.utils import attachment_filename_generator
 
+
 from cdh.files.db import FileField as CDHFileField
+
+# Create your models here.
+
 
 class Attachment(models.Model, renderable):
 
@@ -20,6 +25,7 @@ class Attachment(models.Model, renderable):
         verbose_name=_("Bestand"),
         help_text=_("Selecteer hier het bestand om toe te voegen."),
         filename_generator=attachment_filename_generator,
+
     )
     parent = models.ForeignKey(
         "attachments.attachment",
@@ -36,10 +42,15 @@ class Attachment(models.Model, renderable):
         # whatever form needs them.
         # From Django 5 onwards we can define a callable to get
         # the choices which would be the preferred solution.
-        default=("", _("Gelieve selecteren")),
+        default=("other", _("Overig bestand")),
+        verbose_name=_("Type bestand"),
     )
     name = models.CharField(
         max_length=50,
+        default="",
+        help_text=_(
+            "Geef je bestand een omschrijvende naam, het liefst " "maar enkele woorden."
+        ),
     )
     comments = models.TextField(
         max_length=2000,
@@ -51,6 +62,13 @@ class Attachment(models.Model, renderable):
             "opmerkingen voor de FETC kun je hier ook kwijt."
         ),
     )
+
+    def get_owner_for_proposal(self, proposal):
+        """
+        Convenience function that delegates to submodels.
+        """
+        submodel = self.get_correct_submodel()
+        return submodel.get_owner_for_proposal()
 
     def get_correct_submodel(self):
         if self.__class__.__name__ != "Attachment":
@@ -87,6 +105,15 @@ class Attachment(models.Model, renderable):
             self.attached_to.remove(other_object)
         else:
             self.delete()
+
+    def get_download_url(self, proposal):
+        return reverse(
+            "proposals:download_attachment_original",
+            kwargs={
+                "proposal_pk": proposal.pk,
+                "attachment_pk": self.pk,
+            },
+        )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

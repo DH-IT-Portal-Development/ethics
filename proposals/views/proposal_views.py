@@ -5,6 +5,7 @@ import datetime
 from braces.views import GroupRequiredMixin, LoginRequiredMixin, UserFormKwargsMixin
 
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
 from django.urls import reverse
@@ -22,13 +23,13 @@ from main.views import (
     DeleteView,
     HumanitiesOrPrivilegeRequiredMixin,
     UpdateView,
-    UserAllowedMixin,
 )
 from observations.models import Observation
 from proposals.utils.pdf_diff_logic import create_context_pdf, create_context_diff
 from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
 from studies.models import Documents
+from attachments.models import Attachment, StudyAttachment, ProposalAttachment
 from ..copy import copy_proposal
 from ..forms import (
     ProposalConfirmationForm,
@@ -372,6 +373,88 @@ class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
         return getattr(old, attribute, None), getattr(new, attribute, None)
 
 
+class CompareAttachmentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
+
+    template_name = "proposals/compare_attachments.html"
+    group_required = [
+        settings.GROUP_SECRETARY,
+        settings.GROUP_GENERAL_CHAMBER,
+        settings.GROUP_LINGUISTICS_CHAMBER,
+    ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def get_proposal(
+        self,
+    ):
+        proposal = Proposal.objects.get(
+            pk=self.kwargs.get("proposal_pk"),
+        )
+        return proposal
+
+    def get_allowed_users(
+        self,
+    ):
+        self._get_attachments()
+        proposal = self.get_proposal()
+        allowed_users = set()
+
+        # Users allowed to compare these files must be allowed to see both
+        # attachments individually.
+        def allowed_for_attachment(proposal, attachment):
+            allowed = set()
+            allowed.add(attachment.author)
+            allowed.add(proposal.applicants.all())
+            return allowed
+
+        intersection = allowed_for_attachment(
+            proposal, self.new
+        ) & allowed_for_attachment(proposal.parent, self.old)
+        allowed_users = allowed_users | intersection
+        # The current supervisor gets a pass. If they try to access files
+        # other than those in the parent proposal get_attachments should raise
+        # a PermissionDenied.
+        allowed_users.add(proposal.supervisor)
+        return allowed_users
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["proposal"] = self.get_proposal()
+        context["old_name"] = self.old.upload.original_filename
+        context["old_file"] = self.old.upload
+        context["old_attachment"] = self.old
+        context["old_text"] = get_document_contents(self.old.upload)
+        context["new_name"] = self.new.upload.original_filename
+        context["new_file"] = self.new.upload
+        context["new_attachment"] = self.new
+        context["new_text"] = get_document_contents(self.new.upload)
+        return context
+
+    def _get_attachments(
+        self,
+    ):
+        # Fetch relevant objects
+        self.old = Attachment.objects.get(
+            pk=self.kwargs.get("old_pk"),
+        ).get_correct_submodel()
+
+        self.new = Attachment.objects.get(
+            pk=self.kwargs.get("new_pk"),
+        ).get_correct_submodel()
+
+        self.proposal = Proposal.objects.get(
+            pk=self.kwargs.get("proposal_pk"),
+        )
+        # Check the old attachment is within scope
+        if type(self.old) is StudyAttachment:
+            old_proposals = [ao.proposal for ao in self.old.attached_to.all()]
+        else:
+            old_proposals = self.old.attached_to.all()
+        if self.proposal.parent not in old_proposals:
+            raise PermissionDenied("Couldn't find old_pk in proposal's ancestors!")
+
+
 ###########################
 # Other actions on Proposal
 ###########################
@@ -491,7 +574,7 @@ class ProposalKnowledgeSecurity(
     template_name = "proposals/knowledge_security_form.html"
 
     def get_next_url(self):
-        return reverse("proposals:consent", args=(self.object.pk,))
+        return reverse("proposals:attachments", args=(self.object.pk,))
 
     def get_back_url(self):
         return reverse("studies:design_end", args=(self.object.last_study().pk,))
@@ -508,7 +591,7 @@ class TranslatedConsentView(ProposalContextMixin, UpdateView):
 
     def get_back_url(self):
         """Return to the overview of the last Study"""
-        return reverse("proposals:consent", args=(self.object.pk,))
+        return reverse("proposals:attachments", args=(self.object.pk,))
 
 
 class ProposalDataManagement(ProposalContextMixin, UpdateView):

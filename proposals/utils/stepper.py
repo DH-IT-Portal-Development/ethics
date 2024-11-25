@@ -17,6 +17,8 @@ from observations.forms import ObservationForm
 from interventions.forms import InterventionForm
 
 from proposals.utils.validate_sessions_tasks import validate_sessions_tasks
+from attachments.utils import AttachmentSlot
+from attachments.kinds import desiredness
 
 
 class Stepper(renderable):
@@ -37,8 +39,37 @@ class Stepper(renderable):
         self.request = request
         self.items = []
         self.current_item_ancestors = []
-        self.attachment_slots = []
+        self._attachment_slots = []
         self.check_all(self.starting_checkers)
+
+    @property
+    def attachment_slots(
+        self,
+    ):
+        """
+        Appends unmatched attachments as extra slots to the internal
+        list _attachment_slots.
+        """
+        extra_slots = []
+        # Get all attachable objects
+        objects = [self.proposal] + list(self.proposal.study_set.all())
+        for obj in objects:
+            success = True
+            while success:
+                # Keep appending extra slots as long as they can be matched to
+                # to an attachment for this object. We update the exclude list
+                # as we go to not duplicate them or end up in an infinite loop.
+                exclude = [s.attachment for s in self._attachment_slots] + [
+                    s.attachment for s in extra_slots
+                ]
+                empty_slot = AttachmentSlot(
+                    obj,
+                    force_desiredness=desiredness.EXTRA,
+                )
+                success = empty_slot.match_and_set(exclude=exclude)
+                if success:
+                    extra_slots.append(empty_slot)
+        return self._attachment_slots + extra_slots
 
     def get_context_data(self):
         context = super().get_context_data()
@@ -167,9 +198,9 @@ class Stepper(renderable):
         here because the stepper has ownership of the already matched
         attachments to be excluded from matching.
         """
-        exclude = [slot.attachment for slot in self.attachment_slots]
-        slot.match(exclude)
-        self.attachment_slots.append(slot)
+        exclude = [slot.attachment for slot in self._attachment_slots]
+        slot.match_and_set(exclude)
+        self._attachment_slots.append(slot)
 
     def has_multiple_studies(
         self,
@@ -199,7 +230,10 @@ class Stepper(renderable):
 
         for item in self.items:
             if item.get_errors(include_children=False):
-                if self.has_multiple_studies() and item.form_class in study_forms:
+                if (
+                    self.has_multiple_studies()
+                    and getattr(item, "form_class", None) in study_forms
+                ):
                     page_name = f"{item.parent.title}: {item.title}"
                 else:
                     page_name = item.title
