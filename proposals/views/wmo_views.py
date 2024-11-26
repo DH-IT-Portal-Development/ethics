@@ -181,7 +181,7 @@ def check_wmo(request):
         needs_metc = True
     # Otherwise, METC review is necessary for METC studies (obviously) and
     # studies that have medical research questions or define user behavior
-    elif is_metc or is_medical:
+    if is_metc or is_medical:
         message = _("Je onderzoek zal moeten worden beoordeeld door de METC.")
         message_class = "alert alert-danger mt-2"
         needs_metc = True
