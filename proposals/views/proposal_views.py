@@ -502,14 +502,13 @@ class ProposalOtherResearchersFormView(
         - if other_applicants is False, only the user is in applicants
         - if other_applicants is True, always add current user to applicants
         """
+        response = super(ProposalOtherResearchersFormView, self).form_valid(form)
+        self.object = form.save()
         if form.instance.other_applicants == False:
-            self.object = form.save()
             self.object.applicants.set([self.request.user])
-            return HttpResponseRedirect(self.get_success_url())
         else:
-            self.object = form.save()
             self.object.applicants.add(self.request.user)
-            return HttpResponseRedirect(self.get_success_url())
+        return response
 
     def get_next_url(self):
         proposal = self.object
