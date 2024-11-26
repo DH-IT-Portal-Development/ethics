@@ -4745,7 +4745,7 @@ msgstr ""
 
 #: studies/forms.py:304
 msgid "Er is nog geen onderzoekstype geselecteerd."
-msgstr "You have not selected any other researchers."
+msgstr "You have not selected a study type."
 
 #: studies/models.py:53
 msgid "{}-{} jaar"
