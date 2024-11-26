@@ -220,6 +220,9 @@ class WMOChecker(ModelFormChecker):
         if self.object_exists():
             return self.check_wmo()
         else:
+            def no_wmo_error():
+                return [_("WMO gegevens ontbreken")]
+            self.item.get_checker_errors = no_wmo_error
             return []
 
     def check_wmo(
