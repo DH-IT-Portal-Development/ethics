@@ -454,7 +454,7 @@ cadeautje."
         ):
             return True
 
-        if self.get_observation and self.observation.settings_contains_schools():
+        if self.get_observation() and self.observation.settings_contains_schools():
             return True
 
         return False

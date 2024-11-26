@@ -575,7 +575,7 @@ class StudyAttachmentsChecker(
         registration.
         """
         has_recordings = False
-        if self.study.get_observation:
+        if self.study.get_observation():
             # gather all AV observation_registraions
             recordings_observation = observation_registration.objects.filter(
                 description__in=["audio recording", "video recording"]

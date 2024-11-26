@@ -1157,11 +1157,11 @@ def create_context_diff(context, old_proposal, new_proposal):
 
                     if (
                         old_study is not None
-                        and old_study.has_observation
+                        and old_study.get_observation()
                         or new_study is not None
-                        and new_study.has_observation
+                        and new_study.get_observation()
                     ):
-                        observations = get_all_related(both_studies, "get_observation")
+                        observations = get_all_related(both_studies, "observation")
 
                         sections.append(
                             DiffSection(
