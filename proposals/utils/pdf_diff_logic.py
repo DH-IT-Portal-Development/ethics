@@ -1141,12 +1141,12 @@ def create_context_diff(context, old_proposal, new_proposal):
 
                     if (
                         old_study is not None
-                        and old_study.has_intervention
+                        and old_study.get_intervention()
                         or new_study is not None
-                        and new_study.has_intervention
+                        and new_study.get_intervention()
                     ):
                         interventions = get_all_related(
-                            both_studies, "get_intervention"
+                            both_studies, "intervention"
                         )
 
                         sections.append(
