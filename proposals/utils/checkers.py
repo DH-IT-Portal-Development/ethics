@@ -1010,6 +1010,7 @@ class AttachmentsItem(
                 )
         return errors
 
+
 class DataManagementChecker(
     ModelFormChecker,
 ):
@@ -1034,6 +1035,7 @@ class DataManagementChecker(
                 self.stepper.proposal.pk,
             ],
         )
+
 
 class AttachmentsChecker(
     Checker,
@@ -1108,8 +1110,6 @@ class TranslationChecker(
                 self.stepper.proposal.pk,
             ],
         )
-
-
 
 
 class SubmitChecker(

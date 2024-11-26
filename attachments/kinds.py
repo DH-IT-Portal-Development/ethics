@@ -209,7 +209,7 @@ class DataManagementPlan(ProposalAttachmentKind):
         "voorafgaand aan een onderzoeksproject wordt opgesteld. Hierin "
         "worden alle aspecten omtrent de omgang met onderzoeksdata, tijdens "
         "en na afloop van het onderzoek, uiteengezet."
-        )
+    )
     desiredness = desiredness.RECOMMENDED
 
     def num_recommended(self):
