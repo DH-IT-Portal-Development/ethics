@@ -271,7 +271,7 @@ class StudyDesignForm(TemplatedModelForm):
         - at least one of the fields has to be checked
         """
         cleaned_data = super(StudyDesignForm, self).clean()
-        
+
         if not True in cleaned_data.values():
             self.add_error(None, _("Er is nog geen onderzoekstype geselecteerd."))
 

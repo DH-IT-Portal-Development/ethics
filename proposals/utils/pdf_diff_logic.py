@@ -1145,9 +1145,7 @@ def create_context_diff(context, old_proposal, new_proposal):
                         or new_study is not None
                         and new_study.get_intervention()
                     ):
-                        interventions = get_all_related(
-                            both_studies, "intervention"
-                        )
+                        interventions = get_all_related(both_studies, "intervention")
 
                         sections.append(
                             DiffSection(
