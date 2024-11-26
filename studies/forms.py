@@ -246,7 +246,7 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
         )
 
 
-class StudyDesignForm(SoftValidationMixin, TemplatedModelForm):
+class StudyDesignForm(TemplatedModelForm):
 
     # This form uses a custom template for rendering the form part.
     # As it needs are a bit specific
@@ -271,7 +271,7 @@ class StudyDesignForm(SoftValidationMixin, TemplatedModelForm):
         - at least one of the fields has to be checked
         """
         cleaned_data = super(StudyDesignForm, self).clean()
-
+        
         if not True in cleaned_data.values():
             self.add_error(None, _("Er is nog geen onderzoekstype geselecteerd."))
 

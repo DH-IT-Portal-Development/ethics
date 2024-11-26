@@ -7,8 +7,8 @@
     <div class="uu-form-row">
         <div class="uu-form-field">
             {% for field, field_errors in fields %}
-                <input type="checkbox" class="form-check-input" name="{{ field.name }}">
-                <label class="form-check-label">{{ field.label }}</label>
+                <input type="checkbox" class="form-check-input" name="{{ field.name }}" id="{{ field.name }}" {% if field.value %} checked {% endif %}>
+                <label for="{{ field.name }}" class="form-check-label">{{ field.label }}</label>
                 <br>
             {% endfor %}
             {% if errors %}
