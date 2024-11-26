@@ -238,6 +238,13 @@ class OtherResearchersForm(
         other_applicants = cleaned_data.get("other_applicants")
         applicants = cleaned_data.get("applicants")
 
+        # Mark both base fields as required
+        self.mark_soft_required(
+            cleaned_data,
+            "other_applicants",
+            "other_stakeholders",
+        )
+
         # Always make sure the applicant is actually in the applicants list
         if self.user not in applicants and self.user != self.instance.supervisor:
             error = forms.ValidationError(
