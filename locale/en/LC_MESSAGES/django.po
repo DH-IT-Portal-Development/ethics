@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-20 17:15+0100\n"
+"POT-Creation-Date: 2024-11-26 10:03+0100\n"
 "PO-Revision-Date: 2024-04-03 12:32+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -29,7 +29,11 @@ msgid ""
 "op anonieme gegevens, hoef je geen informatie te verstrekken over de "
 "verwerking van persoonsgegevens."
 msgstr ""
-"You have indicated that you will collect data anonymously. Because the GDPR does not regulate the collection of anonymous data, you do not need to inform or ask for consent relating to personal data. You will however still need to inform your participants on ethical grounds, so that they can make a well-informed choice on whether to participate. "
+"You have indicated that you will collect data anonymously. Because the GDPR "
+"does not regulate the collection of anonymous data, you do not need to "
+"inform or ask for consent relating to personal data. You will however still "
+"need to inform your participants on ethical grounds, so that they can make a "
+"well-informed choice on whether to participate. "
 
 #: attachments/kinds.py:47
 msgid "Informatiebrief algemeen belang"
@@ -42,7 +46,10 @@ msgid ""
 "Let op! Voor bepaalde aspecten van je onderzoek kan het desondanks nodig "
 "zijn om toestemming te vragen."
 msgstr ""
-"You have indicated to legally base your processing of personal data on the public interest. This is the recommended way to conduct research. Though you should be careful, for certain aspects of your research it may still be necessary to collect consent."
+"You have indicated to legally base your processing of personal data on the "
+"public interest. This is the recommended way to conduct research. Though you "
+"should be careful, for certain aspects of your research it may still be "
+"necessary to collect consent."
 
 #: attachments/kinds.py:61
 msgid "Informatiebrief toestemming"
@@ -68,7 +75,8 @@ msgstr ""
 
 #: attachments/kinds.py:98
 msgid "Toestemmingsverklaring algemeen belang bijzondere persoonsgegevens"
-msgstr "Declaration of consent for public interest with special personal details"
+msgstr ""
+"Declaration of consent for public interest with special personal details"
 
 #: attachments/kinds.py:100
 msgid ""
@@ -1156,11 +1164,11 @@ msgstr "Will observations be made in a non-public space?"
 #: observations/models.py:86
 msgid ""
 "Bijvoorbeeld er wordt geobserveerd bij iemand thuis, tijdens een "
-"hypotheekgesprek, tijdens politieverhoren of een forum waar een account voor "
-"moet worden aangemaakt."
+"hypotheekgesprek, tijdens politieverhoren of een digitale omgeving waar een "
+"account voor moet worden aangemaakt."
 msgstr ""
 "For example, will observations be made in someone's home, during a mortgage "
-"negotiation, during a police interrogation or in a forum for which an "
+"negotiation, during a police interrogation or in a digital environment for which an "
 "account must be created."
 
 #: observations/models.py:99
