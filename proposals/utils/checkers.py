@@ -583,7 +583,7 @@ class StudyAttachmentsChecker(
             # check if there is an overlap between these two QS's
             if self.study.observation.registrations.all() & recordings_observation:
                 has_recordings = True
-        if self.study.get_sessions:
+        if self.study.get_sessions():
             # gather all the tasks
             all_tasks = Task.objects.filter(session__study=self.study)
             # gather all AV task_registrations

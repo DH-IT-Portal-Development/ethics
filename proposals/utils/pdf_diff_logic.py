@@ -1171,12 +1171,12 @@ def create_context_diff(context, old_proposal, new_proposal):
 
                     if (
                         old_study is not None
-                        and old_study.has_sessions
+                        and old_study.get_sessions()
                         or new_study is not None
-                        and new_study.has_sessions
+                        and new_study.get_sessions()
                     ):
                         old_sessions_set, new_sessions_set = get_all_related_set(
-                            both_studies, "get_sessions"
+                            both_studies, "sessions"
                         )
 
                         for both_sessions in zip_equalize_lists(

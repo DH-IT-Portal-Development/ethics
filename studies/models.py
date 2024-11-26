@@ -449,7 +449,7 @@ cadeautje."
             return True
 
         if (
-            self.get_sessions
+            self.get_sessions()
             and self.session_set.filter(setting__is_school=True).exists()
         ):
             return True
