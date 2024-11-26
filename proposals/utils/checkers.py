@@ -341,8 +341,8 @@ class TrajectoriesChecker(
     ):
         return [
             KnowledgeSecurityChecker(self.stepper, parent=self.item),
-            AttachmentsChecker,
             DataManagementChecker,
+            AttachmentsChecker,
             SubmitChecker,
         ]
 
@@ -1011,6 +1011,32 @@ class AttachmentsItem(
         return errors
 
 
+class DataManagementChecker(
+    ModelFormChecker,
+):
+    title = _("Data management")
+    form_class = proposal_forms.ProposalDataManagementForm
+    location = "data_management"
+
+    def check(
+        self,
+    ):
+        self.stepper.items.append(
+            self.make_stepper_item(),
+        )
+        return []
+
+    def get_url(
+        self,
+    ):
+        return reverse(
+            "proposals:data_management",
+            args=[
+                self.stepper.proposal.pk,
+            ],
+        )
+
+
 class AttachmentsChecker(
     Checker,
 ):
@@ -1080,32 +1106,6 @@ class TranslationChecker(
     ):
         return reverse(
             "proposals:translated",
-            args=[
-                self.stepper.proposal.pk,
-            ],
-        )
-
-
-class DataManagementChecker(
-    ModelFormChecker,
-):
-    title = _("Data management")
-    form_class = proposal_forms.ProposalDataManagementForm
-    location = "data_management"
-
-    def check(
-        self,
-    ):
-        self.stepper.items.append(
-            self.make_stepper_item(),
-        )
-        return []
-
-    def get_url(
-        self,
-    ):
-        return reverse(
-            "proposals:data_management",
             args=[
                 self.stepper.proposal.pk,
             ],

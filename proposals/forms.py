@@ -741,7 +741,7 @@ class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
 class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
-        fields = ["privacy_officer", "dmp_file"]
+        fields = ["privacy_officer"]
         widgets = {
             "privacy_officer": BootstrapRadioSelect(choices=YES_NO),
         }
