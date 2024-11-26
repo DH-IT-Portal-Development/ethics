@@ -171,13 +171,13 @@ class StudyEnd(
 
     def get_back_url(self):
         study = self.object
-        if study.has_sessions:
+        if study.get_sessions():
             next_url = "tasks:session_overview"
             pk = self.object.pk
-        elif study.has_intervention:
+        elif study.get_intervention():
             next_url = "interventions:update"
             pk = Intervention.objects.get(study=study).pk
-        elif study.has_observation:
+        elif study.get_observation():
             next_url = "observations:update"
             pk = Observation.objects.get(study=study).pk
         else:

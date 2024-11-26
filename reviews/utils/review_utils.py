@@ -499,7 +499,7 @@ def auto_review(proposal: Proposal):
                 )
             )
 
-        if study.has_sessions:
+        if study.get_sessions():
             for session in study.session_set.all():
                 for age_group in study.age_groups.all():
                     if session.net_duration() > age_group.max_net_duration:

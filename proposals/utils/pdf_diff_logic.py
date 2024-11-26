@@ -1038,11 +1038,11 @@ def create_context_pdf(context, proposal):
             if proposal.wmo.status == proposal.wmo.WMOStatuses.NO_WMO:
                 for study in proposal.study_set.all():
                     sections.append(StudySection(study))
-                    if study.has_intervention:
+                    if study.get_intervention():
                         sections.append(InterventionSection(study.intervention))
-                    if study.has_observation:
+                    if study.get_observation():
                         sections.append(ObservationSection(study.observation))
-                    if study.has_sessions:
+                    if study.get_sessions():
                         for session in study.session_set.all():
                             sections.append(SessionSection(session))
                             for task in session.task_set.all():

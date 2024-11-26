@@ -433,7 +433,7 @@ cadeautje."
         return not documents.informed_consent or not documents.briefing
 
     def has_missing_sessions(self):
-        if self.has_intervention and self.intervention.extra_task:
+        if self.get_intervention() and self.intervention.extra_task:
             return (
                 self.intervention.settings_contains_schools() and not self.has_sessions
             )
