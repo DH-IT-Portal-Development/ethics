@@ -1140,6 +1140,28 @@ class SubmitChecker(
             ],
         )
 
+    def make_stepper_item(
+        self,
+    ):
+        self.recursion_marker = False
+
+        def submittable():
+            """
+            Return a single error if the proposal is not submittable,
+            avoiding recursion in error fetching.
+            """
+            if self.recursion_marker:
+                # This function will only return errors once
+                return []
+            self.recursion_marker = True
+            all_errors = self.stepper.get_form_errors()
+            if all_errors:
+                return [_("Aanvraag bevat nog foutmeldingen")]
+            return []
+        item = super().make_stepper_item()
+        item.get_checker_errors = submittable
+        return item
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["proposal"] = self.proposal
