@@ -44,7 +44,9 @@ class StepperItem(
     title = "Stepper item"
     location = None
 
-    def __init__(self, stepper, parent=None, title=None, location=None, complete_by_default=False):
+    def __init__(
+        self, stepper, parent=None, title=None, location=None, complete_by_default=False
+    ):
         self.stepper = stepper
         self.proposal = stepper.proposal
         self.children = []
