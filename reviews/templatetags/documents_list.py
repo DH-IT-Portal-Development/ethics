@@ -285,7 +285,7 @@ def get_legacy_documents(proposal, user=None):
         ]
 
         # Search for old-style observations (deprecated)
-        if d.study and d.study.has_observation:
+        if d.study and d.study.get_observation():
             if d.study.observation.needs_approval:
                 potential_files.append(
                     (
