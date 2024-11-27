@@ -44,13 +44,14 @@ class StepperItem(
     title = "Stepper item"
     location = None
 
-    def __init__(self, stepper, parent=None, title=None, location=None):
+    def __init__(self, stepper, parent=None, title=None, location=None, complete_by_default=False):
         self.stepper = stepper
         self.proposal = stepper.proposal
         self.children = []
         self.parent = parent
         self.is_expanded = False
         self.css_classes = set()
+        self.complete_by_default = complete_by_default
         # Don't override default location if not provided explicitly
         if location:
             self.location = location
@@ -142,6 +143,18 @@ class PlaceholderItem(StepperItem):
         self,
     ):
         return ""
+
+    def get_form_errors(self, *args, **kwargs):
+        # Check for child errors
+        errors = super().get_form_errors(*args, **kwargs)
+        if errors:
+            return errors
+        # Only return no errors if complete_by_default is set
+        if self.complete_by_default:
+            return []
+        # Else, return a single error
+        # Placeholders are considered incomplete by default
+        return [_("Item is onvoltooid")]
 
 
 class DisabledItem(PlaceholderItem):
