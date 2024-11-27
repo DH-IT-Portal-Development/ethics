@@ -198,12 +198,6 @@ class ContainerItem(
                 errors += child.get_errors(include_children=True)
         return errors
 
-    def build_css_classes(self):
-        if self.get_errors(include_children=True):
-            self.css_classes.add("incomplete")
-        else:
-            self.css_classes.add("complete")
-
 
 class ModelFormChecker(
     Checker,
