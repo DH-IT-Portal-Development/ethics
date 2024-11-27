@@ -113,7 +113,13 @@ class StepperItem(
         the item represents.
         """
         if self.get_errors(include_children=not self.is_expanded):
-            self.css_classes.add("incomplete")
+            # Currently we resort to the default grey colour for items with
+            # errors. However the incomplete colour exists for when we figure
+            # out how to differentiate between forms with errors and unvisited
+            # forms.
+            #
+            # self.css_classes.add("incomplete")
+            pass
         else:
             self.css_classes.add("complete")
 
