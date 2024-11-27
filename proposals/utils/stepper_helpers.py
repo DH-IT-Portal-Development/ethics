@@ -144,6 +144,15 @@ class PlaceholderItem(StepperItem):
         return ""
 
 
+class DisabledItem(PlaceholderItem):
+
+    def build_css_classes(self):
+        """
+        Disabled items are placeholders which are never complete.
+        """
+        return ""
+
+
 class ContainerItem(
     StepperItem,
 ):
