@@ -90,18 +90,6 @@
     </p>
     {% if not proposal.is_pre_assessment %}
         {% for study in proposal.study_set.all %}
-            {% if study.has_missing_forms %}
-                <div class="warning">
-                    {% url "proposals:consent" proposal.pk as consent_link %}
-                    {% blocktrans trimmed with study_order=study.order %}
-                        Je hebt nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject
-                        {{ study_order }}.
-                        Die kan je op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
-                        Als je deze formulieren nog niet klaar hebt, kan je ook op een later moment terugkeren;
-                        je aanvraag is reeds opgeslagen en terug te vinden onder "Mijn concepten".
-                    {% endblocktrans %}
-                </div>
-            {% endif %}
             {% if  study.has_missing_sessions %}
                 <div class="warning">
                     {% url "studies:design" study.pk as study_link %}

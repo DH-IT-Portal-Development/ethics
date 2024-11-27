@@ -814,7 +814,6 @@ class ProposalSubmitForm(ConditionalModelForm):
         - If the inform_local_staff question is asked, it is required
         - Was the embargo question answered and, if so, is the end date within two years from now?
         """
-        from studies.models import Documents
 
         cleaned_data = super(ProposalSubmitForm, self).clean()
 
