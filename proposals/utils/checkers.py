@@ -697,7 +697,7 @@ class DesignChecker(
     ):
         self.stepper.items.append(self.make_stepper_item())
         return []
-    
+
     def get_form_object(self):
         return self.study
 
