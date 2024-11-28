@@ -310,7 +310,7 @@ class ProposalAttachmentsView(
         return reverse("proposals:translated", args=(self.object.pk,))
 
     def get_back_url(self):
-        return reverse("proposals:knowledge_security", args=(self.object.pk,))
+        return reverse("proposals:data_management", args=(self.object.pk,))
 
     def legacy_documents(
         self,

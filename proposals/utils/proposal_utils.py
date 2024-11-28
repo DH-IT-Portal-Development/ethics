@@ -398,15 +398,15 @@ def check_local_facilities(proposal):
             if recruitment.is_local:
                 add_to_result(recruitment)
 
-        if study.has_intervention:
+        if study.get_intervention():
             for setting in study.intervention.setting.all():
                 if setting.is_local:
                     add_to_result(setting)
-        if study.has_observation:
+        if study.get_observation():
             for setting in study.observation.setting.all():
                 if setting.is_local:
                     add_to_result(setting)
-        if study.has_sessions:
+        if study.get_sessions():
             for session in study.session_set.all():
                 for setting in session.setting.all():
                     if setting.is_local:

@@ -369,17 +369,14 @@ cadeautje."
         ordering = ["order"]
         unique_together = ("proposal", "order")
 
-    @property
     def get_intervention(self):
         if self.has_intervention and hasattr(self, "intervention"):
             return self.intervention
 
-    @property
     def get_observation(self):
         if self.has_observation and hasattr(self, "observation"):
             return self.observation
 
-    @property
     def get_sessions(self):
         if self.has_sessions:
             return self.session_set.all()
@@ -436,7 +433,7 @@ cadeautje."
         return not documents.informed_consent or not documents.briefing
 
     def has_missing_sessions(self):
-        if self.has_intervention and self.intervention.extra_task:
+        if self.get_intervention() and self.intervention.extra_task:
             return (
                 self.intervention.settings_contains_schools() and not self.has_sessions
             )
@@ -448,16 +445,16 @@ cadeautje."
 
     def research_settings_contains_schools(self):
         """Checks if any research track contains a school in it's setting"""
-        if self.has_intervention and self.intervention.settings_contains_schools():
+        if self.get_intervention() and self.intervention.settings_contains_schools():
             return True
 
         if (
-            self.has_sessions
+            self.get_sessions()
             and self.session_set.filter(setting__is_school=True).exists()
         ):
             return True
 
-        if self.has_observation and self.observation.settings_contains_schools():
+        if self.get_observation() and self.observation.settings_contains_schools():
             return True
 
         return False

@@ -23,13 +23,15 @@ function depends_on_value(a, a_value, b)
 
         // Only if we don't want to show the field
         if(!check) {
-            // clear the checkbox values for dependent fields to ensure secondary
-            // dependencies disappear
+            // clear the checkbox and radio values for dependent fields to 
+            // ensure secondary dependencies disappear
+            let b_radios = input_b.find('[type=radio]');
             let b_checkboxes = input_b.find('[type=checkbox]');
-            b_checkboxes.each(function() {
+            let b_clearable_inputs = b_radios.add(b_checkboxes)
+            b_clearable_inputs.each(function() {
                 this.checked = false;
             });
-            b_checkboxes.trigger('change');
+            b_clearable_inputs.trigger('change');
         }
 
         input_b.parents('.uu-form-row').toggle(check);
@@ -113,13 +115,16 @@ function check_field_required(input_name, field_name, required_input, app_name, 
         let req = $.post(url, params, function(data) {
             r_input.parents('.uu-form-row').toggle(data.result);
 
-            // If we don't want to show the field, unselect all selected checkboxes of that field (if any)
+            // If we don't want to show the field, unselect all selected checkboxes/radio's of that field (if any)
             if (data.result === false) {
                 let r_input_checkboxes = r_input.find('[type=checkbox]');
-                r_input_checkboxes.each(function() {
+                let r_input_radios = r_input.find('[type=radio]')
+                let r_clearable_inputs = r_input_radios.add(r_input_checkboxes)
+    
+                r_clearable_inputs.each(function() {
                     this.checked = false;
                 });
-                r_input_checkboxes.trigger('change');
+                r_clearable_inputs.trigger('change');
             }
 
             // Remove header if present

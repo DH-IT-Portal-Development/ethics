@@ -80,7 +80,7 @@ class SoftValidationMixin:
                     "{} is not a field of {}!".format(field, self.__class__.__name__)
                 )
 
-            if field not in data or not data[field]:
+            if field not in data or data[field] in (None, ""):
                 self.add_error(field, _("Dit veld is verplicht."))
 
     def _initial_post_clean(self):

@@ -75,13 +75,13 @@ def study_urls(study, prev_study_completed):
         design_url.url = reverse("studies:design", args=(study.pk,))
     urls.append(design_url)
 
-    if study.has_intervention:
+    if study.get_intervention():
         urls.append(intervention_url(study))
 
-    if study.has_observation:
+    if study.get_observation():
         urls.append(observation_url(study))
 
-    if study.has_sessions:
+    if study.get_sessions():
         urls.append(session_urls(study))
 
     end_url = AvailableURL(
@@ -121,11 +121,9 @@ def copy_study_to_proposal(proposal, original_study):
     traits = original_study.traits.all()
     compensation = original_study.compensation
     recruitment = original_study.recruitment.all()
-    intervention = (
-        original_study.intervention if original_study.has_intervention else None
-    )
-    observation = original_study.observation if original_study.has_observation else None
-    sessions = original_study.session_set.all() if original_study.has_sessions else []
+    intervention = original_study.get_intervention()
+    observation = original_study.get_observation()
+    sessions = original_study.get_sessions()
 
     s = Study.objects.get(pk=original_study.pk)
     s.pk = None

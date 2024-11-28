@@ -11,7 +11,7 @@ from django.db.models.fields.files import FieldFile
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponseRedirect
 
 # from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
@@ -496,6 +496,20 @@ class ProposalOtherResearchersFormView(
     form_class = OtherResearchersForm
     template_name = "proposals/other_researchers_form.html"
 
+    def form_valid(self, form):
+        """
+        Ensure:
+        - if other_applicants is False, only the user is in applicants
+        - if other_applicants is True, always add current user to applicants
+        """
+        response = super(ProposalOtherResearchersFormView, self).form_valid(form)
+        self.object = form.save()
+        if form.instance.other_applicants == False:
+            self.object.applicants.set([self.request.user])
+        else:
+            self.object.applicants.add(self.request.user)
+        return response
+
     def get_next_url(self):
         proposal = self.object
         if proposal.is_pre_assessment:
@@ -574,7 +588,7 @@ class ProposalKnowledgeSecurity(
     template_name = "proposals/knowledge_security_form.html"
 
     def get_next_url(self):
-        return reverse("proposals:attachments", args=(self.object.pk,))
+        return reverse("proposals:data_management", args=(self.object.pk,))
 
     def get_back_url(self):
         return reverse("studies:design_end", args=(self.object.last_study().pk,))
@@ -587,7 +601,7 @@ class TranslatedConsentView(ProposalContextMixin, UpdateView):
 
     def get_next_url(self):
         """Go to the consent form upload page"""
-        return reverse("proposals:data_management", args=(self.object.pk,))
+        return reverse("proposals:submit", args=(self.object.pk,))
 
     def get_back_url(self):
         """Return to the overview of the last Study"""
@@ -601,11 +615,11 @@ class ProposalDataManagement(ProposalContextMixin, UpdateView):
 
     def get_next_url(self):
         """Continue to the submission view"""
-        return reverse("proposals:submit", args=(self.object.pk,))
+        return reverse("proposals:attachments", args=(self.object.pk,))
 
     def get_back_url(self):
         """Return to the consent form overview of the last Study"""
-        return reverse("proposals:translated", args=(self.object.pk,))
+        return reverse("proposals:knowledge_security", args=(self.object.pk,))
 
 
 class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
