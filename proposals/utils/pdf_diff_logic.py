@@ -881,7 +881,7 @@ class KnowledgeSecuritySection(BaseSection):
 class InformedConsentFormsSection(BaseSection):
     """This class receives a Documents object"""
 
-    section_title = _("Informed consent formulieren")
+    section_title = _("Documenten")
 
     row_fields = [
         "translated_forms",

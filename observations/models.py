@@ -96,14 +96,14 @@ class Observation(SettingModel):
     )
 
     has_advanced_consent = models.BooleanField(
-        _("Vindt informed consent van tevoren plaats?"),
+        _("Wordt er van tevoren toestemming gegeven?"),
         default=True,
     )
 
     has_advanced_consent_details = models.TextField(
         _(
-            "Leg uit waarom informed consent niet van te voren plaatsvindt en "
-            "geef ook op welke wijze dit achteraf verzorgd wordt."
+            "Leg uit waarom er niet van tevoren toestemming wordt gegeven en "
+            "beschrijf ook op welke wijze dit achteraf verzorgd wordt."
         ),
         blank=True,
     )

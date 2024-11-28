@@ -802,7 +802,7 @@ class ProposalSubmitForm(ConditionalModelForm):
     def clean(self):
         """
         Check if the Proposal is complete:
-        - Do all Studies have informed consent/briefing?
+        - Do all Studies have attachments?
         - If the inform_local_staff question is asked, it is required
         - Was the embargo question answered and, if so, is the end date within two years from now?
         """

@@ -14,7 +14,7 @@ help_menu = (
         open_in_new_tab=True,
     ),
     MenuItem(
-        _("Informed consent formulieren"),
+        _("Documenten"),
         _("https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"),
         open_in_new_tab=True,
     ),

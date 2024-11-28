@@ -165,9 +165,9 @@ Dan moet je hier hier 4-5 én 6-11 invullen."
             "Wilsonbekwame volwassenen zijn volwassenen waarvan \
 redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten \
 wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag \
-worden aangenomen dat informed consent niet goed gerealiseerd kan worden \
+worden aangenomen dat bewuste toestemming niet goed gerealiseerd kan worden \
 (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). \
-Hier dient in ieder geval altijd informed consent van een relevante \
+Hier dient in ieder geval altijd toestemming van een relevante \
 vertegenwoordiger te worden verkregen."
         ),
         default=False,
@@ -479,13 +479,13 @@ cadeautje."
     # DEFUNCT: Passive consent has been removed from studies.
     # These fields are kept for posterity as to not break older proposals.
     passive_consent = models.BooleanField(
-        _("Maak je gebruik van passieve informed consent?"),
+        _("Maak je gebruik van passieve toestemming?"),
         help_text=mark_safe_lazy(
             _(
                 'Wanneer je kinderen via een instelling \
 (dus ook school) werft en je de ouders niet laat ondertekenen, maar in \
 plaats daarvan de leiding van die instelling, dan maak je gebruik van \
-passieve informed consent. Je kan de templates vinden op \
+passieve toestemming. Je kan de templates vinden op \
 <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" \
 target="_blank">de FETC-GW-website</a>.'
             )
