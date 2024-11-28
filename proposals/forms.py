@@ -90,6 +90,11 @@ class ResearcherForm(
             "supervisor": SearchableSelectWidget(),
         }
 
+    _soft_validation_fields = [
+        "supervisor",
+        "relation",
+    ]
+
     def __init__(self, *args, **kwargs):
         """
         - Remove empty label from relation field
@@ -147,7 +152,7 @@ van het FETC-GW worden opgenomen."
                 error = forms.ValidationError(
                     _("Je dient een promotor/begeleider op te geven."), code="required"
                 )
-                self.add_error("supervisor", error)
+                self.add_error("relation", error)
 
             if (
                 relation.needs_supervisor
@@ -157,7 +162,7 @@ van het FETC-GW worden opgenomen."
                 error = forms.ValidationError(
                     _("Je kunt niet jezelf als promotor/begeleider opgeven.")
                 )
-                self.add_error("supervisor", error)
+                self.add_error("relation", error)
 
             if relation.check_in_course:
                 self.mark_soft_required(cleaned_data, "student_context")
@@ -202,7 +207,7 @@ class OtherResearchersForm(
         }
 
     _soft_validation_fields = [
-        "other_applicants",
+        "applicants",
         "other_stakeholders",
         "stakeholders",
     ]
@@ -231,31 +236,18 @@ class OtherResearchersForm(
         Check for conditional requirements:
         - If other_applicants is checked, make sure applicants are set
         - If other_stakeholders is checked, make sure stakeholders is not empty
-        - Make sure the user is listed in applicants
         """
         cleaned_data = super(OtherResearchersForm, self).clean()
 
         other_applicants = cleaned_data.get("other_applicants")
         applicants = cleaned_data.get("applicants")
 
-        # Mark both base fields as required
-        self.mark_soft_required(
-            cleaned_data,
-            "other_applicants",
-            "other_stakeholders",
-        )
-
-        # Always make sure the applicant is actually in the applicants list
-        if self.user not in applicants and self.user != self.instance.supervisor:
-            error = forms.ValidationError(
-                _("Je hebt jezelf niet als onderzoekers geselecteerd."), code="required"
-            )
-            self.add_error("applicants", error)
-        elif other_applicants and len(applicants) == 1:
-            error = forms.ValidationError(
-                _("Je hebt geen andere onderzoekers geselecteerd."), code="required"
-            )
-            self.add_error("applicants", error)
+        if other_applicants:
+            if len(applicants) == 1 and self.user in applicants:
+                error = forms.ValidationError(
+                    _("Je hebt geen andere onderzoekers geselecteerd."), code="required"
+                )
+                self.add_error("other_applicants", error)
 
         self.check_dependency(cleaned_data, "other_stakeholders", "stakeholders")
 
@@ -748,7 +740,7 @@ class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
 class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
-        fields = ["privacy_officer", "dmp_file"]
+        fields = ["privacy_officer"]
         widgets = {
             "privacy_officer": BootstrapRadioSelect(choices=YES_NO),
         }

@@ -346,8 +346,8 @@ class TrajectoriesChecker(
     ):
         return [
             KnowledgeSecurityChecker(self.stepper, parent=self.item),
-            AttachmentsChecker,
             DataManagementChecker,
+            AttachmentsChecker,
             SubmitChecker,
         ]
 
@@ -580,7 +580,7 @@ class StudyAttachmentsChecker(
         registration.
         """
         has_recordings = False
-        if self.study.get_observation:
+        if self.study.get_observation():
             # gather all AV observation_registraions
             recordings_observation = observation_registration.objects.filter(
                 description__in=["audio recording", "video recording"]
@@ -588,7 +588,7 @@ class StudyAttachmentsChecker(
             # check if there is an overlap between these two QS's
             if self.study.observation.registrations.all() & recordings_observation:
                 has_recordings = True
-        if self.study.get_sessions:
+        if self.study.get_sessions():
             # gather all the tasks
             all_tasks = Task.objects.filter(session__study=self.study)
             # gather all AV task_registrations
@@ -702,6 +702,9 @@ class DesignChecker(
     ):
         self.stepper.items.append(self.make_stepper_item())
         return []
+
+    def get_form_object(self):
+        return self.study
 
     def get_url(
         self,
@@ -1016,6 +1019,32 @@ class AttachmentsItem(
         return errors
 
 
+class DataManagementChecker(
+    ModelFormChecker,
+):
+    title = _("Data management")
+    form_class = proposal_forms.ProposalDataManagementForm
+    location = "data_management"
+
+    def check(
+        self,
+    ):
+        self.stepper.items.append(
+            self.make_stepper_item(),
+        )
+        return []
+
+    def get_url(
+        self,
+    ):
+        return reverse(
+            "proposals:data_management",
+            args=[
+                self.stepper.proposal.pk,
+            ],
+        )
+
+
 class AttachmentsChecker(
     Checker,
 ):
@@ -1085,32 +1114,6 @@ class TranslationChecker(
     ):
         return reverse(
             "proposals:translated",
-            args=[
-                self.stepper.proposal.pk,
-            ],
-        )
-
-
-class DataManagementChecker(
-    ModelFormChecker,
-):
-    title = _("Data management")
-    form_class = proposal_forms.ProposalDataManagementForm
-    location = "data_management"
-
-    def check(
-        self,
-    ):
-        self.stepper.items.append(
-            self.make_stepper_item(),
-        )
-        return []
-
-    def get_url(
-        self,
-    ):
-        return reverse(
-            "proposals:data_management",
             args=[
                 self.stepper.proposal.pk,
             ],

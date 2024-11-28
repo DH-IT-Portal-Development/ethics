@@ -43,3 +43,12 @@
     </div>
     <p>{% trans "Beantwoord op basis van dit overzicht de volgende vragen:" %}</p>
 {% endblock %}
+
+{% block post-form-pre-buttons %}
+    <script>
+    // So this form features a non-field error which gets used for validation
+    // However, it does not need to be visible here ...
+    // this is a very hacky way to remove it.
+    document.getElementsByClassName("errorlist nonfield")[0].remove()    
+    </script>
+{% endblock %}

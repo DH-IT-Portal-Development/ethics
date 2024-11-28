@@ -48,7 +48,7 @@ class ObservationMixin(StepperContextMixin):
         study = self.get_study()
         pk = study.pk
         next_url = "studies:design"
-        if study.has_intervention:
+        if study.get_intervention():
             next_url = "interventions:update"
             pk = study.intervention.pk
         return reverse(next_url, args=(pk,))

@@ -204,7 +204,12 @@ class DataManagementPlan(ProposalAttachmentKind):
 
     db_name = "dmp"
     name = _("Data Management Plan")
-    description = _("Omschrijving DMP")
+    description = _(
+        "Een Data Management Plan (DMP) is een document, dat "
+        "voorafgaand aan een onderzoeksproject wordt opgesteld. Hierin "
+        "worden alle aspecten omtrent de omgang met onderzoeksdata, tijdens "
+        "en na afloop van het onderzoek, uiteengezet."
+    )
     desiredness = desiredness.RECOMMENDED
 
     def num_recommended(self):
