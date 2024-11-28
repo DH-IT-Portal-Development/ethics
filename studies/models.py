@@ -158,8 +158,8 @@ Dan moet je hier hier 4-5 én 6-11 invullen."
     )
     legally_incapable = models.BooleanField(
         _(
-            "Maakt je onderzoek gebruik van wils<u>on</u>bekwame (volwassen) \
-deelnemers?"
+            "Maakt je onderzoek gebruik van wils<u>on</u>bekwame volwassen "
+"deelnemers?"
         ),  # Note: Form labels with HTML are hard-coded in the Form meta class
         help_text=_(
             "Wilsonbekwame volwassenen zijn volwassenen waarvan \
