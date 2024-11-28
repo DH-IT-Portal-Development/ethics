@@ -142,8 +142,8 @@ class Study(models.Model):
 
     class LegalBases(models.IntegerChoices):
         ANONYMOUS = 0, _("Dit traject is volledig anoniem.")
-        CONSENT = 1, _("De deelnemers geven toestemming.")
-        PUBLIC_INTEREST = 2, _("De AVG grondslag is algemeen belang.")
+        PUBLIC_INTEREST = 1, _("De AVG grondslag is 'algemeen belang'.")
+        CONSENT = 2, _("De AVG grondslag is 'toestemming'.")
 
     order = models.PositiveIntegerField()
     name = models.CharField(_("Naam traject"), max_length=15, blank=True)
@@ -175,10 +175,13 @@ vertegenwoordiger te worden verkregen."
     legally_incapable_details = models.TextField(_("Licht toe"), blank=True)
 
     has_special_details = models.BooleanField(
-        verbose_name=_("Worden er bijzondere persoonsgegevens verzameld?"),
+        verbose_name=_("Worden er bijzondere of gevoelige persoonsgegevens verzameld?"),
         help_text=_(
-            "zie de <a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw' \
-            target='_blank'>Richtlijnen</a>"
+                 "Wat 'bijzondere of gevoelige persoonsgegevens' zijn kun je "
+                 "vinden op <a href='https://utrechtuniversity.github.io/"
+                 "dataprivacyhandbook/special-types-personal-data.html#special"
+                 "-types-personal-data' target='_blank'>deze pagina</a> van "
+                 "het UU Data Privacy Handbook."
         ),
         null=True,
         blank=True,
@@ -192,7 +195,7 @@ vertegenwoordiger te worden verkregen."
             "Voor meer informatie over welk AVG grondslag op jouw onderzoek van "
             "toepassing is, zie de flowchart in het "
             "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/choose-legal-basis.html'"
-            " target='_blank'>Data Privacy Handbook</a>"
+            " target='_blank'>UU Data Privacy Handbook</a>"
         ),
         choices=LegalBases.choices,
         null=True,
