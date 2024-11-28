@@ -289,7 +289,7 @@ cadeautje."
     # Fields with respect to experimental design
     has_intervention = models.BooleanField(_("Interventieonderzoek"), default=False)
     has_observation = models.BooleanField(_("Observatieonderzoek"), default=False)
-    has_sessions = models.BooleanField(_("Taakonderzoek en interviews"), default=False)
+    has_sessions = models.BooleanField(_("Taakonderzoek en/of interview(s)"), default=False)
 
     # Fields with respect to Sessions
     deception = models.CharField(
