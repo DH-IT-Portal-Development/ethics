@@ -11,7 +11,7 @@ from django.db.models.fields.files import FieldFile
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponseRedirect
 
 # from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
@@ -495,6 +495,20 @@ class ProposalOtherResearchersFormView(
     model = Proposal
     form_class = OtherResearchersForm
     template_name = "proposals/other_researchers_form.html"
+
+    def form_valid(self, form):
+        """
+        Ensure:
+        - if other_applicants is False, only the user is in applicants
+        - if other_applicants is True, always add current user to applicants
+        """
+        response = super(ProposalOtherResearchersFormView, self).form_valid(form)
+        self.object = form.save()
+        if form.instance.other_applicants == False:
+            self.object.applicants.set([self.request.user])
+        else:
+            self.object.applicants.add(self.request.user)
+        return response
 
     def get_next_url(self):
         proposal = self.object

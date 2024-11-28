@@ -575,7 +575,7 @@ class StudyAttachmentsChecker(
         registration.
         """
         has_recordings = False
-        if self.study.get_observation:
+        if self.study.get_observation():
             # gather all AV observation_registraions
             recordings_observation = observation_registration.objects.filter(
                 description__in=["audio recording", "video recording"]
@@ -583,7 +583,7 @@ class StudyAttachmentsChecker(
             # check if there is an overlap between these two QS's
             if self.study.observation.registrations.all() & recordings_observation:
                 has_recordings = True
-        if self.study.get_sessions:
+        if self.study.get_sessions():
             # gather all the tasks
             all_tasks = Task.objects.filter(session__study=self.study)
             # gather all AV task_registrations
@@ -697,6 +697,9 @@ class DesignChecker(
     ):
         self.stepper.items.append(self.make_stepper_item())
         return []
+
+    def get_form_object(self):
+        return self.study
 
     def get_url(
         self,

@@ -47,7 +47,7 @@
     </p>
     {% include "studies/intervention_table.html" %}
     {% include "studies/observation_table.html" %}
-    {% if study.has_sessions %}
+    {% if study.get_sessions %}
         <h3>
             {% trans "Takenonderzoek" %}
             <a href="{% url 'tasks:session_overview' study.pk %}">

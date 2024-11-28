@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load fetc_filters %}
 
-{% if study.has_observation %}
+{% if study.get_observation %}
     {% with observation=study.observation %}
         <h3 class="mb-3">
             {% trans "Observatieonderzoek" %}
