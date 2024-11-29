@@ -246,7 +246,7 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
         )
 
 
-class StudyDesignForm(TemplatedModelForm):
+class StudyDesignForm(SoftValidationMixin, TemplatedModelForm,):
 
     # This form uses a custom template for rendering the form part.
     # As it needs are a bit specific

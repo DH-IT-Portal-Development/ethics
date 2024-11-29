@@ -768,7 +768,7 @@ class ProposalUpdateDateStartForm(TemplatedModelForm):
         fields = ["date_start"]
 
 
-class ProposalSubmitForm(ConditionalModelForm):
+class ProposalSubmitForm(SoftValidationMixin, ConditionalModelForm,):
     class Meta:
         model = Proposal
         fields = ["comments", "inform_local_staff", "embargo", "embargo_end_date"]
