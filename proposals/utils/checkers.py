@@ -1010,7 +1010,7 @@ class AttachmentsItem(
         return url
 
     def get_errors(self, include_children=False):
-        errors = []
+        errors = super().get_errors(include_children=include_children)
         for slot in self.stepper.attachment_slots:
             if slot.required and not slot.attachment:
                 errors.append(

@@ -76,7 +76,13 @@ class StepperItem(
         """
         Overwrite for adding errors to stepper validation.
         """
-        return []
+        errors = []
+        if hasattr(self, "get_checker_errors"):
+            errors += self.get_checker_errors()
+        if include_children and self.children:
+            for child in self.children:
+                errors += child.get_errors(include_children=True)
+        return errors
 
     def get_ancestors(self):
         """
@@ -318,14 +324,8 @@ class ModelFormItem(
         By passing a custom get_checker_errors function
         from the checker, custom errors also be added.
         """
-        errors = []
+        errors = super().get_errors(include_children=include_children)
         errors += self.model_form.errors
-
-        if hasattr(self, "get_checker_errors"):
-            errors += self.get_checker_errors()
-        if include_children and self.children:
-            for child in self.children:
-                errors += child.get_errors(include_children=True)
         return errors
 
 
