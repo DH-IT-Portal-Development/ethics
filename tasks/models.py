@@ -156,10 +156,12 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
             "Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?"
         ),
         help_text=_(
-            "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het gebruik van de term \
-        ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor deelnemers. Voor meer informatie, zie de \
-        <a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf'> \
-        Richtlijnen voor geïnformeerde toestemming, ‘Beeld en geluid’</a>."
+            "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop "
+            "bij het gebruik van de term 'anoniem' of 'geanonimiseerd' in "
+            "je documenten voor deelnemers. Voor meer informatie, zie het UU Data Privacy Handbook over "
+            "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/pseudonymisation-anonymisation.html#pseudonymisation-anonymisation' target='_blank'>"
+            "anonimiseren en pseudonimiseren</a>."
+
         ),
     )
 
