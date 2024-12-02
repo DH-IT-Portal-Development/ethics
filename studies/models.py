@@ -159,7 +159,7 @@ Dan moet je hier hier 4-5 én 6-11 invullen."
     legally_incapable = models.BooleanField(
         _(
             "Maakt je onderzoek gebruik van wils<u>on</u>bekwame volwassen "
-"deelnemers?"
+            "deelnemers?"
         ),  # Note: Form labels with HTML are hard-coded in the Form meta class
         help_text=_(
             "Wilsonbekwame volwassenen zijn volwassenen waarvan \
@@ -177,11 +177,11 @@ vertegenwoordiger te worden verkregen."
     has_special_details = models.BooleanField(
         verbose_name=_("Worden er bijzondere of gevoelige persoonsgegevens verzameld?"),
         help_text=_(
-                 "Wat 'bijzondere of gevoelige persoonsgegevens' zijn kun je "
-                 "vinden op <a href='https://utrechtuniversity.github.io/"
-                 "dataprivacyhandbook/special-types-personal-data.html#special"
-                 "-types-personal-data' target='_blank'>deze pagina</a> van "
-                 "het UU Data Privacy Handbook."
+            "Wat 'bijzondere of gevoelige persoonsgegevens' zijn kun je "
+            "vinden op <a href='https://utrechtuniversity.github.io/"
+            "dataprivacyhandbook/special-types-personal-data.html#special"
+            "-types-personal-data' target='_blank'>deze pagina</a> van "
+            "het UU Data Privacy Handbook."
         ),
         null=True,
         blank=True,
@@ -286,7 +286,9 @@ cadeautje."
     # Fields with respect to experimental design
     has_intervention = models.BooleanField(_("Interventieonderzoek"), default=False)
     has_observation = models.BooleanField(_("Observatieonderzoek"), default=False)
-    has_sessions = models.BooleanField(_("Taakonderzoek en/of interview(s)"), default=False)
+    has_sessions = models.BooleanField(
+        _("Taakonderzoek en/of interview(s)"), default=False
+    )
 
     # Fields with respect to Sessions
     deception = models.CharField(

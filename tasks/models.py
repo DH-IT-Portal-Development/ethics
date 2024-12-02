@@ -161,7 +161,6 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
             "je documenten voor deelnemers. Voor meer informatie, zie het UU Data Privacy Handbook over "
             "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/pseudonymisation-anonymisation.html#pseudonymisation-anonymisation' target='_blank'>"
             "anonimiseren en pseudonimiseren</a>."
-
         ),
     )
 
