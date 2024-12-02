@@ -20,6 +20,8 @@ from attachments.kinds import (
     LEGAL_BASIS_KIND_DICT,
     ConsentFormAdults,
     AgreementRecordingsAdults,
+    AgreementRecordingsChildrenNoParents,
+    AgreementRecordingsChildrenParents,
     ScriptVerbalConsentRecordings,
     ConsentPublicInterestSpecialDetails,
     ConsentChildrenParents,
@@ -486,6 +488,9 @@ class StudyAttachmentsChecker(
     def check(
         self,
     ):
+        
+        # INFORMATION LETTER LOGIC
+
         if self.study.legal_basis is not None:
             kind = LEGAL_BASIS_KIND_DICT[self.study.legal_basis]
             info_slot = AttachmentSlot(
@@ -494,36 +499,44 @@ class StudyAttachmentsChecker(
             )
             self.stepper.add_slot(info_slot)
 
+        # LOGIC FOR PUBLIC INTEREST
+
         if self.study.legal_basis == Study.LegalBases.PUBLIC_INTEREST:
-
-            fulfilled_recording_slot = None
-
+            
             if self.check_has_recordings():
-                # if a study features registration, add two slots
-                recording_group = OptionalityGroup()
-                recordings_slots = [
-                    AttachmentSlot(
-                        self.study,
-                        kind=AgreementRecordingsAdults,
-                        optionality_group=recording_group,
-                    ),
-                    AttachmentSlot(
-                        self.study,
-                        kind=ScriptVerbalConsentRecordings,
-                        optionality_group=recording_group,
-                    ),
-                ]
-                # if one of them has been fulfilled, this becomes the fulfilled slot
-                fulfilled_recording_slot = self.at_least_one_fulfilled(recordings_slots)
+                if self.study.has_adults():
+                    # if a study features registration, add two slots
+                    recording_adults_group = OptionalityGroup()
+                    recording_adults_slots = [
+                        AttachmentSlot(
+                            self.study,
+                            kind=AgreementRecordingsAdults,
+                            optionality_group=recording_adults_group,
+                        ),
+                        AttachmentSlot(
+                            self.study,
+                            kind=ScriptVerbalConsentRecordings,
+                            optionality_group=recording_adults_group,
+                        ),
+                    ]
+                    self.add_optionality_group_slots(recording_adults_slots)
 
-                for slot in recordings_slots:
-                    # if there is at least one, make the other one optional
-                    if (
-                        fulfilled_recording_slot
-                        and slot is not fulfilled_recording_slot
-                    ):
-                        slot.force_desiredness = desiredness.OPTIONAL
-                    self.stepper.add_slot(slot)
+                if self.study.has_children():
+                    # if a study features registration of minors, add two slots
+                    recording_minors_group = OptionalityGroup()
+                    recording_minors_slots = [
+                        AttachmentSlot(
+                            self.study,
+                            kind=AgreementRecordingsChildrenParents,
+                            optionality_group=recording_minors_group,
+                        ),
+                        AttachmentSlot(
+                            self.study,
+                            kind=AgreementRecordingsChildrenNoParents,
+                            optionality_group=recording_minors_group,
+                        ),
+                    ]
+                    self.add_optionality_group_slots(recording_minors_slots)
 
             elif self.study.has_special_details:
                 self.stepper.add_slot(
@@ -533,8 +546,37 @@ class StudyAttachmentsChecker(
                     )
                 )
 
+        # LOGIC FOR CONSENT
+
         if self.study.legal_basis == Study.LegalBases.CONSENT:
-            fulfilled_children_slot = None
+
+            # if there are adults, make the adult consent form required or
+            # if there are recordings, either the adult consent form or Script
+            if self.study.has_adults():
+
+                if self.check_has_recordings():
+                    recording_adults_group = OptionalityGroup()
+                    recording_adults_slots = [
+                        AttachmentSlot(
+                            self.study,
+                            kind=ConsentFormAdults,
+                            optionality_group=recording_adults_group,
+                        ),
+                        AttachmentSlot(
+                            self.study,
+                            kind=ScriptVerbalConsentRecordings,
+                            optionality_group=recording_adults_group,
+                        ),
+                    ]
+                    self.add_optionality_group_slots(recording_adults_slots)
+                else:
+                    self.stepper.add_slot(
+                        AttachmentSlot(
+                            self.study,
+                            kind=ConsentFormAdults,
+                        )
+                    )
+                    
             if self.study.has_children():
                 child_group = OptionalityGroup()
                 children_slots = [
@@ -550,23 +592,9 @@ class StudyAttachmentsChecker(
                     ),
                 ]
 
-                # if one of them has been fulfilled, this becomes the fulfilled slot
-                fulfilled_children_slot = self.at_least_one_fulfilled(children_slots)
-                for slot in children_slots:
-                    # if there is at least one, make the other one optional
-                    if fulfilled_children_slot and slot is not fulfilled_children_slot:
-                        slot.force_desiredness = desiredness.OPTIONAL
-                    self.stepper.add_slot(slot)
+                self.add_optionality_group_slots(children_slots)
 
-            # if there is no children, make the normal consentform required
-            if self.study.has_adults():
-                self.stepper.add_slot(
-                    AttachmentSlot(
-                        self.study,
-                        kind=ConsentFormAdults,
-                    )
-                )
-
+                
         return []
 
     def check_has_recordings(self):
@@ -578,7 +606,7 @@ class StudyAttachmentsChecker(
         if self.study.get_observation():
             # gather all AV observation_registraions
             recordings_observation = observation_registration.objects.filter(
-                description__in=["audio recording", "video recording"]
+                description_en__in=["audio recording", "video recording"]
             )
             # check if there is an overlap between these two QS's
             if self.study.observation.registrations.all() & recordings_observation:
@@ -605,6 +633,23 @@ class StudyAttachmentsChecker(
             if slot.match():
                 fullfilled_slot = slot
         return fullfilled_slot
+    
+    def add_optionality_group_slots(self, optionality_group_slots):
+        """
+        Takes a list of multiple slots belonging to one optionality group
+        and sets desiredness based on the other items in the optionailty group
+        and then add the slots to the stepper
+        """
+        fulfilled_slot = self.at_least_one_fulfilled(optionality_group_slots)
+
+        for slot in optionality_group_slots:
+            # if there is at least one, make the other one optional
+            if (
+                fulfilled_slot
+                and slot is not fulfilled_slot
+            ):
+                slot.force_desiredness = desiredness.OPTIONAL
+            self.stepper.add_slot(slot)
 
 
 class ParticipantsChecker(
