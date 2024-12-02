@@ -18,8 +18,8 @@ from attachments.utils import AttachmentSlot, desiredness, OptionalityGroup
 from attachments.kinds import (
     DataManagementPlan,
     LEGAL_BASIS_KIND_DICT,
-    ConsentForm,
-    AgreementRecordingsPublicInterest,
+    ConsentFormAdults,
+    AgreementRecordingsAdults,
     ScriptVerbalConsentRecordings,
     ConsentPublicInterestSpecialDetails,
     ConsentChildrenParents,
@@ -504,7 +504,7 @@ class StudyAttachmentsChecker(
                 recordings_slots = [
                     AttachmentSlot(
                         self.study,
-                        kind=AgreementRecordingsPublicInterest,
+                        kind=AgreementRecordingsAdults,
                         optionality_group=recording_group,
                     ),
                     AttachmentSlot(
@@ -563,7 +563,7 @@ class StudyAttachmentsChecker(
                 self.stepper.add_slot(
                     AttachmentSlot(
                         self.study,
-                        kind=ConsentForm,
+                        kind=ConsentFormAdults,
                     )
                 )
 

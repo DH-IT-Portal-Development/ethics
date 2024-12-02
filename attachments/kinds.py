@@ -80,10 +80,10 @@ LEGAL_BASIS_KIND_DICT = {
 ###############
 
 
-class ConsentForm(StudyAttachmentKind):
+class ConsentFormAdults(StudyAttachmentKind):
 
-    db_name = "consent_form"
-    name = _("Toestemmingsverklaring")
+    db_name = "consent_form_adults"
+    name = _("Toestemmingsverklaring 16+")
     description = _(
         "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op"
         " de wettelijke grondslag toestemming. De deelnemers zijn volwassenen"
@@ -136,19 +136,46 @@ class ConsentChildrenNoParents(StudyAttachmentKind):
 ####################
 
 
-class AgreementRecordingsPublicInterest(StudyAttachmentKind):
+class AgreementRecordingsAdults(StudyAttachmentKind):
 
-    db_name = "agreement_av_recordings"
-    name = _("Akkoordverklaring beeld- en geluidsopnames algemeen belang")
+    db_name = "agreement_av_recordings_adults"
+    name = _("Akkoordverklaring beeld- en geluidsopnames algemeen belang 16+")
     description = _(
-        "Je baseert de verwerking van persoonsgegevens weliswaar op de"
+        "Je baseert de verwerking van persoonsgegevens op de"
         " wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
-        " geluidsopnames en daar moeten je deelnemers op ethische gronden"
+        " geluidsopnames van volwassenen en daar moeten je deelnemers op ethische gronden"
         " mee instemmen. Ook voor het verdere gebruik van die opnames kun"
         " je de afspraken schriftelijk vastleggen."
     )
     desiredness = desiredness.REQUIRED
 
+class AgreementRecordingsChildrenParents(StudyAttachmentKind):
+
+    db_name = "agreement_av_recordings_children_w_parents"
+    name = _("Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden aanwezig")
+    description = _(
+        "Je baseert de verwerking van persoonsgegevens op de"
+        " wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
+        " geluidsopnames van kinderen in aanwezigheid van diens ouders of voogden."
+        " Daar moeten de ouders of voogden van de deelnemers op ethische gronden"
+        " mee instemmen. Ook voor het verdere gebruik van die opnames kun"
+        " je de afspraken schriftelijk vastleggen."
+    )
+    desiredness = desiredness.REQUIRED
+
+class AgreementRecordingsChildrenNoParents(StudyAttachmentKind):
+
+    db_name = "agreement_av_recordings_children_no_parents"
+    name = _("Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden afwezig")
+    description = _(
+        "Je baseert de verwerking van persoonsgegevens op de"
+        " wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
+        " geluidsopnames van kinderen in aanwezigheid van diens ouders of voogden."
+        " Daar moeten de ouders of voogden van de deelnemers op ethische gronden"
+        " mee instemmen. Ook voor het verdere gebruik van die opnames kun"
+        " je de afspraken schriftelijk vastleggen."
+    )
+    desiredness = desiredness.REQUIRED
 
 class ScriptVerbalConsentRecordings(StudyAttachmentKind):
 
@@ -235,12 +262,12 @@ STUDY_ATTACHMENTS = [
     InformationLetterAnonymous,
     InformationLetterPublicInterest,
     InformationLetterConsent,
-    AgreementRecordingsPublicInterest,
+    AgreementRecordingsAdults,
     ScriptVerbalConsentRecordings,
     ConsentPublicInterestSpecialDetails,
     ConsentChildrenParents,
     ConsentChildrenNoParents,
-    ConsentForm,
+    ConsentFormAdults,
 ]
 
 PROPOSAL_ATTACHMENTS = [
