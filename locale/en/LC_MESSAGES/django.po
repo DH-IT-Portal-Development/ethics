@@ -873,12 +873,6 @@ msgstr ""
 "target=\"_blank\">regulations of the FEtC-H</a>."
 
 #: main/templates/main/index.html:70
-#, fuzzy
-#| msgid ""
-#| "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
-#| "documenten-ethische-toetsingscommissie-gw\" "
-#| "target=\"blank\">voorbeelddocumenten</a> voor de <em>informed consent</"
-#| "em>. (de laatstse versie is van <u>december 2021</u>) </li>"
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\" "
@@ -1213,10 +1207,6 @@ msgid "Wordt er van tevoren toestemming gegeven?"
 msgstr "Will consent be given beforehand?"
 
 #: observations/models.py:105
-#, fuzzy
-#| msgid ""
-#| "Leg uit waarom informed consent niet van te voren plaatsvindt en geef ook "
-#| "op welke wijze dit achteraf verzorgd wordt."
 msgid ""
 "Leg uit waarom er niet van tevoren toestemming wordt gegeven en beschrijf "
 "ook op welke wijze dit achteraf verzorgd wordt."
@@ -1241,15 +1231,6 @@ msgid "Upload hier het toestemmingsdocument (in .pdf of .doc(x)-formaat)"
 msgstr "Upload the permission document (in .pdf or .doc(x)-format) here"
 
 #: observations/models.py:134 tasks/models.py:159
-#, fuzzy
-#| msgid ""
-#| "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het "
-#| "gebruik van de term ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor "
-#| "deelnemers. Voor meer informatie, zie de <a href='https://fetc-gw.wp.hum."
-#| "uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-"
-#| "geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-"
-#| "versie-1.1_21dec2021.pdf' target='_blank'>Richtlijnen voor geïnformeerde "
-#| "toestemming, ‘Beeld en geluid’</a>."
 msgid ""
 "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het "
 "gebruik van de term 'anoniem' of 'geanonimiseerd' in je documenten voor "
@@ -1260,11 +1241,10 @@ msgid ""
 msgstr ""
 "Recordings are never anonymous and are not able to be anonymized. Take note "
 "of this when using the terms 'anonymous' and 'anonymized' in the documents "
-"for participants. For more information, see <a href='https://fetc-gw.wp.hum."
-"uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-"
-"geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-"
-"versie-1.1_21dec2021.pdf' target='_blank'>Guidelines for Informed Consent, "
-"‘Audio and Video’</a>."
+"for participants. For more information, see the UU Data Privacy Handbook about "
+"<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/"
+"pseudonymisation-anonymisation.html#pseudonymisation-anonymisation' target='_blank'>"
+"anonymisation and pseudonymisation</a>."
 
 #: observations/models.py:140
 msgid "Hoe wordt het gedrag geregistreerd?"
@@ -1711,10 +1691,6 @@ msgid "Naam en affiliatie van andere betrokkenen"
 msgstr "Name and affiliation of other involved people"
 
 #: proposals/models.py:259
-#, fuzzy
-#| msgid ""
-#| "Worden de informed consent formulieren nog vertaald naar een andere taal "
-#| "dan Nederlands of Engels?"
 msgid ""
 "Worden de documenten nog vertaald naar een andere taal dan Nederlands of "
 "Engels?"
@@ -1824,19 +1800,6 @@ msgstr ""
 "Can the same informed consent documents be used for all participant groups?"
 
 #: proposals/models.py:405
-#, fuzzy
-#| msgid ""
-#| "Daar waar de verschillen klein en qua belasting of risico irrelevant zijn "
-#| "is sprake van in essentie hetzelfde traject, en voldoet één set "
-#| "documenten voor de informed consent. Denk hierbij aan taakonderzoek "
-#| "waarin de ene groep in taak X de ene helft van een set verhaaltjes te "
-#| "lezen krijgt, en de andere groep in taak X de andere helft. Of aan "
-#| "interventieonderzoek waarin drie vergelijkbare groepen op hetzelfde "
-#| "moment een verschillende interventie-variant krijgen (specificeer dan wel "
-#| "bij de beschrijving van de interventie welke varianten precies gebruikt "
-#| "worden). Let op: als verschillende groepen deelnemers verschillende "
-#| "<i>soorten</i> taken krijgen, dan kan dit niet en zijn dit afzonderlijke "
-#| "trajecten."
 msgid ""
 "Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is "
 "sprake van in essentie hetzelfde traject, en voldoet één set documenten voor "
@@ -2801,11 +2764,6 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_start.html:31
 #: proposals/templates/proposals/proposal_start_practice.html:31
-#, fuzzy
-#| msgid ""
-#| "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
-#| "documenten-ethische-toetsingscommissie-gw\">voorbeelddocumenten</a> voor "
-#| "de <em>informed consent</em>."
 msgid ""
 "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\">voorbeelddocumenten</a> voor de "
@@ -2850,11 +2808,6 @@ msgstr "Trajectory"
 #: proposals/templates/proposals/proposal_start.html:50
 #: proposals/templates/proposals/proposal_start_practice.html:50
 #: proposals/templates/proposals/study_start.html:68
-#, fuzzy
-#| msgid ""
-#| "Als je met verschillende deelnemersgroepen werkt die een verschillend "
-#| "onderzoekstraject doorlopen waarvoor verschillende informed consent "
-#| "documenten nodig zijn."
 msgid ""
 "Als je met verschillende deelnemersgroepen werkt die een verschillend "
 "onderzoekstraject doorlopen waarvoor verschillende documenten nodig zijn."
@@ -2897,16 +2850,12 @@ msgstr "Task"
 #: proposals/templates/proposals/proposal_start.html:67
 #: proposals/templates/proposals/proposal_start_practice.html:67
 #: proposals/templates/proposals/study_start.html:85
-#, fuzzy
-#| msgid ""
-#| "Een taak of onderdeel van je onderzoek. <p> <u>Bijvoorbeeld</u>: het "
-#| "invullen van een vragenlijst, een interview, of een taaltest. </p>"
 msgid ""
 "Een taak of onderdeel van je onderzoek. <p> <u>Bijvoorbeeld</u>: het "
 "invullen van een vragenlijst, een interview, of een bepaalde test. </p>"
 msgstr ""
 " A task or procedure within your study. <p> <u>For example</u>: completing "
-"an interview, questionnaire, or a specific test.</p>"
+"an interview, questionnaire, or a particular test.</p>"
 
 #: proposals/templates/proposals/proposal_start.html:76
 #: proposals/templates/proposals/proposal_start_pre_approved.html:37
@@ -4684,10 +4633,6 @@ msgstr ""
 "setting: {s}"
 
 #: reviews/utils/review_utils.py:557
-#, fuzzy
-#| msgid ""
-#| "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt "
-#| "met informed consent achteraf."
 msgid ""
 "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met "
 "toestemming na afloop van het onderzoek."
@@ -4824,10 +4769,6 @@ msgstr ""
 "fill in 4-5 and 6-11."
 
 #: studies/models.py:161
-#, fuzzy
-#| msgid ""
-#| "Maakt je onderzoek gebruik van wils<u>on</u>bekwame (volwassen) "
-#| "deelnemers?"
 msgid ""
 "Maakt je onderzoek gebruik van wils<u>on</u>bekwame volwassen deelnemers?"
 msgstr ""
@@ -4835,15 +4776,6 @@ msgstr ""
 "of informed consent?"
 
 #: studies/models.py:165
-#, fuzzy
-#| msgid ""
-#| "Wilsonbekwame volwassenen zijn volwassenen waarvan redelijkerwijs mag "
-#| "worden aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele "
-#| "deelname allemaal behelst, en/of waarvan anderszins mag worden aangenomen "
-#| "dat informed consent niet goed gerealiseerd kan worden (bijvoorbeeld "
-#| "omdat ze niet goed hun eigen mening kunnen geven). Hier dient in ieder "
-#| "geval altijd informed consent van een relevante vertegenwoordiger te "
-#| "worden verkregen."
 msgid ""
 "Wilsonbekwame volwassenen zijn volwassenen waarvan redelijkerwijs mag worden "
 "aangenomen dat ze onvoldoende kunnen inschatten wat hun eventuele deelname "
@@ -4866,12 +4798,6 @@ msgstr ""
 "personal data?"
 
 #: studies/models.py:180
-#, fuzzy
-#| msgid ""
-#| "Voor meer informatie over welk AVG grondslag op jouw onderzoek van "
-#| "toepassing is, zie de flowchart in het <a href='https://utrechtuniversity."
-#| "github.io/dataprivacyhandbook/choose-legal-basis.html' "
-#| "target='_blank'>Data Privacy Handbook</a>"
 msgid ""
 "Wat 'bijzondere of gevoelige persoonsgegevens' zijn kun je vinden op <a "
 "href='https://utrechtuniversity.github.io/dataprivacyhandbook/special-types-"
@@ -5082,13 +5008,6 @@ msgid "Maak je gebruik van passieve toestemming?"
 msgstr "Will you use passive consent?"
 
 #: studies/models.py:479
-#, fuzzy
-#| msgid ""
-#| "Wanneer je kinderen via een instelling (dus ook school) werft en je de "
-#| "ouders niet laat ondertekenen, maar in plaats daarvan de leiding van die "
-#| "instelling, dan maak je gebruik van passieve informed consent. Je kan de "
-#| "templates vinden op <a href=\"https://intranet.uu.nl/documenten-ethische-"
-#| "toetsingscommissie-gw\" target=\"_blank\">de FETC-GW-website</a>."
 msgid ""
 "Wanneer je kinderen via een instelling (dus ook school) werft en je de "
 "ouders niet laat ondertekenen, maar in plaats daarvan de leiding van die "
@@ -5252,14 +5171,6 @@ msgstr ""
 "participants in their daily lives, but does not interfere."
 
 #: studies/templates/studies/study_design.html:41
-#, fuzzy
-#| msgid ""
-#| "<strong>Taakonderzoek en Interviews</strong>: <br /> De onderzoeker <ul> "
-#| "<li>legt deelnemers een taak op (bijv. vragenlijst, experiment) of</li> "
-#| "<li>neemt een interview af, of</li> <li>vraagt deelnemer deel te nemen "
-#| "aan een focusgroep.</li> </ul> <br /> Onderzoek in het ILS-lab is vanwege "
-#| "de locatie per definitie altijd taakonderzoek (óók als de deelnemers na "
-#| "ontvangst alleen maar worden geobserveerd)."
 msgid ""
 "<strong>Taakonderzoek en/of interview(s)</strong>: <br /> De onderzoeker "
 "<ul> <li>legt deelnemers een taak op (bijv. vragenlijst, experiment) of</li> "
@@ -5674,11 +5585,6 @@ msgstr ""
 "completes in a day combined."
 
 #: tasks/templates/tasks/session_start.html:24
-#, fuzzy
-#| msgid ""
-#| "<strong>Taak:</strong> Eén taak of onderdeel van je onderzoek. "
-#| "Bijvoorbeeld: het invullen van een vragenlijst, een interview, of een "
-#| "taaltest."
 msgid ""
 "<strong>Taak:</strong> Eén taak of onderdeel van je onderzoek. Bijvoorbeeld: "
 "het invullen van een vragenlijst, een interview, of een bepaalde test."
@@ -5797,28 +5703,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:81
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#, python-brace-format
-#~ msgid ""
-#~ "Er zijn specifieke voorbeelddocumenten voor het gebruik van             "
-#~ "Amazon Mechanical Turk/Prolific op <a href=\"{link}\">deze pagina</a>."
-#~ msgstr ""
-#~ "There are specific template documents for using Amazon Mechanical Turk/"
-#~ "Prolific <a href=\"{link}\">here</a>."
-
-#~ msgid ""
-#~ "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het "
-#~ "gebruik van de term         ‘anoniem’ of ‘geanonimiseerd’ in je "
-#~ "documenten voor deelnemers. Voor meer informatie, zie de         <a "
-#~ "href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/"
-#~ "FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-"
-#~ "onderzoek-versie-1.1_21dec2021.pdf'>         Richtlijnen voor "
-#~ "geïnformeerde toestemming, ‘Beeld en geluid’</a>."
-#~ msgstr ""
-#~ "Recordings are never anonymous and are not able to be anonymized. Take "
-#~ "note of this when using the terms 'anonymous' and 'anonymized' in the "
-#~ "documents for participants. For more information, see <a href='https://"
-#~ "fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-"
-#~ "Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-"
-#~ "versie-1.1_21dec2021.pdf' target='_blank'>Guidelines for Informed "
-#~ "Consent, ‘Audio and Video’ (in Dutch)</a>."
