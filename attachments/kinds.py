@@ -190,7 +190,7 @@ class SchoolConsentForm(ProposalAttachmentKind):
         "Je wilt onderzoek gaan doen binnen een bepaalde instelling (bijv."
         " een school) en je verzoekt de leiding van die instelling om"
         " medewerking. De schoolleiding moet, na goed geïnformeerd te zijn"
-        "toestemming geven voor het onderzoek."
+        " toestemming geven voor het onderzoek."
     )
     desiredness = desiredness.REQUIRED
 
