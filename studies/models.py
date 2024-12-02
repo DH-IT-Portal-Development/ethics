@@ -253,12 +253,6 @@ te testen?"
     )
     recruitment_details = models.TextField(
         _("Licht toe"),
-        help_text=_(
-            'Er zijn specifieke voorbeelddocumenten voor het gebruik van \
-            Amazon Mechanical Turk/Prolific op <a href="{link}">deze pagina</a>.'
-        ).format(
-            link="https://intranet.uu.nl/en/knowledgebase/documents-ethics-assessment-committee-humanities"
-        ),
         blank=True,
     )
     compensation = models.ForeignKey(
