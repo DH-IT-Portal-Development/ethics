@@ -263,6 +263,8 @@ STUDY_ATTACHMENTS = [
     InformationLetterPublicInterest,
     InformationLetterConsent,
     AgreementRecordingsAdults,
+    AgreementRecordingsChildrenParents,
+    AgreementRecordingsChildrenNoParents,
     ScriptVerbalConsentRecordings,
     ConsentPublicInterestSpecialDetails,
     ConsentChildrenParents,
