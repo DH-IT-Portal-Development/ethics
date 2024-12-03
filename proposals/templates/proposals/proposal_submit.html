@@ -5,11 +5,11 @@
 
 {% block header_title %}
     {% if proposal.is_pre_assessment %}
-        {% trans "Aanvraag voor voortoetsing klaar voor versturen" %}
+        {% trans "Aanvraag voor voortoetsing indienen" %}
     {% elif proposal.relation.needs_supervisor %}
-        {% trans "Concept-aanmelding klaar voor versturen" %}
+        {% trans "Concept-aanmelding indienen" %}
     {% else %}
-        {% trans "Aanmelding klaar voor versturen" %}
+        {% trans "Aanmelding indienen" %}
     {% endif %}
     - {{ block.super }}
 {% endblock %}
