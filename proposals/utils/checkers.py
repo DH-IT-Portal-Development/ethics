@@ -555,20 +555,20 @@ class StudyAttachmentsChecker(
             if self.study.has_adults():
 
                 if self.check_has_recordings():
-                    recording_adults_group = OptionalityGroup()
-                    recording_adults_slots = [
+                    recording_adults_consent_group = OptionalityGroup()
+                    recording_adults_consent_slots = [
                         AttachmentSlot(
                             self.study,
                             kind=ConsentFormAdults,
-                            optionality_group=recording_adults_group,
+                            optionality_group=recording_adults_consent_group,
                         ),
                         AttachmentSlot(
                             self.study,
                             kind=ScriptVerbalConsentRecordings,
-                            optionality_group=recording_adults_group,
+                            optionality_group=recording_adults_consent_group,
                         ),
                     ]
-                    self.add_optionality_group_slots(recording_adults_slots)
+                    self.add_optionality_group_slots(recording_adults_consent_slots)
                 else:
                     self.stepper.add_slot(
                         AttachmentSlot(
@@ -576,7 +576,7 @@ class StudyAttachmentsChecker(
                             kind=ConsentFormAdults,
                         )
                     )
-                    
+
             if self.study.has_children():
                 child_group = OptionalityGroup()
                 children_slots = [
