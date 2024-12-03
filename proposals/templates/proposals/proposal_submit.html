@@ -137,11 +137,9 @@
             </p>
         </div>
     {% endif %}
-        {% endblock %}
+{% endblock %}
 
-        {% block auto-form-render %}
-        {{form}}
-        {% endblock %}
+{% block auto-form-render %}{{ form }}{% endblock %}
 
 {% block form-buttons %}
     {% if is_practice %}

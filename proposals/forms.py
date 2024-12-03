@@ -769,8 +769,8 @@ class ProposalUpdateDateStartForm(TemplatedModelForm):
 
 
 class ProposalSubmitForm(
-        SoftValidationMixin,
-        ConditionalModelForm,
+    SoftValidationMixin,
+    ConditionalModelForm,
 ):
     template_name = "forms/submit_form.html"
 
@@ -850,6 +850,7 @@ class ProposalSubmitForm(
         # instantiate a new stepper to reflect changes
         # made to the current instance, which may not yet be saved.
         from proposals.utils.stepper import Stepper
+
         validator = Stepper(self.instance, request=self.request)
         if validator.get_form_errors():
             self.add_error(
