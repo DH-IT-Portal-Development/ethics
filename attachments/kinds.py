@@ -149,10 +149,13 @@ class AgreementRecordingsAdults(StudyAttachmentKind):
     )
     desiredness = desiredness.REQUIRED
 
+
 class AgreementRecordingsChildrenParents(StudyAttachmentKind):
 
     db_name = "agreement_av_recordings_children_w_parents"
-    name = _("Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden aanwezig")
+    name = _(
+        "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden aanwezig"
+    )
     description = _(
         "Je baseert de verwerking van persoonsgegevens op de"
         " wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
@@ -162,11 +165,14 @@ class AgreementRecordingsChildrenParents(StudyAttachmentKind):
         " je de afspraken schriftelijk vastleggen."
     )
     desiredness = desiredness.REQUIRED
+
 
 class AgreementRecordingsChildrenNoParents(StudyAttachmentKind):
 
     db_name = "agreement_av_recordings_children_no_parents"
-    name = _("Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden afwezig")
+    name = _(
+        "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden afwezig"
+    )
     description = _(
         "Je baseert de verwerking van persoonsgegevens op de"
         " wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
@@ -176,6 +182,7 @@ class AgreementRecordingsChildrenNoParents(StudyAttachmentKind):
         " je de afspraken schriftelijk vastleggen."
     )
     desiredness = desiredness.REQUIRED
+
 
 class ScriptVerbalConsentRecordings(StudyAttachmentKind):
 

@@ -203,7 +203,9 @@ class OptionalityGroup(renderable):
 
     template_name = "attachments/optionality_group.html"
 
-    def __init__(self,):
+    def __init__(
+        self,
+    ):
         self.members = []
 
     @property

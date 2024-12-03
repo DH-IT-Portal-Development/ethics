@@ -488,7 +488,7 @@ class StudyAttachmentsChecker(
     def check(
         self,
     ):
-        
+
         # INFORMATION LETTER LOGIC
 
         if self.study.legal_basis is not None:
@@ -502,7 +502,7 @@ class StudyAttachmentsChecker(
         # LOGIC FOR PUBLIC INTEREST
 
         if self.study.legal_basis == Study.LegalBases.PUBLIC_INTEREST:
-            
+
             if self.check_has_recordings():
                 if self.study.has_adults():
                     # if a study features registration, add two slots
@@ -594,7 +594,6 @@ class StudyAttachmentsChecker(
 
                 self.add_optionality_group_slots(children_slots)
 
-                
         return []
 
     def check_has_recordings(self):
@@ -633,7 +632,7 @@ class StudyAttachmentsChecker(
             if slot.match():
                 fullfilled_slot = slot
         return fullfilled_slot
-    
+
     def add_optionality_group_slots(self, optionality_group_slots):
         """
         Takes a list of multiple slots belonging to one optionality group
@@ -644,10 +643,7 @@ class StudyAttachmentsChecker(
 
         for slot in optionality_group_slots:
             # if there is at least one, make the other one optional
-            if (
-                fulfilled_slot
-                and slot is not fulfilled_slot
-            ):
+            if fulfilled_slot and slot is not fulfilled_slot:
                 slot.force_desiredness = desiredness.OPTIONAL
             self.stepper.add_slot(slot)
 
