@@ -44,7 +44,7 @@ class AttachmentSlot(renderable):
         self.force_desiredness = force_desiredness
         self.optionality_group = optionality_group
         if self.optionality_group:
-            self.optionality_group.members.add(self)
+            self.optionality_group.members.append(self)
 
     def match(self, exclude=[]):
         """
@@ -203,8 +203,8 @@ class OptionalityGroup(renderable):
 
     template_name = "attachments/optionality_group.html"
 
-    def __init__(self, members=set()):
-        self.members = set(members)
+    def __init__(self,):
+        self.members = []
 
     @property
     def count(
