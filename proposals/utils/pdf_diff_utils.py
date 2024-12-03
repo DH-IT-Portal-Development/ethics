@@ -416,25 +416,25 @@ def create_context_pdf(context, proposal):
     """A function to create the context for the PDF, which gets called in the ProposalAsPdf view."""
     from reviews.templatetags.documents_list import get_legacy_documents
     from proposals.utils.pdf_diff_sections import (
-    CommentsSection,
-    DMPFileSection,
-    EmbargoSection,
-    ExtraDocumentsSection,
-    GeneralSection,
-    InformedConsentFormsSection,
-    InterventionSection,
-    KnowledgeSecuritySection,
-    METCSection,
-    ObservationSection,
-    SessionSection,
-    StudyOverviewSection,
-    StudySection,
-    TaskSection,
-    TasksOverviewSection,
-    TrajectoriesSection,
-    TranslatedFormsSection,
-    WMOSection,
-)
+        CommentsSection,
+        DMPFileSection,
+        EmbargoSection,
+        ExtraDocumentsSection,
+        GeneralSection,
+        InformedConsentFormsSection,
+        InterventionSection,
+        KnowledgeSecuritySection,
+        METCSection,
+        ObservationSection,
+        SessionSection,
+        StudyOverviewSection,
+        StudySection,
+        TaskSection,
+        TasksOverviewSection,
+        TrajectoriesSection,
+        TranslatedFormsSection,
+        WMOSection,
+    )
 
     sections = []
 

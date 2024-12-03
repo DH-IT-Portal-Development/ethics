@@ -15,6 +15,10 @@ from proposals.utils.pdf_diff_utils import (
     PageBreakMixin,
 )
 
+##############
+# General info
+##############
+
 
 class GeneralSection(BaseSection):
     """This class generates the data for the general section of a proposal and showcases
@@ -88,6 +92,11 @@ class GeneralSection(BaseSection):
         return rows
 
 
+##############
+# WMO sections
+##############
+
+
 class WMOSection(PageBreakMixin, BaseSection):
     """This class receives a proposal.wmo object."""
 
@@ -120,6 +129,11 @@ class METCSection(PageBreakMixin, BaseSection):
     section_title = _("Aanmelding bij de METC")
 
     row_fields = ["metc_application", "metc_decision", "metc_decision_pdf"]
+
+
+################
+# Study sections
+################
 
 
 class TrajectoriesSection(PageBreakMixin, BaseSection):
@@ -487,6 +501,11 @@ class KnowledgeSecuritySection(BaseSection):
         return rows
 
 
+######################
+# Attachments Sections
+######################
+
+
 class TranslatedFormsSection(BaseSection):
     """This class receives a Proposal object"""
 
@@ -505,6 +524,57 @@ class TranslatedFormsSection(BaseSection):
             rows.remove("translated_forms_languages")
 
         return rows
+
+
+###############
+# FinalSections
+###############
+
+
+class DMPFileSection(PageBreakMixin, BaseSection):
+    """
+    This class receives a proposal object
+    NOTE: dmp_file is for legacy proposals, should be covered by new attachment
+    system.
+    """
+
+    section_title = _("Data Management Plan")
+
+    row_fields = ["dmp_file", "privacy_officer"]
+
+    def get_row_fields(self):
+        rows = copy(self.row_fields)
+        obj = self.obj
+
+        if not obj.dmp_file:
+            rows.remove("dmp_file")
+
+        return rows
+
+
+class EmbargoSection(BaseSection):
+    """Gets passed a proposal object"""
+
+    section_title = _("Aanmelding versturen")
+
+    row_fields = ["embargo", "embargo_end_date"]
+
+    def get_row_fields(self):
+        rows = copy(self.row_fields)
+        obj = self.obj
+
+        if not obj.embargo:
+            rows.remove("embargo_end_date")
+
+        return rows
+
+
+class CommentsSection(BaseSection):
+    """Gets passed a proposal object."""
+
+    section_title = _("Ruimte voor eventuele opmerkingen")
+
+    row_fields = ["comments"]
 
 
 ########################
@@ -598,51 +668,3 @@ class ExtraDocumentsSection(BaseSection):
             rows.remove("parents_information")
 
         return rows
-
-
-###############
-# FinalSections
-###############
-
-
-class DMPFileSection(PageBreakMixin, BaseSection):
-    """This class receives a proposal object
-    Also unnecessary I suppose. But I though why not ..."""
-
-    section_title = _("Data Management Plan")
-
-    row_fields = ["dmp_file", "privacy_officer"]
-
-    def get_row_fields(self):
-        rows = copy(self.row_fields)
-        obj = self.obj
-
-        if not obj.dmp_file:
-            rows.remove("dmp_file")
-
-        return rows
-
-
-class EmbargoSection(BaseSection):
-    """Gets passed a proposal object"""
-
-    section_title = _("Aanmelding versturen")
-
-    row_fields = ["embargo", "embargo_end_date"]
-
-    def get_row_fields(self):
-        rows = copy(self.row_fields)
-        obj = self.obj
-
-        if not obj.embargo:
-            rows.remove("embargo_end_date")
-
-        return rows
-
-
-class CommentsSection(BaseSection):
-    """Gets passed a proposal object."""
-
-    section_title = _("Ruimte voor eventuele opmerkingen")
-
-    row_fields = ["comments"]
