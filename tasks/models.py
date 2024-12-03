@@ -3,7 +3,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext_lazy as _
 
 from main.models import SettingModel
-from studies.models import Study
 
 
 class Session(SettingModel):
@@ -39,7 +38,7 @@ instructies per taak, pauzes tussen taken, en debriefing? \
     )
 
     # References
-    study = models.ForeignKey(Study, on_delete=models.CASCADE)
+    study = models.ForeignKey("studies.Study", on_delete=models.CASCADE)
 
     class Meta:
         ordering = ["order"]
