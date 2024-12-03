@@ -153,6 +153,40 @@ class TrajectoriesSection(PageBreakMixin, BaseSection):
         return rows
 
 
+class PersonalDataSection(BaseSection):
+    """This class receives a proposal.study object
+    Note the overwritten __init__ method for adding a sub_title."""
+
+    section_title = _("Persoonlijke gegevens")
+    row_fields = [
+        "legal_basis",
+        "has_special_details",
+        "special_details",
+        "traits",
+        "traits_details",
+    ]
+
+    def __init__(self, obj):
+        super().__init__(obj)
+        self.sub_title = self.get_sub_title(self.obj, "study")
+
+    def get_row_fields(self):
+        rows = copy(self.row_fields)
+        obj = self.obj
+
+        if not obj.has_special_details:
+            rows.remove("special_details")
+            rows.remove("traits")
+            rows.remove("traits_details")
+        elif not medical_traits(obj.special_details.all()):
+            rows.remove("traits")
+            rows.remove("traits_details")
+        elif not needs_details(obj.traits.all()):
+            rows.remove("traits_details")
+
+        return rows
+
+
 class StudySection(PageBreakMixin, BaseSection):
     """This class receives a proposal.study object
     Note the overwritten __init__ method for adding a sub_title."""
@@ -162,10 +196,6 @@ class StudySection(PageBreakMixin, BaseSection):
         "age_groups",
         "legally_incapable",
         "legally_incapable_details",
-        "has_special_details",
-        "special_details",
-        "traits",
-        "traits_details",
         "necessity",
         "necessity_reason",
         "recruitment",
@@ -189,15 +219,6 @@ class StudySection(PageBreakMixin, BaseSection):
             rows.remove("legally_incapable_details")
         elif not obj.legally_incapable:
             rows.remove("legally_incapable_details")
-        if not obj.has_special_details:
-            rows.remove("special_details")
-            rows.remove("traits")
-            rows.remove("traits_details")
-        elif not medical_traits(obj.special_details.all()):
-            rows.remove("traits")
-            rows.remove("traits_details")
-        elif not needs_details(obj.traits.all()):
-            rows.remove("traits_details")
         if not necessity_required(obj):
             rows.remove("necessity")
             rows.remove("necessity_reason")

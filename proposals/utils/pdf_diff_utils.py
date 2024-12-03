@@ -226,7 +226,7 @@ class RowValue:
 
     def get_field_value(self):
         from ..models import Relation
-        from studies.models import Compensation
+        from studies.models import Study, Compensation
 
         value = getattr(self.obj, self.field)
 
@@ -236,6 +236,8 @@ class RowValue:
             return self.yes_no_doubt(value)
         elif isinstance(value, bool):
             return _("ja") if value else _("nee")
+        elif isinstance(value, int) and self.field == "legal_basis":
+            return Study.LegalBases(value).label
         elif isinstance(value, (str, int, date)):
             return value
         elif value is None:
@@ -426,6 +428,7 @@ def create_context_pdf(context, proposal):
         KnowledgeSecuritySection,
         METCSection,
         ObservationSection,
+        PersonalDataSection,
         SessionSection,
         StudyOverviewSection,
         StudySection,
@@ -455,6 +458,7 @@ def create_context_pdf(context, proposal):
             if proposal.wmo.status == proposal.wmo.WMOStatuses.NO_WMO:
                 for study in proposal.study_set.all():
                     sections.append(StudySection(study))
+                    sections.append(PersonalDataSection(study))
                     if study.get_intervention():
                         sections.append(InterventionSection(study.intervention))
                     if study.get_observation():
@@ -520,10 +524,31 @@ def get_all_related_set(objects, related_name):
 def create_context_diff(context, old_proposal, new_proposal):
     """A function to create the context for the diff page."""
     from reviews.templatetags.documents_list import get_legacy_documents
+    from proposals.utils.pdf_diff_sections import (
+        CommentsSection,
+        DMPFileSection,
+        EmbargoSection,
+        ExtraDocumentsSection,
+        GeneralSection,
+        InformedConsentFormsSection,
+        InterventionSection,
+        KnowledgeSecuritySection,
+        METCSection,
+        ObservationSection,
+        PersonalDataSection,
+        SessionSection,
+        StudyOverviewSection,
+        StudySection,
+        TaskSection,
+        TasksOverviewSection,
+        TrajectoriesSection,
+        TranslatedFormsSection,
+        WMOSection,
+    )
 
     sections = []
 
-    has_legacy_docs = get_legacy_documents(old_proposal) or has_legacy_docs(
+    has_legacy_docs = get_legacy_documents(old_proposal) or get_legacy_documents(
         new_proposal
     )
 
@@ -564,6 +589,10 @@ def create_context_diff(context, old_proposal, new_proposal):
 
                     sections.append(
                         DiffSection(*multi_sections(StudySection, both_studies))
+                    )
+
+                    sections.append(
+                        DiffSection(*multi_sections(PersonalDataSection, both_studies))
                     )
 
                     if (
