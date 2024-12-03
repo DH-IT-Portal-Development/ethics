@@ -3,8 +3,8 @@
 <div class="uu-form-row mt-4 mb-4">
     <div class="">
         <div class="row border-3 p-3 border-bottom rounded {{ classes }} bg-light">
-            <div class="col-2 align-middle">{{ slot.desiredness }}</div>
-            <div class="col-7 align-middle">
+            <div class="col-3 align-middle">{{ slot.desiredness }}</div>
+            <div class="col-6 align-middle">
                 <h5>{{ slot.kind.name }}</h5>
                 {% if slot.attachment %}
                     {% include slot.attachment with proposal=proposal %}
