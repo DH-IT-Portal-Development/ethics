@@ -137,10 +137,14 @@
             </p>
         </div>
     {% endif %}
-{% endblock %}
+        {% endblock %}
+
+        {% block auto-form-render %}
+        {{form}}
+        {% endblock %}
 
 {% block form-buttons %}
-    {% if stepper.get_form_errors or is_practice %}
+    {% if is_practice %}
         {% include "base/form_buttons.html" with no_forward=1 %}
     {% else %}
         {% if proposal.is_pre_assessment %}

@@ -788,6 +788,9 @@ class ProposalSubmitForm(SoftValidationMixin, ConditionalModelForm,):
         # Needed for POST data
         self.request = kwargs.pop("request", None)
 
+        # Needed for validation
+        self.final_validation = kwargs.pop("final_validation", None)
+
         super(ProposalSubmitForm, self).__init__(*args, **kwargs)
 
         self.fields["inform_local_staff"].label_suffix = ""
@@ -834,6 +837,20 @@ class ProposalSubmitForm(SoftValidationMixin, ConditionalModelForm,):
                         "De embargo-periode kan maximaal 2 jaar zijn. Kies een datum binnen 2 jaar van vandaag."
                     ),
                 )
+        # final_validation is a kwarg that should only be given by the
+        # actual submit view, not the stepper.
+        if not self.final_validation:
+            return
+        # For final validation, i.e. if a user is actually submitting,we
+        # instantiate a new stepper to reflect changes
+        # made to the current instance, which may not yet be saved.
+        from proposals.utils.stepper import Stepper
+        validator = Stepper(self.instance, request=self.request)
+        if validator.get_form_errors():
+            self.add_error(
+                None,
+                _("Aanvraag bevat nog foutmeldingen"),
+            )
 
 
 class KnowledgeSecurityForm(SoftValidationMixin, ConditionalModelForm):
