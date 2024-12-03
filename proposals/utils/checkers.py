@@ -1011,17 +1011,12 @@ class AttachmentsItem(
 
     def get_errors(self, include_children=False):
         errors = super().get_errors(include_children=include_children)
-        any_added = False
         for slot in self.stepper.attachment_slots:
             if not slot.attachment:
                 if slot.required:
                     errors.append(
                         slot.kind.name,
                     )
-            else:
-                any_added = True
-        if not any_added:
-            errors.append(_("No attachments added"))
         return errors
 
 
