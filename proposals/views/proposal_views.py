@@ -25,8 +25,8 @@ from main.views import (
     UpdateView,
 )
 from observations.models import Observation
-from proposals.utils.pdf_diff_utils import create_context_diff
-from proposals.utils.pdf_diff_utils import create_context_pdf
+from proposals.utils.pdf_diff_sections import create_context_diff
+from proposals.utils.pdf_diff_sections import create_context_pdf
 from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
 from studies.models import Documents
