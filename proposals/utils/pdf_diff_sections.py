@@ -552,6 +552,27 @@ class TranslatedFormsSection(BaseSection):
             rows.remove("translated_forms_languages")
 
         return rows
+    
+class AttachmentSection(BaseSection):
+
+    section_title = ""
+
+    row_fields = [
+        "upload",
+        "name",
+        "comments",
+    ]
+
+    def __init__(self, obj, sub_title, proposal):
+        super().__init__(obj)
+        self.sub_title = sub_title
+        self.proposal = proposal
+    
+    def make_row_for_field(self, field):
+        if field in self.get_row_fields():
+            return Row(self.obj, field, self.proposal)
+        else:
+            return None
 
 
 ###############
@@ -701,6 +722,34 @@ class ExtraDocumentsSection(BaseSection):
 # Create the full PDF/diff
 ##########################
 
+def create_attachment_sections(proposal):
+    from proposals.utils.stepper import Stepper
+
+    attachment_sections = []
+
+    stepper = Stepper(proposal)
+    slots = [slot for slot in stepper.attachment_slots if slot.attachment]
+
+    objects = [proposal] + list(proposal.study_set.all())
+    slot_dict = {obj: [] for obj in objects}
+    for slot in slots:
+        relevant_owner = slot.attachment.get_owner_for_proposal(proposal)
+        slot_dict[relevant_owner].append(slot)
+    
+    for owner in slot_dict:
+        if slot_dict[owner]:
+            if owner == proposal:
+                title = _("Aanvraag in het geheel")
+            elif proposal.study_set.count() == 1:
+                title = _("Het hoofdtraject")
+            else:
+                title = _("Traject ") + owner.order + ": " + owner.name
+            attachment_sections.append(TitleSection(title))
+            for slot in slot_dict[owner]:
+                attachment_sections.append(AttachmentSection(slot.attachment, sub_title=slot.kind.name, proposal=slot.get_proposal()))
+
+    return attachment_sections
+
 def create_context_pdf(context, proposal):
     """A function to create the context for the PDF, which gets called in the ProposalAsPdf view."""
     from reviews.templatetags.documents_list import get_legacy_documents
@@ -740,6 +789,8 @@ def create_context_pdf(context, proposal):
                         sections.append(InformedConsentFormsSection(study.documents))
 
                 sections.append(KnowledgeSecuritySection(proposal))
+
+                sections.extend(create_attachment_sections(proposal))
 
                 sections.append(TranslatedFormsSection(proposal))
 

@@ -6,6 +6,7 @@ from django.template.loader import get_template
 from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
+from django.urls import reverse
 
 from main.templatetags.fetc_filters import create_unordered_html_list
 
@@ -190,12 +191,13 @@ class Row:
         "get_is_medical_display": "is_medical",
     }
 
-    def __init__(self, obj, field):
+    def __init__(self, obj, field, proposal=None):
         self.obj = obj
         self.field = field
+        self.proposal = proposal
 
     def value(self):
-        return RowValue(self.obj, self.field).get_field_value()
+        return RowValue(self.obj, self.field, self.proposal).get_field_value()
 
     def verbose_name(self):
         if self.field in self.verbose_name_diff_field_dict:
@@ -219,9 +221,10 @@ class RowValue:
     the right values per field. This class get initiated in the value method
     of the Row class. It returns mostly strings, but sometimes some html as well."""
 
-    def __init__(self, obj, field):
+    def __init__(self, obj, field, proposal=None):
         self.obj = obj
         self.field = field
+        self.proposal = proposal
 
     def get_field_value(self):
         from ..models import Relation
@@ -230,6 +233,9 @@ class RowValue:
         value = getattr(self.obj, self.field)
 
         User = get_user_model()
+
+        if self.field == "upload":
+            return self.handle_attachment(value)
 
         if value in ("Y", "N", "?"):
             return self.yes_no_doubt(value)
@@ -267,6 +273,7 @@ class RowValue:
         return create_unordered_html_list(list_of_objects)
 
     def handle_field_file(self, field_file):
+        """This is for legacy attachments"""
         if field_file:
             output = format_html(
                 '<a href="{}">{}</a>',
@@ -277,6 +284,21 @@ class RowValue:
             output = _("Niet aangeleverd")
 
         return output
+    
+    def handle_attachment(self, filewrapper):
+
+        if filewrapper:
+            output = format_html(
+                '<a href="{}">{}</a>',
+                settings.BASE_URL + reverse("proposals:download_attachment_original", kwargs={"proposal_pk": self.proposal.pk, "attachment_pk": self.obj.pk,}),
+                _("Download"),
+            )
+        else:
+            output = _("Niet aangeleverd")
+
+        return output
+
+
 
     def yes_no_doubt(self, value):
         from main.models import YesNoDoubt
