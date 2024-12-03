@@ -876,7 +876,25 @@ class KnowledgeSecuritySection(BaseSection):
         rows = [row for row in rows if row not in rows_to_remove]
 
         return rows
+    
+class TranslatedFormsSection(BaseSection):
+    """This class receives a Proposal object"""
 
+    section_title = _("Vertaling formulieren")
+
+    row_fields = [
+        "translated_forms",
+        "translated_forms_languages",
+    ]
+
+    def get_row_fields(self):
+        rows = copy(self.row_fields)
+        obj = self.obj
+
+        if not obj.translated_forms:
+            rows.remove("translated_forms_languages")
+        
+        return rows
 
 class InformedConsentFormsSection(BaseSection):
     """This class receives a Documents object"""
@@ -884,8 +902,6 @@ class InformedConsentFormsSection(BaseSection):
     section_title = _("Informed consent formulieren")
 
     row_fields = [
-        "translated_forms",
-        "translated_forms_languages",
         "informed_consent",
         "briefing",
         "passive_consent",
@@ -899,7 +915,6 @@ class InformedConsentFormsSection(BaseSection):
         """A few fields here need to access different objects, therefore this complex
         overriding of the make_rows function ... :("""
 
-        proposal_list = ["translated_forms", "translated_forms_languages"]
         study_list = ["passive_consent", "passive_consent_details"]
 
         row_fields = self.get_row_fields()
@@ -907,9 +922,7 @@ class InformedConsentFormsSection(BaseSection):
         rows = []
 
         for field in row_fields:
-            if field in proposal_list:
-                rows.append(Row(self.obj.proposal, field))
-            elif field in study_list:
+            if field in study_list:
                 rows.append(Row(self.obj.study, field))
             else:
                 rows.append(Row(self.obj, field))
@@ -920,8 +933,6 @@ class InformedConsentFormsSection(BaseSection):
         rows = copy(self.row_fields)
         obj = self.obj
 
-        if not obj.proposal.translated_forms:
-            rows.remove("translated_forms_languages")
         if obj.proposal.is_practice() or not obj.informed_consent:
             rows.remove("informed_consent")
             rows.remove("briefing")
@@ -981,6 +992,15 @@ class DMPFileSection(PageBreakMixin, BaseSection):
 
     row_fields = ["dmp_file", "privacy_officer"]
 
+    def get_row_fields(self):
+        rows = copy(self.row_fields)
+        obj = self.obj
+
+        if not obj.dmp_file:
+            rows.remove("dmp_file")
+
+        return rows
+
 
 class EmbargoSection(BaseSection):
     """Gets passed a proposal object"""
@@ -1021,8 +1041,12 @@ def get_extra_documents(obj):
 
 def create_context_pdf(context, proposal):
     """A function to create the context for the PDF, which gets called in the ProposalAsPdf view."""
+    from reviews.templatetags.documents_list import get_legacy_documents
 
     sections = []
+
+    #Check if the proposal has legacy documents. Just used as a bool.
+    has_legacy_docs = bool(get_legacy_documents(proposal))
 
     sections.append(GeneralSection(proposal))
 
@@ -1049,14 +1073,19 @@ def create_context_pdf(context, proposal):
                                 sections.append(TaskSection(task))
                             sections.append(TasksOverviewSection(session))
                     sections.append(StudyOverviewSection(study))
-                    sections.append(InformedConsentFormsSection(study.documents))
+                    if has_legacy_docs:
+                        sections.append(InformedConsentFormsSection(study.documents))
 
                 sections.append(KnowledgeSecuritySection(proposal))
 
-                extra_documents = get_extra_documents(proposal)
+                sections.append(TranslatedFormsSection(proposal))
 
-                for num, document in enumerate(extra_documents):
-                    sections.append(ExtraDocumentsSection(document, num))
+                if has_legacy_docs:
+
+                    extra_documents = get_extra_documents(proposal)
+
+                    for num, document in enumerate(extra_documents):
+                        sections.append(ExtraDocumentsSection(document, num))
 
                 sections.append(DMPFileSection(proposal))
 
@@ -1097,8 +1126,11 @@ def get_all_related_set(objects, related_name):
 
 def create_context_diff(context, old_proposal, new_proposal):
     """A function to create the context for the diff page."""
+    from reviews.templatetags.documents_list import get_legacy_documents
 
     sections = []
+
+    has_legacy_docs = get_legacy_documents(old_proposal) or has_legacy_docs(new_proposal)
 
     sections.append(
         DiffSection(GeneralSection(old_proposal), GeneralSection(new_proposal))
@@ -1209,13 +1241,14 @@ def create_context_diff(context, old_proposal, new_proposal):
                         DiffSection(*multi_sections(StudyOverviewSection, both_studies))
                     )
 
-                    both_documents = get_all_related(both_studies, "documents")
+                    if has_legacy_docs:
+                        both_documents = get_all_related(both_studies, "documents")
 
-                    sections.append(
-                        DiffSection(
-                            *multi_sections(InformedConsentFormsSection, both_documents)
+                        sections.append(
+                            DiffSection(
+                                *multi_sections(InformedConsentFormsSection, both_documents)
+                            )
                         )
-                    )
 
                 sections.append(
                     DiffSection(
@@ -1224,20 +1257,28 @@ def create_context_diff(context, old_proposal, new_proposal):
                     )
                 )
 
-                old_extra_docs = get_extra_documents(old_proposal)
-                new_extra_docs = get_extra_documents(new_proposal)
+                sections.append(
+                    DiffSection(
+                        TranslatedFormsSection(old_proposal),
+                        TranslatedFormsSection(new_proposal),
+                    )
+                )
 
-                if old_extra_docs or new_extra_docs:
-                    for num, zipped_extra_docs in enumerate(
-                        zip_equalize_lists(old_extra_docs, new_extra_docs)
-                    ):
-                        sections.append(
-                            DiffSection(
-                                *multi_sections(
-                                    ExtraDocumentsSection, zipped_extra_docs, num
+                if has_legacy_docs:
+                    old_extra_docs = get_extra_documents(old_proposal)
+                    new_extra_docs = get_extra_documents(new_proposal)
+
+                    if old_extra_docs or new_extra_docs:
+                        for num, zipped_extra_docs in enumerate(
+                            zip_equalize_lists(old_extra_docs, new_extra_docs)
+                        ):
+                            sections.append(
+                                DiffSection(
+                                    *multi_sections(
+                                        ExtraDocumentsSection, zipped_extra_docs, num
+                                    )
                                 )
                             )
-                        )
 
                 sections.append(
                     DiffSection(
