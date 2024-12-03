@@ -601,7 +601,7 @@ def create_context_diff(context, old_proposal, new_proposal):
                         and new_study.get_sessions()
                     ):
                         old_sessions_set, new_sessions_set = get_all_related_set(
-                            both_studies, "sessions"
+                            both_studies, "session_set"
                         )
 
                         for both_sessions in zip_equalize_lists(
