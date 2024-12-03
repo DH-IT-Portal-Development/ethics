@@ -15,6 +15,7 @@ from proposals.utils.pdf_diff_utils import (
     DiffSection,
     Row,
     PageBreakMixin,
+    TitleSection,
     get_all_related,
     get_all_related_set,
     get_extra_documents,

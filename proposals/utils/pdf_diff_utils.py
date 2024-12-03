@@ -399,7 +399,22 @@ class PageBreakMixin(BaseSection):
             }
         )
         return super().render(context)
+    
+class TitleSection:
+    """A little dummy section for adding just a title to the PDF"""
 
+    def __init__(self, title):
+        self.title = title
+
+    def render(self, context):
+        context = context.flatten()
+        template = get_template("proposals/title_section.html")
+        context.update(
+            {
+                "title": self.title,
+            }
+        )
+        return template.render(context)
 
 def get_extra_documents(obj):
     """A function to retrieve all extra documents for a specific proposal."""
