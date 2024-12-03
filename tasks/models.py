@@ -77,6 +77,7 @@ class Registration(models.Model):
     needs_kind = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
     age_min = models.PositiveIntegerField(blank=True, null=True)
+    is_recording = models.BooleanField(default=False,)
 
     class Meta:
         ordering = ["order"]
