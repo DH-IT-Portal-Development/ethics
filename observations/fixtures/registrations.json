@@ -1,6 +1,3 @@
-Proceeding without LDAP settings
-Proceeding without SAML settings
-Loaded debug_settings.py
 [
 {
     "model": "observations.registration",
