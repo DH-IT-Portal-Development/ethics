@@ -1,7 +1,9 @@
 from django.core.exceptions import ImproperlyConfigured
+from django.utils.translation import gettext as _
 from braces.forms import UserKwargModelFormMixin
 
 from main.utils import renderable
+
 
 
 class BaseStepperComponent:
@@ -237,7 +239,14 @@ class ModelFormChecker(
             url_func=self.get_url,
             location=self.location,
         )
+        stepper_item.get_checker_errors = self.get_errors
         return stepper_item
+
+    def get_errors(self, ):
+        """
+        Overwrite to provide stepper item errors from the checker.
+        """
+        return []
 
     def get_form_object(
         self,
@@ -359,6 +368,10 @@ class UpdateOrCreateChecker(
             parent=self.parent,
         )
         item.get_url = self.get_create_url
+
+        def not_created_error():
+            return [(None, _("Object nog niet aangemaakt."))]
+        item.get_checker_errors = not_created_error
         return item
 
     def object_exists(
