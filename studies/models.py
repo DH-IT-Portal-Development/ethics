@@ -458,7 +458,7 @@ cadeautje."
             return True
 
         return False
-    
+
     def has_recordings(self):
         """
         A function that checks whether a study features audio or video

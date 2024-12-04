@@ -203,10 +203,7 @@ class OptionalityGroup(renderable):
 
     template_name = "attachments/optionality_group.html"
 
-    def __init__(
-        self,
-        stepper
-    ):
+    def __init__(self, stepper):
         self.stepper = stepper
         self.members = []
         self.fulfilled_slot = None
@@ -221,10 +218,12 @@ class OptionalityGroup(renderable):
         context = super().get_context_data(**kwargs)
         context["group"] = self
         return context
-    
-    def add_slots(self,):
+
+    def add_slots(
+        self,
+    ):
         """
-        Loops over its members and sets desiredness 
+        Loops over its members and sets desiredness
         based on the other items in the optionailty group
         and then add the slots to the stepper
         """
