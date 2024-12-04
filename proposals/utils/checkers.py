@@ -7,9 +7,7 @@ from studies import forms as study_forms
 from studies.models import Study
 from interventions import forms as intervention_forms
 from observations import forms as observation_forms
-from observations.models import Registration as observation_registration
 from tasks import forms as tasks_forms
-from tasks.models import Registration as task_registration
 
 from tasks.views import task_views, session_views
 from tasks.models import Task, Session
@@ -503,7 +501,7 @@ class StudyAttachmentsChecker(
 
         if self.study.legal_basis == Study.LegalBases.PUBLIC_INTEREST:
 
-            if self.check_has_recordings():
+            if self.study.has_recordings():
                 if self.study.has_adults():
                     # if a study features registration, add two slots
                     recording_adults_group = OptionalityGroup()
@@ -554,7 +552,7 @@ class StudyAttachmentsChecker(
             # if there are recordings, either the adult consent form or Script
             if self.study.has_adults():
 
-                if self.check_has_recordings():
+                if self.study.has_recordings():
                     recording_adults_consent_group = OptionalityGroup()
                     recording_adults_consent_slots = [
                         AttachmentSlot(
@@ -595,31 +593,6 @@ class StudyAttachmentsChecker(
                 self.add_optionality_group_slots(children_slots)
 
         return []
-
-    def check_has_recordings(self):
-        """
-        A function that checks whether a study features audio or video
-        registration.
-        """
-        has_recordings = False
-        if self.study.get_observation():
-            # gather all AV observation_registraions
-            recordings_observation = observation_registration.objects.filter(
-                description_en__in=["audio recording", "video recording"]
-            )
-            # check if there is an overlap between these two QS's
-            if self.study.observation.registrations.all() & recordings_observation:
-                has_recordings = True
-        if self.study.get_sessions():
-            # gather all the tasks
-            all_tasks = Task.objects.filter(session__study=self.study)
-            # gather all AV task_registrations
-            recordings_sessions = task_registration.objects.filter(
-                description__in=["audio recording", "video recording"]
-            )
-            if all_tasks.filter(registrations__in=recordings_sessions):
-                has_recordings = True
-        return has_recordings
 
     def at_least_one_fulfilled(self, slots):
         """
