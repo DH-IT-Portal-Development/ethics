@@ -1,57 +1,70 @@
+Proceeding without LDAP settings
+Proceeding without SAML settings
+Loaded debug_settings.py
 [
 {
+    "model": "observations.registration",
+    "pk": 1,
     "fields": {
-        "needs_details": false,
         "order": 1,
+        "description": "logdata",
         "description_nl": "logdata",
         "description_en": "log data",
-        "requires_review": false
-    },
-    "model": "observations.registration",
-    "pk": 1
+        "needs_details": false,
+        "requires_review": false,
+        "is_recording": false
+    }
 },
 {
+    "model": "observations.registration",
+    "pk": 2,
     "fields": {
-        "needs_details": false,
         "order": 2,
+        "description": "audio-opname",
         "description_nl": "audio-opname",
         "description_en": "audio recording",
-        "requires_review": false
-    },
-    "model": "observations.registration",
-    "pk": 2
+        "needs_details": false,
+        "requires_review": false,
+        "is_recording": true
+    }
 },
 {
+    "model": "observations.registration",
+    "pk": 3,
     "fields": {
-        "needs_details": false,
         "order": 3,
+        "description": "video-opname",
         "description_nl": "video-opname",
         "description_en": "video recording",
-        "requires_review": true
-    },
-    "model": "observations.registration",
-    "pk": 3
+        "needs_details": false,
+        "requires_review": true,
+        "is_recording": true
+    }
 },
 {
+    "model": "observations.registration",
+    "pk": 4,
     "fields": {
-        "needs_details": false,
         "order": 4,
+        "description": "notities",
         "description_nl": "notities",
         "description_en": "notes",
-        "requires_review": false
-    },
-    "model": "observations.registration",
-    "pk": 4
+        "needs_details": false,
+        "requires_review": false,
+        "is_recording": false
+    }
 },
 {
+    "model": "observations.registration",
+    "pk": 5,
     "fields": {
-        "needs_details": true,
         "order": 5,
+        "description": "anders",
         "description_nl": "anders",
         "description_en": "otherwise",
-        "requires_review": false
-    },
-    "model": "observations.registration",
-    "pk": 5
+        "needs_details": true,
+        "requires_review": false,
+        "is_recording": false
+    }
 }
 ]

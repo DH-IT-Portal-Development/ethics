@@ -1,3 +1,6 @@
+Proceeding without LDAP settings
+Proceeding without SAML settings
+Loaded debug_settings.py
 [
 {
     "model": "tasks.registration",
@@ -11,7 +14,8 @@
         "needs_details": false,
         "needs_kind": false,
         "requires_review": false,
-        "age_min": null
+        "age_min": null,
+        "is_recording": true
     }
 },
 {
@@ -25,8 +29,9 @@
         "is_local": false,
         "needs_details": false,
         "needs_kind": false,
-        "requires_review": false,
-        "age_min": null
+        "requires_review": true,
+        "age_min": null,
+        "is_recording": true
     }
 },
 {
@@ -41,7 +46,8 @@
         "needs_details": false,
         "needs_kind": false,
         "requires_review": false,
-        "age_min": null
+        "age_min": null,
+        "is_recording": false
     }
 },
 {
@@ -49,14 +55,15 @@
     "pk": 4,
     "fields": {
         "order": 4,
-        "description": "gedrags- en/of reactietijd-registratie via experimentsoftware zoals jsPsych, Zep, Presentation, etc",
-        "description_nl": "gedrags- en/of reactietijd-registratie via experimentsoftware zoals jsPsych, Zep, Presentation, etc",
-        "description_en": "behavioral- and/or reaction time registration using experiment software such as jsPsych, Zep, Presentation, etc.",
+        "description": "gedrags- en/of reactietijd-registratie via Zep, Presentation, JsPsych, etc",
+        "description_nl": "gedrags- en/of reactietijd-registratie via Zep, Presentation, JsPsych, etc",
+        "description_en": "behavioral- and/or reaction time registration using Zep, Presentation, JsPsych, etc.",
         "is_local": true,
         "needs_details": false,
         "needs_kind": false,
         "requires_review": false,
-        "age_min": null
+        "age_min": null,
+        "is_recording": false
     }
 },
 {
@@ -71,7 +78,8 @@
         "needs_details": false,
         "needs_kind": false,
         "requires_review": false,
-        "age_min": null
+        "age_min": null,
+        "is_recording": false
     }
 },
 {
@@ -86,7 +94,8 @@
         "needs_details": false,
         "needs_kind": true,
         "requires_review": true,
-        "age_min": 18
+        "age_min": 18,
+        "is_recording": false
     }
 },
 {
@@ -101,7 +110,8 @@
         "needs_details": false,
         "needs_kind": false,
         "requires_review": false,
-        "age_min": null
+        "age_min": null,
+        "is_recording": false
     }
 },
 {
@@ -116,7 +126,8 @@
         "needs_details": false,
         "needs_kind": false,
         "requires_review": false,
-        "age_min": null
+        "age_min": null,
+        "is_recording": false
     }
 },
 {
@@ -131,7 +142,8 @@
         "needs_details": true,
         "needs_kind": false,
         "requires_review": true,
-        "age_min": null
+        "age_min": null,
+        "is_recording": false
     }
 }
 ]
