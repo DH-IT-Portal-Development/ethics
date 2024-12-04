@@ -1194,11 +1194,11 @@ msgstr "Will observations be made in a non-public space?"
 
 #: observations/models.py:86
 msgid ""
-"Bijvoorbeeld er wordt geobserveerd bij iemand thuis, tijdens een "
+"Bijvoorbeeld: er wordt geobserveerd bij iemand thuis, tijdens een "
 "hypotheekgesprek, tijdens politieverhoren of een digitale omgeving waar een "
 "account voor moet worden aangemaakt."
 msgstr ""
-"For example, will observations be made in someone's home, during a mortgage "
+"For example: will observations be made in someone's home, during a mortgage "
 "negotiation, during a police interrogation or in a digital environment for "
 "which an account must be created."
 
