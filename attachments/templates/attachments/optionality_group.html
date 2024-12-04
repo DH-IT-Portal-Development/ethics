@@ -7,6 +7,6 @@
         {% endblocktrans %}
     </h6>
     {% for slot in group.members %}
-        {% include slot %}
+        {% include slot with hide_desiredness=True %}
     {% endfor %}
 </div>

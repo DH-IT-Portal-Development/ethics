@@ -121,6 +121,11 @@ class AttachmentSlot(renderable):
 
     @property
     def desiredness(self):
+        if self.optionality_group:
+            if not self.attachment:
+                return self.optionality_group.empty_desiredness
+            else:
+                return self.optionality_group.filled_desiredness
         if self.force_desiredness:
             return self.force_desiredness
         return self.kind.desiredness
@@ -218,6 +223,26 @@ class OptionalityGroup(renderable):
         context = super().get_context_data(**kwargs)
         context["group"] = self
         return context
+
+    @property
+    def any_slot_filled(self,):
+        for slot in self.members:
+            if slot.attachment:
+                return True
+        return False
+
+    @property
+    def filled_desiredness(self,):
+        # Desiredness for a slot in this group if it has an attachment
+        return desiredness.REQUIRED
+
+    @property
+    def empty_desiredness(self,):
+        # Desiredness for a slot in this group if it has no attachment
+        if self.any_slot_filled:
+            return desiredness.OPTIONAL
+        else:
+            return desiredness.REQUIRED
 
 
 def merge_groups(slots):
