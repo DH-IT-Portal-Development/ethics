@@ -242,7 +242,11 @@ class OtherResearchersForm(
         other_applicants = cleaned_data.get("other_applicants")
         applicants = cleaned_data.get("applicants")
 
-        self.mark_soft_required(cleaned_data, "applicants", "other_applicants",)
+        self.mark_soft_required(
+            cleaned_data,
+            "applicants",
+            "other_applicants",
+        )
 
         if other_applicants:
             if len(applicants) == 1 and self.user in applicants:

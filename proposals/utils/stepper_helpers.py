@@ -5,7 +5,6 @@ from braces.forms import UserKwargModelFormMixin
 from main.utils import renderable
 
 
-
 class BaseStepperComponent:
 
     def __init__(self, stepper, parent=None):
@@ -242,7 +241,9 @@ class ModelFormChecker(
         stepper_item.get_checker_errors = self.get_errors
         return stepper_item
 
-    def get_errors(self, ):
+    def get_errors(
+        self,
+    ):
         """
         Overwrite to provide stepper item errors from the checker.
         """
@@ -371,6 +372,7 @@ class UpdateOrCreateChecker(
 
         def not_created_error():
             return [(None, _("Object nog niet aangemaakt."))]
+
         item.get_checker_errors = not_created_error
         return item
 
