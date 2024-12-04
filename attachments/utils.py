@@ -205,8 +205,11 @@ class OptionalityGroup(renderable):
 
     def __init__(
         self,
+        stepper
     ):
+        self.stepper = stepper
         self.members = []
+        self.fulfilled_slot = None
 
     @property
     def count(
@@ -218,6 +221,23 @@ class OptionalityGroup(renderable):
         context = super().get_context_data(**kwargs)
         context["group"] = self
         return context
+    
+    def add_slots(self,):
+        """
+        Loops over its members and sets desiredness 
+        based on the other items in the optionailty group
+        and then add the slots to the stepper
+        """
+        for slot in self.members:
+            # check if any of these self.members have been fullfilled yet using match()
+            if slot.match():
+                self.fulfilled_slot = slot
+
+        for slot in self.members:
+            # if there is at least one, make the other one optional
+            if self.fulfilled_slot and slot is not self.fulfilled_slot:
+                slot.force_desiredness = desiredness.OPTIONAL
+            self.stepper.add_slot(slot)
 
 
 def merge_groups(slots):

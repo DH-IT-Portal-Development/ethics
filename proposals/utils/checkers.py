@@ -504,7 +504,7 @@ class StudyAttachmentsChecker(
             if self.study.has_recordings():
                 if self.study.has_adults():
                     # if a study features registration, add two slots
-                    recording_adults_group = OptionalityGroup()
+                    recording_adults_group = OptionalityGroup(self.stepper)
                     recording_adults_slots = [
                         AttachmentSlot(
                             self.study,
@@ -517,11 +517,11 @@ class StudyAttachmentsChecker(
                             optionality_group=recording_adults_group,
                         ),
                     ]
-                    self.add_optionality_group_slots(recording_adults_slots)
+                    recording_adults_group.add_slots()
 
                 if self.study.has_children():
                     # if a study features registration of minors, add two slots
-                    recording_minors_group = OptionalityGroup()
+                    recording_minors_group = OptionalityGroup(self.stepper)
                     recording_minors_slots = [
                         AttachmentSlot(
                             self.study,
@@ -534,7 +534,7 @@ class StudyAttachmentsChecker(
                             optionality_group=recording_minors_group,
                         ),
                     ]
-                    self.add_optionality_group_slots(recording_minors_slots)
+                    recording_minors_group.add_slots()
 
             elif self.study.has_special_details:
                 self.stepper.add_slot(
@@ -553,7 +553,7 @@ class StudyAttachmentsChecker(
             if self.study.has_adults():
 
                 if self.study.has_recordings():
-                    recording_adults_consent_group = OptionalityGroup()
+                    recording_adults_consent_group = OptionalityGroup(self.stepper)
                     recording_adults_consent_slots = [
                         AttachmentSlot(
                             self.study,
@@ -566,7 +566,7 @@ class StudyAttachmentsChecker(
                             optionality_group=recording_adults_consent_group,
                         ),
                     ]
-                    self.add_optionality_group_slots(recording_adults_consent_slots)
+                    recording_adults_consent_group.add_slots()
                 else:
                     self.stepper.add_slot(
                         AttachmentSlot(
@@ -576,7 +576,7 @@ class StudyAttachmentsChecker(
                     )
 
             if self.study.has_children():
-                child_group = OptionalityGroup()
+                child_group = OptionalityGroup(self.stepper)
                 children_slots = [
                     AttachmentSlot(
                         self.study,
@@ -589,36 +589,11 @@ class StudyAttachmentsChecker(
                         optionality_group=child_group,
                     ),
                 ]
-
-                self.add_optionality_group_slots(children_slots)
+                child_group.add_slots()
 
         return []
 
-    def at_least_one_fulfilled(self, slots):
-        """
-        Function which receives a list of slots and checks if at least one has
-        been fullfilled. It returns None, or the fullfiled slot
-        """
-        fullfilled_slot = None
-        for slot in slots:
-            # check if any of these slots have been fullfilled yet using match()
-            if slot.match():
-                fullfilled_slot = slot
-        return fullfilled_slot
 
-    def add_optionality_group_slots(self, optionality_group_slots):
-        """
-        Takes a list of multiple slots belonging to one optionality group
-        and sets desiredness based on the other items in the optionailty group
-        and then add the slots to the stepper
-        """
-        fulfilled_slot = self.at_least_one_fulfilled(optionality_group_slots)
-
-        for slot in optionality_group_slots:
-            # if there is at least one, make the other one optional
-            if fulfilled_slot and slot is not fulfilled_slot:
-                slot.force_desiredness = desiredness.OPTIONAL
-            self.stepper.add_slot(slot)
 
 
 class ParticipantsChecker(
