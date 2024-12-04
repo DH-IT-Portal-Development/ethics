@@ -105,6 +105,19 @@ van de leraar of een ander persoon die bevoegd is?"
         """If the current settings contains any that are marked as schools."""
         return self.setting.filter(is_school=True).exists()
 
+    @property
+    def gatekeeper_requirement(self):
+        """
+        Returns the highest gatekeeper requirement of settings in this
+        SettingModel.
+        """
+        for level in [GatekeeperChoices.REQUIRED, GatekeeperChoices.OPTIONAL,]:
+            if self.setting.filter(
+                    gatekeeper_documents=level,
+            ).exists():
+                return level
+        return GatekeeperChoices.NO
+
     def settings_requires_review(self):
         """If the current settings contain any that requires review"""
         return self.setting.filter(requires_review=True)

@@ -444,7 +444,9 @@ cadeautje."
         return self.has_sessions and self.sessions_number == 0
 
     def research_settings_contains_schools(self):
-        """Checks if any research track contains a school in it's setting"""
+        """
+        Checks if any research track contains a school in its setting.
+        """
         if self.get_intervention() and self.intervention.settings_contains_schools():
             return True
 
@@ -458,6 +460,26 @@ cadeautje."
             return True
 
         return False
+
+    def get_gatekeeper_desiredness(self):
+        """
+        Return the highest gatekeeper document desiredness of this study, or
+        False if undesired.
+        """
+        from main.models import GatekeeperChoices
+        from attachments.utils import desiredness
+        setting_models = list(self.get_sessions())
+        setting_models += [sm for sm in [self.get_intervention()] if sm]
+        setting_models += [sm for sm in [self.get_observation()] if sm]
+        result = False
+        for sm in setting_models:
+            requirement = sm.gatekeeper_requirement
+            if requirement is GatekeeperChoices.REQUIRED:
+                return desiredness.REQUIRED
+            if requirement is GatekeeperChoices.OPTIONAL:
+                result = desiredness.OPTIONAL
+        return result
+
 
     def needs_additional_external_forms(self):
         """This method checks if the school/other external institution forms
