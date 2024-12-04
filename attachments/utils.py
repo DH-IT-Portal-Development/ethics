@@ -225,19 +225,25 @@ class OptionalityGroup(renderable):
         return context
 
     @property
-    def any_slot_filled(self,):
+    def any_slot_filled(
+        self,
+    ):
         for slot in self.members:
             if slot.attachment:
                 return True
         return False
 
     @property
-    def filled_desiredness(self,):
+    def filled_desiredness(
+        self,
+    ):
         # Desiredness for a slot in this group if it has an attachment
         return desiredness.REQUIRED
 
     @property
-    def empty_desiredness(self,):
+    def empty_desiredness(
+        self,
+    ):
         # Desiredness for a slot in this group if it has no attachment
         if self.any_slot_filled:
             return desiredness.OPTIONAL

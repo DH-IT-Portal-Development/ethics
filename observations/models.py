@@ -12,7 +12,9 @@ class Registration(models.Model):
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
-    is_recording = models.BooleanField(default=False,)
+    is_recording = models.BooleanField(
+        default=False,
+    )
 
     class Meta:
         ordering = ["order"]

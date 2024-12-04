@@ -443,13 +443,16 @@ cadeautje."
     def has_no_sessions(self):
         return self.has_sessions and self.sessions_number == 0
 
-    def has_recordings(self,):
+    def has_recordings(
+        self,
+    ):
         """
         A function that checks whether a study features audio or video
         registration.
         """
         from observations.models import Registration as obs_registration
         from tasks.models import Registration as task_registration
+
         has_recordings = False
         observation = self.get_observation()
         if observation:
