@@ -458,34 +458,6 @@ cadeautje."
             return True
 
         return False
-    
-    def has_recordings(self):
-        """
-        A function that checks whether a study features audio or video
-        registration.
-        """
-        from observations.models import Registration as observation_registration
-        from tasks.models import Registration as task_registration
-        from tasks.models import Task
-
-        if self.get_observation():
-            # gather all AV observation_registraions
-            recordings_observation = observation_registration.objects.filter(
-                description_en__in=["audio recording", "video recording"]
-            )
-            # check if there is an overlap between these two QS's
-            if self.observation.registrations.all() & recordings_observation:
-                return True
-        if self.get_sessions():
-            # gather all the tasks
-            all_tasks = Task.objects.filter(session__study=self)
-            # gather all AV task_registrations
-            recordings_sessions = task_registration.objects.filter(
-                description_en__in=["audio recording", "video recording"]
-            )
-            if all_tasks.filter(registrations__in=recordings_sessions):
-                return True
-        return False
 
     def needs_additional_external_forms(self):
         """This method checks if the school/other external institution forms
