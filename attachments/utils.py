@@ -44,7 +44,7 @@ class AttachmentSlot(renderable):
         self.force_desiredness = force_desiredness
         self.optionality_group = optionality_group
         if self.optionality_group:
-            self.optionality_group.members.add(self)
+            self.optionality_group.members.append(self)
 
     def match(self, exclude=[]):
         """
@@ -121,6 +121,11 @@ class AttachmentSlot(renderable):
 
     @property
     def desiredness(self):
+        if self.optionality_group:
+            if not self.attachment:
+                return self.optionality_group.empty_desiredness
+            else:
+                return self.optionality_group.filled_desiredness
         if self.force_desiredness:
             return self.force_desiredness
         return self.kind.desiredness
@@ -203,8 +208,10 @@ class OptionalityGroup(renderable):
 
     template_name = "attachments/optionality_group.html"
 
-    def __init__(self, members=set()):
-        self.members = set(members)
+    def __init__(
+        self,
+    ):
+        self.members = []
 
     @property
     def count(
@@ -216,6 +223,32 @@ class OptionalityGroup(renderable):
         context = super().get_context_data(**kwargs)
         context["group"] = self
         return context
+
+    @property
+    def any_slot_filled(
+        self,
+    ):
+        for slot in self.members:
+            if slot.attachment:
+                return True
+        return False
+
+    @property
+    def filled_desiredness(
+        self,
+    ):
+        # Desiredness for a slot in this group if it has an attachment
+        return desiredness.REQUIRED
+
+    @property
+    def empty_desiredness(
+        self,
+    ):
+        # Desiredness for a slot in this group if it has no attachment
+        if self.any_slot_filled:
+            return desiredness.OPTIONAL
+        else:
+            return desiredness.REQUIRED
 
 
 def merge_groups(slots):
