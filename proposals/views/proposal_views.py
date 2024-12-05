@@ -691,6 +691,11 @@ class ProposalSubmit(
         # to check for js-redirect-submit
         kwargs["request"] = self.request
 
+        # The form wants to make sure that the entire
+        # proposal has no errors. Therefore we send along
+        # the stepper.
+        kwargs["final_validation"] = True
+
         return kwargs
 
     def get_context_data(self, **kwargs):

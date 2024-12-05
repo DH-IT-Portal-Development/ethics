@@ -44,6 +44,9 @@ class SoftValidationMixin:
 
     def _initial_clean_fields(self):
         for field_name, value in self.initial.items():
+            # Only validate fields form self.initial that are also in
+            # self.fields. This allows us to ignore fields that were removed
+            # in __init__()
             if field_name in self.fields:
                 field = self.fields[field_name]
             else:

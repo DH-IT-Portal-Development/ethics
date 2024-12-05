@@ -220,7 +220,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         _(
             "Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of ILS?"
         ),
-        default=False,
+        default=None,
+        null=True,
         help_text=mark_safe_lazy(
             _(
                 "Werk je samen met een onderzoeker of "
@@ -245,7 +246,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
                 "UU? Zoja, vermeld diens naam en affiliatie."
             )
         ),  # Note: form labels with HTML are hard-coded in form Meta classes
-        default=False,
+        default=None,
+        null=True,
     )
 
     stakeholders = models.TextField(
@@ -256,7 +258,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
     translated_forms = models.BooleanField(
         mark_safe_lazy(
             _(
-                "Worden de informed consent formulieren nog vertaald naar een andere taal dan Nederlands of Engels?"
+                "Worden de documenten nog vertaald naar een andere taal dan Nederlands of Engels?"
             )
         ),
         default=None,
@@ -404,7 +406,7 @@ Zep software)"
         help_text=_(
             "Daar waar de verschillen klein en qua belasting of \
 risico irrelevant zijn is sprake van in essentie hetzelfde traject, en \
-voldoet één set documenten voor de informed consent. Denk \
+voldoet één set documenten voor de bijlagen. Denk \
 hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van \
 een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere \
 helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op \

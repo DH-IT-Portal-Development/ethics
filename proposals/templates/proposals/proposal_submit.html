@@ -5,11 +5,11 @@
 
 {% block header_title %}
     {% if proposal.is_pre_assessment %}
-        {% trans "Aanvraag voor voortoetsing klaar voor versturen" %}
+        {% trans "Aanvraag voor voortoetsing indienen" %}
     {% elif proposal.relation.needs_supervisor %}
-        {% trans "Concept-aanmelding klaar voor versturen" %}
+        {% trans "Concept-aanmelding indienen" %}
     {% else %}
-        {% trans "Aanmelding klaar voor versturen" %}
+        {% trans "Aanmelding indienen" %}
     {% endif %}
     - {{ block.super }}
 {% endblock %}
@@ -90,18 +90,6 @@
     </p>
     {% if not proposal.is_pre_assessment %}
         {% for study in proposal.study_set.all %}
-            {% if study.has_missing_forms %}
-                <div class="warning">
-                    {% url "proposals:consent" proposal.pk as consent_link %}
-                    {% blocktrans trimmed with study_order=study.order %}
-                        Je hebt nog geen toestemmingsverklaring of informatiebrief toegevoegd voor traject
-                        {{ study_order }}.
-                        Die kan je op <a href="{{ consent_link }}">deze pagina</a> alsnog toevoegen.
-                        Als je deze formulieren nog niet klaar hebt, kan je ook op een later moment terugkeren;
-                        je aanvraag is reeds opgeslagen en terug te vinden onder "Mijn concepten".
-                    {% endblocktrans %}
-                </div>
-            {% endif %}
             {% if  study.has_missing_sessions %}
                 <div class="warning">
                     {% url "studies:design" study.pk as study_link %}
@@ -151,8 +139,10 @@
     {% endif %}
 {% endblock %}
 
+{% block auto-form-render %}{{ form }}{% endblock %}
+
 {% block form-buttons %}
-    {% if stepper.get_form_errors or is_practice %}
+    {% if is_practice %}
         {% include "base/form_buttons.html" with no_forward=1 %}
     {% else %}
         {% if proposal.is_pre_assessment %}
