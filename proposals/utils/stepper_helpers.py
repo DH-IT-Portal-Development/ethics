@@ -1,4 +1,5 @@
 from django.core.exceptions import ImproperlyConfigured
+from django.utils.translation import gettext as _
 from braces.forms import UserKwargModelFormMixin
 
 from main.utils import renderable
@@ -44,13 +45,16 @@ class StepperItem(
     title = "Stepper item"
     location = None
 
-    def __init__(self, stepper, parent=None, title=None, location=None):
+    def __init__(
+        self, stepper, parent=None, title=None, location=None, complete_by_default=False
+    ):
         self.stepper = stepper
         self.proposal = stepper.proposal
         self.children = []
         self.parent = parent
         self.is_expanded = False
         self.css_classes = set()
+        self.complete_by_default = complete_by_default
         # Don't override default location if not provided explicitly
         if location:
             self.location = location
@@ -73,7 +77,13 @@ class StepperItem(
         """
         Overwrite for adding errors to stepper validation.
         """
-        return []
+        errors = []
+        if hasattr(self, "get_checker_errors"):
+            errors += self.get_checker_errors()
+        if include_children and self.children:
+            for child in self.children:
+                errors += child.get_errors(include_children=True)
+        return errors
 
     def get_ancestors(self):
         """
@@ -113,7 +123,13 @@ class StepperItem(
         the item represents.
         """
         if self.get_errors(include_children=not self.is_expanded):
-            self.css_classes.add("incomplete")
+            # Currently we resort to the default grey colour for items with
+            # errors. However the incomplete colour exists for when we figure
+            # out how to differentiate between forms with errors and unvisited
+            # forms.
+            #
+            # self.css_classes.add("incomplete")
+            pass
         else:
             self.css_classes.add("complete")
 
@@ -135,6 +151,27 @@ class PlaceholderItem(StepperItem):
     def get_url(
         self,
     ):
+        return ""
+
+    def get_form_errors(self, *args, **kwargs):
+        # Check for child errors
+        errors = super().get_form_errors(*args, **kwargs)
+        if errors:
+            return errors
+        # Only return no errors if complete_by_default is set
+        if self.complete_by_default:
+            return []
+        # Else, return a single error
+        # Placeholders are considered incomplete by default
+        return [_("Item is onvoltooid")]
+
+
+class DisabledItem(PlaceholderItem):
+
+    def build_css_classes(self):
+        """
+        Disabled items are placeholders which are never complete.
+        """
         return ""
 
 
@@ -170,12 +207,6 @@ class ContainerItem(
                 errors += child.get_errors(include_children=True)
         return errors
 
-    def build_css_classes(self):
-        if self.get_errors(include_children=True):
-            self.css_classes.add("incomplete")
-        else:
-            self.css_classes.add("complete")
-
 
 class ModelFormChecker(
     Checker,
@@ -207,7 +238,16 @@ class ModelFormChecker(
             url_func=self.get_url,
             location=self.location,
         )
+        stepper_item.get_checker_errors = self.get_errors
         return stepper_item
+
+    def get_errors(
+        self,
+    ):
+        """
+        Overwrite to provide stepper item errors from the checker.
+        """
+        return []
 
     def get_form_object(
         self,
@@ -294,14 +334,8 @@ class ModelFormItem(
         By passing a custom get_checker_errors function
         from the checker, custom errors also be added.
         """
-        errors = []
+        errors = super().get_errors(include_children=include_children)
         errors += self.model_form.errors
-
-        if hasattr(self, "get_checker_errors"):
-            errors += self.get_checker_errors()
-        if include_children and self.children:
-            for child in self.children:
-                errors += child.get_errors(include_children=True)
         return errors
 
 
@@ -335,6 +369,11 @@ class UpdateOrCreateChecker(
             parent=self.parent,
         )
         item.get_url = self.get_create_url
+
+        def not_created_error():
+            return [(None, _("Object nog niet aangemaakt."))]
+
+        item.get_checker_errors = not_created_error
         return item
 
     def object_exists(

@@ -222,6 +222,11 @@ class WMOChecker(ModelFormChecker):
         if self.object_exists():
             return self.check_wmo()
         else:
+
+            def no_wmo_error():
+                return [_("WMO gegevens ontbreken")]
+
+            self.item.get_checker_errors = no_wmo_error
             return []
 
     def check_wmo(
@@ -998,12 +1003,13 @@ class AttachmentsItem(
         return url
 
     def get_errors(self, include_children=False):
-        errors = []
+        errors = super().get_errors(include_children=include_children)
         for slot in self.stepper.attachment_slots:
-            if slot.required and not slot.attachment:
-                errors.append(
-                    slot.kind.name,
-                )
+            if not slot.attachment:
+                if slot.required:
+                    errors.append(
+                        slot.kind.name,
+                    )
         return errors
 
 
@@ -1132,6 +1138,29 @@ class SubmitChecker(
                 self.stepper.proposal.pk,
             ],
         )
+
+    def make_stepper_item(
+        self,
+    ):
+        self.recursion_marker = False
+
+        def submittable():
+            """
+            Return a single error if the proposal is not submittable,
+            avoiding recursion in error fetching.
+            """
+            if self.recursion_marker:
+                # This function will only return errors once
+                return []
+            self.recursion_marker = True
+            all_errors = self.stepper.get_form_errors()
+            if all_errors:
+                return [_("Aanvraag bevat nog foutmeldingen")]
+            return []
+
+        item = super().make_stepper_item()
+        item.get_checker_errors = submittable
+        return item
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

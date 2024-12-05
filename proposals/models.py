@@ -220,7 +220,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         _(
             "Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of ILS?"
         ),
-        default=False,
+        default=None,
+        null=True,
         help_text=mark_safe_lazy(
             _(
                 "Werk je samen met een onderzoeker of "
@@ -245,7 +246,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
                 "UU? Zoja, vermeld diens naam en affiliatie."
             )
         ),  # Note: form labels with HTML are hard-coded in form Meta classes
-        default=False,
+        default=None,
+        null=True,
     )
 
     stakeholders = models.TextField(

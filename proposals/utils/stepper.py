@@ -5,7 +5,7 @@ from django.utils.translation import gettext as _
 from main.utils import renderable
 
 from .stepper_helpers import (
-    PlaceholderItem,
+    DisabledItem,
     StepperItem,
 )
 
@@ -155,7 +155,7 @@ class Stepper(renderable):
             if isinstance(slot, StepperItem):
                 continue
             # Remaining empty slots are replaced by placeholders
-            placeholder = PlaceholderItem(
+            placeholder = DisabledItem(
                 self,
                 title=slot[1],
             )
