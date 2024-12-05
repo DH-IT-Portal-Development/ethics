@@ -33,11 +33,13 @@ class SystemMessage(models.Model):
 
         return ""
 
+
 class GatekeeperChoices(models.IntegerChoices):
     # Not translated, as it's backend only
     NO = (1, "No")
     OPTIONAL = (2, "Optional")
     REQUIRED = (3, "Required")
+
 
 class Setting(models.Model):
     order = models.PositiveIntegerField(unique=True)
@@ -111,9 +113,12 @@ van de leraar of een ander persoon die bevoegd is?"
         Returns the highest gatekeeper requirement of settings in this
         SettingModel.
         """
-        for level in [GatekeeperChoices.REQUIRED, GatekeeperChoices.OPTIONAL,]:
+        for level in [
+            GatekeeperChoices.REQUIRED,
+            GatekeeperChoices.OPTIONAL,
+        ]:
             if self.setting.filter(
-                    gatekeeper_documents=level,
+                gatekeeper_documents=level,
             ).exists():
                 return level
         return GatekeeperChoices.NO

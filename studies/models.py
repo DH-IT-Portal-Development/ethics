@@ -502,6 +502,7 @@ cadeautje."
         """
         from main.models import GatekeeperChoices
         from attachments.utils import desiredness
+
         setting_models = list(self.get_sessions())
         setting_models += [sm for sm in [self.get_intervention()] if sm]
         setting_models += [sm for sm in [self.get_observation()] if sm]
@@ -513,7 +514,6 @@ cadeautje."
             if requirement is GatekeeperChoices.OPTIONAL:
                 result = desiredness.OPTIONAL
         return result
-
 
     def needs_additional_external_forms(self):
         """This method checks if the school/other external institution forms
