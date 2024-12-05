@@ -348,7 +348,10 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             del self.fields["deception"]
             del self.fields["deception_details"]
 
-        self.initial_clean()
+        # If we have an existing instance and we're not POSTing,
+        # run a initial clean
+        if self.instance.pk and "data" not in kwargs:
+            self.initial_clean()
 
     def clean(self):
         """
