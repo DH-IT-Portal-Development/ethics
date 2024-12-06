@@ -8,6 +8,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe, SafeString
@@ -653,18 +654,20 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
     def accountable_user(self):
         return self.supervisor if self.relation.needs_supervisor else self.created_by
 
+    @property
+    def stepper(self,):
+        if not getattr(self, "_stepper", None):
+            # Importing here to avoid circular import
+            from proposals.utils.stepper import Stepper
+            self._stepper = Stepper(self)
+        return self._stepper
+
     def continue_url(self):
-        """Returns the next URL for this Proposal"""
-        available_urls = self.available_urls()
-        # For copies, always start at the first available URL
-        if self.parent:
-            result = available_urls[0].url
-        # Otherwise, loop through the available URLs to find the last non-title with an URL
-        else:
-            for available_url in available_urls:
-                if available_url.url and not available_url.is_title:
-                    result = available_url.url
-        return result
+        stepper = self.stepper
+        for item in stepper.items:
+            if item.get_errors():
+                return item.get_url()
+        return reverse("proposals:submit", args=[self.pk])
 
     def committee_prefixed_refnum(self):
         """Returns the reference number including the reviewing committee"""
