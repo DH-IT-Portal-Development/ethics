@@ -17,7 +17,7 @@ mark_safe_lazy = lazy(mark_safe, SafeString)
 
 from main.models import YesNoDoubt
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
-from .utils import available_urls, FilenameFactory, OverwriteStorage
+from .utils import FilenameFactory, OverwriteStorage
 from datetime import date, timedelta
 
 logger = logging.getLogger(__name__)
@@ -673,10 +673,6 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         """Returns the reference number including the reviewing committee"""
         parts = (self.reviewing_committee.name, self.reference_number)
         return "-".join(parts)
-
-    def available_urls(self):
-        """Returns the available URLs for this Proposal"""
-        return available_urls(self)
 
     def first_study(self):
         """Returns the first Study in this Proposal, or None if there's none."""

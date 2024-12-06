@@ -46,7 +46,7 @@ from proposals.views.proposal_views import (
     ProposalKnowledgeSecurity,
 )
 
-from proposals.views.study_views import StudyStart, StudyConsent
+from proposals.views.study_views import StudyStart
 from proposals.views.wmo_views import (
     WmoCreate,
     WmoUpdate,
@@ -216,7 +216,6 @@ proposal_urls = [
         ProposalKnowledgeSecurity.as_view(),
         name="knowledge_security",
     ),
-    path("consent/<int:pk>/", StudyConsent.as_view(), name="consent"),
     path("translated/<int:pk>/", TranslatedConsentView.as_view(), name="translated"),
     path(
         "copy/",
