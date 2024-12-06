@@ -655,10 +655,13 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         return self.supervisor if self.relation.needs_supervisor else self.created_by
 
     @property
-    def stepper(self,):
+    def stepper(
+        self,
+    ):
         if not getattr(self, "_stepper", None):
             # Importing here to avoid circular import
             from proposals.utils.stepper import Stepper
+
             self._stepper = Stepper(self)
         return self._stepper
 

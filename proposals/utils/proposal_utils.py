@@ -30,6 +30,7 @@ __all__ = [
     "OverwriteStorage",
 ]
 
+
 def _add_study_urls(main_element, proposal):
     # If only one trajectory, add the children urls of that study directly.
     # (Bypassing the study's own node)

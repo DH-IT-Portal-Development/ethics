@@ -44,7 +44,9 @@ class Stepper(renderable):
         self.check_all(self.starting_checkers)
 
     @property
-    def request(self,):
+    def request(
+        self,
+    ):
         if self._request:
             return self._request
         # If no request was provided,
