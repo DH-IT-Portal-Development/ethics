@@ -30,23 +30,6 @@ __all__ = [
     "OverwriteStorage",
 ]
 
-
-def _add_study_urls(main_element, proposal):
-    # If only one trajectory, add the children urls of that study directly.
-    # (Bypassing the study's own node)
-    if proposal.studies_number == 1:
-        main_element.children.extend(
-            study_urls(proposal.study_set.first(), True).children
-        )
-        return
-
-    # Otherwise, add them all with the parent node
-    prev_study_completed = True
-    for study in proposal.study_set.all():
-        main_element.children.append(study_urls(study, prev_study_completed))
-        prev_study_completed = study.is_completed()
-
-
 def generate_ref_number():
     """
     Generates a reference number for a new(!) Proposal.
