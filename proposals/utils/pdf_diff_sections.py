@@ -717,38 +717,12 @@ class ExtraDocumentsSection(BaseSection):
             rows.remove("parents_information")
 
         return rows
-    
-##########################    
-# Create the full PDF/diff
-##########################
 
-def create_attachment_sections(proposal):
-    from proposals.utils.stepper import Stepper
 
-    attachment_sections = []
+#####################
+# Create the full PDF
+#####################
 
-    stepper = Stepper(proposal)
-    slots = [slot for slot in stepper.attachment_slots if slot.attachment]
-
-    objects = [proposal] + list(proposal.study_set.all())
-    slot_dict = {obj: [] for obj in objects}
-    for slot in slots:
-        relevant_owner = slot.attachment.get_owner_for_proposal(proposal)
-        slot_dict[relevant_owner].append(slot)
-    
-    for owner in slot_dict:
-        if slot_dict[owner]:
-            if owner == proposal:
-                title = _("Aanvraag in het geheel")
-            elif proposal.study_set.count() == 1:
-                title = _("Het hoofdtraject")
-            else:
-                title = _("Traject ") + owner.order + ": " + owner.name
-            attachment_sections.append(TitleSection(title))
-            for slot in slot_dict[owner]:
-                attachment_sections.append(AttachmentSection(slot.attachment, sub_title=slot.kind.name, proposal=slot.get_proposal()))
-
-    return attachment_sections
 
 def create_context_pdf(context, proposal):
     """A function to create the context for the PDF, which gets called in the ProposalAsPdf view."""
@@ -799,6 +773,10 @@ def create_context_pdf(context, proposal):
                     for num, document in enumerate(extra_documents):
                         sections.append(ExtraDocumentsSection(document, num))
 
+                sections.extend(
+                    AllAttachmentSectionsPDF(proposal).get_all_attachment_sections()
+                )
+
                 sections.append(TranslatedFormsSection(proposal))
 
     sections.append(EmbargoSection(proposal))
@@ -807,6 +785,96 @@ def create_context_pdf(context, proposal):
     context["sections"] = sections
 
     return context
+
+class AllAttachmentSectionsPDF:
+    """
+    Class to create sections for attachments in the PDF.
+    Many of these class methods receive a proposal explicitly and not from self,
+    so that they can be re-used for creating sections for the diff
+    """
+
+    def __init__(self, proposal):
+        self.proposal = proposal
+
+    def get_all_attachment_sections(self):
+        """
+        Returns a list of Attachment sections, along with TitleSections to organize
+        the sections. Only used for PDF.
+        """
+        attachment_sections = []
+
+        slot_dict = self._all_attachments_dict(self.proposal)
+
+        for owner in slot_dict:
+            if slot_dict[owner]:
+                title = self._create_object_heading(owner, self.proposal)
+                attachment_sections.append(TitleSection(title))
+                for slot in slot_dict[owner]:
+                    attachment_sections.append(self._create_attachment_section(slot))
+
+        return attachment_sections
+
+    def _all_slots_list(self, proposal):
+        """
+        Returns a list of all slots for a specific proposal
+        """
+        from proposals.utils.stepper import Stepper
+
+        stepper = Stepper(proposal)
+        slots = [slot for slot in stepper.attachment_slots if slot.attachment]
+
+        return slots
+
+    def _all_owners_list(self, proposal):
+        """
+        Returns a list of all possible owners of attachments for a given proposal
+        """
+        return [proposal] + list(proposal.study_set.all())
+
+    def _all_attachments_dict(self, proposal):
+        """
+        Returns a dictionary where the objects are the keys and the attachments
+        are stored in a list as the value
+        """
+
+        slots = self._all_slots_list(proposal)
+
+        objects = self._all_owners_list(proposal)
+        slot_dict = {obj: [] for obj in objects}
+        for slot in slots:
+            relevant_owner = slot.attachment.get_owner_for_proposal(proposal)
+            slot_dict[relevant_owner].append(slot)
+
+        return slot_dict
+
+    def _create_object_heading(self, owner, proposal):
+        """
+        Generate a title for a study or proposal to which attachments are attached
+        """
+        if owner == proposal:
+            title = _("Aanvraag in het geheel")
+        elif proposal.study_set.count() == 1:
+            title = _("Het hoofdtraject")
+        else:
+            title = _("Traject ") + str(owner.order) + ": " + owner.name
+        return title
+
+    def _create_attachment_section(self, slot, attachment=None):
+        """
+        Creates an AttachmentSection, where a specific attachment can
+        optionally be supplied eg. attachment.parent (used for the diff)
+        """
+        if not attachment:
+            attachment = slot.attachment
+        return AttachmentSection(
+            attachment,
+            sub_title=slot.kind.name,
+            proposal=slot.get_proposal(),
+        )
+
+######################
+# Create the full diff
+######################
 
 def create_context_diff(context, old_proposal, new_proposal):
     """A function to create the context for the diff page."""

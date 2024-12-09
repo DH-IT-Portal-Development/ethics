@@ -234,9 +234,6 @@ class RowValue:
 
         User = get_user_model()
 
-        if self.field == "upload":
-            return self.handle_attachment(value)
-
         if value in ("Y", "N", "?"):
             return self.yes_no_doubt(value)
         elif isinstance(value, bool):
@@ -251,6 +248,8 @@ class RowValue:
             return self.handle_user(value)
         elif isinstance(value, Relation) or isinstance(value, Compensation):
             return value.description
+        if value.__class__.__name__ == "FileWrapper":
+            return self.handle_attachment(value)
         elif value.__class__.__name__ == "ManyRelatedManager":
             if value.all().model == User:
                 return self.get_applicants_names(value)
