@@ -283,21 +283,27 @@ class RowValue:
             output = _("Niet aangeleverd")
 
         return output
-    
+
     def handle_attachment(self, filewrapper):
 
         if filewrapper:
             output = format_html(
-                '<a href="{}">{}</a>',
-                settings.BASE_URL + reverse("proposals:download_attachment_original", kwargs={"proposal_pk": self.proposal.pk, "attachment_pk": self.obj.pk,}),
+                '<a href="{}">{}</a><p>{}</p>',
+                settings.BASE_URL
+                + reverse(
+                    "proposals:download_attachment_original",
+                    kwargs={
+                        "proposal_pk": self.proposal.pk,
+                        "attachment_pk": self.obj.pk,
+                    },
+                ),
                 _("Download"),
+                _(" (Gewijzigd voor revisie)") if self.obj.parent else "",
             )
         else:
             output = _("Niet aangeleverd")
 
         return output
-
-
 
     def yes_no_doubt(self, value):
         from main.models import YesNoDoubt
@@ -420,7 +426,8 @@ class PageBreakMixin(BaseSection):
             }
         )
         return super().render(context)
-    
+
+
 class TitleSection:
     """A little dummy section for adding just a title to the PDF"""
 
@@ -436,6 +443,7 @@ class TitleSection:
             }
         )
         return template.render(context)
+
 
 def get_extra_documents(obj):
     """A function to retrieve all extra documents for a specific proposal."""
@@ -481,5 +489,3 @@ def get_all_related_set(objects, related_name):
         getattr(obj, related_name, None).all() if obj is not None else None
         for obj in objects
     ]
-
-
