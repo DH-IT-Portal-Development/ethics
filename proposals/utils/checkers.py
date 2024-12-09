@@ -121,13 +121,6 @@ class OtherResearchersChecker(
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
-        if self.proposal.is_pre_assessment:
-            return [
-                GoalChecker(
-                    self.stepper,
-                    parent=self.parent,
-                )
-            ]
         return [
             FundingChecker(
                 self.stepper,
@@ -172,14 +165,12 @@ class GoalChecker(
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
-        if self.proposal.is_pre_approved:
-            return [
-                PreApprovedChecker(
-                    self.stepper,
-                    parent=self.parent,
-                )
-            ]
-        return [WMOChecker]
+        return [
+            PreApprovedChecker(
+                self.stepper,
+                parent=self.parent,
+            )
+        ]
 
     def get_url(self):
         return reverse(
@@ -196,8 +187,9 @@ class PreApprovedChecker(
     form_class = proposal_forms.PreApprovedForm
 
     def check(self):
-        self.stepper.items.append(self.make_stepper_item())
-        return [SubmitChecker]
+        if self.proposal.is_pre_approved:
+            self.stepper.items.append(self.make_stepper_item())
+        return [WMOChecker]
 
     def get_url(self):
         return reverse(
@@ -215,6 +207,8 @@ class WMOChecker(ModelFormChecker):
     def check(
         self,
     ):
+        if self.proposal.is_pre_approved:
+            return [TrajectoriesChecker]
         self.item = self.make_stepper_item()
         self.stepper.items.append(
             self.item,
@@ -243,8 +237,6 @@ class WMOChecker(ModelFormChecker):
                     parent=self.item,
                 )
             ]
-        if self.proposal.is_pre_assessment:
-            return [SubmitChecker]
         return [TrajectoriesChecker]
 
     def get_url(self):
@@ -331,10 +323,14 @@ class TrajectoriesChecker(
     def check(
         self,
     ):
+        proposal = self.proposal
+        if proposal.is_pre_assessment or proposal.is_pre_approved:
+            return self.remaining_checkers()
         self.item = self.make_stepper_item()
         self.stepper.items.append(self.item)
         sub_items = [self.make_study_checker(s) for s in self.get_studies()]
-        return sub_items + self.remaining_checkers()
+        ksc = KnowledgeSecurityChecker(self.stepper, parent=self.item)
+        return sub_items + [ksc] + self.remaining_checkers()
 
     def make_study_checker(self, study):
         return StudyChecker(
@@ -347,7 +343,6 @@ class TrajectoriesChecker(
         self,
     ):
         return [
-            KnowledgeSecurityChecker(self.stepper, parent=self.item),
             DataManagementChecker,
             AttachmentsChecker,
             SubmitChecker,
@@ -1057,6 +1052,8 @@ class AttachmentsChecker(
         ]
 
     def add_dmp_slot(self):
+        if self.proposal.is_pre_assessment:
+            return
         slot = AttachmentSlot(
             self.stepper.proposal,
             kind=DataManagementPlan,
@@ -1100,7 +1097,8 @@ class TranslationChecker(
     def check(
         self,
     ):
-        self.stepper.items.append(self.make_stepper_item())
+        if not self.proposal.is_pre_assessment:
+            self.stepper.items.append(self.make_stepper_item())
         return []
 
     def get_url(
