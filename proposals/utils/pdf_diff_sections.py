@@ -580,7 +580,7 @@ class AttachmentSection(BaseSection):
 ###############
 
 
-class DMPFileSection(PageBreakMixin, BaseSection):
+class DMPSection(PageBreakMixin, BaseSection):
     """
     This class receives a proposal object
     NOTE: dmp_file is for legacy proposals, should be covered by new attachment
@@ -790,9 +790,7 @@ def create_context_pdf(context, proposal):
 
                 sections.append(KnowledgeSecuritySection(proposal))
 
-                sections.extend(create_attachment_sections(proposal))
-
-                sections.append(TranslatedFormsSection(proposal))
+                sections.append(DMPSection(proposal))
 
                 if has_legacy_docs:
 
@@ -801,7 +799,7 @@ def create_context_pdf(context, proposal):
                     for num, document in enumerate(extra_documents):
                         sections.append(ExtraDocumentsSection(document, num))
 
-                sections.append(DMPFileSection(proposal))
+                sections.append(TranslatedFormsSection(proposal))
 
     sections.append(EmbargoSection(proposal))
     sections.append(CommentsSection(proposal))
@@ -952,10 +950,7 @@ def create_context_diff(context, old_proposal, new_proposal):
                 )
 
                 sections.append(
-                    DiffSection(
-                        TranslatedFormsSection(old_proposal),
-                        TranslatedFormsSection(new_proposal),
-                    )
+                    DiffSection(DMPSection(old_proposal), DMPSection(new_proposal))
                 )
 
                 if has_legacy_docs:
@@ -970,7 +965,8 @@ def create_context_diff(context, old_proposal, new_proposal):
 
                 sections.append(
                     DiffSection(
-                        DMPFileSection(old_proposal), DMPFileSection(new_proposal)
+                        TranslatedFormsSection(old_proposal),
+                        TranslatedFormsSection(new_proposal),
                     )
                 )
 
