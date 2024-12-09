@@ -1064,22 +1064,28 @@ class AttachmentsChecker(
         self.stepper.add_slot(slot)
 
     def add_school_slots(self):
-        studies_with_schools = [
-            study
-            for study in self.proposal.study_set.all()
-            if study.research_settings_contains_schools()
-        ]
-        if studies_with_schools:
+        result_des = False
+        for study in self.proposal.study_set.all():
+            # Get highest desiredness of all studies
+            study_gd = study.get_gatekeeper_desiredness()
+            if study_gd is desiredness.REQUIRED:
+                result_des = desiredness.REQUIRED
+                break
+            if study_gd is desiredness.OPTIONAL:
+                result_des = desiredness.OPTIONAL
+        if result_des:
             self.stepper.add_slot(
                 AttachmentSlot(
                     self.stepper.proposal,
                     kind=SchoolInformationLetter,
+                    force_desiredness=result_des,
                 )
             )
             self.stepper.add_slot(
                 AttachmentSlot(
                     self.stepper.proposal,
                     kind=SchoolConsentForm,
+                    force_desiredness=result_des,
                 )
             )
 
