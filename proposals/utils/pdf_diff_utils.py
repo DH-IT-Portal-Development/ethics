@@ -467,6 +467,13 @@ def get_all_related(objects, related_name):
     ]
 
 
+def get_all_sessions(studies):
+    """
+    Receives a list of study objects and gets sessions for the study
+    """
+    return [study.get_sessions() if study is not None else None for study in studies]
+
+
 def get_all_related_set(objects, related_name):
     """Helper function for retrieving a set of related objects."""
 
