@@ -95,7 +95,7 @@ class ProposalQuerySet(models.QuerySet):
             status__gte=self.DECISION_MADE,
             status_review=True,
             in_archive=True,
-            is_pre_assessment=False,            
+            is_pre_assessment=False,
         )
 
     def no_embargo(self):

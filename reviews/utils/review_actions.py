@@ -252,7 +252,7 @@ class ChangeArchiveStatus(ReviewAction):
 
         if review.proposal.status < Proposal.Statuses.DECISION_MADE:
             return False
-        
+
         if review.proposal.is_pre_assessment:
             return False
 
