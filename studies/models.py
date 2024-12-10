@@ -146,7 +146,7 @@ class Study(models.Model):
         CONSENT = 2, _("De AVG grondslag is 'toestemming'.")
 
     order = models.PositiveIntegerField()
-    name = models.CharField(_("Naam traject"), max_length=15, blank=True)
+    name = models.CharField(_("Naam traject"), max_length=30, blank=True)
 
     age_groups = models.ManyToManyField(
         AgeGroup,
