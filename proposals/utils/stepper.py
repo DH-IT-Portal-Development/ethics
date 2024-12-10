@@ -1,6 +1,7 @@
 from copy import copy
 
 from django.utils.translation import gettext as _
+from django.http import HttpRequest
 
 from main.utils import renderable
 
@@ -36,11 +37,23 @@ class Stepper(renderable):
         ]
         # The stepper keeps track of the request to determine
         # which item is current
-        self.request = request
+        self._request = request
         self.items = []
         self.current_item_ancestors = []
         self._attachment_slots = []
         self.check_all(self.starting_checkers)
+
+    @property
+    def request(
+        self,
+    ):
+        if self._request:
+            return self._request
+        # If no request was provided,
+        # generate a fake request for forms that require it
+        request = HttpRequest()
+        request.user = self.proposal.applicants.first()
+        return request
 
     @property
     def attachment_slots(
