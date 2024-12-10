@@ -813,6 +813,10 @@ class ProposalSubmitForm(
         if not check_local_facilities(self.proposal):
             del self.fields["inform_local_staff"]
 
+        if self.proposal.is_pre_assessment:
+            del self.fields["embargo"]
+            del self.fields["embargo_end_date"]
+
     def clean(self):
         """
         Check if the Proposal is complete:
