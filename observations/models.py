@@ -52,7 +52,7 @@ class Observation(SettingModel):
     )
 
     details_frequency = models.TextField(
-        _("Beschrijf <b>hoe vaak en hoe lang</b> de observant wordt geobserveerd."),
+        _("Beschrijf <b>hoe vaak en hoelang</b> de observant wordt geobserveerd."),
         help_text=_(
             "Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten "
             "worden geobserveerd."
