@@ -15,7 +15,6 @@ mark_safe_lazy = lazy(mark_safe, SafeString)
 from main.models import YesNoDoubt
 from main.validators import validate_pdf_or_doc
 from proposals.models import Proposal
-from studies.utils import study_urls
 from proposals.utils.proposal_utils import FilenameFactory, OverwriteStorage
 from tasks.models import Task
 

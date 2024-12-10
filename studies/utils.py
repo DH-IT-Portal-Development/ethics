@@ -1,12 +1,8 @@
 from __future__ import division
 
-from django.urls import reverse
-from django.utils.translation import gettext as _
-
-from main.utils import AvailableURL
-from interventions.utils import intervention_url, copy_intervention_to_study
-from observations.utils import observation_url, copy_observation_to_study
-from tasks.utils import session_urls, copy_session_to_study
+from interventions.utils import copy_intervention_to_study
+from observations.utils import copy_observation_to_study
+from tasks.utils import copy_session_to_study
 
 STUDY_PROGRESS_START = 10
 STUDY_PROGRESS_TOTAL = 90
@@ -53,50 +49,6 @@ def get_study_progress(study, is_end=False):
     else:
         progress *= study.order
     return int(STUDY_PROGRESS_START + progress)
-
-
-def study_urls(study, prev_study_completed):
-    """
-    Returns the available URLs for the current Study.
-    :param study: the current Study
-    :param prev_study_completed: whether the previous Study is completed
-    :return: a list of available URLs for this Study.
-    """
-    urls = list()
-
-    study_url = AvailableURL(title=_("Deelnemers"))
-    if study:
-        study_url.url = reverse("studies:update", args=(study.pk,))
-
-    urls.append(study_url)
-
-    design_url = AvailableURL(title=_("Onderzoekstype(n)"))
-    if study.compensation:
-        design_url.url = reverse("studies:design", args=(study.pk,))
-    urls.append(design_url)
-
-    if study.get_intervention():
-        urls.append(intervention_url(study))
-
-    if study.get_observation():
-        urls.append(observation_url(study))
-
-    if study.get_sessions():
-        urls.append(session_urls(study))
-
-    end_url = AvailableURL(
-        title=_("Overzicht"),
-    )
-
-    if prev_study_completed:
-        end_url.url = reverse("studies:design_end", args=(study.pk,))
-    urls.append(end_url)
-
-    return AvailableURL(
-        title=_("Traject {}").format(study.order),
-        is_title=True,
-        children=urls,
-    )
 
 
 def create_documents_for_study(study):

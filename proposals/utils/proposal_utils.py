@@ -17,7 +17,6 @@ from django.utils.translation import activate, get_language, gettext as _
 from django.utils.deconstruct import deconstructible
 
 from main.utils import AvailableURL, get_secretary
-from studies.utils import study_urls
 
 
 __all__ = [
