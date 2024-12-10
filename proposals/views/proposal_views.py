@@ -691,9 +691,9 @@ class ProposalSubmit(
         # to check for js-redirect-submit
         kwargs["request"] = self.request
 
-        # The form wants to make sure that the entire
-        # proposal has no errors. Therefore we send along
-        # the stepper.
+        # The following is a flag to let form validation know that
+        # this is an actual user attempting to submit the form, and not
+        # background validation by the Stepper.
         kwargs["final_validation"] = True
 
         return kwargs

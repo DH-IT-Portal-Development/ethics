@@ -1018,6 +1018,8 @@ class DataManagementChecker(
     def check(
         self,
     ):
+        if self.proposal.is_pre_assessment:
+            return []
         self.stepper.items.append(
             self.make_stepper_item(),
         )
