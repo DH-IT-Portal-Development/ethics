@@ -824,8 +824,7 @@ class ProposalSubmitForm(
         cleaned_data = super(ProposalSubmitForm, self).clean()
 
         if (
-            not self.instance.is_pre_assessment
-            and not self.instance.is_practice()
+            not self.instance.is_practice()
             and not "js-redirect-submit" in self.request.POST
             and not "save_back" in self.request.POST
         ):
