@@ -512,10 +512,7 @@ class ProposalOtherResearchersFormView(
 
     def get_next_url(self):
         proposal = self.object
-        if proposal.is_pre_assessment:
-            return reverse("proposals:research_goal", args=(self.object.pk,))
-        else:
-            return reverse("proposals:funding", args=(self.object.pk,))
+        return reverse("proposals:funding", args=(self.object.pk,))
 
     def get_back_url(self):
         return reverse("proposals:researcher", args=(self.object.pk,))
