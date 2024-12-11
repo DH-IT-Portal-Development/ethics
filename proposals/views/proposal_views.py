@@ -646,6 +646,17 @@ class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
         """Continue to the URL specified in the 'next' POST parameter"""
         return reverse("reviews:detail", args=[self.object.latest_review().pk])
 
+    def get_back_url(self,):
+        if self.get_proposal().is_pre_approved:
+            return reverse(
+                "proposals:pre_approved",
+                args=[self.get_proposal().pk],
+            )
+        return reverse(
+            "proposals:knowledge_security",
+            args=[self.get_proposal().pk],
+        )
+
 
 class ProposalUpdateDateStart(GroupRequiredMixin, generic.UpdateView):
     """
@@ -756,7 +767,7 @@ class ProposalSubmit(
 
     def get_back_url(self):
         """Return to the data management view"""
-        return reverse("proposals:data_management", args=(self.object.pk,))
+        return reverse("proposals:translated", args=(self.object.pk,))
 
     def _get_page_number(self):
         if self.object.is_pre_assessment:
@@ -924,7 +935,7 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
 
     def get_back_url(self):
         """Return to the Wmo overview"""
-        return reverse("proposals:wmo_update_pre", args=(self.object.pk,))
+        return reverse("proposals:attachments", args=(self.object.pk,))
 
 
 class ProposalSubmittedPreAssessment(ProposalSubmitted):
@@ -952,10 +963,6 @@ class ProposalSubmitPreApproved(ProposalSubmit):
     def get_next_url(self):
         """After submission, go to the thank-you view"""
         return reverse("proposals:submitted_pre_approved", args=(self.object.pk,))
-
-    def get_back_url(self):
-        """Return to the update page"""
-        return reverse("proposals:pre_approved", args=(self.object.pk,))
 
 
 class ProposalSubmittedPreApproved(ProposalSubmitted):
