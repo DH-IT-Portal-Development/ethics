@@ -686,6 +686,8 @@ class AllAttachmentSectionsPDF:
         """
         attachment_sections = []
 
+        attachment_sections.append(TitleSection(_("Alle documenten")))
+
         slot_dict = self._all_attachments_dict(self.proposal)
 
         for owner in slot_dict:
