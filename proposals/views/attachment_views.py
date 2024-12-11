@@ -307,6 +307,8 @@ class ProposalAttachmentsView(
         return context
 
     def get_next_url(self):
+        if self.get_proposal().is_pre_assessment:
+            return reverse("proposals:submit_pre", args=(self.object.pk,))
         return reverse("proposals:translated", args=(self.object.pk,))
 
     def get_back_url(self):
