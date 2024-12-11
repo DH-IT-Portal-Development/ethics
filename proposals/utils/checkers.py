@@ -1132,8 +1132,14 @@ class SubmitChecker(
     def get_url(
         self,
     ):
+        url_string = "proposals:submit"
+        if self.proposal.is_pre_assessment:
+            url_string = "proposals:submit_pre"
+        if self.proposal.is_pre_approved:
+            url_string = "proposals:submit_pre_approved"
+
         return reverse(
-            "proposals:submit",
+            url_string,
             args=[
                 self.stepper.proposal.pk,
             ],
