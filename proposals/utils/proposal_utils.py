@@ -30,6 +30,7 @@ __all__ = [
     "OverwriteStorage",
 ]
 
+
 def generate_ref_number():
     """
     Generates a reference number for a new(!) Proposal.

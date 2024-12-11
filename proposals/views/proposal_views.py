@@ -643,7 +643,9 @@ class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
         """Continue to the URL specified in the 'next' POST parameter"""
         return reverse("reviews:detail", args=[self.object.latest_review().pk])
 
-    def get_back_url(self,):
+    def get_back_url(
+        self,
+    ):
         if self.get_proposal().is_pre_approved:
             return reverse(
                 "proposals:pre_approved",
