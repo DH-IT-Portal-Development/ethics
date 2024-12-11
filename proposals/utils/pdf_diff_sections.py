@@ -585,23 +585,11 @@ class AttachmentSection(BaseSection):
 class DMPSection(PageBreakMixin, BaseSection):
     """
     This class receives a proposal object
-    NOTE: dmp_file is for legacy proposals, should be covered by new attachment
-    system.
     """
 
-    section_title = _("Data Management Plan")
+    section_title = _("Data Management")
 
-    row_fields = ["dmp_file", "privacy_officer"]
-
-    def get_row_fields(self):
-        rows = copy(self.row_fields)
-        obj = self.obj
-
-        if not obj.dmp_file:
-            rows.remove("dmp_file")
-
-        return rows
-
+    row_fields = ["privacy_officer"]
 
 class EmbargoSection(BaseSection):
     """Gets passed a proposal object"""
@@ -628,99 +616,6 @@ class CommentsSection(BaseSection):
     row_fields = ["comments"]
 
 
-########################
-# Legacy Documents stuff
-########################
-
-
-class InformedConsentFormsSection(BaseSection):
-    """This class receives a Documents object"""
-
-    section_title = _("Informed consent formulieren")
-
-    row_fields = [
-        "informed_consent",
-        "briefing",
-        "passive_consent",
-        "passive_consent_details",
-        "director_consent_declaration",
-        "director_consent_information",
-        "parents_information",
-    ]
-
-    def make_rows(self):
-        """A few fields here need to access different objects, therefore this complex
-        overriding of the make_rows function ... :("""
-
-        study_list = ["passive_consent", "passive_consent_details"]
-
-        row_fields = self.get_row_fields()
-
-        rows = []
-
-        for field in row_fields:
-            if field in study_list:
-                rows.append(Row(self.obj.study, field))
-            else:
-                rows.append(Row(self.obj, field))
-
-        return rows
-
-    def get_row_fields(self):
-        rows = copy(self.row_fields)
-        obj = self.obj
-
-        if obj.proposal.is_practice() or not obj.informed_consent:
-            rows.remove("informed_consent")
-            rows.remove("briefing")
-        if obj.study.passive_consent is None:
-            rows.remove("passive_consent")
-        if not obj.study.passive_consent:
-            rows.remove("passive_consent_details")
-        if not obj.director_consent_declaration:
-            rows.remove("director_consent_declaration")
-        if not obj.director_consent_information:
-            rows.remove("director_consent_information")
-        if not obj.parents_information:
-            rows.remove("parents_information")
-
-        return rows
-
-
-class ExtraDocumentsSection(BaseSection):
-    """This class receives an Documents object.
-    Overrides the __init__ to create a formatted section title"""
-
-    row_fields = [
-        "informed_consent",
-        "briefing",
-        "director_consent_declaration",
-        "director_consent_information",
-        "parents_information",
-    ]
-
-    def __init__(self, obj, num):
-        super().__init__(obj)
-        self.section_title = _("Extra formulieren ") + str(num + 1)
-
-    def get_row_fields(self):
-        rows = copy(self.row_fields)
-        obj = self.obj
-
-        if not obj.informed_consent:
-            rows.remove("informed_consent")
-        if not obj.briefing:
-            rows.remove("briefing")
-        if not obj.director_consent_declaration:
-            rows.remove("director_consent_declaration")
-        if not obj.director_consent_information:
-            rows.remove("director_consent_information")
-        if not obj.parents_information:
-            rows.remove("parents_information")
-
-        return rows
-
-
 #####################
 # Create the full PDF
 #####################
@@ -731,9 +626,6 @@ def create_context_pdf(context, proposal):
     from reviews.templatetags.documents_list import get_legacy_documents
 
     sections = []
-
-    # Check if the proposal has legacy documents. Just used as a bool.
-    has_legacy_docs = bool(get_legacy_documents(proposal))
 
     sections.append(GeneralSection(proposal))
 
@@ -761,19 +653,10 @@ def create_context_pdf(context, proposal):
                                 sections.append(TaskSection(task))
                             sections.append(TasksOverviewSection(session))
                     sections.append(StudyOverviewSection(study))
-                    if has_legacy_docs:
-                        sections.append(InformedConsentFormsSection(study.documents))
 
                 sections.append(KnowledgeSecuritySection(proposal))
 
                 sections.append(DMPSection(proposal))
-
-                if has_legacy_docs:
-
-                    extra_documents = get_extra_documents(proposal)
-
-                    for num, document in enumerate(extra_documents):
-                        sections.append(ExtraDocumentsSection(document, num))
 
                 sections.extend(
                     AllAttachmentSectionsPDF(proposal).get_all_attachment_sections()
@@ -804,6 +687,8 @@ class AllAttachmentSectionsPDF:
         the sections. Only used for PDF.
         """
         attachment_sections = []
+
+        attachment_sections.append(TitleSection(_("Alle documenten")))
 
         slot_dict = self._all_attachments_dict(self.proposal)
 
@@ -883,10 +768,6 @@ def create_context_diff(context, old_proposal, new_proposal):
     from reviews.templatetags.documents_list import get_legacy_documents
 
     sections = []
-
-    has_legacy_docs = get_legacy_documents(old_proposal) or get_legacy_documents(
-        new_proposal
-    )
 
     sections.append(
         DiffSection(GeneralSection(old_proposal), GeneralSection(new_proposal))
@@ -1000,17 +881,6 @@ def create_context_diff(context, old_proposal, new_proposal):
                     sections.append(
                         DiffSection(*multi_sections(StudyOverviewSection, both_studies))
                     )
-
-                    if has_legacy_docs:
-                        both_documents = get_all_related(both_studies, "documents")
-
-                        sections.append(
-                            DiffSection(
-                                *multi_sections(
-                                    InformedConsentFormsSection, both_documents
-                                )
-                            )
-                        )
 
                 sections.append(
                     DiffSection(
