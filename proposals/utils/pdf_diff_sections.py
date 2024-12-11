@@ -591,6 +591,7 @@ class DMPSection(PageBreakMixin, BaseSection):
 
     row_fields = ["privacy_officer"]
 
+
 class EmbargoSection(BaseSection):
     """Gets passed a proposal object"""
 
@@ -670,6 +671,7 @@ def create_context_pdf(context, proposal):
     context["sections"] = sections
 
     return context
+
 
 class AllAttachmentSectionsPDF:
     """
@@ -759,9 +761,11 @@ class AllAttachmentSectionsPDF:
             proposal=slot.get_proposal(),
         )
 
+
 ######################
 # Create the full diff
 ######################
+
 
 def create_context_diff(context, old_proposal, new_proposal):
     """A function to create the context for the diff page."""
@@ -926,6 +930,7 @@ def create_context_diff(context, old_proposal, new_proposal):
     context["sections"] = sections
 
     return context
+
 
 class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
     """
