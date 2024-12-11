@@ -970,6 +970,8 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
         """
         attachment_sections = []
 
+        attachment_sections.append(TitleSection(_("Alle documenten")))
+
         att_dict = self._get_all_attachment_dict_diff()
 
         for owner in att_dict:
