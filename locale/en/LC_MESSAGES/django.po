@@ -66,10 +66,8 @@ msgstr ""
 "minors."
 
 #: attachments/kinds.py:86
-#, fuzzy
-#| msgid "Toestemmingsverklaring"
 msgid "Toestemmingsverklaring 16+"
-msgstr "Consent form"
+msgstr "Consent form 16+"
 
 #: attachments/kinds.py:88
 msgid ""
@@ -129,19 +127,10 @@ msgstr ""
 "parents or guardians are present during the research."
 
 #: attachments/kinds.py:142
-#, fuzzy
-#| msgid "Akkoordverklaring beeld- en geluidsopnames algemeen belang"
 msgid "Akkoordverklaring beeld- en geluidsopnames algemeen belang 16+"
-msgstr "Agreement video/audio recordings public interest"
+msgstr "Agreement video/audio recordings public interest 16+"
 
 #: attachments/kinds.py:144
-#, fuzzy
-#| msgid ""
-#| "Je baseert de verwerking van persoonsgegevens weliswaar op de wettelijke "
-#| "grondslag algemeen belang, maar je maakt beeld- en/of geluidsopnames en "
-#| "daar moeten je deelnemers op ethische gronden mee instemmen. Ook voor het "
-#| "verdere gebruik van die opnames kun je de afspraken schriftelijk "
-#| "vastleggen."
 msgid ""
 "Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
 "algemeen belang, maar je maakt beeld- en/of geluidsopnames van volwassenen "
@@ -154,24 +143,14 @@ msgstr ""
 "agreements in writing."
 
 #: attachments/kinds.py:157
-#, fuzzy
-#| msgid ""
-#| "Toestemmingsverklaring kinderen tot 16 jaar, ouders of voogden aanwezig"
 msgid ""
 "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden "
 "aanwezig"
 msgstr ""
-"Declaration of consent children up to 16 years of age, parents or caregivers "
+"Agreement video- or audio-recordings children up to 16 years of age, parents or caregivers "
 "present"
 
 #: attachments/kinds.py:160 attachments/kinds.py:177
-#, fuzzy
-#| msgid ""
-#| "Je baseert de verwerking van persoonsgegevens weliswaar op de wettelijke "
-#| "grondslag algemeen belang, maar je maakt beeld- en/of geluidsopnames en "
-#| "daar moeten je deelnemers op ethische gronden mee instemmen. Ook voor het "
-#| "verdere gebruik van die opnames kun je de afspraken schriftelijk "
-#| "vastleggen."
 msgid ""
 "Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
 "algemeen belang, maar je maakt beeld- en/of geluidsopnames van kinderen in "
@@ -180,19 +159,16 @@ msgid ""
 "gebruik van die opnames kun je de afspraken schriftelijk vastleggen."
 msgstr ""
 "Although you base the processing of personal data on the legal basis public "
-"interest, you make video and/or audio recordings and for that you need "
+"interest, you make video and/or audio recordings with parents and/or caregivers present and for that you need "
 "consent. For the further use of those recordings, you can also put "
 "agreements in writing."
 
 #: attachments/kinds.py:174
-#, fuzzy
-#| msgid ""
-#| "Toestemmingsverklaring kinderen tot 16 jaar, ouders of voogden afwezig"
 msgid ""
 "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden "
 "afwezig"
 msgstr ""
-"Declaration of consent children up to 16 years of age, no parents or "
+"Agreement video- or audio-recordings children up to 16 years of age, no parents or "
 "caregivers present"
 
 #: attachments/kinds.py:190
@@ -926,21 +902,16 @@ msgstr ""
 #: main/templates/main/index.html:70
 #: proposals/templates/proposals/proposal_start.html:31
 #: proposals/templates/proposals/proposal_start_practice.html:31
-#, fuzzy
-#| msgid ""
-#| "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
-#| "documenten-ethische-toetsingscommissie-gw\" "
-#| "target=\"blank\">voorbeelddocumenten</a> voor de <em>informed consent</"
-#| "em>. </li>"
 msgid ""
 "Tijdens de aanvraagprocedure kan er om een of meer bijlagen worden gevraagd. "
 "Gebruik daarvoor de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\" "
 "target=\"_blank\">voorbeelddocumenten/templates</a>."
 msgstr ""
-"Make sure to use the correct (most recent) <a href=\"https://intranet.uu.nl/"
+"It is possible that during the application proces, you are asked to submit"
+"one or more attachments. As an example, please use the most recent <a href=\"https://intranet.uu.nl/"
 "en/documents-ethics-assessment-committee-humanities\" "
-"target=\"_blank\">model documents</a> for <em>informed consent</em>."
+"target=\"_blank\">model documents</a>."
 
 #: main/templates/main/index.html:83
 msgid "Bekijk mijn aanvragen"
@@ -993,10 +964,8 @@ msgid "Reglement van de FETC-GW"
 msgstr "Regulations of the FEtC-H"
 
 #: main/templates/main/index.html:138
-#, fuzzy
-#| msgid "voorbeelddocumenten"
 msgid "Voorbeelddocumenten"
-msgstr "model documents"
+msgstr "Model documents"
 
 #: main/templates/main/index.html:141
 msgid "Veelgestelde vragen m.b.t. dit portal"
@@ -1236,7 +1205,8 @@ msgid ""
 "Bijvoorbeeld: je maakt aantekeningen van observaties van onbekenden in de "
 "openbare ruimte (anoniem) of je maakt video-opnamen van gedragingen van "
 "mensen (niet anoniem)."
-msgstr ""
+msgstr "For example: you make notes of observations of strangers in a public space "
+"(anonymous) or you make video-recordings of how people act (not anonymous)."
 
 #: observations/models.py:74 observations/models.py:84
 #: observations/models.py:99 proposals/models.py:518 proposals/models.py:537
@@ -1266,18 +1236,14 @@ msgstr ""
 
 #: observations/models.py:104
 msgid "Gaan deelnemers van tevoren akkoord met de observatie?"
-msgstr ""
+msgstr "Do participant agree to the observation beforehand?"
 
 #: observations/models.py:110
-#, fuzzy
-#| msgid ""
-#| "Leg uit waarom er niet van tevoren toestemming wordt gegeven en beschrijf "
-#| "ook op welke wijze dit achteraf verzorgd wordt."
 msgid ""
 "Leg uit waarom er niet van tevoren akkoord kan worden gegeven en beschrijf "
 "ook op welke wijze dit achteraf verzorgd wordt."
 msgstr ""
-"Please explain why consent is not given beforehand and how it will be given "
+"Please explain why consent cannot be given beforehand and how it will be given "
 "afterwards."
 
 #: observations/models.py:118
@@ -1568,10 +1534,8 @@ msgstr ""
 "from today."
 
 #: proposals/forms.py:864 proposals/utils/checkers.py:1164
-#, fuzzy
-#| msgid "Aanvraag beoordelen"
 msgid "Aanvraag bevat nog foutmeldingen"
-msgstr "Assess the application"
+msgstr "Application still contains errors"
 
 #: proposals/forms.py:949
 msgid "Vul in in welke talen de formulieren worden vertaald."
@@ -1934,10 +1898,6 @@ msgid "Leg uit"
 msgstr "Explain why"
 
 #: proposals/models.py:494
-#, fuzzy
-#| msgid ""
-#| "Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf "
-#| "kort hoe ga je daarmee omgaat.  Gebruik maximaal 1000 woorden."
 msgid ""
 "Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf "
 "kort hoe je daarmee omgaat. Gebruik maximaal 1000 woorden."
@@ -2510,52 +2470,39 @@ msgstr ""
 "follow with regard to data."
 
 #: proposals/templates/proposals/proposal_data_management.html:17
-#, fuzzy
-#| msgid "Data Management Plan"
 msgid "Data Management Plan (DMP)"
-msgstr "Data Management Plan"
+msgstr "Data Management Plan (DMP)"
 
 #: proposals/templates/proposals/proposal_data_management.html:19
-#, fuzzy
-#| msgid ""
-#| "Een data management plan is sinds 2020 <a href=\"https://intranet.uu.nl/"
-#| "actueel/nieuws/nieuw-facultair-datamanagementbeleid\" "
-#| "target=\"_blank\">verplicht</a> bij de faculteit geesteswetenschappen, "
-#| "zowel als bij de instanties NWO en ERC als zij subsidie voor een "
-#| "onderzoek bieden."
 msgid ""
 "Een DMP is sinds 2020 <a href=\"https://intranet.uu.nl/actueel/nieuws/nieuw-"
 "facultair-datamanagementbeleid\" target=\"_blank\">verplicht</a> bij GW."
 msgstr ""
-"A data management plan is <a href=\"https://intranet.uu.nl/en/current-"
+"A DMP is <a href=\"https://intranet.uu.nl/en/current-"
 "affairs/news/new-faculty-data-management-policy\" "
-"target=\"_blank\">required</a> by the Faculty of Humanities from 2020 "
-"onwards as well as by NWO or ERC if you are financed by these organizations. "
+"target=\"_blank\">required</a> by the Faculty of Humanities since 2020."
 
 #: proposals/templates/proposals/proposal_data_management.html:24
 msgid "Informatie over en hulp bij het schrijven van een DMP:"
-msgstr ""
+msgstr "Information about and resources for writing a DMP:"
 
 #: proposals/templates/proposals/proposal_data_management.html:30
 msgid ""
 "via de facultaire <a href=\"mailto:datamanagement.gw@uu.nl\">datamanager</a>."
 msgstr ""
+"via the faculty's <a href=\"mailto:datamanagement.gw@uu.nl\">datamanager</a>."
 
 #: proposals/templates/proposals/proposal_data_management.html:35
-#, fuzzy
-#| msgid ""
-#| "<li> de workshop <a href=\"https://www.uu.nl/en/node/75859\" "
-#| "target=\"_blank\">Quick start to Research Data Management</a> </li>"
 msgid ""
 "nuttige (online) workshop <a href=\"https://www.uu.nl/en/node/75859\" "
 "target=\"_blank\">Quick start to Research Data Management</a>"
 msgstr ""
-"<li>the workshop <a href=\"https://www.uu.nl/en/node/75859\" "
+"useful online workshop <a href=\"https://www.uu.nl/en/node/75859\" "
 "target=\"_blank\">Quick start to Research Data Management</a></li>"
 
 #: proposals/templates/proposals/proposal_data_management.html:41
 msgid "Privacy, gegevensbescherming en de AVG"
-msgstr ""
+msgstr "Privacy, data protection and the GDPR"
 
 #: proposals/templates/proposals/proposal_data_management.html:43
 msgid ""
@@ -2564,52 +2511,38 @@ msgid ""
 "privacywet genoemd, maar de AVG beschermt alle grondrechten van burgers, en "
 "beschermt dus bijvoorbeeld ook tegen discriminatie en uitsluiting."
 msgstr ""
+"When you work with personal data, you need to work in accordance with the "
+"General Data Protection Regulation (GDPR). This European regulation is often "
+"refered to as a privacy regulation, but the GDPR protect all fundamental "
+"rights of civilians and thusly, also protect against, for example, "
+"discrimination and exclusion."
 
 #: proposals/templates/proposals/proposal_data_management.html:51
-#, fuzzy
-#| msgid ""
-#| "De autoriteit persoonsgegevens heeft <a href=\"https://www."
-#| "autoriteitpersoonsgegevens.nl/nl/onderwerpen/algemene-informatie-avg/"
-#| "algemene-informatie-avg\" target=\"_blank\">uitgebreide informatie</a> in "
-#| "het Nederlands over hoe de AVG dataverzameling beïnvloedt."
 msgid ""
 "Op de <a href=\"https://www.autoriteitpersoonsgegevens.nl/nl/onderwerpen/"
 "algemene-informatie-avg/algemene-informatie-avg\" target=\"_blank\">website</"
 "a> van de Autoriteit Persoonsgegevens vind je veel algemene informatie over "
 "de AVG."
 msgstr ""
-"The Dutch Data Protection Authority provides <a href=\"https://www."
-"autoriteitpersoonsgegevens.nl/nl/onderwerpen/algemene-informatie-avg/"
-"algemene-informatie-avg\" target=\"_blank\">comprehensive information</a> on "
-"how the AVG affects data collectors, though only in Dutch at the time of "
-"writing.    "
+"On the<a href=\"https://www.autoriteitpersoonsgegevens.nl/en/themes/basic-"
+"gdpr/gdpr-basics/the-gdpr-in-brief\" target=\"_blank\">website</a> of "
+"the Dutch Data Protection Authority there is a lot of general info about the GDPR."
 
 #: proposals/templates/proposals/proposal_data_management.html:57
 msgid "Nuttige informatie:"
 msgstr "Useful information:"
 
 #: proposals/templates/proposals/proposal_data_management.html:59
-#, fuzzy
-#| msgid ""
-#| "Voor vragen over privacy, zoals: \"Wat zijn persoonlijke gegevens?\" of "
-#| "\"Wanneer mag ik mijn onderzoek anoniem noemen?\", raden we je aan het <a "
-#| "href=\"https://utrechtuniversity.github.io/dataprivacyhandbook/\">Data "
-#| "Privacy Handboek</a> te raadplegen."
 msgid ""
 "Voor AVG-informatie die specifiek gericht is op wetenschappelijk onderzoek "
 "kun je het uitstekende <a href=\"https://utrechtuniversity.github.io/"
 "dataprivacyhandbook/\"> Data Privacy Handboek</a> raadplegen."
 msgstr ""
-"For all your questions regarding privacy, e.g.: \"What are personal data?\" "
-"or \"When may I call my research anonymous?\", consult the <a href=\"https://"
-"utrechtuniversity.github.io/dataprivacyhandbook/\">Data Privacy Handbook</a>."
+"For GDPR-information specifically aimed at scientific research, "
+"please consult the excellent <a href=\"https://utrechtuniversity.github.io/"
+"dataprivacyhandbook/\"> Data Privacy Handboek</a>."
 
 #: proposals/templates/proposals/proposal_data_management.html:67
-#, fuzzy
-#| msgid ""
-#| "Voor advies op het gebied van privacy en de AVG kun je contact opnemen "
-#| "met de privacy officer van GW via <a href=\"mailto:privacy.gw@uu."
-#| "nl\">privacy.gw@uu.nl</a>."
 msgid ""
 "Voor advies op het gebied van privacy en de AVG kun je contact opnemen met "
 "de privacy officer van GW via <a href=\"mailto:privacy.gw@uu.nl\">privacy."
@@ -2619,7 +2552,9 @@ msgid ""
 msgstr ""
 "For advice relating to privacy and the AVG, you can contact the privacy "
 "officer of the humanities at <a href=\"mailto:privacy.gw@uu.nl\">privacy."
-"gw@uu.nl</a>."
+"gw@uu.nl</a>. Are you working with <a href=\"https://utrechtuniversity.github.io/"
+"dataprivacyhandbook/special-types-personal-data.html\">personal "
+"data</a>? We strongly urge you to do so."
 
 #: proposals/templates/proposals/proposal_diff.html:11
 msgid "Overzicht van wijzigingen"
@@ -2649,6 +2584,8 @@ msgid ""
 "startdatum ten minste twee weken na de indieningsdatum van de aanvraag "
 "liggen. In andere gevallen is alleen een post-hoc advies mogelijk."
 msgstr ""
+"In order to receive official approval from the FETC-H, the intended start date "
+"must be within two weeks of the day of submission. In other cases, a post-hoc approval is possible."
 
 #: proposals/templates/proposals/proposal_list.html:37
 #: proposals/templates/proposals/proposal_private_archive.html:36
@@ -2881,7 +2818,8 @@ msgstr "Session"
 msgid ""
 "Alle taken en procedures die een deelnemer voltooit tijdens een enkel bezoek "
 "aan de onderzoekslocatie, of tijdens een enkel bezoek van de onderzoeker."
-msgstr ""
+msgstr "All tasks and procedures that a participant completes during a single visit "
+"to the research location, or during a single visit of the researcher."
 
 #: proposals/templates/proposals/proposal_start.html:69
 #: proposals/templates/proposals/proposal_start_practice.html:69
@@ -3005,20 +2943,14 @@ msgstr ""
 "process."
 
 #: proposals/templates/proposals/proposal_submit.html:8
-#, fuzzy
-#| msgid "Aanvraag voor voortoetsing versturen"
 msgid "Aanvraag voor voortoetsing indienen"
 msgstr "Submit application for preliminary assessment"
 
 #: proposals/templates/proposals/proposal_submit.html:10
-#, fuzzy
-#| msgid "Concept-aanmelding versturen"
 msgid "Concept-aanmelding indienen"
 msgstr "Submit draft application"
 
 #: proposals/templates/proposals/proposal_submit.html:12
-#, fuzzy
-#| msgid "Aanmelding versturen"
 msgid "Aanmelding indienen"
 msgstr "Submit application"
 
@@ -3340,17 +3272,6 @@ msgid "Vertaling formulieren"
 msgstr "Translation of documents"
 
 #: proposals/templates/proposals/translated_consent_forms.html:22
-#, fuzzy
-#| msgid ""
-#| "Documenten moet in het Nederlands of in het Engels worden ingediend. "
-#| "Echter, om je deelnemers op een adequate manier te informeren kan het "
-#| "noodzakelijk zijn om de documenten in hun moedertaal te vertalen. Als dat "
-#| "het geval is, dan hoeven deze niet direct te worden ingediend. Het is wel "
-#| "noodzakelijk te vermelden dat deze vertaald zullen gaan worden. Bij "
-#| "goedkeuring moeten de documenten in andere talen wel worden aangeleverd, "
-#| "omdat de portal ook dient als officieel archief van goedgekeurde "
-#| "aanvragen. Dit kan eventueel na goedkeuring, maar kan ook bij een "
-#| "minimale revisie."
 msgid ""
 "Documenten moeten in het Nederlands of in het Engels worden ingediend. "
 "Echter, om je deelnemers op een adequate manier te informeren kan het "
@@ -3492,10 +3413,8 @@ msgid "Eerdere toetsing"
 msgstr "Prior approval"
 
 #: proposals/utils/checkers.py:227
-#, fuzzy
-#| msgid "WMO-gegevens bewerkt"
 msgid "WMO gegevens ontbreken"
-msgstr "WMO information edited"
+msgstr "WMO information missing"
 
 #: proposals/utils/checkers.py:299
 msgid "WMO applicatie"
@@ -3520,8 +3439,6 @@ msgstr "Participants"
 #: proposals/utils/checkers.py:648
 #: studies/templates/studies/study_personal_data.html:7
 #: studies/templates/studies/study_personal_data.html:22
-#, fuzzy
-#| msgid "Persoonlijke gegevens"
 msgid "Persoonsgegevens"
 msgstr "Personal data"
 
@@ -3639,11 +3556,11 @@ msgstr "WMO"
 
 #: proposals/utils/stepper_helpers.py:166
 msgid "Item is onvoltooid"
-msgstr ""
+msgstr "Item is incomplete"
 
 #: proposals/utils/stepper_helpers.py:374
 msgid "Object nog niet aangemaakt."
-msgstr ""
+msgstr "Object not yet created."
 
 #: proposals/utils/validate_sessions_tasks.py:27 tasks/models.py:69
 msgid "Sessie {}"
@@ -3736,14 +3653,10 @@ msgid "Je onderzoek hoeft niet te worden beoordeeld door de METC."
 msgstr "Your application does not require assessment by an METC."
 
 #: proposals/views/wmo_views.py:177
-#, fuzzy
-#| msgid ""
-#| "Neem contact op met <a href=\"{link}\">{secretary}</a> om de twijfels weg "
-#| "te nemen."
 msgid ""
 "Neem contact op met <a href=\"mailto:fetc-gw@uu.nl\">de secretaris van de "
 "FETC-GW</a> om de twijfels weg te nemen."
-msgstr "Contact <a href=\"{link}\">{secretary}</a> to make sure."
+msgstr "Contact <a href=\"mailto:fetc-gw@uu.nl\">The secretary of FETC-H</a> to make sure."
 
 #: proposals/views/wmo_views.py:184
 msgid "Je onderzoek zal moeten worden beoordeeld door de METC."
@@ -3929,10 +3842,8 @@ msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
 #: reviews/models.py:172
-#, fuzzy
-#| msgid "Ruimte voor eventuele opmerkingen"
 msgid "Ruimte voor onderbouwing"
-msgstr "Space for possible comments"
+msgstr "Space for substantiation"
 
 #: reviews/templates/reviews/action_explaination.html:36
 #, python-format
@@ -4083,10 +3994,8 @@ msgid "Aanvraag beoordelen"
 msgstr "Assess the application"
 
 #: reviews/templates/reviews/decision_form.html:22
-#, fuzzy, python-format
-#| msgid "Je kunt nu de aanvraag <em>%(title)s</em> bekijken. <br />"
 msgid "Je kunt nu je beoordeling geven over aanvraag <em>%(title)s</em>."
-msgstr "You can now (re)view this application here: <em>%(title)s</em>. <br />"
+msgstr "You can now submit your review about application <em>%(title)s</em>."
 
 #: reviews/templates/reviews/decision_form.html:28
 msgid ""
@@ -4104,19 +4013,14 @@ msgid "Je kunt nu de aanvraag <em>%(title)s</em> bekijken. <br />"
 msgstr "You can now (re)view this application here: <em>%(title)s</em>. <br />"
 
 #: reviews/templates/reviews/decision_form.html:41
-#, fuzzy
-#| msgid ""
-#| "Als de aanvraag (incl. geïnformeerde toestemmingsformulieren) in orde is, "
-#| "klik dan op ‘goedgekeurd’ en ‘Beslissing opslaan’ hieronder; dan wordt de "
-#| "aanvraag ingediend bij de FETC-GW."
 msgid ""
 "Als de aanvraag (incl. de documenten voor o.a. deelnemers) in orde is, klik "
 "dan op ‘goedgekeurd’ en ‘Beslissing opslaan’ hieronder; dan wordt de "
 "aanvraag ingediend bij de FETC-GW."
 msgstr ""
-"If the application (incl. informed consent forms) is in order, click on "
-"'endorsed' and 'Save decision' below; the application will then be submitted "
-"to the FEtC-H. "
+"If the application (incl. the documents for e.g., participants) is in order, "
+"click on 'endorsed' and 'Save decision' below; the application will then "
+"be submitted to the FEtC-H."
 
 #: reviews/templates/reviews/decision_form.html:48
 msgid ""
@@ -4813,15 +4717,11 @@ msgid "Uit welke leeftijdscategorie(ën) bestaat je deelnemersgroep?"
 msgstr "What is/are the age category/ies of your participants?"
 
 #: studies/models.py:155
-#, fuzzy
-#| msgid ""
-#| "De beoogde leeftijdsgroep kan zijn 5-7 jarigen. Dan moet je hier hier 4-5 "
-#| "én 6-11 invullen."
 msgid ""
 "Voorbeeld: Stel dat de beoogde leeftijdsgroep bestaat uit 5–7 jarigen. Dan "
 "moet je hier hier 4–5 én 6–11 aanvinken."
 msgstr ""
-"If the intended age group is 5-7 year-olds, for example, then you should "
+"Example: Your intended age group is 5-7 year-olds. In that case you should "
 "fill in 4-5 and 6-11."
 
 #: studies/models.py:161
@@ -4848,12 +4748,10 @@ msgstr ""
 "relevant representative."
 
 #: studies/models.py:178
-#, fuzzy
-#| msgid "Worden er bijzondere of gevoelige persoonsgegevens verzameld?"
 msgid ""
 "Worden er bijzondere of gevoelige persoonsgegevens verzameld of gebruikt?"
 msgstr ""
-"Will you collect any special categories of personal data or any sensitive "
+"Will you collect or make use of any special categories of personal data or any sensitive "
 "personal data?"
 
 #: studies/models.py:180
@@ -4873,12 +4771,6 @@ msgid "Wat is de AVG grondslag voor het verzamelen van persoonsgegevens?"
 msgstr "What is the legal justification for the collection of personal data?"
 
 #: studies/models.py:195
-#, fuzzy
-#| msgid ""
-#| "Voor meer informatie over welk AVG grondslag op jouw onderzoek van "
-#| "toepassing is, zie de flowchart in het <a href='https://utrechtuniversity."
-#| "github.io/dataprivacyhandbook/choose-legal-basis.html' target='_blank'>UU "
-#| "Data Privacy Handbook</a>"
 msgid ""
 "Voor meer informatie over welke AVG grondslag op jouw onderzoek van "
 "toepassing is, zie de flowchart in het <a href='https://utrechtuniversity."
@@ -4891,12 +4783,10 @@ msgstr ""
 "Privacy Handbook."
 
 #: studies/models.py:208
-#, fuzzy
-#| msgid "Geef aan welke bijzondere persoonsgegevens worden verzameld:"
 msgid ""
 "Geef aan welke bijzondere persoonsgegevens worden verzameld of gebruikt:"
 msgstr ""
-"Please select which kinds of special personal details may be collected:"
+"Please select which kinds of special personal details may be collected or made use of:"
 
 #: studies/models.py:213
 msgid ""
@@ -4927,13 +4817,10 @@ msgstr ""
 "application."
 
 #: studies/models.py:231
-#, fuzzy
-#| msgid ""
-#| "Selecteer de medische gegevens van je proefpersonen die worden verzameld"
 msgid ""
 "Selecteer de medische gegevens van je proefpersonen die worden verzameld of "
 "gebruikt"
-msgstr "Select the medical details of your participants that are recorded"
+msgstr "Select the medical details of your participants that are recorded or made use of"
 
 #: studies/models.py:237
 msgid ""
@@ -4960,8 +4847,6 @@ msgid "Hoe worden de deelnemers geworven?"
 msgstr "How will the participants be recruited?"
 
 #: studies/models.py:260
-#, fuzzy
-#| msgid "Welke vergoeding krijgt de deelnemer voor hun deelname?"
 msgid "Welke vergoeding krijgen deelnemers voor hun deelname?"
 msgstr ""
 "What compensation will participants receive for taking part in this study?"
@@ -4975,15 +4860,12 @@ msgstr ""
 "are not permitted to receive money, but can be given a gift."
 
 #: studies/models.py:274
-#, fuzzy
-#| msgid ""
-#| "Bestaat een hiërarchische relatie tussen onderzoeker(s) en deelnemer(s)?"
 msgid ""
 "Bestaat er een hiërarchische relatie tussen onderzoeker(s) en deelnemer(s) "
 "of zouden deelnemers die relatie als hiërarchisch kunnen ervaren?"
 msgstr ""
-"Does a hierarchal relationship between researcher(s) and participant(s) "
-"exist?"
+"Does a hierarchical relationship between researcher(s) and participant(s) "
+"exist or could participants experience the relationship as hierarchical?"
 
 #: studies/models.py:283
 msgid "Zo ja, wat is de relatie (bijv. docent-student)?"
@@ -5249,14 +5131,6 @@ msgstr ""
 "participants in their daily lives, but does not interfere."
 
 #: studies/templates/studies/study_design.html:41
-#, fuzzy
-#| msgid ""
-#| "<strong>Taakonderzoek en/of interview(s)</strong>: <br /> De onderzoeker "
-#| "<ul> <li>legt deelnemers een taak op (bijv. vragenlijst, experiment) of</"
-#| "li> <li>neemt een interview af, of</li> <li>vraagt deelnemer deel te "
-#| "nemen aan een focusgroep.</li> </ul> <br /> Onderzoek in het ILS-lab is "
-#| "vanwege de locatie per definitie altijd taakonderzoek (óók als de "
-#| "deelnemers na ontvangst alleen maar worden geobserveerd)."
 msgid ""
 "<strong>Taakonderzoek en/of interview(s)</strong>: <br /> De onderzoeker "
 "<ul> <li>legt deelnemers een taak op (bijv. vragenlijst, experiment) of</li> "
@@ -5269,9 +5143,9 @@ msgstr ""
 "researcher<ul> <li>gives participants a task to fulfil (such as a "
 "questionnaire or experiment), or </li> <li>interviews participants, or </"
 "li><li>asks participants to partake in a focus group.</li> </ul><br /"
-">Research that takes place at the ILS-labs is  always categorized as task-"
+">Research that takes place at the ILS-labs is always categorized as task-"
 "based research due to the location (even if participants are only observed "
-"after their arrival)."
+"there)."
 
 #: studies/templates/studies/study_design.html:57
 msgid ""
@@ -5479,13 +5353,6 @@ msgstr ""
 "create a new session for every unique session."
 
 #: tasks/models.py:30
-#, fuzzy, python-format
-#| msgid ""
-#| "De totale geschatte netto taakduur van je sessie komt op basis van je "
-#| "opgave per taak uit op <strong>%d minuten</strong>. Hoe lang duurt <em>de "
-#| "totale sessie</em>, inclusief ontvangst, instructies per taak, pauzes "
-#| "tussen taken, en debriefing? (bij labbezoek dus van binnenkomst tot "
-#| "vertrek)"
 msgid ""
 "De totale geschatte netto taakduur van je sessie komt op basis van je opgave "
 "per taak uit op <strong>%d minuten</strong>. Hoeveel minuten duurt de totale "
@@ -5497,7 +5364,7 @@ msgstr ""
 "of each task, comes to <strong>%d minutes</strong>. How long does the "
 "<em>the total session</em> take, including welcome, instructions for each "
 "task, breaks between tasks, and debriefing? (in case of a lab visit from "
-"entering the lab until leaving)"
+"entering the lab until leaving and in case of a focus-group from arrival to end)"
 
 #: tasks/models.py:86
 msgid "Vastlegging gedrag"
@@ -5508,14 +5375,6 @@ msgid "Wat is de naam van de taak?"
 msgstr "What is the title of the task?"
 
 #: tasks/models.py:116
-#, fuzzy
-#| msgid ""
-#| "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort uit hoe "
-#| "deze taak (en de eventuele manipulaties daarbinnen) aan de beantwoording "
-#| "van jouw onderzoeksvragen bijdraagt. Geef, kort, een paar voorbeelden (of "
-#| "beschrijvingen) van het type stimuli dat je van plan bent aan de "
-#| "deelnemer aan te bieden. Het moet voor de commissieleden duidelijk zijn "
-#| "wat je precies gaat doen."
 msgid ""
 "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort uit hoe deze "
 "taak (en de eventuele manipulaties daarbinnen) aan de beantwoording van jouw "
@@ -5562,15 +5421,11 @@ msgid "Kies het soort meting"
 msgstr "Select the type of measurement"
 
 #: tasks/models.py:190
-#, fuzzy
-#| msgid ""
-#| "Krijgt de deelnemer tijdens of na deze taak feedback op hun gedrag of "
-#| "toestand?"
 msgid ""
 "Krijgen deelnemers tijdens of na deze taak feedback op hun gedrag of "
 "toestand?"
 msgstr ""
-"Will the participant receive feedback on their behaviour or state during or "
+"Will the participants receive feedback on their behaviour or state during or "
 "after this task?"
 
 #: tasks/models.py:198
@@ -5687,6 +5542,8 @@ msgid ""
 "tijdens een enkel bezoek aan de onderzoekslocatie, of tijdens een enkel "
 "bezoek van de onderzoeker."
 msgstr ""
+"<strong>Session:</strong> All tasks and procedures that a participant completes during a single visit "
+"to the research location, or during a single visit of the researcher."
 
 #: tasks/templates/tasks/session_start.html:24
 msgid ""
@@ -5807,160 +5664,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:81
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid ""
-#~ "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
-#~ "documenten-ethische-toetsingscommissie-gw\" "
-#~ "target=\"blank\">voorbeelddocumenten</a> voor de <em>bijlagen</em>. (de "
-#~ "laatstse versie is van <u>oktober 2024</u>) </li>"
-#~ msgstr ""
-#~ "Make sure to use the correct (most recent) <a href=\"https://intranet.uu."
-#~ "nl/en/documents-ethics-assessment-committee-humanities\" "
-#~ "target=\"_blank\">model documents</a> for your <em>attachments</em>. "
-#~ "(Latest version: <u>October 2024</u>)"
-
-#~ msgid ""
-#~ "Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account "
-#~ "heeft."
-#~ msgstr "As might happen on forums where the researcher also has an account."
-
-#~ msgid "Wordt er van tevoren toestemming gegeven?"
-#~ msgstr "Will consent be given beforehand?"
-
-#~ msgid ""
-#~ "De faculteit biedt uitgebreide informatie op het gebied van data "
-#~ "management, waaronder ook <a href=\"https://www.uu.nl/en/research/"
-#~ "research-data-management/guides/data-management-planning\" "
-#~ "target=\"_blank\">hoe deze te schrijven</a>. <br /> Je kunt bij de "
-#~ "faculteit ook je DMP laten nakijken door <a href=\"https://www.uu.nl/en/"
-#~ "research/research-data-management/tools-services/data-management-plan-"
-#~ "review\" target=\"_blank\">Research Data Management Support</a> of de "
-#~ "facultaire <a href=\"mailto:datamanagement.gw@uu.nl\" "
-#~ "target=\"_blank\">datamanager</a>."
-#~ msgstr ""
-#~ "The faculty provides information on <a href=\"https://intranet.uu.nl/en/"
-#~ "current-affairs/news/new-faculty-data-management-policy\" "
-#~ "target=\"_blank\">data management</a>, as well as on <a href=\"https://"
-#~ "www.uu.nl/en/research/research-data-management/guides/data-management-"
-#~ "planning\" target=\"_blank\">how to write a Data Management Plan</a>. You "
-#~ "can also have your plan reviewed, either by <a href=\"https://www.uu.nl/"
-#~ "en/research/research-data-management/tools-services/data-management-plan-"
-#~ "review\" target=\"_blank\">Research Data Management Support</a> or the "
-#~ "faculty <a href=\"mailto:Datamanagement.gw@uu.nl\" target=\"_blank\">data "
-#~ "manager</a>. "
-
-#~ msgid ""
-#~ "Op de website <a href=\"https://dmponline.dcc.ac.uk/\" "
-#~ "target=\"_blank\">DMP-online</a> vind je na het inloggen met je Solis-ID "
-#~ "templates voor een DMP. Dit is waar je de templates die NWO en ERC "
-#~ "vereisen kunt terugvinden, aangeboden door de UU."
-#~ msgstr ""
-#~ "The site <a href=\"https://dmponline.dcc.ac.uk/\" target=\"_blank\">DMP-"
-#~ "online</a> provides templates for plans, which you can access with your "
-#~ "Solis-ID. This is where you can find DMP templates mandated by NWO or ERC "
-#~ "funding, provided by Utrecht University."
-
-#~ msgid "Nuttige workshops:"
-#~ msgstr "Recommended workshops"
-
-#~ msgid ""
-#~ "Als je dit nog niet gedaan hebt, wordt er sterk aangeraden om de volgende "
-#~ "workshop te volgen:"
-#~ msgstr ""
-#~ "If you have not already done so, it is highly recommended you attend: "
-
-#~ msgid ""
-#~ "Voor advies op het gebied van data management planning kun je contact "
-#~ "opnemen met de datamanager GW, Frans de Liagre Böhl via <a href=\"mailto:"
-#~ "datamanagement.gw@uu.nl\" target=\"_blank\">datamanagement.gw@uu.nl</a>."
-#~ msgstr ""
-#~ "For advice on data management planning you can also contact Frans de "
-#~ "Liagre Böhl at <a href=\"mailto:Datamanagement.gw@uu.nl\" "
-#~ "target=\"_blank\">datamanagement.gw@uu.nl</a>, who is the data manager of "
-#~ "the Faculty of Humanities."
-
-#~ msgid "Privacy: AVG en GDPR"
-#~ msgstr "Privacy: AVG and GDPR"
-
-#~ msgid ""
-#~ "Wanneer je persoonsgebonden data verzamelt, zorg je er voor dat je je "
-#~ "houdt aan de Algemene Verordening Gegevensbescherming, of AVG. Deze wet "
-#~ "is de Nederlandse implementatie van het Europese <a href=\"https://gdpr."
-#~ "eu/\" target=\"_blank\">GDPR</a>."
-#~ msgstr ""
-#~ "When you collect personal data, make sure you comply with the Dutch <a "
-#~ "href=\"https://business.gov.nl/regulation/protection-personal-data/\" "
-#~ "target=\"_blank\">Algemene Verordening Persoonsgegevens</a>, or AVG. This "
-#~ "regulation is in line with European <a href=\"https://gdpr.eu/\" "
-#~ "target=\"_blank\">GDPR privacy legislation</a>."
-
-#~ msgid ""
-#~ "Als de beoogde startdatum binnen twee weken van het indienen van de "
-#~ "aanvraag ligt, kan de FETC geen officiële goedkeuring meer geven."
-#~ msgstr ""
-#~ "If the intended start date lies within two weeks of submission, the FETC-"
-#~ "H will not be able to provide official approval for this proposal."
-
-#~ msgid ""
-#~ "Gebruik de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
-#~ "documenten-ethische-toetsingscommissie-gw\">voorbeelddocumenten</a> voor "
-#~ "de <em>bijlagen</em>."
-#~ msgstr ""
-#~ "Make sure to use the correct (most recent) <a href=\"https://intranet.uu."
-#~ "nl/en/documents-ethics-assessment-committee-humanities\" "
-#~ "target=\"_blank\">model documents</a> for the <em>attachments</em>."
-
-#~ msgid "Alle taken/onderdelen die iemand op één dag uitvoert."
-#~ msgstr ""
-#~ "All tasks or procedures that a participant completes in a day combined. "
-
-#, python-format
-#~ msgid ""
-#~ "Je hebt nog geen toestemmingsverklaring of informatiebrief toegevoegd "
-#~ "voor traject %(study_order)s. Die kan je op <a "
-#~ "href=\"%(consent_link)s\">deze pagina</a> alsnog toevoegen. Als je deze "
-#~ "formulieren nog niet klaar hebt, kan je ook op een later moment "
-#~ "terugkeren; je aanvraag is reeds opgeslagen en terug te vinden onder "
-#~ "\"Mijn concepten\"."
-#~ msgstr ""
-#~ "You have not yet added a declaration of consent or information letter for "
-#~ "trajectory %(study_order)s. You can add these on <a "
-#~ "href=\"%(consent_link)s\">this page</a>. If these forms are not yet "
-#~ "ready, you can return later; your application has already been saved and "
-#~ "can be found under \"My drafts\"."
-
-#~ msgid "Ethische toetsing nodig door een METC?"
-#~ msgstr "Ethical assessment by a METC necessary?"
-
-#~ msgid "METC"
-#~ msgstr "METC"
-
-#~ msgid "Uploaden"
-#~ msgstr "Upload"
-
-#~ msgid "Vertaling"
-#~ msgstr "Translation"
-
-#~ msgid "Formulieren"
-#~ msgstr "Forms"
-
-#~ msgid "Versturen"
-#~ msgstr "Submit"
-
-#, python-format
-#~ msgid ""
-#~ "Je kunt nu een go of no-go geven voor de aanvraag <em>%(title)s</em>, "
-#~ "%(refnum)s in %(chamber)s. De aanvraag is <a href=\"%(pdf_url)s\" "
-#~ "target=\"_blank\">hier</a> in te zien (downloadt als PDF)."
-#~ msgstr ""
-#~ "    You can now give a go or no-go for the application <em>%(title)s</"
-#~ "em>, %(refnum)s in %(chamber)s.    You can see the details of this "
-#~ "application <a href=\"%(pdf_url)s\" target=\"_blank\">here</a> (downloads "
-#~ "as PDF)."
-
-#~ msgid ""
-#~ "<strong>Sessie:</strong> Alle taken/onderdelen die iemand op één dag "
-#~ "uitvoert."
-#~ msgstr ""
-#~ "<strong>Session:</strong> All tasks or procedures that a participant "
-#~ "completes in a day combined."
