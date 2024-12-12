@@ -152,8 +152,8 @@ class Study(models.Model):
         AgeGroup,
         verbose_name=_("Uit welke leeftijdscategorie(ën) bestaat je deelnemersgroep?"),
         help_text=_(
-            "De beoogde leeftijdsgroep kan zijn 5-7 jarigen. \
-Dan moet je hier hier 4-5 én 6-11 invullen."
+            "Voorbeeld: Stel dat de beoogde leeftijdsgroep bestaat uit 5–7 "
+            "jarigen. Dan moet je hier hier 4–5 én 6–11 aanvinken."
         ),
     )
     legally_incapable = models.BooleanField(
