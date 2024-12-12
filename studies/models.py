@@ -175,7 +175,7 @@ vertegenwoordiger te worden verkregen."
     legally_incapable_details = models.TextField(_("Licht toe"), blank=True)
 
     has_special_details = models.BooleanField(
-        verbose_name=_("Worden er bijzondere of gevoelige persoonsgegevens verzameld?"),
+        verbose_name=_("Worden er bijzondere of gevoelige persoonsgegevens verzameld of gebruikt?"),
         help_text=_(
             "Wat 'bijzondere of gevoelige persoonsgegevens' zijn kun je "
             "vinden op <a href='https://utrechtuniversity.github.io/"
@@ -205,7 +205,7 @@ vertegenwoordiger te worden verkregen."
     special_details = models.ManyToManyField(
         SpecialDetail,
         blank=True,
-        verbose_name=_("Geef aan welke bijzondere persoonsgegevens worden verzameld:"),
+        verbose_name=_("Geef aan welke bijzondere persoonsgegevens worden verzameld of gebruikt:"),
     )
 
     has_traits = models.BooleanField(
@@ -228,7 +228,7 @@ eerst contact op met de <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>, v
         Trait,
         blank=True,
         verbose_name=_(
-            "Selecteer de medische gegevens van je proefpersonen die worden verzameld"
+            "Selecteer de medische gegevens van je proefpersonen die worden verzameld of gebruikt"
         ),
     )
     traits_details = models.CharField(_("Namelijk"), max_length=200, blank=True)
