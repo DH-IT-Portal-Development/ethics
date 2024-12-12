@@ -20,9 +20,7 @@
         {% if user != proposal.supervisor %}
             <p>
                 {% blocktrans trimmed with title=proposal.title refnum=proposal.reference_number chamber=proposal.reviewing_committee %}
-                    Je kunt nu een go of no-go geven voor de aanvraag <em>{{ title }}</em>,
-                    {{ refnum }} in {{ chamber }}.
-                    De aanvraag is <a href="{{ pdf_url }}" target="_blank">hier</a> in te zien (downloadt als PDF).
+                Je kunt nu je beoordeling geven over aanvraag <em>{{ title }}</em>.
                 {% endblocktrans %}
             </p>
             {% if decision.is_final_decision %}
