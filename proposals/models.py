@@ -492,7 +492,7 @@ trajecten."
     self_assessment = models.TextField(
         _(
             "Wat zijn de belangrijkste ethische kwesties in dit onderzoek en "
-            "beschrijf kort hoe ga je daarmee omgaat.  Gebruik maximaal 1000 "
+            "beschrijf kort hoe je daarmee omgaat. Gebruik maximaal 1000 "
             "woorden."
         ),
         blank=True,
