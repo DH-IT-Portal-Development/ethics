@@ -192,7 +192,7 @@ vertegenwoordiger te worden verkregen."
             "Wat is de AVG grondslag voor het verzamelen van " "persoonsgegevens?"
         ),
         help_text=_(
-            "Voor meer informatie over welk AVG grondslag op jouw onderzoek van "
+            "Voor meer informatie over welke AVG grondslag op jouw onderzoek van "
             "toepassing is, zie de flowchart in het "
             "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/choose-legal-basis.html'"
             " target='_blank'>UU Data Privacy Handbook</a>"
