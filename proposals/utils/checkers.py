@@ -645,7 +645,7 @@ class ParticipantsChecker(
 
 
 class PersonalDataChecker(ModelFormChecker):
-    title = _("Persoonlijke gegevens")
+    title = _("Persoonsgegevens")
     form_class = study_forms.PersonalDataForm
 
     def __init__(
