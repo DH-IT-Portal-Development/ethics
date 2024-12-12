@@ -63,7 +63,9 @@ class Observation(SettingModel):
     is_anonymous = models.BooleanField(
         _("Wordt er anoniem geobserveerd?"),
         help_text=_(
-            "Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft."
+            "Bijvoorbeeld: je maakt aantekeningen van observaties van "
+            "onbekenden in de openbare ruimte (anoniem) of je maakt "
+            "video-opnamen van gedragingen van mensen (niet anoniem)."
         ),
         default=False,
     )
