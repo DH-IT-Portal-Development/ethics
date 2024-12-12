@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-12-06 15:47+0100\n"
-"PO-Revision-Date: 2024-12-06 15:58+0100\n"
+"PO-Revision-Date: 2024-12-12 14:15+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -1817,7 +1817,7 @@ msgstr "I am using this portal to explore the portal"
 msgid ""
 "Doorlopen alle deelnemers hetzelfde onderzoekstraject, zonder "
 "noemenswaardige verschillen in taken en belasting?"
-msgstr ""
+msgstr "Do all participants follow the same research trajectory, without notable differences in their tasks or experience?"
 
 #: proposals/models.py:407
 msgid ""
@@ -1825,7 +1825,7 @@ msgid ""
 "sprake van in essentie hetzelfde traject. Let op: als verschillende groepen "
 "deelnemers verschillende <i>soorten</i> taken krijgen, dan zijn dit "
 "afzonderlijke trajecten."
-msgstr ""
+msgstr "When differences are small and inconsequential to the risk and effort that participants undertake, we consider those participants to be following the same trajectory. Please note: when participants partake in different <i>kinds</i> of tasks, then these are always separate trajectories."
 
 #: proposals/models.py:419
 msgid "Hoeveel verschillende trajecten zijn er?"
@@ -3284,7 +3284,7 @@ msgid ""
 "Deelnemers aan een onderzoek die dezelfde taken uitvoeren doorlopen samen "
 "een bepaald onderzoekstraject. Het kan zijn dat alle deelnemers aan een "
 "onderzoek dezelfde taken uitvoeren, dan heeft het onderzoek maar één traject."
-msgstr ""
+msgstr "Participants who follow the same instruction and complete the same tasks are said to constitute a certain research Trajectory. It is possible that all participants in your study all complete the same tasks, in which case your study only has one trajectory."
 
 #: proposals/templates/proposals/study_start.html:72
 msgid ""
@@ -3293,7 +3293,7 @@ msgid ""
 "voor het hele onderzoek sprake van één traject, want iedereen doet "
 "hetzelfde. Maar als deelnemers met dyslexie een aanvullende leestest doen, "
 "spreekt men hier van een tweede traject, want deze groep wordt anders belast."
-msgstr ""
+msgstr "<u>For example</u>: All participants in a study are asked to fill in a questionnaire, and then complete a lexical task. At this point this study consists of just one trajectory, because everyone does the same thing. However if participants with dyslexia are additionally asked to complete a reading test, then they follow a second research trajectory, because they put in a different amount of effort."
 
 #: proposals/templates/proposals/study_start.html:78
 msgid ""
@@ -3302,13 +3302,13 @@ msgid ""
 "plaatsvindt, maar ook als iedere week weer een online taak wordt aangeboden "
 "spreken we van meerdere sessies. Je kunt aangeven dat een sessie herhaald "
 "wordt."
-msgstr ""
+msgstr "A session is a collection of tasks that a participant completes in one day. This could be a visit to a lab where research is performed, or a questionnaire filled in at home. If a participant receives an online task once a week, we consider each of these to be separate sessions. You can indicate the number of times that a session is repeated."
 
 #: proposals/templates/proposals/study_start.html:84
 msgid ""
 "Een taak of onderdeel van je onderzoek. Deelnemers aan een onderzoekstraject "
 "voeren vaak meerdere taken uit tijdens een sessie."
-msgstr ""
+msgstr "A task performed by your participants. Often a session will consist of multiple tasks."
 
 #: proposals/templates/proposals/study_start.html:89
 msgid ""
@@ -3639,11 +3639,11 @@ msgstr "WMO"
 
 #: proposals/utils/stepper_helpers.py:166
 msgid "Item is onvoltooid"
-msgstr ""
+msgstr "Item is incomplete."
 
 #: proposals/utils/stepper_helpers.py:374
 msgid "Object nog niet aangemaakt."
-msgstr ""
+msgstr "Object yet to be added."
 
 #: proposals/utils/validate_sessions_tasks.py:27 tasks/models.py:68
 msgid "Sessie {}"
