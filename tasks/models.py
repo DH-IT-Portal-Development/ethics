@@ -31,7 +31,8 @@ class Session(SettingModel):
             "op basis van je opgave per taak uit op <strong>%d minuten</strong>. "
             "Hoeveel minuten duurt de totale sessie, inclusief ontvangst, "
             "instructies per taak, pauzes tussen taken, en debriefing? "
-            "(bij labbezoek dus van binnenkomst tot vertrek)"
+            "(bij labbezoek dus van binnenkomst tot vertrek en bij een "
+            "focus-groep van ontvangst tot afsluiting)"
         ),
         null=True,
         blank=True,
