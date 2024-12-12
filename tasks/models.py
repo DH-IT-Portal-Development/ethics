@@ -113,12 +113,12 @@ class Task(models.Model):
 
     description = models.TextField(
         _(
-            "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort \
-uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de \
-beantwoording van jouw onderzoeksvragen bijdraagt. \
-Geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli \
-dat je van plan bent aan de deelnemer aan te bieden. \
-Het moet voor de commissieleden duidelijk zijn wat je precies gaat doen."
+            "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort "
+"uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de "
+"beantwoording van jouw onderzoeksvragen bijdraagt. "
+"Geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli "
+"of prompts dat je van plan bent aan de deelnemer aan te bieden. Het moet "
+"voor de commissieleden duidelijk zijn wat je precies gaat doen."
         ),
         blank=True,
     )
