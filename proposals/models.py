@@ -223,6 +223,17 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         ),
         default=None,
         null=True,
+    )
+
+    other_stakeholders = models.BooleanField(
+        mark_safe_lazy(
+            _(
+                "Zijn er nog andere onderzoekers bij deze aanvraag betrokken "
+                "die <strong>niet</strong> geaffilieerd zijn aan een van de "
+                "onderzoeksinstituten van de Faculteit Geestwetenschappen van de "
+                "UU? Zoja, vermeld diens naam en affiliatie."
+            )
+        ),  # Note: form labels with HTML are hard-coded in form Meta classes
         help_text=mark_safe_lazy(
             _(
                 "Werk je samen met een onderzoeker of "
@@ -236,17 +247,6 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
                 "persoonsgegevens."
             )
         ),
-    )
-
-    other_stakeholders = models.BooleanField(
-        mark_safe_lazy(
-            _(
-                "Zijn er nog andere onderzoekers bij deze aanvraag betrokken "
-                "die <strong>niet</strong> geaffilieerd zijn aan een van de "
-                "onderzoeksinstituten van de Faculteit Geestwetenschappen van de "
-                "UU? Zoja, vermeld diens naam en affiliatie."
-            )
-        ),  # Note: form labels with HTML are hard-coded in form Meta classes
         default=None,
         null=True,
     )
