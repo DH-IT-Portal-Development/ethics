@@ -169,7 +169,7 @@ class Decision(models.Model):
 
     date_decision = models.DateTimeField(blank=True, null=True)
 
-    comments = models.TextField(_("Ruimte voor eventuele opmerkingen"), blank=True)
+    comments = models.TextField(_("Ruimte voor onderbouwing"), blank=True)
 
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
