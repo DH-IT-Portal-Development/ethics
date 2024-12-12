@@ -271,7 +271,9 @@ cadeautje."
 
     hierarchy = models.BooleanField(
         verbose_name=_(
-            "Bestaat een hiërarchische relatie tussen onderzoeker(s) en deelnemer(s)?"
+            "Bestaat er een hiërarchische relatie tussen onderzoeker(s) "
+            "en deelnemer(s) of zouden deelnemers die relatie als "
+            "hiërarchisch kunnen ervaren?"
         ),
         null=True,
         blank=True,
