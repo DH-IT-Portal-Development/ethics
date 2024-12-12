@@ -101,14 +101,14 @@ class Observation(SettingModel):
     )
 
     has_advanced_consent = models.BooleanField(
-        _("Worden deelnemers, d.w.z. de mensen die worden geobserveerd, van te voren geïnformeerd over het onderzoek?"),
+        _("Gaan deelnemers van tevoren akkoord met de observatie?"),
         default=True,
     )
 
     has_advanced_consent_details = models.TextField(
         _(
-            "Leg uit waarom er niet van tevoren toestemming wordt gegeven en "
-            "beschrijf ook op welke wijze dit achteraf verzorgd wordt."
+            "Leg uit waarom er niet van tevoren akkoord kan worden gegeven "
+            "en beschrijf ook op welke wijze dit achteraf verzorgd wordt."
         ),
         blank=True,
     )
