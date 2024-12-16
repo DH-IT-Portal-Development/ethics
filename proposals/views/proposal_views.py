@@ -596,6 +596,8 @@ class TranslatedConsentView(ProposalContextMixin, UpdateView):
 
     def get_next_url(self):
         """Go to the consent form upload page"""
+        if self.get_proposal().is_pre_approved:
+            return reverse("proposals:submit_pre_approved", args=(self.object.pk,))
         return reverse("proposals:submit", args=(self.object.pk,))
 
     def get_back_url(self):
