@@ -123,13 +123,13 @@ class PreAssessmentMixin(object):
         """Different continue URL for pre-assessment Proposals"""
         wmo = self.object
         if wmo.status == Wmo.WMOStatuses.NO_WMO:
-            return reverse("proposals:attachments", args=(self.object.proposal.pk,))
+            return reverse("proposals:attachments", args=(self.get_proposal().pk,))
         else:
             return reverse("proposals:wmo_application_pre", args=(wmo.pk,))
 
     def get_back_url(self):
         """Different return URL for pre-assessment Proposals"""
-        return reverse("proposals:research_goal", args=(self.object.proposal.pk,))
+        return reverse("proposals:research_goal", args=(self.get_proposal().pk,))
 
 
 class WmoCreatePreAssessment(PreAssessmentMixin, WmoCreate):
@@ -149,7 +149,9 @@ class WmoApplicationPreAssessment(PreAssessmentMixin, WmoApplication):
         else:
             return reverse("proposals:attachments", args=(wmo.proposal.pk,))
 
-    def get_back_url(self,):
+    def get_back_url(
+        self,
+    ):
         return reverse("proposals:wmo_update_pre", args=[self.get_proposal().pk])
 
 
