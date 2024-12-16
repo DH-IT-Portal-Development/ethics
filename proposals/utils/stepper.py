@@ -277,11 +277,14 @@ RegularProposalLayout = [
 
 PreApprProposalLayout = [
     ("create", _("Basisgegevens")),
+    ("data_management", _("Datamanagement")),
+    ("attachments", _("Documenten")),
     ("submit", _("Indienen")),
 ]
 
 PreAssProposalLayout = [
     ("create", _("Basisgegevens")),
     ("wmo", _("WMO")),
+    ("attachments", _("Documenten")),
     ("submit", _("Indienen")),
 ]
