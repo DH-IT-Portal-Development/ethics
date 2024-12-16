@@ -425,6 +425,7 @@ class HumanitiesOrPrivilegeRequiredMixin(UserPassesTestMixin):
     Checks for Humanities faculty affiliation, but also lets in users belonging
     to a privileged set of groups.
     """
+    raise_exception = True
 
     def test_func(self, user):
         return can_view_archive(user)
