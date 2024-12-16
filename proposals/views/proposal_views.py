@@ -568,9 +568,7 @@ class ProposalPreApprovedFormView(
     template_name = "proposals/pre_approved_form.html"
 
     def get_next_url(self):
-        """Go to the Other Researcher page"""
-
-        return reverse("proposals:submit_pre_approved", args=(self.object.pk,))
+        return reverse("proposals:data_management", args=(self.object.pk,))
 
     def get_back_url(self):
         """Return to the Proposal Form page"""
