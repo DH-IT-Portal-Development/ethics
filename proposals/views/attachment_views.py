@@ -5,7 +5,7 @@ from django import forms
 from django.conf import settings
 from main.views import UpdateView
 from proposals.mixins import ProposalContextMixin
-from proposals.models import Proposal
+from proposals.models import Proposal, Wmo
 from studies.models import Study
 from attachments.utils import get_kind_from_str
 from attachments.models import Attachment, ProposalAttachment, StudyAttachment
@@ -318,6 +318,8 @@ class ProposalAttachmentsView(
                 return reverse(
                     "proposals:wmo_application_pre", args=[self.get_proposal().pk]
                 )
+            # If you're at this point then you must have created a WMO object
+            # so it's always the update URL, and not create
             return reverse("proposals:wmo_update_pre", args=[self.get_proposal().pk])
         return reverse("proposals:data_management", args=(self.get_proposal().pk,))
 
