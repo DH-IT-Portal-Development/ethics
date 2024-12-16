@@ -609,12 +609,19 @@ class ProposalDataManagement(ProposalContextMixin, UpdateView):
     template_name = "proposals/proposal_data_management.html"
 
     def get_next_url(self):
-        """Continue to the submission view"""
-        return reverse("proposals:attachments", args=(self.object.pk,))
+        """Continue to the attachments view"""
+        proposal = self.get_proposal()
+        return reverse("proposals:attachments", args=(proposal.pk,))
 
     def get_back_url(self):
-        """Return to the consent form overview of the last Study"""
-        return reverse("proposals:knowledge_security", args=(self.object.pk,))
+        """
+        Return to the consent form overview of the last Study,
+        unless this proposal is preapproved.
+        """
+        proposal = self.get_proposal()
+        if proposal.is_pre_approved:
+            return reverse("proposals:pre_approved", args=[proposal.pk])
+        return reverse("proposals:knowledge_security", args=(proposal.pk,))
 
 
 class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
