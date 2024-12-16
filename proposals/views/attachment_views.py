@@ -312,7 +312,14 @@ class ProposalAttachmentsView(
         return reverse("proposals:translated", args=(self.object.pk,))
 
     def get_back_url(self):
-        return reverse("proposals:data_management", args=(self.object.pk,))
+        # Preassessments don't have data_management
+        if self.get_proposal().is_pre_assessment:
+            if self.get_proposal().wmo.status != Wmo.WMOStatuses.NO_WMO:
+                return reverse(
+                    "proposals:wmo_application_pre", args=[self.get_proposal().pk]
+                )
+            return reverse("proposals:wmo_update_pre", args=[self.get_proposal().pk])
+        return reverse("proposals:data_management", args=(self.get_proposal().pk,))
 
     def legacy_documents(
         self,
