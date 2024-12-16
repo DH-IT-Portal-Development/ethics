@@ -124,6 +124,7 @@ class HomeView(LoginRequiredMixin, SeasonalCoverImageMixin, _SystemMessageView):
 
         context["is_humanities"] = is_member_of_humanities(self.request.user)
         context["proposals"] = self.get_priority_proposals()
+        context["can_view_archive"] = can_view_archive(self.request.user)
 
         return context
 
