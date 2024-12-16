@@ -123,7 +123,7 @@ class PreAssessmentMixin(object):
         """Different continue URL for pre-assessment Proposals"""
         wmo = self.object
         if wmo.status == Wmo.WMOStatuses.NO_WMO:
-            return reverse("proposals:submit_pre", args=(self.object.proposal.pk,))
+            return reverse("proposals:attachments", args=(self.object.proposal.pk,))
         else:
             return reverse("proposals:wmo_application_pre", args=(wmo.pk,))
 
@@ -147,7 +147,7 @@ class WmoApplicationPreAssessment(PreAssessmentMixin, WmoApplication):
         if wmo.status == Wmo.WMOStatuses.WAITING:
             return reverse("proposals:wmo_application", args=(wmo.pk,))
         else:
-            return reverse("proposals:submit_pre", args=(wmo.proposal.pk,))
+            return reverse("proposals:attachments", args=(wmo.proposal.pk,))
 
 
 ################
