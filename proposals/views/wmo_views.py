@@ -149,6 +149,9 @@ class WmoApplicationPreAssessment(PreAssessmentMixin, WmoApplication):
         else:
             return reverse("proposals:attachments", args=(wmo.proposal.pk,))
 
+    def get_back_url(self,):
+        return reverse("proposals:wmo_update_pre", args=[self.get_proposal().pk])
+
 
 ################
 # AJAX callbacks
