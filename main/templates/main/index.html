@@ -86,8 +86,10 @@
            href="{% url 'proposals:copy_revision' %}">{% trans "Nieuwe revisie starten" %}</a>
         <a class="btn btn-outline-secondary"
            href="{% url 'proposals:copy_amendment' %}">{% trans "Nieuw amendement starten" %}</a>
-        <a class="btn btn-outline-secondary"
-           href="{% url 'proposals:archive' 'LK' %}">{% trans "Archief" %}</a>
+        {% if can_view_archive %}
+            <a class="btn btn-outline-secondary"
+               href="{% url 'proposals:archive' 'LK' %}">{% trans "Archief" %}</a>
+        {% endif %}
     </div>
     <div class="uu-container">
         <div class="row gx-3 gy-4">
