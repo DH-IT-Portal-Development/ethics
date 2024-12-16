@@ -295,8 +295,6 @@ class WMOApplicationChecker(ModelFormChecker):
         self.stepper.items.append(self.make_stepper_item())
         if self.proposal.wmo.status == Wmo.WMOStatuses.WAITING:
             return []
-        if self.proposal.is_pre_assessment:
-            return [SubmitChecker]
         return [TrajectoriesChecker]
 
     def get_url(self):
