@@ -553,11 +553,8 @@ class ProposalResearchGoalFormView(
             return reverse(f"proposals:wmo_create{pre_suffix}", args=(proposal.pk,))
 
     def get_back_url(self):
-        proposal = self.object
-        if proposal.is_pre_assessment:
-            return reverse("proposals:other_researchers", args=(self.object.pk,))
-        else:
-            return reverse("proposals:funding", args=(self.object.pk,))
+        proposal = self.get_proposal()
+        return reverse("proposals:funding", args=[proposal.pk])
 
 
 class ProposalPreApprovedFormView(
