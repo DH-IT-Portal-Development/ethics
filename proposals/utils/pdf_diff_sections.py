@@ -557,6 +557,11 @@ class TranslatedFormsSection(BaseSection):
 
 
 class AttachmentSection(BaseSection):
+    """
+    This section, uniquely, works with a AttachmentSlot as its obj. This is the
+    only section that does not receive a Django model as its obj, which leads
+    to the funky self.make_row_field. KindRow is only used here. 
+    """
 
     section_title = ""
 
@@ -934,7 +939,6 @@ def create_context_diff(context, old_proposal, new_proposal):
 
     return context
 
-
 class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
     """
     Class to create secitons for attachments in the Diff.
@@ -983,6 +987,10 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
         return slot.attached_object.order
 
     def _insert_into_matches(self, old_slot, new_slot, matches):
+        """
+        Appends a tuple of AttachmentSections to the matches dict
+        The keys are study.order or 0 for Proposals
+        """
         if new_slot:
             order = self._get_order(new_slot)
         else:
@@ -998,6 +1006,11 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
         return matches
 
     def _match_slot(self, slot, slots):
+        """
+        Attempts to match an new slot to an old slot by recursively looping 
+        over the old_slots. It returns a match if the attachment is unchanged 
+        or if the slot's attachment is a child of an attachment in the old_slots
+        """
         if slots == []:
             # If we've run out of slots, no match was found
             return False

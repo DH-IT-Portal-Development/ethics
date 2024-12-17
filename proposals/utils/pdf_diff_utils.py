@@ -216,6 +216,10 @@ class Row:
             )
         
 class KindRow(Row):
+    """
+    Create a row for a very specific edge case, namely attachment.kind.
+    It needs to use attachment's verbose name, but get the value from slot.
+    """
 
     def __init__(self, slot, attachment, field):
         self.slot = slot
