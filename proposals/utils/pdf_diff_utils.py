@@ -214,7 +214,8 @@ class Row:
             return mark_safe(
                 self.obj._meta.get_field(field).verbose_name % self.obj.net_duration()
             )
-        
+
+
 class KindRow(Row):
     """
     Create a row for a very specific edge case, namely attachment.kind.

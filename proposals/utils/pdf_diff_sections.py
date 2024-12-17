@@ -560,7 +560,7 @@ class AttachmentSection(BaseSection):
     """
     This section, uniquely, works with a AttachmentSlot as its obj. This is the
     only section that does not receive a Django model as its obj, which leads
-    to the funky self.make_row_field. KindRow is only used here. 
+    to the funky self.make_row_field. KindRow is only used here.
     """
 
     section_title = ""
@@ -939,6 +939,7 @@ def create_context_diff(context, old_proposal, new_proposal):
 
     return context
 
+
 class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
     """
     Class to create secitons for attachments in the Diff.
@@ -976,9 +977,9 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
             attachment_sections.append(TitleSection(title))
             for att_tuple in att_dict[owner_num]:
                 attachment_sections.append(DiffSection(*att_tuple))
-            
+
         return attachment_sections
-    
+
     def _get_order(self, slot):
         from proposals.models import Proposal
 
@@ -1001,14 +1002,14 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
             (
                 self._create_attachment_section(old_slot) if old_slot else None,
                 self._create_attachment_section(new_slot) if new_slot else None,
-             ),
+            ),
         )
         return matches
 
     def _match_slot(self, slot, slots):
         """
-        Attempts to match an new slot to an old slot by recursively looping 
-        over the old_slots. It returns a match if the attachment is unchanged 
+        Attempts to match an new slot to an old slot by recursively looping
+        over the old_slots. It returns a match if the attachment is unchanged
         or if the slot's attachment is a child of an attachment in the old_slots
         """
         if slots == []:
@@ -1020,9 +1021,7 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
         if slot.attachment.parent.get_correct_submodel() == potential_match.attachment:
             return potential_match
         # Continue with the next potential match
-        return self._match_slot(
-            slot, slots[1:]
-        )
+        return self._match_slot(slot, slots[1:])
 
     def _get_matches_from_slots(self, old_slots, new_slots, matches=dict()):
         """
@@ -1040,26 +1039,28 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
             # We've already run out of new slots, so these must be
             # unmatched slots and we can just insert them.
             self._insert_into_matches(
-                unmatched_old_slot, None, matches,
+                unmatched_old_slot,
+                None,
+                matches,
             )
             # Continue until old slots run out
             return self._get_matches_from_slots(
-                old_slots[1:], new_slots, matches=matches,
+                old_slots[1:],
+                new_slots,
+                matches=matches,
             )
         current_slot = new_slots[0]
         match = self._match_slot(current_slot, old_slots)
         if match:
             # If we have a match, insert it and remove the matched
             # old slot from the pool
-            matches = self._insert_into_matches(
-                match, current_slot, matches
-            )
+            matches = self._insert_into_matches(match, current_slot, matches)
             old_slots.remove(match)
         else:
-            matches = self._insert_into_matches(
-                None, current_slot, matches
-            )
+            matches = self._insert_into_matches(None, current_slot, matches)
         # Continue with the next new slot
         return self._get_matches_from_slots(
-            old_slots, new_slots[1:], matches=matches,
+            old_slots,
+            new_slots[1:],
+            matches=matches,
         )
