@@ -103,6 +103,8 @@ class ResearcherForm(
         - If this is a practice Proposal, limit the relation choices
         """
 
+
+        self.supervisor_editing_flag = False
         super(ResearcherForm, self).__init__(*args, **kwargs)
         self.fields["relation"].empty_label = None
         self.fields["student_context"].empty_label = None
@@ -110,9 +112,10 @@ class ResearcherForm(
         supervisors = get_user_model().objects.exclude(pk=self.user.pk)
 
         instance = kwargs.get("instance")
-
-        # If you are already defined as a supervisor, we have to set it to you
-        if instance is not None and instance.supervisor == self.user:
+        # If you're already set as the supervisor, we remove all other options
+        # and set a flag assuming you're already editing as the supervisor
+        if self.instance.supervisor == self.user:
+            self.supervisor_editing_flag = True
             supervisors = [self.user]
 
         self.fields["supervisor"].choices = [
@@ -157,7 +160,7 @@ van het FETC-GW worden opgenomen."
             if (
                 relation.needs_supervisor
                 and supervisor == self.user
-                and self.instance.status != Proposal.Statuses.SUBMITTED_TO_SUPERVISOR
+                and not self.supervisor_editing_flag
             ):
                 error = forms.ValidationError(
                     _("Je kunt niet jezelf als promotor/begeleider opgeven.")
