@@ -137,10 +137,11 @@ msgid ""
 "en daar moeten je deelnemers op ethische gronden mee instemmen. Ook voor het "
 "verdere gebruik van die opnames kun je de afspraken schriftelijk vastleggen."
 msgstr ""
-"Although you base the processing of personal data on the legal basis public "
-"interest, you make video and/or audio recordings and for that you need "
-"consent. For the further use of those recordings, you can also put "
-"agreements in writing."
+"Your legal basis for the processing of personal information is the public "
+"interest, however you will be recording participants up to 16 years of age "
+"with their parents or caregivers present. Said caregivers must consent to "
+"this on ethical grounds. These forms also allow you to agree on future use "
+"of the footage."
 
 #: attachments/kinds.py:157
 msgid ""
@@ -1846,34 +1847,23 @@ msgstr "I am using this portal to explore the portal"
 
 #: proposals/models.py:404
 msgid ""
-"Kan voor alle deelnemers dezelfde informatiebrief en, indien van           "
-"toepassing, dezelfde toestemmingsverklaring gebruikt worden?"
+"Doorlopen alle deelnemers hetzelfde onderzoekstraject, zonder "
+"noemenswaardige verschillen in taken en belasting?"
 msgstr ""
-"Can the same informed consent documents be used for all participant groups?"
+"Do all participants follow the same research trajectory, without notable "
+"differences in their tasks or experience?"
 
 #: proposals/models.py:408
 msgid ""
 "Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is "
-"sprake van in essentie hetzelfde traject, en voldoet één set documenten voor "
-"de bijlagen. Denk hierbij aan taakonderzoek waarin de ene groep in taak X de "
-"ene helft van een set verhaaltjes te lezen krijgt, en de andere groep in "
-"taak X de andere helft. Of aan interventieonderzoek waarin drie "
-"vergelijkbare groepen op hetzelfde moment een verschillende interventie-"
-"variant krijgen (specificeer dan wel bij de beschrijving van de interventie "
-"welke varianten precies gebruikt worden). Let op: als verschillende groepen "
-"deelnemers verschillende <i>soorten</i> taken krijgen, dan kan dit niet en "
-"zijn dit afzonderlijke trajecten."
+"sprake van in essentie hetzelfde traject. Let op: als verschillende groepen "
+"deelnemers verschillende <i>soorten</i> taken krijgen, dan zijn dit "
+"afzonderlijke trajecten."
 msgstr ""
-"Complicated experimental designs can define many different groups of "
-"participants. For ethical assessment, it's usually not necessary to "
-"differentiate them down to the smallest detail. If differences between "
-"groups are small, and insignificant in terms of burden and risk, these "
-"groups may constitute a single trajectory requiring only one set of "
-"documents. For example, two experimental groups who read different halves of "
-"the same pool of short stories. Or perhaps three comparable groups, each "
-"receiving a different variant of an intervention at the same time. However, "
-"if separate groups receive different <i>kinds</i> of tasks, they constitute "
-"separate trajectories."
+"When differences are small and inconsequential to the risk and effort that "
+"participants undertake, we consider those participants to be following the "
+"same trajectory. Please note: when participants partake in different "
+"<i>kinds</i> of tasks, then these are always separate trajectories."
 
 #: proposals/models.py:425
 msgid "Hoeveel verschillende trajecten zijn er?"
@@ -2195,16 +2185,42 @@ msgstr "Save"
 msgid "Informatie over betrokken onderzoekers"
 msgstr "Information about other researchers"
 
-#: proposals/templates/proposals/attachments.html:15
+#: proposals/templates/proposals/attachments.html:13
+msgid ""
+"Ter ondersteuning van je aanvraag kun je op deze pagina bestanden uploaden "
+"als aanvullende documentatie."
+msgstr "Below you may attach documents to support your application."
+
+#: proposals/templates/proposals/attachments.html:18
+msgid ""
+"Op basis van de antwoorden op eerdere vragen kunnen hier bepaalde documenten "
+"verplicht gesteld worden, bijvoorbeeld informatiebrieven of "
+"akkoordverklaringen voor deelnemers."
+msgstr ""
+"Based on your answers to previous questions, certain documents may be "
+"automatically set as required to complete your application, for example "
+"information letters or consent forms for your participants."
+
+#: proposals/templates/proposals/attachments.html:23
+msgid ""
+"Als jouw aanvraag (meerdere) trajecten bevat, kun je kiezen om bestanden aan "
+"een specifiek traject toe te voegen. Voeg waar mogelijk documenten aan het "
+"relevante traject toe."
+msgstr ""
+"If your application contains (multiple) trajectories, you may choose to "
+"attach files to a specific trajectory or the application as a whole. Where "
+"possible, always attach files to the relevant trajectory."
+
+#: proposals/templates/proposals/attachments.html:30
 msgid "Algemeen"
 msgstr "General"
 
-#: proposals/templates/proposals/attachments.html:25
-#: proposals/templates/proposals/attachments.html:44
+#: proposals/templates/proposals/attachments.html:40
+#: proposals/templates/proposals/attachments.html:59
 msgid "Toevoegen"
 msgstr "Add"
 
-#: proposals/templates/proposals/attachments.html:32
+#: proposals/templates/proposals/attachments.html:47
 #: proposals/utils/pdf_diff_logic.py:319 proposals/utils/pdf_diff_logic.py:346
 #: proposals/utils/pdf_diff_logic.py:355 proposals/utils/pdf_diff_logic.py:379
 msgid "Traject "
@@ -3277,6 +3293,62 @@ msgstr ""
 "You can now describe the nature of <em>each trajectory</em> of the study on "
 "the following pages."
 
+#: proposals/templates/proposals/study_start.html:67
+msgid ""
+"Deelnemers aan een onderzoek die dezelfde taken uitvoeren doorlopen samen "
+"een bepaald onderzoekstraject. Het kan zijn dat alle deelnemers aan een "
+"onderzoek dezelfde taken uitvoeren, dan heeft het onderzoek maar één traject."
+msgstr ""
+"Participants who follow the same instruction and complete the same tasks are "
+"said to constitute a certain research Trajectory. It is possible that all "
+"participants in your study all complete the same tasks, in which case your "
+"study only has one trajectory."
+
+#: proposals/templates/proposals/study_start.html:72
+msgid ""
+"<u>Bijvoorbeeld</u>: Alle deelnemers aan een onderzoek vullen een "
+"vragenlijst in, en vervolgens wordt hun woordenschat gemeten. Hier is er "
+"voor het hele onderzoek sprake van één traject, want iedereen doet "
+"hetzelfde. Maar als deelnemers met dyslexie een aanvullende leestest doen, "
+"spreekt men hier van een tweede traject, want deze groep wordt anders belast."
+msgstr ""
+"<u>For example</u>: All participants in a study are asked to fill in a "
+"questionnaire, and then complete a lexical task. At this point this study "
+"consists of just one trajectory, because everyone does the same thing. "
+"However if participants with dyslexia are additionally asked to complete a "
+"reading test, then they follow a second research trajectory, because they "
+"put in a different amount of effort."
+
+#: proposals/templates/proposals/study_start.html:78
+msgid ""
+"Onder een sessie verstaan we een set aan taken die een deelnemer op een dag "
+"uitvoert. Dit kan een bezoek aan een instelling zijn waar het onderzoek "
+"plaatsvindt, maar ook als iedere week weer een online taak wordt aangeboden "
+"spreken we van meerdere sessies. Je kunt aangeven dat een sessie herhaald "
+"wordt."
+msgstr ""
+"A session is a collection of tasks that a participant completes in one day. "
+"This could be a visit to a lab where research is performed, or a "
+"questionnaire filled in at home. If a participant receives an online task "
+"once a week, we consider each of these to be separate sessions. You can "
+"indicate the number of times that a session is repeated."
+
+#: proposals/templates/proposals/study_start.html:84
+msgid ""
+"Een taak of onderdeel van je onderzoek. Deelnemers aan een onderzoekstraject "
+"voeren vaak meerdere taken uit tijdens een sessie."
+msgstr ""
+"A task performed by your participants. Often a session will consist of "
+"multiple tasks."
+
+#: proposals/templates/proposals/study_start.html:89
+msgid ""
+"<u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of een "
+"bepaalde test."
+msgstr ""
+"<u>For example</u>: completing an interview, questionnaire, or a particular "
+"test."
+
 #: proposals/templates/proposals/table_with_header_diff.html:13
 msgid "Vorige aanvraag"
 msgstr "Previous application"
@@ -3593,7 +3665,7 @@ msgstr "Session {}, task {}"
 msgid "Sessie {} overzicht"
 msgstr "Session {} overview"
 
-#: proposals/views/attachment_views.py:323
+#: proposals/views/attachment_views.py:334
 msgid "Geen bestanden gevonden"
 msgstr "No documents found"
 
@@ -3647,7 +3719,7 @@ msgstr "Application %(title)s created"
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:683
+#: proposals/views/proposal_views.py:698
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 

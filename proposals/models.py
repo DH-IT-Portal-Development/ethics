@@ -401,21 +401,16 @@ Zep software)"
     # Fields with respect to Studies
     studies_similar = models.BooleanField(
         _(
-            "Kan voor alle deelnemers dezelfde informatiebrief en, indien van \
-          toepassing, dezelfde toestemmingsverklaring gebruikt worden?"
+            "Doorlopen alle deelnemers hetzelfde onderzoekstraject, zonder "
+            "noemenswaardige verschillen in taken en belasting?"
         ),
         help_text=_(
-            "Daar waar de verschillen klein en qua belasting of \
-risico irrelevant zijn is sprake van in essentie hetzelfde traject, en \
-voldoet één set documenten voor de bijlagen. Denk \
-hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van \
-een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere \
-helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op \
-hetzelfde moment een verschillende interventie-variant krijgen (specificeer \
-dan wel bij de beschrijving van de interventie welke varianten precies \
-gebruikt worden). Let op: als verschillende groepen deelnemers verschillende \
-<i>soorten</i> taken krijgen, dan kan dit niet en zijn dit afzonderlijke \
-trajecten."
+            "Daar waar de verschillen klein en qua belasting of "
+            "risico irrelevant zijn is sprake van in essentie hetzelfde "
+            "traject. "
+            "Let op: als verschillende groepen deelnemers verschillende "
+            "<i>soorten</i> taken krijgen, dan zijn dit "
+            "afzonderlijke trajecten."
         ),
         blank=True,
         null=True,
