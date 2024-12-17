@@ -906,15 +906,6 @@ def create_context_diff(context, old_proposal, new_proposal):
                     DiffSection(DMPSection(old_proposal), DMPSection(new_proposal))
                 )
 
-                old_extra_docs = get_extra_documents(old_proposal)
-                new_extra_docs = get_extra_documents(new_proposal)
-
-                if old_extra_docs or new_extra_docs:
-                    for num, zipped_extra_docs in enumerate(
-                        zip_equalize_lists(old_extra_docs, new_extra_docs)
-                    ):
-                        sections.append(DiffSection(*multi_sections()))
-
                 sections.extend(
                     AllAttachmentSectionsDiff(
                         old_proposal, new_proposal
