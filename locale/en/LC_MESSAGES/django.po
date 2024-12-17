@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-12-12 14:49+0100\n"
+"POT-Creation-Date: 2024-12-17 16:16+0100\n"
 "PO-Revision-Date: 2024-04-03 12:32+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -147,8 +147,8 @@ msgid ""
 "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden "
 "aanwezig"
 msgstr ""
-"Agreement video- or audio-recordings children up to 16 years of age, parents or caregivers "
-"present"
+"Agreement video- or audio-recordings children up to 16 years of age, parents "
+"or caregivers present"
 
 #: attachments/kinds.py:160 attachments/kinds.py:177
 msgid ""
@@ -159,17 +159,17 @@ msgid ""
 "gebruik van die opnames kun je de afspraken schriftelijk vastleggen."
 msgstr ""
 "Although you base the processing of personal data on the legal basis public "
-"interest, you make video and/or audio recordings with parents and/or caregivers present and for that you need "
-"consent. For the further use of those recordings, you can also put "
-"agreements in writing."
+"interest, you make video and/or audio recordings with parents and/or "
+"caregivers present and for that you need consent. For the further use of "
+"those recordings, you can also put agreements in writing."
 
 #: attachments/kinds.py:174
 msgid ""
 "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden "
 "afwezig"
 msgstr ""
-"Agreement video- or audio-recordings children up to 16 years of age, no parents or "
-"caregivers present"
+"Agreement video- or audio-recordings children up to 16 years of age, no "
+"parents or caregivers present"
 
 #: attachments/kinds.py:190
 msgid "Script voor mondelinge toestemming opnames"
@@ -335,7 +335,7 @@ msgstr "Optional"
 msgid "Extra"
 msgstr "Extra"
 
-#: faqs/menus.py:7 main/templates/main/index.html:130
+#: faqs/menus.py:7
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
 
@@ -480,7 +480,7 @@ msgstr ""
 "research\" on the previous page to answer the required task questions "
 "related to tasks."
 
-#: interventions/utils.py:11 studies/models.py:289
+#: interventions/utils.py:11 studies/models.py:293
 #: studies/templates/studies/intervention_table.html:8
 msgid "Interventieonderzoek"
 msgstr "Interventional research"
@@ -514,7 +514,7 @@ msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
 #: main/models.py:76 observations/models.py:148 proposals/models.py:285
-#: studies/models.py:234 studies/models.py:270 tasks/models.py:171
+#: studies/models.py:238 studies/models.py:274 tasks/models.py:171
 #: tasks/models.py:183
 msgid "Namelijk"
 msgstr "Please specify"
@@ -908,10 +908,10 @@ msgid ""
 "documenten-ethische-toetsingscommissie-gw\" "
 "target=\"_blank\">voorbeelddocumenten/templates</a>."
 msgstr ""
-"It is possible that during the application proces, you are asked to submit"
-"one or more attachments. As an example, please use the most recent <a href=\"https://intranet.uu.nl/"
-"en/documents-ethics-assessment-committee-humanities\" "
-"target=\"_blank\">model documents</a>."
+"It is possible that during the application proces, you are asked to "
+"submitone or more attachments. As an example, please use the most recent <a "
+"href=\"https://intranet.uu.nl/en/documents-ethics-assessment-committee-"
+"humanities\" target=\"_blank\">model documents</a>."
 
 #: main/templates/main/index.html:83
 msgid "Bekijk mijn aanvragen"
@@ -959,23 +959,38 @@ msgstr "<strong>Technical support</strong> <br /> portalsupport.gw@uu.nl"
 msgid "Resources"
 msgstr "Resources"
 
-#: main/templates/main/index.html:134
-msgid "Reglement van de FETC-GW"
-msgstr "Regulations of the FEtC-H"
+#: main/templates/main/index.html:130
+msgid ""
+"<a href='http://fetc-gw.wp.hum.uu.nl/' target='_blank'>FETC-GW website</a>"
+msgstr ""
+"<a href='https://fetc-gw.wp.hum.uu.nl/en/' "
+"target='_blank'>website of the FEtC-H</a>."
 
-#: main/templates/main/index.html:138
-msgid "Voorbeelddocumenten"
-msgstr "Model documents"
+#: main/templates/main/index.html:133
+msgid ""
+"<a href='https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/' "
+"target='_blank'>Reglement van de FETC-GW</a>"
+msgstr ""
+"<a href='https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/' "
+"target='_blank'>Regulations of the FEtC-H</a>."
 
-#: main/templates/main/index.html:141
+#: main/templates/main/index.html:136
+msgid ""
+"<a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw' "
+"target='_blank'>Voorbeelddocumenten</a>"
+msgstr ""
+"<a href='https://intranet.uu.nl/en/knowledgebase/documents-ethics-assessment-committee-humanities' "
+"target='_blank'>Model documents</a>"
+
+#: main/templates/main/index.html:139
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: main/templates/main/index.html:146
+#: main/templates/main/index.html:144
 msgid "Feedback"
 msgstr "Feedback"
 
-#: main/templates/main/index.html:148
+#: main/templates/main/index.html:146
 msgid ""
 "Heb je een vraag over de werking van de portal, ontdek je een foutje, "
 "missende functionaliteit, of verkeerde vertaling? Neem dan contact op met <a "
@@ -1205,13 +1220,14 @@ msgid ""
 "Bijvoorbeeld: je maakt aantekeningen van observaties van onbekenden in de "
 "openbare ruimte (anoniem) of je maakt video-opnamen van gedragingen van "
 "mensen (niet anoniem)."
-msgstr "For example: you make notes of observations of strangers in a public space "
+msgstr ""
+"For example: you make notes of observations of strangers in a public space "
 "(anonymous) or you make video-recordings of how people act (not anonymous)."
 
 #: observations/models.py:74 observations/models.py:84
 #: observations/models.py:99 proposals/models.py:518 proposals/models.py:537
-#: proposals/models.py:833 studies/models.py:175 studies/models.py:255
-#: studies/models.py:334 studies/models.py:364
+#: proposals/models.py:833 studies/models.py:175 studies/models.py:259
+#: studies/models.py:338 studies/models.py:368
 msgid "Licht toe"
 msgstr "Explain"
 
@@ -1243,8 +1259,8 @@ msgid ""
 "Leg uit waarom er niet van tevoren akkoord kan worden gegeven en beschrijf "
 "ook op welke wijze dit achteraf verzorgd wordt."
 msgstr ""
-"Please explain why consent cannot be given beforehand and how it will be given "
-"afterwards."
+"Please explain why consent cannot be given beforehand and how it will be "
+"given afterwards."
 
 #: observations/models.py:118
 msgid ""
@@ -1333,7 +1349,7 @@ msgstr ""
 msgid "Terug naar de vorige pagina"
 msgstr "Back to the previous page"
 
-#: observations/utils.py:8 studies/models.py:290
+#: observations/utils.py:8 studies/models.py:294
 #: studies/templates/studies/observation_table.html:8
 msgid "Observatieonderzoek"
 msgstr "Observational research"
@@ -2478,9 +2494,9 @@ msgid ""
 "Een DMP is sinds 2020 <a href=\"https://intranet.uu.nl/actueel/nieuws/nieuw-"
 "facultair-datamanagementbeleid\" target=\"_blank\">verplicht</a> bij GW."
 msgstr ""
-"A DMP is <a href=\"https://intranet.uu.nl/en/current-"
-"affairs/news/new-faculty-data-management-policy\" "
-"target=\"_blank\">required</a> by the Faculty of Humanities since 2020."
+"A DMP is <a href=\"https://intranet.uu.nl/en/current-affairs/news/new-"
+"faculty-data-management-policy\" target=\"_blank\">required</a> by the "
+"Faculty of Humanities since 2020."
 
 #: proposals/templates/proposals/proposal_data_management.html:24
 msgid "Informatie over en hulp bij het schrijven van een DMP:"
@@ -2525,8 +2541,9 @@ msgid ""
 "de AVG."
 msgstr ""
 "On the<a href=\"https://www.autoriteitpersoonsgegevens.nl/en/themes/basic-"
-"gdpr/gdpr-basics/the-gdpr-in-brief\" target=\"_blank\">website</a> of "
-"the Dutch Data Protection Authority there is a lot of general info about the GDPR."
+"gdpr/gdpr-basics/the-gdpr-in-brief\" target=\"_blank\">website</a> of the "
+"Dutch Data Protection Authority there is a lot of general info about the "
+"GDPR."
 
 #: proposals/templates/proposals/proposal_data_management.html:57
 msgid "Nuttige informatie:"
@@ -2538,8 +2555,8 @@ msgid ""
 "kun je het uitstekende <a href=\"https://utrechtuniversity.github.io/"
 "dataprivacyhandbook/\"> Data Privacy Handboek</a> raadplegen."
 msgstr ""
-"For GDPR-information specifically aimed at scientific research, "
-"please consult the excellent <a href=\"https://utrechtuniversity.github.io/"
+"For GDPR-information specifically aimed at scientific research, please "
+"consult the excellent <a href=\"https://utrechtuniversity.github.io/"
 "dataprivacyhandbook/\"> Data Privacy Handboek</a>."
 
 #: proposals/templates/proposals/proposal_data_management.html:67
@@ -2552,8 +2569,8 @@ msgid ""
 msgstr ""
 "For advice relating to privacy and the AVG, you can contact the privacy "
 "officer of the humanities at <a href=\"mailto:privacy.gw@uu.nl\">privacy."
-"gw@uu.nl</a>. Are you working with <a href=\"https://utrechtuniversity.github.io/"
-"dataprivacyhandbook/special-types-personal-data.html\">personal "
+"gw@uu.nl</a>. Are you working with <a href=\"https://utrechtuniversity."
+"github.io/dataprivacyhandbook/special-types-personal-data.html\">personal "
 "data</a>? We strongly urge you to do so."
 
 #: proposals/templates/proposals/proposal_diff.html:11
@@ -2584,8 +2601,9 @@ msgid ""
 "startdatum ten minste twee weken na de indieningsdatum van de aanvraag "
 "liggen. In andere gevallen is alleen een post-hoc advies mogelijk."
 msgstr ""
-"In order to receive official approval from the FETC-H, the intended start date "
-"must be within two weeks of the day of submission. In other cases, a post-hoc approval is possible."
+"In order to receive official approval from the FETC-H, the intended start "
+"date must be within two weeks of the day of submission. In other cases, a "
+"post-hoc approval is possible."
 
 #: proposals/templates/proposals/proposal_list.html:37
 #: proposals/templates/proposals/proposal_private_archive.html:36
@@ -2818,7 +2836,8 @@ msgstr "Session"
 msgid ""
 "Alle taken en procedures die een deelnemer voltooit tijdens een enkel bezoek "
 "aan de onderzoekslocatie, of tijdens een enkel bezoek van de onderzoeker."
-msgstr "All tasks and procedures that a participant completes during a single visit "
+msgstr ""
+"All tasks and procedures that a participant completes during a single visit "
 "to the research location, or during a single visit of the researcher."
 
 #: proposals/templates/proposals/proposal_start.html:69
@@ -3542,11 +3561,11 @@ msgstr "Knowledge security and researcher risk"
 msgid "Extra formulieren "
 msgstr "Additional forms "
 
-#: proposals/utils/proposal_utils.py:296
+#: proposals/utils/proposal_utils.py:297
 msgid "FETC-GW: gereviseerde aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: A revised application uses lab facilities"
 
-#: proposals/utils/proposal_utils.py:298
+#: proposals/utils/proposal_utils.py:299
 msgid "FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: New application uses lab facilities"
 
@@ -3656,7 +3675,9 @@ msgstr "Your application does not require assessment by an METC."
 msgid ""
 "Neem contact op met <a href=\"mailto:fetc-gw@uu.nl\">de secretaris van de "
 "FETC-GW</a> om de twijfels weg te nemen."
-msgstr "Contact <a href=\"mailto:fetc-gw@uu.nl\">The secretary of FETC-H</a> to make sure."
+msgstr ""
+"Contact <a href=\"mailto:fetc-gw@uu.nl\">The secretary of FETC-H</a> to make "
+"sure."
 
 #: proposals/views/wmo_views.py:184
 msgid "Je onderzoek zal moeten worden beoordeeld door de METC."
@@ -3994,8 +4015,8 @@ msgid "Aanvraag beoordelen"
 msgstr "Assess the application"
 
 #: reviews/templates/reviews/decision_form.html:22
-msgid "Je kunt nu je beoordeling geven over aanvraag <em>%(title)s</em>."
-msgstr "You can now submit your review about application <em>%(title)s</em>."
+msgid "Je kunt nu je beoordeling geven van aanvraag <em>%(title)s</em>."
+msgstr "You can now submit your review of application <em>%(title)s</em>."
 
 #: reviews/templates/reviews/decision_form.html:28
 msgid ""
@@ -4019,8 +4040,8 @@ msgid ""
 "aanvraag ingediend bij de FETC-GW."
 msgstr ""
 "If the application (incl. the documents for e.g., participants) is in order, "
-"click on 'endorsed' and 'Save decision' below; the application will then "
-"be submitted to the FEtC-H."
+"click on 'endorsed' and 'Save decision' below; the application will then be "
+"submitted to the FEtC-H."
 
 #: reviews/templates/reviews/decision_form.html:48
 msgid ""
@@ -4747,14 +4768,14 @@ msgstr ""
 "express their own opinion). Here consent should always be obtained from a "
 "relevant representative."
 
-#: studies/models.py:178
+#: studies/models.py:179
 msgid ""
 "Worden er bijzondere of gevoelige persoonsgegevens verzameld of gebruikt?"
 msgstr ""
-"Will you collect or make use of any special categories of personal data or any sensitive "
-"personal data?"
+"Will you collect or make use of any special categories of personal data or "
+"any sensitive personal data?"
 
-#: studies/models.py:180
+#: studies/models.py:182
 msgid ""
 "Wat 'bijzondere of gevoelige persoonsgegevens' zijn kun je vinden op <a "
 "href='https://utrechtuniversity.github.io/dataprivacyhandbook/special-types-"
@@ -4766,11 +4787,11 @@ msgstr ""
 "dataprivacyhandbook/special-types-personal-data.html#special-types-personal-"
 "data' target='_blank'>this page</a> of the UU Data Privacy Handbook."
 
-#: studies/models.py:192
+#: studies/models.py:194
 msgid "Wat is de AVG grondslag voor het verzamelen van persoonsgegevens?"
 msgstr "What is the legal justification for the collection of personal data?"
 
-#: studies/models.py:195
+#: studies/models.py:197
 msgid ""
 "Voor meer informatie over welke AVG grondslag op jouw onderzoek van "
 "toepassing is, zie de flowchart in het <a href='https://utrechtuniversity."
@@ -4782,13 +4803,14 @@ msgstr ""
 "choose-legal-basis.html' target='_blank'>flowchart</a> in the UU Data "
 "Privacy Handbook."
 
-#: studies/models.py:208
+#: studies/models.py:211
 msgid ""
 "Geef aan welke bijzondere persoonsgegevens worden verzameld of gebruikt:"
 msgstr ""
-"Please select which kinds of special personal details may be collected or made use of:"
+"Please select which kinds of special personal details may be collected or "
+"made use of:"
 
-#: studies/models.py:213
+#: studies/models.py:217
 msgid ""
 "Deelnemers kunnen geïncludeerd worden op bepaalde bijzondere kenmerken. Is "
 "dit in jouw onderzoek bij (een deel van) de deelnemers het geval?"
@@ -4796,7 +4818,7 @@ msgstr ""
 "Participants can be included based on particular characteristics. Is this "
 "the case with (some of) the participants in this application?"
 
-#: studies/models.py:217
+#: studies/models.py:221
 msgid ""
 "In de meeste gevallen kun je dit soort gegevens alleen verzamelen als je "
 "daar toestemming voor hebt: zie de <a href='https://fetc-gw.wp.hum.uu.nl/wp-"
@@ -4816,13 +4838,15 @@ msgstr ""
 "href='mailto:privacy.gw@uu.nl'>privacy officer</a> before submitting your "
 "application."
 
-#: studies/models.py:231
+#: studies/models.py:235
 msgid ""
 "Selecteer de medische gegevens van je proefpersonen die worden verzameld of "
 "gebruikt"
-msgstr "Select the medical details of your participants that are recorded or made use of"
+msgstr ""
+"Select the medical details of your participants that are recorded or made "
+"use of"
 
-#: studies/models.py:237
+#: studies/models.py:241
 msgid ""
 "Is het, om de onderzoeksvraag beantwoord te krijgen, noodzakelijk om het "
 "geselecteerde type deelnemer aan het onderzoek te laten meedoen?"
@@ -4830,7 +4854,7 @@ msgstr ""
 "In order to answer the research question, is it necessary for the selected "
 "type of participants to participate in the study?"
 
-#: studies/models.py:242
+#: studies/models.py:246
 msgid ""
 "Is het bijvoorbeeld noodzakelijk om kinderen te testen, of zou je de vraag "
 "ook kunnen beantwoorden door volwassen deelnemers te testen?"
@@ -4838,20 +4862,20 @@ msgstr ""
 "For example, is it necessary to test children, or would it be possible to "
 "answer the research question by testing adults?"
 
-#: studies/models.py:250
+#: studies/models.py:254
 msgid "Leg uit waarom"
 msgstr "Explain why"
 
-#: studies/models.py:252
+#: studies/models.py:256
 msgid "Hoe worden de deelnemers geworven?"
 msgstr "How will the participants be recruited?"
 
-#: studies/models.py:260
+#: studies/models.py:264
 msgid "Welke vergoeding krijgen deelnemers voor hun deelname?"
 msgstr ""
 "What compensation will participants receive for taking part in this study?"
 
-#: studies/models.py:262
+#: studies/models.py:266
 msgid ""
 "Het standaardbedrag voor vergoeding aan de deelnemers is €10,- per uur. "
 "Minderjarigen mogen geen geld ontvangen, maar wel een cadeautje."
@@ -4859,7 +4883,7 @@ msgstr ""
 "The standard sum for compensation of participants is €10 per hour. Minors "
 "are not permitted to receive money, but can be given a gift."
 
-#: studies/models.py:274
+#: studies/models.py:278
 msgid ""
 "Bestaat er een hiërarchische relatie tussen onderzoeker(s) en deelnemer(s) "
 "of zouden deelnemers die relatie als hiërarchisch kunnen ervaren?"
@@ -4867,11 +4891,11 @@ msgstr ""
 "Does a hierarchical relationship between researcher(s) and participant(s) "
 "exist or could participants experience the relationship as hierarchical?"
 
-#: studies/models.py:283
+#: studies/models.py:287
 msgid "Zo ja, wat is de relatie (bijv. docent-student)?"
 msgstr "If so, what is the nature of the relationship (e.g. teacher-student)?"
 
-#: studies/models.py:292 tasks/templates/tasks/session_start.html:7
+#: studies/models.py:296 tasks/templates/tasks/session_start.html:7
 #: tasks/templates/tasks/session_start.html:11
 #: tasks/templates/tasks/session_update.html:7
 #: tasks/templates/tasks/session_update.html:11
@@ -4880,7 +4904,7 @@ msgstr "If so, what is the nature of the relationship (e.g. teacher-student)?"
 msgid "Taakonderzoek en/of interview(s)"
 msgstr "Task-based research and/or interview(s)"
 
-#: studies/models.py:298
+#: studies/models.py:302
 msgid ""
 "Is er binnen bovenstaand onderzoekstraject sprake van misleiding van de "
 "deelnemer?"
@@ -4888,7 +4912,7 @@ msgstr ""
 "Does the above research trajectory involve misrepresentation to the "
 "participant?"
 
-#: studies/models.py:302
+#: studies/models.py:306
 msgid ""
 "Misleiding is het doelbewust verschaffen van inaccurate informatie over het "
 "doel en/of belangrijke aspecten van de gang van zaken tijdens het onderzoek. "
@@ -4905,7 +4929,7 @@ msgstr ""
 "crucial memory task without announcing it, or giving false feedback. Fillers "
 "do not count as misrepresentation."
 
-#: studies/models.py:316
+#: studies/models.py:320
 msgid ""
 "Geef een toelichting en beschrijf hoe en wanneer de deelnemer zal worden "
 "gedebrieft."
@@ -4913,7 +4937,7 @@ msgstr ""
 "Give an explanation and describe how and when the participant will be "
 "debriefed."
 
-#: studies/models.py:323
+#: studies/models.py:327
 msgid ""
 "Bevat bovenstaand onderzoekstraject elementen die <em>tijdens</em> de "
 "deelname zodanig belastend zijn dat deze vragen, weerstand, of zelfs "
@@ -4926,7 +4950,7 @@ msgstr ""
 "consider emotionally probing questions, insulting utterances, negative "
 "feedback, and frustrating, difficult, (very) long and/or (very) boring tasks."
 
-#: studies/models.py:336
+#: studies/models.py:340
 msgid ""
 "Geef concrete voorbeelden van de relevante aspecten van jouw onderzoek "
 "(bijv. voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de "
@@ -4938,7 +4962,7 @@ msgstr ""
 "questions in a questionnaire; negative feedback), so that the commission has "
 "a clear idea of what is involved."
 
-#: studies/models.py:347
+#: studies/models.py:351
 msgid ""
 "Zijn er kwesties rondom de veiligheid van, of risico's voor de deelnemers "
 "<em>tijdens of na</em> deelname aan het onderzoek?"
@@ -4946,7 +4970,7 @@ msgstr ""
 "Are there concerns relating to the safety of, or risks to, participants "
 "<em>during or after</em> participation in the research?"
 
-#: studies/models.py:352
+#: studies/models.py:356
 msgid ""
 "Houd hierbij niet alleen rekening met mogelijke psychische of fysieke "
 "schadelijke gevolgen, maar ook met andere mogelijke schade, zoals bijv. "
@@ -4958,16 +4982,16 @@ msgstr ""
 "em> minimal? I.e. is the chance of and/or magnitude of potential damage to "
 "participants clearly <em>above</em> that of the \"background risk\"?"
 
-#: studies/models.py:532
+#: studies/models.py:536
 #, python-format
 msgid "Study details for proposal %s"
 msgstr "Study details for proposal %s"
 
-#: studies/models.py:537
+#: studies/models.py:541
 msgid "Maak je gebruik van passieve toestemming?"
 msgstr "Will you use passive consent?"
 
-#: studies/models.py:540
+#: studies/models.py:544
 msgid ""
 "Wanneer je kinderen via een instelling (dus ook school) werft en je de "
 "ouders niet laat ondertekenen, maar in plaats daarvan de leiding van die "
@@ -4982,7 +5006,7 @@ msgstr ""
 "ethics-assessment-committee-humanities\" target=\"_blank\">here</a>."
 
 # studies/models.py:229
-#: studies/models.py:553
+#: studies/models.py:557
 msgid ""
 "Licht je antwoord toe. Wij willen je wijzen op het reglement, sectie 3.1 'd' "
 "en 'e'. Passive consent is slechts in enkele gevallen toegestaan en draagt "
@@ -4992,16 +5016,16 @@ msgstr ""
 "'d' and 'e'. Passive consent is allowed under certain situations but is not "
 "preferred by the committee."
 
-#: studies/models.py:570
+#: studies/models.py:574
 msgid "Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"
 msgstr ""
 "Please upload the declaration of consent here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:578
+#: studies/models.py:582
 msgid "Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the information letter here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:587
+#: studies/models.py:591
 msgid ""
 "Upload hier de toestemmingsverklaring voor de leiding of het management van "
 "de instelling (in .pdf of .doc(x)-format)"
@@ -5009,7 +5033,7 @@ msgstr ""
 "Please upload the declaration of consent for the management of the school or "
 "institution (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:592
+#: studies/models.py:596
 msgid ""
 "Upload indien mogelijk een ondertekende versie van het document. Upload als "
 "deze nog niet bestaat een blanco versie, en stuur de ondertekende versie "
@@ -5020,7 +5044,7 @@ msgstr ""
 "and follow up by sending a signed copy to the secretary of the FEtC-H once "
 "available."
 
-#: studies/models.py:600
+#: studies/models.py:604
 msgid ""
 "Upload hier de informatiebrief voor de leiding of het management van de "
 "instelling (in .pdf of .doc(x)-formaat)"
@@ -5028,7 +5052,7 @@ msgstr ""
 "Please upload the the information letter for the management of the school or "
 "institution (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:610
+#: studies/models.py:614
 msgid ""
 "Upload hier de informatiebrief voor de ouders of verzorgers (in .pdf of ."
 "doc(x)-formaat)"
@@ -5353,6 +5377,7 @@ msgstr ""
 "create a new session for every unique session."
 
 #: tasks/models.py:30
+#, python-format
 msgid ""
 "De totale geschatte netto taakduur van je sessie komt op basis van je opgave "
 "per taak uit op <strong>%d minuten</strong>. Hoeveel minuten duurt de totale "
@@ -5364,7 +5389,8 @@ msgstr ""
 "of each task, comes to <strong>%d minutes</strong>. How long does the "
 "<em>the total session</em> take, including welcome, instructions for each "
 "task, breaks between tasks, and debriefing? (in case of a lab visit from "
-"entering the lab until leaving and in case of a focus-group from arrival to end)"
+"entering the lab until leaving and in case of a focus-group from arrival to "
+"end)"
 
 #: tasks/models.py:86
 msgid "Vastlegging gedrag"
@@ -5542,8 +5568,9 @@ msgid ""
 "tijdens een enkel bezoek aan de onderzoekslocatie, of tijdens een enkel "
 "bezoek van de onderzoeker."
 msgstr ""
-"<strong>Session:</strong> All tasks and procedures that a participant completes during a single visit "
-"to the research location, or during a single visit of the researcher."
+"<strong>Session:</strong> All tasks and procedures that a participant "
+"completes during a single visit to the research location, or during a single "
+"visit of the researcher."
 
 #: tasks/templates/tasks/session_start.html:24
 msgid ""

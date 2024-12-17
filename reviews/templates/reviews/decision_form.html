@@ -20,7 +20,7 @@
         {% if user != proposal.supervisor %}
             <p>
                 {% blocktrans trimmed with title=proposal.title refnum=proposal.reference_number chamber=proposal.reviewing_committee %}
-                Je kunt nu je beoordeling geven over aanvraag <em>{{ title }}</em>.
+                    Je kunt nu je beoordeling geven van aanvraag <em>{{ title }}</em>.
                 {% endblocktrans %}
             </p>
             {% if decision.is_final_decision %}
@@ -39,9 +39,9 @@
             </p>
             <p>
                 {% blocktrans trimmed %}
-                Als de aanvraag (incl. de documenten voor o.a. deelnemers) in 
-                orde is, klik dan op ‘goedgekeurd’ en ‘Beslissing opslaan’ 
-                hieronder; dan wordt de aanvraag ingediend bij de FETC-GW.
+                    Als de aanvraag (incl. de documenten voor o.a. deelnemers) in
+                    orde is, klik dan op ‘goedgekeurd’ en ‘Beslissing opslaan’
+                    hieronder; dan wordt de aanvraag ingediend bij de FETC-GW.
                 {% endblocktrans %}
             </p>
             <p>
