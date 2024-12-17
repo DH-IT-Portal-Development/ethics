@@ -214,6 +214,16 @@ class Row:
             return mark_safe(
                 self.obj._meta.get_field(field).verbose_name % self.obj.net_duration()
             )
+        
+class KindRow(Row):
+
+    def __init__(self, slot, attachment, field):
+        self.slot = slot
+        self.obj = attachment
+        self.field = field
+
+    def value(self):
+        return self.slot.kind.name
 
 
 class RowValue:

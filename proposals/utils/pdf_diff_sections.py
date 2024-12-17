@@ -21,6 +21,7 @@ from proposals.utils.pdf_diff_utils import (
     get_all_sessions,
     get_extra_documents,
     multi_sections,
+    KindRow,
 )
 
 ##############
@@ -563,6 +564,7 @@ class AttachmentSection(BaseSection):
         "upload",
         "name",
         "comments",
+        "kind",
     ]
 
     def __init__(self, obj, sub_title, proposal):
@@ -571,8 +573,14 @@ class AttachmentSection(BaseSection):
         self.proposal = proposal
 
     def make_row_for_field(self, field):
+
+        if field == "kind":
+            return KindRow(self.obj, self.obj.attachment, field)
+        else:
+            obj = self.obj.attachment
+
         if field in self.get_row_fields():
-            return Row(self.obj, field, self.proposal)
+            return Row(obj, field, self.proposal)
         else:
             return None
 
@@ -624,7 +632,6 @@ class CommentsSection(BaseSection):
 
 def create_context_pdf(context, proposal):
     """A function to create the context for the PDF, which gets called in the ProposalAsPdf view."""
-    from reviews.templatetags.documents_list import get_legacy_documents
 
     sections = []
 
@@ -748,15 +755,13 @@ class AllAttachmentSectionsPDF:
             title = _("Traject ") + str(owner.order) + ": " + owner.name
         return title
 
-    def _create_attachment_section(self, slot, attachment=None):
+    def _create_attachment_section(self, slot):
         """
         Creates an AttachmentSection, where a specific attachment can
         optionally be supplied eg. attachment.parent (used for the diff)
         """
-        if not attachment:
-            attachment = slot.attachment
         return AttachmentSection(
-            attachment,
+            slot,
             sub_title=slot.kind.name,
             proposal=slot.get_proposal(),
         )
@@ -769,7 +774,6 @@ class AllAttachmentSectionsPDF:
 
 def create_context_diff(context, old_proposal, new_proposal):
     """A function to create the context for the diff page."""
-    from reviews.templatetags.documents_list import get_legacy_documents
 
     sections = []
 
@@ -897,15 +901,14 @@ def create_context_diff(context, old_proposal, new_proposal):
                     DiffSection(DMPSection(old_proposal), DMPSection(new_proposal))
                 )
 
-                if has_legacy_docs:
-                    old_extra_docs = get_extra_documents(old_proposal)
-                    new_extra_docs = get_extra_documents(new_proposal)
+                old_extra_docs = get_extra_documents(old_proposal)
+                new_extra_docs = get_extra_documents(new_proposal)
 
-                    if old_extra_docs or new_extra_docs:
-                        for num, zipped_extra_docs in enumerate(
-                            zip_equalize_lists(old_extra_docs, new_extra_docs)
-                        ):
-                            sections.append(DiffSection(*multi_sections()))
+                if old_extra_docs or new_extra_docs:
+                    for num, zipped_extra_docs in enumerate(
+                        zip_equalize_lists(old_extra_docs, new_extra_docs)
+                    ):
+                        sections.append(DiffSection(*multi_sections()))
 
                 sections.extend(
                     AllAttachmentSectionsDiff(
@@ -949,111 +952,101 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
         # get all slots for both proposals
         self.new_slots = self._all_slots_list(self.new_p)
         self.old_slots = self._all_slots_list(self.old_p)
-        # get all attachments for both proposals
-        self.new_atts = [slot.attachment for slot in self.new_slots]
-        self.old_atts = [slot.attachment for slot in self.old_slots]
-        # create a set of attachments that overlap between both proposals
-        self.overlap_atts = set(self.new_atts) & set(self.old_atts)
-        # get a list of slots that are unique to both proposals
-        self.uniq_new_slots = [
-            slot
-            for slot in self.new_slots
-            if slot.attachment not in self.overlap_atts and not slot.attachment.parent
-        ]
-
-        self.uniq_old_slots = [
-            slot
-            for slot in self.old_slots
-            if slot.attachment not in self.overlap_atts
-            and not slot.attachment.children.all()
-        ]
 
     def get_all_attachment_sections_diff(self):
-        """
-        Returns a list of Attachment sections, along with TitleSections to organize
-        the sections. Only used for PDF.
-        """
         attachment_sections = []
 
-        attachment_sections.append(TitleSection(_("Alle documenten")))
+        att_dict = self._get_matches_from_slots(self.old_slots, self.new_slots)
 
-        att_dict = self._get_all_attachment_dict_diff()
-
-        for owner in att_dict:
-            if att_dict[owner]:
-                title = self._create_object_heading(owner, self.new_p)
-                attachment_sections.append(TitleSection(title))
-                for att_tuple in att_dict[owner]:
-                    attachment_sections.append(DiffSection(*att_tuple))
-
-        return attachment_sections
-
-    def _get_all_attachment_dict_diff(self):
-        """
-        Function which creates a dictionary, with owner objects as key
-        And list of tuples as values, where the old_attachment (if present)
-        is the first in the tuple and the new attachment (if present) the 2nd.
-        If either of these is not present, we put None in their place.
-
-        We try to reason from the structure of the new_p as much as possible.
-        """
-        new_p_owners = self._all_owners_list(self.new_p)
-
-        master_dict = {obj: [] for obj in new_p_owners}
-
-        # first loop over the new_slots
-        for slot in self.new_slots:
-            relevant_owner = slot.attachment.get_owner_for_proposal(self.new_p)
-            # if it is the same attachment, for the old and new p, add twice
-            if slot.attachment in self.overlap_atts:
-                master_dict[relevant_owner].append(
-                    (
-                        self._create_attachment_section(slot),
-                        self._create_attachment_section(slot),
-                    )
-                )
-            # if the attachment is unique to the new p, add None as the AttachmentSection for the old_p
-            if slot in self.uniq_new_slots:
-                master_dict[relevant_owner].append(
-                    (
-                        None,
-                        self._create_attachment_section(slot),
-                    )
-                )
-            # if there is a parent, use the parent as the attachment for the old slot
-            if slot.attachment.parent:
-                master_dict[relevant_owner].append(
-                    (
-                        self._create_attachment_section(slot, slot.attachment.parent),
-                        self._create_attachment_section(
-                            slot,
-                        ),
-                    )
-                )
-
-        # So far so good. The tricky part is matching the slots, that are unique to the old proposal ...
-        # Here goes:
-        for slot in self.uniq_old_slots:
-            relevant_owner = slot.attachment.get_owner_for_proposal(self.old_p)
-            from proposals.models import Proposal
-
-            if isinstance(relevant_owner, Proposal):
-                relevant_owner = self.new_p
-            # if the owner is not a proposal, and therefore a study, and there is only one study in the new_p, add it to that study
-            elif len(new_p_owners) == 2:
-                relevant_owner = new_p_owners[1]
-
-            elif relevant_owner.order <= len(new_p_owners) - 1:
-                for owner in new_p_owners[1:]:
-                    if owner.order == relevant_owner.order:
-                        relevant_owner = owner
+        for owner_num in range(len(att_dict)):
+            proposal = self.new_p
+            if owner_num == 0:
+                owner_obj = proposal
             else:
-                master_dict[relevant_owner] = []
-            master_dict[relevant_owner].append(
-                (
-                    self._create_attachment_section(slot),
-                    None,
-                )
-            )
+                try:
+                    owner_obj = proposal.study_set.get(order=owner_num)
+                except:
+                    proposal = self.old_p
+                    owner_obj = proposal.study_set.get(order=owner_num)
+            title = self._create_object_heading(owner_obj, proposal)
+            attachment_sections.append(TitleSection(title))
+            for att_tuple in att_dict[owner_num]:
+                attachment_sections.append(DiffSection(*att_tuple))
+            
+        return attachment_sections
+    
+    def _get_order(self, slot):
+        from proposals.models import Proposal
 
-        return master_dict
+        if type(slot.attached_object) is Proposal:
+            return 0
+        return slot.attached_object.order
+
+    def _insert_into_matches(self, old_slot, new_slot, matches):
+        if new_slot:
+            order = self._get_order(new_slot)
+        else:
+            order = self._get_order(old_slot)
+        if order not in matches.keys():
+            matches[order] = []
+        matches[order].append(
+            (
+                self._create_attachment_section(old_slot) if old_slot else None,
+                self._create_attachment_section(new_slot) if new_slot else None,
+             ),
+        )
+        return matches
+
+    def _match_slot(self, slot, slots):
+        if slots == []:
+            # If we've run out of slots, no match was found
+            return False
+        potential_match = slots[0]
+        if slot.attachment == potential_match.attachment:
+            return potential_match
+        if slot.attachment.parent.get_correct_submodel() == potential_match.attachment:
+            return potential_match
+        # Continue with the next potential match
+        return self._match_slot(
+            slot, slots[1:]
+        )
+
+    def _get_matches_from_slots(self, old_slots, new_slots, matches=dict()):
+        """
+        Tail recursive function that returns a dictionary of integers to tuples
+        of (old, new) attachment slot sets, either of which may be None, but not
+        both.
+        """
+        if new_slots == []:
+            # If we've run out of new slots, start going through the yet
+            # unmatched old slots.
+            if old_slots == []:
+                # If no old slots remain, return the matches
+                return matches
+            unmatched_old_slot = old_slots[0]
+            # We've already run out of new slots, so these must be
+            # unmatched slots and we can just insert them.
+            self._insert_into_matches(
+                unmatched_old_slot, None, matches,
+            )
+            # Continue until old slots run out
+            return self._get_matches_from_slots(
+                old_slots[1:], new_slots, matches=matches,
+            )
+        current_slot = new_slots[0]
+        match = self._match_slot(current_slot, old_slots)
+        if match:
+            # If we have a match, insert it and remove the matched
+            # old slot from the pool
+            matches = self._insert_into_matches(
+                match, current_slot, matches
+            )
+            old_slots.remove(match)
+        else:
+            matches = self._insert_into_matches(
+                None, current_slot, matches
+            )
+        # Continue with the next new slot
+        return self._get_matches_from_slots(
+            old_slots, new_slots[1:], matches=matches,
+        )
