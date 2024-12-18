@@ -15,7 +15,6 @@ from proposals.utils.pdf_diff_utils import (
     DiffSection,
     Row,
     PageBreakMixin,
-    TitleSection,
     get_all_related,
     get_all_related_set,
     get_all_sessions,
@@ -712,16 +711,17 @@ class AllAttachmentSectionsPDF:
         """
         attachment_sections = []
 
-        attachment_sections.append(TitleSection(_("Alle documenten")))
-
         slot_dict = self._all_attachments_dict(self.proposal)
 
         for owner in slot_dict:
             if slot_dict[owner]:
                 title = self._create_object_heading(owner, self.proposal)
-                attachment_sections.append(TitleSection(title))
-                for slot in slot_dict[owner]:
-                    attachment_sections.append(self._create_attachment_section(slot))
+                for index, slot in enumerate(slot_dict[owner]):
+                    att_section = self._create_attachment_section(slot)
+                    # Add a section title to the first attachment for an owner
+                    if index == 0:
+                        att_section.section_title = title
+                    attachment_sections.append(att_section)
 
         return attachment_sections
 
@@ -763,11 +763,11 @@ class AllAttachmentSectionsPDF:
         Generate a title for a study or proposal to which attachments are attached
         """
         if owner == proposal:
-            title = _("Aanvraag in het geheel")
+            title = _("Documenten - Aanvraag in het geheel")
         elif proposal.study_set.count() == 1:
-            title = _("Het hoofdtraject")
+            title = _("Documenten - Het hoofdtraject")
         else:
-            title = _("Traject ") + str(owner.order) + ": " + owner.name
+            title = _("Documenten - Traject ") + str(owner.order) + ": " + owner.name
         return title
 
     def _create_attachment_section(self, slot):
@@ -1014,9 +1014,13 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
                     proposal = self.old_p
                     owner_obj = proposal.study_set.get(order=owner_num)
             title = self._create_object_heading(owner_obj, proposal)
-            attachment_sections.append(TitleSection(title))
-            for att_tuple in att_dict[owner_num]:
-                attachment_sections.append(DiffSection(*att_tuple))
+            for index, att_list in enumerate(att_dict[owner_num]):
+                # Add a section_title attribute to the first attachment of each owner
+                if index == 0:
+                    for att in att_list:
+                        if att is not None:
+                            att.section_title = title
+                attachment_sections.append(DiffSection(*att_list))
 
         return attachment_sections
 
@@ -1039,10 +1043,10 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
         if order not in matches.keys():
             matches[order] = []
         matches[order].append(
-            (
+            [
                 self._create_attachment_section(old_slot) if old_slot else None,
                 self._create_attachment_section(new_slot) if new_slot else None,
-            ),
+            ],
         )
         return matches
 
