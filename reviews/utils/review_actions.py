@@ -245,8 +245,8 @@ class ChangeArchiveStatus(ReviewAction):
             return False
 
         if (
-            review.proposal.embargo == True and
-            review.proposal.embargo_end_date is not None
+            review.proposal.embargo == True
+            and review.proposal.embargo_end_date is not None
             and review.proposal.embargo_end_date > datetime.date.today()
         ):
             return False
