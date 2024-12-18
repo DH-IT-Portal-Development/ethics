@@ -3,5 +3,5 @@
 <a href="{% url "proposals:download_attachment_original" proposal_pk=proposal.pk attachment_pk=attachment.pk %}">
 {{ attachment.upload.original_filename }}</a>
 {% if include_normalized %}
-    <span class="ms-2o">    (<a href="{% url "proposals:download_attachment" proposal_pk=proposal.pk attachment_pk=attachment.pk %}">{% trans "FETC-bestandsnaam" %}</a>)</span>
+    <span class="ms-2o">    (<a href="{% url "proposals:download_attachment" proposal_pk=proposal.pk attachment_pk=attachment.pk %}">{{ attachment.upload }}</a>)</span>
 {% endif %}

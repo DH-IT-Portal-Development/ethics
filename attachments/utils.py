@@ -1,3 +1,5 @@
+import mimetypes
+
 from django.template.loader import get_template
 from django.utils.translation import gettext as _
 from django.urls import reverse
@@ -280,6 +282,39 @@ def merge_groups(slots):
         out.append(item)
     return out
 
+def attachment_filename_generator(file):
+    from attachments.kinds import ProposalAttachment, StudyAttachment
+
+    #try to get a Proposal attachment, otherwise, it must be a Study attachment
+    try:
+        attachment = ProposalAttachment.objects.get(upload=file.file_instance)
+        proposal = attachment.attached_to.last()
+        trajectory = None
+    except ProposalAttachment.DoesNotExist:
+        attachment = StudyAttachment.objects.get(upload=file.file_instance)
+        study = attachment.attached_to.last()
+        proposal = study.proposal
+        trajectory = f"T{study.order}"
+        
+    chamber = proposal.reviewing_committee.name
+    lastname = proposal.created_by.last_name
+    refnum = proposal.reference_number
+    kind = attachment.kind
+    extension = mimetypes.guess_extension(file.file_instance.content_type)
+
+    fn_parts = [
+            "FETC",
+            chamber,
+            refnum,
+            lastname,
+            trajectory,
+            kind,
+        ]
+
+    # Translations will trip up join(), so we convert them here
+    fn_parts = [str(p) for p in fn_parts if p]
+
+    return "-".join(fn_parts) + extension
 
 def get_kind_from_str(db_name):
     from attachments.kinds import ATTACHMENTS, OtherAttachment
