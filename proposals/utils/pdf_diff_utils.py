@@ -459,23 +459,6 @@ class PageBreakMixin(BaseSection):
         return super().render(context)
 
 
-class TitleSection:
-    """A little dummy section for adding just a title to the PDF"""
-
-    def __init__(self, title):
-        self.title = title
-
-    def render(self, context):
-        context = context.flatten()
-        template = get_template("proposals/title_section.html")
-        context.update(
-            {
-                "title": self.title,
-            }
-        )
-        return template.render(context)
-
-
 def get_extra_documents(obj):
     """A function to retrieve all extra documents for a specific proposal."""
     from studies.models import Documents
@@ -504,6 +487,13 @@ def get_all_related(objects, related_name):
     return [
         getattr(obj, related_name, None) if obj is not None else None for obj in objects
     ]
+
+
+def get_all_sessions(studies):
+    """
+    Receives a list of study objects and gets sessions for the study
+    """
+    return [study.get_sessions() if study is not None else None for study in studies]
 
 
 def get_all_related_set(objects, related_name):

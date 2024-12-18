@@ -15,9 +15,9 @@ from proposals.utils.pdf_diff_utils import (
     DiffSection,
     Row,
     PageBreakMixin,
-    TitleSection,
     get_all_related,
     get_all_related_set,
+    get_all_sessions,
     get_extra_documents,
     multi_sections,
     KindRow,
@@ -70,17 +70,13 @@ class GeneralSection(BaseSection):
             rows.remove("pre_approval_institute")
             rows.remove("pre_approval_pdf")
 
-        if obj.is_pre_assessment:
-            rows.remove("funding")
-            rows.remove("funding_name")
-            rows.remove("funding_details")
-            rows.remove("summary")
-        else:
+        if not obj.is_pre_assessment:
             rows.remove("pre_assessment_pdf")
-            if not needs_details(obj.funding.all()):
-                rows.remove("funding_details")
-            if not needs_details(obj.funding.all(), "needs_name"):
-                rows.remove("funding_name")
+
+        if not needs_details(obj.funding.all()):
+            rows.remove("funding_details")
+        if not needs_details(obj.funding.all(), "needs_name"):
+            rows.remove("funding_name")
 
         if not obj.relation.needs_supervisor:
             rows.remove("supervisor")
@@ -557,6 +553,11 @@ class TranslatedFormsSection(BaseSection):
 
 
 class AttachmentSection(BaseSection):
+    """
+    This section, uniquely, works with a AttachmentSlot as its obj. This is the
+    only section that does not receive a Django model as its obj, which leads
+    to the funky self.make_row_field. KindRow is only used here.
+    """
 
     section_title = ""
 
@@ -574,8 +575,9 @@ class AttachmentSection(BaseSection):
         self.proposal = proposal
 
     def make_row_for_field(self, field):
-        if field in self.get_row_fields():
-            return Row(self.obj, field, self.proposal)
+
+        if field == "kind":
+            return KindRow(self.obj, self.obj.attachment, field)
         else:
             obj = self.obj.attachment
 
@@ -632,48 +634,64 @@ class CommentsSection(BaseSection):
 
 def create_context_pdf(context, proposal):
     """A function to create the context for the PDF, which gets called in the ProposalAsPdf view."""
-    from reviews.templatetags.documents_list import get_legacy_documents
 
     sections = []
 
     sections.append(GeneralSection(proposal))
 
-    if hasattr(proposal, "wmo"):
-        sections.append(WMOSection(proposal.wmo))
+    if not proposal.is_pre_approved:
+        if hasattr(proposal, "wmo"):
+            sections.append(WMOSection(proposal.wmo))
 
-        if not proposal.is_pre_assessment:
             if proposal.wmo.status != proposal.wmo.WMOStatuses.NO_WMO:
                 sections.append(METCSection(proposal.wmo))
 
-            sections.append(TrajectoriesSection(proposal))
+            if not proposal.is_pre_assessment:
 
-            if proposal.wmo.status == proposal.wmo.WMOStatuses.NO_WMO:
-                for study in proposal.study_set.all():
-                    sections.append(StudySection(study))
-                    sections.append(PersonalDataSection(study))
-                    if study.get_intervention():
-                        sections.append(InterventionSection(study.intervention))
-                    if study.get_observation():
-                        sections.append(ObservationSection(study.observation))
-                    if study.get_sessions():
-                        for session in study.session_set.all():
-                            sections.append(SessionSection(session))
-                            for task in session.task_set.all():
-                                sections.append(TaskSection(task))
-                            sections.append(TasksOverviewSection(session))
-                    sections.append(StudyOverviewSection(study))
+                sections.append(TrajectoriesSection(proposal))
 
-                sections.append(KnowledgeSecuritySection(proposal))
+                if proposal.wmo.status == proposal.wmo.WMOStatuses.NO_WMO:
+                    for study in proposal.study_set.all():
+                        sections.append(StudySection(study))
+                        sections.append(PersonalDataSection(study))
+                        if study.get_intervention():
+                            sections.append(InterventionSection(study.intervention))
+                        if study.get_observation():
+                            sections.append(ObservationSection(study.observation))
+                        if study.get_sessions():
+                            for session in study.session_set.all():
+                                sections.append(SessionSection(session))
+                                for task in session.task_set.all():
+                                    sections.append(TaskSection(task))
+                                sections.append(TasksOverviewSection(session))
+                        sections.append(StudyOverviewSection(study))
 
-                sections.append(DMPSection(proposal))
+                    sections.append(KnowledgeSecuritySection(proposal))
 
+                    sections.append(DMPSection(proposal))
+
+                    sections.extend(
+                        AllAttachmentSectionsPDF(proposal).get_all_attachment_sections()
+                    )
+
+                    sections.append(TranslatedFormsSection(proposal))
+
+                sections.append(EmbargoSection(proposal))
+
+            elif proposal.is_pre_assessment:
                 sections.extend(
                     AllAttachmentSectionsPDF(proposal).get_all_attachment_sections()
                 )
+    elif proposal.is_pre_approved:
+        sections.append(DMPSection(proposal))
 
-                sections.append(TranslatedFormsSection(proposal))
+        sections.extend(
+            AllAttachmentSectionsPDF(proposal).get_all_attachment_sections()
+        )
 
-    sections.append(EmbargoSection(proposal))
+        sections.append(TranslatedFormsSection(proposal))
+
+        sections.append(EmbargoSection(proposal))
     sections.append(CommentsSection(proposal))
 
     context["sections"] = sections
@@ -698,16 +716,17 @@ class AllAttachmentSectionsPDF:
         """
         attachment_sections = []
 
-        attachment_sections.append(TitleSection(_("Alle documenten")))
-
         slot_dict = self._all_attachments_dict(self.proposal)
 
         for owner in slot_dict:
             if slot_dict[owner]:
                 title = self._create_object_heading(owner, self.proposal)
-                attachment_sections.append(TitleSection(title))
-                for slot in slot_dict[owner]:
-                    attachment_sections.append(self._create_attachment_section(slot))
+                for index, slot in enumerate(slot_dict[owner]):
+                    att_section = self._create_attachment_section(slot)
+                    # Add a section title to the first attachment for an owner
+                    if index == 0:
+                        att_section.section_title = title
+                    attachment_sections.append(att_section)
 
         return attachment_sections
 
@@ -749,22 +768,20 @@ class AllAttachmentSectionsPDF:
         Generate a title for a study or proposal to which attachments are attached
         """
         if owner == proposal:
-            title = _("Aanvraag in het geheel")
+            title = _("Documenten - Aanvraag in het geheel")
         elif proposal.study_set.count() == 1:
-            title = _("Het hoofdtraject")
+            title = _("Documenten - Het hoofdtraject")
         else:
-            title = _("Traject ") + str(owner.order) + ": " + owner.name
+            title = _("Documenten - Traject ") + str(owner.order) + ": " + owner.name
         return title
 
-    def _create_attachment_section(self, slot, attachment=None):
+    def _create_attachment_section(self, slot):
         """
         Creates an AttachmentSection, where a specific attachment can
         optionally be supplied eg. attachment.parent (used for the diff)
         """
-        if not attachment:
-            attachment = slot.attachment
         return AttachmentSection(
-            attachment,
+            slot,
             sub_title=slot.kind.name,
             proposal=slot.get_proposal(),
         )
@@ -777,7 +794,6 @@ class AllAttachmentSectionsPDF:
 
 def create_context_diff(context, old_proposal, new_proposal):
     """A function to create the context for the diff page."""
-    from reviews.templatetags.documents_list import get_legacy_documents
 
     sections = []
 
@@ -785,12 +801,13 @@ def create_context_diff(context, old_proposal, new_proposal):
         DiffSection(GeneralSection(old_proposal), GeneralSection(new_proposal))
     )
 
-    if hasattr(new_proposal, "wmo"):
-        sections.append(
-            DiffSection(WMOSection(old_proposal.wmo), WMOSection(new_proposal.wmo))
-        )
+    if not new_proposal.is_pre_approved:
 
-        if not new_proposal.is_pre_assessment:
+        if hasattr(new_proposal, "wmo"):
+            sections.append(
+                DiffSection(WMOSection(old_proposal.wmo), WMOSection(new_proposal.wmo))
+            )
+
             if (
                 new_proposal.wmo.status != new_proposal.wmo.WMOStatuses.NO_WMO
                 or old_proposal.wmo.status != old_proposal.wmo.WMOStatuses.NO_WMO
@@ -801,120 +818,164 @@ def create_context_diff(context, old_proposal, new_proposal):
                     )
                 )
 
-            sections.append(
-                DiffSection(
-                    TrajectoriesSection(old_proposal), TrajectoriesSection(new_proposal)
+            if not new_proposal.is_pre_assessment:
+                sections.append(
+                    DiffSection(
+                        TrajectoriesSection(old_proposal),
+                        TrajectoriesSection(new_proposal),
+                    )
                 )
-            )
 
-            if (
-                new_proposal.wmo.status == new_proposal.wmo.WMOStatuses.NO_WMO
-                or new_proposal.wmo.status == new_proposal.wmo.WMOStatuses.JUDGED
-            ):
-                for old_study, new_study in zip_equalize_lists(
-                    old_proposal.study_set.all(), new_proposal.study_set.all()
+                if (
+                    new_proposal.wmo.status == new_proposal.wmo.WMOStatuses.NO_WMO
+                    or new_proposal.wmo.status == new_proposal.wmo.WMOStatuses.JUDGED
                 ):
-                    both_studies = [old_study, new_study]
-
-                    sections.append(
-                        DiffSection(*multi_sections(StudySection, both_studies))
-                    )
-
-                    sections.append(
-                        DiffSection(*multi_sections(PersonalDataSection, both_studies))
-                    )
-
-                    if (
-                        old_study is not None
-                        and old_study.get_intervention()
-                        or new_study is not None
-                        and new_study.get_intervention()
+                    for old_study, new_study in zip_equalize_lists(
+                        old_proposal.study_set.all(), new_proposal.study_set.all()
                     ):
-                        interventions = get_all_related(both_studies, "intervention")
+                        both_studies = [old_study, new_study]
+
+                        sections.append(
+                            DiffSection(*multi_sections(StudySection, both_studies))
+                        )
 
                         sections.append(
                             DiffSection(
-                                *multi_sections(InterventionSection, interventions)
+                                *multi_sections(PersonalDataSection, both_studies)
                             )
                         )
 
-                    if (
-                        old_study is not None
-                        and old_study.get_observation()
-                        or new_study is not None
-                        and new_study.get_observation()
-                    ):
-                        observations = get_all_related(both_studies, "observation")
-
-                        sections.append(
-                            DiffSection(
-                                *multi_sections(ObservationSection, observations)
-                            )
-                        )
-
-                    if (
-                        old_study is not None
-                        and old_study.get_sessions()
-                        or new_study is not None
-                        and new_study.get_sessions()
-                    ):
-                        old_sessions_set, new_sessions_set = get_all_related_set(
-                            both_studies, "session_set"
-                        )
-
-                        for both_sessions in zip_equalize_lists(
-                            old_sessions_set, new_sessions_set
+                        if (
+                            old_study is not None
+                            and old_study.get_intervention()
+                            or new_study is not None
+                            and new_study.get_intervention()
                         ):
+                            interventions = get_all_related(
+                                both_studies, "intervention"
+                            )
+
                             sections.append(
                                 DiffSection(
-                                    *multi_sections(SessionSection, both_sessions)
+                                    *multi_sections(InterventionSection, interventions)
                                 )
                             )
 
-                            old_tasks_set, new_tasks_set = get_all_related_set(
-                                both_sessions, "task_set"
+                        if (
+                            old_study is not None
+                            and old_study.get_observation()
+                            or new_study is not None
+                            and new_study.get_observation()
+                        ):
+                            observations = get_all_related(both_studies, "observation")
+
+                            sections.append(
+                                DiffSection(
+                                    *multi_sections(ObservationSection, observations)
+                                )
                             )
 
-                            for both_tasks in zip_equalize_lists(
-                                old_tasks_set, new_tasks_set
+                        if (
+                            old_study is not None
+                            and old_study.get_sessions()
+                            or new_study is not None
+                            and new_study.get_sessions()
+                        ):
+                            old_sessions_set, new_sessions_set = get_all_sessions(
+                                both_studies,
+                            )
+
+                            for both_sessions in zip_equalize_lists(
+                                old_sessions_set, new_sessions_set
                             ):
                                 sections.append(
                                     DiffSection(
-                                        *multi_sections(TaskSection, both_tasks)
+                                        *multi_sections(SessionSection, both_sessions)
                                     )
                                 )
 
-                            sections.append(
-                                DiffSection(
-                                    *multi_sections(TasksOverviewSection, both_sessions)
+                                old_tasks_set, new_tasks_set = get_all_related_set(
+                                    both_sessions, "task_set"
                                 )
+
+                                for both_tasks in zip_equalize_lists(
+                                    old_tasks_set, new_tasks_set
+                                ):
+                                    sections.append(
+                                        DiffSection(
+                                            *multi_sections(TaskSection, both_tasks)
+                                        )
+                                    )
+
+                                sections.append(
+                                    DiffSection(
+                                        *multi_sections(
+                                            TasksOverviewSection, both_sessions
+                                        )
+                                    )
+                                )
+
+                        sections.append(
+                            DiffSection(
+                                *multi_sections(StudyOverviewSection, both_studies)
                             )
+                        )
 
                     sections.append(
-                        DiffSection(*multi_sections(StudyOverviewSection, both_studies))
+                        DiffSection(
+                            KnowledgeSecuritySection(old_proposal),
+                            KnowledgeSecuritySection(new_proposal),
+                        )
+                    )
+
+                    sections.append(
+                        DiffSection(DMPSection(old_proposal), DMPSection(new_proposal))
+                    )
+
+                    sections.extend(
+                        AllAttachmentSectionsDiff(
+                            old_proposal, new_proposal
+                        ).get_all_attachment_sections_diff()
+                    )
+
+                    sections.append(
+                        DiffSection(
+                            TranslatedFormsSection(old_proposal),
+                            TranslatedFormsSection(new_proposal),
+                        )
                     )
 
                 sections.append(
                     DiffSection(
-                        KnowledgeSecuritySection(old_proposal),
-                        KnowledgeSecuritySection(new_proposal),
+                        EmbargoSection(old_proposal), EmbargoSection(new_proposal)
                     )
                 )
-
-                sections.append(
-                    DiffSection(DMPSection(old_proposal), DMPSection(new_proposal))
+            elif new_proposal:
+                sections.extend(
+                    AllAttachmentSectionsDiff(
+                        old_proposal, new_proposal
+                    ).get_all_attachment_sections_diff()
                 )
+    elif new_proposal.is_pre_approved:
+        sections.append(DiffSection(DMPSection(old_proposal), DMPSection(new_proposal)))
 
-                sections.append(
-                    DiffSection(
-                        TranslatedFormsSection(old_proposal),
-                        TranslatedFormsSection(new_proposal),
-                    )
-                )
+        sections.extend(
+            AllAttachmentSectionsDiff(
+                old_proposal, new_proposal
+            ).get_all_attachment_sections_diff()
+        )
 
-    sections.append(
-        DiffSection(EmbargoSection(old_proposal), EmbargoSection(new_proposal))
-    )
+        sections.append(
+            DiffSection(
+                TranslatedFormsSection(old_proposal),
+                TranslatedFormsSection(new_proposal),
+            )
+        )
+
+        sections.append(
+            DiffSection(EmbargoSection(old_proposal), EmbargoSection(new_proposal))
+        )
+
     sections.append(
         DiffSection(CommentsSection(old_proposal), CommentsSection(new_proposal))
     )
@@ -922,3 +983,137 @@ def create_context_diff(context, old_proposal, new_proposal):
     context["sections"] = sections
 
     return context
+
+
+class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
+    """
+    Class to create secitons for attachments in the Diff.
+    Is quite a bit more complex, but uses a lot of class methods from the
+    PDF generation.
+
+    We mostly adhere to the structure of the new proposal for outlining this,
+    but sometimes have to do some guesswork to make attachments that are unique
+    to the old proposal fit somewhere sensibly.
+    """
+
+    def __init__(self, old_p, new_p):
+        self.old_p = old_p
+        self.new_p = new_p
+        # get all slots for both proposals
+        self.new_slots = self._all_slots_list(self.new_p)
+        self.old_slots = self._all_slots_list(self.old_p)
+
+    def get_all_attachment_sections_diff(self):
+        attachment_sections = []
+
+        att_dict = self._get_matches_from_slots(self.old_slots, self.new_slots)
+
+        for owner_num in range(len(att_dict)):
+            proposal = self.new_p
+            if owner_num == 0:
+                owner_obj = proposal
+            else:
+                try:
+                    owner_obj = proposal.study_set.get(order=owner_num)
+                except:
+                    proposal = self.old_p
+                    owner_obj = proposal.study_set.get(order=owner_num)
+            title = self._create_object_heading(owner_obj, proposal)
+            for index, att_list in enumerate(att_dict[owner_num]):
+                # Add a section_title attribute to the first attachment of each owner
+                if index == 0:
+                    for att in att_list:
+                        if att is not None:
+                            att.section_title = title
+                attachment_sections.append(DiffSection(*att_list))
+
+        return attachment_sections
+
+    def _get_order(self, slot):
+        from proposals.models import Proposal
+
+        if type(slot.attached_object) is Proposal:
+            return 0
+        return slot.attached_object.order
+
+    def _insert_into_matches(self, old_slot, new_slot, matches):
+        """
+        Appends a tuple of AttachmentSections to the matches dict
+        The keys are study.order or 0 for Proposals
+        """
+        if new_slot:
+            order = self._get_order(new_slot)
+        else:
+            order = self._get_order(old_slot)
+        if order not in matches.keys():
+            matches[order] = []
+        matches[order].append(
+            [
+                self._create_attachment_section(old_slot) if old_slot else None,
+                self._create_attachment_section(new_slot) if new_slot else None,
+            ],
+        )
+        return matches
+
+    def _match_slot(self, slot, slots):
+        """
+        Attempts to match an new slot to an old slot by recursively looping
+        over the old_slots. It returns a match if the attachment is unchanged
+        or if the slot's attachment is a child of an attachment in the old_slots
+        """
+        if slots == []:
+            # If we've run out of slots, no match was found
+            return False
+        potential_match = slots[0]
+        # We match against the exact same attachment or its parent,
+        # if it has one
+        targets = [slot.attachment]
+        if slot.attachment.parent:
+            targets.append(slot.attachment.parent.get_correct_submodel())
+        if potential_match.attachment in targets:
+            # Success, return the match
+            return potential_match
+        # Else, continue with the next potential match
+        return self._match_slot(slot, slots[1:])
+
+    def _get_matches_from_slots(self, old_slots, new_slots, matches=dict()):
+        """
+        Tail recursive function that returns a dictionary of integers to tuples
+        of (old, new) attachment slot sets, either of which may be None, but not
+        both.
+        """
+        if new_slots == []:
+            # If we've run out of new slots, start going through the yet
+            # unmatched old slots.
+            if old_slots == []:
+                # If no old slots remain, return the matches
+                return matches
+            unmatched_old_slot = old_slots[0]
+            # We've already run out of new slots, so these must be
+            # unmatched slots and we can just insert them.
+            self._insert_into_matches(
+                unmatched_old_slot,
+                None,
+                matches,
+            )
+            # Continue until old slots run out
+            return self._get_matches_from_slots(
+                old_slots[1:],
+                new_slots,
+                matches=matches,
+            )
+        current_slot = new_slots[0]
+        match = self._match_slot(current_slot, old_slots)
+        if match:
+            # If we have a match, insert it and remove the matched
+            # old slot from the pool
+            self._insert_into_matches(match, current_slot, matches)
+            old_slots.remove(match)
+        else:
+            self._insert_into_matches(None, current_slot, matches)
+        # Continue with the next new slot
+        return self._get_matches_from_slots(
+            old_slots,
+            new_slots[1:],
+            matches=matches,
+        )
