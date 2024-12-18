@@ -1005,11 +1005,15 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
             # If we've run out of slots, no match was found
             return False
         potential_match = slots[0]
-        if slot.attachment == potential_match.attachment:
+        # We match against the exact same attachment or its parent,
+        # if it has one
+        targets = [slot.attachment]
+        if slot.attachment.parent:
+            targets.append(slot.attachment.parent.get_correct_submodel())
+        if potential_match.attachment in targets:
+            # Success, return the match
             return potential_match
-        if slot.attachment.parent.get_correct_submodel() == potential_match.attachment:
-            return potential_match
-        # Continue with the next potential match
+        # Else, continue with the next potential match
         return self._match_slot(slot, slots[1:])
 
     def _get_matches_from_slots(self, old_slots, new_slots, matches=dict()):
