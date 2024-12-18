@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -229,6 +229,23 @@ class KindRow(Row):
 
     def value(self):
         return self.slot.kind.name
+
+
+class UploadDateRow:
+    """
+    Another very specific row case for attachments. This one just needed to be
+    fully custom and hardly related to the normal Row ...
+    """
+
+    def __init__(self, attachment, field):
+        self.field = field
+        self.attachment = attachment
+
+    def value(self):
+        return datetime.date(self.attachment.upload.file_instance.modified_on)
+
+    def verbose_name(self):
+        return _("Uploaddatum")
 
 
 class RowValue:
