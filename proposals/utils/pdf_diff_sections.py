@@ -556,8 +556,6 @@ class TranslatedFormsSection(BaseSection):
         return rows
 
 
-
-
 class AttachmentSection(BaseSection):
     """
     This section, uniquely, works with a AttachmentSlot as its obj. This is the
