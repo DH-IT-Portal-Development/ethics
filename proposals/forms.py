@@ -103,7 +103,6 @@ class ResearcherForm(
         - If this is a practice Proposal, limit the relation choices
         """
 
-
         self.supervisor_editing_flag = False
         super(ResearcherForm, self).__init__(*args, **kwargs)
         self.fields["relation"].empty_label = None
