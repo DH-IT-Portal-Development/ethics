@@ -299,7 +299,6 @@ class RowValue:
 
         return output
 
-
     def handle_attachment(self, filewrapper):
 
         if filewrapper:
