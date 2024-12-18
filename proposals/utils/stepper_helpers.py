@@ -9,8 +9,12 @@ class BaseStepperComponent:
 
     def __init__(self, stepper, parent=None):
         self.stepper = stepper
+        self.request = self.stepper.request
         self.proposal = stepper.proposal
         self.parent = parent
+
+    def get_proposal(self,):
+        return self.proposal
 
 
 class Checker(

@@ -3,6 +3,7 @@ from django.urls import reverse
 
 from proposals import forms as proposal_forms
 from proposals.models import Wmo
+from proposals.mixins import SupervisorEditingMixin
 from studies import forms as study_forms
 from studies.models import Study
 from interventions import forms as intervention_forms
@@ -97,6 +98,7 @@ class ProposalCreateChecker(
 
 
 class ResearcherChecker(
+    SupervisorEditingMixin,
     ModelFormChecker,
 ):
     title = _("Onderzoeker")
