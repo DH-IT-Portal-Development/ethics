@@ -304,21 +304,23 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
     )
 
     inform_local_staff = models.BooleanField(
-        _(
-            "<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één \
-van de faciliteiten van het ILS, namelijk de database, Zep software \
-en/of het ILS lab. Het lab supportteam van het ILS zou graag op \
-de hoogte willen worden gesteld van aankomende onderzoeken. \
-Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te \
-sturen naar het lab supportteam.</p> \
-<p>Vind je het goed dat de volgende delen uit de aanvraag \
-worden doorgestuurd:</p> \
-- Jouw naam en de namen van de andere betrokkenen <br/> \
-- De eindverantwoordelijke van het onderzoek <br/> \
-- De titel van het onderzoek <br/> \
-- De beoogde startdatum <br/> \
-- Van welke faciliteiten je gebruik wil maken (database, lab, \
-Zep software)"
+        mark_safe(
+            _(
+                "<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één "
+                "van de faciliteiten van het ILS, namelijk de database, Zep software "
+                "en/of het ILS lab. Het lab supportteam van het ILS zou graag op "
+                "de hoogte willen worden gesteld van aankomende onderzoeken. "
+                "Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te "
+                "sturen naar het lab supportteam.</p> "
+                "<p>Vind je het goed dat de volgende delen uit de aanvraag "
+                "worden doorgestuurd:</p> "
+                "- Jouw naam en de namen van de andere betrokkenen <br/> "
+                "- De eindverantwoordelijke van het onderzoek <br/> "
+                "- De titel van het onderzoek <br/> "
+                "- De beoogde startdatum <br/> "
+                "- Van welke faciliteiten je gebruik wil maken (database, lab, "
+                "Zep software)"
+            ),
         ),
         default=None,
         blank=True,

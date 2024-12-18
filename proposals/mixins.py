@@ -15,6 +15,20 @@ from .forms import ProposalForm
 from .utils.proposal_utils import pdf_link_callback
 
 
+class SupervisorEditingMixin:
+    """
+    Mixin that provides a form kwarg indicating if the current
+    request user is editing as a supervisor.
+    """
+
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super().get_form_kwargs(*args, **kwargs)
+        proposal = self.get_proposal()
+        editing_user = self.request.user
+        kwargs["supervisor_editing_flag"] = proposal.supervisor == editing_user
+        return kwargs
+
+
 class StepperContextMixin:
     """
     Includes a stepper object in the view's context
