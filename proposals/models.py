@@ -8,6 +8,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from django.urls import reverse
 
 from django.utils.functional import lazy
 from django.utils.safestring import mark_safe, SafeString
@@ -16,7 +17,7 @@ mark_safe_lazy = lazy(mark_safe, SafeString)
 
 from main.models import YesNoDoubt
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
-from .utils import available_urls, FilenameFactory, OverwriteStorage
+from .utils import FilenameFactory, OverwriteStorage
 from datetime import date, timedelta
 
 logger = logging.getLogger(__name__)
@@ -220,7 +221,19 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         _(
             "Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of ILS?"
         ),
-        default=False,
+        default=None,
+        null=True,
+    )
+
+    other_stakeholders = models.BooleanField(
+        mark_safe_lazy(
+            _(
+                "Zijn er nog andere onderzoekers bij deze aanvraag betrokken "
+                "die <strong>niet</strong> geaffilieerd zijn aan een van de "
+                "onderzoeksinstituten van de Faculteit Geestwetenschappen van de "
+                "UU? Zoja, vermeld diens naam en affiliatie."
+            )
+        ),  # Note: form labels with HTML are hard-coded in form Meta classes
         help_text=mark_safe_lazy(
             _(
                 "Werk je samen met een onderzoeker of "
@@ -234,18 +247,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
                 "persoonsgegevens."
             )
         ),
-    )
-
-    other_stakeholders = models.BooleanField(
-        mark_safe_lazy(
-            _(
-                "Zijn er nog andere onderzoekers bij deze aanvraag betrokken "
-                "die <strong>niet</strong> geaffilieerd zijn aan een van de "
-                "onderzoeksinstituten van de Faculteit Geestwetenschappen van de "
-                "UU? Zoja, vermeld diens naam en affiliatie."
-            )
-        ),  # Note: form labels with HTML are hard-coded in form Meta classes
-        default=False,
+        default=None,
+        null=True,
     )
 
     stakeholders = models.TextField(
@@ -256,7 +259,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
     translated_forms = models.BooleanField(
         mark_safe_lazy(
             _(
-                "Worden de informed consent formulieren nog vertaald naar een andere taal dan Nederlands of Engels?"
+                "Worden de documenten nog vertaald naar een andere taal dan Nederlands of Engels?"
             )
         ),
         default=None,
@@ -301,21 +304,23 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
     )
 
     inform_local_staff = models.BooleanField(
-        _(
-            "<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één \
-van de faciliteiten van het ILS, namelijk de database, Zep software \
-en/of het ILS lab. Het lab supportteam van het ILS zou graag op \
-de hoogte willen worden gesteld van aankomende onderzoeken. \
-Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te \
-sturen naar het lab supportteam.</p> \
-<p>Vind je het goed dat de volgende delen uit de aanvraag \
-worden doorgestuurd:</p> \
-- Jouw naam en de namen van de andere betrokkenen <br/> \
-- De eindverantwoordelijke van het onderzoek <br/> \
-- De titel van het onderzoek <br/> \
-- De beoogde startdatum <br/> \
-- Van welke faciliteiten je gebruik wil maken (database, lab, \
-Zep software)"
+        mark_safe(
+            _(
+                "<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één "
+                "van de faciliteiten van het ILS, namelijk de database, Zep software "
+                "en/of het ILS lab. Het lab supportteam van het ILS zou graag op "
+                "de hoogte willen worden gesteld van aankomende onderzoeken. "
+                "Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te "
+                "sturen naar het lab supportteam.</p> "
+                "<p>Vind je het goed dat de volgende delen uit de aanvraag "
+                "worden doorgestuurd:</p> "
+                "- Jouw naam en de namen van de andere betrokkenen <br/> "
+                "- De eindverantwoordelijke van het onderzoek <br/> "
+                "- De titel van het onderzoek <br/> "
+                "- De beoogde startdatum <br/> "
+                "- Van welke faciliteiten je gebruik wil maken (database, lab, "
+                "Zep software)"
+            ),
         ),
         default=None,
         blank=True,
@@ -398,21 +403,16 @@ Zep software)"
     # Fields with respect to Studies
     studies_similar = models.BooleanField(
         _(
-            "Kan voor alle deelnemers dezelfde informatiebrief en, indien van \
-          toepassing, dezelfde toestemmingsverklaring gebruikt worden?"
+            "Doorlopen alle deelnemers hetzelfde onderzoekstraject, zonder "
+            "noemenswaardige verschillen in taken en belasting?"
         ),
         help_text=_(
-            "Daar waar de verschillen klein en qua belasting of \
-risico irrelevant zijn is sprake van in essentie hetzelfde traject, en \
-voldoet één set documenten voor de informed consent. Denk \
-hierbij aan taakonderzoek waarin de ene groep in taak X de ene helft van \
-een set verhaaltjes te lezen krijgt, en de andere groep in taak X de andere \
-helft. Of aan interventieonderzoek waarin drie vergelijkbare groepen op \
-hetzelfde moment een verschillende interventie-variant krijgen (specificeer \
-dan wel bij de beschrijving van de interventie welke varianten precies \
-gebruikt worden). Let op: als verschillende groepen deelnemers verschillende \
-<i>soorten</i> taken krijgen, dan kan dit niet en zijn dit afzonderlijke \
-trajecten."
+            "Daar waar de verschillen klein en qua belasting of "
+            "risico irrelevant zijn is sprake van in essentie hetzelfde "
+            "traject. "
+            "Let op: als verschillende groepen deelnemers verschillende "
+            "<i>soorten</i> taken krijgen, dan zijn dit "
+            "afzonderlijke trajecten."
         ),
         blank=True,
         null=True,
@@ -489,7 +489,7 @@ trajecten."
     self_assessment = models.TextField(
         _(
             "Wat zijn de belangrijkste ethische kwesties in dit onderzoek en "
-            "beschrijf kort hoe ga je daarmee omgaat.  Gebruik maximaal 1000 "
+            "beschrijf kort hoe je daarmee omgaat. Gebruik maximaal 1000 "
             "woorden."
         ),
         blank=True,
@@ -651,27 +651,28 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
     def accountable_user(self):
         return self.supervisor if self.relation.needs_supervisor else self.created_by
 
+    @property
+    def stepper(
+        self,
+    ):
+        if not getattr(self, "_stepper", None):
+            # Importing here to avoid circular import
+            from proposals.utils.stepper import Stepper
+
+            self._stepper = Stepper(self)
+        return self._stepper
+
     def continue_url(self):
-        """Returns the next URL for this Proposal"""
-        available_urls = self.available_urls()
-        # For copies, always start at the first available URL
-        if self.parent:
-            result = available_urls[0].url
-        # Otherwise, loop through the available URLs to find the last non-title with an URL
-        else:
-            for available_url in available_urls:
-                if available_url.url and not available_url.is_title:
-                    result = available_url.url
-        return result
+        stepper = self.stepper
+        for item in stepper.items:
+            if item.get_errors():
+                return item.get_url()
+        return reverse("proposals:submit", args=[self.pk])
 
     def committee_prefixed_refnum(self):
         """Returns the reference number including the reviewing committee"""
         parts = (self.reviewing_committee.name, self.reference_number)
         return "-".join(parts)
-
-    def available_urls(self):
-        """Returns the available URLs for this Proposal"""
-        return available_urls(self)
 
     def first_study(self):
         """Returns the first Study in this Proposal, or None if there's none."""

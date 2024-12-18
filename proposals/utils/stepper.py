@@ -1,11 +1,12 @@
 from copy import copy
 
 from django.utils.translation import gettext as _
+from django.http import HttpRequest
 
 from main.utils import renderable
 
 from .stepper_helpers import (
-    PlaceholderItem,
+    DisabledItem,
     StepperItem,
 )
 
@@ -36,11 +37,23 @@ class Stepper(renderable):
         ]
         # The stepper keeps track of the request to determine
         # which item is current
-        self.request = request
+        self._request = request
         self.items = []
         self.current_item_ancestors = []
         self._attachment_slots = []
         self.check_all(self.starting_checkers)
+
+    @property
+    def request(
+        self,
+    ):
+        if self._request:
+            return self._request
+        # If no request was provided,
+        # generate a fake request for forms that require it
+        request = HttpRequest()
+        request.user = self.proposal.applicants.first()
+        return request
 
     @property
     def attachment_slots(
@@ -155,7 +168,7 @@ class Stepper(renderable):
             if isinstance(slot, StepperItem):
                 continue
             # Remaining empty slots are replaced by placeholders
-            placeholder = PlaceholderItem(
+            placeholder = DisabledItem(
                 self,
                 title=slot[1],
             )
@@ -257,18 +270,21 @@ RegularProposalLayout = [
     ("create", _("Basisgegevens")),
     ("wmo", _("WMO")),
     ("studies", _("Trajecten")),
-    ("attachments", _("Documenten")),
     ("data_management", _("Datamanagement")),
+    ("attachments", _("Documenten")),
     ("submit", _("Indienen")),
 ]
 
 PreApprProposalLayout = [
     ("create", _("Basisgegevens")),
+    ("data_management", _("Datamanagement")),
+    ("attachments", _("Documenten")),
     ("submit", _("Indienen")),
 ]
 
 PreAssProposalLayout = [
     ("create", _("Basisgegevens")),
     ("wmo", _("WMO")),
+    ("attachments", _("Documenten")),
     ("submit", _("Indienen")),
 ]

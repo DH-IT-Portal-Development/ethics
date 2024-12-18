@@ -34,6 +34,16 @@ from cdh.core.forms import (
 )
 
 
+class SupervisorEditingFormMixin:
+
+    def __init__(self, *args, **kwargs):
+        self.supervisor_editing_flag = kwargs.pop(
+            "supervisor_editing_flag",
+            False,
+        )
+        return super().__init__(*args, **kwargs)
+
+
 class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
@@ -72,7 +82,10 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
 
 
 class ResearcherForm(
-    UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm
+    UserKwargModelFormMixin,
+    SupervisorEditingFormMixin,
+    SoftValidationMixin,
+    ConditionalModelForm,
 ):
     class Meta:
         model = Proposal
@@ -90,6 +103,11 @@ class ResearcherForm(
             "supervisor": SearchableSelectWidget(),
         }
 
+    _soft_validation_fields = [
+        "supervisor",
+        "relation",
+    ]
+
     def __init__(self, *args, **kwargs):
         """
         - Remove empty label from relation field
@@ -97,7 +115,6 @@ class ResearcherForm(
         - Add a None-option for supervisor
         - If this is a practice Proposal, limit the relation choices
         """
-
         super(ResearcherForm, self).__init__(*args, **kwargs)
         self.fields["relation"].empty_label = None
         self.fields["student_context"].empty_label = None
@@ -105,9 +122,9 @@ class ResearcherForm(
         supervisors = get_user_model().objects.exclude(pk=self.user.pk)
 
         instance = kwargs.get("instance")
-
-        # If you are already defined as a supervisor, we have to set it to you
-        if instance is not None and instance.supervisor == self.user:
+        # If you're already the supervisor, we remove all other options
+        # and set a flag assuming you're already editing as the supervisor
+        if self.supervisor_editing_flag:
             supervisors = [self.user]
 
         self.fields["supervisor"].choices = [
@@ -147,17 +164,17 @@ van het FETC-GW worden opgenomen."
                 error = forms.ValidationError(
                     _("Je dient een promotor/begeleider op te geven."), code="required"
                 )
-                self.add_error("supervisor", error)
+                self.add_error("relation", error)
 
             if (
                 relation.needs_supervisor
                 and supervisor == self.user
-                and self.instance.status != Proposal.Statuses.SUBMITTED_TO_SUPERVISOR
+                and not self.supervisor_editing_flag
             ):
                 error = forms.ValidationError(
                     _("Je kunt niet jezelf als promotor/begeleider opgeven.")
                 )
-                self.add_error("supervisor", error)
+                self.add_error("relation", error)
 
             if relation.check_in_course:
                 self.mark_soft_required(cleaned_data, "student_context")
@@ -202,7 +219,7 @@ class OtherResearchersForm(
         }
 
     _soft_validation_fields = [
-        "other_applicants",
+        "applicants",
         "other_stakeholders",
         "stakeholders",
     ]
@@ -231,24 +248,24 @@ class OtherResearchersForm(
         Check for conditional requirements:
         - If other_applicants is checked, make sure applicants are set
         - If other_stakeholders is checked, make sure stakeholders is not empty
-        - Make sure the user is listed in applicants
         """
         cleaned_data = super(OtherResearchersForm, self).clean()
 
         other_applicants = cleaned_data.get("other_applicants")
         applicants = cleaned_data.get("applicants")
 
-        # Always make sure the applicant is actually in the applicants list
-        if self.user not in applicants and self.user != self.instance.supervisor:
-            error = forms.ValidationError(
-                _("Je hebt jezelf niet als onderzoekers geselecteerd."), code="required"
-            )
-            self.add_error("applicants", error)
-        elif other_applicants and len(applicants) == 1:
-            error = forms.ValidationError(
-                _("Je hebt geen andere onderzoekers geselecteerd."), code="required"
-            )
-            self.add_error("applicants", error)
+        self.mark_soft_required(
+            cleaned_data,
+            "applicants",
+            "other_applicants",
+        )
+
+        if other_applicants:
+            if len(applicants) == 1 and self.user in applicants:
+                error = forms.ValidationError(
+                    _("Je hebt geen andere onderzoekers geselecteerd."), code="required"
+                )
+                self.add_error("other_applicants", error)
 
         self.check_dependency(cleaned_data, "other_stakeholders", "stakeholders")
 
@@ -741,7 +758,7 @@ class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
 class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
-        fields = ["privacy_officer", "dmp_file"]
+        fields = ["privacy_officer"]
         widgets = {
             "privacy_officer": BootstrapRadioSelect(choices=YES_NO),
         }
@@ -769,7 +786,12 @@ class ProposalUpdateDateStartForm(TemplatedModelForm):
         fields = ["date_start"]
 
 
-class ProposalSubmitForm(ConditionalModelForm):
+class ProposalSubmitForm(
+    SoftValidationMixin,
+    ConditionalModelForm,
+):
+    template_name = "forms/submit_form.html"
+
     class Meta:
         model = Proposal
         fields = ["comments", "inform_local_staff", "embargo", "embargo_end_date"]
@@ -789,6 +811,9 @@ class ProposalSubmitForm(ConditionalModelForm):
         # Needed for POST data
         self.request = kwargs.pop("request", None)
 
+        # Needed for validation
+        self.final_validation = kwargs.pop("final_validation", None)
+
         super(ProposalSubmitForm, self).__init__(*args, **kwargs)
 
         self.fields["inform_local_staff"].label_suffix = ""
@@ -803,17 +828,15 @@ class ProposalSubmitForm(ConditionalModelForm):
     def clean(self):
         """
         Check if the Proposal is complete:
-        - Do all Studies have informed consent/briefing?
+        - Do all Studies have attachments?
         - If the inform_local_staff question is asked, it is required
         - Was the embargo question answered and, if so, is the end date within two years from now?
         """
-        from studies.models import Documents
 
         cleaned_data = super(ProposalSubmitForm, self).clean()
 
         if (
-            not self.instance.is_pre_assessment
-            and not self.instance.is_practice()
+            not self.instance.is_practice()
             and not "js-redirect-submit" in self.request.POST
             and not "save_back" in self.request.POST
         ):
@@ -836,6 +859,21 @@ class ProposalSubmitForm(ConditionalModelForm):
                         "De embargo-periode kan maximaal 2 jaar zijn. Kies een datum binnen 2 jaar van vandaag."
                     ),
                 )
+        # final_validation is a kwarg that should only be given by the
+        # actual submit view, not the stepper.
+        if not self.final_validation:
+            return
+        # For final validation, i.e. if a user is actually submitting,we
+        # instantiate a new stepper to reflect changes
+        # made to the current instance, which may not yet be saved.
+        from proposals.utils.stepper import Stepper
+
+        validator = Stepper(self.instance, request=self.request)
+        if validator.get_form_errors():
+            self.add_error(
+                None,
+                _("Aanvraag bevat nog foutmeldingen"),
+            )
 
 
 class KnowledgeSecurityForm(SoftValidationMixin, ConditionalModelForm):

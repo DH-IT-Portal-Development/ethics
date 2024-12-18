@@ -499,7 +499,7 @@ def auto_review(proposal: Proposal):
                 )
             )
 
-        if study.has_sessions:
+        if study.get_sessions():
             for session in study.session_set.all():
                 for age_group in study.age_groups.all():
                     if session.net_duration() > age_group.max_net_duration:
@@ -554,7 +554,7 @@ def auto_review_observation(observation):
         if not observation.has_advanced_consent:
             reasons.append(
                 _(
-                    "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met informed consent achteraf."
+                    "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met toestemming na afloop van het onderzoek."
                 )
             )
         if observation.is_anonymous:

@@ -881,7 +881,7 @@ class KnowledgeSecuritySection(BaseSection):
 class InformedConsentFormsSection(BaseSection):
     """This class receives a Documents object"""
 
-    section_title = _("Informed consent formulieren")
+    section_title = _("Documenten")
 
     row_fields = [
         "translated_forms",
@@ -1038,11 +1038,11 @@ def create_context_pdf(context, proposal):
             if proposal.wmo.status == proposal.wmo.WMOStatuses.NO_WMO:
                 for study in proposal.study_set.all():
                     sections.append(StudySection(study))
-                    if study.has_intervention:
+                    if study.get_intervention():
                         sections.append(InterventionSection(study.intervention))
-                    if study.has_observation:
+                    if study.get_observation():
                         sections.append(ObservationSection(study.observation))
-                    if study.has_sessions:
+                    if study.get_sessions():
                         for session in study.session_set.all():
                             sections.append(SessionSection(session))
                             for task in session.task_set.all():
@@ -1141,13 +1141,11 @@ def create_context_diff(context, old_proposal, new_proposal):
 
                     if (
                         old_study is not None
-                        and old_study.has_intervention
+                        and old_study.get_intervention()
                         or new_study is not None
-                        and new_study.has_intervention
+                        and new_study.get_intervention()
                     ):
-                        interventions = get_all_related(
-                            both_studies, "get_intervention"
-                        )
+                        interventions = get_all_related(both_studies, "intervention")
 
                         sections.append(
                             DiffSection(
@@ -1157,11 +1155,11 @@ def create_context_diff(context, old_proposal, new_proposal):
 
                     if (
                         old_study is not None
-                        and old_study.has_observation
+                        and old_study.get_observation()
                         or new_study is not None
-                        and new_study.has_observation
+                        and new_study.get_observation()
                     ):
-                        observations = get_all_related(both_studies, "get_observation")
+                        observations = get_all_related(both_studies, "observation")
 
                         sections.append(
                             DiffSection(
@@ -1171,12 +1169,12 @@ def create_context_diff(context, old_proposal, new_proposal):
 
                     if (
                         old_study is not None
-                        and old_study.has_sessions
+                        and old_study.get_sessions()
                         or new_study is not None
-                        and new_study.has_sessions
+                        and new_study.get_sessions()
                     ):
                         old_sessions_set, new_sessions_set = get_all_related_set(
-                            both_studies, "get_sessions"
+                            both_studies, "sessions"
                         )
 
                         for both_sessions in zip_equalize_lists(

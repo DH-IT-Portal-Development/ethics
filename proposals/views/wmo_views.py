@@ -123,13 +123,13 @@ class PreAssessmentMixin(object):
         """Different continue URL for pre-assessment Proposals"""
         wmo = self.object
         if wmo.status == Wmo.WMOStatuses.NO_WMO:
-            return reverse("proposals:submit_pre", args=(self.object.proposal.pk,))
+            return reverse("proposals:attachments", args=(self.get_proposal().pk,))
         else:
             return reverse("proposals:wmo_application_pre", args=(wmo.pk,))
 
     def get_back_url(self):
         """Different return URL for pre-assessment Proposals"""
-        return reverse("proposals:research_goal", args=(self.object.proposal.pk,))
+        return reverse("proposals:research_goal", args=(self.get_proposal().pk,))
 
 
 class WmoCreatePreAssessment(PreAssessmentMixin, WmoCreate):
@@ -147,7 +147,12 @@ class WmoApplicationPreAssessment(PreAssessmentMixin, WmoApplication):
         if wmo.status == Wmo.WMOStatuses.WAITING:
             return reverse("proposals:wmo_application", args=(wmo.pk,))
         else:
-            return reverse("proposals:submit_pre", args=(wmo.proposal.pk,))
+            return reverse("proposals:attachments", args=(wmo.proposal.pk,))
+
+    def get_back_url(
+        self,
+    ):
+        return reverse("proposals:wmo_update_pre", args=[self.get_proposal().pk])
 
 
 ################
@@ -168,22 +173,21 @@ def check_wmo(request):
 
     # Default message: OK.
     message = _("Je onderzoek hoeft niet te worden beoordeeld door de METC.")
-    message_class = "info"
+    message_class = "alert alert-info mt-2"
     needs_metc = False
 
     # On doubt, contact secretary.
     if doubt:
-        secretary = get_secretary()
         message = _(
-            'Neem contact op met <a href="{link}">{secretary}</a> om de twijfels weg te nemen.'
-        ).format(link="mailto:" + secretary.email, secretary=secretary.get_full_name())
-        message_class = "warning"
+            'Neem contact op met <a href="mailto:fetc-gw@uu.nl">de secretaris van de FETC-GW</a> om de twijfels weg te nemen.'
+        )
+        message_class = "alert alert-danger mt-2"
         needs_metc = True
     # Otherwise, METC review is necessary for METC studies (obviously) and
     # studies that have medical research questions or define user behavior
-    elif is_metc or is_medical:
+    if is_metc or is_medical:
         message = _("Je onderzoek zal moeten worden beoordeeld door de METC.")
-        message_class = "warning"
+        message_class = "alert alert-danger mt-2"
         needs_metc = True
 
     return JsonResponse(

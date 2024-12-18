@@ -21,7 +21,6 @@ from studies.utils import study_urls
 
 
 __all__ = [
-    "available_urls",
     "generate_ref_number",
     "generate_revision_ref_number",
     "generate_pdf",
@@ -30,143 +29,6 @@ __all__ = [
     "FilenameFactory",
     "OverwriteStorage",
 ]
-
-
-def available_urls(proposal):
-    """
-    Returns the available URLs for the given Proposal.
-    :param proposal: the current Proposal
-    :return: a list of available URLs for this Proposal.
-    """
-    urls = list()
-
-    urls.append(
-        AvailableURL(
-            url=reverse("proposals:update", args=(proposal.pk,)),
-            title=_("Algemene informatie over de aanvraag"),
-        )
-    )
-
-    urls.append(
-        AvailableURL(
-            url=reverse("proposals:researcher", args=(proposal.pk,)),
-            title=_("Informatie over de onderzoeker"),
-        )
-    )
-
-    urls.append(
-        AvailableURL(
-            url=reverse("proposals:other_researchers", args=(proposal.pk,)),
-            title=_("Informatie over betrokken onderzoekers"),
-        )
-    )
-
-    if not proposal.is_pre_assessment:
-        urls.append(
-            AvailableURL(
-                url=reverse("proposals:funding", args=(proposal.pk,)),
-                title=_("Informatie over financiering"),
-            )
-        )
-
-    urls.append(
-        AvailableURL(
-            url=reverse("proposals:research_goal", args=(proposal.pk,)),
-            title=_("Informatie over het onderzoeksdoel"),
-        )
-    )
-
-    if proposal.is_pre_assessment:
-
-        wmo_url = AvailableURL(title=_("Ethische toetsing nodig door een METC?"))
-        if hasattr(proposal, "wmo"):
-            wmo_url.url = reverse("proposals:wmo_update_pre", args=(proposal.wmo.pk,))
-        else:
-            wmo_url.url = reverse("proposals:wmo_create_pre", args=(proposal.pk,))
-        urls.append(wmo_url)
-
-        submit_url = AvailableURL(
-            title=_("Aanvraag voor voortoetsing klaar voor versturen")
-        )
-        if hasattr(proposal, "wmo"):
-            submit_url.url = reverse("proposals:submit_pre", args=(proposal.pk,))
-        urls.append(submit_url)
-    elif proposal.is_pre_approved:
-        urls.append(
-            AvailableURL(
-                url=reverse("proposals:pre_approved", args=(proposal.pk,)),
-                title=_("Informatie over eerdere toetsing"),
-            )
-        )
-
-        submit_url = AvailableURL(
-            title=_("Aanvraag voor voortoetsing klaar voor versturen"),
-            margin=0,
-            url=reverse("proposals:submit_pre_approved", args=(proposal.pk,)),
-        )
-        urls.append(submit_url)
-    else:
-        wmo_url = AvailableURL(title=_("METC"))
-        if hasattr(proposal, "wmo"):
-            wmo_url.url = reverse("proposals:wmo_update", args=(proposal.wmo.pk,))
-        else:
-            wmo_url.url = reverse("proposals:wmo_create", args=(proposal.pk,))
-        urls.append(wmo_url)
-
-        studies_url = AvailableURL(title=_("Trajecten"))
-        if hasattr(proposal, "wmo"):
-            studies_url.url = reverse("proposals:study_start", args=(proposal.pk,))
-
-            if proposal.study_set.count() > 0:
-                _add_study_urls(studies_url, proposal)
-
-        urls.append(studies_url)
-
-        consent_docs_url = AvailableURL(
-            title=_("Uploaden"), url=reverse("proposals:consent", args=(proposal.pk,))
-        )
-        translated_docs_url = AvailableURL(
-            title=_("Vertaling"),
-            url=reverse("proposals:translated", args=(proposal.pk,)),
-        )
-        consent_url = AvailableURL(
-            title=_("Formulieren"), children=[translated_docs_url, consent_docs_url]
-        )
-
-        data_management_url = AvailableURL(title=_("Datamanagement"))
-        submit_url = AvailableURL(title=_("Versturen"))
-
-        if proposal.last_study() and proposal.last_study().is_completed():
-            consent_url.url = reverse("proposals:translated", args=(proposal.pk,))
-            data_management_url.url = reverse(
-                "proposals:data_management", args=(proposal.pk,)
-            )
-            submit_url.url = reverse("proposals:submit", args=(proposal.pk,))
-
-        if proposal.translated_forms is not None:
-            consent_url.url = reverse("proposals:consent", args=(proposal.pk,))
-
-        urls.append(consent_url)
-        urls.append(data_management_url)
-        urls.append(submit_url)
-
-    return urls
-
-
-def _add_study_urls(main_element, proposal):
-    # If only one trajectory, add the children urls of that study directly.
-    # (Bypassing the study's own node)
-    if proposal.studies_number == 1:
-        main_element.children.extend(
-            study_urls(proposal.study_set.first(), True).children
-        )
-        return
-
-    # Otherwise, add them all with the parent node
-    prev_study_completed = True
-    for study in proposal.study_set.all():
-        main_element.children.append(study_urls(study, prev_study_completed))
-        prev_study_completed = study.is_completed()
 
 
 def generate_ref_number():
@@ -398,15 +260,15 @@ def check_local_facilities(proposal):
             if recruitment.is_local:
                 add_to_result(recruitment)
 
-        if study.has_intervention:
+        if study.get_intervention():
             for setting in study.intervention.setting.all():
                 if setting.is_local:
                     add_to_result(setting)
-        if study.has_observation:
+        if study.get_observation():
             for setting in study.observation.setting.all():
                 if setting.is_local:
                     add_to_result(setting)
-        if study.has_sessions:
+        if study.get_sessions():
             for session in study.session_set.all():
                 for setting in session.setting.all():
                     if setting.is_local:

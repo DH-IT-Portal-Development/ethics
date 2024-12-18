@@ -39,18 +39,31 @@
         <li>
             <p>
                 {% blocktrans trimmed %}
-                    <strong>Taakonderzoek en Interviews</strong>:
+                    <strong>Taakonderzoek en/of interview(s)</strong>:
                     <br />
                     De onderzoeker
                     <ul>
                         <li>legt deelnemers een taak op (bijv. vragenlijst, experiment) of</li>
                         <li>neemt een interview af, of</li>
-                        <li>vraagt deelnemer deel te nemen aan een focusgroep.</li>
+                        <li>vraagt deelnemers deel te nemen aan een focusgroep.</li>
                     </ul>
                     <br />
-                    Onderzoek in het ILS-lab is vanwege de locatie per definitie altijd taakonderzoek (óók als de deelnemers na ontvangst alleen maar worden geobserveerd).
+                    Onderzoek in het ILS-lab is vanwege de locatie per definitie altijd taakonderzoek (óók als de deelnemers daar alleen maar worden geobserveerd).
                 {% endblocktrans %}
             </p>
         </li>
     </ul>
+    <p>
+        {% blocktrans trimmed %}
+            Kies meerdere opties wanneer je bijvoorbeeld een observatiedeel
+            combineert met een taakonderzoeksdeel, of met een interventiedeel
+            (in dezelfde sessie, of verspreid over dagen). Wanneer je in
+            interventieonderzoek extra taken inzet om de effecten van de
+            interventie te bemeten (bijvoorbeeld een speciale voor- en
+            nameting met een vragenlijst die anders niet zou worden afgenomen)
+            dien je die apart als taakonderzoek te specificeren.
+        {% endblocktrans %}
+    </p>
 {% endblock %}
+
+{% block form-css-classes %}uu-form-no-gap{% endblock %}

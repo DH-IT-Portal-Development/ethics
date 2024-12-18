@@ -9,6 +9,21 @@
 
 {% block pre-form-text %}
     <h2>{% trans "Documenten" %}</h2>
+    <p>
+        {% blocktrans trimmed %}
+            Ter ondersteuning van je aanvraag kun je op deze pagina bestanden uploaden als aanvullende documentatie.
+        {% endblocktrans %}
+    </p>
+    <p>
+        {% blocktrans trimmed %}
+            Op basis van de antwoorden op eerdere vragen kunnen hier bepaalde documenten verplicht gesteld worden, bijvoorbeeld informatiebrieven of akkoordverklaringen voor deelnemers.
+        {% endblocktrans %}
+    </p>
+    <p>
+        {% blocktrans trimmed %}
+            Als jouw aanvraag (meerdere) trajecten bevat, kun je kiezen om bestanden aan een specifiek traject toe te voegen. Voeg waar mogelijk documenten aan het relevante traject toe.
+        {% endblocktrans %}
+    </p>
 {% endblock %}
 
 {% block auto-form-render %}

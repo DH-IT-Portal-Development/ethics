@@ -11,7 +11,7 @@ from django.db.models.fields.files import FieldFile
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponseRedirect
 
 # from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
@@ -53,6 +53,7 @@ from ..forms import (
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
 from proposals.mixins import (
+    SupervisorEditingMixin,
     ProposalMixin,
     ProposalContextMixin,
     PDFTemplateResponseMixin,
@@ -471,6 +472,7 @@ class ProposalStart(generic.TemplateView):
 class ProposalResearcherFormView(
     ProposalMixin,
     UserFormKwargsMixin,
+    SupervisorEditingMixin,
     ProposalContextMixin,
     AllowErrorsOnBackbuttonMixin,
     UpdateView,
@@ -496,12 +498,23 @@ class ProposalOtherResearchersFormView(
     form_class = OtherResearchersForm
     template_name = "proposals/other_researchers_form.html"
 
+    def form_valid(self, form):
+        """
+        Ensure:
+        - if other_applicants is False, only the user is in applicants
+        - if other_applicants is True, always add current user to applicants
+        """
+        response = super(ProposalOtherResearchersFormView, self).form_valid(form)
+        self.object = form.save()
+        if form.instance.other_applicants == False:
+            self.object.applicants.set([self.request.user])
+        else:
+            self.object.applicants.add(self.request.user)
+        return response
+
     def get_next_url(self):
         proposal = self.object
-        if proposal.is_pre_assessment:
-            return reverse("proposals:research_goal", args=(self.object.pk,))
-        else:
-            return reverse("proposals:funding", args=(self.object.pk,))
+        return reverse("proposals:funding", args=(self.object.pk,))
 
     def get_back_url(self):
         return reverse("proposals:researcher", args=(self.object.pk,))
@@ -542,11 +555,8 @@ class ProposalResearchGoalFormView(
             return reverse(f"proposals:wmo_create{pre_suffix}", args=(proposal.pk,))
 
     def get_back_url(self):
-        proposal = self.object
-        if proposal.is_pre_assessment:
-            return reverse("proposals:other_researchers", args=(self.object.pk,))
-        else:
-            return reverse("proposals:funding", args=(self.object.pk,))
+        proposal = self.get_proposal()
+        return reverse("proposals:funding", args=[proposal.pk])
 
 
 class ProposalPreApprovedFormView(
@@ -557,9 +567,7 @@ class ProposalPreApprovedFormView(
     template_name = "proposals/pre_approved_form.html"
 
     def get_next_url(self):
-        """Go to the Other Researcher page"""
-
-        return reverse("proposals:submit_pre_approved", args=(self.object.pk,))
+        return reverse("proposals:data_management", args=(self.object.pk,))
 
     def get_back_url(self):
         """Return to the Proposal Form page"""
@@ -574,7 +582,7 @@ class ProposalKnowledgeSecurity(
     template_name = "proposals/knowledge_security_form.html"
 
     def get_next_url(self):
-        return reverse("proposals:attachments", args=(self.object.pk,))
+        return reverse("proposals:data_management", args=(self.object.pk,))
 
     def get_back_url(self):
         return reverse("studies:design_end", args=(self.object.last_study().pk,))
@@ -587,7 +595,9 @@ class TranslatedConsentView(ProposalContextMixin, UpdateView):
 
     def get_next_url(self):
         """Go to the consent form upload page"""
-        return reverse("proposals:data_management", args=(self.object.pk,))
+        if self.get_proposal().is_pre_approved:
+            return reverse("proposals:submit_pre_approved", args=(self.object.pk,))
+        return reverse("proposals:submit", args=(self.object.pk,))
 
     def get_back_url(self):
         """Return to the overview of the last Study"""
@@ -600,12 +610,19 @@ class ProposalDataManagement(ProposalContextMixin, UpdateView):
     template_name = "proposals/proposal_data_management.html"
 
     def get_next_url(self):
-        """Continue to the submission view"""
-        return reverse("proposals:submit", args=(self.object.pk,))
+        """Continue to the attachments view"""
+        proposal = self.get_proposal()
+        return reverse("proposals:attachments", args=(proposal.pk,))
 
     def get_back_url(self):
-        """Return to the consent form overview of the last Study"""
-        return reverse("proposals:translated", args=(self.object.pk,))
+        """
+        Return to the consent form overview of the last Study,
+        unless this proposal is preapproved.
+        """
+        proposal = self.get_proposal()
+        if proposal.is_pre_approved:
+            return reverse("proposals:pre_approved", args=[proposal.pk])
+        return reverse("proposals:knowledge_security", args=(proposal.pk,))
 
 
 class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
@@ -631,6 +648,19 @@ class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         """Continue to the URL specified in the 'next' POST parameter"""
         return reverse("reviews:detail", args=[self.object.latest_review().pk])
+
+    def get_back_url(
+        self,
+    ):
+        if self.get_proposal().is_pre_approved:
+            return reverse(
+                "proposals:pre_approved",
+                args=[self.get_proposal().pk],
+            )
+        return reverse(
+            "proposals:knowledge_security",
+            args=[self.get_proposal().pk],
+        )
 
 
 class ProposalUpdateDateStart(GroupRequiredMixin, generic.UpdateView):
@@ -676,6 +706,11 @@ class ProposalSubmit(
         # Required for examining POST data
         # to check for js-redirect-submit
         kwargs["request"] = self.request
+
+        # The following is a flag to let form validation know that
+        # this is an actual user attempting to submit the form, and not
+        # background validation by the Stepper.
+        kwargs["final_validation"] = True
 
         return kwargs
 
@@ -737,7 +772,7 @@ class ProposalSubmit(
 
     def get_back_url(self):
         """Return to the data management view"""
-        return reverse("proposals:data_management", args=(self.object.pk,))
+        return reverse("proposals:translated", args=(self.object.pk,))
 
     def _get_page_number(self):
         if self.object.is_pre_assessment:
@@ -905,7 +940,7 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
 
     def get_back_url(self):
         """Return to the Wmo overview"""
-        return reverse("proposals:wmo_update_pre", args=(self.object.pk,))
+        return reverse("proposals:attachments", args=(self.object.pk,))
 
 
 class ProposalSubmittedPreAssessment(ProposalSubmitted):
@@ -933,10 +968,6 @@ class ProposalSubmitPreApproved(ProposalSubmit):
     def get_next_url(self):
         """After submission, go to the thank-you view"""
         return reverse("proposals:submitted_pre_approved", args=(self.object.pk,))
-
-    def get_back_url(self):
-        """Return to the update page"""
-        return reverse("proposals:pre_approved", args=(self.object.pk,))
 
 
 class ProposalSubmittedPreApproved(ProposalSubmitted):

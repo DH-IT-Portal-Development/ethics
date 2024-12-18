@@ -44,6 +44,7 @@ class SettingAdmin(admin.ModelAdmin):
         "needs_supervision",
         "requires_review",
         "is_school",
+        "gatekeeper_documents",
     )
     list_display_links = ("description",)
     ordering = ["order"]

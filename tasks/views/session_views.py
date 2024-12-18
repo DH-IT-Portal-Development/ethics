@@ -9,7 +9,8 @@ from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView, Cre
 from proposals.mixins import StepperContextMixin
 from studies.mixins import StudyFromURLMixin, StudyMixin
 from ..forms import SessionUpdateForm, SessionEndForm, SessionOverviewForm
-from ..models import Session, Study
+from ..models import Session
+from studies.models import Study
 
 
 ######################
@@ -89,10 +90,10 @@ class SessionStart(StudyMixin, UpdateView):
         study = self.object
         next_url = "studies:design"
         pk = study.pk
-        if study.has_observation:
+        if study.get_observation():
             next_url = "observations:update"
             pk = study.observation.pk
-        elif study.has_intervention:
+        elif study.get_intervention():
             next_url = "interventions:update"
             pk = study.intervention.pk
         return reverse(next_url, args=(pk,))

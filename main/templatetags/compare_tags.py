@@ -47,7 +47,7 @@ class CompareLinkNode(template.Node):
         except Proposal.DoesNotExist:
             return None
 
-        if old_study.has_observation:
+        if old_study.get_observation():
             if not obj.approval_document or not old_study.observation.approval_document:
                 return None
 
