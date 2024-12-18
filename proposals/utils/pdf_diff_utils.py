@@ -303,7 +303,7 @@ class RowValue:
 
         if filewrapper:
             output = format_html(
-                '<a href="{}">{}</a><p>{}</p>',
+                '<a href="{}">{}</a>',
                 settings.BASE_URL
                 + reverse(
                     "proposals:download_attachment_original",
@@ -313,7 +313,6 @@ class RowValue:
                     },
                 ),
                 _("Download"),
-                _(" (Gewijzigd voor revisie)") if self.obj.parent else "",
             )
         else:
             output = _("Niet aangeleverd")
