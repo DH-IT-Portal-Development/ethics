@@ -3,7 +3,6 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import gettext_lazy as _
 
 from main.models import SettingModel
-from studies.models import Study
 
 
 class Session(SettingModel):
@@ -28,18 +27,19 @@ class Session(SettingModel):
 
     tasks_duration = models.PositiveIntegerField(
         _(
-            "De totale geschatte netto taakduur van je sessie komt \
-op basis van je opgave per taak uit op <strong>%d minuten</strong>. \
-Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, \
-instructies per taak, pauzes tussen taken, en debriefing? \
-(bij labbezoek dus van binnenkomst tot vertrek)"
+            "De totale geschatte netto taakduur van je sessie komt "
+            "op basis van je opgave per taak uit op <strong>%d minuten</strong>. "
+            "Hoeveel minuten duurt de totale sessie, inclusief ontvangst, "
+            "instructies per taak, pauzes tussen taken, en debriefing? "
+            "(bij labbezoek dus van binnenkomst tot vertrek en bij een "
+            "focus-groep van ontvangst tot afsluiting)"
         ),
         null=True,
         blank=True,
     )
 
     # References
-    study = models.ForeignKey(Study, on_delete=models.CASCADE)
+    study = models.ForeignKey("studies.Study", on_delete=models.CASCADE)
 
     class Meta:
         ordering = ["order"]
@@ -77,6 +77,9 @@ class Registration(models.Model):
     needs_kind = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
     age_min = models.PositiveIntegerField(blank=True, null=True)
+    is_recording = models.BooleanField(
+        default=False,
+    )
 
     class Meta:
         ordering = ["order"]
@@ -110,12 +113,12 @@ class Task(models.Model):
 
     description = models.TextField(
         _(
-            "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort \
-uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de \
-beantwoording van jouw onderzoeksvragen bijdraagt. \
-Geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli \
-dat je van plan bent aan de deelnemer aan te bieden. \
-Het moet voor de commissieleden duidelijk zijn wat je precies gaat doen."
+            "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort "
+            "uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de "
+            "beantwoording van jouw onderzoeksvragen bijdraagt. "
+            "Geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli "
+            "of prompts dat je van plan bent aan de deelnemer aan te bieden. Het moet "
+            "voor de commissieleden duidelijk zijn wat je precies gaat doen."
         ),
         blank=True,
     )
@@ -156,10 +159,11 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
             "Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?"
         ),
         help_text=_(
-            "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het gebruik van de term \
-        ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor deelnemers. Voor meer informatie, zie de \
-        <a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf'> \
-        Richtlijnen voor geïnformeerde toestemming, ‘Beeld en geluid’</a>."
+            "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop "
+            "bij het gebruik van de term 'anoniem' of 'geanonimiseerd' in "
+            "je documenten voor deelnemers. Voor meer informatie, zie het UU Data Privacy Handbook over "
+            "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/pseudonymisation-anonymisation.html#pseudonymisation-anonymisation' target='_blank'>"
+            "anonimiseren en pseudonimiseren</a>."
         ),
     )
 
@@ -183,7 +187,7 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
 
     feedback = models.BooleanField(
         _(
-            "Krijgt de deelnemer tijdens of na deze taak feedback op hun "
+            "Krijgen deelnemers tijdens of na deze taak feedback op hun "
             "gedrag of toestand?"
         ),
         null=True,

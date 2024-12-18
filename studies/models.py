@@ -17,7 +17,7 @@ from main.validators import validate_pdf_or_doc
 from proposals.models import Proposal
 from studies.utils import study_urls
 from proposals.utils.proposal_utils import FilenameFactory, OverwriteStorage
-
+from tasks.models import Task
 
 INFORMED_CONSENT_FILENAME = FilenameFactory("Informed_Consent")
 METC_DECISION_FILENAME = FilenameFactory("METC_Decision")
@@ -142,8 +142,8 @@ class Study(models.Model):
 
     class LegalBases(models.IntegerChoices):
         ANONYMOUS = 0, _("Dit traject is volledig anoniem.")
-        CONSENT = 1, _("De deelnemers geven toestemming.")
-        PUBLIC_INTEREST = 2, _("De AVG grondslag is algemeen belang.")
+        PUBLIC_INTEREST = 1, _("De AVG grondslag is 'algemeen belang'.")
+        CONSENT = 2, _("De AVG grondslag is 'toestemming'.")
 
     order = models.PositiveIntegerField()
     name = models.CharField(_("Naam traject"), max_length=15, blank=True)
@@ -152,22 +152,22 @@ class Study(models.Model):
         AgeGroup,
         verbose_name=_("Uit welke leeftijdscategorie(ën) bestaat je deelnemersgroep?"),
         help_text=_(
-            "De beoogde leeftijdsgroep kan zijn 5-7 jarigen. \
-Dan moet je hier hier 4-5 én 6-11 invullen."
+            "Voorbeeld: Stel dat de beoogde leeftijdsgroep bestaat uit 5–7 "
+            "jarigen. Dan moet je hier hier 4–5 én 6–11 aanvinken."
         ),
     )
     legally_incapable = models.BooleanField(
         _(
-            "Maakt je onderzoek gebruik van wils<u>on</u>bekwame (volwassen) \
-deelnemers?"
+            "Maakt je onderzoek gebruik van wils<u>on</u>bekwame volwassen "
+            "deelnemers?"
         ),  # Note: Form labels with HTML are hard-coded in the Form meta class
         help_text=_(
             "Wilsonbekwame volwassenen zijn volwassenen waarvan \
 redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten \
 wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag \
-worden aangenomen dat informed consent niet goed gerealiseerd kan worden \
+worden aangenomen dat bewuste toestemming niet goed gerealiseerd kan worden \
 (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). \
-Hier dient in ieder geval altijd informed consent van een relevante \
+Hier dient in ieder geval altijd toestemming van een relevante \
 vertegenwoordiger te worden verkregen."
         ),
         default=False,
@@ -175,10 +175,15 @@ vertegenwoordiger te worden verkregen."
     legally_incapable_details = models.TextField(_("Licht toe"), blank=True)
 
     has_special_details = models.BooleanField(
-        verbose_name=_("Worden er bijzondere persoonsgegevens verzameld?"),
+        verbose_name=_(
+            "Worden er bijzondere of gevoelige persoonsgegevens verzameld of gebruikt?"
+        ),
         help_text=_(
-            "zie de <a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw' \
-            target='_blank'>Richtlijnen</a>"
+            "Wat 'bijzondere of gevoelige persoonsgegevens' zijn kun je "
+            "vinden op <a href='https://utrechtuniversity.github.io/"
+            "dataprivacyhandbook/special-types-personal-data.html#special"
+            "-types-personal-data' target='_blank'>deze pagina</a> van "
+            "het UU Data Privacy Handbook."
         ),
         null=True,
         blank=True,
@@ -189,10 +194,10 @@ vertegenwoordiger te worden verkregen."
             "Wat is de AVG grondslag voor het verzamelen van " "persoonsgegevens?"
         ),
         help_text=_(
-            "Voor meer informatie over welk AVG grondslag op jouw onderzoek van "
+            "Voor meer informatie over welke AVG grondslag op jouw onderzoek van "
             "toepassing is, zie de flowchart in het "
             "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/choose-legal-basis.html'"
-            " target='_blank'>Data Privacy Handbook</a>"
+            " target='_blank'>UU Data Privacy Handbook</a>"
         ),
         choices=LegalBases.choices,
         null=True,
@@ -202,7 +207,9 @@ vertegenwoordiger te worden verkregen."
     special_details = models.ManyToManyField(
         SpecialDetail,
         blank=True,
-        verbose_name=_("Geef aan welke bijzondere persoonsgegevens worden verzameld:"),
+        verbose_name=_(
+            "Geef aan welke bijzondere persoonsgegevens worden verzameld of gebruikt:"
+        ),
     )
 
     has_traits = models.BooleanField(
@@ -225,7 +232,7 @@ eerst contact op met de <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>, v
         Trait,
         blank=True,
         verbose_name=_(
-            "Selecteer de medische gegevens van je proefpersonen die worden verzameld"
+            "Selecteer de medische gegevens van je proefpersonen die worden verzameld of gebruikt"
         ),
     )
     traits_details = models.CharField(_("Namelijk"), max_length=200, blank=True)
@@ -250,17 +257,11 @@ te testen?"
     )
     recruitment_details = models.TextField(
         _("Licht toe"),
-        help_text=_(
-            'Er zijn specifieke voorbeelddocumenten voor het gebruik van \
-            Amazon Mechanical Turk/Prolific op <a href="{link}">deze pagina</a>.'
-        ).format(
-            link="https://intranet.uu.nl/en/knowledgebase/documents-ethics-assessment-committee-humanities"
-        ),
         blank=True,
     )
     compensation = models.ForeignKey(
         Compensation,
-        verbose_name=_("Welke vergoeding krijgt de deelnemer voor hun deelname?"),
+        verbose_name=_("Welke vergoeding krijgen deelnemers voor hun deelname?"),
         help_text=_(
             "Het standaardbedrag voor vergoeding aan de deelnemers \
 is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een \
@@ -274,7 +275,9 @@ cadeautje."
 
     hierarchy = models.BooleanField(
         verbose_name=_(
-            "Bestaat een hiërarchische relatie tussen onderzoeker(s) en deelnemer(s)?"
+            "Bestaat er een hiërarchische relatie tussen onderzoeker(s) "
+            "en deelnemer(s) of zouden deelnemers die relatie als "
+            "hiërarchisch kunnen ervaren?"
         ),
         null=True,
         blank=True,
@@ -289,7 +292,9 @@ cadeautje."
     # Fields with respect to experimental design
     has_intervention = models.BooleanField(_("Interventieonderzoek"), default=False)
     has_observation = models.BooleanField(_("Observatieonderzoek"), default=False)
-    has_sessions = models.BooleanField(_("Taakonderzoek en interviews"), default=False)
+    has_sessions = models.BooleanField(
+        _("Taakonderzoek en/of interview(s)"), default=False
+    )
 
     # Fields with respect to Sessions
     deception = models.CharField(
@@ -443,8 +448,45 @@ cadeautje."
     def has_no_sessions(self):
         return self.has_sessions and self.sessions_number == 0
 
+    def has_recordings(
+        self,
+    ):
+        """
+        A function that checks whether a study features audio or video
+        registration.
+        """
+        from observations.models import Registration as obs_registration
+        from tasks.models import Registration as task_registration
+
+        has_recordings = False
+        observation = self.get_observation()
+        if observation:
+            # gather all AV observation_registrations
+            recordings_observation = obs_registration.objects.filter(
+                is_recording=True,
+            )
+            # check if there is an overlap between these two QS's
+            if observation.registrations.all() & recordings_observation:
+                has_recordings = True
+        sessions = self.get_sessions()
+        # Skip the second check if we already have recordings
+        if not has_recordings and sessions:
+            # gather all the tasks
+            all_tasks = Task.objects.filter(
+                session__study=self,
+            )
+            # gather all AV task_registrations
+            recordings_sessions = task_registration.objects.filter(
+                is_recording=True,
+            )
+            if all_tasks.filter(registrations__in=recordings_sessions):
+                has_recordings = True
+        return has_recordings
+
     def research_settings_contains_schools(self):
-        """Checks if any research track contains a school in it's setting"""
+        """
+        Checks if any research track contains a school in its setting.
+        """
         if self.get_intervention() and self.intervention.settings_contains_schools():
             return True
 
@@ -458,6 +500,26 @@ cadeautje."
             return True
 
         return False
+
+    def get_gatekeeper_desiredness(self):
+        """
+        Return the highest gatekeeper document desiredness of this study, or
+        False if undesired.
+        """
+        from main.models import GatekeeperChoices
+        from attachments.utils import desiredness
+
+        setting_models = list(self.get_sessions())
+        setting_models += [sm for sm in [self.get_intervention()] if sm]
+        setting_models += [sm for sm in [self.get_observation()] if sm]
+        result = False
+        for sm in setting_models:
+            requirement = sm.gatekeeper_requirement
+            if requirement is GatekeeperChoices.REQUIRED:
+                return desiredness.REQUIRED
+            if requirement is GatekeeperChoices.OPTIONAL:
+                result = desiredness.OPTIONAL
+        return result
 
     def needs_additional_external_forms(self):
         """This method checks if the school/other external institution forms
@@ -476,13 +538,13 @@ cadeautje."
     # DEFUNCT: Passive consent has been removed from studies.
     # These fields are kept for posterity as to not break older proposals.
     passive_consent = models.BooleanField(
-        _("Maak je gebruik van passieve informed consent?"),
+        _("Maak je gebruik van passieve toestemming?"),
         help_text=mark_safe_lazy(
             _(
                 'Wanneer je kinderen via een instelling \
 (dus ook school) werft en je de ouders niet laat ondertekenen, maar in \
 plaats daarvan de leiding van die instelling, dan maak je gebruik van \
-passieve informed consent. Je kan de templates vinden op \
+passieve toestemming. Je kan de templates vinden op \
 <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" \
 target="_blank">de FETC-GW-website</a>.'
             )
