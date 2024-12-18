@@ -230,6 +230,7 @@ class KindRow(Row):
     def value(self):
         return self.slot.kind.name
 
+
 class UploadDateRow:
     """
     Another very specific row case for attachments. This one just needed to be
@@ -242,7 +243,7 @@ class UploadDateRow:
 
     def value(self):
         return datetime.date(self.attachment.upload.file_instance.modified_on)
-    
+
     def verbose_name(self):
         return _("Uploaddatum")
 

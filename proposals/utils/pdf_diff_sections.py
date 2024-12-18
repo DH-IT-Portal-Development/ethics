@@ -578,7 +578,7 @@ class AttachmentSection(BaseSection):
             return Row(self.obj, field, self.proposal)
         else:
             obj = self.obj.attachment
-        
+
         if field == "upload_date":
             return UploadDateRow(obj, field)
 
