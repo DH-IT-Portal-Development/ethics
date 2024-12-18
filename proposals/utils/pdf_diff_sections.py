@@ -1047,10 +1047,10 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
         if match:
             # If we have a match, insert it and remove the matched
             # old slot from the pool
-            matches = self._insert_into_matches(match, current_slot, matches)
+            self._insert_into_matches(match, current_slot, matches)
             old_slots.remove(match)
         else:
-            matches = self._insert_into_matches(None, current_slot, matches)
+            self._insert_into_matches(None, current_slot, matches)
         # Continue with the next new slot
         return self._get_matches_from_slots(
             old_slots,
