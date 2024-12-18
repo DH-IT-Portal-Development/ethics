@@ -20,6 +20,8 @@ from proposals.utils.pdf_diff_utils import (
     get_all_related_set,
     get_extra_documents,
     multi_sections,
+    KindRow,
+    UploadDateRow,
 )
 
 ##############
@@ -562,6 +564,8 @@ class AttachmentSection(BaseSection):
         "upload",
         "name",
         "comments",
+        "kind",
+        "upload_date",
     ]
 
     def __init__(self, obj, sub_title, proposal):
@@ -573,7 +577,12 @@ class AttachmentSection(BaseSection):
         if field in self.get_row_fields():
             return Row(self.obj, field, self.proposal)
         else:
-            return None
+            obj = self.obj.attachment
+        
+        if field == "upload_date":
+            return UploadDateRow(obj, field)
+
+        return Row(obj, field, self.proposal)
 
 
 ###############

@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
@@ -214,6 +214,37 @@ class Row:
             return mark_safe(
                 self.obj._meta.get_field(field).verbose_name % self.obj.net_duration()
             )
+
+
+class KindRow(Row):
+    """
+    Create a row for a very specific edge case, namely attachment.kind.
+    It needs to use attachment's verbose name, but get the value from slot.
+    """
+
+    def __init__(self, slot, attachment, field):
+        self.slot = slot
+        self.obj = attachment
+        self.field = field
+
+    def value(self):
+        return self.slot.kind.name
+
+class UploadDateRow:
+    """
+    Another very specific row case for attachments. This one just needed to be
+    fully custom and hardly related to the normal Row ...
+    """
+
+    def __init__(self, attachment, field):
+        self.field = field
+        self.attachment = attachment
+
+    def value(self):
+        return datetime.date(self.attachment.upload.file_instance.modified_on)
+    
+    def verbose_name(self):
+        return _("Uploaddatum")
 
 
 class RowValue:
