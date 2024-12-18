@@ -12,46 +12,46 @@
     {% trans "Je kan de aard van de aanvraag nu in detail op de volgende pagina's specificeren." as is_similar %}
     {% trans "Je kan de aard van de aanvraag nu <em>per traject</em> in detail op de volgende pagina's specificeren." as is_dissimilar %}
     <script>
-$(function() {
+    $(function() {
 
-    $('input[name=studies_similar]').change(function() {
-        var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
-        
-        var text = "{{ is_similar }}";
-        if (is_dissimilar) {
-            // Set the default value for studies_number to 2 (if it's not already set)
-            if ($('input[name="studies_number"]').val() === '1') {
-                $('input[name="studies_number"]').val('2');
-            }
+        $('input[name=studies_similar]').change(function() {
+            var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
+
+            var text = "{{ is_similar }}";
+            if (is_dissimilar) {
+                // Set the default value for studies_number to 2 (if it's not already set)
+                if ($('input[name="studies_number"]').val() === '1') {
+                    $('input[name="studies_number"]').val('2');
+                }
         	text = "{{ is_dissimilar }}";
-        }
-        else {
-            $('input[name="studies_number"]').val('1');
-            $('input[name^="study_name"]').parents('.uu-form-row').hide();
-            $('input[name="study_name_1"]').parents('.uu-form-row').prev().hide();
-        }
-        console.log(text)
-
-        $('#next_text').html(text);
-        $('#next_text').show();
-        
-        $('#id_studies_number').parents('.uu-form-row').toggle(is_dissimilar);
-        $('#id_studies_number').change();
-    });
-    $('input[name=studies_similar]').change();
-    
-    $('input[name=studies_number]').change(function() {
-        var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
-        
-        if (is_dissimilar) {
-            $('input[name="study_name_1"]').parents('.uu-form-row').prev().show();
-            for (var i = 1; i <= 10; i++) {
-                $('input[name="study_name_' + i + '"]').parents('.uu-form-row').toggle(i <= $(this).val());
             }
-        }
+            else {
+                $('input[name="studies_number"]').val('1');
+                $('input[name^="study_name"]').parents('.uu-form-row').hide();
+                $('input[name="study_name_1"]').parents('.uu-form-row').prev().hide();
+            }
+            console.log(text)
+
+            $('#next_text').html(text);
+            $('#next_text').show();
+
+            $('#id_studies_number').parents('.uu-form-row').toggle(is_dissimilar);
+            $('#id_studies_number').change();
+        });
+        $('input[name=studies_similar]').change();
+
+        $('input[name=studies_number]').change(function() {
+            var is_dissimilar = $('input[name=studies_similar]:checked').val() === 'False';
+
+            if (is_dissimilar) {
+                $('input[name="study_name_1"]').parents('.uu-form-row').prev().show();
+                for (var i = 1; i <= 10; i++) {
+                    $('input[name="study_name_' + i + '"]').parents('.uu-form-row').toggle(i <= $(this).val());
+                }
+            }
+        });
+        $('input[name=studies_number]').change();
     });
-    $('input[name=studies_number]').change();
-});
     </script>
 {% endblock %}
 
@@ -77,7 +77,7 @@ $(function() {
         <li>
             <strong>{% trans "Sessie" %}</strong>:
             {% blocktrans trimmed %}
-                Alle taken/onderdelen die iemand op één dag uitvoert.
+                Alle taken en procedures die een deelnemer voltooit tijdens een enkel bezoek aan de onderzoekslocatie, of tijdens een enkel bezoek van de onderzoeker.
             {% endblocktrans %}
         </li>
         <li>

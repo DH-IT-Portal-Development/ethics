@@ -34,6 +34,16 @@ from cdh.core.forms import (
 )
 
 
+class SupervisorEditingFormMixin:
+
+    def __init__(self, *args, **kwargs):
+        self.supervisor_editing_flag = kwargs.pop(
+            "supervisor_editing_flag",
+            False,
+        )
+        return super().__init__(*args, **kwargs)
+
+
 class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
@@ -72,7 +82,10 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
 
 
 class ResearcherForm(
-    UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm
+    UserKwargModelFormMixin,
+    SupervisorEditingFormMixin,
+    SoftValidationMixin,
+    ConditionalModelForm,
 ):
     class Meta:
         model = Proposal
@@ -102,7 +115,6 @@ class ResearcherForm(
         - Add a None-option for supervisor
         - If this is a practice Proposal, limit the relation choices
         """
-
         super(ResearcherForm, self).__init__(*args, **kwargs)
         self.fields["relation"].empty_label = None
         self.fields["student_context"].empty_label = None
@@ -110,9 +122,9 @@ class ResearcherForm(
         supervisors = get_user_model().objects.exclude(pk=self.user.pk)
 
         instance = kwargs.get("instance")
-
-        # If you are already defined as a supervisor, we have to set it to you
-        if instance is not None and instance.supervisor == self.user:
+        # If you're already the supervisor, we remove all other options
+        # and set a flag assuming you're already editing as the supervisor
+        if self.supervisor_editing_flag:
             supervisors = [self.user]
 
         self.fields["supervisor"].choices = [
@@ -157,7 +169,7 @@ van het FETC-GW worden opgenomen."
             if (
                 relation.needs_supervisor
                 and supervisor == self.user
-                and self.instance.status != Proposal.Statuses.SUBMITTED_TO_SUPERVISOR
+                and not self.supervisor_editing_flag
             ):
                 error = forms.ValidationError(
                     _("Je kunt niet jezelf als promotor/begeleider opgeven.")
@@ -828,8 +840,7 @@ class ProposalSubmitForm(
         cleaned_data = super(ProposalSubmitForm, self).clean()
 
         if (
-            not self.instance.is_pre_assessment
-            and not self.instance.is_practice()
+            not self.instance.is_practice()
             and not "js-redirect-submit" in self.request.POST
             and not "save_back" in self.request.POST
         ):

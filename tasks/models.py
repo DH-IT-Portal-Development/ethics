@@ -27,11 +27,12 @@ class Session(SettingModel):
 
     tasks_duration = models.PositiveIntegerField(
         _(
-            "De totale geschatte netto taakduur van je sessie komt \
-op basis van je opgave per taak uit op <strong>%d minuten</strong>. \
-Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, \
-instructies per taak, pauzes tussen taken, en debriefing? \
-(bij labbezoek dus van binnenkomst tot vertrek)"
+            "De totale geschatte netto taakduur van je sessie komt "
+            "op basis van je opgave per taak uit op <strong>%d minuten</strong>. "
+            "Hoeveel minuten duurt de totale sessie, inclusief ontvangst, "
+            "instructies per taak, pauzes tussen taken, en debriefing? "
+            "(bij labbezoek dus van binnenkomst tot vertrek en bij een "
+            "focus-groep van ontvangst tot afsluiting)"
         ),
         null=True,
         blank=True,
@@ -112,12 +113,12 @@ class Task(models.Model):
 
     description = models.TextField(
         _(
-            "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort \
-uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de \
-beantwoording van jouw onderzoeksvragen bijdraagt. \
-Geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli \
-dat je van plan bent aan de deelnemer aan te bieden. \
-Het moet voor de commissieleden duidelijk zijn wat je precies gaat doen."
+            "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort "
+            "uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de "
+            "beantwoording van jouw onderzoeksvragen bijdraagt. "
+            "Geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli "
+            "of prompts dat je van plan bent aan de deelnemer aan te bieden. Het moet "
+            "voor de commissieleden duidelijk zijn wat je precies gaat doen."
         ),
         blank=True,
     )
@@ -186,7 +187,7 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
 
     feedback = models.BooleanField(
         _(
-            "Krijgt de deelnemer tijdens of na deze taak feedback op hun "
+            "Krijgen deelnemers tijdens of na deze taak feedback op hun "
             "gedrag of toestand?"
         ),
         null=True,
