@@ -1048,10 +1048,10 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
         if order not in matches.keys():
             matches[order] = []
         matches[order].append(
-            [
+            (
                 self._create_attachment_section(old_slot) if old_slot else None,
                 self._create_attachment_section(new_slot) if new_slot else None,
-            ],
+            ),
         )
         return matches
 
@@ -1076,12 +1076,14 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
         # Else, continue with the next potential match
         return self._match_slot(slot, slots[1:])
 
-    def _get_matches_from_slots(self, old_slots, new_slots, matches=dict()):
+    def _get_matches_from_slots(self, old_slots, new_slots, matches=False):
         """
         Tail recursive function that returns a dictionary of integers to tuples
         of (old, new) attachment slot sets, either of which may be None, but not
         both.
         """
+        if not matches:
+            matches = dict()
         if new_slots == []:
             # If we've run out of new slots, start going through the yet
             # unmatched old slots.
