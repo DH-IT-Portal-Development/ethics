@@ -59,6 +59,7 @@ class Attachment(models.Model, renderable):
             "je het voor gaat gebruiken tijdens je onderzoek. Eventuele "
             "opmerkingen voor de FETC kun je hier ook kwijt."
         ),
+        blank=True,
     )
 
     def get_owner_for_proposal(self, proposal):

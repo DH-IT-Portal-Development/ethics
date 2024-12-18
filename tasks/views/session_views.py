@@ -9,7 +9,8 @@ from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView, Cre
 from proposals.mixins import StepperContextMixin
 from studies.mixins import StudyFromURLMixin, StudyMixin
 from ..forms import SessionUpdateForm, SessionEndForm, SessionOverviewForm
-from ..models import Session, Study
+from ..models import Session
+from studies.models import Study
 
 
 ######################

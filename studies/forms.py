@@ -246,7 +246,10 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
         )
 
 
-class StudyDesignForm(TemplatedModelForm):
+class StudyDesignForm(
+    SoftValidationMixin,
+    TemplatedModelForm,
+):
 
     # This form uses a custom template for rendering the form part.
     # As it needs are a bit specific
@@ -345,8 +348,10 @@ class StudyEndForm(SoftValidationMixin, ConditionalModelForm):
             del self.fields["deception"]
             del self.fields["deception_details"]
 
-        self._errors = None
-        self.full_clean()
+        # If we have an existing instance and we're not POSTing,
+        # run a initial clean
+        if self.instance.pk and "data" not in kwargs:
+            self.initial_clean()
 
     def clean(self):
         """

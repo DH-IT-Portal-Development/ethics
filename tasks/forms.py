@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.utils import YES_NO
-from tasks.models import Study
+from studies.models import Study
 from .models import Session, Task
 
 

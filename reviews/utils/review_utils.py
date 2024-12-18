@@ -554,7 +554,7 @@ def auto_review_observation(observation):
         if not observation.has_advanced_consent:
             reasons.append(
                 _(
-                    "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met informed consent achteraf."
+                    "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met toestemming na afloop van het onderzoek."
                 )
             )
         if observation.is_anonymous:

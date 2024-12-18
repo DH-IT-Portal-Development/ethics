@@ -29,9 +29,9 @@
     "fields": {
         "is_local": false,
         "needs_details": false,
-        "description": "scholen, KDV, BSO",
-        "description_en": "schools, nurseries, day care centers",
-        "description_nl": "scholen, KDV, BSO",
+        "description": "school / onderwijsinstelling / peuterspeelzaal / kinderopvang",
+        "description_en": "school / educational facility / kindergarten / day care centers",
+        "description_nl": "school / onderwijsinstelling / peuterspeelzaal / kinderopvang",
         "requires_review": true,
         "order": 3
     },
@@ -55,9 +55,9 @@
     "fields": {
         "is_local": false,
         "needs_details": true,
-        "description": "Amazon Mechanical Turk (MTurk) / Prolific,",
-        "description_en": "Amazon Mechanical Turk (MTurk) / Prolific",
-        "description_nl": "Amazon Mechanical Turk (MTurk) / Prolific",
+        "description": "Prolific / MTurk (Amazon Mechanical Turk)",
+        "description_en": "Prolific / MTurk (Amazon Mechanical Turk)",
+        "description_nl": "Prolific / MTurk (Amazon Mechanical Turk)",
         "requires_review": true,
         "order": 4
     },

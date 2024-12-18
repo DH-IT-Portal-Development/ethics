@@ -18,8 +18,10 @@ from attachments.utils import AttachmentSlot, desiredness, OptionalityGroup
 from attachments.kinds import (
     DataManagementPlan,
     LEGAL_BASIS_KIND_DICT,
-    ConsentForm,
-    AgreementRecordingsPublicInterest,
+    ConsentFormAdults,
+    AgreementRecordingsAdults,
+    AgreementRecordingsChildrenNoParents,
+    AgreementRecordingsChildrenParents,
     ScriptVerbalConsentRecordings,
     ConsentPublicInterestSpecialDetails,
     ConsentChildrenParents,
@@ -119,13 +121,6 @@ class OtherResearchersChecker(
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
-        if self.proposal.is_pre_assessment:
-            return [
-                GoalChecker(
-                    self.stepper,
-                    parent=self.parent,
-                )
-            ]
         return [
             FundingChecker(
                 self.stepper,
@@ -170,14 +165,12 @@ class GoalChecker(
 
     def check(self):
         self.stepper.items.append(self.make_stepper_item())
-        if self.proposal.is_pre_approved:
-            return [
-                PreApprovedChecker(
-                    self.stepper,
-                    parent=self.parent,
-                )
-            ]
-        return [WMOChecker]
+        return [
+            PreApprovedChecker(
+                self.stepper,
+                parent=self.parent,
+            )
+        ]
 
     def get_url(self):
         return reverse(
@@ -194,8 +187,9 @@ class PreApprovedChecker(
     form_class = proposal_forms.PreApprovedForm
 
     def check(self):
-        self.stepper.items.append(self.make_stepper_item())
-        return [SubmitChecker]
+        if self.proposal.is_pre_approved:
+            self.stepper.items.append(self.make_stepper_item())
+        return [WMOChecker]
 
     def get_url(self):
         return reverse(
@@ -213,6 +207,8 @@ class WMOChecker(ModelFormChecker):
     def check(
         self,
     ):
+        if self.proposal.is_pre_approved:
+            return [TrajectoriesChecker]
         self.item = self.make_stepper_item()
         self.stepper.items.append(
             self.item,
@@ -220,6 +216,11 @@ class WMOChecker(ModelFormChecker):
         if self.object_exists():
             return self.check_wmo()
         else:
+
+            def no_wmo_error():
+                return [_("WMO gegevens ontbreken")]
+
+            self.item.get_checker_errors = no_wmo_error
             return []
 
     def check_wmo(
@@ -236,8 +237,6 @@ class WMOChecker(ModelFormChecker):
                     parent=self.item,
                 )
             ]
-        if self.proposal.is_pre_assessment:
-            return [SubmitChecker]
         return [TrajectoriesChecker]
 
     def get_url(self):
@@ -296,8 +295,6 @@ class WMOApplicationChecker(ModelFormChecker):
         self.stepper.items.append(self.make_stepper_item())
         if self.proposal.wmo.status == Wmo.WMOStatuses.WAITING:
             return []
-        if self.proposal.is_pre_assessment:
-            return [SubmitChecker]
         return [TrajectoriesChecker]
 
     def get_url(self):
@@ -324,10 +321,14 @@ class TrajectoriesChecker(
     def check(
         self,
     ):
+        proposal = self.proposal
+        if proposal.is_pre_assessment or proposal.is_pre_approved:
+            return self.remaining_checkers()
         self.item = self.make_stepper_item()
         self.stepper.items.append(self.item)
         sub_items = [self.make_study_checker(s) for s in self.get_studies()]
-        return sub_items + self.remaining_checkers()
+        ksc = KnowledgeSecurityChecker(self.stepper, parent=self.item)
+        return sub_items + [ksc] + self.remaining_checkers()
 
     def make_study_checker(self, study):
         return StudyChecker(
@@ -340,7 +341,6 @@ class TrajectoriesChecker(
         self,
     ):
         return [
-            KnowledgeSecurityChecker(self.stepper, parent=self.item),
             DataManagementChecker,
             AttachmentsChecker,
             SubmitChecker,
@@ -486,6 +486,9 @@ class StudyAttachmentsChecker(
     def check(
         self,
     ):
+
+        # INFORMATION LETTER LOGIC
+
         if self.study.legal_basis is not None:
             kind = LEGAL_BASIS_KIND_DICT[self.study.legal_basis]
             info_slot = AttachmentSlot(
@@ -494,36 +497,46 @@ class StudyAttachmentsChecker(
             )
             self.stepper.add_slot(info_slot)
 
+        # LOGIC FOR PUBLIC INTEREST
+
         if self.study.legal_basis == Study.LegalBases.PUBLIC_INTEREST:
 
-            fulfilled_recording_slot = None
+            if self.study.has_recordings():
+                if self.study.has_adults():
+                    # if a study features registration, add two slots
+                    recording_adults_group = OptionalityGroup()
+                    self.stepper.add_slot(
+                        AttachmentSlot(
+                            self.study,
+                            kind=ScriptVerbalConsentRecordings,
+                            optionality_group=recording_adults_group,
+                        ),
+                    )
+                    self.stepper.add_slot(
+                        AttachmentSlot(
+                            self.study,
+                            kind=AgreementRecordingsAdults,
+                            optionality_group=recording_adults_group,
+                        ),
+                    )
 
-            if self.check_has_recordings():
-                # if a study features registration, add two slots
-                recording_group = OptionalityGroup()
-                recordings_slots = [
-                    AttachmentSlot(
-                        self.study,
-                        kind=AgreementRecordingsPublicInterest,
-                        optionality_group=recording_group,
-                    ),
-                    AttachmentSlot(
-                        self.study,
-                        kind=ScriptVerbalConsentRecordings,
-                        optionality_group=recording_group,
-                    ),
-                ]
-                # if one of them has been fulfilled, this becomes the fulfilled slot
-                fulfilled_recording_slot = self.at_least_one_fulfilled(recordings_slots)
-
-                for slot in recordings_slots:
-                    # if there is at least one, make the other one optional
-                    if (
-                        fulfilled_recording_slot
-                        and slot is not fulfilled_recording_slot
-                    ):
-                        slot.force_desiredness = desiredness.OPTIONAL
-                    self.stepper.add_slot(slot)
+                if self.study.has_children():
+                    # if a study features registration of minors, add two slots
+                    recording_minors_group = OptionalityGroup()
+                    self.stepper.add_slot(
+                        AttachmentSlot(
+                            self.study,
+                            kind=AgreementRecordingsChildrenNoParents,
+                            optionality_group=recording_minors_group,
+                        ),
+                    )
+                    self.stepper.add_slot(
+                        AttachmentSlot(
+                            self.study,
+                            kind=AgreementRecordingsChildrenParents,
+                            optionality_group=recording_minors_group,
+                        ),
+                    )
 
             elif self.study.has_special_details:
                 self.stepper.add_slot(
@@ -533,78 +546,56 @@ class StudyAttachmentsChecker(
                     )
                 )
 
+        # LOGIC FOR CONSENT
+
         if self.study.legal_basis == Study.LegalBases.CONSENT:
-            fulfilled_children_slot = None
+
+            # if there are adults, make the adult consent form required or
+            # if there are recordings, either the adult consent form or Script
+            if self.study.has_adults():
+
+                if self.study.has_recordings():
+                    recording_adults_consent_group = OptionalityGroup()
+                    self.stepper.add_slot(
+                        AttachmentSlot(
+                            self.study,
+                            kind=ConsentFormAdults,
+                            optionality_group=recording_adults_consent_group,
+                        ),
+                    )
+                    self.stepper.add_slot(
+                        AttachmentSlot(
+                            self.study,
+                            kind=ScriptVerbalConsentRecordings,
+                            optionality_group=recording_adults_consent_group,
+                        ),
+                    )
+                else:
+                    self.stepper.add_slot(
+                        AttachmentSlot(
+                            self.study,
+                            kind=ConsentFormAdults,
+                        )
+                    )
+
             if self.study.has_children():
                 child_group = OptionalityGroup()
-                children_slots = [
+                self.stepper.add_slot(
                     AttachmentSlot(
                         self.study,
                         kind=ConsentChildrenParents,
                         optionality_group=child_group,
                     ),
+                )
+                self.stepper.add_slot(
                     AttachmentSlot(
                         self.study,
                         kind=ConsentChildrenNoParents,
                         optionality_group=child_group,
                     ),
-                ]
-
-                # if one of them has been fulfilled, this becomes the fulfilled slot
-                fulfilled_children_slot = self.at_least_one_fulfilled(children_slots)
-                for slot in children_slots:
-                    # if there is at least one, make the other one optional
-                    if fulfilled_children_slot and slot is not fulfilled_children_slot:
-                        slot.force_desiredness = desiredness.OPTIONAL
-                    self.stepper.add_slot(slot)
-
-            # if there is no children, make the normal consentform required
-            if self.study.has_adults():
-                self.stepper.add_slot(
-                    AttachmentSlot(
-                        self.study,
-                        kind=ConsentForm,
-                    )
                 )
 
         return []
-
-    def check_has_recordings(self):
-        """
-        A function that checks whether a study features audio or video
-        registration.
-        """
-        has_recordings = False
-        if self.study.get_observation():
-            # gather all AV observation_registraions
-            recordings_observation = observation_registration.objects.filter(
-                description__in=["audio recording", "video recording"]
-            )
-            # check if there is an overlap between these two QS's
-            if self.study.observation.registrations.all() & recordings_observation:
-                has_recordings = True
-        if self.study.get_sessions():
-            # gather all the tasks
-            all_tasks = Task.objects.filter(session__study=self.study)
-            # gather all AV task_registrations
-            recordings_sessions = task_registration.objects.filter(
-                description__in=["audio recording", "video recording"]
-            )
-            if all_tasks.filter(registrations__in=recordings_sessions):
-                has_recordings = True
-        return has_recordings
-
-    def at_least_one_fulfilled(self, slots):
-        """
-        Function which receives a list of slots and checks if at least one has
-        been fullfilled. It returns None, or the fullfiled slot
-        """
-        fullfilled_slot = None
-        for slot in slots:
-            # check if any of these slots have been fullfilled yet using match()
-            if slot.match():
-                fullfilled_slot = slot
-        return fullfilled_slot
 
 
 class ParticipantsChecker(
@@ -647,7 +638,7 @@ class ParticipantsChecker(
 
 
 class PersonalDataChecker(ModelFormChecker):
-    title = _("Persoonlijke gegevens")
+    title = _("Persoonsgegevens")
     form_class = study_forms.PersonalDataForm
 
     def __init__(
@@ -1005,12 +996,13 @@ class AttachmentsItem(
         return url
 
     def get_errors(self, include_children=False):
-        errors = []
+        errors = super().get_errors(include_children=include_children)
         for slot in self.stepper.attachment_slots:
-            if slot.required and not slot.attachment:
-                errors.append(
-                    slot.kind.name,
-                )
+            if not slot.attachment:
+                if slot.required:
+                    errors.append(
+                        slot.kind.name,
+                    )
         return errors
 
 
@@ -1024,6 +1016,8 @@ class DataManagementChecker(
     def check(
         self,
     ):
+        if self.proposal.is_pre_assessment:
+            return []
         self.stepper.items.append(
             self.make_stepper_item(),
         )
@@ -1058,6 +1052,8 @@ class AttachmentsChecker(
         ]
 
     def add_dmp_slot(self):
+        if self.proposal.is_pre_assessment:
+            return
         slot = AttachmentSlot(
             self.stepper.proposal,
             kind=DataManagementPlan,
@@ -1065,22 +1061,28 @@ class AttachmentsChecker(
         self.stepper.add_slot(slot)
 
     def add_school_slots(self):
-        studies_with_schools = [
-            study
-            for study in self.proposal.study_set.all()
-            if study.research_settings_contains_schools()
-        ]
-        if studies_with_schools:
+        result_des = False
+        for study in self.proposal.study_set.all():
+            # Get highest desiredness of all studies
+            study_gd = study.get_gatekeeper_desiredness()
+            if study_gd is desiredness.REQUIRED:
+                result_des = desiredness.REQUIRED
+                break
+            if study_gd is desiredness.OPTIONAL:
+                result_des = desiredness.OPTIONAL
+        if result_des:
             self.stepper.add_slot(
                 AttachmentSlot(
                     self.stepper.proposal,
                     kind=SchoolInformationLetter,
+                    force_desiredness=result_des,
                 )
             )
             self.stepper.add_slot(
                 AttachmentSlot(
                     self.stepper.proposal,
                     kind=SchoolConsentForm,
+                    force_desiredness=result_des,
                 )
             )
 
@@ -1101,7 +1103,8 @@ class TranslationChecker(
     def check(
         self,
     ):
-        self.stepper.items.append(self.make_stepper_item())
+        if not self.proposal.is_pre_assessment:
+            self.stepper.items.append(self.make_stepper_item())
         return []
 
     def get_url(
@@ -1133,12 +1136,41 @@ class SubmitChecker(
     def get_url(
         self,
     ):
+        url_string = "proposals:submit"
+        if self.proposal.is_pre_assessment:
+            url_string = "proposals:submit_pre"
+        if self.proposal.is_pre_approved:
+            url_string = "proposals:submit_pre_approved"
+
         return reverse(
-            "proposals:submit",
+            url_string,
             args=[
                 self.stepper.proposal.pk,
             ],
         )
+
+    def make_stepper_item(
+        self,
+    ):
+        self.recursion_marker = False
+
+        def submittable():
+            """
+            Return a single error if the proposal is not submittable,
+            avoiding recursion in error fetching.
+            """
+            if self.recursion_marker:
+                # This function will only return errors once
+                return []
+            self.recursion_marker = True
+            all_errors = self.stepper.get_form_errors()
+            if all_errors:
+                return [_("Aanvraag bevat nog foutmeldingen")]
+            return []
+
+        item = super().make_stepper_item()
+        item.get_checker_errors = submittable
+        return item
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
