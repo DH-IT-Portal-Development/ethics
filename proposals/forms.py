@@ -34,6 +34,14 @@ from cdh.core.forms import (
 )
 
 
+class SupervisorEditingFormMixin:
+
+    def __init__(self, *args, **kwargs):
+        self.supervisor_editing_flag = kwargs.pop(
+            "supervisor_editing_flag", False,
+        )
+        return super().__init__(*args, **kwargs)
+
 class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
@@ -72,7 +80,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
 
 
 class ResearcherForm(
-    UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm
+        UserKwargModelFormMixin, SupervisorEditingFormMixin, SoftValidationMixin, ConditionalModelForm,
 ):
     class Meta:
         model = Proposal
@@ -102,8 +110,6 @@ class ResearcherForm(
         - Add a None-option for supervisor
         - If this is a practice Proposal, limit the relation choices
         """
-
-        self.supervisor_editing_flag = False
         super(ResearcherForm, self).__init__(*args, **kwargs)
         self.fields["relation"].empty_label = None
         self.fields["student_context"].empty_label = None
@@ -111,10 +117,9 @@ class ResearcherForm(
         supervisors = get_user_model().objects.exclude(pk=self.user.pk)
 
         instance = kwargs.get("instance")
-        # If you're already set as the supervisor, we remove all other options
+        # If you're already the supervisor, we remove all other options
         # and set a flag assuming you're already editing as the supervisor
-        if self.instance.supervisor == self.user:
-            self.supervisor_editing_flag = True
+        if self.supervisor_editing_flag:
             supervisors = [self.user]
 
         self.fields["supervisor"].choices = [
