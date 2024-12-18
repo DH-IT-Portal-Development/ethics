@@ -583,11 +583,9 @@ class AttachmentSection(BaseSection):
             return KindRow(self.obj, self.obj.attachment, field)
         else:
             obj = self.obj.attachment
+        
+        return Row(obj, field, self.proposal)
 
-        if field in self.get_row_fields():
-            return Row(obj, field, self.proposal)
-        else:
-            return None
 
 
 ###############
