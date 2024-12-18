@@ -13,7 +13,9 @@ class BaseStepperComponent:
         self.proposal = stepper.proposal
         self.parent = parent
 
-    def get_proposal(self,):
+    def get_proposal(
+        self,
+    ):
         return self.proposal
 
 

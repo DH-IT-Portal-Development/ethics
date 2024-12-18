@@ -14,6 +14,7 @@ from .models import Proposal
 from .forms import ProposalForm
 from .utils.proposal_utils import pdf_link_callback
 
+
 class SupervisorEditingMixin:
     """
     Mixin that provides a form kwarg indicating if the current

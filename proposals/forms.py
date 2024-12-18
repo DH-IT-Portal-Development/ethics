@@ -38,9 +38,11 @@ class SupervisorEditingFormMixin:
 
     def __init__(self, *args, **kwargs):
         self.supervisor_editing_flag = kwargs.pop(
-            "supervisor_editing_flag", False,
+            "supervisor_editing_flag",
+            False,
         )
         return super().__init__(*args, **kwargs)
+
 
 class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
     class Meta:
@@ -80,7 +82,10 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
 
 
 class ResearcherForm(
-        UserKwargModelFormMixin, SupervisorEditingFormMixin, SoftValidationMixin, ConditionalModelForm,
+    UserKwargModelFormMixin,
+    SupervisorEditingFormMixin,
+    SoftValidationMixin,
+    ConditionalModelForm,
 ):
     class Meta:
         model = Proposal
