@@ -178,10 +178,9 @@ def check_wmo(request):
 
     # On doubt, contact secretary.
     if doubt:
-        secretary = get_secretary()
         message = _(
-            'Neem contact op met <a href="{link}">{secretary}</a> om de twijfels weg te nemen.'
-        ).format(link="mailto:" + secretary.email, secretary=secretary.get_full_name())
+            'Neem contact op met <a href="mailto:fetc-gw@uu.nl">de secretaris van de FETC-GW</a> om de twijfels weg te nemen.'
+        )
         message_class = "alert alert-danger mt-2"
         needs_metc = True
     # Otherwise, METC review is necessary for METC studies (obviously) and

@@ -62,34 +62,34 @@
             Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) sessies, (iii) taken.
         {% endblocktrans %}
     </p>
-    <h5>{% trans "Traject" %}</h5>
-    <p>
-        {% blocktrans trimmed %}
-            Deelnemers aan een onderzoek die dezelfde taken uitvoeren doorlopen samen een bepaald onderzoekstraject. Het kan zijn dat alle deelnemers aan een onderzoek dezelfde taken uitvoeren, dan heeft het onderzoek maar één traject.
-        {% endblocktrans %}
-    </p>
-    <p>
-        {% blocktrans trimmed %}
-            <u>Bijvoorbeeld</u>: Alle deelnemers aan een onderzoek vullen een vragenlijst in, en vervolgens wordt hun woordenschat gemeten. Hier is er voor het hele onderzoek sprake van één traject, want iedereen doet hetzelfde. Maar als deelnemers met dyslexie een aanvullende leestest doen, spreekt men hier van een tweede traject, want deze groep wordt anders belast.
-        {% endblocktrans %}
-    </p>
-    <h5>{% trans "Sessie" %}</h5>
-    <p>
-        {% blocktrans trimmed %}
-            Onder een sessie verstaan we een set aan taken die een deelnemer op een dag uitvoert. Dit kan een bezoek aan een instelling zijn waar het onderzoek plaatsvindt, maar ook als iedere week weer een online taak wordt aangeboden spreken we van meerdere sessies. Je kunt aangeven dat een sessie herhaald wordt.
-        {% endblocktrans %}
-    </p>
-    <h5>{% trans "Taak" %}</h5>
-    <p>
-        {% blocktrans trimmed %}
-            Een taak of onderdeel van je onderzoek. Deelnemers aan een onderzoekstraject voeren vaak meerdere taken uit tijdens een sessie.
-        {% endblocktrans %}
-    </p>
-    <p>
-        {% blocktrans trimmed %}
-            <u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of een bepaalde test.
-        {% endblocktrans %}
-    </p>
+    <ul>
+        <li>
+            <strong>{% trans "Traject" %}</strong>:
+            {% blocktrans trimmed %}
+                Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende documenten nodig zijn.
+            {% endblocktrans %}
+            <p>
+                {% blocktrans trimmed %}
+                    <u>Bijvoorbeeld</u>: ouders van leerlingen 15 jaar en jonger, docenten, een controlegroep en een experimentele groep die verschillende taken krijgen.
+                {% endblocktrans %}
+            </p>
+        </li>
+        <li>
+            <strong>{% trans "Sessie" %}</strong>:
+            {% blocktrans trimmed %}
+                Alle taken en procedures die een deelnemer voltooit tijdens een enkel bezoek aan de onderzoekslocatie, of tijdens een enkel bezoek van de onderzoeker.
+            {% endblocktrans %}
+        </li>
+        <li>
+            <strong>{% trans "Taak" %}</strong>:
+            {% blocktrans trimmed %}
+                Een taak of onderdeel van je onderzoek.
+                <p>
+                    <u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of een bepaalde test.
+                </p>
+            {% endblocktrans %}
+        </li>
+    </ul>
 {% endblock %}
 
 {% block post-form-pre-buttons %}

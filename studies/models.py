@@ -152,8 +152,8 @@ class Study(models.Model):
         AgeGroup,
         verbose_name=_("Uit welke leeftijdscategorie(ën) bestaat je deelnemersgroep?"),
         help_text=_(
-            "De beoogde leeftijdsgroep kan zijn 5-7 jarigen. \
-Dan moet je hier hier 4-5 én 6-11 invullen."
+            "Voorbeeld: Stel dat de beoogde leeftijdsgroep bestaat uit 5–7 "
+            "jarigen. Dan moet je hier hier 4–5 én 6–11 aanvinken."
         ),
     )
     legally_incapable = models.BooleanField(
@@ -175,7 +175,9 @@ vertegenwoordiger te worden verkregen."
     legally_incapable_details = models.TextField(_("Licht toe"), blank=True)
 
     has_special_details = models.BooleanField(
-        verbose_name=_("Worden er bijzondere of gevoelige persoonsgegevens verzameld?"),
+        verbose_name=_(
+            "Worden er bijzondere of gevoelige persoonsgegevens verzameld of gebruikt?"
+        ),
         help_text=_(
             "Wat 'bijzondere of gevoelige persoonsgegevens' zijn kun je "
             "vinden op <a href='https://utrechtuniversity.github.io/"
@@ -192,7 +194,7 @@ vertegenwoordiger te worden verkregen."
             "Wat is de AVG grondslag voor het verzamelen van " "persoonsgegevens?"
         ),
         help_text=_(
-            "Voor meer informatie over welk AVG grondslag op jouw onderzoek van "
+            "Voor meer informatie over welke AVG grondslag op jouw onderzoek van "
             "toepassing is, zie de flowchart in het "
             "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/choose-legal-basis.html'"
             " target='_blank'>UU Data Privacy Handbook</a>"
@@ -205,7 +207,9 @@ vertegenwoordiger te worden verkregen."
     special_details = models.ManyToManyField(
         SpecialDetail,
         blank=True,
-        verbose_name=_("Geef aan welke bijzondere persoonsgegevens worden verzameld:"),
+        verbose_name=_(
+            "Geef aan welke bijzondere persoonsgegevens worden verzameld of gebruikt:"
+        ),
     )
 
     has_traits = models.BooleanField(
@@ -228,7 +232,7 @@ eerst contact op met de <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>, v
         Trait,
         blank=True,
         verbose_name=_(
-            "Selecteer de medische gegevens van je proefpersonen die worden verzameld"
+            "Selecteer de medische gegevens van je proefpersonen die worden verzameld of gebruikt"
         ),
     )
     traits_details = models.CharField(_("Namelijk"), max_length=200, blank=True)
@@ -257,7 +261,7 @@ te testen?"
     )
     compensation = models.ForeignKey(
         Compensation,
-        verbose_name=_("Welke vergoeding krijgt de deelnemer voor hun deelname?"),
+        verbose_name=_("Welke vergoeding krijgen deelnemers voor hun deelname?"),
         help_text=_(
             "Het standaardbedrag voor vergoeding aan de deelnemers \
 is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een \
@@ -271,7 +275,9 @@ cadeautje."
 
     hierarchy = models.BooleanField(
         verbose_name=_(
-            "Bestaat een hiërarchische relatie tussen onderzoeker(s) en deelnemer(s)?"
+            "Bestaat er een hiërarchische relatie tussen onderzoeker(s) "
+            "en deelnemer(s) of zouden deelnemers die relatie als "
+            "hiërarchisch kunnen ervaren?"
         ),
         null=True,
         blank=True,
