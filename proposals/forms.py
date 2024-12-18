@@ -825,6 +825,10 @@ class ProposalSubmitForm(
         if not check_local_facilities(self.proposal):
             del self.fields["inform_local_staff"]
 
+        if self.proposal.is_pre_assessment:
+            del self.fields["embargo"]
+            del self.fields["embargo_end_date"]
+
     def clean(self):
         """
         Check if the Proposal is complete:
@@ -851,6 +855,11 @@ class ProposalSubmitForm(
 
             embargo_end_date = cleaned_data["embargo_end_date"]
             two_years_from_now = timezone.now().date() + timezone.timedelta(days=730)
+
+            if cleaned_data["embargo"] == True and not embargo_end_date:
+                self.add_error(
+                    "embargo_end_date", _("Vul een datum in waarop de embargo afloopt.")
+                )
 
             if embargo_end_date is not None and embargo_end_date > two_years_from_now:
                 self.add_error(
