@@ -162,7 +162,7 @@ class PersonalDataSection(BaseSection):
     """This class receives a proposal.study object
     Note the overwritten __init__ method for adding a sub_title."""
 
-    section_title = _("Persoonlijke gegevens")
+    section_title = _("Persoonsgegevens")
     row_fields = [
         "legal_basis",
         "has_special_details",
