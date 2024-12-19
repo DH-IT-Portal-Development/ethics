@@ -3,7 +3,7 @@ import logging
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 logger = logging.getLogger("ethics.main")
 
@@ -38,6 +38,13 @@ class SystemMessage(models.Model):
         return ""
 
 
+class GatekeeperChoices(models.IntegerChoices):
+    # Not translated, as it's backend only
+    NO = (1, "No")
+    OPTIONAL = (2, "Optional")
+    REQUIRED = (3, "Required")
+
+
 class Setting(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -45,9 +52,15 @@ class Setting(models.Model):
     needs_details = models.BooleanField(default=False)
     needs_supervision = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
+    is_school = models.BooleanField("Is a school", default=False)
+
     # Variable is called is_school because in the early requirement it was
     # only in schools. Now it's been extended and thus renamed.
-    is_school = models.BooleanField("Needs external permission", default=False)
+    gatekeeper_documents = models.PositiveIntegerField(
+        verbose_name="Gatekeeper documents",
+        choices=GatekeeperChoices.choices,
+        default=GatekeeperChoices.NO,
+    )
 
     class Meta:
         ordering = ["order"]
@@ -97,6 +110,22 @@ van de leraar of een ander persoon die bevoegd is?"
     def settings_contains_schools(self):
         """If the current settings contains any that are marked as schools."""
         return self.setting.filter(is_school=True).exists()
+
+    @property
+    def gatekeeper_requirement(self):
+        """
+        Returns the highest gatekeeper requirement of settings in this
+        SettingModel.
+        """
+        for level in [
+            GatekeeperChoices.REQUIRED,
+            GatekeeperChoices.OPTIONAL,
+        ]:
+            if self.setting.filter(
+                gatekeeper_documents=level,
+            ).exists():
+                return level
+        return GatekeeperChoices.NO
 
     def settings_requires_review(self):
         """If the current settings contain any that requires review"""

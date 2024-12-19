@@ -4,12 +4,12 @@ from typing import Tuple
 from braces.views import GroupRequiredMixin, LoginRequiredMixin
 from django.conf import settings
 from django.db.models import Q, Exists, OuterRef
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from rest_framework.authentication import SessionAuthentication
 
 from main.utils import is_secretary
 from proposals.models import Proposal
-from uil.vue.rest import FancyListApiView
+from cdh.vue.rest import FancyListApiView
 from ..mixins import CommitteeMixin
 
 from ..models import Decision, Review

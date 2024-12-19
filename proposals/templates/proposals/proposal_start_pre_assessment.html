@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{% trans "Nieuwe FETC-aanvraag voor (al dan niet goedgekeurde) subsidieaanvragen" %}</h2>
             <p>
@@ -39,7 +39,7 @@
                     <img src="{% static 'proposals/images/fetc-flowchart-pre-2.png' %}"
                          style="width: 100%">
                 </p>
-                <a class="button button-colored float-right mb-3"
+                <a class="btn btn-primary float-end mb-3"
                    href="{% url 'proposals:create_pre' %}">{% trans "Volgende stap >>" %}</a>
             </div>
         </div>

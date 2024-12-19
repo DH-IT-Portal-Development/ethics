@@ -1,0 +1,77 @@
+{% extends 'base/fetc_base.html' %}
+
+{% load i18n %}
+
+{% block content %}
+    <div class="uu-container">
+        {# A block one can use to insert content before the stepper/form container #}
+        {% include "proposals/practice_or_supervisor_warning.html" %}
+        {% block pre-form-container-content %}{% endblock %}
+
+        {# todo: responsive design #}
+        <div class="col-3">
+            {% block sidebar %}
+                {% if stepper %}
+                    {% include stepper %}
+                {% endif %}
+                {% if secretary_return_link %}
+                    <div class="pt-4 sticky-top">
+                        <a href="{{ secretary_return_link }}" class="btn btn-primary sticky-top">{% trans "Terug naar beoordeling" %}</a>
+                    </div>
+                {% endif %}
+            {% endblock %}
+
+        </div>
+        <div class="col-9">
+            <form action="" method="post" class="uu-form {% block form-css-classes %}{% endblock %}
+                 " enctype="multipart/form-data">
+                {% csrf_token %}
+                {# A block one can use to add stuff before the actual form, but next to the stepper #}
+                {% block pre-form %}
+                    <div class="uu-form-text-row">
+                        <div class="uu-form-text">
+                            {% block pre-form-text %}{% endblock %}
+
+                        </div>
+                        <aside class="uu-form-text-aside">
+                            {% block pre-form-aside %}{% endblock %}
+
+                        </aside>
+                    </div>
+                {% endblock %}
+
+                {% block auto-form-render %}{{ form }}{% endblock %}
+
+                {% block post-form-pre-buttons %}{% endblock %}
+
+                <div class="uu-form-text-row">
+                    <div class="uu-form-text">
+                        <div class="mt-4 mb-3 w-100 d-flex">
+                            {% block form-buttons %}
+                                {% include "base/form_buttons.html" %}
+                            {% endblock %}
+
+                        </div>
+                    </div>
+                </div>
+                {# A block one can use to add stuff after the form, but still next to the stepper #}
+                {% block post-form %}
+                    <div class="uu-form-text-row">
+                        <div class="uu-form-text">
+                            {% block post-form-text %}{% endblock %}
+
+                        </div>
+                        <aside class="uu-form-text-aside">
+                            {% block post-form-aside %}{% endblock %}
+
+                        </aside>
+                    </div>
+                {% endblock %}
+
+            </form>
+        </div>
+        {# A block one can use to insert content after the stepper/form container #}
+        {% block post-form-container-content %}{% endblock %}
+
+    </div>
+{% endblock %}

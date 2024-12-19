@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_form_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -8,36 +8,22 @@
 {% endblock %}
 
 {% block html_head %}
+    {{ block.super }}
     <script>
         $(function () {
             depends_on_value('metc_application', 'True', 'metc_decision');
-            depends_on_value('metc_application', 'True', 'metc_decision_pdf');
             depends_on_value('metc_decision', 'True', 'metc_decision_pdf');
         });
     </script>
 {% endblock %}
 
-{% block content %}
-    <div class="uu-inner-container">
-        <div class="col-12">
-            {% with nav_items=wmo.proposal.available_urls active=2 %}
-                {% include 'base/navigation.html' %}
-            {% endwith %}
-            <h2>{% trans "Aanmelding bij de METC" %}</h2>
-            <form action="" method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <table>
-                    {{ form.as_table }}
-                </table>
-                {% if wmo.status == wmo.WMOStatuses.WAITING %}
-                    <div class="warning">
-                        {% trans "Zolang je aanvraag nog niet is beoordeeld door de METC, kan je niet verder in het aanmeldingsproces." %}
-                    </div>
-                {% endif %}
-                {% with proposal=wmo.proposal %}
-                    {% include "base/form_buttons.html" %}
-                {% endwith %}
-            </form>
+{% block form-css-classes %}uu-form-no-gap uu-form-no-help{% endblock %}
+
+{% block pre-form %}
+    <h3>{% trans "Aanmelding bij de METC" %}</h3>
+    {% if wmo.status == wmo.WMOStatuses.WAITING %}
+        <div class="alert alert-warning mt-3">
+            {% trans "Zolang je aanvraag nog niet is beoordeeld door de METC, kan je niet verder in het aanmeldingsproces." %}
         </div>
-    </div>
+    {% endif %}
 {% endblock %}

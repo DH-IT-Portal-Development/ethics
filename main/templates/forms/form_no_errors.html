@@ -1,0 +1,28 @@
+<div class="d-flex flex-column">
+    {% for field, errors in fields %}
+        {% if field.field.form_text %}
+            {{ field }}
+        {% else %}
+            <div {% with classes=field.css_classes %}
+                 class="uu-form-row {% if not field.help_text and not always_show_help_column %}uu-form-no-help{% endif %} {% if not show_help_column %}uu-form-no-help{% endif %} {% if classes %}{{ classes }}{% endif %}"
+                 {% endwith %}>
+                <div class="uu-form-field">
+                    <label for="{{ field.id_for_label }}" class="form-label d-block">{{ field.label }}</label>
+                    {{ field }}
+                    <div class="invalid-feedback">
+                        {% for error in field.errors %}
+                            {{ error }}
+                            {% if not forloop.last %}<br />{% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                {% if show_help_column and field.help_text %}
+                    <div class="uu-form-help">
+                        {% if field.help_text %}{{ field.help_text|safe }}{% endif %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% for field in hidden_fields %}{{ field }}{% endfor %}
+</div>

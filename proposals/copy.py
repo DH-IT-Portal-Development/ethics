@@ -65,6 +65,19 @@ def copy_proposal(original_proposal, is_revision, created_by_user):
         copy_study_to_proposal(copy_proposal, study)
 
     if not copy_proposal.is_pre_approved:
-        copy_documents_to_proposal(original_proposal.pk, copy_proposal)
+        copy_attachments(original_proposal, copy_proposal)
 
     return copy_proposal
+
+
+def copy_attachments(old, new):
+    for att in old.attachments.all():
+        att.attached_to.add(new)
+        att.save()
+    for old_study, new_study in zip(
+        old.study_set.all(),
+        new.study_set.all(),
+    ):
+        for att in old_study.attachments.all():
+            att.attached_to.add(new_study)
+            att.save()

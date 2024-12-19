@@ -13,6 +13,7 @@ class RegistrationAdmin(admin.ModelAdmin):
         "needs_kind",
         "requires_review",
         "age_min",
+        "is_recording",
     )
     list_display_links = ("description",)
     ordering = ["order"]

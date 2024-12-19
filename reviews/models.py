@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
 from proposals.models import Proposal
@@ -144,6 +144,15 @@ class Review(models.Model):
     def current_reviewers(self):
         return get_user_model().objects.filter(decision__review=self)
 
+    def get_attachments_list(self, request=None):
+        from attachments.utils import AttachmentsList
+
+        attachments_list = AttachmentsList(
+            review=self,
+            request=request,
+        )
+        return attachments_list
+
     def __str__(self):
         return "Review of %s" % self.proposal
 
@@ -160,7 +169,7 @@ class Decision(models.Model):
 
     date_decision = models.DateTimeField(blank=True, null=True)
 
-    comments = models.TextField(_("Ruimte voor eventuele opmerkingen"), blank=True)
+    comments = models.TextField(_("Ruimte voor onderbouwing"), blank=True)
 
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     reviewer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

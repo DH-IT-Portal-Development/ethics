@@ -23,16 +23,18 @@ function depends_on_value(a, a_value, b)
 
         // Only if we don't want to show the field
         if(!check) {
-            // clear the checkbox values for dependent fields to ensure secondary
-            // dependencies disappear
+            // clear the checkbox and radio values for dependent fields to 
+            // ensure secondary dependencies disappear
+            let b_radios = input_b.find('[type=radio]');
             let b_checkboxes = input_b.find('[type=checkbox]');
-            b_checkboxes.each(function() {
+            let b_clearable_inputs = b_radios.add(b_checkboxes)
+            b_clearable_inputs.each(function() {
                 this.checked = false;
             });
-            b_checkboxes.trigger('change');
+            b_clearable_inputs.trigger('change');
         }
 
-        input_b.parents('tr').toggle(check);
+        input_b.parents('.uu-form-row').toggle(check);
     });
     input_a.change();
 }
@@ -57,10 +59,10 @@ function depends_on_hidden_value(a, a_value, b, header=false)
 
         if(header)
         {
-            input_b.parents('tr').prev().toggle(check);
+            input_b.parents('div').prev().toggle(check);
         }
 
-        input_b.parents('tr').toggle(check);
+        input_b.parents('.uu-form-row').toggle(check);
     });
     input_a.change();
 }
@@ -111,21 +113,24 @@ function check_field_required(input_name, field_name, required_input, app_name, 
         let url = "{% url 'main:check_requires' %}";
         let params = {'value': checked_inputs, 'app': app_name, 'model': model_name, 'field': field_name};
         let req = $.post(url, params, function(data) {
-            r_input.parents('tr').toggle(data.result);
+            r_input.parents('.uu-form-row').toggle(data.result);
 
-            // If we don't want to show the field, unselect all selected checkboxes of that field (if any)
+            // If we don't want to show the field, unselect all selected checkboxes/radio's of that field (if any)
             if (data.result === false) {
                 let r_input_checkboxes = r_input.find('[type=checkbox]');
-                r_input_checkboxes.each(function() {
+                let r_input_radios = r_input.find('[type=radio]')
+                let r_clearable_inputs = r_input_radios.add(r_input_checkboxes)
+    
+                r_clearable_inputs.each(function() {
                     this.checked = false;
                 });
-                r_input_checkboxes.trigger('change');
+                r_clearable_inputs.trigger('change');
             }
 
             // Remove header if present
             if(header)
             {
-                r_input.parents('tr').prev().toggle(data.result);
+                r_input.parents('.uu-form-row').prev().toggle(data.result);
             }
             //when the request is done, mark it undefined
             postrequests.delete(process_identifier);
@@ -135,45 +140,7 @@ function check_field_required(input_name, field_name, required_input, app_name, 
     input.change();
 }
 
-// Adds a title row to a form field
-function add_title(field, title)
-{
-    var insert = $('<tr>').append($('<th>').append($('<strong>').text(title))).append($('<td>'));
-    $('#id_' + field).parents('tr').before(insert);
-}
-
 $(function() {
-    // Will put help texts as a tooltip on an information image
-    $("[id^=id]").each(function() {
-        var help = $(this).nextAll('.helptext');
-        if (help.html())
-        {
-            var label = $("th label[for^='" + $(this).attr('id') + "']").first();
-            label.after(` <img src="{% static 'main/images/information.png' %}">`);
-            label.next().qtip({
-                content: {
-                    text: help.html(),
-                },
-                hide: {
-                    fixed: true,
-                    delay: 500,
-                },
-            });
-            help.remove();
-        }
-    });
-
-    // Will remove labels off table headers for checkbox/radio fields
-    $('input[type="radio"], input[type="checkbox"]').parents('tr').find('th label').contents().unwrap();
-
-    // Will automatically create tabindices
-    $('select[name!=language], input[type!=hidden], textarea, .pure-button').each(function(index) {
-        $(this).attr('tabindex', index + 1)
-    });
-
-    // Will set a custom width for the language element
-    $('select[name="language"] + .select2-container').width('110px');
-
     // Will make each textarea auto-resize.
     // Copied from: http://stackoverflow.com/a/25621277
     function h(e) {

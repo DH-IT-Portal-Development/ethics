@@ -1,0 +1,31 @@
+{% load cdh_filters %}
+
+<div class="stepper">
+    <ul>
+        {% counter counter create 1 %}
+        {% for item in stepper.build_stepper %}
+            <li>
+                {% if item.is_disabled %}
+                    <div class="stepper-item disabled {{ item.get_css_classes }}">
+                        <span class="stepper-bubble {{ bubble_size.0 }}">{% counter counter value %}</span>
+                        <span>{{ item.title }}</span>
+                    </div>
+                {% else %}
+                    <a class="stepper-item {{ item.get_css_classes }}"
+                       href="{{ item.get_url }}">
+                        <span class="stepper-bubble {{ bubble_size.0 }}">{% counter counter value %}</span>
+                        <span>{{ item.title }}</span>
+                    </a>
+                {% endif %}
+                {% if item.children and item.is_expanded %}
+                    <ul>
+                        {% for child in item.children %}
+                            {% include child with bubble_size=bubble_size|slice:"1:" %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </li>
+            {% counter counter increment %}
+        {% endfor %}
+    </ul>
+</div>

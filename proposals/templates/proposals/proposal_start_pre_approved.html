@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -9,7 +9,7 @@
 
 {% block content %}
     {% trans "https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/" as reg_url %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{% trans "Een nieuwe aanvraag aanmelden (die al goedgekeurd is door een andere ethische toetsingscomissie)" %}</h2>
             <p>
@@ -33,7 +33,7 @@
                     <a href="mailto:fetc-gw@uu.nl">fetc-gw@uu.nl</a>).
                 {% endblocktrans %}
             </p>
-            <a class="button button-colored float-right mb-3"
+            <a class="btn btn-primary float-end mb-3"
                href="{% url 'proposals:create_pre_approved' %}">{% trans "Volgende stap >>" %}</a>
         </div>
     </div>

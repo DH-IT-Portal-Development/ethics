@@ -1,134 +1,162 @@
 [
 {
+    "model": "main.setting",
+    "pk": 1,
     "fields": {
+        "order": 1,
+        "description": "het ILS lab (voormalig UiL-OTS)",
+        "description_nl": "het ILS lab (voormalig UiL-OTS)",
+        "description_en": "the ILS labs (formerly UiL-OTS)",
         "is_local": true,
         "needs_details": false,
-        "description": "het ILS lab",
-        "description_en": "the ILS labs",
-        "description_nl": "het ILS lab",
         "needs_supervision": false,
-        "order": 1
-    },
-    "model": "main.setting",
-    "pk": 1
+        "requires_review": false,
+        "is_school": false,
+        "gatekeeper_documents": 1
+    }
 },
 {
+    "model": "main.setting",
+    "pk": 2,
     "fields": {
-        "is_local": false,
-        "needs_details": false,
+        "order": 2,
         "description": "online",
-        "description_en": "online",
         "description_nl": "online",
-        "needs_supervision": false,
-        "order": 2
-    },
-    "model": "main.setting",
-    "pk": 2
-},
-{
-    "fields": {
+        "description_en": "online",
         "is_local": false,
         "needs_details": false,
+        "needs_supervision": false,
+        "requires_review": false,
+        "is_school": false,
+        "gatekeeper_documents": 1
+    }
+},
+{
+    "model": "main.setting",
+    "pk": 3,
+    "fields": {
+        "order": 3,
         "description": "school/onderwijsinstelling",
-        "description_en": "school/educational institution",
         "description_nl": "school/onderwijsinstelling",
-        "needs_supervision": true,
-        "is_school": true,
-        "order": 3
-    },
-    "model": "main.setting",
-    "pk": 3
-},
-{
-    "fields": {
+        "description_en": "school/educational institution",
         "is_local": false,
         "needs_details": false,
+        "needs_supervision": true,
+        "requires_review": false,
+        "is_school": true,
+        "gatekeeper_documents": 3
+    }
+},
+{
+    "model": "main.setting",
+    "pk": 4,
+    "fields": {
+        "order": 4,
         "description": "peuterspeelzaal/dagopvang/buitenschoolse opvang",
-        "description_en": "nursery/day care center",
         "description_nl": "peuterspeelzaal/dagopvang/buitenschoolse opvang",
+        "description_en": "nursery/day care center",
+        "is_local": false,
+        "needs_details": false,
         "needs_supervision": true,
+        "requires_review": false,
         "is_school": true,
-        "order": 4
-    },
-    "model": "main.setting",
-    "pk": 4
+        "gatekeeper_documents": 3
+    }
 },
 {
+    "model": "main.setting",
+    "pk": 5,
     "fields": {
-        "is_local": false,
-        "needs_details": false,
+        "order": 5,
         "description": "thuis bij de deelnemer",
-        "description_en": "at the participant's home",
         "description_nl": "thuis bij de deelnemer",
-        "needs_supervision": false,
-        "order": 5
-    },
-    "model": "main.setting",
-    "pk": 5
-},
-{
-    "fields": {
+        "description_en": "at the participant's home",
         "is_local": false,
         "needs_details": false,
+        "needs_supervision": false,
+        "requires_review": true,
+        "is_school": false,
+        "gatekeeper_documents": 1
+    }
+},
+{
+    "model": "main.setting",
+    "pk": 6,
+    "fields": {
+        "order": 6,
         "description": "studenten worden geworven als onderdeel van de cursus",
-        "description_en": "students who are recruited as part of a course",
         "description_nl": "studenten worden geworven als onderdeel van de cursus",
-        "needs_supervision": false,
-        "order": 6
-    },
-    "model": "main.setting",
-    "pk": 6
-},
-{
-    "fields": {
+        "description_en": "students who are recruited as part of a course",
         "is_local": false,
         "needs_details": false,
+        "needs_supervision": false,
+        "requires_review": true,
+        "is_school": false,
+        "gatekeeper_documents": 1
+    }
+},
+{
+    "model": "main.setting",
+    "pk": 7,
+    "fields": {
+        "order": 7,
         "description": "collegezaal",
-        "description_en": "lecture hall",
         "description_nl": "collegezaal",
-        "needs_supervision": false,
-        "order": 7
-    },
-    "model": "main.setting",
-    "pk": 7
-},
-{
-    "fields": {
+        "description_en": "lecture hall",
         "is_local": false,
         "needs_details": false,
+        "needs_supervision": false,
+        "requires_review": true,
+        "is_school": false,
+        "gatekeeper_documents": 1
+    }
+},
+{
+    "model": "main.setting",
+    "pk": 8,
+    "fields": {
+        "order": 8,
         "description": "logopediepraktijk",
-        "description_en": "speech therapist",
         "description_nl": "logopediepraktijk",
+        "description_en": "speech therapist",
+        "is_local": false,
+        "needs_details": false,
         "needs_supervision": false,
-        "order": 8
-    },
-    "model": "main.setting",
-    "pk": 8
+        "requires_review": false,
+        "is_school": false,
+        "gatekeeper_documents": 3
+    }
 },
 {
+    "model": "main.setting",
+    "pk": 9,
     "fields": {
-        "is_local": false,
-        "needs_details": true,
+        "order": 9,
         "description": "zorginstelling",
-        "description_en": "medical institution",
         "description_nl": "zorginstelling",
-        "needs_supervision": false,
-        "order": 9
-    },
-    "model": "main.setting",
-    "pk": 9
-},
-{
-    "fields": {
+        "description_en": "medical institution",
         "is_local": false,
         "needs_details": true,
-        "description": "anders, namelijk",
-        "description_en": "otherwise, viz.",
-        "description_nl": "anders, namelijk",
         "needs_supervision": false,
-        "order": 10
-    },
+        "requires_review": true,
+        "is_school": false,
+        "gatekeeper_documents": 3
+    }
+},
+{
     "model": "main.setting",
-    "pk": 10
+    "pk": 10,
+    "fields": {
+        "order": 10,
+        "description": "anders, namelijk",
+        "description_nl": "anders, namelijk",
+        "description_en": "otherwise, viz.",
+        "is_local": false,
+        "needs_details": true,
+        "needs_supervision": false,
+        "requires_review": true,
+        "is_school": false,
+        "gatekeeper_documents": 2
+    }
 }
 ]

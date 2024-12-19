@@ -4,7 +4,8 @@ from django.contrib.auth.models import Group
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
+from django.template import loader, Template, Context
 
 import magic  # whoooooo
 import pdftotext
@@ -129,7 +130,7 @@ def get_document_contents(file: FieldFile) -> str:
         with file.open(mode="rb") as f:
             return docx2txt.process(f)
 
-    return "No text found"
+    return f"No text found, or document not supported: ({mime})"
 
 
 def is_member_of_faculty(user, faculty):
@@ -162,3 +163,19 @@ def can_view_archive(user):
     # If our tests are inconclusive,
     # check for Humanities affiliation
     return is_member_of_humanities(user)
+
+
+class renderable:
+
+    def get_context_data(self, **kwargs):
+        context = Context()
+        context.update(kwargs)
+        return context
+
+    def render(self, extra_context={}, template_name=None):
+        if not template_name:
+            template_name = self.template_name
+        context = self.get_context_data()
+        template = loader.get_template(template_name)
+        context.update(extra_context)
+        return template.render(context.flatten())

@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load static %}
 {% load i18n %}
@@ -21,7 +21,7 @@ $(function() {
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{% trans "Formulieren aanpassen" %}</h2>
             <p>
@@ -36,11 +36,10 @@ $(function() {
                     {{ form.as_table }}
                 </table>
                 <input type="hidden" name="next" value="{{ request.META.HTTP_REFERER }}">
-                <input class="pure-button pure-button-primary"
+                <input class="btn btn-primary"
                        type="submit"
                        value="{% trans 'Formulieren aanpassen' %}" />
-                <a class="pure-button pure-button-secondary"
-                   href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+                <a class="btn btn-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
             </form>
         </div>
     </div>

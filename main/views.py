@@ -24,7 +24,7 @@ from django.http import (
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic.detail import SingleObjectMixin
@@ -57,8 +57,58 @@ class _SystemMessageView(generic.ListView):
         return self.model.objects.filter(not_after__gt=now, not_before__lt=now)
 
 
-class HomeView(LoginRequiredMixin, _SystemMessageView):
+class SeasonalCoverImageMixin:
+    seasons = {
+        "spring": {
+            "image": "main/images/coverimage-spring.jpg",
+            "author": "Dick Boetekees",
+            # This controls how the image is fitted inside the container; every image has its own 'best' fit
+            "classes": "align-items-end",
+        },
+        "summer": {
+            "image": "main/images/coverimage-summer.jpg",
+            "author": "Bert Spiertz",
+            "classes": "align-items-middle",
+        },
+        "autumn": {
+            "image": "main/images/coverimage-autumn.jpg",
+            "author": "Ivar Pel",
+            "classes": "align-items-middle",
+        },
+        "winter": {
+            "image": "main/images/coverimage-winter.jpg",
+            "author": "Simona Evstatieva",
+            "classes": "align-items-middle",
+        },
+    }
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["cover_image"] = self.get_seasonal_cover_image()
+        return context
+
+    def get_seasonal_cover_image(self):
+        now = timezone.now()
+
+        # Allow overriding by adding a ?season= get parameter
+        # For dev/testing mostly
+        if override := self.request.GET.get("season", None):
+            if override in self.seasons.keys():
+                return self.seasons[override]
+
+        if now.month in [3, 4, 5]:
+            return self.seasons["spring"]
+        elif now.month in [6, 7, 8]:
+            return self.seasons["summer"]
+        elif now.month in [9, 10, 11]:
+            return self.seasons["autumn"]
+        else:
+            return self.seasons["winter"]
+
+
+class HomeView(LoginRequiredMixin, SeasonalCoverImageMixin, _SystemMessageView):
     template_name = "main/index.html"
+    max_n_proposals = 2
 
     def no_permissions_fail(self, request=None):
         """
@@ -73,11 +123,56 @@ class HomeView(LoginRequiredMixin, _SystemMessageView):
         context = super().get_context_data(*args, **kwargs)
 
         context["is_humanities"] = is_member_of_humanities(self.request.user)
+        context["proposals"] = self.get_priority_proposals()
+        context["can_view_archive"] = can_view_archive(self.request.user)
 
         return context
 
+    def get_priority_proposals(self):
+        proposals = []
 
-class LandingView(_SystemMessageView):
+        proposals += Proposal.objects.filter(
+            supervisor=self.request.user,
+            status=Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
+            date_reviewed_supervisor=None,
+        ).order_by("date_submitted_supervisor")[: self.max_n_proposals]
+
+        if len(proposals) == self.max_n_proposals:
+            return proposals
+
+        n_needed = self.max_n_proposals - len(proposals)
+
+        proposals += (
+            Proposal.objects.filter(
+                applicants=self.request.user,
+                status=Proposal.Statuses.DRAFT,
+            )
+            .distinct()
+            .order_by(
+                "-date_modified",
+            )[:n_needed]
+        )
+
+        if len(proposals) == self.max_n_proposals:
+            return proposals
+
+        n_needed = self.max_n_proposals - len(proposals)
+
+        proposals += (
+            Proposal.objects.filter(
+                applicants=self.request.user,
+                status__gt=Proposal.Statuses.DRAFT,
+            )
+            .distinct()
+            .order_by(
+                "-date_modified",
+            )[:n_needed]
+        )
+
+        return proposals
+
+
+class LandingView(SeasonalCoverImageMixin, _SystemMessageView):
     template_name = "main/landing.html"
     model = SystemMessage
 
@@ -332,6 +427,8 @@ class HumanitiesOrPrivilegeRequiredMixin(UserPassesTestMixin):
     to a privileged set of groups.
     """
 
+    raise_exception = True
+
     def test_func(self, user):
         return can_view_archive(user)
 
@@ -386,7 +483,10 @@ class UserAllowedMixin(SingleObjectMixin):
             if self.request.user not in supervisor:
                 raise PermissionDenied
         else:
-            if self.request.user not in applicants | supervisor:
+            if (
+                self.request.user not in applicants | supervisor
+                and self.request.user != proposal.created_by
+            ):
                 raise PermissionDenied
 
         return obj
@@ -540,9 +640,9 @@ class DeleteView(LoginRequiredMixin, UserAllowedMixin, generic.DeleteView):
     """Generic delete view including login required and user allowed mixin and
     alternative for success message"""
 
-    def delete(self, request, *args, **kwargs):
+    def form_valid(self, form):
         messages.success(self.request, self.success_message)
-        return super(DeleteView, self).delete(request, *args, **kwargs)
+        return super(DeleteView, self).form_valid(form)
 
 
 class UserMediaView(LoginRequiredMixin, generic.View):

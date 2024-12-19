@@ -1,0 +1,23 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Overzicht van het takenonderzoek" %} - {{ block.super }}
+{% endblock %}
+
+{% block pre-form %}
+    <h2>{% trans "Overzicht van alle sessies en taken" %}</h2>
+    {% include "studies/study_title.html" %}
+    <p>
+        <em>{% trans "Vanuit dit overzicht is het mogelijk om sessies aan te maken, te bewerken of te verwijderen." %}</em>
+    </p>
+    {% include "tasks/session_list.html" %}
+{% endblock %}
+
+{% block auto-form-render %}<!--Override rendering of the form-->{% endblock %}
+
+{% block form-buttons %}
+    {% include "base/form_buttons.html" %}
+{% endblock %}

@@ -1,9 +1,10 @@
 # -*- encoding: utf-8 -*-
 
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, FormSetUpdateView
+from proposals.mixins import ProposalContextMixin
 from studies.models import Documents, Study
 from studies.forms import StudyConsentForm
 from studies.utils import create_documents_for_study
@@ -11,7 +12,11 @@ from ..forms import StudyStartForm
 from ..models import Proposal
 
 
-class StudyStart(AllowErrorsOnBackbuttonMixin, UpdateView):
+class StudyStart(
+    ProposalContextMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
+):
     model = Proposal
     form_class = StudyStartForm
     template_name = "proposals/study_start.html"
@@ -108,14 +113,10 @@ class StudyConsent(AllowErrorsOnBackbuttonMixin, FormSetUpdateView):
         return documents
 
     def get_next_url(self):
-        """
-        If there is another Study in this Proposal, continue to that one.
-        Otherwise, go to the data management view.
-        """
         proposal = Proposal.objects.get(pk=self.kwargs.get("pk"))
-        return reverse("proposals:data_management", args=(proposal.pk,))
+        return reverse("proposals:translated", args=(proposal.pk,))
 
     def get_back_url(self):
         """Return to the Study design view"""
         proposal = Proposal.objects.get(pk=self.kwargs.get("pk"))
-        return reverse("proposals:translated", args=(proposal.pk,))
+        return reverse("proposals:knowledge_security", args=(proposal.pk,))

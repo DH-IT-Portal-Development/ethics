@@ -53,7 +53,7 @@
     "fields": {
         "medical_traits": true,
         "order": 6,
-        "description_nl": "gegevens over gezondheid",
+        "description_nl": "gegevens over gezondheid (medische gegevens)",
         "description_en": "medical details"
     },
     "model": "studies.specialdetail",

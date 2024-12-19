@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError, ImproperlyConfigured
 from django.forms.fields import Field, FileField
 from django.forms.models import InlineForeignKeyField, construct_instance
 from django.forms.utils import ErrorDict
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 
 
 class SoftValidationMixin:
@@ -10,6 +10,9 @@ class SoftValidationMixin:
     This mixin will allow a form to submit even if specified fields have
     validator errors.
     """
+
+    # Disable the default TemplatedForm behavior of showing valid fields, it will be even more confusing
+    show_valid_fields = False
 
     _soft_validation_fields = []
 
@@ -41,6 +44,9 @@ class SoftValidationMixin:
 
     def _initial_clean_fields(self):
         for field_name, value in self.initial.items():
+            # Only validate fields form self.initial that are also in
+            # self.fields. This allows us to ignore fields that were removed
+            # in __init__()
             if field_name in self.fields:
                 field = self.fields[field_name]
             else:
@@ -77,7 +83,7 @@ class SoftValidationMixin:
                     "{} is not a field of {}!".format(field, self.__class__.__name__)
                 )
 
-            if field not in data or not data[field]:
+            if field not in data or data[field] in (None, ""):
                 self.add_error(field, _("Dit veld is verplicht."))
 
     def _initial_post_clean(self):

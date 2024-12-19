@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<div class="d-flex flex-column">
+    <label class="form-label d-block">
+        {% trans "Om welk type onderzoek gaat het hier? Je kan meerdere opties aankruisen." %}
+    </label>
+    <div class="uu-form-row">
+        <div class="uu-form-field">
+            {% for field, field_errors in fields %}
+                <input type="checkbox"
+                       class="form-check-input"
+                       name="{{ field.name }}"
+                       id="{{ field.name }}"
+                       {% if field.value %}checked{% endif %}>
+                <label for="{{ field.name }}" class="form-check-label">{{ field.label }}</label>
+                <br>
+            {% endfor %}
+            {% if errors %}
+                <div class="invalid-feedback" style="display: inline;">
+                    {% for error in errors %}{{ error }}{% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

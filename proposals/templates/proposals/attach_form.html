@@ -1,0 +1,62 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block header_title %}
+    {% trans "Voeg een bestand toe" %} - {{ block.super }}
+{% endblock %}
+
+{% block pre-form-text %}
+    <h3>{% trans "Maak of wijzig een bestand" %}</h3>
+    <p>
+        {% if not view.editing %}
+            {% blocktrans trimmed %}
+                Je voegt een bestand toe aan het volgende:
+            {% endblocktrans %}
+        {% else %}
+            {% blocktrans trimmed %}
+                Je bewerkt het volgende bestand:
+            {% endblocktrans %}
+            <p>{% include object with proposal=view.get_proposal %}</p>
+            {% blocktrans trimmed %}
+                Dit bestand is gekoppeld aan het volgende:
+            {% endblocktrans %}
+        {% endif %}
+    </p>
+    <p class="ml-5">
+        {% if study %}
+            {% blocktrans with order=study.order name=study.name trimmed %}
+                Traject {{ order }}: <em>{{ name }}</em> van
+            {% endblocktrans %}
+        {% endif %}
+        {% trans "de aanvraag" %} <em>{{ proposal.title }}</em>.
+    </p>
+    {% if not view.editing %}
+        {% if kind %}
+            {% blocktrans with name=kind.name trimmed %}
+                Je gaat hier een {{ name }} aan toevoegen. Wil je een ander soort bestand toevoegen? Ga dan terug naar de vorige pagina.
+            {% endblocktrans %}
+        {% endif %}
+    {% endif %}
+</p>
+{% endblock %}
+
+{% block form-buttons %}
+    <div class="mt-4 mb-3 w-100 d-flex">
+        <a class="btn btn-secondary"
+           href="{% url "proposals:attachments" pk=proposal.pk %}">
+            {% trans '<< Ga terug' %}
+        </a>
+        {% if view.editing %}
+            <a class="btn btn-danger"
+               href="{% url "proposals:detach_file" attachment_pk=form.instance.pk proposal_pk=view.get_proposal.pk %}">
+                {% trans 'Bestand verwijderen' %}
+            </a>
+        {% endif %}
+        <input class="btn btn-primary continue-button ms-auto"
+               type="submit"
+               name="save"
+               value="{% trans "Opslaan" %}" />
+    </div>
+{% endblock %}

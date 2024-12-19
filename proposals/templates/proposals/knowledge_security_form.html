@@ -1,0 +1,22 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Afronding trajecten" %} - {{ block.super }}
+{% endblock %}
+
+{% block html_head %}
+    {{ block.super }}
+    <script>
+        $(function () {
+            depends_on_list_value('knowledge_security', ['Y', '?'], 'knowledge_security_details');
+            depends_on_list_value('researcher_risk', ['Y', '?'], 'researcher_risk_details');
+        });
+    </script>
+{% endblock %}
+
+{% block pre-form-text %}
+    <h3>{% trans "Afronding trajecten" %}</h3>
+{% endblock %}

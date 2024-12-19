@@ -1,13 +1,20 @@
 from django import forms
 from django.contrib.auth.models import Group
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.conf import settings
 from main.forms import ConditionalModelForm
 from main.utils import YES_NO, get_reviewers_from_groups, is_secretary
 from proposals.models import Proposal
 from .models import Review, Decision
 
-from cdh.core.forms import DateField
+from cdh.core.forms import (
+    DateField,
+    BootstrapRadioSelect,
+    SearchableSelectWidget,
+    TemplatedModelForm,
+    BootstrapCheckboxInput,
+    TemplatedForm,
+)
 
 from django.core.exceptions import ValidationError
 
@@ -41,7 +48,7 @@ class ReviewAssignForm(ConditionalModelForm):
         model = Review
         fields = ["short_route"]
         widgets = {
-            "short_route": forms.RadioSelect(choices=SHORT_LONG_REVISE),
+            "short_route": BootstrapRadioSelect(choices=SHORT_LONG_REVISE),
         }
 
     def __init__(self, *args, **kwargs):
@@ -64,11 +71,11 @@ class ReviewAssignForm(ConditionalModelForm):
         self.fields["reviewers"] = forms.ModelMultipleChoiceField(
             initial=self.instance.current_reviewers(),
             queryset=reviewers,
-            widget=forms.SelectMultiple(
-                attrs={"data-placeholder": _("Selecteer de commissieleden")}
-            ),
+            widget=SearchableSelectWidget(),
             required=False,
         )
+
+        self.fields["reviewers"].widget.allow_multiple_selected = True
 
     def clean_reviewers(self):
         reviewers = self.cleaned_data["reviewers"]
@@ -83,7 +90,7 @@ class ReviewAssignForm(ConditionalModelForm):
         return self.cleaned_data["reviewers"]
 
 
-class ReviewCloseForm(forms.ModelForm):
+class ReviewCloseForm(ConditionalModelForm):
     in_archive = forms.BooleanField(initial=True, required=False)
     has_minor_revision = forms.BooleanField(initial=False, required=False)
     minor_revision_description = forms.Field(required=False)
@@ -97,7 +104,7 @@ class ReviewCloseForm(forms.ModelForm):
             "in_archive",
         ]
         widgets = {
-            "continuation": forms.RadioSelect(),
+            "continuation": BootstrapRadioSelect(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -117,12 +124,12 @@ class ReviewCloseForm(forms.ModelForm):
             ]
 
         self.fields["in_archive"].label = _("Voeg deze aanvraag toe aan het archief")
-        self.fields["in_archive"].widget = forms.RadioSelect(choices=YES_NO)
+        self.fields["in_archive"].widget = BootstrapRadioSelect(choices=YES_NO)
 
         self.fields["has_minor_revision"].label = _(
             "Is er een revisie geweest na het indienen van deze aanvraag?"
         )
-        self.fields["has_minor_revision"].widget = forms.RadioSelect(choices=YES_NO)
+        self.fields["has_minor_revision"].widget = BootstrapRadioSelect(choices=YES_NO)
 
         self.fields["minor_revision_description"].label = _("Opmerkingen over revisie")
         self.fields["minor_revision_description"].widget = forms.Textarea()
@@ -139,20 +146,15 @@ class ReviewDiscontinueForm(forms.ModelForm):
             "confirm_discontinue",
         ]
 
-    def __init__(self, *args, **kwargs):
-        """
-        - Check that this review can be discontinued
-        """
-
-        return super().__init__(*args, **kwargs)
+        widgets = {"confirm_discontinue": BootstrapCheckboxInput()}
 
 
-class DecisionForm(forms.ModelForm):
+class DecisionForm(TemplatedModelForm):
     class Meta:
         model = Decision
         fields = ["go", "comments"]
         widgets = {
-            "go": forms.RadioSelect(),
+            "go": BootstrapRadioSelect(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -163,6 +165,6 @@ class DecisionForm(forms.ModelForm):
         self.fields["go"].required = True
 
 
-class StartEndDateForm(forms.Form):
+class StartEndDateForm(TemplatedForm):
     start_date = DateField(label=_("Start datum periode:"))
     end_date = DateField(label=_("Eind datum periode:"))

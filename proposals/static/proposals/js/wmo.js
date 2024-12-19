@@ -5,7 +5,7 @@ function check_metc_required(check_url) {
 
         // Set the is_medical field based on the checked value
         var no_metc = $.inArray($("input[name=metc]:checked").val(), ["N", "?"]) > -1;
-        $("input[name=is_medical]").parents("tr").toggle(no_metc);
+        $("input[name=is_medical]").parents(".uu-form-row").toggle(no_metc);
     });
     $("input[name=metc]").change();
 

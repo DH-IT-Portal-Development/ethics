@@ -194,7 +194,7 @@ def get_registrations_for_proposal(proposal: Proposal) -> dict:
     registrations = defaultdict(list)
 
     for study in proposal.study_set.all():
-        if study.has_observation:
+        if study.get_observation():
             for registration in study.observation.registrations.all():
                 if registration in ObsReg.objects.filter(needs_details=True):
                     registrations[study.order].append(
@@ -207,7 +207,7 @@ def get_registrations_for_proposal(proposal: Proposal) -> dict:
                     registrations[study.order].append(
                         "obs: {}".format(registration.description)
                     )
-        if study.has_sessions:
+        if study.get_sessions():
             for session in study.session_set.all():
                 for task in session.task_set.all():
                     for registration in task.registrations.all():
@@ -241,11 +241,11 @@ def get_studytypes_for_proposal(proposal: Proposal) -> dict:
     study_types = defaultdict(list)
 
     for study in proposal.study_set.all():
-        if study.has_intervention:
+        if study.get_intervention():
             study_types[study.order].append("intervention")
-        if study.has_observation:
+        if study.get_observation():
             study_types[study.order].append("observation")
-        if study.has_sessions:
+        if study.get_sessions():
             study_types[study.order].append("task")
 
     return study_types

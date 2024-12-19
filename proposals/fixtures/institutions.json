@@ -4,9 +4,9 @@
       "pk":1,
       "fields":{
          "order":4,
-         "description":"Institute for Language Sciences Labs (ILS)",
-         "description_nl":"Institute for Language Sciences Labs (ILS)",
-         "description_en":"Institute for Language Sciences Labs (ILS)",
+         "description":"Institute for Language Sciences (ILS)",
+         "description_nl":"Institute for Language Sciences (ILS)",
+         "description_en":"Institute for Language Sciences (ILS)",
          "reviewing_chamber":1
       }
    },
