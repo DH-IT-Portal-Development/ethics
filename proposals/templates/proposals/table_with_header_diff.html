@@ -5,7 +5,9 @@
 {% if section_title %}
     <h2 class="mt-5 mb-1">{% trans section_title %}</h2>
 {% endif %}
-{% if sub_title %}<h3 class='mt-3'>{{ sub_title }}</h3>{% endif %}
+{% if sub_title %}
+    <h3 class={% if section_title %}'mt-3'{% else %}"mt-5 mb-1"{% endif %}>{{ sub_title }}</h3>
+{% endif %}
 <table class="table">
     <thead>
         <tr>
