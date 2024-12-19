@@ -42,7 +42,7 @@ class Attachment(models.Model, renderable):
         verbose_name=_("Type bestand"),
     )
     name = models.CharField(
-        verbose_name=_("Bestandsnaam"),
+        verbose_name=_("Omschrijving"),
         max_length=50,
         default="",
         help_text=_(
