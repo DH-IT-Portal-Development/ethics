@@ -563,10 +563,10 @@ class AttachmentSection(BaseSection):
 
     row_fields = [
         "upload",
+        "upload_date",
         "name",
         "comments",
         "kind",
-        "upload_date",
     ]
 
     def __init__(self, obj, sub_title, proposal):
