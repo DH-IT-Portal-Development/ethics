@@ -859,9 +859,8 @@ class ProposalSubmitForm(
             if "embargo" in cleaned_data:
                 if cleaned_data["embargo"] is True and not embargo_end_date:
                     self.add_error(
-                        "embargo_end_date", _(
-                            "Vul een datum in waarop de embargo afloopt."
-                        ),
+                        "embargo_end_date",
+                        _("Vul een datum in waarop de embargo afloopt."),
                     )
 
             if embargo_end_date is not None and embargo_end_date > two_years_from_now:
