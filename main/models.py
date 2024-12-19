@@ -1,7 +1,11 @@
+import logging
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+
+logger = logging.getLogger("ethics.main")
 
 
 class YesNoDoubt(models.TextChoices):
@@ -187,7 +191,10 @@ class SamlUserProxy(User):
                 if faculty_obj.users.filter(pk=self.pk).exists():
                     continue
 
+                # Save the user to ensure the user is saved before adding the faculty
+                self.save()
+
                 faculty_obj.users.add(self)
-            except:
-                # Just ignore any errors...
+            except:  # noQA
+                logger.error(f"Error processing faculty for user", exc_info=True)
                 continue
