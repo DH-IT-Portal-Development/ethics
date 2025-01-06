@@ -81,7 +81,9 @@ class AttachmentSlot(renderable):
             return self.attachment
         return False
 
-    def get_kind_from_attachment(self,):
+    def get_kind_from_attachment(
+        self,
+    ):
         if not self.attachment:
             raise RuntimeError(
                 "An AttachmentSlot must be provided with either a kind "
@@ -89,7 +91,9 @@ class AttachmentSlot(renderable):
             )
         return get_kind_from_str(self.attachment.kind)
 
-    def get_fetc_filename(self,):
+    def get_fetc_filename(
+        self,
+    ):
         return generate_filename(self)
 
     @property
@@ -304,6 +308,7 @@ def merge_groups(slots):
         out.append(item)
     return out
 
+
 def generate_filename(slot):
 
     proposal = slot.get_proposal()
@@ -335,6 +340,7 @@ def generate_filename(slot):
     fn_parts = [str(p) for p in fn_parts if p]
 
     return "-".join(fn_parts) + extension
+
 
 def get_kind_from_str(db_name):
     from attachments.kinds import ATTACHMENTS, OtherAttachment
