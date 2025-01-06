@@ -301,36 +301,34 @@ def merge_groups(slots):
         out.append(item)
     return out
 
-def attachment_filename_generator(file):
-    from attachments.kinds import ProposalAttachment, StudyAttachment
+def generate_filename(slot):
 
-    #try to get a Proposal attachment, otherwise, it must be a Study attachment
-    try:
-        attachment = ProposalAttachment.objects.get(upload=file.file_instance)
-        proposal = attachment.attached_to.last()
-        trajectory = None
-    except ProposalAttachment.DoesNotExist:
-        attachment = StudyAttachment.objects.get(upload=file.file_instance)
-        study = attachment.attached_to.last()
-        proposal = study.proposal
-        trajectory = f"T{study.order}"
-
+    proposal = slot.get_proposal()
     chamber = proposal.reviewing_committee.name
     lastname = proposal.created_by.last_name
     refnum = proposal.reference_number
-    kind = attachment.kind
-    extension = mimetypes.guess_extension(file.file_instance.content_type)
+    original_fn = slot.attachment.upload.original_filename
+    kind = slot.kind.name
+
+    extension = (
+        "." + original_fn.split(".")[-1][-7:]
+    )  # At most 7 chars seems reasonable
+
+    trajectory = None
+    if not type(slot.attached_object) is Proposal:
+        trajectory = "T" + str(slot.attached_object.order)
 
     fn_parts = [
-            "FETC",
-            chamber,
-            refnum,
-            lastname,
-            trajectory,
-            kind,
-        ]
+        "FETC",
+        chamber,
+        refnum,
+        lastname,
+        trajectory,
+        kind,
+    ]
 
-    # Translations will trip up join(), so we convert them here
+    # Translations will trip up join(), so we convert them here.
+    # This will also remove the trajectory if None.
     fn_parts = [str(p) for p in fn_parts if p]
 
     return "-".join(fn_parts) + extension
