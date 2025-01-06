@@ -314,7 +314,7 @@ def attachment_filename_generator(file):
         study = attachment.attached_to.last()
         proposal = study.proposal
         trajectory = f"T{study.order}"
-        
+
     chamber = proposal.reviewing_committee.name
     lastname = proposal.created_by.last_name
     refnum = proposal.reference_number
