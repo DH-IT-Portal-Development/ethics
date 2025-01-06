@@ -27,6 +27,13 @@ class AttachmentKind:
     attached_field = "attachments"
     desiredness = desiredness.OPTIONAL
 
+    def get_fn_part(self):
+        if hasattr(self, "fn_part"):
+            return self.fn_part
+        # Capitalize DB name
+        parts = self.db_name.split("_")
+        return "_".join([part.capitalize() for part in parts])
+
 
 class AttachmentSlot(renderable):
 
@@ -316,7 +323,7 @@ def generate_filename(slot):
     lastname = proposal.created_by.last_name
     refnum = proposal.reference_number
     original_fn = slot.attachment.upload.original_filename
-    kind = slot.kind.name
+    kind = slot.kind.get_fn_part()
 
     extension = (
         "." + original_fn.split(".")[-1][-7:]
