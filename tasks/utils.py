@@ -1,53 +1,5 @@
 from __future__ import division
 
-from django.urls import reverse
-from django.utils.translation import gettext as _
-
-from main.utils import AvailableURL
-
-
-def session_urls(study):
-    tasks_url = AvailableURL(title=_("Takenonderzoek"))
-
-    if study.has_sessions:
-        tasks_url.url = reverse("tasks:session_start", args=(study.pk,))
-        session_overview_url = AvailableURL(
-            title=_("Overzicht van alle sessies"),
-            url=reverse("tasks:session_overview", args=(study.pk,)),
-        )
-        tasks_url.children.append(session_overview_url)
-        for session in study.session_set.all():
-            task_start_url = AvailableURL(
-                title=_("Het takenonderzoek: sessie {}").format(session.order)
-            )
-            task_start_url.url = reverse("tasks:session_update", args=(session.pk,))
-            tasks_url.children.append(task_start_url)
-
-            tasks_url.children.extend(tasks_urls(session))
-
-            task_end_url = AvailableURL(
-                title=_("Overzicht van takenonderzoek: sessie {}").format(session.order)
-            )
-            task_end_url.url = reverse("tasks:session_end", args=(session.pk,))
-            tasks_url.children.append(task_end_url)
-
-    return tasks_url
-
-
-def tasks_urls(session):
-    result = list()
-
-    for task in session.task_set.all():
-        task_url = AvailableURL(
-            title=_("Het takenonderzoek: sessie {} taak {}").format(
-                session.order, task.order
-            )
-        )
-        task_url.url = reverse("tasks:update", args=(task.pk,))
-        result.append(task_url)
-
-    return result
-
 
 def copy_task_to_session(session, original_task):
     from tasks.models import Task

@@ -15,7 +15,6 @@ mark_safe_lazy = lazy(mark_safe, SafeString)
 from main.models import YesNoDoubt
 from main.validators import validate_pdf_or_doc
 from proposals.models import Proposal
-from studies.utils import study_urls
 from proposals.utils.proposal_utils import FilenameFactory, OverwriteStorage
 from tasks.models import Task
 
@@ -146,7 +145,7 @@ class Study(models.Model):
         CONSENT = 2, _("De AVG grondslag is 'toestemming'.")
 
     order = models.PositiveIntegerField()
-    name = models.CharField(_("Naam traject"), max_length=15, blank=True)
+    name = models.CharField(_("Naam traject"), max_length=30, blank=True)
 
     age_groups = models.ManyToManyField(
         AgeGroup,
@@ -572,6 +571,9 @@ class Documents(models.Model):
 
     informed_consent = models.FileField(
         _("Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"),
+        help_text=_(
+            "Als je de AVG grondslag 'Algemeen belang' gebruikt, en er helemaal geen toestemmingsverklaring nodig is (ook niet voor bijzondere persoonsgegevens of opnames), upload dan een leeg document in dit veld."
+        ),
         blank=True,
         validators=[validate_pdf_or_doc],
         upload_to=INFORMED_CONSENT_FILENAME,

@@ -15,8 +15,7 @@
             <thead class="table-primary">
                 <tr>
                     <th>{% trans "Setting" %}</th>
-                    <th>{% trans "Aantal dagen" %}</th>
-                    <th>{% trans "Duur per sessie (in uren)" %}</th>
+                    <th>{% trans "Frequentie" %}</th>
                     <th>{% trans "Anoniem?" %}</th>
                     <th>{% trans "Doelgroep?" %}</th>
                     <th>{% trans "Niet openbaar?" %}</th>
@@ -30,8 +29,7 @@
             <tbody>
                 <tr>
                     <td>{{ observation.setting.all|create_unordered_html_list }}</td>
-                    <td>{{ observation.days }}</td>
-                    <td>{{ observation.mean_hours }}</td>
+                    <td>{{ observation.details_frequency }}</td>
                     <td>{{ observation.is_anonymous|yesno:_("ja, nee") }}</td>
                     <td>{{ observation.is_in_target_group|yesno:_("ja, nee") }}</td>
                     <td>{{ observation.is_nonpublic_space|yesno:_("ja, nee") }}</td>

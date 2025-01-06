@@ -1,0 +1,25 @@
+{% extends "mail/base.txt" %}
+
+{% block content_nl %}
+Beste {{ supervisor }},
+
+{{ creator }} heeft op {{ date_start }} een concept-aanvraag ingediend die door jou gecontroleerd moet worden.
+Voordat deze aanvraag in behandeling kan worden genomen door de FETC-GW moet deze door jou geaccordeerd worden.
+
+Als er nog wijzigingen nodig zijn kun je die zelf aanbrengen of je kunt de aanvraag afkeuren.
+In dat laatste geval moet je {{ creator }} op de hoogte stellen, zodat hij/zij de aanvraag kan aanpassen.
+
+Je kunt deze concept-aanvraag bekijken via {{ proposal_url }}.
+{% endblock %}
+
+{% block content_en %}
+Dear {{ supervisor }},
+
+On {{ date_start }}, {{ creator }} submitted a draft application to be reviewed by you. Before this application can be
+processed by the FEtC-H, it must be approved by you.
+
+If changes are still needed you can make them yourself, or you can reject the application. In the latter case, you must
+then notify {{ creator }} so that he/she can modify the application.
+
+You can review this draft application via {{ proposal_url }}.
+{% endblock %}

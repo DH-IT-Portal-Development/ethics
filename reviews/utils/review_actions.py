@@ -85,7 +85,7 @@ class DecideAction(ReviewAction):
         user = self.user
         review = self.review
 
-        if review.stage not in (Review.Stages.COMMISSION, Review.Stages.SUPERVISOR):
+        if review.stage not in (review.Stages.COMMISSION, review.Stages.SUPERVISOR):
             return False
 
         try:
@@ -246,11 +246,15 @@ class ChangeArchiveStatus(ReviewAction):
 
         if (
             review.proposal.embargo == True
+            and review.proposal.embargo_end_date is not None
             and review.proposal.embargo_end_date > datetime.date.today()
         ):
             return False
 
         if review.proposal.status < Proposal.Statuses.DECISION_MADE:
+            return False
+
+        if review.proposal.is_pre_assessment:
             return False
 
         return True

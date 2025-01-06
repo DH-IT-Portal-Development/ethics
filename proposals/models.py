@@ -95,6 +95,7 @@ class ProposalQuerySet(models.QuerySet):
             status__gte=self.DECISION_MADE,
             status_review=True,
             in_archive=True,
+            is_pre_assessment=False,
         )
 
     def no_embargo(self):
@@ -122,7 +123,6 @@ class ProposalQuerySet(models.QuerySet):
             self.archive_pre_filter()
             .no_embargo()
             .filter(
-                is_pre_assessment=False,
                 reviewing_committee=committee,
             )
             .select_related(
