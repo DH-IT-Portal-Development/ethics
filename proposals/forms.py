@@ -795,6 +795,26 @@ class ProposalSubmitForm(
     class Meta:
         model = Proposal
         fields = ["comments", "inform_local_staff", "embargo", "embargo_end_date"]
+        labels = {
+            "inform_local_staff": mark_safe_lazy(
+                _(
+                    "<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één "
+                    "van de faciliteiten van het ILS, namelijk de database, Zep software "
+                    "en/of het ILS lab. Het lab supportteam van het ILS zou graag op "
+                    "de hoogte willen worden gesteld van aankomende onderzoeken. "
+                    "Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te "
+                    "sturen naar het lab supportteam.</p> "
+                    "<p>Vind je het goed dat de volgende delen uit de aanvraag "
+                    "worden doorgestuurd:</p> "
+                    "- Jouw naam en de namen van de andere betrokkenen <br/> "
+                    "- De eindverantwoordelijke van het onderzoek <br/> "
+                    "- De titel van het onderzoek <br/> "
+                    "- De beoogde startdatum <br/> "
+                    "- Van welke faciliteiten je gebruik wil maken (database, lab, "
+                    "Zep software)"
+                ),
+            ),
+        }
         widgets = {
             "inform_local_staff": BootstrapRadioSelect(choices=YES_NO),
             "embargo": BootstrapRadioSelect(choices=YES_NO),
@@ -815,8 +835,6 @@ class ProposalSubmitForm(
         self.final_validation = kwargs.pop("final_validation", None)
 
         super(ProposalSubmitForm, self).__init__(*args, **kwargs)
-
-        self.fields["inform_local_staff"].label_suffix = ""
 
         self.fields["inform_local_staff"].label = mark_safe(
             self.fields["inform_local_staff"].label
