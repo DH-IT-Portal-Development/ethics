@@ -51,6 +51,14 @@ class AttachmentSlot(renderable):
         if self.optionality_group:
             self.optionality_group.members.append(self)
 
+    @classmethod
+    def from_proposal(attachment, proposal):
+        attached_object = attachment.get_owner_for_proposal(proposal)
+        return AttachmentSlot(
+            attached_object,
+            attachment=attachment,
+        )
+
     def match(self, exclude=[]):
         """
         Tries to find a matching attachment for this slot. If it finds one,
