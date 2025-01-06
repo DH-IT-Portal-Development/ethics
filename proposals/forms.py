@@ -880,7 +880,14 @@ class ProposalSubmitForm(
         from proposals.utils.stepper import Stepper
 
         validator = Stepper(self.instance, request=self.request)
-        if validator.get_form_errors():
+
+        form_errors = validator.get_form_errors()
+
+        if form_errors:
+            #If there are only errors on the submit form, we override this
+            #validation. Otherwise saving the updated data becomes impossible
+            if len(form_errors) == 1 and form_errors[0]["page_name"] == _("Indienen"):
+                return
             self.add_error(
                 None,
                 _("Aanvraag bevat nog foutmeldingen"),
