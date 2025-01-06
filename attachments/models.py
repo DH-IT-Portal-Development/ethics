@@ -3,7 +3,6 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext as _
 from django.urls import reverse
 from main.utils import renderable
-from attachments.utils import attachment_filename_generator
 
 
 from cdh.files.db import FileField as CDHFileField
@@ -24,8 +23,6 @@ class Attachment(models.Model, renderable):
     upload = CDHFileField(
         verbose_name=_("Bestand"),
         help_text=_("Selecteer hier het bestand om toe te voegen."),
-        filename_generator=attachment_filename_generator,
-
     )
     parent = models.ForeignKey(
         "attachments.attachment",
