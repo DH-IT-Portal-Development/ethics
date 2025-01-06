@@ -369,7 +369,7 @@ class ProposalAttachmentDownloadView(
         if self.original_filename:
             return self.attachment.upload.original_filename
         else:
-            return self.get_filename_from_kind()
+            return self.get_filename_from_slot()
 
     def get_filename_from_slot(self):
         self.slot = AttachmentSlot.from_proposal(

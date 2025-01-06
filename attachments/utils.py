@@ -89,6 +89,9 @@ class AttachmentSlot(renderable):
             )
         return get_kind_from_str(self.attachment.kind)
 
+    def get_fetc_filename(self,):
+        return generate_filename(self)
+
     @property
     def classes(self):
         if self.required:
