@@ -237,9 +237,7 @@ class OtherResearchersForm(
 
         applicants = get_user_model().objects.all()
 
-        self.fields["other_stakeholders"].label = mark_safe(
-            self.fields["other_stakeholders"].label
-        )
+        self.fields["other_stakeholders"].label = self.fields["other_stakeholders"].label
 
         self.fields["applicants"].choices = get_users_as_list(applicants)
 
@@ -836,9 +834,7 @@ class ProposalSubmitForm(
 
         super(ProposalSubmitForm, self).__init__(*args, **kwargs)
 
-        self.fields["inform_local_staff"].label = mark_safe(
-            self.fields["inform_local_staff"].label
-        )
+        self.fields["inform_local_staff"].label = self.fields["inform_local_staff"].label
 
         if not check_local_facilities(self.proposal):
             del self.fields["inform_local_staff"]
