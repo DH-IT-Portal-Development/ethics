@@ -42,7 +42,10 @@ class AttachmentSlot(renderable):
     ):
         self.attachment = attachment
         self.attached_object = attached_object
-        self.kind = kind
+        if kind:
+            self.kind = kind
+        else:
+            self.kind = self.get_kind_from_attachment()
         self.force_desiredness = force_desiredness
         self.optionality_group = optionality_group
         if self.optionality_group:
@@ -69,6 +72,14 @@ class AttachmentSlot(renderable):
             self.kind = get_kind_from_str(matched_attachment.kind)
             return self.attachment
         return False
+
+    def get_kind_from_attachment(self,):
+        if not self.attachment:
+            raise RuntimeError(
+                "An AttachmentSlot must be provided with either a kind "
+                "or an attachment"
+            )
+        return get_kind_from_str(self.attachment.kind)
 
     @property
     def classes(self):
