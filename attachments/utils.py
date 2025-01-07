@@ -1,4 +1,5 @@
 import mimetypes
+from collections import Counter
 
 from django.template.loader import get_template
 from django.utils.translation import gettext as _
@@ -352,6 +353,47 @@ def generate_filename(slot):
 
     return "-".join(fn_parts) + extension
 
+def enumerate_slots(slots):
+    """
+    Provides an order attribute to all attachment slots whose kind
+    appears more than once in the provided list.
+    """
+    # Create seperate slot lists per attached_object
+    per_ao = sort_into_dict(
+        slots, lambda x: x.attached_object,
+    ).values()
+    # Assign orders to them separately
+    for ao_slots in per_ao:
+        assign_orders(ao_slots)
+
+def sort_into_dict(iterable, key_func):
+    """
+    Split iterable into separate lists in a dict whose keys
+    are the shared response to all its items' key_func(item).
+    """
+    out_dict = {}
+    for item in iterable:
+        key = key_func(item)
+        if key not in out_dict:
+            out_dict[key] = [item]
+        else:
+            out_dict[key].append(item)
+    return out_dict
+
+def assign_orders(slots):
+    # Count total kind occurrences
+    totals = Counter(
+        [slot.kind for slot in slots]
+    )
+    # Create counter to increment gradually
+    kind_counter = Counter()
+    # Loop through the slots
+    for slot in slots:
+        if totals[slot.kind] < 2:
+            # Skip slots with unique kinds
+            continue
+        kind_counter[slot.kind] += 1
+        slot.order = kind_counter[slot.kind]
 
 def get_kind_from_str(db_name):
     from attachments.kinds import ATTACHMENTS, OtherAttachment
