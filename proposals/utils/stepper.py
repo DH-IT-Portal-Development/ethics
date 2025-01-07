@@ -88,11 +88,9 @@ class Stepper(renderable):
 
     @property
     def filled_slots(
-            self,
+        self,
     ):
-        return [
-            slot for slot in self.attachment_slots if slot.attachment
-        ]
+        return [slot for slot in self.attachment_slots if slot.attachment]
 
     def get_context_data(self):
         context = super().get_context_data()

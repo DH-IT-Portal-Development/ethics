@@ -353,6 +353,7 @@ def generate_filename(slot):
 
     return "-".join(fn_parts) + extension
 
+
 def enumerate_slots(slots):
     """
     Provides an order attribute to all attachment slots whose kind
@@ -360,11 +361,13 @@ def enumerate_slots(slots):
     """
     # Create seperate slot lists per attached_object
     per_ao = sort_into_dict(
-        slots, lambda x: x.attached_object,
+        slots,
+        lambda x: x.attached_object,
     ).values()
     # Assign orders to them separately
     for ao_slots in per_ao:
         assign_orders(ao_slots)
+
 
 def sort_into_dict(iterable, key_func):
     """
@@ -380,11 +383,10 @@ def sort_into_dict(iterable, key_func):
             out_dict[key].append(item)
     return out_dict
 
+
 def assign_orders(slots):
     # Count total kind occurrences
-    totals = Counter(
-        [slot.kind for slot in slots]
-    )
+    totals = Counter([slot.kind for slot in slots])
     # Create counter to increment gradually
     kind_counter = Counter()
     # Loop through the slots
@@ -394,6 +396,7 @@ def assign_orders(slots):
             continue
         kind_counter[slot.kind] += 1
         slot.order = kind_counter[slot.kind]
+
 
 def get_kind_from_str(db_name):
     from attachments.kinds import ATTACHMENTS, OtherAttachment
