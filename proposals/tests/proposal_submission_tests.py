@@ -232,7 +232,13 @@ class PreassessmentSubmitTestCase(
     def setUp(self):
         super().setUp()
         self.proposal = self.pre_assessment
-        self.proposal.wmo = self.wmo
+        wmo = Wmo(
+            status=0,
+            metc="N",
+            is_medical="N",
+        )
+        wmo.save()
+        self.proposal.wmo = wmo
 
 
 class PreapprovedSubmitTestCase(
