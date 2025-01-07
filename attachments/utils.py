@@ -46,12 +46,14 @@ class AttachmentSlot(renderable):
         kind=None,
         force_desiredness=None,
         optionality_group=None,
+        order=None,
     ):
         self.attachment = attachment
         self.attached_object = attached_object
         if kind:
             self.kind = kind
         else:
+        self.order = order
             self.kind = self.get_kind_from_attachment()
         self.force_desiredness = force_desiredness
         self.optionality_group = optionality_group
@@ -324,6 +326,7 @@ def generate_filename(slot):
     refnum = proposal.reference_number
     original_fn = slot.attachment.upload.original_filename
     kind = slot.kind.get_fn_part()
+    order = slot.order
 
     extension = (
         "." + original_fn.split(".")[-1][-7:]
@@ -340,6 +343,7 @@ def generate_filename(slot):
         lastname,
         trajectory,
         kind,
+        order,
     ]
 
     # Translations will trip up join(), so we convert them here.
