@@ -886,6 +886,7 @@ class ProposalSubmitForm(
         # instantiate a new stepper to reflect changes
         # made to the current instance, which may not yet be saved.
         from proposals.utils.stepper import Stepper
+
         validator = Stepper(self.instance, request=self.request)
         # And then we append stepper errors to show them to the user
         # on the submit page
@@ -912,9 +913,7 @@ class ProposalSubmitForm(
             )
         embargo_end_date = cleaned_data.get("embargo_end_date", None)
         if embargo_end_date:
-            two_years_from_now = (
-                timezone.now().date() + timezone.timedelta(days=730)
-            )
+            two_years_from_now = timezone.now().date() + timezone.timedelta(days=730)
             if embargo_end_date > two_years_from_now:
                 self.add_error(
                     "embargo_end_date",
