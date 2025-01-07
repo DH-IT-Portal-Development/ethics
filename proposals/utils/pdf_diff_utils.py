@@ -323,7 +323,7 @@ class RowValue:
                 '<a href="{}">{}</a>',
                 settings.BASE_URL
                 + reverse(
-                    "proposals:download_attachment_original",
+                    "proposals:download_attachment",
                     kwargs={
                         "proposal_pk": self.proposal.pk,
                         "attachment_pk": self.obj.pk,

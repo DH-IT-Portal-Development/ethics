@@ -348,7 +348,7 @@ def generate_filename(slot):
     ]
 
     # Translations will trip up join(), so we convert them here.
-    # This will also remove the trajectory if None.
+    # This will also remove parts that are None.
     fn_parts = [str(p) for p in fn_parts if p]
 
     return "-".join(fn_parts) + extension
