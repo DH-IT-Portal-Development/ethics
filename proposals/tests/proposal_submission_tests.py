@@ -5,7 +5,7 @@ from django.conf import settings
 from django.test import TestCase
 
 from main.tests import BaseViewTestCase
-from proposals.models import Proposal, Relation
+from proposals.models import Proposal, Relation, Wmo
 from reviews.models import Review
 
 from proposals.views.proposal_views import (
@@ -77,6 +77,12 @@ class BaseProposalTestCase(TestCase):
         Please note, this currently uses a mish-mash of both fixtures
         and programmatically created users and objects.
         """
+        self.wmo = Wmo(
+            status=0,
+            metc="N",
+            is_medical="N",
+        )
+        self.wmo.save()
         self.proposal = Proposal.objects.get(pk=1)
         self.proposal.applicants.add(self.user)
         self.proposal.save()
@@ -156,21 +162,22 @@ class ProposalSubmitTestCase(
             self.get_post_data(),
             user=self.user,
         )
-        self.assertIn(page.status_code, [302, 200])
-        self.refresh()
-        # Post-submission tests
-        self.assertNotEqual(
-            self.proposal.status,
-            self.proposal.Statuses.DRAFT,
-        )
-        self.assertNotEqual(
-            self.proposal.latest_review(),
-            None,
-        )
-        self.assertEqual(
-            self.proposal.latest_review().stage,
-            Review.Stages.ASSIGNMENT,
-        )
+        if True:
+            self.assertIn(page.status_code, [302, 200])
+            self.refresh()
+            # Post-submission tests
+            self.assertNotEqual(
+                self.proposal.status,
+                self.proposal.Statuses.DRAFT,
+            )
+            self.assertNotEqual(
+                self.proposal.latest_review(),
+                None,
+            )
+            self.assertEqual(
+                self.proposal.latest_review().stage,
+                Review.Stages.ASSIGNMENT,
+            )
 
     def test_proposal_supervised(self):
         """
@@ -225,6 +232,7 @@ class PreassessmentSubmitTestCase(
     def setUp(self):
         super().setUp()
         self.proposal = self.pre_assessment
+        self.proposal.wmo = self.wmo
 
 
 class PreapprovedSubmitTestCase(
