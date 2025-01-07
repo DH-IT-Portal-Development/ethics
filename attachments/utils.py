@@ -51,11 +51,15 @@ class AttachmentSlot(renderable):
     ):
         self.attachment = attachment
         self.attached_object = attached_object
-        if kind:
-            self.kind = kind
-        else:
         self.order = order
+
+        if attachment and not kind:
+            # If an attachment was provided but no kind,
+            # attempt to get the kind from the attachment
             self.kind = self.get_kind_from_attachment()
+        else:
+            self.kind = kind
+
         self.force_desiredness = force_desiredness
         self.optionality_group = optionality_group
         if self.optionality_group:
@@ -94,11 +98,6 @@ class AttachmentSlot(renderable):
     def get_kind_from_attachment(
         self,
     ):
-        if not self.attachment:
-            raise RuntimeError(
-                "An AttachmentSlot must be provided with either a kind "
-                "or an attachment"
-            )
         return get_kind_from_str(self.attachment.kind)
 
     def get_fetc_filename(
