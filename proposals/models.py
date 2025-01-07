@@ -304,7 +304,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
     )
 
     inform_local_staff = models.BooleanField(
-        mark_safe(
+        mark_safe_lazy(
             _(
                 "<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één "
                 "van de faciliteiten van het ILS, namelijk de database, Zep software "
@@ -322,6 +322,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
                 "Zep software)"
             ),
         ),
+        # NOTE: lables with html are hardcoded in form Meta class!
         default=None,
         blank=True,
         null=True,
