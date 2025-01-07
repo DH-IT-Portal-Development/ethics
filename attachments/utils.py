@@ -27,11 +27,12 @@ class AttachmentKind:
     attached_field = "attachments"
     desiredness = desiredness.OPTIONAL
 
-    def get_fn_part(self):
-        if hasattr(self, "fn_part"):
-            return self.fn_part
+    @classmethod
+    def get_fn_part(cls):
+        if hasattr(cls, "fn_part"):
+            return cls.fn_part
         # Capitalize DB name
-        parts = self.db_name.split("_")
+        parts = cls.db_name.split("_")
         return "_".join([part.capitalize() for part in parts])
 
 
