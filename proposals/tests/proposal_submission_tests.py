@@ -162,22 +162,22 @@ class ProposalSubmitTestCase(
             self.get_post_data(),
             user=self.user,
         )
-        if True:
-            self.assertIn(page.status_code, [302, 200])
-            self.refresh()
-            # Post-submission tests
-            self.assertNotEqual(
-                self.proposal.status,
-                self.proposal.Statuses.DRAFT,
-            )
-            self.assertNotEqual(
-                self.proposal.latest_review(),
-                None,
-            )
-            self.assertEqual(
-                self.proposal.latest_review().stage,
-                Review.Stages.ASSIGNMENT,
-            )
+
+        self.assertIn(page.status_code, [302, 200])
+        self.refresh()
+        # Post-submission tests
+        self.assertNotEqual(
+            self.proposal.status,
+            self.proposal.Statuses.DRAFT,
+        )
+        self.assertNotEqual(
+            self.proposal.latest_review(),
+            None,
+        )
+        self.assertEqual(
+            self.proposal.latest_review().stage,
+            Review.Stages.ASSIGNMENT,
+        )
 
     def test_proposal_supervised(self):
         """
