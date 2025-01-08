@@ -34,7 +34,7 @@ class AttachmentKind:
             return cls.fn_part
         # Capitalize DB name
         parts = cls.db_name.split("_")
-        return "_".join([part.capitalize() for part in parts])
+        return "-".join([part.capitalize() for part in parts])
 
 
 class AttachmentSlot(renderable):
