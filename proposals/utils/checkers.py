@@ -1093,7 +1093,6 @@ class AttachmentsChecker(
             self.stepper,
         )
         return item
-        return [TranslationChecker]
 
 
 class TranslationChecker(
