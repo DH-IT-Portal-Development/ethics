@@ -67,7 +67,7 @@ class AttachmentSlot(renderable):
             self.optionality_group.members.append(self)
 
     @classmethod
-    def from_proposal(attachment, proposal):
+    def from_proposal(cls, attachment, proposal):
         attached_object = attachment.get_owner_for_proposal(proposal)
         return AttachmentSlot(
             attached_object,
