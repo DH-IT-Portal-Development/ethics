@@ -886,7 +886,7 @@ class ProposalSubmitForm(
         if form_errors:
             # If there are only errors on the submit form, we override this
             # validation. Otherwise saving the updated data becomes impossible
-            if len(form_errors) == 1 and form_errors[0]["page_name"] == _("Indienen"):
+            if len(form_errors) == 1 and "proposals/submit" in form_errors[0]["url"]:
                 return
             self.add_error(
                 None,
