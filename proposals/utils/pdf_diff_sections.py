@@ -576,8 +576,8 @@ class AttachmentSection(BaseSection):
         self.proposal = proposal
 
     def make_row_for_field(self, field):
-        
-        # "kind" and "upload" require slots as their obj, other fields receive 
+
+        # "kind" and "upload" require slots as their obj, other fields receive
         # the attachment as their obj.
         if field == "kind":
             return KindRow(self.obj, self.obj.attachment, field)

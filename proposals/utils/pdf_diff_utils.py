@@ -229,7 +229,8 @@ class KindRow(Row):
 
     def value(self):
         return self.slot.kind.name
-    
+
+
 class AttachmentRow(Row):
     """
     This row receives a slot as self.obj and also is basically fully custom.
@@ -237,7 +238,7 @@ class AttachmentRow(Row):
 
     def get_verbose_name(self, field):
         return _("Bestand")
-    
+
     def value(self):
 
         if self.obj.attachment.upload:
@@ -257,6 +258,7 @@ class AttachmentRow(Row):
             output = _("Niet aangeleverd")
 
         return output
+
 
 class UploadDateRow:
     """
