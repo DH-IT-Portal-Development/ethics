@@ -68,7 +68,7 @@ class Attachment(models.Model, renderable):
         Convenience function that delegates to submodels.
         """
         submodel = self.get_correct_submodel()
-        return submodel.get_owner_for_proposal()
+        return submodel.get_owner_for_proposal(proposal)
 
     def get_correct_submodel(self):
         if self.__class__.__name__ != "Attachment":
