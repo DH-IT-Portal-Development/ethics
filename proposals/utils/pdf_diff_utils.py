@@ -229,7 +229,34 @@ class KindRow(Row):
 
     def value(self):
         return self.slot.kind.name
+    
+class AttachmentRow(Row):
+    """
+    This row receives a slot as self.obj and also is basically fully custom.
+    """
 
+    def get_verbose_name(self, field):
+        return _("Bestand")
+    
+    def value(self):
+
+        if self.obj.attachment.upload:
+            output = format_html(
+                '<a href="{}">{}</a>',
+                settings.BASE_URL
+                + reverse(
+                    "proposals:download_attachment",
+                    kwargs={
+                        "proposal_pk": self.proposal.pk,
+                        "attachment_pk": self.obj.attachment.pk,
+                    },
+                ),
+                self.obj.get_fetc_filename(),
+            )
+        else:
+            output = _("Niet aangeleverd")
+
+        return output
 
 class UploadDateRow:
     """
@@ -280,8 +307,6 @@ class RowValue:
             return self.handle_user(value)
         elif isinstance(value, Relation) or isinstance(value, Compensation):
             return value.description
-        if value.__class__.__name__ == "FileWrapper":
-            return self.handle_attachment(value)
         elif value.__class__.__name__ == "ManyRelatedManager":
             if value.all().model == User:
                 return self.get_applicants_names(value)
@@ -309,26 +334,6 @@ class RowValue:
             output = format_html(
                 '<a href="{}">{}</a>',
                 f"{settings.BASE_URL}{field_file.url}",
-                _("Download"),
-            )
-        else:
-            output = _("Niet aangeleverd")
-
-        return output
-
-    def handle_attachment(self, filewrapper):
-
-        if filewrapper:
-            output = format_html(
-                '<a href="{}">{}</a>',
-                settings.BASE_URL
-                + reverse(
-                    "proposals:download_attachment",
-                    kwargs={
-                        "proposal_pk": self.proposal.pk,
-                        "attachment_pk": self.obj.pk,
-                    },
-                ),
                 _("Download"),
             )
         else:
