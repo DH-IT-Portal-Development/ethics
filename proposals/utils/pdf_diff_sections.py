@@ -1013,7 +1013,7 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
 
         att_dict = self._get_matches_from_slots(self.old_slots, self.new_slots)
 
-        for owner_num in range(len(att_dict)):
+        for owner_num in att_dict.keys():
             proposal = self.new_p
             if owner_num == 0:
                 owner_obj = proposal
