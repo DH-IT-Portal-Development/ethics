@@ -3,7 +3,7 @@ from collections.abc import Iterable
 from braces.views import UserFormKwargsMixin
 from xhtml2pdf import pisa
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ImproperlyConfigured
 
 from django.views.generic.base import TemplateResponseMixin
@@ -15,29 +15,87 @@ from .forms import ProposalForm
 from .utils.proposal_utils import pdf_link_callback
 
 
-class ProposalMixin(UserFormKwargsMixin):
-    model = Proposal
-    form_class = ProposalForm
-    success_message = _("Aanvraag %(title)s bewerkt")
+class SupervisorEditingMixin:
+    """
+    Mixin that provides a form kwarg indicating if the current
+    request user is editing as a supervisor.
+    """
 
-    def get_next_url(self):
-        """If the Proposal has a Wmo model attached, go to update, else, go to create"""
-        proposal = self.object
-        if hasattr(proposal, "wmo"):
-            return reverse("proposals:wmo_update", args=(proposal.pk,))
-        else:
-            return reverse("proposals:wmo_create", args=(proposal.pk,))
+    def get_form_kwargs(self, *args, **kwargs):
+        kwargs = super().get_form_kwargs(*args, **kwargs)
+        proposal = self.get_proposal()
+        editing_user = self.request.user
+        kwargs["supervisor_editing_flag"] = proposal.supervisor == editing_user
+        return kwargs
 
 
-class ProposalContextMixin:
+class StepperContextMixin:
+    """
+    Includes a stepper object in the view's context
+    """
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context["stepper"] = self.get_stepper()
+        return context
+
+    def get_stepper(
+        self,
+    ):
+        if hasattr(
+            self,
+            "stepper",
+        ):
+            return self.stepper
+        # Try to determine proposal
+        proposal = Proposal()
+        if hasattr(self, "get_proposal"):
+            proposal = self.get_proposal()
+        # Importing here to prevent circular import
+        from .utils.stepper import Stepper
+
+        # Initialize and insert stepper object
+        self.stepper = Stepper(
+            proposal,
+            request=self.request,
+        )
+        return self.stepper
+
+
+class ProposalContextMixin(
+    StepperContextMixin,
+):
     def current_user_is_supervisor(self):
-        return self.object.supervisor == self.request.user
+        return self.get_proposal().supervisor == self.request.user
+
+    def get_proposal(
+        self,
+    ):
+        try:
+            if self.model is Proposal:
+                return self.get_object()
+        except AttributeError:
+            raise RuntimeError(
+                "Couldn't find proposal object for ProposalContextMixin",
+            )
 
     def get_context_data(self, **kwargs):
         context = super(ProposalContextMixin, self).get_context_data(**kwargs)
         context["is_supervisor"] = self.current_user_is_supervisor()
-        context["is_practice"] = self.object.is_practice()
+        context["is_practice"] = self.get_proposal().is_practice()
+        context["proposal"] = self.get_proposal()
         return context
+
+
+class ProposalMixin(
+    ProposalContextMixin,
+):
+    model = Proposal
+
+    def get_proposal(
+        self,
+    ):
+        return self.get_object()
 
 
 class PDFTemplateResponseMixin(TemplateResponseMixin):

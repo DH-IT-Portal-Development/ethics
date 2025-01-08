@@ -1,0 +1,24 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Persoonsgegevens" %} - {{ block.super }}
+{% endblock %}
+
+{% block html_head %}
+    {{ block.super }}
+    <script>
+$(function() {
+    depends_on_value('has_special_details', 'True', 'special_details');
+    check_field_required('special_details', 'medical_traits', 'traits', 'studies', 'SpecialDetail');
+    check_field_required('traits', 'needs_details', 'traits_details', 'studies', 'Trait');
+});
+    </script>
+{% endblock %}
+
+{% block pre-form %}
+    <h2>{% trans "Persoonsgegevens" %}</h2>
+    {% include "studies/study_title.html" %}
+{% endblock %}

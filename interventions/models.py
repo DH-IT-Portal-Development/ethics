@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.models import SettingModel
 from studies.models import Study
@@ -15,7 +15,6 @@ class Intervention(SettingModel):
 
     period = models.TextField(
         _("Wat is de periode waarbinnen de interventie plaatsvindt?"),
-        help_text=_("De interventie vindt plaats binnen het schooljaar " "2018-2019"),
         blank=True,
     )
 

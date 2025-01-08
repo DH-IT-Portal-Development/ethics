@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.template.loader import render_to_string
-from django.utils.translation import activate, get_language, ugettext_lazy as _
+from django.utils.translation import activate, get_language, gettext_lazy as _
 from django.utils import timezone
 
 from main.models import YesNoDoubt
@@ -533,23 +533,24 @@ def auto_review(proposal: Proposal):
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
-        if study.stressful in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+        if study.negativity in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(
                 _(
-                    "De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op onderdelen of \
-als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen."
+                    "De onderzoeker geeft aan dat sommige vragen binnen het onderzoek mogelijk "
+                    "dermate belastend kunnen zijn dat ze negatieve reacties bij de deelnemers "
+                    "en/of onderzoekers kunnen veroorzaken."
                 )
             )
 
         if study.risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(
                 _(
-                    "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op psychische of \
-fysieke schade bij deelname aan het onderzoek meer dan minimaal zijn."
+                    "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid "
+                    "van de deelnemers tijdens of na het onderzoek."
                 )
             )
 
-        if study.has_sessions:
+        if study.get_sessions():
             for session in study.session_set.all():
                 for age_group in study.age_groups.all():
                     if session.net_duration() > age_group.max_net_duration:
@@ -565,6 +566,21 @@ voor de leeftijdsgroep {ag}."
                                 max_d=age_group.max_net_duration,
                             )
                         )
+    if proposal.knowledge_security in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+        reasons.append(
+            _(
+                "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom "
+                "kennisveiligheid."
+            )
+        )
+
+    if proposal.researcher_risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+        reasons.append(
+            _(
+                "De onderzoeker geeft aan dat er mogelijk kwesties zijn "
+                "rondom de veiligheid van de betrokken onderzoekers."
+            )
+        )
 
     return reasons
 
@@ -589,7 +605,7 @@ def auto_review_observation(observation):
         if not observation.has_advanced_consent:
             reasons.append(
                 _(
-                    "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met informed consent achteraf."
+                    "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met toestemming na afloop van het onderzoek."
                 )
             )
         if observation.is_anonymous:

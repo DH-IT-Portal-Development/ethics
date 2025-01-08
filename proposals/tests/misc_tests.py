@@ -8,6 +8,7 @@ from django.conf import settings
 from main.models import Setting, YesNoDoubt
 from interventions.models import Intervention
 from observations.models import Observation
+from studies.utils import create_documents_for_study
 from tasks.models import Session, Task, Registration
 from studies.models import Study, Recruitment
 from proposals.api.views import MyProposalsApiView
@@ -187,12 +188,10 @@ class ProposalTestCase(MiscProposalTestCase):
         s = Study.objects.create(proposal=proposal, order=1)
         # self.assertEqual(proposal.continue_url(), '/studies/design/1/')
 
-        s.sessions_number = 2
         s.save()
         s1 = Session.objects.create(study=s, order=1)
         s2 = Session.objects.create(study=s, order=2)
 
-        s1.tasks_number = 2
         s1.save()
 
         s1_t1 = Task.objects.create(session=s1, order=1, name="t1")
@@ -247,11 +246,9 @@ class ProposalTestCase(MiscProposalTestCase):
 
         # If we add a Sessions part, we should return facilities when we add local Registrations
         s.has_sessions = True
-        s.sessions_number = 2
         s.save()
         s1 = Session.objects.create(study=s, order=1)
 
-        s1.tasks_number = 2
         s1.save()
 
         s1_t1 = Task.objects.create(session=s1, order=1, name="t1")
@@ -373,7 +370,6 @@ class CopyTestCase(MiscProposalTestCase):
         self.session_1 = Session.objects.create(
             study=self.study_1,
             order=1,
-            tasks_number=1,
         )
         self.task_1 = Task.objects.create(
             session=self.session_1,

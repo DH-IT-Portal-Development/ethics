@@ -6,18 +6,17 @@ from django.db import models
 from django.db.models import Q
 
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.utils.functional import lazy
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe, SafeString
 
-mark_safe_lazy = lazy(mark_safe, str)
+mark_safe_lazy = lazy(mark_safe, SafeString)
 
 from main.models import YesNoDoubt
 from main.validators import validate_pdf_or_doc
 from proposals.models import Proposal
-from studies.utils import study_urls
 from proposals.utils.proposal_utils import FilenameFactory, OverwriteStorage
-
+from tasks.models import Task
 
 INFORMED_CONSENT_FILENAME = FilenameFactory("Informed_Consent")
 METC_DECISION_FILENAME = FilenameFactory("METC_Decision")
@@ -140,29 +139,34 @@ class Study(models.Model):
     A Study consists of participant details, experiment design and consent forms.
     """
 
+    class LegalBases(models.IntegerChoices):
+        ANONYMOUS = 0, _("Dit traject is volledig anoniem.")
+        PUBLIC_INTEREST = 1, _("De AVG grondslag is 'algemeen belang'.")
+        CONSENT = 2, _("De AVG grondslag is 'toestemming'.")
+
     order = models.PositiveIntegerField()
-    name = models.CharField(_("Naam traject"), max_length=15, blank=True)
+    name = models.CharField(_("Naam traject"), max_length=30, blank=True)
 
     age_groups = models.ManyToManyField(
         AgeGroup,
         verbose_name=_("Uit welke leeftijdscategorie(ën) bestaat je deelnemersgroep?"),
         help_text=_(
-            "De beoogde leeftijdsgroep kan zijn 5-7 jarigen. \
-Dan moet je hier hier 4-5 én 6-11 invullen."
+            "Voorbeeld: Stel dat de beoogde leeftijdsgroep bestaat uit 5–7 "
+            "jarigen. Dan moet je hier hier 4–5 én 6–11 aanvinken."
         ),
     )
     legally_incapable = models.BooleanField(
         _(
-            "Maakt je onderzoek gebruik van wils<u>on</u>bekwame (volwassen) \
-deelnemers?"
+            "Maakt je onderzoek gebruik van wils<u>on</u>bekwame volwassen "
+            "deelnemers?"
         ),  # Note: Form labels with HTML are hard-coded in the Form meta class
         help_text=_(
             "Wilsonbekwame volwassenen zijn volwassenen waarvan \
 redelijkerwijs mag worden aangenomen dat ze onvoldoende kunnen inschatten \
 wat hun eventuele deelname allemaal behelst, en/of waarvan anderszins mag \
-worden aangenomen dat informed consent niet goed gerealiseerd kan worden \
+worden aangenomen dat bewuste toestemming niet goed gerealiseerd kan worden \
 (bijvoorbeeld omdat ze niet goed hun eigen mening kunnen geven). \
-Hier dient in ieder geval altijd informed consent van een relevante \
+Hier dient in ieder geval altijd toestemming van een relevante \
 vertegenwoordiger te worden verkregen."
         ),
         default=False,
@@ -170,11 +174,31 @@ vertegenwoordiger te worden verkregen."
     legally_incapable_details = models.TextField(_("Licht toe"), blank=True)
 
     has_special_details = models.BooleanField(
-        verbose_name=_("Worden er bijzondere persoonsgegevens verzameld?"),
-        help_text=_(
-            "zie de <a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw' \
-            target='_blank'>Richtlijnen</a>"
+        verbose_name=_(
+            "Worden er bijzondere of gevoelige persoonsgegevens verzameld of gebruikt?"
         ),
+        help_text=_(
+            "Wat 'bijzondere of gevoelige persoonsgegevens' zijn kun je "
+            "vinden op <a href='https://utrechtuniversity.github.io/"
+            "dataprivacyhandbook/special-types-personal-data.html#special"
+            "-types-personal-data' target='_blank'>deze pagina</a> van "
+            "het UU Data Privacy Handbook."
+        ),
+        null=True,
+        blank=True,
+    )
+
+    legal_basis = models.PositiveIntegerField(
+        verbose_name=_(
+            "Wat is de AVG grondslag voor het verzamelen van " "persoonsgegevens?"
+        ),
+        help_text=_(
+            "Voor meer informatie over welke AVG grondslag op jouw onderzoek van "
+            "toepassing is, zie de flowchart in het "
+            "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/choose-legal-basis.html'"
+            " target='_blank'>UU Data Privacy Handbook</a>"
+        ),
+        choices=LegalBases.choices,
         null=True,
         blank=True,
     )
@@ -182,7 +206,9 @@ vertegenwoordiger te worden verkregen."
     special_details = models.ManyToManyField(
         SpecialDetail,
         blank=True,
-        verbose_name=_("Geef aan welke bijzondere persoonsgegevens worden verzameld:"),
+        verbose_name=_(
+            "Geef aan welke bijzondere persoonsgegevens worden verzameld of gebruikt:"
+        ),
     )
 
     has_traits = models.BooleanField(
@@ -205,7 +231,7 @@ eerst contact op met de <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>, v
         Trait,
         blank=True,
         verbose_name=_(
-            "Selecteer de medische gegevens van je proefpersonen die worden verzameld"
+            "Selecteer de medische gegevens van je proefpersonen die worden verzameld of gebruikt"
         ),
     )
     traits_details = models.CharField(_("Namelijk"), max_length=200, blank=True)
@@ -230,17 +256,11 @@ te testen?"
     )
     recruitment_details = models.TextField(
         _("Licht toe"),
-        help_text=_(
-            'Er zijn specifieke voorbeelddocumenten voor het gebruik van \
-            Amazon Mechanical Turk/Prolific op <a href="{link}">deze pagina</a>.'
-        ).format(
-            link="https://intranet.uu.nl/en/knowledgebase/documents-ethics-assessment-committee-humanities"
-        ),
         blank=True,
     )
     compensation = models.ForeignKey(
         Compensation,
-        verbose_name=_("Welke vergoeding krijgt de deelnemer voor hun deelname?"),
+        verbose_name=_("Welke vergoeding krijgen deelnemers voor hun deelname?"),
         help_text=_(
             "Het standaardbedrag voor vergoeding aan de deelnemers \
 is €10,- per uur. Minderjarigen mogen geen geld ontvangen, maar wel een \
@@ -254,7 +274,9 @@ cadeautje."
 
     hierarchy = models.BooleanField(
         verbose_name=_(
-            "Bestaat een hiërarchische relatie tussen onderzoeker(s) en deelnemer(s)?"
+            "Bestaat er een hiërarchische relatie tussen onderzoeker(s) "
+            "en deelnemer(s) of zouden deelnemers die relatie als "
+            "hiërarchisch kunnen ervaren?"
         ),
         null=True,
         blank=True,
@@ -269,38 +291,24 @@ cadeautje."
     # Fields with respect to experimental design
     has_intervention = models.BooleanField(_("Interventieonderzoek"), default=False)
     has_observation = models.BooleanField(_("Observatieonderzoek"), default=False)
-    has_sessions = models.BooleanField(_("Taakonderzoek en interviews"), default=False)
+    has_sessions = models.BooleanField(
+        _("Taakonderzoek en/of interview(s)"), default=False
+    )
 
     # Fields with respect to Sessions
-    sessions_number = models.PositiveIntegerField(
-        _("Hoeveel sessies met taakonderzoek zullen de deelnemers doorlopen?"),
-        null=True,
-        validators=[
-            MinValueValidator(1),
-            MaxValueValidator(100),
-        ],  # Max of 100 is just a technical safeguard
-        help_text=_(
-            "Wanneer je bijvoorbeeld eerst de deelnemer een \
-taak/aantal taken laat doen tijdens een eerste bezoek aan het lab en \
-je laat de deelnemer nog een keer terugkomen om dezelfde taak/taken \
-of andere taak/taken te doen, dan spreken we van twee sessies. \
-Wanneer je meerdere taken afneemt op dezelfde dag, met pauzes daartussen, \
-dan geldt dat toch als één sessie."
-        ),
-    )
     deception = models.CharField(
         _(
-            "Is er binnen bovenstaand onderzoekstraject sprake van \
-misleiding van de deelnemer?"
+            "Is er binnen bovenstaand onderzoekstraject sprake van "
+            "misleiding van de deelnemer?"
         ),
         help_text=_(
-            'Misleiding is het doelbewust verschaffen van inaccurate \
-informatie over het doel en/of belangrijke aspecten van de gang van zaken \
-tijdens het onderzoek. Denk aan zaken als een bewust misleidende "cover story" \
-voor het experiment; het ten onrechte suggereren dat er met andere \
-deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale \
-geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: \
-het gaat hierbij niet om fillers.'
+            "Misleiding is het doelbewust verschaffen van inaccurate "
+            "informatie over het doel en/of belangrijke aspecten van de gang van zaken "
+            'tijdens het onderzoek. Denk aan zaken als een bewust misleidende "cover story" '
+            "voor het experiment; het ten onrechte suggereren dat er door de deelnemer met andere "
+            "deelnemers wordt samengewerkt; het onaangekondigd aanbieden van een cruciale "
+            "geheugentaak of het geven van gefingeerde feedback. Wellicht ten overvloede: "
+            "het gaat hierbij niet om fillers in bijv. taalwetenschappelijk onderzoek."
         ),
         max_length=1,
         choices=YesNoDoubt.choices,
@@ -308,81 +316,48 @@ het gaat hierbij niet om fillers.'
     )
     deception_details = models.TextField(
         _(
-            "Geef een toelichting en beschrijf hoe en wanneer de deelnemer \
-zal worden gedebrieft."
+            "Geef een toelichting en beschrijf hoe en wanneer de deelnemer "
+            "zal worden gedebrieft."
         ),
         blank=True,
     )
     negativity = models.CharField(
         _(
-            "Bevat bovenstaand onderzoekstraject elementen die \
-<em>tijdens</em> de deelname niet-triviale negatieve emoties kunnen opwekken? \
-Denk hierbij bijvoorbeeld aan emotioneel indringende vragen, kwetsende \
-uitspraken, negatieve feedback, frustrerende, zware, (heel) lange en/of \
-(heel) saaie taken."
+            "Bevat bovenstaand onderzoekstraject elementen die <em>tijdens"
+            "</em> de deelname zodanig belastend zijn dat deze vragen, "
+            "weerstand, of zelfs verontwaardiging zouden kunnen oproepen, "
+            "bijvoorbeeld bij collega-onderzoekers, bij de deelnemers zelf, "
+            "of bij ouders of andere vertegenwoordigers?"
         ),
         max_length=1,
         choices=YesNoDoubt.choices,
         blank=True,
     )
-    negativity_details = models.TextField(_("Licht je antwoord toe."), blank=True)
-    stressful = models.CharField(
-        _(
-            "Bevat bovenstaand onderzoekstraject elementen die tijdens de \
-deelname zodanig belastend zijn dat deze <em>ondanks de verkregen \
-informed consent</em> vragen zou kunnen oproepen (of zelfs \
-verontwaardiging), bijvoorbeeld bij collega-onderzoekers, bij de deelnemers \
-zelf, of bij ouders of andere vertegenwoordigers?"
-        ),
-        help_text=mark_safe_lazy(
-            _(
-                "Dit zou bijvoorbeeld het geval kunnen zijn \
-bij een 'onmenselijk' lange en uitputtende taak, een zeer confronterende \
-vragenlijst, of voortdurend vernietigende feedback, maar ook bij een ervaren \
-inbreuk op de privacy, of een ander ervaren gebrek aan respect. \
-Let op, het gaat bij deze vraag om de door de deelnemer ervaren belasting \
-tijdens het onderzoek, niet om de opgelopen psychische of fysieke schade \
-door het onderzoek."
-            )
-        ),
-        max_length=1,
-        choices=YesNoDoubt.choices,
-        blank=True,
-    )
-    stressful_details = models.TextField(
-        _(
-            "Licht je antwoord toe. Geef concrete voorbeelden van de relevante \
-aspecten van jouw onderzoek (bijv. representatieve voorbeelden van mogelijk zeer \
-kwetsende woorden of uitspraken in de taak, of van zeer confronterende \
-vragen in een vragenlijst), zodat de commissie zich een goed beeld kan \
-vormen."
+    negativity_details = models.TextField(
+        _("Licht toe"),
+        help_text=_(
+            "Geef concrete voorbeelden van de relevante aspecten van jouw "
+            "onderzoek (bijv. voorbeelden van mogelijk zeer kwetsende woorden "
+            "of uitspraken in de taak; zeer confronterende vragen in een "
+            "vragenlijst; negatieve feedback), zodat de commissie zich een "
+            "goed beeld kan vormen."
         ),
         blank=True,
     )
+
     risk = models.CharField(
         _(
-            'Zijn de risico\'s op psychische, fysieke, of andere (bijv. \
-economische, juridische) schade door deelname aan bovenstaand \
-onderzoekstraject <em>meer dan</em> minimaal? \
-D.w.z. ligt de kans op en/of omvang van mogelijke schade \
-bij de deelnemers duidelijk <em>boven</em> het "achtergrondrisico"?'
+            "Zijn er kwesties rondom de veiligheid van, of risico's voor de "
+            "deelnemers <em>tijdens of na</em> deelname aan het onderzoek?"
         ),
         help_text=mark_safe_lazy(
             _(
-                'Achtergrondrisico is datgene dat gezonde, \
-gemiddelde burgers in de relevante leeftijdscategorie normaalgesproken \
-in het dagelijks leven ten deel valt. \
-Denk bij schade ook aan de gevolgen die het voor de deelnemer of \
-anderen beschikbaar komen van bepaalde informatie kan hebben, bijv. \
-op het vlak van zelfbeeld, stigmatisering door anderen, economische \
-schade door data-koppeling, et cetera. Het achtergrondrisico voor \
-psychische en fysieke schade omvat bijvoorbeeld ook de risico\'s van \
-"routine"-tests, -onderzoeken of -procedures die in alledaagse didactische, \
-psychologische of medische contexten plaatsvinden (zoals een eindexamen, \
-een rijexamen, een stressbestendigheids-<em>assessment</em>, een \
-intelligentie- of persoonlijkheidstest, of een hartslagmeting na fysieke \
-inspanning; dit alles, waar relevant, onder begeleiding van adequaat \
-geschoolde specialisten).'
+                "Houd hierbij niet alleen rekening met mogelijke psychische "
+                "of fysieke schadelijke gevolgen, maar ook met andere "
+                "mogelijke schade, zoals bijv. stigmatisering, "
+                "(re-)traumatisering, aantasting van zelfbeeld, verlies van "
+                "privacy, toevalsbevindingen, juridische vervolging of "
+                "aansprakelijkheid, e.d."
             )
         ),
         max_length=1,
@@ -398,6 +373,23 @@ geschoolde specialisten).'
         ordering = ["order"]
         unique_together = ("proposal", "order")
 
+    def get_intervention(self):
+        if self.has_intervention and hasattr(self, "intervention"):
+            return self.intervention
+
+    def get_observation(self):
+        if self.has_observation and hasattr(self, "observation"):
+            return self.observation
+
+    def get_sessions(self):
+        if self.has_sessions:
+            return self.session_set.all()
+        return []
+
+    @property
+    def sessions_number(self):
+        return self.session_set.count()
+
     def first_session(self):
         """Returns the first Session in this Study"""
         return self.session_set.order_by("order")[0]
@@ -409,6 +401,10 @@ geschoolde specialisten).'
     def has_children(self):
         """Returns whether the Study contains non-adult AgeGroups"""
         return self.age_groups.filter(is_adult=False).exists()
+
+    def has_adults(self):
+        """Returns whether the Study contains adult AgeGroups"""
+        return self.age_groups.filter(is_adult=True).exists()
 
     def has_participants_below_age(self, age):
         """Returns whether the Study contains AgeGroups with ages below the specified age"""
@@ -441,28 +437,88 @@ geschoolde specialisten).'
         return not documents.informed_consent or not documents.briefing
 
     def has_missing_sessions(self):
-        if self.has_intervention and self.intervention.extra_task:
+        if self.get_intervention() and self.intervention.extra_task:
             return (
                 self.intervention.settings_contains_schools() and not self.has_sessions
             )
 
         return False
 
+    def has_no_sessions(self):
+        return self.has_sessions and self.sessions_number == 0
+
+    def has_recordings(
+        self,
+    ):
+        """
+        A function that checks whether a study features audio or video
+        registration.
+        """
+        from observations.models import Registration as obs_registration
+        from tasks.models import Registration as task_registration
+
+        has_recordings = False
+        observation = self.get_observation()
+        if observation:
+            # gather all AV observation_registrations
+            recordings_observation = obs_registration.objects.filter(
+                is_recording=True,
+            )
+            # check if there is an overlap between these two QS's
+            if observation.registrations.all() & recordings_observation:
+                has_recordings = True
+        sessions = self.get_sessions()
+        # Skip the second check if we already have recordings
+        if not has_recordings and sessions:
+            # gather all the tasks
+            all_tasks = Task.objects.filter(
+                session__study=self,
+            )
+            # gather all AV task_registrations
+            recordings_sessions = task_registration.objects.filter(
+                is_recording=True,
+            )
+            if all_tasks.filter(registrations__in=recordings_sessions):
+                has_recordings = True
+        return has_recordings
+
     def research_settings_contains_schools(self):
-        """Checks if any research track contains a school in it's setting"""
-        if self.has_intervention and self.intervention.settings_contains_schools():
+        """
+        Checks if any research track contains a school in its setting.
+        """
+        if self.get_intervention() and self.intervention.settings_contains_schools():
             return True
 
         if (
-            self.has_sessions
+            self.get_sessions()
             and self.session_set.filter(setting__is_school=True).exists()
         ):
             return True
 
-        if self.has_observation and self.observation.settings_contains_schools():
+        if self.get_observation() and self.observation.settings_contains_schools():
             return True
 
         return False
+
+    def get_gatekeeper_desiredness(self):
+        """
+        Return the highest gatekeeper document desiredness of this study, or
+        False if undesired.
+        """
+        from main.models import GatekeeperChoices
+        from attachments.utils import desiredness
+
+        setting_models = list(self.get_sessions())
+        setting_models += [sm for sm in [self.get_intervention()] if sm]
+        setting_models += [sm for sm in [self.get_observation()] if sm]
+        result = False
+        for sm in setting_models:
+            requirement = sm.gatekeeper_requirement
+            if requirement is GatekeeperChoices.REQUIRED:
+                return desiredness.REQUIRED
+            if requirement is GatekeeperChoices.OPTIONAL:
+                result = desiredness.OPTIONAL
+        return result
 
     def needs_additional_external_forms(self):
         """This method checks if the school/other external institution forms
@@ -481,13 +537,13 @@ geschoolde specialisten).'
     # DEFUNCT: Passive consent has been removed from studies.
     # These fields are kept for posterity as to not break older proposals.
     passive_consent = models.BooleanField(
-        _("Maak je gebruik van passieve informed consent?"),
+        _("Maak je gebruik van passieve toestemming?"),
         help_text=mark_safe_lazy(
             _(
                 'Wanneer je kinderen via een instelling \
 (dus ook school) werft en je de ouders niet laat ondertekenen, maar in \
 plaats daarvan de leiding van die instelling, dan maak je gebruik van \
-passieve informed consent. Je kan de templates vinden op \
+passieve toestemming. Je kan de templates vinden op \
 <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw" \
 target="_blank">de FETC-GW-website</a>.'
             )

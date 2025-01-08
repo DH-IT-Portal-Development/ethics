@@ -1,54 +1,61 @@
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.models import SettingModel
-from studies.models import Study
 
 
 class Session(SettingModel):
     order = models.PositiveIntegerField()
 
-    # Fields with respect to Tasks
-    tasks_number = models.PositiveIntegerField(
-        _("Hoeveel taken worden er binnen deze sessie bij de deelnemer afgenomen?"),
-        null=True,
+    repeats = models.PositiveBigIntegerField(
+        _("Hoe vaak wordt deze sessie uitgevoerd?"),
+        help_text=_(
+            "Het kan zijn dat een zelfde sessie meerdere keren moet worden \
+                    uitgevoerd. Als dit het geval is, kun je dat hier \
+                    aangeven. Als er variatie zit in de verschillende \
+                    sessies van je onderzoek, maak dan een nieuwe sessie \
+                    aan voor elke unieke sessie."
+        ),
+        null=False,
+        default=1,
         validators=[
             MinValueValidator(1),
             MaxValueValidator(100),
         ],  # Max of 100 is a technical safeguard
-        help_text=_(
-            'Wanneer je bijvoorbeeld eerst de deelnemer observeert \
-en de deelnemer vervolgens een vragenlijst afneemt, dan vul je hierboven "2" '
-            "in. Electrodes plakken, sessie-debriefing en kort "
-            "(< 3 minuten) exit-interview gelden niet als een taak."
-        ),
     )
 
     tasks_duration = models.PositiveIntegerField(
         _(
-            "De totale geschatte netto taakduur van je sessie komt \
-op basis van je opgave per taak uit op <strong>%d minuten</strong>. \
-Hoe lang duurt <em>de totale sessie</em>, inclusief ontvangst, \
-instructies per taak, pauzes tussen taken, en debriefing? \
-(bij labbezoek dus van binnenkomst tot vertrek)"
+            "De totale geschatte netto taakduur van je sessie komt "
+            "op basis van je opgave per taak uit op <strong>%d minuten</strong>. "
+            "Hoeveel minuten duurt de totale sessie, inclusief ontvangst, "
+            "instructies per taak, pauzes tussen taken, en debriefing? "
+            "(bij labbezoek dus van binnenkomst tot vertrek en bij een "
+            "focus-groep van ontvangst tot afsluiting)"
         ),
         null=True,
         blank=True,
     )
 
     # References
-    study = models.ForeignKey(Study, on_delete=models.CASCADE)
+    study = models.ForeignKey("studies.Study", on_delete=models.CASCADE)
 
     class Meta:
         ordering = ["order"]
         unique_together = ("study", "order")
 
     def net_duration(self):
-        if duration := self.task_set.aggregate(models.Sum("duration"))["duration__sum"]:
+        if duration := self.task_set.annotate(
+            total_duration=models.F("duration") * models.F("repeats")
+        ).aggregate(models.Sum("total_duration"))["total_duration__sum"]:
             return duration
 
         return 0
+
+    @property
+    def tasks_number(self):
+        return self.task_set.count()
 
     def first_task(self):
         tasks = self.task_set.order_by("order")
@@ -57,32 +64,6 @@ instructies per taak, pauzes tussen taken, en debriefing? \
     def last_task(self):
         tasks = self.task_set.order_by("-order")
         return tasks[0] if tasks else None
-
-    def current_task(self):
-        """
-        Returns the current (incomplete) Task.
-        - If all Tasks are completed, the last Task is returned.
-        - If no Tasks have yet been created, None is returned.
-        """
-        current_task = None
-        for task in self.task_set.all():
-            current_task = task
-            if not task.is_completed():
-                break
-        return current_task
-
-    def tasks_completed(self):
-        result = True
-        if self.task_set.count() == 0:
-            result = False
-        for task in self.task_set.all():
-            result &= task.is_completed()
-        return result
-
-    def is_completed(self):
-        result = self.tasks_completed()
-        result &= self.tasks_duration is not None
-        return result
 
     def __str__(self):
         return _("Sessie {}").format(self.order)
@@ -96,6 +77,9 @@ class Registration(models.Model):
     needs_kind = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
     age_min = models.PositiveIntegerField(blank=True, null=True)
+    is_recording = models.BooleanField(
+        default=False,
+    )
 
     class Meta:
         ordering = ["order"]
@@ -129,14 +113,31 @@ class Task(models.Model):
 
     description = models.TextField(
         _(
-            "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort \
-uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de \
-beantwoording van jouw onderzoeksvragen bijdraagt. \
-Geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli \
-dat je van plan bent aan de deelnemer aan te bieden. \
-Het moet voor de commissieleden duidelijk zijn wat je precies gaat doen."
+            "Beschrijf de taak die de deelnemer moet uitvoeren, en leg kort "
+            "uit hoe deze taak (en de eventuele manipulaties daarbinnen) aan de "
+            "beantwoording van jouw onderzoeksvragen bijdraagt. "
+            "Geef, kort, een paar voorbeelden (of beschrijvingen) van het type stimuli "
+            "of prompts dat je van plan bent aan de deelnemer aan te bieden. Het moet "
+            "voor de commissieleden duidelijk zijn wat je precies gaat doen."
         ),
         blank=True,
+    )
+
+    repeats = models.PositiveBigIntegerField(
+        _("Hoe vaak wordt deze taak uitgevoerd binnen deze sessie?"),
+        help_text=_(
+            "Het kan zijn dat eenzelfde taak meerdere keren moet worden \
+                    uitgevoerd binnen een sessie. Als dit het geval is, kun je dat hier \
+                    aangeven. Als er variatie zit in de verschillende \
+                    taken van deze sessie, maak dan een nieuwe taak \
+                    aan voor elke unieke taak binnen deze sessie."
+        ),
+        null=False,
+        default=1,
+        validators=[
+            MinValueValidator(1),
+            MaxValueValidator(100),
+        ],  # Max of 100 is a technical safeguard
     )
 
     duration = models.PositiveIntegerField(
@@ -158,10 +159,11 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
             "Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?"
         ),
         help_text=_(
-            "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het gebruik van de term \
-        ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor deelnemers. Voor meer informatie, zie de \
-        <a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf'> \
-        Richtlijnen voor geïnformeerde toestemming, ‘Beeld en geluid’</a>."
+            "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop "
+            "bij het gebruik van de term 'anoniem' of 'geanonimiseerd' in "
+            "je documenten voor deelnemers. Voor meer informatie, zie het UU Data Privacy Handbook over "
+            "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/pseudonymisation-anonymisation.html#pseudonymisation-anonymisation' target='_blank'>"
+            "anonimiseren en pseudonimiseren</a>."
         ),
     )
 
@@ -185,7 +187,7 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
 
     feedback = models.BooleanField(
         _(
-            "Krijgt de deelnemer tijdens of na deze taak feedback op hun "
+            "Krijgen deelnemers tijdens of na deze taak feedback op hun "
             "gedrag of toestand?"
         ),
         null=True,
@@ -203,9 +205,6 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
     class Meta:
         ordering = ["order"]
         unique_together = ("session", "order")
-
-    def is_completed(self):
-        return self.name != ""
 
     def delete(self, *args, **kwargs):
         """
