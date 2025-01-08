@@ -742,7 +742,7 @@ class AllAttachmentSectionsPDF:
         from proposals.utils.stepper import Stepper
 
         stepper = Stepper(proposal)
-        slots = [slot for slot in stepper.attachment_slots if slot.attachment]
+        slots = stepper.filled_slots
 
         return slots
 
