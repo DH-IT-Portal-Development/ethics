@@ -197,7 +197,11 @@ class Row:
         self.proposal = proposal
 
     def value(self):
-        return RowValue(self.obj, self.field, self.proposal).get_field_value()
+        val = RowValue(self.obj, self.field, self.proposal).get_field_value()
+        if val == "":
+            # Prevent collapsing of the value area
+            val = mark_safe("&nbsp;")
+        return val
 
     def verbose_name(self):
         if self.field in self.verbose_name_diff_field_dict:
