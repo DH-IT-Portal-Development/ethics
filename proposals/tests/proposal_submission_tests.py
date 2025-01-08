@@ -85,7 +85,8 @@ class BaseProposalTestCase(TestCase):
         self.wmo.save()
         self.proposal = Proposal.objects.get(pk=1)
         self.proposal.applicants.add(self.user)
-        self.proposal.save()
+        self.proposal.wmo = self.wmo
+        self.proposal.save()        
         self.pre_assessment = Proposal.objects.get(pk=2)
         self.pre_assessment.applicants.add(self.user)
         self.pre_assessment.save()
