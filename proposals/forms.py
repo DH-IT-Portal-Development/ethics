@@ -831,7 +831,7 @@ class ProposalSubmitForm(
         # Needed for POST data
         self.request = kwargs.pop("request", None)
 
-        # we save this variable for later, but want it 
+        # we save this variable for later, but want it
         # set for None for this part of the validation.
         final_validation = kwargs.pop("final_validation", None)
         self.final_validation = None
