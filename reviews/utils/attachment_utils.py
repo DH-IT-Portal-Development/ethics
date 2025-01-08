@@ -186,9 +186,8 @@ class AttachmentsList(renderable):
         from proposals.utils.stepper import Stepper
 
         stepper = Stepper(self.proposal)
-        filled_slots = [slot for slot in stepper.attachment_slots if slot.attachment]
         containers = DocList(
-            filled_slots,
+            stepper.filled_slots,
             proposal=self.proposal,
         ).as_containers()
         return containers

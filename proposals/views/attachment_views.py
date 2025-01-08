@@ -16,7 +16,7 @@ from reviews.templatetags.documents_list import get_legacy_documents, DocItem
 from reviews.mixins import HideStepperMixin
 from django.utils.translation import gettext as _
 from attachments.kinds import ATTACHMENTS, KIND_CHOICES
-from attachments.utils import AttachmentKind, merge_groups
+from attachments.utils import AttachmentKind, merge_groups, AttachmentSlot
 from cdh.core import forms as cdh_forms
 from django.utils.translation import gettext as _
 from reviews.mixins import UsersOrGroupsAllowedMixin
@@ -369,14 +369,14 @@ class ProposalAttachmentDownloadView(
         if self.original_filename:
             return self.attachment.upload.original_filename
         else:
-            return self.get_filename_from_kind()
+            return self.get_filename_from_slot()
 
-    def get_filename_from_kind(self):
-        self.kind = AttachmentKind.from_proposal(
-            self.proposal,
+    def get_filename_from_slot(self):
+        self.slot = AttachmentSlot.from_proposal(
             self.attachment,
+            self.proposal,
         )
-        return self.kind.name
+        return self.slot.get_fetc_filename()
 
     def get_file_response(self):
         attachment_file = self.attachment.upload.file

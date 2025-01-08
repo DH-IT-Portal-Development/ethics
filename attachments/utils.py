@@ -1,3 +1,6 @@
+import mimetypes
+from collections import Counter
+
 from django.template.loader import get_template
 from django.utils.translation import gettext as _
 from django.urls import reverse
@@ -25,6 +28,14 @@ class AttachmentKind:
     attached_field = "attachments"
     desiredness = desiredness.OPTIONAL
 
+    @classmethod
+    def get_fn_part(cls):
+        if hasattr(cls, "fn_part"):
+            return cls.fn_part
+        # Capitalize DB name
+        parts = cls.db_name.split("_")
+        return "-".join([part.capitalize() for part in parts])
+
 
 class AttachmentSlot(renderable):
 
@@ -37,14 +48,31 @@ class AttachmentSlot(renderable):
         kind=None,
         force_desiredness=None,
         optionality_group=None,
+        order=None,
     ):
         self.attachment = attachment
         self.attached_object = attached_object
-        self.kind = kind
+        self.order = order
+
+        if attachment and not kind:
+            # If an attachment was provided but no kind,
+            # attempt to get the kind from the attachment
+            self.kind = self.get_kind_from_attachment()
+        else:
+            self.kind = kind
+
         self.force_desiredness = force_desiredness
         self.optionality_group = optionality_group
         if self.optionality_group:
             self.optionality_group.members.append(self)
+
+    @classmethod
+    def from_proposal(attachment, proposal):
+        attached_object = attachment.get_owner_for_proposal(proposal)
+        return AttachmentSlot(
+            attached_object,
+            attachment=attachment,
+        )
 
     def match(self, exclude=[]):
         """
@@ -67,6 +95,16 @@ class AttachmentSlot(renderable):
             self.kind = get_kind_from_str(matched_attachment.kind)
             return self.attachment
         return False
+
+    def get_kind_from_attachment(
+        self,
+    ):
+        return get_kind_from_str(self.attachment.kind)
+
+    def get_fetc_filename(
+        self,
+    ):
+        return generate_filename(self)
 
     @property
     def classes(self):
@@ -279,6 +317,85 @@ def merge_groups(slots):
                 continue
         out.append(item)
     return out
+
+
+def generate_filename(slot):
+
+    proposal = slot.get_proposal()
+    chamber = proposal.reviewing_committee.name
+    lastname = proposal.created_by.last_name
+    refnum = proposal.reference_number
+    original_fn = slot.attachment.upload.original_filename
+    kind = slot.kind.get_fn_part()
+    order = slot.order
+
+    extension = (
+        "." + original_fn.split(".")[-1][-7:]
+    )  # At most 7 chars seems reasonable
+
+    trajectory = None
+    if not type(slot.attached_object) is Proposal:
+        trajectory = "T" + str(slot.attached_object.order)
+
+    fn_parts = [
+        "FETC",
+        chamber,
+        refnum,
+        lastname,
+        trajectory,
+        kind,
+        order,
+    ]
+
+    # Translations will trip up join(), so we convert them here.
+    # This will also remove parts that are None.
+    fn_parts = [str(p) for p in fn_parts if p]
+
+    return "-".join(fn_parts) + extension
+
+
+def enumerate_slots(slots):
+    """
+    Provides an order attribute to all attachment slots whose kind
+    appears more than once in the provided list.
+    """
+    # Create seperate slot lists per attached_object
+    per_ao = sort_into_dict(
+        slots,
+        lambda x: x.attached_object,
+    ).values()
+    # Assign orders to them separately
+    for ao_slots in per_ao:
+        assign_orders(ao_slots)
+
+
+def sort_into_dict(iterable, key_func):
+    """
+    Split iterable into separate lists in a dict whose keys
+    are the shared response to all its items' key_func(item).
+    """
+    out_dict = {}
+    for item in iterable:
+        key = key_func(item)
+        if key not in out_dict:
+            out_dict[key] = [item]
+        else:
+            out_dict[key].append(item)
+    return out_dict
+
+
+def assign_orders(slots):
+    # Count total kind occurrences
+    totals = Counter([slot.kind for slot in slots])
+    # Create counter to increment gradually
+    kind_counter = Counter()
+    # Loop through the slots
+    for slot in slots:
+        if totals[slot.kind] < 2:
+            # Skip slots with unique kinds
+            continue
+        kind_counter[slot.kind] += 1
+        slot.order = kind_counter[slot.kind]
 
 
 def get_kind_from_str(db_name):

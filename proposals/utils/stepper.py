@@ -18,7 +18,7 @@ from observations.forms import ObservationForm
 from interventions.forms import InterventionForm
 
 from proposals.utils.validate_sessions_tasks import validate_sessions_tasks
-from attachments.utils import AttachmentSlot
+from attachments.utils import AttachmentSlot, enumerate_slots
 from attachments.kinds import desiredness
 
 
@@ -82,7 +82,15 @@ class Stepper(renderable):
                 success = empty_slot.match_and_set(exclude=exclude)
                 if success:
                     extra_slots.append(empty_slot)
-        return self._attachment_slots + extra_slots
+        all_slots = self._attachment_slots + extra_slots
+        enumerate_slots(all_slots)
+        return all_slots
+
+    @property
+    def filled_slots(
+        self,
+    ):
+        return [slot for slot in self.attachment_slots if slot.attachment]
 
     def get_context_data(self):
         context = super().get_context_data()

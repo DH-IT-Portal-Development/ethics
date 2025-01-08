@@ -75,7 +75,7 @@
                                 </tr>
                                 <tr>
                                     <td>{% trans "Bestand" %}</td>
-                                    <td>{% include slot.attachment with proposal=proposal include_normalized=True %}</td>
+                                    <td>{% include slot.attachment with proposal=proposal normalized_filename=slot.get_fetc_filename %}</td>
                                 </tr>
                                 <tr>
                                     <td>{% trans "Commentaar" %}</td>

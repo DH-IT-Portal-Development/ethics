@@ -21,6 +21,7 @@ from proposals.utils.pdf_diff_utils import (
     get_extra_documents,
     multi_sections,
     KindRow,
+    AttachmentRow,
     UploadDateRow,
 )
 
@@ -576,8 +577,12 @@ class AttachmentSection(BaseSection):
 
     def make_row_for_field(self, field):
 
+        # "kind" and "upload" require slots as their obj, other fields receive
+        # the attachment as their obj.
         if field == "kind":
             return KindRow(self.obj, self.obj.attachment, field)
+        if field == "upload":
+            return AttachmentRow(self.obj, field, self.proposal)
         else:
             obj = self.obj.attachment
 
@@ -737,7 +742,7 @@ class AllAttachmentSectionsPDF:
         from proposals.utils.stepper import Stepper
 
         stepper = Stepper(proposal)
-        slots = [slot for slot in stepper.attachment_slots if slot.attachment]
+        slots = stepper.filled_slots
 
         return slots
 
@@ -1008,7 +1013,7 @@ class AllAttachmentSectionsDiff(AllAttachmentSectionsPDF):
 
         att_dict = self._get_matches_from_slots(self.old_slots, self.new_slots)
 
-        for owner_num in range(len(att_dict)):
+        for owner_num in att_dict.keys():
             proposal = self.new_p
             if owner_num == 0:
                 owner_obj = proposal

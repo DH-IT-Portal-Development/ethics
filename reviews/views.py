@@ -658,7 +658,7 @@ class ReviewAttachmentsView(
     ):
         proposal = self.get_review().proposal
         stepper = Stepper(proposal)
-        return [slot for slot in stepper.attachment_slots if slot.attachment]
+        return stepper.filled_slots
 
     def per_object(
         self,
