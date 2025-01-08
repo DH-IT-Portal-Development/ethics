@@ -41,6 +41,11 @@ class AttachmentItem(DocItem):
     A wrapper for AttachmentsList items that works with Attachment slots.
     """
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Attachment download views always set content dispo
+        self.sets_content_disposition = True
+
     @property
     def attachment(
         self,
