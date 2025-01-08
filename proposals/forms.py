@@ -237,9 +237,9 @@ class OtherResearchersForm(
 
         applicants = get_user_model().objects.all()
 
-        self.fields["other_stakeholders"].label = mark_safe(
-            self.fields["other_stakeholders"].label
-        )
+        self.fields["other_stakeholders"].label = self.fields[
+            "other_stakeholders"
+        ].label
 
         self.fields["applicants"].choices = get_users_as_list(applicants)
 
@@ -795,6 +795,26 @@ class ProposalSubmitForm(
     class Meta:
         model = Proposal
         fields = ["comments", "inform_local_staff", "embargo", "embargo_end_date"]
+        labels = {
+            "inform_local_staff": mark_safe_lazy(
+                _(
+                    "<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één "
+                    "van de faciliteiten van het ILS, namelijk de database, Zep software "
+                    "en/of het ILS lab. Het lab supportteam van het ILS zou graag op "
+                    "de hoogte willen worden gesteld van aankomende onderzoeken. "
+                    "Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te "
+                    "sturen naar het lab supportteam.</p> "
+                    "<p>Vind je het goed dat de volgende delen uit de aanvraag "
+                    "worden doorgestuurd:</p> "
+                    "- Jouw naam en de namen van de andere betrokkenen <br/> "
+                    "- De eindverantwoordelijke van het onderzoek <br/> "
+                    "- De titel van het onderzoek <br/> "
+                    "- De beoogde startdatum <br/> "
+                    "- Van welke faciliteiten je gebruik wil maken (database, lab, "
+                    "Zep software)"
+                ),
+            ),
+        }
         widgets = {
             "inform_local_staff": BootstrapRadioSelect(choices=YES_NO),
             "embargo": BootstrapRadioSelect(choices=YES_NO),
@@ -811,16 +831,16 @@ class ProposalSubmitForm(
         # Needed for POST data
         self.request = kwargs.pop("request", None)
 
-        # Needed for validation
-        self.final_validation = kwargs.pop("final_validation", None)
+        # we save this variable for later, but want it
+        # set for None for this part of the validation.
+        final_validation = kwargs.pop("final_validation", None)
+        self.final_validation = None
 
         super(ProposalSubmitForm, self).__init__(*args, **kwargs)
 
-        self.fields["inform_local_staff"].label_suffix = ""
-
-        self.fields["inform_local_staff"].label = mark_safe(
-            self.fields["inform_local_staff"].label
-        )
+        self.fields["inform_local_staff"].label = self.fields[
+            "inform_local_staff"
+        ].label
 
         if not check_local_facilities(self.proposal):
             del self.fields["inform_local_staff"]
@@ -828,6 +848,13 @@ class ProposalSubmitForm(
         if self.proposal.is_pre_assessment:
             del self.fields["embargo"]
             del self.fields["embargo_end_date"]
+
+        self.final_validation = final_validation
+
+        # If we have an existing instance and we're not POSTing,
+        # run an initial clean
+        if self.instance.pk and "data" not in kwargs:
+            self.initial_clean()
 
     def clean(self):
         """
@@ -840,41 +867,23 @@ class ProposalSubmitForm(
         cleaned_data = super(ProposalSubmitForm, self).clean()
 
         if (
+            check_local_facilities(self.proposal)
+            and cleaned_data["inform_local_staff"] is None
+        ):
+            self.add_error("inform_local_staff", _("Dit veld is verplicht."))
+
+        if (
             not self.instance.is_practice()
             and not "js-redirect-submit" in self.request.POST
             and not "save_back" in self.request.POST
         ):
-            if (
-                check_local_facilities(self.proposal)
-                and cleaned_data["inform_local_staff"] is None
-            ):
-                self.add_error("inform_local_staff", _("Dit veld is verplicht."))
+            self.validate_embargo(cleaned_data)
 
-            if cleaned_data["embargo"] is None:
-                self.add_error("embargo", _("Dit veld is verplicht."))
-
-            embargo_end_date = cleaned_data["embargo_end_date"]
-            two_years_from_now = timezone.now().date() + timezone.timedelta(days=730)
-
-            if "embargo" in cleaned_data:
-                if cleaned_data["embargo"] is True and not embargo_end_date:
-                    self.add_error(
-                        "embargo_end_date",
-                        _("Vul een datum in waarop de embargo afloopt."),
-                    )
-
-            if embargo_end_date is not None and embargo_end_date > two_years_from_now:
-                self.add_error(
-                    "embargo_end_date",
-                    _(
-                        "De embargo-periode kan maximaal 2 jaar zijn. Kies een datum binnen 2 jaar van vandaag."
-                    ),
-                )
         # final_validation is a kwarg that should only be given by the
         # actual submit view, not the stepper.
         if not self.final_validation:
             return
-        # For final validation, i.e. if a user is actually submitting,we
+        # For final validation, i.e. if a user is actually submitting, we
         # instantiate a new stepper to reflect changes
         # made to the current instance, which may not yet be saved.
         from proposals.utils.stepper import Stepper
@@ -892,6 +901,33 @@ class ProposalSubmitForm(
                 None,
                 _("Aanvraag bevat nog foutmeldingen"),
             )
+
+    def validate_embargo(self, cleaned_data):
+
+        # Only check embargo and end date if form was initialized with it.
+        if "embargo" not in self.fields:
+            return
+
+        self.mark_soft_required(cleaned_data, "embargo")
+
+        if "embargo" in cleaned_data:
+            self.check_dependency(
+                cleaned_data,
+                "embargo",
+                "embargo_end_date",
+                error_message=_("Vul een datum in waarop de embargo afloopt."),
+            )
+        embargo_end_date = cleaned_data.get("embargo_end_date", None)
+        if embargo_end_date:
+            two_years_from_now = timezone.now().date() + timezone.timedelta(days=730)
+            if embargo_end_date > two_years_from_now:
+                self.add_error(
+                    "embargo_end_date",
+                    _(
+                        "De embargo-periode kan maximaal 2 jaar zijn. "
+                        "Kies een datum binnen 2 jaar van vandaag."
+                    ),
+                )
 
 
 class KnowledgeSecurityForm(SoftValidationMixin, ConditionalModelForm):

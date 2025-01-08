@@ -756,6 +756,7 @@ class ProposalSubmit(
         if (
             "save_back" not in self.request.POST
             and "js-redirect-submit" not in self.request.POST
+            and not form.instance.is_practice()
         ):
             start_review(proposal)
         return success_response

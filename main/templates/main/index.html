@@ -129,15 +129,21 @@
                 {# What should this be in dutch tho? #}
                 <ul>
                     <li>
-                        {% trans "<a href='http://fetc-gw.wp.hum.uu.nl/' target='_blank'>FETC-GW website</a>" %}
+                        {% blocktrans trimmed %}
+                            <a href='http://fetc-gw.wp.hum.uu.nl/' target='_blank'>FETC-GW website</a>
+                        {% endblocktrans %}
                     </li>
                     <li>
-                        {% trans "<a href='https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/'
-   target='_blank'>Reglement van de FETC-GW</a>" %}
+                        {% blocktrans trimmed %}
+                            <a href='https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/'
+                               target='_blank'>Reglement van de FETC-GW</a>
+                        {% endblocktrans %}
                     </li>
                     <li>
-                        {% trans "<a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw'
-   target='_blank'>Voorbeelddocumenten</a>" %}
+                        {% blocktrans trimmed %}
+                            <a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw'
+                               target='_blank'>Voorbeelddocumenten</a>
+                        {% endblocktrans %}
                     </li>
                     <li>
                         <a href="{% url 'faqs:list' %}">{% trans "Veelgestelde vragen m.b.t. dit portal" %}</a>
