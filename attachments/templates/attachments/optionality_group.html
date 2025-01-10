@@ -1,0 +1,12 @@
+{% load i18n %}
+
+<div class="border-start border-4 p-2 pb-1 m-0 mb-3 ps-4 pe-0">
+    <h6 class="m-0 p-0">
+        {% blocktrans trimmed with count=group.count %}
+            Een van deze {{ count }} documenten is voldoende
+        {% endblocktrans %}
+    </h6>
+    {% for slot in group.members %}
+        {% include slot with hide_desiredness=True %}
+    {% endfor %}
+</div>

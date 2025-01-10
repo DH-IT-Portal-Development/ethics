@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load fetc_filters %}
 {% load get_field_name %}
@@ -9,7 +9,7 @@
 {% block header_title %}{{ user_object.get_full_name }} - {{ block.super }}{% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{{ user_object.get_full_name }}</h2>
             <table class="exportTable mb-2">

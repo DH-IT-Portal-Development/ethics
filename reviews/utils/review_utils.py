@@ -5,7 +5,7 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.urls import reverse
 from django.template.loader import render_to_string
-from django.utils.translation import activate, get_language, ugettext_lazy as _
+from django.utils.translation import activate, get_language, gettext_lazy as _
 from django.utils import timezone
 
 from main.models import YesNoDoubt
@@ -50,9 +50,12 @@ def start_supervisor_phase(proposal):
     - Send an e-mail to the supervisor
     - send an e-mail to other applicants
     """
+    next_week = timezone.now() + timezone.timedelta(weeks=1)
+
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.Stages.SUPERVISOR
     review.is_committee_review = False
+    review.date_should_end = next_week
     review.save()
 
     proposal.date_submitted_supervisor = timezone.now()
@@ -62,7 +65,7 @@ def start_supervisor_phase(proposal):
     decision = Decision.objects.create(review=review, reviewer=proposal.supervisor)
     reference = proposal.committee_prefixed_refnum()
 
-    subject = _("FETC-GW {}: bevestiging indienen concept-aanmelding".format(reference))
+    subject = _("FETC-GW {}: bevestiging indiening concept-aanvraag".format(reference))
     params = {
         "proposal": proposal,
         "title": proposal.title,
@@ -165,7 +168,7 @@ def start_assignment_phase(proposal):
     notify_secretary_assignment(review)
 
     subject = _(
-        "FETC-GW {}: aanmelding ontvangen".format(proposal.committee_prefixed_refnum())
+        "FETC-GW {}: aanvraag ontvangen".format(proposal.committee_prefixed_refnum())
     )
     params = {
         "secretary": secretary.get_full_name(),
@@ -223,9 +226,9 @@ def start_assignment_phase(proposal):
     return review
 
 
-def remind_reviewers():
+def remind_committee_reviewers():
     """
-    Sends an email to a reviewer to remind them to review a proposal.
+    Sends an email to a committee reviewer to remind them to review a proposal.
     The reminders are only sent for proposals that are on the short track and need to be reviewed in the next 2 days
     """
 
@@ -233,6 +236,7 @@ def remind_reviewers():
     next_two_days = today + datetime.timedelta(days=2)
 
     decisions = Decision.objects.filter(
+        review__is_committee_review=True,
         review__stage=Review.Stages.COMMISSION,
         review__short_route=True,
         review__date_should_end__gte=today,
@@ -262,6 +266,53 @@ def remind_reviewers():
             [decision.reviewer.email],
             html_message=msg_html,
         )
+
+
+def remind_supervisor_reviewers():
+    """
+    Sends an email to a supervisor reviewer to remind them to review a proposal.
+    The reminders are only sent for open reviews older than a week.
+    """
+
+    today = datetime.date.today()
+
+    decisions = Decision.objects.filter(
+        review__is_committee_review=False,
+        review__stage=Review.Stages.SUPERVISOR,
+        review__date_should_end__lte=today,
+    )
+
+    for decision in decisions:
+        proposal = decision.review.proposal
+        subject = "Herinnering: beoordeel aanvraag {}".format(
+            proposal.committee_prefixed_refnum(),
+        )
+        params = {
+            "supervisor": decision.reviewer.get_full_name(),
+            "creator": proposal.created_by.get_full_name(),
+            "proposal_url": settings.BASE_URL
+            + reverse("reviews:decide", args=(decision.pk,)),
+            "secretary": get_secretary().get_full_name(),
+            "date_start": decision.review.date_start.strftime("%d-%m-%Y"),
+        }
+        msg_plain = render_to_string("mail/reminder_supervisor.txt", params)
+        msg_html = render_to_string("mail/reminder_supervisor.html", params)
+        send_mail(
+            subject,
+            msg_plain,
+            settings.EMAIL_FROM,
+            [decision.reviewer.email],
+            html_message=msg_html,
+        )
+
+
+def remind_reviewers():
+    """
+    Sends reminders to committee reviewers and supervisor reviewers. Used by a cron job that calls the
+    send_reminders management command.
+    """
+    remind_committee_reviewers()
+    remind_supervisor_reviewers()
 
 
 def start_review_pre_assessment(proposal):
@@ -482,23 +533,24 @@ def auto_review(proposal: Proposal):
         for task in Task.objects.filter(session__study=study):
             reasons.extend(auto_review_task(study, task))
 
-        if study.stressful in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+        if study.negativity in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(
                 _(
-                    "De onderzoeker geeft aan dat (of twijfelt erover of) het onderzoek op onderdelen of \
-als geheel zodanig belastend is dat deze ondanks de verkregen informed consent vragen zou kunnen oproepen."
+                    "De onderzoeker geeft aan dat sommige vragen binnen het onderzoek mogelijk "
+                    "dermate belastend kunnen zijn dat ze negatieve reacties bij de deelnemers "
+                    "en/of onderzoekers kunnen veroorzaken."
                 )
             )
 
         if study.risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(
                 _(
-                    "De onderzoeker geeft aan dat (of twijfelt erover of) de risico's op psychische of \
-fysieke schade bij deelname aan het onderzoek meer dan minimaal zijn."
+                    "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid "
+                    "van de deelnemers tijdens of na het onderzoek."
                 )
             )
 
-        if study.has_sessions:
+        if study.get_sessions():
             for session in study.session_set.all():
                 for age_group in study.age_groups.all():
                     if session.net_duration() > age_group.max_net_duration:
@@ -514,6 +566,21 @@ voor de leeftijdsgroep {ag}."
                                 max_d=age_group.max_net_duration,
                             )
                         )
+    if proposal.knowledge_security in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+        reasons.append(
+            _(
+                "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom "
+                "kennisveiligheid."
+            )
+        )
+
+    if proposal.researcher_risk in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
+        reasons.append(
+            _(
+                "De onderzoeker geeft aan dat er mogelijk kwesties zijn "
+                "rondom de veiligheid van de betrokken onderzoekers."
+            )
+        )
 
     return reasons
 
@@ -538,7 +605,7 @@ def auto_review_observation(observation):
         if not observation.has_advanced_consent:
             reasons.append(
                 _(
-                    "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met informed consent achteraf."
+                    "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met toestemming na afloop van het onderzoek."
                 )
             )
         if observation.is_anonymous:

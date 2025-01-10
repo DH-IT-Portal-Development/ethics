@@ -1,6 +1,6 @@
 from django import template
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.utils import get_static_file
 from proposals.models import Proposal
@@ -47,7 +47,7 @@ class CompareLinkNode(template.Node):
         except Proposal.DoesNotExist:
             return None
 
-        if old_study.has_observation:
+        if old_study.get_observation():
             if not obj.approval_document or not old_study.observation.approval_document:
                 return None
 

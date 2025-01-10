@@ -1,4 +1,4 @@
-from django.utils.translation import ugettext as _
+from django.utils.translation import gettext as _
 from django.urls import reverse
 from django.conf import settings
 from django.utils.safestring import mark_safe
@@ -183,10 +183,9 @@ class ChangeAssignment(ReviewAction):
         if not settings.GROUP_SECRETARY in user_groups:
             return False
 
-        if self.review.stage not in [
-            Review.Continuations.REVISION,
-            Review.Continuations.NO_GO,
-            Review.Stages.CLOSING,
+        if self.review.stage in [
+            Review.Stages.SUPERVISOR,
+            Review.Stages.CLOSED,
         ]:
             return False
 
@@ -247,11 +246,15 @@ class ChangeArchiveStatus(ReviewAction):
 
         if (
             review.proposal.embargo == True
+            and review.proposal.embargo_end_date is not None
             and review.proposal.embargo_end_date > datetime.date.today()
         ):
             return False
 
         if review.proposal.status < Proposal.Statuses.DECISION_MADE:
+            return False
+
+        if review.proposal.is_pre_assessment:
             return False
 
         return True

@@ -1,0 +1,35 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Taakonderzoek en/of interview(s)" %} - {{ block.super }}
+{% endblock %}
+
+{% block pre-form-text %}
+    <h2>{% trans "Taakonderzoek en/of interview(s)" %}</h2>
+    {% include "studies/study_title.html" %}
+    <p>
+        {% blocktrans trimmed %}
+            Een traject bestaat uit één of meer sessies. Een sessie bestaat uit één of meer taken.
+        {% endblocktrans %}
+    </p>
+    <p>
+        {% blocktrans trimmed %}
+            <strong>Sessie:</strong> Alle taken en procedures die een deelnemer voltooit tijdens een enkel bezoek aan de onderzoekslocatie, of tijdens een enkel bezoek van de onderzoeker.
+        {% endblocktrans %}
+    </p>
+    <p>
+        {% blocktrans trimmed %}
+            <strong>Taak:</strong> Eén taak of onderdeel van je onderzoek. Bijvoorbeeld: het invullen van een vragenlijst, een interview, of een bepaalde test.
+        {% endblocktrans %}
+    </p>
+    <p>
+        {% blocktrans trimmed %}
+            Je kan op de volgende pagina, de overzichtspagina van sessies en taken, beginnen met het aanmaken van sessies. Binnen elke sessie kun je taken aanmaken. Als je klaar bent met het aanmaken van een sessie keer je terug op de overzichtspagina van sessies en taken.
+        {% endblocktrans %}
+    </p>
+{% endblock %}
+
+{% block auto-form-render %}<!--Override rendering of the form-->{% endblock %}

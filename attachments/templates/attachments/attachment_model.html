@@ -1,0 +1,9 @@
+{% load i18n %}
+
+<a href="{% url "proposals:download_attachment_original" proposal_pk=proposal.pk attachment_pk=attachment.pk %}">
+{{ attachment.upload.original_filename }}</a>
+{% if normalized_filename %}
+    <span class="ms-2o">
+        <br />
+        <a href="{% url "proposals:download_attachment" proposal_pk=proposal.pk attachment_pk=attachment.pk %}">{{ normalized_filename }}</a></span>
+{% endif %}

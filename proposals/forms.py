@@ -5,13 +5,12 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.db.models import Q
 
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.utils.functional import lazy
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe, SafeString
 from django.utils import timezone
-from datetime import timedelta
 
-mark_safe_lazy = lazy(mark_safe, str)
+mark_safe_lazy = lazy(mark_safe, SafeString)
 
 from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.models import YesNoDoubt
@@ -20,37 +19,188 @@ from .field import ParentChoiceModelField
 from .models import Proposal, Relation, Wmo
 from .utils import check_local_facilities
 from .validators import UniqueTitleValidator
-from .widgets import SelectMultipleUser, SelectUser
 
-from cdh.core.forms import DateField
+from cdh.core.forms import (
+    DateField,
+    BootstrapRadioSelect,
+    BootstrapCheckboxSelectMultiple,
+    BootstrapSelect,
+    SearchableSelectWidget,
+    DateInput,
+    SplitDateTimeWidget,
+    BootstrapSplitDateTimeWidget,
+    TemplatedForm,
+    TemplatedModelForm,
+)
+
+
+class SupervisorEditingFormMixin:
+
+    def __init__(self, *args, **kwargs):
+        self.supervisor_editing_flag = kwargs.pop(
+            "supervisor_editing_flag",
+            False,
+        )
+        return super().__init__(*args, **kwargs)
 
 
 class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = [
-            "is_pre_approved",
+            "title",
+            "date_start",
             "institution",
+        ]
+        widgets = {
+            "date_start": DateInput(),
+            "institution": BootstrapRadioSelect(),
+        }
+        error_messages = {
+            "title": {
+                "unique": _("Er bestaat al een aanvraag met deze titel."),
+            },
+        }
+
+    def __init__(self, *args, **kwargs):
+        """
+        - Make sure all non-revision/non-amendment studies have an unique name
+        """
+
+        super(ProposalForm, self).__init__(*args, **kwargs)
+        self.fields["institution"].empty_label = None
+
+        # Only revisions or amendments are allowed to have a title that's not
+        # unique.
+        if not self.instance or not self.instance.is_revision:
+            self.fields["title"].validators.append(UniqueTitleValidator(self.instance))
+
+    def clean(self):
+        cleaned_data = super(ProposalForm, self).clean()
+
+        self.mark_soft_required(cleaned_data, "date_start")
+
+
+class ResearcherForm(
+    UserKwargModelFormMixin,
+    SupervisorEditingFormMixin,
+    SoftValidationMixin,
+    ConditionalModelForm,
+):
+    class Meta:
+        model = Proposal
+        fields = [
             "relation",
             "student_program",
             "student_context",
             "student_context_details",
             "student_justification",
             "supervisor",
+        ]
+        widgets = {
+            "relation": BootstrapRadioSelect(),
+            "student_context": BootstrapRadioSelect(),
+            "supervisor": SearchableSelectWidget(),
+        }
+
+    _soft_validation_fields = [
+        "supervisor",
+        "relation",
+    ]
+
+    def __init__(self, *args, **kwargs):
+        """
+        - Remove empty label from relation field
+        - Don't allow to pick yourself or a superuser as supervisor, unless you already are
+        - Add a None-option for supervisor
+        - If this is a practice Proposal, limit the relation choices
+        """
+        super(ResearcherForm, self).__init__(*args, **kwargs)
+        self.fields["relation"].empty_label = None
+        self.fields["student_context"].empty_label = None
+
+        supervisors = get_user_model().objects.exclude(pk=self.user.pk)
+
+        instance = kwargs.get("instance")
+        # If you're already the supervisor, we remove all other options
+        # and set a flag assuming you're already editing as the supervisor
+        if self.supervisor_editing_flag:
+            supervisors = [self.user]
+
+        self.fields["supervisor"].choices = [
+            (None, _("Selecteer..."))
+        ] + get_users_as_list(supervisors)
+
+        if instance.in_course:
+            self.fields["relation"].queryset = Relation.objects.filter(
+                check_in_course=True
+            )
+            self.fields["supervisor"].label = _("Docent")
+            self.fields["supervisor"].help_text = _(
+                "Vul hier de docent van \
+de cursus in waarbinnen je deze portal moet doorlopen. De docent kan na afloop \
+de aanvraag inkijken in de portal. De studie zal niet in het semipublieke archief \
+van het FETC-GW worden opgenomen."
+            )
+
+        if instance.is_pre_assessment:
+            self.fields["relation"].queryset = Relation.objects.filter(
+                check_pre_assessment=True
+            )
+
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If relation needs supervisor, make sure supervisor is set
+        - If relation needs supervisor, make sure supervisor is a different person
+        """
+        cleaned_data = super(ResearcherForm, self).clean()
+
+        relation = cleaned_data.get("relation")
+        supervisor = cleaned_data.get("supervisor")
+
+        if relation:
+            if relation.needs_supervisor and not supervisor:
+                error = forms.ValidationError(
+                    _("Je dient een promotor/begeleider op te geven."), code="required"
+                )
+                self.add_error("relation", error)
+
+            if (
+                relation.needs_supervisor
+                and supervisor == self.user
+                and not self.supervisor_editing_flag
+            ):
+                error = forms.ValidationError(
+                    _("Je kunt niet jezelf als promotor/begeleider opgeven.")
+                )
+                self.add_error("relation", error)
+
+            if relation.check_in_course:
+                self.mark_soft_required(cleaned_data, "student_context")
+                self.mark_soft_required(cleaned_data, "student_justification")
+
+        self.check_dependency_singular(
+            cleaned_data, "relation", "check_in_course", "student_program"
+        )
+        self.check_dependency_singular(
+            cleaned_data, "student_context", "needs_details", "student_context_details"
+        )
+        self.check_dependency_singular(
+            cleaned_data, "relation", "check_in_course", "student_justification"
+        )
+
+
+class OtherResearchersForm(
+    UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm
+):
+    class Meta:
+        model = Proposal
+        fields = [
             "other_applicants",
             "applicants",
             "other_stakeholders",
             "stakeholders",
-            "date_start",
-            "title",
-            "summary",
-            "pre_assessment_pdf",
-            "funding",
-            "funding_details",
-            "funding_name",
-            "pre_approval_institute",
-            "pre_approval_pdf",
-            "self_assessment",
         ]
         labels = {
             "other_stakeholders": mark_safe_lazy(
@@ -63,16 +213,73 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
             ),
         }
         widgets = {
-            "is_pre_approved": forms.RadioSelect(choices=YES_NO),
-            "institution": forms.RadioSelect(),
-            "relation": forms.RadioSelect(),
-            "student_context": forms.RadioSelect(),
-            "other_applicants": forms.RadioSelect(choices=YES_NO),
-            "other_stakeholders": forms.RadioSelect(choices=YES_NO),
-            "summary": forms.Textarea(attrs={"cols": 50}),
-            "funding": forms.CheckboxSelectMultiple(),
-            "applicants": SelectMultipleUser(),
-            "supervisor": forms.Select(),
+            "other_applicants": BootstrapRadioSelect(choices=YES_NO),
+            "other_stakeholders": BootstrapRadioSelect(choices=YES_NO),
+            "applicants": SearchableSelectWidget(),
+        }
+
+    _soft_validation_fields = [
+        "applicants",
+        "other_stakeholders",
+        "stakeholders",
+    ]
+
+    def __init__(self, *args, **kwargs):
+        """
+        - Don't allow to pick a superuser as applicant
+        """
+        super(OtherResearchersForm, self).__init__(*args, **kwargs)
+        self.instance = kwargs.get("instance")
+
+        # Needed to set the widget into multiple mode
+        # TODO: write a DSC widget that has this enabled by default
+        self.fields["applicants"].widget.allow_multiple_selected = True
+
+        applicants = get_user_model().objects.all()
+
+        self.fields["other_stakeholders"].label = self.fields[
+            "other_stakeholders"
+        ].label
+
+        self.fields["applicants"].choices = get_users_as_list(applicants)
+
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If other_applicants is checked, make sure applicants are set
+        - If other_stakeholders is checked, make sure stakeholders is not empty
+        """
+        cleaned_data = super(OtherResearchersForm, self).clean()
+
+        other_applicants = cleaned_data.get("other_applicants")
+        applicants = cleaned_data.get("applicants")
+
+        self.mark_soft_required(
+            cleaned_data,
+            "applicants",
+            "other_applicants",
+        )
+
+        if other_applicants:
+            if len(applicants) == 1 and self.user in applicants:
+                error = forms.ValidationError(
+                    _("Je hebt geen andere onderzoekers geselecteerd."), code="required"
+                )
+                self.add_error("other_applicants", error)
+
+        self.check_dependency(cleaned_data, "other_stakeholders", "stakeholders")
+
+
+class FundingForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm):
+    class Meta:
+        model = Proposal
+        fields = [
+            "funding",
+            "funding_details",
+            "funding_name",
+        ]
+        widgets = {
+            "funding": BootstrapCheckboxSelectMultiple(),
         }
         error_messages = {
             "title": {
@@ -81,157 +288,67 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
         }
 
     _soft_validation_fields = [
-        "relation",
-        "other_applicants",
-        "other_stakeholders",
-        "stakeholders",
-        "summary",
-        "pre_assessment_pdf",
         "funding",
         "funding_details",
         "funding_name",
-        "pre_approval_institute",
-        "pre_approval_pdf",
+    ]
+
+    def clean(self):
+        cleaned_data = super(FundingForm, self).clean()
+
+        if not cleaned_data["funding"]:
+            self.add_error(
+                "funding", _("Je dient minstens een van de opties te selecteren.")
+            )
+
+        self.check_dependency_multiple(
+            cleaned_data, "funding", "needs_details", "funding_details"
+        )
+        self.check_dependency_multiple(
+            cleaned_data, "funding", "needs_name", "funding_name"
+        )
+
+
+class ResearchGoalForm(
+    UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm
+):
+    class Meta:
+        model = Proposal
+        fields = [
+            "summary",
+            "pre_assessment_pdf",
+            "self_assessment",
+        ]
+        widgets = {
+            "summary": forms.Textarea(attrs={"cols": 50}),
+        }
+
+    _soft_validation_fields = [
+        "summary",
+        "pre_assessment_pdf",
         "self_assessment",
     ]
 
     def __init__(self, *args, **kwargs):
         """
-        - Remove empty label from relation field
-        - Make sure all non-revision/non-amendment studies have an unique name
-        - Don't allow to pick yourself or a superuser as supervisor, unless you already are
-        - Add a None-option for supervisor
-        - Don't allow to pick a superuser as applicant
-        - If this is a practice Proposal, limit the relation choices
         - Remove summary for preliminary assessment Proposals
         - Set pre_assessment_pdf required for preliminary assessment Proposals, otherwise remove
         """
-        in_course = kwargs.pop("in_course", False)
-        is_pre_approved = kwargs.pop("is_pre_approved", False)
 
-        # First, try to determine this value from the kwargs. Otherwise, try
-        # to get it from the instance. If that fails, assume False
-        self.is_pre_assessment = kwargs.pop(
-            "is_pre_assessment",
-            getattr(kwargs.get("instance"), "is_pre_assessment", False),
-        )
+        super(ResearchGoalForm, self).__init__(*args, **kwargs)
+        self.instance = kwargs.get("instance")
 
-        super(ProposalForm, self).__init__(*args, **kwargs)
-        self.fields["relation"].empty_label = None
-        self.fields["institution"].empty_label = None
-        self.fields["student_context"].empty_label = None
-
-        # Only revisions or amendments are allowed to have a title that's not
-        # unique.
-        if not self.instance or not self.instance.is_revision:
-            self.fields["title"].validators.append(UniqueTitleValidator(self.instance))
-
-        applicants = get_user_model().objects.all()
-
-        supervisors = applicants.exclude(pk=self.user.pk)
-
-        instance = kwargs.get("instance")
-
-        self.fields["other_stakeholders"].label = mark_safe(
-            self.fields["other_stakeholders"].label
-        )
-
-        # If you are already defined as a supervisor, we have to set it to you
-        if instance is not None and instance.supervisor == self.user:
-            supervisors = [self.user]
-
-        self.fields["supervisor"].choices = [
-            (None, _("Selecteer..."))
-        ] + get_users_as_list(supervisors)
-
-        self.fields["applicants"].choices = get_users_as_list(applicants)
-
-        if in_course:
-            self.fields["relation"].queryset = Relation.objects.filter(
-                check_in_course=True
-            )
-            self.fields["supervisor"].label = _("Docent")
-            self.fields["supervisor"].help_text = _(
-                "Vul hier de docent van \
-de cursus in waarbinnen je deze portal moet doorlopen. De docent kan na afloop \
-de aanvraag inkijken in de portal. De studie zal niet in het semipublieke archief \
-van het FETC-GW worden opgenomen."
-            )
-
-        if self.is_pre_assessment:
-            self.fields["relation"].queryset = Relation.objects.filter(
-                check_pre_assessment=True
-            )
+        if self.instance.is_pre_assessment:
             self.fields["pre_assessment_pdf"].required = True
             del self.fields["summary"]
-            del self.fields["funding"]
-            del self.fields["funding_details"]
-            del self.fields["funding_name"]
         else:
             del self.fields["pre_assessment_pdf"]
 
-        if is_pre_approved:
-            self.fields["pre_approval_institute"].required = True
-            self.fields["pre_approval_pdf"].required = True
-        else:
-            del self.fields["is_pre_approved"]
-            del self.fields["pre_approval_institute"]
-            del self.fields["pre_approval_pdf"]
-
     def clean(self):
-        """
-        Check for conditional requirements:
-        - If relation needs supervisor, make sure supervisor is set
-        - If relation needs supervisor, make sure supervisor is a different person
-        - If other_applicants is checked, make sure applicants are set
-        - If other_stakeholders is checked, make sure stakeholders is not empty
-        - Maximum number of words for summary
-        - If this is a pre approved proposal, make sure people say yes to that question
-        - If this is a pre approved proposal, make sure people fill in the correct fields
-        - Make sure the user is listed in applicants
-        """
-        cleaned_data = super(ProposalForm, self).clean()
+        cleaned_data = super(ResearchGoalForm, self).clean()
 
-        if not self.is_pre_assessment:
-            self.mark_soft_required(cleaned_data, "funding")
+        if not self.instance.is_pre_assessment:
             self.mark_soft_required(cleaned_data, "summary")
-
-        self.mark_soft_required(cleaned_data, "relation")
-        self.mark_soft_required(cleaned_data, "date_start")
-
-        relation = cleaned_data.get("relation")
-        supervisor = cleaned_data.get("supervisor")
-
-        if relation and relation.needs_supervisor and not supervisor:
-            error = forms.ValidationError(
-                _("Je dient een promotor/begeleider op te geven."), code="required"
-            )
-            self.add_error("supervisor", error)
-
-        if relation and relation.needs_supervisor and supervisor == self.user:
-            error = forms.ValidationError(
-                _("Je kunt niet jezelf als promotor/begeleider opgeven.")
-            )
-            self.add_error("supervisor", error)
-
-        if relation.check_in_course:
-            self.mark_soft_required(cleaned_data, "student_context")
-            self.mark_soft_required(cleaned_data, "student_justification")
-
-        other_applicants = cleaned_data.get("other_applicants")
-        applicants = cleaned_data.get("applicants")
-
-        # Always make sure the applicant is actually in the applicants list
-        if self.user not in applicants and self.user != supervisor:
-            error = forms.ValidationError(
-                _("Je hebt jezelf niet als onderzoekers geselecteerd."), code="required"
-            )
-            self.add_error("applicants", error)
-        elif other_applicants and len(applicants) == 1:
-            error = forms.ValidationError(
-                _("Je hebt geen andere onderzoekers geselecteerd."), code="required"
-            )
-            self.add_error("applicants", error)
 
         # Add an error if self_assessment is missing
         self_assessment = cleaned_data.get("self_assessment")
@@ -246,6 +363,50 @@ van het FETC-GW worden opgenomen."
                     code="required",
                 ),
             )
+
+
+class PreApprovedForm(
+    UserKwargModelFormMixin, SoftValidationMixin, ConditionalModelForm
+):
+    class Meta:
+        model = Proposal
+        fields = [
+            "is_pre_approved",
+            "pre_approval_institute",
+            "pre_approval_pdf",
+        ]
+        widgets = {
+            "is_pre_approved": BootstrapRadioSelect(choices=YES_NO),
+        }
+
+    _soft_validation_fields = [
+        "pre_approval_institute",
+        "pre_approval_pdf",
+    ]
+
+    def __init__(self, *args, **kwargs):
+        """
+        - Set pre_assessment_pdf required for preliminary assessment Proposals, otherwise remove
+        """
+
+        super(PreApprovedForm, self).__init__(*args, **kwargs)
+
+        instance = kwargs.get("instance")
+
+        if instance.is_pre_approved:
+            self.fields["pre_approval_institute"].required = True
+            self.fields["pre_approval_pdf"].required = True
+        else:
+            del self.fields["is_pre_approved"]
+            del self.fields["pre_approval_institute"]
+            del self.fields["pre_approval_pdf"]
+
+    def clean(self):
+        """
+        - If this is a pre approved proposal, make sure people say yes to that question
+        - If this is a pre approved proposal, make sure people fill in the correct fields
+        """
+        cleaned_data = super(PreApprovedForm, self).clean()
 
         if "is_pre_approved" in cleaned_data:
             if not cleaned_data["is_pre_approved"]:
@@ -263,33 +424,16 @@ van het FETC-GW worden opgenomen."
                 cleaned_data, "is_pre_approved", "pre_approval_institute"
             )
 
-        self.check_dependency(cleaned_data, "other_stakeholders", "stakeholders")
-        self.check_dependency_multiple(
-            cleaned_data, "funding", "needs_details", "funding_details"
-        )
-        self.check_dependency_multiple(
-            cleaned_data, "funding", "needs_name", "funding_name"
-        )
-        self.check_dependency_singular(
-            cleaned_data, "relation", "check_in_course", "student_program"
-        )
-        self.check_dependency_singular(
-            cleaned_data, "student_context", "needs_details", "student_context_details"
-        )
-        self.check_dependency_singular(
-            cleaned_data, "relation", "check_in_course", "student_justification"
-        )
 
-
-class ProposalStartPracticeForm(forms.Form):
+class ProposalStartPracticeForm(TemplatedForm):
     practice_reason = forms.ChoiceField(
         label=_("Ik maak een oefenaanvraag aan"),
         choices=Proposal.PracticeReasons.choices,
-        widget=forms.RadioSelect(),
+        widget=BootstrapRadioSelect(),
     )
 
 
-class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
+class BaseProposalCopyForm(UserKwargModelFormMixin, TemplatedModelForm):
     class Meta:
         model = Proposal
         fields = ["parent", "is_revision"]
@@ -297,6 +441,7 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, forms.ModelForm):
             "is_revision": forms.HiddenInput(),
         }
 
+    # TODO: figure out if we need to change widgets here
     parent = ParentChoiceModelField(
         queryset=Proposal.objects.all(),
         label=_("Te kopiëren aanvraag"),
@@ -403,17 +548,18 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
         )
 
 
-class ProposalConfirmationForm(forms.ModelForm):
+class ProposalConfirmationForm(TemplatedModelForm):
     class Meta:
         model = Proposal
         fields = ["date_confirmed", "confirmation_comments"]
+        widgets = {"date_confirmed": DateInput}
 
 
 class WmoForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Wmo
         fields = ["metc", "metc_details", "metc_institution", "is_medical"]
-        widgets = {"metc": forms.RadioSelect(), "is_medical": forms.RadioSelect()}
+        widgets = {"metc": BootstrapRadioSelect(), "is_medical": BootstrapRadioSelect()}
 
     _soft_validation_fields = ["metc_details", "metc_institution", "is_medical"]
 
@@ -456,27 +602,6 @@ class WmoForm(SoftValidationMixin, ConditionalModelForm):
         )
 
 
-class WmoCheckForm(forms.ModelForm):
-    class Meta:
-        model = Wmo
-        fields = [
-            "metc",
-            "is_medical",
-        ]
-        widgets = {
-            "metc": forms.RadioSelect(),
-            "is_medical": forms.RadioSelect(),
-        }
-
-    def __init__(self, *args, **kwargs):
-        """
-        - Remove empty label from is_medical/is_behavioristic field and reset the choices
-        """
-        super(WmoCheckForm, self).__init__(*args, **kwargs)
-        self.fields["is_medical"].empty_label = None
-        self.fields["is_medical"].choices = YesNoDoubt.choices
-
-
 class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Wmo
@@ -486,8 +611,8 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
             "metc_decision_pdf",
         ]
         widgets = {
-            "metc_application": forms.RadioSelect(choices=YES_NO),
-            "metc_decision": forms.RadioSelect(choices=YES_NO),
+            "metc_application": BootstrapRadioSelect(choices=YES_NO),
+            "metc_decision": BootstrapRadioSelect(choices=YES_NO),
         }
 
     _soft_validation_fields = [
@@ -519,9 +644,14 @@ class WmoApplicationForm(SoftValidationMixin, ConditionalModelForm):
         return cleaned_data  # Sticking to Django conventions
 
 
-class StudyStartForm(forms.ModelForm):
+class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
     study_name_1 = forms.CharField(
-        label=_("Naam traject 1"), max_length=15, required=False
+        label=_("Naam traject 1"),
+        max_length=15,
+        required=False,
+        help_text=_(
+            "Geef elk traject hieronder een behulpzame naam van maximaal 15 karakters."
+        ),
     )
     study_name_2 = forms.CharField(
         label=_("Naam traject 2"), max_length=15, required=False
@@ -568,7 +698,7 @@ class StudyStartForm(forms.ModelForm):
             "study_name_10",
         ]
         widgets = {
-            "studies_similar": forms.RadioSelect(choices=YES_NO),
+            "studies_similar": BootstrapRadioSelect(choices=YES_NO),
         }
 
     def __init__(self, *args, **kwargs):
@@ -580,9 +710,17 @@ class StudyStartForm(forms.ModelForm):
 
         super(StudyStartForm, self).__init__(*args, **kwargs)
 
+        for field, name in self._get_study_names().items():
+            self.fields[field].initial = name
+
+    def _get_study_names(
+        self,
+    ):
+        names = {}
         for n, study in enumerate(self.proposal.study_set.all()):
             study_name = "study_name_" + str(n + 1)
-            self.fields[study_name].initial = study.name
+            names[study_name] = study.name
+        return names
 
     def clean(self):
         """
@@ -591,7 +729,10 @@ class StudyStartForm(forms.ModelForm):
         - If studies_similar is set to False, make sure studies_number is set (and higher than 2)
         - If studies_number is set, make sure the corresponding name fields are filled.
         """
-        cleaned_data = super(StudyStartForm, self).clean()
+        # Start with study names
+        cleaned_data = self._get_study_names()
+        # Update with provided form data
+        cleaned_data.update(super().clean())
 
         if cleaned_data["studies_similar"] is None:
             self.add_error(
@@ -614,12 +755,12 @@ class StudyStartForm(forms.ModelForm):
                     self.add_error(study_name, _("Dit veld is verplicht."))
 
 
-class ProposalDataManagementForm(SoftValidationMixin, forms.ModelForm):
+class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
-        fields = ["privacy_officer", "dmp_file"]
+        fields = ["privacy_officer"]
         widgets = {
-            "privacy_officer": forms.RadioSelect(choices=YES_NO),
+            "privacy_officer": BootstrapRadioSelect(choices=YES_NO),
         }
 
     def clean(self):
@@ -631,13 +772,13 @@ class ProposalDataManagementForm(SoftValidationMixin, forms.ModelForm):
             )
 
 
-class ProposalUpdateDataManagementForm(forms.ModelForm):
+class ProposalUpdateDataManagementForm(TemplatedModelForm):
     class Meta:
         model = Proposal
         fields = ["dmp_file"]
 
 
-class ProposalUpdateDateStartForm(forms.ModelForm):
+class ProposalUpdateDateStartForm(TemplatedModelForm):
     date_start = DateField(label=_("Nieuwe beoogde startdatum"))
 
     class Meta:
@@ -645,13 +786,39 @@ class ProposalUpdateDateStartForm(forms.ModelForm):
         fields = ["date_start"]
 
 
-class ProposalSubmitForm(forms.ModelForm):
+class ProposalSubmitForm(
+    SoftValidationMixin,
+    ConditionalModelForm,
+):
+    template_name = "forms/submit_form.html"
+
     class Meta:
         model = Proposal
         fields = ["comments", "inform_local_staff", "embargo", "embargo_end_date"]
+        labels = {
+            "inform_local_staff": mark_safe_lazy(
+                _(
+                    "<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één "
+                    "van de faciliteiten van het ILS, namelijk de database, Zep software "
+                    "en/of het ILS lab. Het lab supportteam van het ILS zou graag op "
+                    "de hoogte willen worden gesteld van aankomende onderzoeken. "
+                    "Daarom vragen wij hier jouw toestemming om delen van deze aanvraag door te "
+                    "sturen naar het lab supportteam.</p> "
+                    "<p>Vind je het goed dat de volgende delen uit de aanvraag "
+                    "worden doorgestuurd:</p> "
+                    "- Jouw naam en de namen van de andere betrokkenen <br/> "
+                    "- De eindverantwoordelijke van het onderzoek <br/> "
+                    "- De titel van het onderzoek <br/> "
+                    "- De beoogde startdatum <br/> "
+                    "- Van welke faciliteiten je gebruik wil maken (database, lab, "
+                    "Zep software)"
+                ),
+            ),
+        }
         widgets = {
-            "inform_local_staff": forms.RadioSelect(choices=YES_NO),
-            "embargo": forms.RadioSelect(choices=YES_NO),
+            "inform_local_staff": BootstrapRadioSelect(choices=YES_NO),
+            "embargo": BootstrapRadioSelect(choices=YES_NO),
+            "embargo_end_date": DateInput(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -664,88 +831,174 @@ class ProposalSubmitForm(forms.ModelForm):
         # Needed for POST data
         self.request = kwargs.pop("request", None)
 
+        # we save this variable for later, but want it
+        # set for None for this part of the validation.
+        final_validation = kwargs.pop("final_validation", None)
+        self.final_validation = None
+
         super(ProposalSubmitForm, self).__init__(*args, **kwargs)
 
-        self.fields["inform_local_staff"].label_suffix = ""
-
-        self.fields["inform_local_staff"].label = mark_safe(
-            self.fields["inform_local_staff"].label
-        )
+        self.fields["inform_local_staff"].label = self.fields[
+            "inform_local_staff"
+        ].label
 
         if not check_local_facilities(self.proposal):
             del self.fields["inform_local_staff"]
 
+        if self.proposal.is_pre_assessment:
+            del self.fields["embargo"]
+            del self.fields["embargo_end_date"]
+
+        self.final_validation = final_validation
+
+        # If we have an existing instance and we're not POSTing,
+        # run an initial clean
+        if self.instance.pk and "data" not in kwargs:
+            self.initial_clean()
+
     def clean(self):
         """
         Check if the Proposal is complete:
-        - Do all Studies have informed consent/briefing?
+        - Do all Studies have attachments?
         - If the inform_local_staff question is asked, it is required
         - Was the embargo question answered and, if so, is the end date within two years from now?
         """
-        from studies.models import Documents
 
         cleaned_data = super(ProposalSubmitForm, self).clean()
 
         if (
-            not self.instance.is_pre_assessment
-            and not self.instance.is_practice()
+            check_local_facilities(self.proposal)
+            and cleaned_data["inform_local_staff"] is None
+        ):
+            self.add_error("inform_local_staff", _("Dit veld is verplicht."))
+
+        if (
+            not self.instance.is_practice()
             and not "js-redirect-submit" in self.request.POST
             and not "save_back" in self.request.POST
         ):
-            if (
-                check_local_facilities(self.proposal)
-                and cleaned_data["inform_local_staff"] is None
-            ):
-                self.add_error("inform_local_staff", _("Dit veld is verplicht."))
+            self.validate_embargo(cleaned_data)
 
-            for study in self.instance.study_set.all():
-                documents = Documents.objects.get(study=study)
+        # final_validation is a kwarg that should only be given by the
+        # actual submit view, not the stepper.
+        if not self.final_validation:
+            return
+        # For final validation, i.e. if a user is actually submitting, we
+        # instantiate a new stepper to reflect changes
+        # made to the current instance, which may not yet be saved.
+        from proposals.utils.stepper import Stepper
 
-                if not documents.informed_consent:
-                    self.add_error(
-                        "comments",
-                        _(
-                            "Toestemmingsverklaring voor traject {} nog niet toegevoegd."
-                        ).format(study.order),
-                    )
-                if not documents.briefing:
-                    self.add_error(
-                        "comments",
-                        _(
-                            "Informatiebrief voor traject {} nog niet toegevoegd."
-                        ).format(study.order),
-                    )
+        validator = Stepper(self.instance, request=self.request)
 
-            if cleaned_data["embargo"] is None:
-                self.add_error("embargo", _("Dit veld is verplicht."))
+        form_errors = validator.get_form_errors()
 
-            embargo_end_date = cleaned_data["embargo_end_date"]
+        if form_errors:
+            # If there are only errors on the submit form, we override this
+            # validation. Otherwise saving the updated data becomes impossible
+            if len(form_errors) == 1 and "proposals/submit" in form_errors[0]["url"]:
+                return
+            self.add_error(
+                None,
+                _("Aanvraag bevat nog foutmeldingen"),
+            )
+
+    def validate_embargo(self, cleaned_data):
+
+        # Only check embargo and end date if form was initialized with it.
+        if "embargo" not in self.fields:
+            return
+
+        self.mark_soft_required(cleaned_data, "embargo")
+
+        if "embargo" in cleaned_data:
+            self.check_dependency(
+                cleaned_data,
+                "embargo",
+                "embargo_end_date",
+                error_message=_("Vul een datum in waarop de embargo afloopt."),
+            )
+        embargo_end_date = cleaned_data.get("embargo_end_date", None)
+        if embargo_end_date:
             two_years_from_now = timezone.now().date() + timezone.timedelta(days=730)
-
-            if embargo_end_date is not None and embargo_end_date > two_years_from_now:
+            if embargo_end_date > two_years_from_now:
                 self.add_error(
                     "embargo_end_date",
                     _(
-                        "De embargo-periode kan maximaal 2 jaar zijn. Kies een datum binnen 2 jaar van vandaag."
+                        "De embargo-periode kan maximaal 2 jaar zijn. "
+                        "Kies een datum binnen 2 jaar van vandaag."
                     ),
                 )
 
 
-class TranslatedConsentForms(SoftValidationMixin, forms.ModelForm):
+class KnowledgeSecurityForm(SoftValidationMixin, ConditionalModelForm):
+
+    class Meta:
+        model = Proposal
+        fields = [
+            "knowledge_security",
+            "knowledge_security_details",
+            "researcher_risk",
+            "researcher_risk_details",
+        ]
+        widgets = {
+            "knowledge_security": BootstrapRadioSelect(),
+            "researcher_risk": BootstrapRadioSelect(),
+        }
+
+    _soft_validation_fields = [
+        "knowledge_security",
+        "knowledge_security_details",
+        "researcher_risk",
+        "researcher_risk_details",
+    ]
+
+    def __init__(self, *args, **kwargs):
+        """
+        - Set the Study for later reference
+        - Remove empty label from fields and reset the choices
+        """
+        super(KnowledgeSecurityForm, self).__init__(*args, **kwargs)
+
+        self.base_fields = (
+            "knowledge_security",
+            "researcher_risk",
+        )
+        for field in self.base_fields:
+            self.fields[field].empty_label = None
+            self.fields[field].choices = YesNoDoubt.choices
+
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If deception is set to yes, make sure deception_details has been filled out
+        - If negativity is set to yes, make sure negativity_details has been filled out
+        - If risk is set to yes, make sure risk_details has been filled out
+        """
+        cleaned_data = super(KnowledgeSecurityForm, self).clean()
+
+        self.mark_soft_required(cleaned_data, "knowledge_security", "researcher_risk")
+
+        for field in self.base_fields:
+            self.check_dependency_list(
+                cleaned_data,
+                f"{field}",
+                f"{field}_details",
+                f1_value_list=[YesNoDoubt.YES, YesNoDoubt.DOUBT],
+            )
+
+
+class TranslatedConsentForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = ["translated_forms", "translated_forms_languages"]
         widgets = {
-            "translated_forms": forms.RadioSelect(choices=YES_NO),
+            "translated_forms": BootstrapRadioSelect(choices=YES_NO),
         }
 
     _soft_validation_fields = ["translated_forms", "translated_forms_languages"]
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-
     def clean(self):
-        cleaned_data = super(TranslatedConsentForms, self).clean()
+        cleaned_data = super(TranslatedConsentForm, self).clean()
 
         if cleaned_data["translated_forms"] is None:
             self.add_error(

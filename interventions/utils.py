@@ -1,22 +1,3 @@
-from django.urls import reverse
-from django.utils.translation import ugettext as _
-
-from main.utils import AvailableURL
-
-
-def intervention_url(study):
-    """
-    Returns the available URLs for an Intervention
-    """
-    result = AvailableURL(title=_("Interventieonderzoek"), margin=2)
-    if study.has_intervention:
-        if hasattr(study, "intervention"):
-            result.url = reverse("interventions:update", args=(study.intervention.pk,))
-        else:
-            result.url = reverse("interventions:create", args=(study.pk,))
-    return result
-
-
 def copy_intervention_to_study(study, original_intervention):
     """
     Copies the given Intervention to the given Study

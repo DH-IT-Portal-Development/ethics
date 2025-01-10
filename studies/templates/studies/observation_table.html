@@ -1,0 +1,43 @@
+{% load static %}
+{% load i18n %}
+{% load fetc_filters %}
+
+{% if study.get_observation %}
+    {% with observation=study.observation %}
+        <h3 class="mb-3">
+            {% trans "Observatieonderzoek" %}
+            <a href="{% url 'observations:update' observation.id %}">
+                <img src="{% static 'proposals/images/pencil.png' %}"
+                     title="{% trans 'Observatie bewerken' %}">
+            </a>
+        </h3>
+        <table class="table mt-2">
+            <thead class="table-primary">
+                <tr>
+                    <th>{% trans "Setting" %}</th>
+                    <th>{% trans "Frequentie" %}</th>
+                    <th>{% trans "Anoniem?" %}</th>
+                    <th>{% trans "Doelgroep?" %}</th>
+                    <th>{% trans "Niet openbaar?" %}</th>
+                    <th>{% trans "Toestemming nodig?" %}</th>
+                    {% if observation.needs_approval %}
+                        <th>{% trans "Instantie" %}</th>
+                    {% endif %}
+                    <th>{% trans "Registratie via" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ observation.setting.all|create_unordered_html_list }}</td>
+                    <td>{{ observation.details_frequency }}</td>
+                    <td>{{ observation.is_anonymous|yesno:_("ja, nee") }}</td>
+                    <td>{{ observation.is_in_target_group|yesno:_("ja, nee") }}</td>
+                    <td>{{ observation.is_nonpublic_space|yesno:_("ja, nee") }}</td>
+                    <td>{{ observation.needs_approval|yesno:_("ja, nee") }}</td>
+                    {% if observation.needs_approval %}<td>{{ observation.approval_institution }}</td>{% endif %}
+                    <td>{{ observation.registrations.all|create_unordered_html_list }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endwith %}
+{% endif %}
