@@ -68,9 +68,16 @@
         </h4>
         <p>
             {% blocktrans trimmed %}
-                De portal heeft recent het systeem voor het toevoegen van documenten vernieuwd. Door de omvang van de veranderingen is het foutgevoelig om de documenten uit het oude systeem automatisch te importeren. Daarom verzoeken we je om eerder toegevoegde documenten vanuit het oude systeem zelf op de goede plek te zetten. Alle oude documenten bij deze aanvraag zijn hieronder weergegeven.
+                De portal heeft recent het systeem voor het toevoegen van documenten vernieuwd. Door de omvang van de veranderingen is het foutgevoelig om de documenten uit het oude systeem automatisch te importeren. Daarom verzoeken we je om eerder toegevoegde documenten vanuit het oude systeem zelf op de goede plek te zetten, indien ze nog steeds van toepassing zijn. Alle oude documenten bij deze aanvraag zijn hieronder weergegeven.
             {% endblocktrans %}
         </p>
+        {% if proposal.is_revision %}
+            <p>
+                {% blocktrans trimmed %}
+                    Indien de FEtC-GW wijzigingen aan de documenten heeft verzocht, verzoeken we je om deze eerst door te voeren, voordat je de documenten opnieuw upload.
+                {% endblocktrans %}
+            </p>
+        {% endif %}
         <p>
             {% blocktrans trimmed %}
                 Het opnieuw toevoegen van deze documenten hoeft maar één keer, en is alleen nodig voor aanvragen die lopen tijdens deze overgangsperiode.

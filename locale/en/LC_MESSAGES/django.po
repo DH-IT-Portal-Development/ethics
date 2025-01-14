@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-13 10:53+0100\n"
+"POT-Creation-Date: 2025-01-14 14:41+0100\n"
 "PO-Revision-Date: 2025-01-13 10:54+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -221,7 +221,7 @@ msgstr ""
 "institution. The management, after having been properly informed, has to "
 "sign a statement of agreement."
 
-#: attachments/kinds.py:240 reviews/templatetags/documents_list.py:223
+#: attachments/kinds.py:240 reviews/templatetags/documents_list.py:213
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
 
@@ -2237,16 +2237,23 @@ msgid ""
 "vernieuwd. Door de omvang van de veranderingen is het foutgevoelig om de "
 "documenten uit het oude systeem automatisch te importeren. Daarom verzoeken "
 "we je om eerder toegevoegde documenten vanuit het oude systeem zelf op de "
-"goede plek te zetten. Alle oude documenten bij deze aanvraag zijn hieronder "
-"weergegeven."
+"goede plek te zetten, indien ze nog steeds van toepassing zijn. Alle oude "
+"documenten bij deze aanvraag zijn hieronder weergegeven."
 msgstr ""
 "The system for attaching documents has recently been updated. Due to the "
 "magnitude of the changes, automatically importing documents is not possible. "
-"Therefore we ask that you re-add previously attached documents from the old "
-"system. All previously attached documents for this proposal are displayed "
+"Therefore we ask that you re-upload previously attached documents from the old "
+"system, if they are still applicable. All previously attached documents for this proposal are displayed "
 "below."
 
-#: proposals/templates/proposals/attachments.html:75
+#: proposals/templates/proposals/attachments.html:76
+msgid ""
+"Indien de FEtC-GW wijzigingen aan de documenten heeft verzocht, verzoeken we "
+"je om deze eerst door te voeren, voordat je de documenten opnieuw upload."
+msgstr "If the FEtC-H requested changes to the documents, please revise "
+"them before re-uploading."
+
+#: proposals/templates/proposals/attachments.html:82
 msgid ""
 "Het opnieuw toevoegen van deze documenten hoeft maar één keer, en is alleen "
 "nodig voor aanvragen die lopen tijdens deze overgangsperiode."
@@ -4478,53 +4485,52 @@ msgstr "Extra documents {}"
 msgid "Aanmelding"
 msgstr "Application"
 
-#: reviews/templatetags/documents_list.py:197
-#: reviews/utils/attachment_utils.py:139
-msgid "Aanvraag in PDF-vorm"
-msgstr "Application in PDF format"
-
-#: reviews/templatetags/documents_list.py:209
+#: reviews/templatetags/documents_list.py:199
 #: reviews/utils/attachment_utils.py:144
 msgid "Eerdere goedkeuring"
 msgstr "Prior approval"
 
-#: reviews/templatetags/documents_list.py:216
+#: reviews/templatetags/documents_list.py:206
 #: reviews/utils/attachment_utils.py:150
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templatetags/documents_list.py:239
+#: reviews/templatetags/documents_list.py:229
 #: reviews/utils/attachment_utils.py:160
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templatetags/documents_list.py:272
+#: reviews/templatetags/documents_list.py:263
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templatetags/documents_list.py:273
+#: reviews/templatetags/documents_list.py:264
 msgid "Informatiebrief"
 msgstr "Information letter"
 
-#: reviews/templatetags/documents_list.py:275
+#: reviews/templatetags/documents_list.py:266
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:280
+#: reviews/templatetags/documents_list.py:271
 msgid "Informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:284
+#: reviews/templatetags/documents_list.py:275
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
-#: reviews/templatetags/documents_list.py:292
+#: reviews/templatetags/documents_list.py:283
 msgid "Toestemmingsdocument observatie"
 msgstr "Consent document for observation"
 
 #: reviews/utils/attachment_utils.py:114
 msgid "Traject {}"
 msgstr "Trajectory {}"
+
+#: reviews/utils/attachment_utils.py:139
+msgid "Aanvraag in PDF-vorm"
+msgstr "Application in PDF format"
 
 #: reviews/utils/review_actions.py:118
 msgid "Pas jouw beslissing en/of commentaar aan"
@@ -4720,37 +4726,6 @@ msgid ""
 msgstr ""
 "This application has already been assessed, so you cannot add/change your "
 "assessment"
-
-#: src/uil-django-core/uil/rest_client/clients/_base.py:104
-#: src/uil-django-core/uil/rest_client/clients/_base.py:107
-msgid "api:host_unreachable"
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:28
-#, python-format
-msgid "Value %(value)r is not a valid choice."
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:29
-msgid "This field cannot be null."
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:30
-msgid "This field cannot be blank."
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:31
-#, python-format
-msgid "%(model_name)s with this %(field_label)s already exists."
-msgstr ""
-
-#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
-#. Eg: "Title must be unique for pub_date year"
-#: src/uil-django-core/uil/rest_client/fields.py:35
-#, python-format
-msgid ""
-"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-msgstr ""
 
 #: studies/forms.py:33
 msgid "De leeftijdsgroep van je deelnemers"
