@@ -29,11 +29,11 @@ class SystemMessage(models.Model):
     @property
     def css_class(self):
         if self.level == self.Levels.URGENT:
-            return "failed"
+            return "alert alert-danger"
         if self.level == self.Levels.ATTENTION:
-            return "warning"
+            return "alert alert-warning"
         if self.level == self.Levels.INFO:
-            return "info"
+            return "alert alert-info"
 
         return ""
 
