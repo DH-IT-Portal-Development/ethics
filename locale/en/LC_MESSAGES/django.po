@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-01-13 10:53+0100\n"
-"PO-Revision-Date: 2025-01-13 10:54+0100\n"
+"PO-Revision-Date: 2025-01-14 11:10+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: attachments/kinds.py:31
 msgid "Informatiebrief anoniem onderzoek"
-msgstr "Information about the researcher"
+msgstr "Information letter for anonymous research"
 
 #: attachments/kinds.py:33
 msgid ""
