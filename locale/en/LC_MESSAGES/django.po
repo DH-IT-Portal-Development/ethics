@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-14 14:41+0100\n"
+"POT-Creation-Date: 2025-01-14 15:51+0100\n"
 "PO-Revision-Date: 2025-01-13 10:54+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -474,7 +474,7 @@ msgstr "How many times a week will the intervention session take place?"
 
 #: interventions/templates/interventions/intervention_form.html:7
 #: interventions/templates/interventions/intervention_form.html:42
-#: proposals/utils/pdf_diff_sections.py:244
+#: proposals/utils/pdf_diff_sections.py:245
 msgid "Het interventieonderzoek"
 msgstr "Intervention study"
 
@@ -1311,7 +1311,7 @@ msgstr "How many hours of observation will take place on average per day?"
 
 #: observations/templates/observations/observation_form.html:7
 #: observations/templates/observations/observation_form.html:32
-#: proposals/utils/pdf_diff_sections.py:300
+#: proposals/utils/pdf_diff_sections.py:301
 msgid "Het observatieonderzoek"
 msgstr "Observational study"
 
@@ -1888,7 +1888,7 @@ msgstr ""
 "include it here. Supplying a DMP can expedite ethical assessment of "
 "proposals."
 
-#: proposals/models.py:463 proposals/utils/pdf_diff_sections.py:630
+#: proposals/models.py:463 proposals/utils/pdf_diff_sections.py:634
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -2233,25 +2233,27 @@ msgstr "Legacy documents"
 
 #: proposals/templates/proposals/attachments.html:70
 msgid ""
-"De portal heeft recent het systeem voor het toevoegen van documenten "
-"vernieuwd. Door de omvang van de veranderingen is het foutgevoelig om de "
-"documenten uit het oude systeem automatisch te importeren. Daarom verzoeken "
-"we je om eerder toegevoegde documenten vanuit het oude systeem zelf op de "
-"goede plek te zetten, indien ze nog steeds van toepassing zijn. Alle oude "
-"documenten bij deze aanvraag zijn hieronder weergegeven."
+"Recent is het systeem voor het toevoegen van documenten vernieuwd. Door de "
+"omvang van de veranderingen is het foutgevoelig om de documenten uit het "
+"oude systeem automatisch te importeren. Alle oude documenten bij deze "
+"aanvraag zijn hieronder weergegeven. Deze documenten kun je, indien ze nog "
+"steeds van toepassing zijn, downloaden en vervolgens op de juiste plek "
+"hierboven indienen."
 msgstr ""
 "The system for attaching documents has recently been updated. Due to the "
 "magnitude of the changes, automatically importing documents is not possible. "
-"Therefore we ask that you re-upload previously attached documents from the old "
-"system, if they are still applicable. All previously attached documents for this proposal are displayed "
-"below."
+"All previously attached documents for this proposal are displayed below. "
+"Please download the documents that you need to submit again and re-upload "
+"them, if they are still applicable."
 
 #: proposals/templates/proposals/attachments.html:76
 msgid ""
-"Indien de FEtC-GW wijzigingen aan de documenten heeft verzocht, verzoeken we "
-"je om deze eerst door te voeren, voordat je de documenten opnieuw upload."
-msgstr "If the FEtC-H requested changes to the documents, please revise "
-"them before re-uploading."
+"Wanneer de FETC-GW verzocht heeft om wijzigingen aan te brengen in de "
+"documenten, dan verzoeken we je om deze eerst door te voeren, voordat je de "
+"documenten opnieuw indient."
+msgstr ""
+"If the FEtC-H requested changes to the documents, please revise them before "
+"re-uploading."
 
 #: proposals/templates/proposals/attachments.html:82
 msgid ""
@@ -2642,7 +2644,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_form.html:7
 #: proposals/templates/proposals/proposal_form.html:57
-#: proposals/utils/pdf_diff_sections.py:40
+#: proposals/utils/pdf_diff_sections.py:41
 msgid "Algemene informatie over de aanvraag"
 msgstr "General information about the application"
 
@@ -3104,8 +3106,13 @@ msgid "Er zijn nog errors gevonden op de volgende pagina's:"
 msgstr "Errors were found on the following pages:"
 
 #: proposals/templates/proposals/proposal_submit.html:119
+#, fuzzy
+#| msgid ""
+#| "Dit komt waarschijnlijk doordat je nog niet alle verplichte velden heeft "
+#| "ingevuld. Je kan je aanmelding pas versturen wanneer deze fouten "
+#| "gecorrigeerd zijn."
 msgid ""
-"Dit komt waarschijnlijk doordat je nog niet alle verplichte velden heeft "
+"Dit komt waarschijnlijk doordat je nog niet alle verplichte velden hebt "
 "ingevuld. Je kan je aanmelding pas versturen wanneer deze fouten "
 "gecorrigeerd zijn."
 msgstr ""
@@ -3148,7 +3155,7 @@ msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
 #: proposals/templates/proposals/proposal_submit.html:155
-#: proposals/utils/pdf_diff_sections.py:613
+#: proposals/utils/pdf_diff_sections.py:614
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -3309,7 +3316,7 @@ msgstr "Additional forms"
 
 #: proposals/templates/proposals/study_start.html:7
 #: proposals/templates/proposals/study_start.html:59
-#: proposals/utils/pdf_diff_sections.py:148
+#: proposals/utils/pdf_diff_sections.py:149
 msgid "Eén of meerdere trajecten?"
 msgstr "One or more trajectories?"
 
@@ -3338,7 +3345,7 @@ msgstr "Current application"
 
 #: proposals/templates/proposals/translated_consent_forms.html:7
 #: proposals/templates/proposals/translated_consent_forms.html:20
-#: proposals/utils/pdf_diff_sections.py:539
+#: proposals/utils/pdf_diff_sections.py:540
 msgid "Vertaling formulieren"
 msgstr "Translation of documents"
 
@@ -3429,7 +3436,7 @@ msgstr "Revision/amendment of"
 
 #: proposals/templates/proposals/wmo_application.html:7
 #: proposals/templates/proposals/wmo_application.html:23
-#: proposals/utils/pdf_diff_sections.py:135
+#: proposals/utils/pdf_diff_sections.py:136
 msgid "Aanmelding bij de METC"
 msgstr "Registration with the METC"
 
@@ -3452,7 +3459,7 @@ msgstr "Start again"
 
 #: proposals/templates/proposals/wmo_form.html:7
 #: proposals/templates/proposals/wmo_form.html:28
-#: proposals/utils/pdf_diff_sections.py:110
+#: proposals/utils/pdf_diff_sections.py:111
 msgid ""
 "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?"
 msgstr ""
@@ -3507,7 +3514,7 @@ msgstr "Conclusion trajectories"
 msgid "Deelnemers"
 msgstr "Participants"
 
-#: proposals/utils/checkers.py:643 proposals/utils/pdf_diff_sections.py:166
+#: proposals/utils/checkers.py:643 proposals/utils/pdf_diff_sections.py:167
 #: studies/templates/studies/study_personal_data.html:7
 #: studies/templates/studies/study_personal_data.html:22
 msgid "Persoonsgegevens"
@@ -3546,38 +3553,38 @@ msgstr "Translations"
 msgid "Indienen"
 msgstr "Submit"
 
-#: proposals/utils/pdf_diff_sections.py:200
+#: proposals/utils/pdf_diff_sections.py:201
 #: studies/templates/studies/study_form.html:7
 #: studies/templates/studies/study_form.html:64
 msgid "De deelnemers"
 msgstr "Participants"
 
-#: proposals/utils/pdf_diff_sections.py:402
+#: proposals/utils/pdf_diff_sections.py:403
 msgid "Het takenonderzoek en interviews"
 msgstr "Task-based research and interviews"
 
-#: proposals/utils/pdf_diff_sections.py:474
+#: proposals/utils/pdf_diff_sections.py:475
 #: studies/templates/studies/study_end.html:8
 msgid "Overzicht en eigen beoordeling van het gehele onderzoek"
 msgstr "Overview and self-assessment of the entire study"
 
-#: proposals/utils/pdf_diff_sections.py:510
+#: proposals/utils/pdf_diff_sections.py:511
 msgid "Kennisveiligheid en risico onderzoekers"
 msgstr "Knowledge security and researcher risk"
 
-#: proposals/utils/pdf_diff_sections.py:605
+#: proposals/utils/pdf_diff_sections.py:606
 msgid "Data Management"
 msgstr "Data Management"
 
-#: proposals/utils/pdf_diff_sections.py:776
+#: proposals/utils/pdf_diff_sections.py:780
 msgid "Documenten - Aanvraag in het geheel"
 msgstr "Documents - Application in general"
 
-#: proposals/utils/pdf_diff_sections.py:778
+#: proposals/utils/pdf_diff_sections.py:782
 msgid "Documenten - Het hoofdtraject"
 msgstr "Documents - The main trajectory"
 
-#: proposals/utils/pdf_diff_sections.py:780
+#: proposals/utils/pdf_diff_sections.py:784
 msgid "Documenten - Traject "
 msgstr "Documents - Trajectory "
 
