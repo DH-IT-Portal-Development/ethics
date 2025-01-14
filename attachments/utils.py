@@ -106,6 +106,15 @@ class AttachmentSlot(renderable):
     ):
         return generate_filename(self)
 
+    def get_provision(
+        self,
+    ):
+        if self.comparable:
+            return _("Gereviseerd")
+        if self.is_new:
+            return _("Nieuw bij deze aanvraag")
+        return "Bestaand bestand"
+
     @property
     def classes(self):
         if self.required:
