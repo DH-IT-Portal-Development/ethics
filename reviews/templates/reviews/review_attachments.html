@@ -56,18 +56,18 @@
                                 <tr>
                                     <td>{% trans "Aanlevering" %}</td>
                                     <td>
-                                        {% if slot.is_new %}
-                                            {% if proposal.parent %}
-                                                <strong>{% trans "Nieuw bij deze aanvraag" %}</strong>
-                                            {% else %}
-                                                {% trans "Nieuw bij deze aanvraag" %}
-                                            {% endif %}
-                                        {% elif slot.comparable %}
+                                        {% if slot.comparable %}
                                             <strong>{% trans "Gereviseerd bestand" %}</strong>
                                             <a href="{{ slot.compare_url }}" target="_blank" class="icon-link">
                                                 <img src="{% static 'proposals/images/arrow_divide.png' %}"
                                                      title="{% trans 'Toon verschillen' %}">
                                             </a>
+                                        {% elif slot.is_new %}
+                                            {% if proposal.parent %}
+                                                <strong>{% trans "Nieuw bij deze aanvraag" %}</strong>
+                                            {% else %}
+                                                {% trans "Nieuw bij deze aanvraag" %}
+                                            {% endif %}
                                         {% else %}
                                             {% trans "Onveranderd" %}
                                         {% endif %}
@@ -97,12 +97,12 @@
             {% if supervisor_decision %}
                 <a href="{% url "reviews:decide" supervisor_decision.pk %}"
                    class="btn btn-primary mt-3 mb-3">
-                {% else %}
+            {% else %}
                     <a href="{% url "reviews:detail" review.pk %}"
                        class="btn btn-primary mt-3 mb-3">
-                    {% endif %}
-                    {% trans "Terug naar beoordeling" %}
-                </a>
-            </div>
+            {% endif %}
+            {% trans "Terug naar beoordeling" %}
+                    </a>
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}
