@@ -117,13 +117,26 @@ class AttachmentSlot(renderable):
 
     @property
     def is_new(self):
+        """
+        Returns true if this attachment file has not been seen before
+        by the Ethics committee. Please note that this includes revised
+        files.
+        """
         ancestor_proposal = self.get_proposal().parent
         # If this is a fresh proposal we must be new, regardless
         # of if we have a parent.
         if not ancestor_proposal:
             return True
-        # Otherwise, we're new only if we have no parent.
-        return not self.attachment.parent
+        # We gather the set of ancestor objects
+        ancestor_objects = [ancestor_proposal] + list(ancestor_proposal.study_set.all())
+        for obj in ancestor_objects:
+            # If this object is attached to any of these ancestor objects,
+            # it is definitely not new
+            if self.attachment.attached_to.contains(obj):
+                return False
+        # If none of the above has returned yet, we consider the remaining
+        # attachments to be new.
+        return True
 
     @property
     def comparable(self):
