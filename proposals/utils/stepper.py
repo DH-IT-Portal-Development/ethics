@@ -16,6 +16,7 @@ from tasks.forms import SessionOverviewForm
 from studies.forms import StudyForm, StudyDesignForm, StudyEndForm
 from observations.forms import ObservationForm
 from interventions.forms import InterventionForm
+from proposals.forms import ProposalSubmitForm
 
 from proposals.utils.validate_sessions_tasks import validate_sessions_tasks
 from attachments.utils import AttachmentSlot, enumerate_slots
@@ -232,7 +233,7 @@ class Stepper(renderable):
         num_studies = self.proposal.study_set.count()
         return num_studies > 1
 
-    def get_form_errors(self):
+    def get_form_errors(self, exclude_submit=False):
         """
         A method providing validation of all the forms making up the proposal.
         It return a list of dicts, with url's and formatted page name's
@@ -258,6 +259,11 @@ class Stepper(renderable):
                     page_name = f"{item.parent.title}: {item.title}"
                 else:
                     page_name = item.title
+                # When using this method on the submit page, we
+                # use the form's own validation, otherwise it gets
+                # validated twice
+                if exclude_submit and item.form_class == ProposalSubmitForm:
+                    continue
                 troublesome_pages.append(
                     {
                         "url": item.get_url(),
