@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-14 15:51+0100\n"
-"PO-Revision-Date: 2025-01-13 10:54+0100\n"
+"POT-Creation-Date: 2025-01-15 12:45+0100\n"
+"PO-Revision-Date: 2025-01-15 12:46+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -474,7 +474,7 @@ msgstr "How many times a week will the intervention session take place?"
 
 #: interventions/templates/interventions/intervention_form.html:7
 #: interventions/templates/interventions/intervention_form.html:42
-#: proposals/utils/pdf_diff_sections.py:245
+#: proposals/utils/pdf_diff_sections.py:244
 msgid "Het interventieonderzoek"
 msgstr "Intervention study"
 
@@ -1311,7 +1311,7 @@ msgstr "How many hours of observation will take place on average per day?"
 
 #: observations/templates/observations/observation_form.html:7
 #: observations/templates/observations/observation_form.html:32
-#: proposals/utils/pdf_diff_sections.py:301
+#: proposals/utils/pdf_diff_sections.py:300
 msgid "Het observatieonderzoek"
 msgstr "Observational study"
 
@@ -1888,7 +1888,7 @@ msgstr ""
 "include it here. Supplying a DMP can expedite ethical assessment of "
 "proposals."
 
-#: proposals/models.py:463 proposals/utils/pdf_diff_sections.py:634
+#: proposals/models.py:463 proposals/utils/pdf_diff_sections.py:630
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -2644,7 +2644,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_form.html:7
 #: proposals/templates/proposals/proposal_form.html:57
-#: proposals/utils/pdf_diff_sections.py:41
+#: proposals/utils/pdf_diff_sections.py:40
 msgid "Algemene informatie over de aanvraag"
 msgstr "General information about the application"
 
@@ -3106,11 +3106,6 @@ msgid "Er zijn nog errors gevonden op de volgende pagina's:"
 msgstr "Errors were found on the following pages:"
 
 #: proposals/templates/proposals/proposal_submit.html:119
-#, fuzzy
-#| msgid ""
-#| "Dit komt waarschijnlijk doordat je nog niet alle verplichte velden heeft "
-#| "ingevuld. Je kan je aanmelding pas versturen wanneer deze fouten "
-#| "gecorrigeerd zijn."
 msgid ""
 "Dit komt waarschijnlijk doordat je nog niet alle verplichte velden hebt "
 "ingevuld. Je kan je aanmelding pas versturen wanneer deze fouten "
@@ -3155,7 +3150,7 @@ msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
 #: proposals/templates/proposals/proposal_submit.html:155
-#: proposals/utils/pdf_diff_sections.py:614
+#: proposals/utils/pdf_diff_sections.py:613
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -3316,7 +3311,7 @@ msgstr "Additional forms"
 
 #: proposals/templates/proposals/study_start.html:7
 #: proposals/templates/proposals/study_start.html:59
-#: proposals/utils/pdf_diff_sections.py:149
+#: proposals/utils/pdf_diff_sections.py:148
 msgid "Eén of meerdere trajecten?"
 msgstr "One or more trajectories?"
 
@@ -3345,7 +3340,7 @@ msgstr "Current application"
 
 #: proposals/templates/proposals/translated_consent_forms.html:7
 #: proposals/templates/proposals/translated_consent_forms.html:20
-#: proposals/utils/pdf_diff_sections.py:540
+#: proposals/utils/pdf_diff_sections.py:539
 msgid "Vertaling formulieren"
 msgstr "Translation of documents"
 
@@ -3436,7 +3431,7 @@ msgstr "Revision/amendment of"
 
 #: proposals/templates/proposals/wmo_application.html:7
 #: proposals/templates/proposals/wmo_application.html:23
-#: proposals/utils/pdf_diff_sections.py:136
+#: proposals/utils/pdf_diff_sections.py:135
 msgid "Aanmelding bij de METC"
 msgstr "Registration with the METC"
 
@@ -3459,7 +3454,7 @@ msgstr "Start again"
 
 #: proposals/templates/proposals/wmo_form.html:7
 #: proposals/templates/proposals/wmo_form.html:28
-#: proposals/utils/pdf_diff_sections.py:111
+#: proposals/utils/pdf_diff_sections.py:110
 msgid ""
 "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?"
 msgstr ""
@@ -3514,7 +3509,7 @@ msgstr "Conclusion trajectories"
 msgid "Deelnemers"
 msgstr "Participants"
 
-#: proposals/utils/checkers.py:643 proposals/utils/pdf_diff_sections.py:167
+#: proposals/utils/checkers.py:643 proposals/utils/pdf_diff_sections.py:166
 #: studies/templates/studies/study_personal_data.html:7
 #: studies/templates/studies/study_personal_data.html:22
 msgid "Persoonsgegevens"
@@ -3553,38 +3548,38 @@ msgstr "Translations"
 msgid "Indienen"
 msgstr "Submit"
 
-#: proposals/utils/pdf_diff_sections.py:201
+#: proposals/utils/pdf_diff_sections.py:200
 #: studies/templates/studies/study_form.html:7
 #: studies/templates/studies/study_form.html:64
 msgid "De deelnemers"
 msgstr "Participants"
 
-#: proposals/utils/pdf_diff_sections.py:403
+#: proposals/utils/pdf_diff_sections.py:402
 msgid "Het takenonderzoek en interviews"
 msgstr "Task-based research and interviews"
 
-#: proposals/utils/pdf_diff_sections.py:475
+#: proposals/utils/pdf_diff_sections.py:474
 #: studies/templates/studies/study_end.html:8
 msgid "Overzicht en eigen beoordeling van het gehele onderzoek"
 msgstr "Overview and self-assessment of the entire study"
 
-#: proposals/utils/pdf_diff_sections.py:511
+#: proposals/utils/pdf_diff_sections.py:510
 msgid "Kennisveiligheid en risico onderzoekers"
 msgstr "Knowledge security and researcher risk"
 
-#: proposals/utils/pdf_diff_sections.py:606
+#: proposals/utils/pdf_diff_sections.py:605
 msgid "Data Management"
 msgstr "Data Management"
 
-#: proposals/utils/pdf_diff_sections.py:780
+#: proposals/utils/pdf_diff_sections.py:776
 msgid "Documenten - Aanvraag in het geheel"
 msgstr "Documents - Application in general"
 
-#: proposals/utils/pdf_diff_sections.py:782
+#: proposals/utils/pdf_diff_sections.py:778
 msgid "Documenten - Het hoofdtraject"
 msgstr "Documents - The main trajectory"
 
-#: proposals/utils/pdf_diff_sections.py:784
+#: proposals/utils/pdf_diff_sections.py:780
 msgid "Documenten - Traject "
 msgstr "Documents - Trajectory "
 
@@ -4733,6 +4728,35 @@ msgid ""
 msgstr ""
 "This application has already been assessed, so you cannot add/change your "
 "assessment"
+
+#: src/uil-django-core/uil/rest_client/clients/_base.py:106
+#: src/uil-django-core/uil/rest_client/clients/_base.py:109
+msgid "api:host_unreachable"
+msgstr ""
+
+#: src/uil-django-core/uil/rest_client/fields.py:28
+#, python-format
+msgid "Value %(value)r is not a valid choice."
+msgstr ""
+
+#: src/uil-django-core/uil/rest_client/fields.py:29
+msgid "This field cannot be null."
+msgstr ""
+
+#: src/uil-django-core/uil/rest_client/fields.py:30
+msgid "This field cannot be blank."
+msgstr ""
+
+#: src/uil-django-core/uil/rest_client/fields.py:31
+#, python-format
+msgid "%(model_name)s with this %(field_label)s already exists."
+msgstr ""
+
+#: src/uil-django-core/uil/rest_client/fields.py:35
+#, python-format
+msgid ""
+"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
+msgstr ""
 
 #: studies/forms.py:33
 msgid "De leeftijdsgroep van je deelnemers"
