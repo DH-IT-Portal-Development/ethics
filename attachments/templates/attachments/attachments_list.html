@@ -27,8 +27,7 @@
                             <img src="{% static 'proposals/images/arrow_divide.png' %}"
                                  title="{% trans 'Toon verschillen' %}">
                         </a>
-                    {% endif %}
-                    {% if item.slot.is_new %}
+                    {% elif item.slot.is_new %}
                         <img src="{% static 'proposals/images/weather-clear.png' %}"
                              title="{% trans 'Nieuw bestand' %}">
                     </a>

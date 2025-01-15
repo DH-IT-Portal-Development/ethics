@@ -44,7 +44,7 @@
             {% endfor %}
         {% else %}
             {% for row in rows %}
-                <tr class="diff">
+                <tr {% if not row.nodiff %}class="diff"{% else %}class="diff-ignore"{% endif %}>
                     <td>{{ row.verbose_name }}</td>
                     <td>{{ row.old_value }}</td>
                     <td>{{ row.new_value }}</td>

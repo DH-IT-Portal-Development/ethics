@@ -16,6 +16,10 @@ from proposals.utils.proposal_utils import FilenameFactory
 register = template.Library()
 
 
+def is_identical(new_file, old_file):
+    return new_file.url == old_file.url
+
+
 @register.inclusion_tag("reviews/simple_compare_link.html")
 def simple_compare_link(obj, file):
     """Generates a compare icon"""
@@ -101,6 +105,11 @@ def simple_compare_link(obj, file):
         "new": pk,
         "attribute": file.field.name,
     }
+
+    # Do not offer to compare identical files
+    old_file = getattr(parent_obj, file.field.name)
+    if is_identical(file, old_file):
+        return {}
 
     # CompareDocumentsView expects the following args:
     # - old pk
@@ -194,16 +203,6 @@ def documents_list(review, user):
     # Get the proposal PDF
     pdf_container = Container(_("Aanmelding"))
 
-    proposal_pdf = DocItem(_("Aanvraag in PDF-vorm"))
-    proposal_pdf.link_url = reverse("proposals:pdf", args=(proposal.pk,))
-
-    # The proposals:pdf view sets an attachment and filename
-    # HTTP header (Content-disposition:) which does not interact well with
-    # the download= link attribute. So we add a flag here that circumvents it
-    proposal_pdf.sets_content_disposition = True
-
-    pdf_container.items.append(proposal_pdf)
-
     # Pre-approval
     if proposal.pre_approval_pdf:
         pre_approval = DocItem(_("Eerdere goedkeuring"))
@@ -241,8 +240,9 @@ def documents_list(review, user):
 
         pdf_container.items.append(metc_decision)
 
-    # Finally, append the container
-    containers.append(pdf_container)
+    # Finally, append the container, if it contains items
+    if pdf_container.items:
+        containers.append(pdf_container)
 
     containers += get_legacy_documents(proposal, user=user)
 

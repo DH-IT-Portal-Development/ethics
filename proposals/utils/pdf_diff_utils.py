@@ -133,6 +133,7 @@ class DiffSection:
                             "verbose_name": old_section_dict[field].verbose_name,
                             "old_value": old_section_dict[field].value,
                             "new_value": new_section_dict[field].value,
+                            "nodiff": new_section_dict[field].nodiff,
                         }
                     )
                 elif field in old_section_dict and not field in new_section_dict:
@@ -141,6 +142,7 @@ class DiffSection:
                             "verbose_name": old_section_dict[field].verbose_name,
                             "old_value": old_section_dict[field].value,
                             "new_value": "",
+                            "nodiff": old_section_dict[field].nodiff,
                         }
                     )
                 elif field in new_section_dict and not field in old_section_dict:
@@ -149,6 +151,7 @@ class DiffSection:
                             "verbose_name": new_section_dict[field].verbose_name,
                             "old_value": "",
                             "new_value": new_section_dict[field].value,
+                            "nodiff": new_section_dict[field].nodiff,
                         }
                     )
 
@@ -195,6 +198,7 @@ class Row:
         self.obj = obj
         self.field = field
         self.proposal = proposal
+        self.nodiff = False
 
     def value(self):
         val = RowValue(self.obj, self.field, self.proposal).get_field_value()
@@ -230,15 +234,38 @@ class KindRow(Row):
         self.slot = slot
         self.obj = attachment
         self.field = field
+        self.nodiff = False
 
     def value(self):
         return self.slot.kind.name
+
+
+class ProvisionRow(Row):
+
+    def __init__(self, slot, field):
+        self.field = field
+        self.slot = slot
+        self.nodiff = False
+
+    def verbose_name(
+        self,
+    ):
+        return _("Aanlevering")
+
+    def value(
+        self,
+    ):
+        return self.slot.get_provision()
 
 
 class AttachmentRow(Row):
     """
     This row receives a slot as self.obj and also is basically fully custom.
     """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.nodiff = True
 
     def get_verbose_name(self, field):
         return _("Bestand")
@@ -273,6 +300,7 @@ class UploadDateRow:
     def __init__(self, attachment, field):
         self.field = field
         self.attachment = attachment
+        self.nodiff = False
 
     def value(self):
         return datetime.date(self.attachment.upload.file_instance.modified_on)

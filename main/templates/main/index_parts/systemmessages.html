@@ -1,0 +1,13 @@
+{% if systemmessage_list %}
+    <div class="uu-container">
+        <div class="col-12">
+            {% for message in systemmessage_list %}
+                <div class="{{ message.css_class }}">
+                    {% autoescape off %}
+                        {{ message.message }}
+                    {% endautoescape %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
