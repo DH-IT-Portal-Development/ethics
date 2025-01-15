@@ -16,6 +16,10 @@ from proposals.utils.proposal_utils import FilenameFactory
 register = template.Library()
 
 
+def is_identical(new_file, old_file):
+    return new_file.url == old_file.url
+
+
 @register.inclusion_tag("reviews/simple_compare_link.html")
 def simple_compare_link(obj, file):
     """Generates a compare icon"""
@@ -101,6 +105,11 @@ def simple_compare_link(obj, file):
         "new": pk,
         "attribute": file.field.name,
     }
+
+    # Do not offer to compare identical files
+    old_file = getattr(parent_obj, file.field.name)
+    if is_identical(file, old_file):
+        return {}
 
     # CompareDocumentsView expects the following args:
     # - old pk
