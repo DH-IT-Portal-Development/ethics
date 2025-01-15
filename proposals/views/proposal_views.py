@@ -721,6 +721,9 @@ class ProposalSubmit(
         context["pagenr"] = self._get_page_number()
         context["is_supervisor_edit_phase"] = self.is_supervisor_edit_phase()
         context["start_date_warning"] = self.check_start_date()
+        context["stepper_errors"] = self.get_stepper().get_form_errors(
+            exclude_submit=True
+        )
 
         return context
 

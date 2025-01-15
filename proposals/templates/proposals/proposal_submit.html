@@ -102,7 +102,7 @@
             {% endif %}
         {% endfor %}
     {% endif %}
-    {% if stepper.get_form_errors %}
+    {% if stepper_errors %}
         <div class="alert alert-primary mt-3">
             <h5 class="mt-1">
                 {% blocktrans trimmed %}
@@ -110,7 +110,7 @@
                 {% endblocktrans %}
             </h5>
             <ul>
-                {% for error_page in stepper.get_form_errors %}
+                {% for error_page in stepper_errors %}
                     <li>
                         <a href="{{ error_page.url }}">{{ error_page.page_name }}</a>
                     </li>
