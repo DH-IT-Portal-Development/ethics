@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-13 10:53+0100\n"
-"PO-Revision-Date: 2025-01-13 10:54+0100\n"
+"POT-Creation-Date: 2025-01-14 15:39+0100\n"
+"PO-Revision-Date: 2025-01-14 15:40+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: attachments/kinds.py:31
 msgid "Informatiebrief anoniem onderzoek"
-msgstr "Information about the researcher"
+msgstr "Information letter for anonymous research"
 
 #: attachments/kinds.py:33
 msgid ""
@@ -245,7 +245,7 @@ msgstr "Other file type"
 msgid "Voor alle overige soorten bestanden"
 msgstr "For miscellaneous files"
 
-#: attachments/models.py:24 proposals/utils/pdf_diff_utils.py:244
+#: attachments/models.py:24 proposals/utils/pdf_diff_utils.py:267
 #: reviews/templates/reviews/review_attachments.html:77
 msgid "Bestand"
 msgstr "File"
@@ -294,7 +294,7 @@ msgstr "View all"
 #: attachments/templates/attachments/attachments_list.html:28
 #: main/templatetags/compare_tags.py:63
 #: proposals/templates/proposals/vue_templates/proposal_list.html:51
-#: reviews/templates/reviews/review_attachments.html:69
+#: reviews/templates/reviews/review_attachments.html:63
 #: reviews/templates/reviews/review_detail_sidebar.html:30
 #: reviews/templates/reviews/simple_compare_link.html:7
 #: reviews/templates/reviews/vue_templates/decision_list.html:53
@@ -302,7 +302,7 @@ msgstr "View all"
 msgid "Toon verschillen"
 msgstr "Show differences"
 
-#: attachments/templates/attachments/attachments_list.html:33
+#: attachments/templates/attachments/attachments_list.html:32
 msgid "Nieuw bestand"
 msgstr "New document"
 
@@ -342,6 +342,16 @@ msgstr "Optional"
 #: attachments/utils.py:18
 msgid "Extra"
 msgstr "Extra"
+
+#: attachments/utils.py:111
+msgid "Gereviseerd"
+msgstr "Revised"
+
+#: attachments/utils.py:113
+#: reviews/templates/reviews/review_attachments.html:67
+#: reviews/templates/reviews/review_attachments.html:69
+msgid "Nieuw bij deze aanvraag"
+msgstr "New with this review"
 
 #: faqs/menus.py:7
 msgid "FETC-GW website"
@@ -474,7 +484,7 @@ msgstr "How many times a week will the intervention session take place?"
 
 #: interventions/templates/interventions/intervention_form.html:7
 #: interventions/templates/interventions/intervention_form.html:42
-#: proposals/utils/pdf_diff_sections.py:244
+#: proposals/utils/pdf_diff_sections.py:245
 msgid "Het interventieonderzoek"
 msgstr "Intervention study"
 
@@ -500,11 +510,11 @@ msgstr "Intervention saved"
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
-#: main/models.py:12 main/utils.py:17 proposals/utils/pdf_diff_utils.py:305
+#: main/models.py:12 main/utils.py:17 proposals/utils/pdf_diff_utils.py:329
 msgid "ja"
 msgstr "yes"
 
-#: main/models.py:13 main/utils.py:17 proposals/utils/pdf_diff_utils.py:305
+#: main/models.py:13 main/utils.py:17 proposals/utils/pdf_diff_utils.py:329
 msgid "nee"
 msgstr "no"
 
@@ -1311,7 +1321,7 @@ msgstr "How many hours of observation will take place on average per day?"
 
 #: observations/templates/observations/observation_form.html:7
 #: observations/templates/observations/observation_form.html:32
-#: proposals/utils/pdf_diff_sections.py:300
+#: proposals/utils/pdf_diff_sections.py:301
 msgid "Het observatieonderzoek"
 msgstr "Observational study"
 
@@ -1888,7 +1898,7 @@ msgstr ""
 "include it here. Supplying a DMP can expedite ethical assessment of "
 "proposals."
 
-#: proposals/models.py:463 proposals/utils/pdf_diff_sections.py:630
+#: proposals/models.py:463 proposals/utils/pdf_diff_sections.py:634
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -2222,8 +2232,8 @@ msgid "Toevoegen"
 msgstr "Add"
 
 #: proposals/templates/proposals/attachments.html:47
-#: proposals/utils/pdf_diff_utils.py:382 proposals/utils/pdf_diff_utils.py:409
-#: proposals/utils/pdf_diff_utils.py:418 proposals/utils/pdf_diff_utils.py:442
+#: proposals/utils/pdf_diff_utils.py:406 proposals/utils/pdf_diff_utils.py:433
+#: proposals/utils/pdf_diff_utils.py:442 proposals/utils/pdf_diff_utils.py:466
 msgid "Traject "
 msgstr "Trajectory "
 
@@ -2635,7 +2645,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_form.html:7
 #: proposals/templates/proposals/proposal_form.html:57
-#: proposals/utils/pdf_diff_sections.py:40
+#: proposals/utils/pdf_diff_sections.py:41
 msgid "Algemene informatie over de aanvraag"
 msgstr "General information about the application"
 
@@ -2841,7 +2851,7 @@ msgstr ""
 #: proposals/templates/proposals/proposal_start.html:52
 #: proposals/templates/proposals/proposal_start_practice.html:52
 #: proposals/templates/proposals/study_start.html:67
-#: proposals/utils/pdf_diff_utils.py:389
+#: proposals/utils/pdf_diff_utils.py:413
 #: reviews/templates/reviews/committee_members_workload.html:23
 #: reviews/templates/reviews/review_attachments.html:42
 msgid "Traject"
@@ -3141,7 +3151,7 @@ msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
 #: proposals/templates/proposals/proposal_submit.html:155
-#: proposals/utils/pdf_diff_sections.py:613
+#: proposals/utils/pdf_diff_sections.py:617
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -3302,7 +3312,7 @@ msgstr "Additional forms"
 
 #: proposals/templates/proposals/study_start.html:7
 #: proposals/templates/proposals/study_start.html:59
-#: proposals/utils/pdf_diff_sections.py:148
+#: proposals/utils/pdf_diff_sections.py:149
 msgid "Eén of meerdere trajecten?"
 msgstr "One or more trajectories?"
 
@@ -3331,7 +3341,7 @@ msgstr "Current application"
 
 #: proposals/templates/proposals/translated_consent_forms.html:7
 #: proposals/templates/proposals/translated_consent_forms.html:20
-#: proposals/utils/pdf_diff_sections.py:539
+#: proposals/utils/pdf_diff_sections.py:540
 msgid "Vertaling formulieren"
 msgstr "Translation of documents"
 
@@ -3422,7 +3432,7 @@ msgstr "Revision/amendment of"
 
 #: proposals/templates/proposals/wmo_application.html:7
 #: proposals/templates/proposals/wmo_application.html:23
-#: proposals/utils/pdf_diff_sections.py:135
+#: proposals/utils/pdf_diff_sections.py:136
 msgid "Aanmelding bij de METC"
 msgstr "Registration with the METC"
 
@@ -3445,7 +3455,7 @@ msgstr "Start again"
 
 #: proposals/templates/proposals/wmo_form.html:7
 #: proposals/templates/proposals/wmo_form.html:28
-#: proposals/utils/pdf_diff_sections.py:110
+#: proposals/utils/pdf_diff_sections.py:111
 msgid ""
 "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?"
 msgstr ""
@@ -3500,7 +3510,7 @@ msgstr "Conclusion trajectories"
 msgid "Deelnemers"
 msgstr "Participants"
 
-#: proposals/utils/checkers.py:643 proposals/utils/pdf_diff_sections.py:166
+#: proposals/utils/checkers.py:643 proposals/utils/pdf_diff_sections.py:167
 #: studies/templates/studies/study_personal_data.html:7
 #: studies/templates/studies/study_personal_data.html:22
 msgid "Persoonsgegevens"
@@ -3539,38 +3549,38 @@ msgstr "Translations"
 msgid "Indienen"
 msgstr "Submit"
 
-#: proposals/utils/pdf_diff_sections.py:200
+#: proposals/utils/pdf_diff_sections.py:201
 #: studies/templates/studies/study_form.html:7
 #: studies/templates/studies/study_form.html:64
 msgid "De deelnemers"
 msgstr "Participants"
 
-#: proposals/utils/pdf_diff_sections.py:402
+#: proposals/utils/pdf_diff_sections.py:403
 msgid "Het takenonderzoek en interviews"
 msgstr "Task-based research and interviews"
 
-#: proposals/utils/pdf_diff_sections.py:474
+#: proposals/utils/pdf_diff_sections.py:475
 #: studies/templates/studies/study_end.html:8
 msgid "Overzicht en eigen beoordeling van het gehele onderzoek"
 msgstr "Overview and self-assessment of the entire study"
 
-#: proposals/utils/pdf_diff_sections.py:510
+#: proposals/utils/pdf_diff_sections.py:511
 msgid "Kennisveiligheid en risico onderzoekers"
 msgstr "Knowledge security and researcher risk"
 
-#: proposals/utils/pdf_diff_sections.py:605
+#: proposals/utils/pdf_diff_sections.py:609
 msgid "Data Management"
 msgstr "Data Management"
 
-#: proposals/utils/pdf_diff_sections.py:776
+#: proposals/utils/pdf_diff_sections.py:780
 msgid "Documenten - Aanvraag in het geheel"
 msgstr "Documents - Application in general"
 
-#: proposals/utils/pdf_diff_sections.py:778
+#: proposals/utils/pdf_diff_sections.py:782
 msgid "Documenten - Het hoofdtraject"
 msgstr "Documents - The main trajectory"
 
-#: proposals/utils/pdf_diff_sections.py:780
+#: proposals/utils/pdf_diff_sections.py:784
 msgid "Documenten - Traject "
 msgstr "Documents - Trajectory "
 
@@ -3589,36 +3599,41 @@ msgstr ""
 "This section was present in the original application, but was removed for "
 "the revision."
 
-#: proposals/utils/pdf_diff_utils.py:262 proposals/utils/pdf_diff_utils.py:346
+#: proposals/utils/pdf_diff_utils.py:251
+#: reviews/templates/reviews/review_attachments.html:57
+msgid "Aanlevering"
+msgstr "Provided as"
+
+#: proposals/utils/pdf_diff_utils.py:285 proposals/utils/pdf_diff_utils.py:370
 msgid "Niet aangeleverd"
 msgstr "Not provided"
 
-#: proposals/utils/pdf_diff_utils.py:281
+#: proposals/utils/pdf_diff_utils.py:305
 msgid "Uploaddatum"
 msgstr "Date uploaded"
 
-#: proposals/utils/pdf_diff_utils.py:311 reviews/models.py:112
+#: proposals/utils/pdf_diff_utils.py:335 reviews/models.py:112
 msgid "Onbekend"
 msgstr "Unknown"
 
-#: proposals/utils/pdf_diff_utils.py:343
+#: proposals/utils/pdf_diff_utils.py:367
 msgid "Download"
 msgstr "Download"
 
-#: proposals/utils/pdf_diff_utils.py:369
+#: proposals/utils/pdf_diff_utils.py:393
 #: tasks/templates/tasks/session_overview.html:7
 msgid "Overzicht van het takenonderzoek"
 msgstr "Overview of task-based research"
 
-#: proposals/utils/pdf_diff_utils.py:412 proposals/utils/pdf_diff_utils.py:445
+#: proposals/utils/pdf_diff_utils.py:436 proposals/utils/pdf_diff_utils.py:469
 msgid "sessie "
 msgstr "session "
 
-#: proposals/utils/pdf_diff_utils.py:425 proposals/utils/pdf_diff_utils.py:453
+#: proposals/utils/pdf_diff_utils.py:449 proposals/utils/pdf_diff_utils.py:477
 msgid "Sessie "
 msgstr "Session "
 
-#: proposals/utils/pdf_diff_utils.py:447 proposals/utils/pdf_diff_utils.py:455
+#: proposals/utils/pdf_diff_utils.py:471 proposals/utils/pdf_diff_utils.py:479
 msgid ", taak "
 msgstr ", task "
 
@@ -4229,16 +4244,7 @@ msgstr "Application in general"
 msgid "Het hoofdtraject"
 msgstr "The main trajectory"
 
-#: reviews/templates/reviews/review_attachments.html:57
-msgid "Aanlevering"
-msgstr "Provided as"
-
-#: reviews/templates/reviews/review_attachments.html:61
-#: reviews/templates/reviews/review_attachments.html:63
-msgid "Nieuw bij deze aanvraag"
-msgstr "New with this review"
-
-#: reviews/templates/reviews/review_attachments.html:66
+#: reviews/templates/reviews/review_attachments.html:60
 msgid "Gereviseerd bestand"
 msgstr "Revised file"
 
@@ -4721,8 +4727,8 @@ msgstr ""
 "This application has already been assessed, so you cannot add/change your "
 "assessment"
 
-#: src/uil-django-core/uil/rest_client/clients/_base.py:104
-#: src/uil-django-core/uil/rest_client/clients/_base.py:107
+#: src/uil-django-core/uil/rest_client/clients/_base.py:106
+#: src/uil-django-core/uil/rest_client/clients/_base.py:109
 msgid "api:host_unreachable"
 msgstr ""
 
@@ -4744,8 +4750,6 @@ msgstr ""
 msgid "%(model_name)s with this %(field_label)s already exists."
 msgstr ""
 
-#. Translators: The 'lookup_type' is one of 'date', 'year' or 'month'.
-#. Eg: "Title must be unique for pub_date year"
 #: src/uil-django-core/uil/rest_client/fields.py:35
 #, python-format
 msgid ""
