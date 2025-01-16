@@ -125,7 +125,7 @@ class StudyForm(SoftValidationMixin, ConditionalModelForm):
         cleaned_data = super(StudyForm, self).clean()
 
         self.mark_soft_required(
-            cleaned_data, "compensation", "recruitment", "hierarchy"
+            cleaned_data, "compensation", "hierarchy"
         )
 
         self.necessity_required(cleaned_data)
