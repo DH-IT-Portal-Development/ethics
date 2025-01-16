@@ -1,3 +1,5 @@
+from django.http import Http404
+
 from .models import Study
 from proposals.mixins import StepperContextMixin
 
@@ -16,7 +18,10 @@ class StudyFromURLMixin:
 
     def get_study(self):
         """Retrieves the Study from the pk kwarg"""
-        return Study.objects.get(pk=self.kwargs["pk"])
+        try:
+            return Study.objects.get(pk=self.kwargs["pk"])
+        except Study.DoesNotExist:
+            raise Http404
 
     def get_proposal(
         self,

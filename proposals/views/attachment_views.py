@@ -1,6 +1,7 @@
 from django.views import generic
 from django import forms
 from django.urls import reverse
+from django.http import Http404
 from django import forms
 from django.conf import settings
 from main.views import UpdateView
@@ -139,7 +140,10 @@ class AttachFormView:
     def get_owner_object(self):
         owner_class = self.owner_model
         other_pk = self.kwargs.get("other_pk")
-        return owner_class.objects.get(pk=other_pk)
+        try:
+            return owner_class.objects.get(pk=other_pk)
+        except owner_class.DoesNotExist:
+            raise Http404
 
     def get_kind(self):
         kind_str = self.kwargs.get("kind", None)
