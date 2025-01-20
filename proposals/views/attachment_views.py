@@ -2,6 +2,8 @@ from django.views import generic
 from django import forms
 from django.urls import reverse
 from django import forms
+from django.http import Http404
+from django.core.exceptions import PermissionDenied
 from django.conf import settings
 from main.views import UpdateView
 from proposals.mixins import ProposalContextMixin
@@ -357,53 +359,79 @@ class ProposalAttachmentDownloadView(
         proposal_pk,
         attachment_pk,
     ):
-        self.attachment = Attachment.objects.get(
-            pk=attachment_pk,
-        )
-        self.proposal = Proposal.objects.get(
-            pk=proposal_pk,
-        )
         return self.get_file_response()
 
     def get_filename(self):
         if self.original_filename:
-            return self.attachment.upload.original_filename
+            return self.get_attachment().upload.original_filename
         else:
             return self.get_filename_from_slot()
 
     def get_filename_from_slot(self):
         self.slot = AttachmentSlot.from_proposal(
-            self.attachment,
-            self.proposal,
+            self.get_attachment(),
+            self.get_proposal(),
         )
         return self.slot.get_fetc_filename()
 
     def get_file_response(self):
-        attachment_file = self.attachment.upload.file
+        attachment_file = self.get_attachment().upload.file
         return FileResponse(
             attachment_file,
             filename=self.get_filename(),
             as_attachment=True,
         )
 
-    def get_allowed_users(self):
+    def get_proposal(
+        self,
+    ):
+        if getattr(self, "proposal", None) is None:
+            try:
+                self.proposal = Proposal.objects.get(
+                    pk=self.kwargs.get("proposal_pk"),
+                )
+            except Proposal.DoesNotExist:
+                raise Http404
+        return self.proposal
 
-        self.proposal = Proposal.objects.get(
-            pk=self.kwargs.get("proposal_pk"),
-        )
-        allowed_users = list(self.proposal.applicants.all())
-        if self.proposal.supervisor:
-            allowed_users.append(self.proposal.supervisor)
+    def get_attachment(
+        self,
+    ):
+        if getattr(self, "attachment", None) is None:
+            try:
+                self.attachment = Attachment.objects.get(
+                    pk=self.kwargs.get("attachment_pk"),
+                ).get_correct_submodel()
+            except Attachment.DoesNotExist:
+                raise Http404
+        else:
+            # Skip relation check if the attachment is already set
+            return self.attachment
+        # Check attachment-proposal relation
+        if not self.attachment.get_owner_for_proposal(
+            self.get_proposal(),
+        ):
+            # This attachment doesn't belong to the given proposal,
+            # so we can't check its permissions.
+            raise PermissionDenied
+        return self.attachment
+
+    def get_allowed_users(self):
+        proposal = self.get_proposal()
+        allowed_users = list(proposal.applicants.all())
+        if proposal.supervisor:
+            allowed_users.append(proposal.supervisor)
         return allowed_users
 
     def get_group_required(self):
+        proposal = self.get_proposal()
         group_required = [
             settings.GROUP_SECRETARY,
             settings.GROUP_CHAIR,
         ]
-        if self.proposal.reviewing_committee.name == "AK":
+        if proposal.reviewing_committee.name == "AK":
             group_required += [settings.GROUP_GENERAL_CHAMBER]
-        if self.proposal.reviewing_committee.name == "LK":
+        if proposal.reviewing_committee.name == "LK":
             group_required += [settings.GROUP_LINGUISTICS_CHAMBER]
 
         return group_required
