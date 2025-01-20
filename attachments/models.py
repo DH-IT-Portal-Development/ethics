@@ -134,10 +134,13 @@ class ProposalAttachment(
         proposal,
     ):
         """
-        This method doesn't do much, it's just here to provide
-        a consistent interface for getting owner objects.
+        Returns the given proposal if this Attachment is attached to it, or
+        None if that is not the case.
         """
-        return proposal
+        owner = None
+        if proposal in self.attached_to.all():
+            owner = proposal
+        return owner
 
 
 class StudyAttachment(
@@ -153,6 +156,11 @@ class StudyAttachment(
         proposal,
     ):
         """
-        Gets the owner study based on given proposal.
+        Gets the owner study based on given proposal, or None
+        if no such study exists.
         """
-        return self.attached_to.get(proposal=proposal)
+        try:
+            owner = self.attached_to.get(proposal=proposal)
+        except self.DoesNotExist:
+            owner = None
+        return owner
