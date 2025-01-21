@@ -4,7 +4,6 @@ from django.utils.translation import gettext as _
 from django.urls import reverse
 from main.utils import renderable
 
-
 from cdh.files.db import FileField as CDHFileField
 
 # Create your models here.
@@ -161,6 +160,6 @@ class StudyAttachment(
         """
         try:
             owner = self.attached_to.get(proposal=proposal)
-        except self.DoesNotExist:
+        except self.attached_to.model.DoesNotExist:
             owner = None
         return owner
