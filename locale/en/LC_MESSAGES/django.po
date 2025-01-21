@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-15 12:45+0100\n"
+"POT-Creation-Date: 2025-01-16 16:36+0100\n"
 "PO-Revision-Date: 2025-01-15 12:46+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -221,7 +221,7 @@ msgstr ""
 "institution. The management, after having been properly informed, has to "
 "sign a statement of agreement."
 
-#: attachments/kinds.py:240 reviews/templatetags/documents_list.py:213
+#: attachments/kinds.py:240 reviews/templatetags/documents_list.py:222
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
 
@@ -237,7 +237,7 @@ msgstr ""
 "of research data, during and after the research."
 
 #: attachments/kinds.py:256 attachments/models.py:42
-#: proposals/views/attachment_views.py:55
+#: proposals/views/attachment_views.py:56
 msgid "Overig bestand"
 msgstr "Other file type"
 
@@ -245,7 +245,7 @@ msgstr "Other file type"
 msgid "Voor alle overige soorten bestanden"
 msgstr "For miscellaneous files"
 
-#: attachments/models.py:24 proposals/utils/pdf_diff_utils.py:267
+#: attachments/models.py:24 proposals/utils/pdf_diff_utils.py:271
 #: reviews/templates/reviews/review_attachments.html:77
 msgid "Bestand"
 msgstr "File"
@@ -282,8 +282,8 @@ msgstr ""
 
 #: attachments/templates/attachments/attachments_list.html:8 faqs/menus.py:17
 #: proposals/templates/proposals/attachments.html:11
-#: proposals/utils/checkers.py:988 proposals/utils/stepper.py:282
-#: proposals/utils/stepper.py:289 proposals/utils/stepper.py:296
+#: proposals/utils/checkers.py:988 proposals/utils/stepper.py:288
+#: proposals/utils/stepper.py:295 proposals/utils/stepper.py:302
 msgid "Documenten"
 msgstr "Documents"
 
@@ -343,11 +343,11 @@ msgstr "Optional"
 msgid "Extra"
 msgstr "Extra"
 
-#: attachments/utils.py:111
+#: attachments/utils.py:113
 msgid "Gereviseerd"
 msgstr "Revised"
 
-#: attachments/utils.py:113
+#: attachments/utils.py:115
 #: reviews/templates/reviews/review_attachments.html:67
 #: reviews/templates/reviews/review_attachments.html:69
 msgid "Nieuw bij deze aanvraag"
@@ -510,11 +510,11 @@ msgstr "Intervention saved"
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
-#: main/models.py:12 main/utils.py:17 proposals/utils/pdf_diff_utils.py:329
+#: main/models.py:12 main/utils.py:17 proposals/utils/pdf_diff_utils.py:333
 msgid "ja"
 msgstr "yes"
 
-#: main/models.py:13 main/utils.py:17 proposals/utils/pdf_diff_utils.py:329
+#: main/models.py:13 main/utils.py:17 proposals/utils/pdf_diff_utils.py:333
 msgid "nee"
 msgstr "no"
 
@@ -855,7 +855,7 @@ msgstr ""
 msgid "Startpagina"
 msgstr "Start page"
 
-#: main/templates/main/index.html:22
+#: main/templates/main/index.html:23
 msgid ""
 "Formele goedkeuring door één van beide kamers van de FETC-GW (middels een "
 "formele goedkeuringsbrief) is vereist voor mensgebonden onderzoek binnen de "
@@ -870,7 +870,7 @@ msgstr ""
 "even to recruiting participants. Therefore, always wait for the letter of "
 "approval before starting research activities."
 
-#: main/templates/main/index.html:31
+#: main/templates/main/index.html:32
 msgid ""
 "NB: Goedgekeurde aanvragen komen in het archief van deze portal te staan, "
 "zie het menu hierboven. Dit archief is toegankelijk voor iedereen met een "
@@ -880,21 +880,21 @@ msgstr ""
 "studying or working at the Faculty of Humanities with a Solis-ID can access "
 "this archive through the menu bar above."
 
-#: main/templates/main/index.html:45
+#: main/templates/main/index.html:46
 msgid "Bekijk al mijn aanvragen"
 msgstr "All my applications"
 
-#: main/templates/main/index.html:52
+#: main/templates/main/index.html:53
 msgid "Voordat je begint"
 msgstr "Before you begin"
 
-#: main/templates/main/index.html:55
+#: main/templates/main/index.html:56
 #: proposals/templates/proposals/proposal_start.html:16
 #: proposals/templates/proposals/proposal_start_practice.html:16
 msgid "Check voor het indienen:"
 msgstr "Before submitting an application, please consult:"
 
-#: main/templates/main/index.html:58
+#: main/templates/main/index.html:59
 #: proposals/templates/proposals/proposal_start.html:19
 #: proposals/templates/proposals/proposal_start_practice.html:19
 msgid ""
@@ -904,7 +904,7 @@ msgstr ""
 "The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/\"  target=\"_blank\">UU-"
 "webpage of the FEtC-H</a> for news and upcoming dates."
 
-#: main/templates/main/index.html:64
+#: main/templates/main/index.html:65
 msgid ""
 "Het <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/\" "
 "target=\"blank\">reglement van de FETC-GW</a>."
@@ -912,7 +912,7 @@ msgstr ""
 "The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\" "
 "target=\"_blank\">regulations of the FEtC-H</a>."
 
-#: main/templates/main/index.html:70
+#: main/templates/main/index.html:71
 #: proposals/templates/proposals/proposal_start.html:31
 #: proposals/templates/proposals/proposal_start_practice.html:31
 msgid ""
@@ -926,60 +926,60 @@ msgstr ""
 "href=\"https://intranet.uu.nl/en/documents-ethics-assessment-committee-"
 "humanities\" target=\"_blank\">model documents</a>."
 
-#: main/templates/main/index.html:83
+#: main/templates/main/index.html:84
 msgid "Bekijk mijn aanvragen"
 msgstr "View my applications"
 
-#: main/templates/main/index.html:84 proposals/menus.py:9
+#: main/templates/main/index.html:85 proposals/menus.py:9
 msgid "Nieuwe aanvraag starten"
 msgstr "Start a new application"
 
-#: main/templates/main/index.html:86
+#: main/templates/main/index.html:87
 msgid "Nieuwe revisie starten"
 msgstr "Create new revision"
 
-#: main/templates/main/index.html:88
+#: main/templates/main/index.html:89
 msgid "Nieuw amendement starten"
 msgstr "Create new amendment"
 
-#: main/templates/main/index.html:91 proposals/menus.py:112
+#: main/templates/main/index.html:92 proposals/menus.py:112
 #: proposals/views/proposal_views.py:192
 msgid "Archief"
 msgstr "Archive"
 
-#: main/templates/main/index.html:97
+#: main/templates/main/index.html:98
 msgid "Ondersteuning"
 msgstr "Support"
 
-#: main/templates/main/index.html:99
+#: main/templates/main/index.html:100
 msgid ""
 "<strong>FETC-GW secretaris</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
 msgstr "<strong>FEtC-H secretary</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
 
-#: main/templates/main/index.html:106
+#: main/templates/main/index.html:107
 msgid "<strong>Data Management advies</strong> <br /> datamanagement.gw@uu.nl"
 msgstr "<strong>Data Management advice</strong> <br /> datamanagement.gw@uu.nl"
 
-#: main/templates/main/index.html:113
+#: main/templates/main/index.html:114
 msgid "<strong>Privacy kwesties/vragen</strong> <br /> privacy.gw@uu.nl"
 msgstr "<strong>Privacy issues/questions</strong> <br /> privacy.gw@uu.nl"
 
-#: main/templates/main/index.html:120
+#: main/templates/main/index.html:121
 msgid "<strong>Technical support</strong> <br /> portalsupport.gw@uu.nl"
 msgstr "<strong>Technical support</strong> <br /> portalsupport.gw@uu.nl"
 
-#: main/templates/main/index.html:128
+#: main/templates/main/index.html:129
 msgid "Resources"
 msgstr "Resources"
 
-#: main/templates/main/index.html:132
+#: main/templates/main/index.html:133
 msgid ""
 "<a href='http://fetc-gw.wp.hum.uu.nl/' target='_blank'>FETC-GW website</a>"
 msgstr ""
 "<a href='https://fetc-gw.wp.hum.uu.nl/en/' target='_blank'>website of the "
 "FEtC-H</a>."
 
-#: main/templates/main/index.html:137
+#: main/templates/main/index.html:138
 msgid ""
 "<a href='https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/' "
 "target='_blank'>Reglement van de FETC-GW</a>"
@@ -987,7 +987,7 @@ msgstr ""
 "<a href='https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/' "
 "target='_blank'>Regulations of the FEtC-H</a>."
 
-#: main/templates/main/index.html:143
+#: main/templates/main/index.html:144
 msgid ""
 "<a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw' "
 "target='_blank'>Voorbeelddocumenten</a>"
@@ -995,15 +995,15 @@ msgstr ""
 "<a href='https://intranet.uu.nl/en/knowledgebase/documents-ethics-assessment-"
 "committee-humanities' target='_blank'>Model documents</a>"
 
-#: main/templates/main/index.html:149
+#: main/templates/main/index.html:150
 msgid "Veelgestelde vragen m.b.t. dit portal"
 msgstr "Frequently asked questions relating to this portal"
 
-#: main/templates/main/index.html:154
+#: main/templates/main/index.html:155
 msgid "Feedback"
 msgstr "Feedback"
 
-#: main/templates/main/index.html:156
+#: main/templates/main/index.html:157
 msgid ""
 "Heb je een vraag over de werking van de portal, ontdek je een foutje, "
 "missende functionaliteit, of verkeerde vertaling? Neem dan contact op met <a "
@@ -1069,7 +1069,7 @@ msgstr "Continue"
 msgid "Beoordeel"
 msgstr "Review"
 
-#: main/templates/main/landing.html:50
+#: main/templates/main/landing.html:38
 msgid ""
 "Welkom bij het portal van de Facultaire Ethische Toetsingscommissie "
 "Geesteswetenschappen (FETC-GW)."
@@ -1077,7 +1077,7 @@ msgstr ""
 "Welcome to the portal of the Faculty Ethics assessment Committee Humanities "
 "(FEtC-H)"
 
-#: main/templates/main/landing.html:56
+#: main/templates/main/landing.html:44
 #: main/templates/registration/logged_out.html:18
 msgid ""
 "Klik <a href=\"http://fetc-gw.wp.hum.uu.nl\">hier</a> om terug te keren naar "
@@ -1086,28 +1086,28 @@ msgstr ""
 "Click <a href=\"http://fetc-gw.wp.hum.uu.nl/en/\">here</a> to return to the "
 "FEtC-H website."
 
-#: main/templates/main/landing.html:60
+#: main/templates/main/landing.html:48
 msgid "Contact"
 msgstr "Contact"
 
-#: main/templates/main/landing.html:62
+#: main/templates/main/landing.html:50
 msgid "Secretaris FETC-GW"
 msgstr "FEtC-H Secretary"
 
-#: main/templates/main/landing.html:65 main/templates/main/landing.html:72
+#: main/templates/main/landing.html:53 main/templates/main/landing.html:60
 msgid "Om hier een e-mail adres te zien moet Javascript aan staan"
 msgstr "Javascript needs to be enabled to see the email address"
 
-#: main/templates/main/landing.html:69
+#: main/templates/main/landing.html:57
 msgid "Technische ondersteuning"
 msgstr "Technical support"
 
-#: main/templates/main/landing.html:77 main/templates/registration/login.html:8
+#: main/templates/main/landing.html:65 main/templates/registration/login.html:8
 #: main/templates/registration/login.html:33
 msgid "Inloggen"
 msgstr "Log in"
 
-#: main/templates/main/landing.html:79
+#: main/templates/main/landing.html:67
 msgid ""
 "Om in te loggen heb je een Solis-ID nodig. Heb je geen Solis-ID, neem dan "
 "contact op met de secretaris van de FETC-GW."
@@ -1115,7 +1115,7 @@ msgstr ""
 "You need a Solis-ID to log in. If you do not have a Solis ID, please contact "
 "the secretary of the FEtC-H."
 
-#: main/templates/main/landing.html:86 main/templates/main/landing.html:94
+#: main/templates/main/landing.html:74 main/templates/main/landing.html:82
 msgid "Log in met je Solis-ID"
 msgstr "Log in with your Solis-ID"
 
@@ -1334,7 +1334,6 @@ msgstr "Observational study"
 #: proposals/templates/proposals/proposal_update_dmp.html:26
 #: studies/templates/studies/study_update_attachments.html:7
 #: studies/templates/studies/study_update_attachments.html:11
-#: studies/templates/studies/study_update_attachments.html:24
 msgid "Formulieren aanpassen"
 msgstr "Change forms"
 
@@ -1479,7 +1478,7 @@ msgid ""
 msgstr "This field shows only approved applications in which you are involved."
 
 #: proposals/forms.py:585 proposals/forms.py:739 proposals/forms.py:771
-#: proposals/forms.py:1005
+#: proposals/forms.py:1001
 msgid "Dit veld is verplicht om verder te gaan."
 msgstr "This field is required to continue."
 
@@ -1572,15 +1571,15 @@ msgstr ""
 "> - The title of the study <br/> - The planned starting date <br/> - The "
 "facilities you intend to use (database, lab, Zep software)"
 
-#: proposals/forms.py:902 proposals/utils/checkers.py:1170
+#: proposals/forms.py:898 proposals/utils/checkers.py:1170
 msgid "Aanvraag bevat nog foutmeldingen"
 msgstr "Application still contains errors"
 
-#: proposals/forms.py:918
+#: proposals/forms.py:914
 msgid "Vul een datum in waarop de embargo afloopt."
 msgstr "Enter the date on which the embargo should end."
 
-#: proposals/forms.py:927
+#: proposals/forms.py:923
 msgid ""
 "De embargo-periode kan maximaal 2 jaar zijn. Kies een datum binnen 2 jaar "
 "van vandaag."
@@ -1588,7 +1587,7 @@ msgstr ""
 "The embargo-period can last a maximum of 2 years. Pick a date within 2 years "
 "from today."
 
-#: proposals/forms.py:1014
+#: proposals/forms.py:1010
 msgid "Vul in in welke talen de formulieren worden vertaald."
 msgstr "Please fill in the languages"
 
@@ -2232,8 +2231,8 @@ msgid "Toevoegen"
 msgstr "Add"
 
 #: proposals/templates/proposals/attachments.html:47
-#: proposals/utils/pdf_diff_utils.py:406 proposals/utils/pdf_diff_utils.py:433
-#: proposals/utils/pdf_diff_utils.py:442 proposals/utils/pdf_diff_utils.py:466
+#: proposals/utils/pdf_diff_utils.py:410 proposals/utils/pdf_diff_utils.py:437
+#: proposals/utils/pdf_diff_utils.py:446 proposals/utils/pdf_diff_utils.py:470
 msgid "Traject "
 msgstr "Trajectory "
 
@@ -2528,7 +2527,7 @@ msgid "Kopiëren"
 msgstr "Copy"
 
 #: proposals/templates/proposals/proposal_data_management.html:7
-#: proposals/utils/stepper.py:281 proposals/utils/stepper.py:288
+#: proposals/utils/stepper.py:287 proposals/utils/stepper.py:294
 msgid "Datamanagement"
 msgstr "Data management"
 
@@ -2860,7 +2859,7 @@ msgstr ""
 #: proposals/templates/proposals/proposal_start.html:52
 #: proposals/templates/proposals/proposal_start_practice.html:52
 #: proposals/templates/proposals/study_start.html:67
-#: proposals/utils/pdf_diff_utils.py:413
+#: proposals/utils/pdf_diff_utils.py:417
 #: reviews/templates/reviews/committee_members_workload.html:23
 #: reviews/templates/reviews/review_attachments.html:42
 msgid "Traject"
@@ -3205,7 +3204,6 @@ msgstr ""
 "applications."
 
 #: proposals/templates/proposals/proposal_update_date_start.html:13
-#: proposals/templates/proposals/proposal_update_date_start.html:29
 msgid "Startdatum aanpassen"
 msgstr "Edit start date"
 
@@ -3223,6 +3221,11 @@ msgstr ""
 "already been concluded, the new start date will not be displayed in the PDF. "
 "If you would like the PDF to be generated with the new start date, please "
 "reach out to "
+
+#: proposals/templates/proposals/proposal_update_date_start.html:29
+#: studies/templates/studies/study_update_attachments.html:24
+msgid "Wijzigingen opslaan"
+msgstr "Save changes"
 
 #: proposals/templates/proposals/proposal_update_dmp.html:15
 #, python-format
@@ -3470,8 +3473,8 @@ msgid ""
 msgstr ""
 "Ethical assessment by a Medical Ethical Testing Committee (METC) required?"
 
-#: proposals/utils/checkers.py:69 proposals/utils/stepper.py:278
-#: proposals/utils/stepper.py:287 proposals/utils/stepper.py:294
+#: proposals/utils/checkers.py:69 proposals/utils/stepper.py:284
+#: proposals/utils/stepper.py:293 proposals/utils/stepper.py:300
 msgid "Basisgegevens"
 msgstr "Basic details"
 
@@ -3503,7 +3506,7 @@ msgstr "WMO information missing"
 msgid "WMO applicatie"
 msgstr "WMO application"
 
-#: proposals/utils/checkers.py:320 proposals/utils/stepper.py:280
+#: proposals/utils/checkers.py:320 proposals/utils/stepper.py:286
 msgid "Trajecten"
 msgstr "Trajectories"
 
@@ -3553,8 +3556,8 @@ msgstr "Data management"
 msgid "Vertalingen"
 msgstr "Translations"
 
-#: proposals/utils/checkers.py:1126 proposals/utils/stepper.py:283
-#: proposals/utils/stepper.py:290 proposals/utils/stepper.py:297
+#: proposals/utils/checkers.py:1126 proposals/utils/stepper.py:289
+#: proposals/utils/stepper.py:296 proposals/utils/stepper.py:303
 msgid "Indienen"
 msgstr "Submit"
 
@@ -3608,41 +3611,41 @@ msgstr ""
 "This section was present in the original application, but was removed for "
 "the revision."
 
-#: proposals/utils/pdf_diff_utils.py:251
+#: proposals/utils/pdf_diff_utils.py:253
 #: reviews/templates/reviews/review_attachments.html:57
 msgid "Aanlevering"
 msgstr "Provided as"
 
-#: proposals/utils/pdf_diff_utils.py:285 proposals/utils/pdf_diff_utils.py:370
+#: proposals/utils/pdf_diff_utils.py:289 proposals/utils/pdf_diff_utils.py:374
 msgid "Niet aangeleverd"
 msgstr "Not provided"
 
-#: proposals/utils/pdf_diff_utils.py:305
+#: proposals/utils/pdf_diff_utils.py:309
 msgid "Uploaddatum"
 msgstr "Date uploaded"
 
-#: proposals/utils/pdf_diff_utils.py:335 reviews/models.py:112
+#: proposals/utils/pdf_diff_utils.py:339 reviews/models.py:112
 msgid "Onbekend"
 msgstr "Unknown"
 
-#: proposals/utils/pdf_diff_utils.py:367
+#: proposals/utils/pdf_diff_utils.py:371
 msgid "Download"
 msgstr "Download"
 
-#: proposals/utils/pdf_diff_utils.py:393
+#: proposals/utils/pdf_diff_utils.py:397
 #: tasks/templates/tasks/session_overview.html:7
 msgid "Overzicht van het takenonderzoek"
 msgstr "Overview of task-based research"
 
-#: proposals/utils/pdf_diff_utils.py:436 proposals/utils/pdf_diff_utils.py:469
+#: proposals/utils/pdf_diff_utils.py:440 proposals/utils/pdf_diff_utils.py:473
 msgid "sessie "
 msgstr "session "
 
-#: proposals/utils/pdf_diff_utils.py:449 proposals/utils/pdf_diff_utils.py:477
+#: proposals/utils/pdf_diff_utils.py:453 proposals/utils/pdf_diff_utils.py:481
 msgid "Sessie "
 msgstr "Session "
 
-#: proposals/utils/pdf_diff_utils.py:471 proposals/utils/pdf_diff_utils.py:479
+#: proposals/utils/pdf_diff_utils.py:475 proposals/utils/pdf_diff_utils.py:483
 msgid ", taak "
 msgstr ", task "
 
@@ -3654,7 +3657,7 @@ msgstr "FEtC-H: A revised application uses lab facilities"
 msgid "FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: New application uses lab facilities"
 
-#: proposals/utils/stepper.py:279 proposals/utils/stepper.py:295
+#: proposals/utils/stepper.py:285 proposals/utils/stepper.py:301
 msgid "WMO"
 msgstr "WMO"
 
@@ -3678,7 +3681,7 @@ msgstr "Session {}, task {}"
 msgid "Sessie {} overzicht"
 msgstr "Session {} overview"
 
-#: proposals/views/attachment_views.py:334
+#: proposals/views/attachment_views.py:338
 #: reviews/templates/reviews/review_attachments.html:94
 msgid "Geen bestanden gevonden"
 msgstr "No documents found"
@@ -3737,7 +3740,7 @@ msgstr "Application deleted"
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:809
+#: proposals/views/proposal_views.py:812
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -3749,15 +3752,15 @@ msgstr "Consent saved"
 msgid "WMO-gegevens opgeslagen"
 msgstr "WMO information saved"
 
-#: proposals/views/wmo_views.py:78
+#: proposals/views/wmo_views.py:81
 msgid "WMO-gegevens bewerkt"
 msgstr "WMO information edited"
 
-#: proposals/views/wmo_views.py:175
+#: proposals/views/wmo_views.py:178
 msgid "Je onderzoek hoeft niet te worden beoordeeld door de METC."
 msgstr "Your application does not require assessment by an METC."
 
-#: proposals/views/wmo_views.py:182
+#: proposals/views/wmo_views.py:185
 msgid ""
 "Neem contact op met <a href=\"mailto:fetc-gw@uu.nl\">de secretaris van de "
 "FETC-GW</a> om de twijfels weg te nemen."
@@ -3765,7 +3768,7 @@ msgstr ""
 "Contact <a href=\"mailto:fetc-gw@uu.nl\">The secretary of FETC-H</a> to make "
 "sure."
 
-#: proposals/views/wmo_views.py:189
+#: proposals/views/wmo_views.py:192
 msgid "Je onderzoek zal moeten worden beoordeeld door de METC."
 msgstr "Your application will require assessment by an METC."
 
@@ -4477,58 +4480,58 @@ msgstr "Add this application to the archive"
 msgid "Reviewronde beëindigd: "
 msgstr "Reviewing round ended: "
 
-#: reviews/templatetags/documents_list.py:138
+#: reviews/templatetags/documents_list.py:147
 msgid "Hoofdtraject"
 msgstr "Main trajectory"
 
-#: reviews/templatetags/documents_list.py:140
+#: reviews/templatetags/documents_list.py:149
 msgid "Traject {}: <i>{}</i>"
 msgstr "Trajectory {}: <i>{}</i>"
 
-#: reviews/templatetags/documents_list.py:150
+#: reviews/templatetags/documents_list.py:159
 msgid "Extra documenten {}"
 msgstr "Extra documents {}"
 
-#: reviews/templatetags/documents_list.py:195
+#: reviews/templatetags/documents_list.py:204
 msgid "Aanmelding"
 msgstr "Application"
 
-#: reviews/templatetags/documents_list.py:199
+#: reviews/templatetags/documents_list.py:208
 #: reviews/utils/attachment_utils.py:144
 msgid "Eerdere goedkeuring"
 msgstr "Prior approval"
 
-#: reviews/templatetags/documents_list.py:206
+#: reviews/templatetags/documents_list.py:215
 #: reviews/utils/attachment_utils.py:150
 msgid "Aanvraag bij voortoetsing"
 msgstr "Application for preliminary assessment"
 
-#: reviews/templatetags/documents_list.py:229
+#: reviews/templatetags/documents_list.py:238
 #: reviews/utils/attachment_utils.py:160
 msgid "Beslissing METC"
 msgstr "Decision by METC"
 
-#: reviews/templatetags/documents_list.py:263
+#: reviews/templatetags/documents_list.py:272
 msgid "Informed consent"
 msgstr "Informed consent"
 
-#: reviews/templatetags/documents_list.py:264
+#: reviews/templatetags/documents_list.py:273
 msgid "Informatiebrief"
 msgstr "Information letter"
 
-#: reviews/templatetags/documents_list.py:266
+#: reviews/templatetags/documents_list.py:275
 msgid "Consent declaratie directeur/departementshoofd"
 msgstr "Declaration of consent school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:271
+#: reviews/templatetags/documents_list.py:280
 msgid "Informatiebrief directeur/departementshoofd"
 msgstr "Information letter school director/head of the department"
 
-#: reviews/templatetags/documents_list.py:275
+#: reviews/templatetags/documents_list.py:284
 msgid "Informatiebrief ouders"
 msgstr "Information letter for the parents"
 
-#: reviews/templatetags/documents_list.py:283
+#: reviews/templatetags/documents_list.py:292
 msgid "Toestemmingsdocument observatie"
 msgstr "Consent document for observation"
 
@@ -4734,35 +4737,6 @@ msgid ""
 msgstr ""
 "This application has already been assessed, so you cannot add/change your "
 "assessment"
-
-#: src/uil-django-core/uil/rest_client/clients/_base.py:106
-#: src/uil-django-core/uil/rest_client/clients/_base.py:109
-msgid "api:host_unreachable"
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:28
-#, python-format
-msgid "Value %(value)r is not a valid choice."
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:29
-msgid "This field cannot be null."
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:30
-msgid "This field cannot be blank."
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:31
-#, python-format
-msgid "%(model_name)s with this %(field_label)s already exists."
-msgstr ""
-
-#: src/uil-django-core/uil/rest_client/fields.py:35
-#, python-format
-msgid ""
-"%(field_label)s must be unique for %(date_field_label)s %(lookup_type)s."
-msgstr ""
 
 #: studies/forms.py:33
 msgid "De leeftijdsgroep van je deelnemers"
@@ -5781,95 +5755,6 @@ msgstr "Session deleted"
 msgid "Taak bewerkt"
 msgstr "Task edited"
 
-#: tasks/views/task_views.py:81
+#: tasks/views/task_views.py:84
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid "FETC-bestandsnaam"
-#~ msgstr "FETC filename"
-
-#~ msgid "Persoonlijke gegevens"
-#~ msgstr "Personal data"
-
-#~ msgid "Aantal dagen"
-#~ msgstr "Number of days"
-
-#~ msgid "Duur per sessie (in uren)"
-#~ msgstr "Duration per session (in hours)"
-
-#~ msgid "Onderzoekstype(n)"
-#~ msgstr "Type(s) of research"
-
-#~ msgid "Overzicht"
-#~ msgstr "Overview"
-
-#~ msgid "Overzicht van alle sessies"
-#~ msgstr "Overview of all sessions"
-
-#~ msgid "Het takenonderzoek: sessie {}"
-#~ msgstr "Task-based research: session {}"
-
-#~ msgid "Overzicht van takenonderzoek: sessie {}"
-#~ msgstr "Overview of task-based research: session {}"
-
-#~ msgid "Het takenonderzoek: sessie {} taak {}"
-#~ msgstr "Task-based research: session {} task {}"
-
-#~ msgid "Bestandsnaam"
-#~ msgstr "Description"
-
-#~ msgid ""
-#~ "Deelnemers aan een onderzoek die dezelfde taken uitvoeren doorlopen samen "
-#~ "een bepaald onderzoekstraject. Het kan zijn dat alle deelnemers aan een "
-#~ "onderzoek dezelfde taken uitvoeren, dan heeft het onderzoek maar één "
-#~ "traject."
-#~ msgstr ""
-#~ "Participants who follow the same instruction and complete the same tasks "
-#~ "are said to constitute a certain research Trajectory. It is possible that "
-#~ "all participants in your study all complete the same tasks, in which case "
-#~ "your study only has one trajectory."
-
-#~ msgid ""
-#~ "<u>Bijvoorbeeld</u>: Alle deelnemers aan een onderzoek vullen een "
-#~ "vragenlijst in, en vervolgens wordt hun woordenschat gemeten. Hier is er "
-#~ "voor het hele onderzoek sprake van één traject, want iedereen doet "
-#~ "hetzelfde. Maar als deelnemers met dyslexie een aanvullende leestest "
-#~ "doen, spreekt men hier van een tweede traject, want deze groep wordt "
-#~ "anders belast."
-#~ msgstr ""
-#~ "<u>For example</u>: All participants in a study are asked to fill in a "
-#~ "questionnaire, and then complete a lexical task. At this point this study "
-#~ "consists of just one trajectory, because everyone does the same thing. "
-#~ "However if participants with dyslexia are additionally asked to complete "
-#~ "a reading test, then they follow a second research trajectory, because "
-#~ "they put in a different amount of effort."
-
-#~ msgid ""
-#~ "Onder een sessie verstaan we een set aan taken die een deelnemer op een "
-#~ "dag uitvoert. Dit kan een bezoek aan een instelling zijn waar het "
-#~ "onderzoek plaatsvindt, maar ook als iedere week weer een online taak "
-#~ "wordt aangeboden spreken we van meerdere sessies. Je kunt aangeven dat "
-#~ "een sessie herhaald wordt."
-#~ msgstr ""
-#~ "A session is a collection of tasks that a participant completes in one "
-#~ "day. This could be a visit to a lab where research is performed, or a "
-#~ "questionnaire filled in at home. If a participant receives an online task "
-#~ "once a week, we consider each of these to be separate sessions. You can "
-#~ "indicate the number of times that a session is repeated."
-
-#~ msgid ""
-#~ "Een taak of onderdeel van je onderzoek. Deelnemers aan een "
-#~ "onderzoekstraject voeren vaak meerdere taken uit tijdens een sessie."
-#~ msgstr ""
-#~ "A task performed by your participants. Often a session will consist of "
-#~ "multiple tasks."
-
-#~ msgid ""
-#~ "<u>Bijvoorbeeld</u>: het invullen van een vragenlijst, een interview, of "
-#~ "een bepaalde test."
-#~ msgstr ""
-#~ "<u>For example</u>: completing an interview, questionnaire, or a "
-#~ "particular test."
-
-#~ msgid "Extra formulieren "
-#~ msgstr "Additional forms "
