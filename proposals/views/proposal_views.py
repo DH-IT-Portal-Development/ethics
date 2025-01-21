@@ -5,12 +5,13 @@ import datetime
 from braces.views import GroupRequiredMixin, LoginRequiredMixin, UserFormKwargsMixin
 
 from django.conf import settings
+from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views import generic
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponseRedirect
 
 # from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
@@ -22,37 +23,43 @@ from main.views import (
     DeleteView,
     HumanitiesOrPrivilegeRequiredMixin,
     UpdateView,
-    UserAllowedMixin,
 )
 from observations.models import Observation
-from proposals.utils.validate_proposal import get_form_errors
-from proposals.utils.pdf_diff_logic import create_context_pdf, create_context_diff
+from proposals.utils.pdf_diff_sections import create_context_diff
+from proposals.utils.pdf_diff_sections import create_context_pdf
 from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
 from studies.models import Documents
+from attachments.models import Attachment, StudyAttachment, ProposalAttachment
 from ..copy import copy_proposal
 from ..forms import (
     ProposalConfirmationForm,
     ProposalCopyForm,
     ProposalDataManagementForm,
-    ProposalForm,
     ProposalStartPracticeForm,
     ProposalSubmitForm,
     RevisionProposalCopyForm,
     AmendmentProposalCopyForm,
     ProposalUpdateDataManagementForm,
     ProposalUpdateDateStartForm,
-    TranslatedConsentForms,
+    ResearcherForm,
+    OtherResearchersForm,
+    FundingForm,
+    ResearchGoalForm,
+    PreApprovedForm,
+    TranslatedConsentForm,
+    ProposalForm,
+    KnowledgeSecurityForm,
 )
 from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
 from proposals.mixins import (
+    SupervisorEditingMixin,
     ProposalMixin,
     ProposalContextMixin,
     PDFTemplateResponseMixin,
 )
 from proposals.utils.proposal_utils import FilenameFactory
-
 
 ############
 # List views
@@ -233,20 +240,31 @@ class ChangeArchiveStatusView(GroupRequiredMixin, generic.RedirectView):
 ##########################
 
 
-class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
+class ProposalCreate(AllowErrorsOnBackbuttonMixin, CreateView):
     # Note: template_name is auto-generated to proposal_form.html
 
-    def get_initial(self):
-        """Sets initial applicant to current User"""
-        initial = super(ProposalCreate, self).get_initial()
-        initial["applicants"] = [self.request.user]
-        return initial
+    success_message = _("Aanvraag %(title)s aangemaakt")
+    template_name = "proposals/proposal_form.html"
+    form_class = ProposalForm
+
+    def get_proposal(
+        self,
+    ):
+        return self.get_form().instance
 
     def form_valid(self, form):
-        """Sets created_by to current user and generates a reference number"""
+        """
+        - Sets created_by to current user
+        - Generates a reference number
+        - Sets reviewing committee
+        - Adds user to applicants
+        """
         form.instance.created_by = self.request.user
         form.instance.reference_number = generate_ref_number()
         form.instance.reviewing_committee = form.instance.institution.reviewing_chamber
+        obj = form.save()
+        obj.applicants.set([self.request.user])
+        obj.save()
         return super(ProposalCreate, self).form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -254,12 +272,16 @@ class ProposalCreate(ProposalMixin, AllowErrorsOnBackbuttonMixin, CreateView):
         context = super(ProposalCreate, self).get_context_data(**kwargs)
         context["create"] = True
         context["no_back"] = True
+        context["is_practice"] = self.get_proposal().is_practice()
         return context
 
+    def get_next_url(self):
+        return reverse("proposals:researcher", args=(self.object.pk,))
 
-class ProposalUpdate(
-    ProposalMixin, ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
-):
+
+class ProposalUpdate(ProposalMixin, AllowErrorsOnBackbuttonMixin, UpdateView):
+    form_class = ProposalForm
+
     def form_valid(self, form):
         """Sets created_by to current user and generates a reference number"""
         form.instance.reviewing_committee = form.instance.institution.reviewing_chamber
@@ -272,6 +294,9 @@ class ProposalUpdate(
         context["no_back"] = True
 
         return context
+
+    def get_next_url(self):
+        return reverse("proposals:researcher", args=(self.object.pk,))
 
 
 class ProposalDelete(DeleteView):
@@ -350,6 +375,88 @@ class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
         return getattr(old, attribute, None), getattr(new, attribute, None)
 
 
+class CompareAttachmentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
+
+    template_name = "proposals/compare_attachments.html"
+    group_required = [
+        settings.GROUP_SECRETARY,
+        settings.GROUP_GENERAL_CHAMBER,
+        settings.GROUP_LINGUISTICS_CHAMBER,
+    ]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+    def get_proposal(
+        self,
+    ):
+        proposal = Proposal.objects.get(
+            pk=self.kwargs.get("proposal_pk"),
+        )
+        return proposal
+
+    def get_allowed_users(
+        self,
+    ):
+        self._get_attachments()
+        proposal = self.get_proposal()
+        allowed_users = set()
+
+        # Users allowed to compare these files must be allowed to see both
+        # attachments individually.
+        def allowed_for_attachment(proposal, attachment):
+            allowed = set()
+            allowed.add(attachment.author)
+            allowed.add(proposal.applicants.all())
+            return allowed
+
+        intersection = allowed_for_attachment(
+            proposal, self.new
+        ) & allowed_for_attachment(proposal.parent, self.old)
+        allowed_users = allowed_users | intersection
+        # The current supervisor gets a pass. If they try to access files
+        # other than those in the parent proposal get_attachments should raise
+        # a PermissionDenied.
+        allowed_users.add(proposal.supervisor)
+        return allowed_users
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["proposal"] = self.get_proposal()
+        context["old_name"] = self.old.upload.original_filename
+        context["old_file"] = self.old.upload
+        context["old_attachment"] = self.old
+        context["old_text"] = get_document_contents(self.old.upload)
+        context["new_name"] = self.new.upload.original_filename
+        context["new_file"] = self.new.upload
+        context["new_attachment"] = self.new
+        context["new_text"] = get_document_contents(self.new.upload)
+        return context
+
+    def _get_attachments(
+        self,
+    ):
+        # Fetch relevant objects
+        self.old = Attachment.objects.get(
+            pk=self.kwargs.get("old_pk"),
+        ).get_correct_submodel()
+
+        self.new = Attachment.objects.get(
+            pk=self.kwargs.get("new_pk"),
+        ).get_correct_submodel()
+
+        self.proposal = Proposal.objects.get(
+            pk=self.kwargs.get("proposal_pk"),
+        )
+        # Check the old attachment is within scope
+        if type(self.old) is StudyAttachment:
+            old_proposals = [ao.proposal for ao in self.old.attached_to.all()]
+        else:
+            old_proposals = self.old.attached_to.all()
+        if self.proposal.parent not in old_proposals:
+            raise PermissionDenied("Couldn't find old_pk in proposal's ancestors!")
+
+
 ###########################
 # Other actions on Proposal
 ###########################
@@ -363,32 +470,160 @@ class ProposalStart(generic.TemplateView):
         return context
 
 
-class TranslatedConsentFormsView(UpdateView):
+class ProposalResearcherFormView(
+    ProposalMixin,
+    UserFormKwargsMixin,
+    SupervisorEditingMixin,
+    ProposalContextMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
+):
     model = Proposal
-    form_class = TranslatedConsentForms
+    form_class = ResearcherForm
+    template_name = "proposals/researcher_form.html"
+
+    def get_next_url(self):
+        return reverse("proposals:other_researchers", args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse("proposals:update", args=(self.object.pk,))
+
+
+class ProposalOtherResearchersFormView(
+    UserFormKwargsMixin,
+    AllowErrorsOnBackbuttonMixin,
+    ProposalMixin,
+    UpdateView,
+):
+    model = Proposal
+    form_class = OtherResearchersForm
+    template_name = "proposals/other_researchers_form.html"
+
+    def form_valid(self, form):
+        """
+        Ensure:
+        - if other_applicants is False, only the user is in applicants
+        - if other_applicants is True, always add current user to applicants
+        """
+        response = super(ProposalOtherResearchersFormView, self).form_valid(form)
+        self.object = form.save()
+        if form.instance.other_applicants == False:
+            self.object.applicants.set([self.request.user])
+        else:
+            self.object.applicants.add(self.request.user)
+        return response
+
+    def get_next_url(self):
+        proposal = self.object
+        return reverse("proposals:funding", args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse("proposals:researcher", args=(self.object.pk,))
+
+
+class ProposalFundingFormView(
+    ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
+    model = Proposal
+    form_class = FundingForm
+    template_name = "proposals/funding_form.html"
+
+    def get_next_url(self):
+        return reverse("proposals:research_goal", args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse("proposals:other_researchers", args=(self.object.pk,))
+
+
+class ProposalResearchGoalFormView(
+    ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
+    model = Proposal
+    form_class = ResearchGoalForm
+    template_name = "proposals/research_goal_form.html"
+
+    def get_next_url(self):
+        proposal = self.object
+        if proposal.is_pre_assessment:
+            pre_suffix = "_pre"
+        else:
+            pre_suffix = ""
+        if proposal.is_pre_approved:
+            return reverse("proposals:pre_approved", args=(self.object.pk,))
+        elif hasattr(proposal, "wmo"):
+            return reverse(f"proposals:wmo_update{pre_suffix}", args=(proposal.wmo.pk,))
+        else:
+            return reverse(f"proposals:wmo_create{pre_suffix}", args=(proposal.pk,))
+
+    def get_back_url(self):
+        proposal = self.get_proposal()
+        return reverse("proposals:funding", args=[proposal.pk])
+
+
+class ProposalPreApprovedFormView(
+    ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
+    model = Proposal
+    form_class = PreApprovedForm
+    template_name = "proposals/pre_approved_form.html"
+
+    def get_next_url(self):
+        return reverse("proposals:data_management", args=(self.object.pk,))
+
+    def get_back_url(self):
+        """Return to the Proposal Form page"""
+        return reverse("proposals:research_goal", args=(self.object.pk,))
+
+
+class ProposalKnowledgeSecurity(
+    ProposalContextMixin, AllowErrorsOnBackbuttonMixin, UpdateView
+):
+    model = Proposal
+    form_class = KnowledgeSecurityForm
+    template_name = "proposals/knowledge_security_form.html"
+
+    def get_next_url(self):
+        return reverse("proposals:data_management", args=(self.object.pk,))
+
+    def get_back_url(self):
+        return reverse("studies:design_end", args=(self.object.last_study().pk,))
+
+
+class TranslatedConsentView(ProposalContextMixin, UpdateView):
+    model = Proposal
+    form_class = TranslatedConsentForm
     template_name = "proposals/translated_consent_forms.html"
 
     def get_next_url(self):
         """Go to the consent form upload page"""
-        return reverse("proposals:consent", args=(self.object.pk,))
+        if self.get_proposal().is_pre_approved:
+            return reverse("proposals:submit_pre_approved", args=(self.object.pk,))
+        return reverse("proposals:submit", args=(self.object.pk,))
 
     def get_back_url(self):
         """Return to the overview of the last Study"""
-        return reverse("studies:design_end", args=(self.object.last_study().pk,))
+        return reverse("proposals:attachments", args=(self.object.pk,))
 
 
-class ProposalDataManagement(UpdateView):
+class ProposalDataManagement(ProposalContextMixin, UpdateView):
     model = Proposal
     form_class = ProposalDataManagementForm
     template_name = "proposals/proposal_data_management.html"
 
     def get_next_url(self):
-        """Continue to the submission view"""
-        return reverse("proposals:submit", args=(self.object.pk,))
+        """Continue to the attachments view"""
+        proposal = self.get_proposal()
+        return reverse("proposals:attachments", args=(proposal.pk,))
 
     def get_back_url(self):
-        """Return to the consent form overview of the last Study"""
-        return reverse("proposals:consent", args=(self.object.pk,))
+        """
+        Return to the consent form overview of the last Study,
+        unless this proposal is preapproved.
+        """
+        proposal = self.get_proposal()
+        if proposal.is_pre_approved:
+            return reverse("proposals:pre_approved", args=[proposal.pk])
+        return reverse("proposals:knowledge_security", args=(proposal.pk,))
 
 
 class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
@@ -397,7 +632,7 @@ class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
     """
 
     model = Proposal
-    template_name = "proposals/proposal_update_attachments.html"
+    template_name = "proposals/proposal_update_dmp.html"
     form_class = ProposalUpdateDataManagementForm
     group_required = settings.GROUP_SECRETARY
 
@@ -414,6 +649,19 @@ class ProposalUpdateDataManagement(GroupRequiredMixin, generic.UpdateView):
     def get_success_url(self):
         """Continue to the URL specified in the 'next' POST parameter"""
         return reverse("reviews:detail", args=[self.object.latest_review().pk])
+
+    def get_back_url(
+        self,
+    ):
+        if self.get_proposal().is_pre_approved:
+            return reverse(
+                "proposals:pre_approved",
+                args=[self.get_proposal().pk],
+            )
+        return reverse(
+            "proposals:knowledge_security",
+            args=[self.get_proposal().pk],
+        )
 
 
 class ProposalUpdateDateStart(GroupRequiredMixin, generic.UpdateView):
@@ -460,15 +708,22 @@ class ProposalSubmit(
         # to check for js-redirect-submit
         kwargs["request"] = self.request
 
+        # The following is a flag to let form validation know that
+        # this is an actual user attempting to submit the form, and not
+        # background validation by the Stepper.
+        kwargs["final_validation"] = True
+
         return kwargs
 
     def get_context_data(self, **kwargs):
         context = super(ProposalSubmit, self).get_context_data(**kwargs)
 
-        context["troublesome_pages"] = get_form_errors(self.get_object())
         context["pagenr"] = self._get_page_number()
         context["is_supervisor_edit_phase"] = self.is_supervisor_edit_phase()
         context["start_date_warning"] = self.check_start_date()
+        context["stepper_errors"] = self.get_stepper().get_form_errors(
+            exclude_submit=True
+        )
 
         return context
 
@@ -504,6 +759,7 @@ class ProposalSubmit(
         if (
             "save_back" not in self.request.POST
             and "js-redirect-submit" not in self.request.POST
+            and not form.instance.is_practice()
         ):
             start_review(proposal)
         return success_response
@@ -521,7 +777,7 @@ class ProposalSubmit(
 
     def get_back_url(self):
         """Return to the data management view"""
-        return reverse("proposals:data_management", args=(self.object.pk,))
+        return reverse("proposals:translated", args=(self.object.pk,))
 
     def _get_page_number(self):
         if self.object.is_pre_assessment:
@@ -675,31 +931,11 @@ class ProposalStartPreAssessment(ProposalStart):
     template_name = "proposals/proposal_start_pre_assessment.html"
 
 
-class PreAssessmentMixin(ProposalMixin):
-    def get_form_kwargs(self):
-        """Sets is_pre_assessment as a form kwarg"""
-        kwargs = super(PreAssessmentMixin, self).get_form_kwargs()
-        kwargs["is_pre_assessment"] = True
-        return kwargs
-
-    def get_next_url(self):
-        """If the Proposal has a Wmo model attached, go to update, else, go to create"""
-        proposal = self.object
-        if hasattr(proposal, "wmo"):
-            return reverse("proposals:wmo_update_pre", args=(proposal.pk,))
-        else:
-            return reverse("proposals:wmo_create_pre", args=(proposal.pk,))
-
-
-class ProposalCreatePreAssessment(PreAssessmentMixin, ProposalCreate):
+class ProposalCreatePreAssessment(ProposalCreate):
     def form_valid(self, form):
         """Sets is_pre_assessment to True"""
         form.instance.is_pre_assessment = True
         return super(ProposalCreatePreAssessment, self).form_valid(form)
-
-
-class ProposalUpdatePreAssessment(PreAssessmentMixin, ProposalUpdate):
-    pass
 
 
 class ProposalSubmitPreAssessment(ProposalSubmit):
@@ -709,7 +945,7 @@ class ProposalSubmitPreAssessment(ProposalSubmit):
 
     def get_back_url(self):
         """Return to the Wmo overview"""
-        return reverse("proposals:wmo_update_pre", args=(self.object.pk,))
+        return reverse("proposals:attachments", args=(self.object.pk,))
 
 
 class ProposalSubmittedPreAssessment(ProposalSubmitted):
@@ -725,20 +961,7 @@ class ProposalStartPreApproved(ProposalStart):
     template_name = "proposals/proposal_start_pre_approved.html"
 
 
-class PreApprovedMixin(ProposalMixin):
-    def get_form_kwargs(self):
-        """Sets is_pre_approved as a form kwarg"""
-        kwargs = super(PreApprovedMixin, self).get_form_kwargs()
-        kwargs["is_pre_approved"] = True
-        return kwargs
-
-    def get_next_url(self):
-        proposal = self.object
-        return reverse("proposals:submit_pre_approved", args=(proposal.pk,))
-
-
-class ProposalCreatePreApproved(PreApprovedMixin, ProposalCreate):
-    template_name = "proposals/proposal_form_pre_approved.html"
+class ProposalCreatePreApproved(ProposalCreate):
 
     def form_valid(self, form):
         """Sets is_pre_approved to True"""
@@ -746,18 +969,10 @@ class ProposalCreatePreApproved(PreApprovedMixin, ProposalCreate):
         return super(ProposalCreatePreApproved, self).form_valid(form)
 
 
-class ProposalUpdatePreApproved(PreApprovedMixin, ProposalUpdate):
-    pass
-
-
 class ProposalSubmitPreApproved(ProposalSubmit):
     def get_next_url(self):
         """After submission, go to the thank-you view"""
         return reverse("proposals:submitted_pre_approved", args=(self.object.pk,))
-
-    def get_back_url(self):
-        """Return to the update page"""
-        return reverse("proposals:update_pre_approved", args=(self.object.pk,))
 
 
 class ProposalSubmittedPreApproved(ProposalSubmitted):
@@ -793,12 +1008,6 @@ class ProposalCreatePractice(ProposalCreate):
         context["is_practice"] = True
         return context
 
-    def get_form_kwargs(self):
-        """Sets in_course as a form kwarg"""
-        kwargs = super(ProposalCreatePractice, self).get_form_kwargs()
-        kwargs["in_course"] = self.kwargs["reason"] == Proposal.PracticeReasons.COURSE
-        return kwargs
-
     def form_valid(self, form):
         """Sets in_course and is_exploration"""
         form.instance.in_course = (
@@ -808,11 +1017,3 @@ class ProposalCreatePractice(ProposalCreate):
             self.kwargs["reason"] == Proposal.PracticeReasons.EXPLORATION
         )
         return super(ProposalCreatePractice, self).form_valid(form)
-
-
-class ProposalUpdatePractice(ProposalUpdate):
-    def get_form_kwargs(self):
-        """Sets in_course as a form kwarg"""
-        kwargs = super(ProposalUpdatePractice, self).get_form_kwargs()
-        kwargs["in_course"] = self.object.in_course
-        return kwargs

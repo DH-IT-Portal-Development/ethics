@@ -1,0 +1,27 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Formulieren aanpassen" %} - {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}<!--Override stepper-->{% endblock %}
+
+{% block pre-form-text %}
+    <h2>{% trans "Formulieren aanpassen" %}</h2>
+    <p>
+        {% blocktrans trimmed with title=proposal.title ref_number=proposal.reference_number %}
+            Op deze pagina kan je de formulieren aanpassen behorende bij de aanvraag {{ title }}
+            (referentienummer <em>{{ ref_number }}</em>).
+        {% endblocktrans %}
+    </p>
+{% endblock %}
+
+{% block form-buttons %}
+    <a class="btn btn-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+    <input class="btn btn-primary ms-auto"
+           type="submit"
+           value="{% trans 'Formulieren aanpassen' %}" />
+{% endblock %}

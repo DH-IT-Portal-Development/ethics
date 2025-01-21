@@ -1,0 +1,33 @@
+{% load static %}
+{% load i18n %}
+{% load fetc_filters %}
+
+{% if study.get_intervention %}
+    {% with intervention=study.intervention %}
+        <h3 class="mb-3">
+            {% trans "Interventieonderzoek" %}
+            <a href="{% url 'interventions:update' intervention.pk %}">
+                <img src="{% static 'proposals/images/pencil.png' %}"
+                     title="{% trans 'Interventie bewerken' %}">
+            </a>
+        </h3>
+        <table class="table mt-2">
+            <thead class="table-primary">
+                <tr>
+                    <th>{% trans "Setting" %}</th>
+                    <th>{% trans "Aantal sessies (per week)" %}</th>
+                    <th>{% trans "Duur per sessie (in minuten)" %}</th>
+                    <th>{% trans "Controlegroep?" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ intervention.setting.all|create_unordered_html_list }}</td>
+                    <td>{{ intervention.amount_per_week }}</td>
+                    <td>{{ intervention.duration }}</td>
+                    <td>{{ intervention.has_controls|yesno:_("ja, nee") }}</td>
+                </tr>
+            </tbody>
+        </table>
+    {% endwith %}
+{% endif %}

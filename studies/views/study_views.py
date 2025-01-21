@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.http import JsonResponse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView
 from main.utils import string_to_bool
@@ -17,18 +17,23 @@ from observations.models import Observation
 from ..forms import (
     StudyForm,
     StudyDesignForm,
-    StudyConsentForm,
+    PersonalDataForm,
     StudyEndForm,
     StudyUpdateAttachmentsForm,
 )
 from ..models import Study, Documents
 from ..utils import check_has_adults, check_necessity_required, get_study_progress
+from ..mixins import StudyMixin
 
 
 #######################
 # CRUD actions on Study
 #######################
-class StudyUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
+class StudyUpdate(
+    StudyMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
+):
     """Updates a Study from a StudyForm"""
 
     model = Study
@@ -39,6 +44,7 @@ class StudyUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
         """Setting the progress on the context"""
         context = super(StudyUpdate, self).get_context_data(**kwargs)
         context["progress"] = get_study_progress(self.object)
+        context["proposal"] = self.get_proposal()
         return context
 
     def get_form_kwargs(self):
@@ -58,13 +64,35 @@ class StudyUpdate(AllowErrorsOnBackbuttonMixin, UpdateView):
 
     def get_next_url(self):
         """Continue to the Study design overview"""
-        return reverse("studies:design", args=(self.object.pk,))
+        return reverse("studies:personal_data", args=(self.object.pk,))
 
 
 ###############
 # Other actions
 ###############
-class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView):
+class StudyPersonalData(
+    StudyMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
+):
+    model = Study
+    form_class = PersonalDataForm
+    template_name = "studies/study_personal_data.html"
+
+    def get_back_url(self):
+        """
+        Return to the Study overview
+        """
+        return reverse("studies:update", args=(self.object.pk,))
+
+    def get_next_url(self):
+        """Continue to the Study design overview"""
+        return reverse("studies:design", args=(self.object.pk,))
+
+
+class StudyDesign(
+    StudyMixin, AllowErrorsOnBackbuttonMixin, UpdateView, generic.edit.FormMixin
+):
     model = Study
     form_class = StudyDesignForm
     success_message = _("Traject opgeslagen")
@@ -74,6 +102,7 @@ class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView):
         """Setting the progress on the context"""
         context = super(StudyDesign, self).get_context_data(**kwargs)
         context["progress"] = get_study_progress(self.object) + 3
+        context["proposal"] = self.object.proposal
         return context
 
     def get_next_url(self):
@@ -97,17 +126,21 @@ class StudyDesign(AllowErrorsOnBackbuttonMixin, UpdateView):
             else:
                 next_url = "observations:create"
         elif study.has_sessions:
-            next_url = "studies:session_start"
+            next_url = "tasks:session_start"
         return reverse(next_url, args=(pk,))
 
     def get_back_url(self):
         """
         Return to the Study overview
         """
-        return reverse("studies:update", args=(self.kwargs["pk"],))
+        return reverse("studies:personal_data", args=(self.kwargs["pk"],))
 
 
-class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
+class StudyEnd(
+    StudyMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
+):
     """
     Completes a Study
     """
@@ -120,13 +153,8 @@ class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
         """Setting the progress on the context"""
         context = super(StudyEnd, self).get_context_data(**kwargs)
         context["progress"] = get_study_progress(self.object, True) - 10
+        context["proposal"] = self.object.proposal
         return context
-
-    def get_form_kwargs(self):
-        """Sets the Study as a form kwarg"""
-        kwargs = super(StudyEnd, self).get_form_kwargs()
-        kwargs["study"] = self.object
-        return kwargs
 
     def get_next_url(self):
         """
@@ -139,17 +167,17 @@ class StudyEnd(AllowErrorsOnBackbuttonMixin, UpdateView):
             next_study = Study.objects.get(proposal=proposal, order=next_order)
             return reverse("studies:update", args=(next_study.pk,))
         else:
-            return reverse("proposals:translated", args=(proposal.pk,))
+            return reverse("proposals:knowledge_security", args=(proposal.pk,))
 
     def get_back_url(self):
         study = self.object
-        if study.has_sessions:
-            next_url = "tasks:end"
-            pk = self.object.last_session().pk
-        elif study.has_intervention:
+        if study.get_sessions():
+            next_url = "tasks:session_overview"
+            pk = self.object.pk
+        elif study.get_intervention():
             next_url = "interventions:update"
             pk = Intervention.objects.get(study=study).pk
-        elif study.has_observation:
+        elif study.get_observation():
             next_url = "observations:update"
             pk = Observation.objects.get(study=study).pk
         else:
@@ -181,7 +209,7 @@ class StudyUpdateAttachments(braces.GroupRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         """Continue to the URL specified in the 'next' POST parameter"""
-        return self.request.POST.get("next", "/")
+        return reverse("reviews:detail", args=[self.object.proposal.latest_review().pk])
 
 
 ################

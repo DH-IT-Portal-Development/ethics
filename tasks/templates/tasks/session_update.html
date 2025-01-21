@@ -1,0 +1,22 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Taakonderzoek en/of interview(s)" %} - {{ block.super }}
+{% endblock %}
+
+{% block pre-form-text %}
+    <h2>{% trans "Taakonderzoek en/of interview(s)" %}</h2>
+    {% include "main/setting_checks.html" %}
+    {% include "tasks/session_title.html" %}
+{% endblock %}
+
+{% block post-form-pre-buttons %}
+    <div class="uu-form-row mb-0">
+        <div class="alert alert-info">
+            {% trans "Voor elke taak stellen we in de komende schermen steeds dezelfde vragen." %}
+        </div>
+    </div>
+{% endblock %}

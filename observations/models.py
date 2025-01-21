@@ -1,6 +1,6 @@
 from django.core.validators import MaxValueValidator
 from django.db import models
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from main.models import SettingModel
 from main.validators import validate_pdf_or_doc
@@ -12,6 +12,9 @@ class Registration(models.Model):
     description = models.CharField(max_length=200)
     needs_details = models.BooleanField(default=False)
     requires_review = models.BooleanField(default=False)
+    is_recording = models.BooleanField(
+        default=False,
+    )
 
     class Meta:
         ordering = ["order"]
@@ -49,7 +52,7 @@ class Observation(SettingModel):
     )
 
     details_frequency = models.TextField(
-        _("Beschrijf <b>hoe vaak en hoe lang</b> de observant wordt geobserveerd."),
+        _("Beschrijf <b>hoe vaak en hoelang</b> de observant wordt geobserveerd."),
         help_text=_(
             "Bijvoorbeeld: De leraar zal 5 lessen van 45 minuten "
             "worden geobserveerd."
@@ -60,7 +63,9 @@ class Observation(SettingModel):
     is_anonymous = models.BooleanField(
         _("Wordt er anoniem geobserveerd?"),
         help_text=_(
-            "Zoals zou kunnen voorkomen op fora en de onderzoeker ook een account heeft."
+            "Bijvoorbeeld: je maakt aantekeningen van observaties van "
+            "onbekenden in de openbare ruimte (anoniem) of je maakt "
+            "video-opnamen van gedragingen van mensen (niet anoniem)."
         ),
         default=False,
     )
@@ -83,9 +88,9 @@ class Observation(SettingModel):
     is_nonpublic_space = models.BooleanField(
         _("Wordt er geobserveerd in een niet-openbare ruimte?"),
         help_text=_(
-            "Bijvoorbeeld er wordt geobserveerd bij iemand thuis, \
-tijdens een hypotheekgesprek, tijdens politieverhoren of een forum waar \
-een account voor moet worden aangemaakt."
+            "Bijvoorbeeld: er wordt geobserveerd bij iemand thuis, tijdens een "
+            "hypotheekgesprek, tijdens politieverhoren of een digitale "
+            "omgeving waar een account voor moet worden aangemaakt."
         ),
         default=False,
     )
@@ -96,14 +101,14 @@ een account voor moet worden aangemaakt."
     )
 
     has_advanced_consent = models.BooleanField(
-        _("Vindt informed consent van tevoren plaats?"),
+        _("Gaan deelnemers van tevoren akkoord met de observatie?"),
         default=True,
     )
 
     has_advanced_consent_details = models.TextField(
         _(
-            "Leg uit waarom informed consent niet van te voren plaatsvindt en "
-            "geef ook op welke wijze dit achteraf verzorgd wordt."
+            "Leg uit waarom er niet van tevoren akkoord kan worden gegeven "
+            "en beschrijf ook op welke wijze dit achteraf verzorgd wordt."
         ),
         blank=True,
     )
@@ -131,7 +136,11 @@ om deze observatie te mogen uitvoeren?"
     registrations = models.ManyToManyField(
         Registration,
         help_text=_(
-            "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop bij het gebruik van de term ‘anoniem’ of ‘geanonimiseerd’ in je documenten voor deelnemers. Voor meer informatie, zie de <a href='https://fetc-gw.wp.hum.uu.nl/wp-content/uploads/sites/336/2021/12/FETC-GW-Richtlijnen-voor-geinformeerde-toestemming-bij-wetenschappelijk-onderzoek-versie-1.1_21dec2021.pdf' target='_blank'>Richtlijnen voor geïnformeerde toestemming, ‘Beeld en geluid’</a>."
+            "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop "
+            "bij het gebruik van de term 'anoniem' of 'geanonimiseerd' in "
+            "je documenten voor deelnemers. Voor meer informatie, zie het UU Data Privacy Handbook over "
+            "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/pseudonymisation-anonymisation.html#pseudonymisation-anonymisation' target='_blank'>"
+            "anonimiseren en pseudonimiseren</a>."
         ),
         verbose_name=_("Hoe wordt het gedrag geregistreerd?"),
     )

@@ -1,0 +1,14 @@
+<div class="attachment-row row m-0">
+    <div class="attachment-outer {{ ac.get_outer_css_classes }}">
+        <div class="attachment-upper-border">{{ ac.get_origin_display }} asdf</div>
+        <div class="attachment-content m-2">
+            <h4>Attachment kind</h4>
+            <pre>attachment_filename.docx</pre>
+            <div class="attachment-buttons btn-row">
+                {% for action in container.get_actions %}
+                    {% include action %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

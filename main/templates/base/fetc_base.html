@@ -1,0 +1,61 @@
+{% extends "base/tool_base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{# This is what is appended to <title /> #}
+{% block header_title %}
+    {% trans "FETC-GW" %}
+{% endblock %}
+
+{# Any side-wide stuff that needs to placed in <head> #}
+{% block html_head %}
+    <link rel="stylesheet" type="text/css" href="{% static 'main/style.css' %}">
+    <script type="text/javascript"
+            charset="utf8"
+            src="{% static 'main/js/datepicker-nl.js' %}"></script>
+    <script type="text/javascript"
+            charset="utf8"
+            src="{% static 'main/js/redirect-submit.js' %}"></script>
+    {% include "base/form_styling.html" %}
+{% endblock %}
+
+{% block uu-header-pre-menu %}
+    <a href="{% url 'main:home' %}"
+       class="navbar-text fs-4 text-black text-decoration-none d-none d-lg-flex text-nowrap pe-4">
+        {% trans 'FETC-GW Portal' %}
+    </a>
+{% endblock %}
+
+{% block uu-header-post-menu %}
+    {% if request.user.is_authenticated %}
+        <div class="navbar-text text-black border-left text-nowrap ms-3">
+            {% with request.user as user %}
+                {{ user.first_name }}&nbsp;<a href="{% url 'logout' %}">({% trans 'Log uit' %})</a>
+            {% endwith %}
+        </div>
+    {% endif %}
+    {% include 'base/tool_language_box.html' %}
+{% endblock %}
+
+{% block site-footer %}
+    {% get_current_language as LANGUAGE_CODE %}
+    <div class="uu-footer">
+        <div class="col-10">
+            {% with 'cdh.core/images/logo-footer-'|add:LANGUAGE_CODE|add:'.svg' as header_image %}
+                <img src="{% static header_image %}"
+                     alt="{% trans 'cdh.core:uu' %}"
+                     title="{% trans 'cdh.core:uu' %}" />
+            {% endwith %}
+        </div>
+        <div class="col-2 d-none d-md-block">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'logout' %}">{% trans 'Log uit' %}</a>
+                <br />
+            {% else %}
+                <a href="{% url 'login' %}">{% trans 'Log in' %}</a>
+                <br />
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

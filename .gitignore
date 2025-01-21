@@ -7,11 +7,14 @@ __pycache__/
 *.mo
 
 ### Project-specific ###
-media/
+media/*
+!media/test_pdf.pdf
 certs/
 fetc/ldap_settings.py
 fetc/saml_settings.py
 *.sqlite3
+cdh_files/
+debug_settings.py
 
 ### Coverage ###
 .coverage

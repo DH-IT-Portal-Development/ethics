@@ -1,4 +1,4 @@
-{% extends "base/base.html" %}
+{% extends "base/fetc_base.html" %}
 
 {% load vue_tags %}
 {% load static %}
@@ -9,7 +9,7 @@
 
 {% block html_head %}
     {# This template loads in either the dev or prod Vue library, depending on settings.DEBUG #}
-    {% include 'uil.vue/vueloader.html' %}
+    {% include 'cdh.vue/vueloader.html' %}
     {# Load in the base component FancyList #}
     {% load_vue_component 'FancyList' %}
     {% include 'proposals/vue_templates/proposal_archive_list.html' %}
@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block content %}
-    <div class="uu-inner-container">
+    <div class="uu-container">
         <div class="col-12">
             <h2>{{ title }}</h2>
             {% static "proposals/images/page_white_go.png" as img_next %}

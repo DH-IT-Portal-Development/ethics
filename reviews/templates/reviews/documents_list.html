@@ -6,33 +6,37 @@
 {% load documents_list %}
 
 {% for container in containers %}
-    <h5>{{ container.header }}</h5>
+    <h6>{{ container.header }}</h6>
     <ul>
         {% for item in container.items %}
             <li>
-                <a href="{{ item.get_link_url }}"
-                   target="_blank"
-                   {% if not item.sets_content_disposition %}download="{{ item.get_filename }}"{% endif %}>
-                    {{ item.name }}
-                </a>
-                {% if item.comparable %}
-                    {% simple_compare_link item.object item.field %}
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
-    {% if container.dmp_edit_link %}
-        <a href="{{ container.dmp_edit_link }}" class="d-block mb-3">
-            {% trans "Data Management Plan wijzigen" %}
-            <img src="{% static 'proposals/images/pencil.png' %}"
-                 title="{% trans 'Data Management Plan wijzigen' %}" />
-        </a>
-    {% endif %}
-    {% if container.edit_link %}
-        <a href="{{ container.edit_link }}" class="d-block mb-3">
-            {% trans "Documenten wijzigen" %}
-            <img src="{% static 'proposals/images/pencil.png' %}"
-                 title="{% trans 'Documenten wijzigen' %}" />
-        </a>
-    {% endif %}
-{% endfor %}
+                {% if item.link_url %}
+                    <a href="{{ item.link_url }}" target="_blank">
+                    {% else %}
+                        <a href="{{ item.get_link_url }}"
+                           target="_blank"
+                           {% if not item.sets_content_disposition %}download="{{ item.get_filename }}"{% endif %}>
+                        {% endif %}
+                        {{ item.name }}
+                    </a>
+                    {% if item.comparable %}
+                        {% simple_compare_link item.object item.field %}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+        {% if container.dmp_edit_link %}
+            <a href="{{ container.dmp_edit_link }}" class="d-block mb-3">
+                {% trans "Data Management Plan wijzigen" %}
+                <img src="{% static 'proposals/images/pencil.png' %}"
+                     title="{% trans 'Data Management Plan wijzigen' %}" />
+            </a>
+        {% endif %}
+        {% if container.edit_link %}
+            <a href="{{ container.edit_link }}" class="d-block mb-3">
+                {% trans "Documenten wijzigen" %}
+                <img src="{% static 'proposals/images/pencil.png' %}"
+                     title="{% trans 'Documenten wijzigen' %}" />
+            </a>
+        {% endif %}
+    {% endfor %}

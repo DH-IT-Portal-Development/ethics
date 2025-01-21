@@ -1,11 +1,11 @@
 from django import template
 
-from main.utils import is_secretary
+from main.utils import is_secretary, renderable
 from studies.models import Documents
 from proposals.models import Proposal, Wmo
 from observations.models import Observation
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 
@@ -14,6 +14,10 @@ from django.core.exceptions import ObjectDoesNotExist
 from proposals.utils.proposal_utils import FilenameFactory
 
 register = template.Library()
+
+
+def is_identical(new_file, old_file):
+    return new_file.url == old_file.url
 
 
 @register.inclusion_tag("reviews/simple_compare_link.html")
@@ -102,6 +106,11 @@ def simple_compare_link(obj, file):
         "attribute": file.field.name,
     }
 
+    # Do not offer to compare identical files
+    old_file = getattr(parent_obj, file.field.name)
+    if is_identical(file, old_file):
+        return {}
+
     # CompareDocumentsView expects the following args:
     # - old pk
     # - new pk
@@ -156,6 +165,7 @@ class Container:
         self.dmp_edit_link = False
         self.header = header
         self.items = []
+        self.order = 0
 
         self.__dict__.update(kwargs)
 
@@ -163,9 +173,9 @@ class Container:
 class DocItem:
     def __init__(self, name, **kwargs):
         self.name = name
-        self.comparable = False
         self.filename = None
         self.link_url = None
+        self.field = None
         self.sets_content_disposition = False
 
         self.__dict__.update(kwargs)
@@ -173,13 +183,11 @@ class DocItem:
     def get_filename(self):
         if self.filename:
             return self.filename
-
         return self.field.name
 
     def get_link_url(self):
         if self.link_url:
             return self.link_url
-
         return self.field.url
 
 
@@ -194,16 +202,6 @@ def documents_list(review, user):
 
     # Get the proposal PDF
     pdf_container = Container(_("Aanmelding"))
-
-    proposal_pdf = DocItem(_("Aanvraag in PDF-vorm"))
-    proposal_pdf.link_url = reverse("proposals:pdf", args=(proposal.pk,))
-
-    # The proposals:pdf view sets an attachment and filename
-    # HTTP header (Content-disposition:) which does not interact well with
-    # the download= link attribute. So we add a flag here that circumvents it
-    proposal_pdf.sets_content_disposition = True
-
-    pdf_container.items.append(proposal_pdf)
 
     # Pre-approval
     if proposal.pre_approval_pdf:
@@ -242,15 +240,27 @@ def documents_list(review, user):
 
         pdf_container.items.append(metc_decision)
 
-    # Finally, append the container
-    containers.append(pdf_container)
+    # Finally, append the container, if it contains items
+    if pdf_container.items:
+        containers.append(pdf_container)
 
-    # Now get all trajectories / extra documents
+    containers += get_legacy_documents(proposal, user=user)
+
+    # Finally, return template context
+    return {"review": review, "containers": containers, "proposal": proposal}
+
+
+def get_legacy_documents(proposal, user=None):
+
+    containers = []
+    # Fetch all trajectories / extra documents
     # First we get all objects attached to a study, then we append those
     # without. This way we get the ordering we want.
     qs = Documents.objects.filter(proposal=proposal).exclude(
         study=None
     ) | Documents.objects.filter(proposal=proposal, study=None)
+
+    no_files_found = True
 
     for d in qs:
         # Get a humanized name and create container item
@@ -275,7 +285,7 @@ def documents_list(review, user):
         ]
 
         # Search for old-style observations (deprecated)
-        if d.study and d.study.has_observation:
+        if d.study and d.study.get_observation():
             if d.study.observation.needs_approval:
                 potential_files.append(
                     (
@@ -294,12 +304,19 @@ def documents_list(review, user):
                 item.field = field
                 item.object = obj
                 documents_container.items.append(item)
+                no_files_found = False
 
         # Only the secretary gets an edit link
-        if is_secretary(user):
-            documents_container.edit_link = reverse("studies:attachments", args=[d.pk])
+        if user:
+            if is_secretary(user):
+                documents_container.edit_link = reverse(
+                    "studies:attachments",
+                    args=[d.pk],
+                )
 
         containers.append(documents_container)
 
-    # Finally, return template context
-    return {"review": review, "containers": containers, "proposal": proposal}
+    if no_files_found:
+        return []
+
+    return containers

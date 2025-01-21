@@ -8,12 +8,13 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone
 from django.views import generic
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.contrib.auth import get_user_model
 from django.db.models import Q, Count
 
-from main.utils import get_reviewers, get_secretary
+from main.utils import get_reviewers, get_secretary, is_secretary
 from proposals.models import Proposal
+from proposals.utils.stepper import Stepper
 from .forms import (
     DecisionForm,
     ReviewAssignForm,
@@ -27,6 +28,7 @@ from .mixins import (
     UserAllowedToDecisionMixin,
     CommitteeMixin,
     UsersOrGroupsAllowedMixin,
+    ReviewSidebarMixin,
 )
 from .models import Decision, Review
 from .utils.review_utils import (
@@ -36,6 +38,7 @@ from .utils.review_utils import (
     assign_reviewers,
 )
 from .utils.review_actions import ReviewActions
+from attachments.models import Attachment
 
 
 class BaseDecisionListView(GroupRequiredMixin, CommitteeMixin, generic.TemplateView):
@@ -305,7 +308,11 @@ class AllProposalReviewsView(BaseReviewListView):
 
 
 class ReviewDetailView(
-    LoginRequiredMixin, AutoReviewMixin, UsersOrGroupsAllowedMixin, generic.DetailView
+    ReviewSidebarMixin,
+    LoginRequiredMixin,
+    AutoReviewMixin,
+    UsersOrGroupsAllowedMixin,
+    generic.DetailView,
 ):
     """
     Shows the Decisions for a Review
@@ -343,7 +350,9 @@ class ChangeChamberView(LoginRequiredMixin, GroupRequiredMixin, generic.UpdateVi
         return reverse("reviews:detail", args=[self.object.latest_review().pk])
 
 
-class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
+class ReviewAssignView(
+    ReviewSidebarMixin, GroupRequiredMixin, AutoReviewMixin, generic.UpdateView
+):
     """
     Allows a User of the SECRETARY group to assign reviewers.
     """
@@ -387,7 +396,7 @@ class ReviewAssignView(GroupRequiredMixin, AutoReviewMixin, generic.UpdateView):
         return super(ReviewAssignView, self).form_valid(form)
 
 
-class ReviewDiscontinueView(GroupRequiredMixin, generic.UpdateView):
+class ReviewDiscontinueView(ReviewSidebarMixin, GroupRequiredMixin, generic.UpdateView):
     model = Review
     form_class = ReviewDiscontinueForm
     template_name = "reviews/review_discontinue_form.html"
@@ -418,7 +427,7 @@ class ReviewDiscontinueView(GroupRequiredMixin, generic.UpdateView):
         return super().form_valid(form)
 
 
-class ReviewCloseView(GroupRequiredMixin, generic.UpdateView):
+class ReviewCloseView(GroupRequiredMixin, ReviewSidebarMixin, generic.UpdateView):
     model = Review
     form_class = ReviewCloseForm
     template_name = "reviews/review_close_form.html"
@@ -543,7 +552,10 @@ class CreateDecisionRedirectView(
 
 
 class DecisionUpdateView(
-    LoginRequiredMixin, UserAllowedToDecisionMixin, generic.UpdateView
+    ReviewSidebarMixin,
+    LoginRequiredMixin,
+    UserAllowedToDecisionMixin,
+    generic.UpdateView,
 ):
     """
     Allows a User to make a Decision on a Review.
@@ -555,22 +567,15 @@ class DecisionUpdateView(
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # Supervisors get the chance to update the proposal, but we have
-        # multiple update views for different types of proposals.
-        if self.object.review.proposal.is_pre_approved:
-            context["update_url"] = reverse(
-                "proposals:update_pre_approved", args=[self.object.review.proposal.pk]
-            )
-        elif self.object.review.proposal.is_pre_assessment:
-            context["update_url"] = reverse(
-                "proposals:update_pre", args=[self.object.review.proposal.pk]
-            )
-        else:
-            context["update_url"] = reverse(
-                "proposals:update", args=[self.object.review.proposal.pk]
-            )
-
+        context["update_url"] = reverse(
+            "proposals:update", args=[self.object.review.proposal.pk]
+        )
         return context
+
+    def get_review(
+        self,
+    ):
+        return self.get_object().review
 
     def get_success_url(self):
         obj = self.get_object()
@@ -612,7 +617,10 @@ class DecisionUpdateView(
 
 
 class ReviewClosedDecisionView(
-    LoginRequiredMixin, UserAllowedToDecisionMixin, generic.DetailView
+    ReviewSidebarMixin,
+    LoginRequiredMixin,
+    UserAllowedToDecisionMixin,
+    generic.DetailView,
 ):
     """Custom page for supervisors visiting links to already concluded
     supervisor reviews
@@ -632,3 +640,57 @@ class ReviewClosedDecisionView(
         # Do nothing; we only use the permission check, this page is only for
         # cases where the review is closed.
         return None
+
+
+class ReviewAttachmentsView(
+    ReviewSidebarMixin,
+    generic.TemplateView,
+):
+    template_name = "reviews/review_attachments.html"
+    model = Attachment
+
+    def __init__(self, *args, **kwargs):
+        self.review = None
+        return super().__init__(*args, **kwargs)
+
+    def get_slots(
+        self,
+    ):
+        proposal = self.get_review().proposal
+        stepper = Stepper(proposal)
+        return stepper.filled_slots
+
+    def per_object(
+        self,
+    ):
+        slots = self.get_slots()
+        proposal = self.get_review().proposal
+        # We want to fetch all *possible* objects, not just the ones
+        # that have actual attachments, so that we can explicitly show
+        # the reviewer that there's nothing attached to an object, rather
+        # than just ommitting said object.
+        objects = [proposal] + list(proposal.study_set.all())
+        slot_dict = {obj: [] for obj in objects}
+        for slot in slots:
+            relevant_owner = slot.attachment.get_owner_for_proposal(proposal)
+            slot_dict[relevant_owner].append(slot)
+        return slot_dict
+
+    def get_review(
+        self,
+    ):
+        if self.review:
+            return self.review
+        pk = self.kwargs.get("review_pk")
+        return Review.objects.get(pk=pk)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["slots"] = self.per_object()
+        context["review"] = self.get_review()
+        proposal = self.get_review().proposal
+        context["proposal"] = proposal
+        if is_secretary(self.request.user):
+            context["attachments_edit_link"] = True
+        context["supervisor_decision"] = proposal.supervisor_decision()
+        return context
