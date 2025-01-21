@@ -209,7 +209,7 @@ class StudyUpdateAttachments(braces.GroupRequiredMixin, generic.UpdateView):
 
     def get_success_url(self):
         """Continue to the URL specified in the 'next' POST parameter"""
-        return self.request.POST.get("next", "/")
+        return reverse("reviews:detail", args=[self.object.proposal.latest_review().pk])
 
 
 ################

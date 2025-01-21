@@ -2,7 +2,7 @@
 
 from typing import Any
 from django.urls import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.utils.translation import gettext_lazy as _
 
 from main.views import AllowErrorsOnBackbuttonMixin, UpdateView, DeleteView, CreateView
@@ -64,7 +64,10 @@ class TaskCreate(TaskMixin, CreateView):
 
     def get_session(self):
         """Retrieves the Study from the pk kwarg"""
-        return Session.objects.get(pk=self.kwargs["pk"])
+        try:
+            return Session.objects.get(pk=self.kwargs["pk"])
+        except Session.DoesNotExist:
+            raise Http404
 
     def get_proposal(self):
         return self.get_session().study.proposal
