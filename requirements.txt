@@ -48,7 +48,7 @@ closure==20191111
     # via cdh-django-core
 colorama==0.4.6
     # via djlint
-cryptography==44.0.0
+cryptography==44.0.1
     # via
     #   cdh-django-core
     #   pyhanko
