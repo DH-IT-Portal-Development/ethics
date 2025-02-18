@@ -507,9 +507,9 @@ class ProposalOtherResearchersFormView(
         """
         response = super(ProposalOtherResearchersFormView, self).form_valid(form)
         self.object = form.save()
-        if form.instance.other_applicants == False:
+        if form.instance.other_applicants == False and not self.current_user_is_supervisor():
             self.object.applicants.set([self.request.user])
-        else:
+        elif not self.current_user_is_supervisor():
             self.object.applicants.add(self.request.user)
         return response
 
