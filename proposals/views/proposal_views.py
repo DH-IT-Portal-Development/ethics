@@ -521,8 +521,10 @@ class ProposalOtherResearchersFormView(
 
     def get_back_url(self):
         return reverse("proposals:researcher", args=(self.object.pk,))
-    
-    def current_user_is_applicant(self,):
+
+    def current_user_is_applicant(
+        self,
+    ):
         return not self.current_user_is_supervisor()
 
 
