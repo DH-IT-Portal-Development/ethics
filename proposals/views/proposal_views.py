@@ -55,6 +55,7 @@ from ..models import Proposal, Wmo
 from ..utils import generate_pdf, generate_ref_number
 from proposals.mixins import (
     SupervisorEditingMixin,
+    SupervisorCannotEditMixin,
     ProposalMixin,
     ProposalContextMixin,
     PDFTemplateResponseMixin,
@@ -471,6 +472,7 @@ class ProposalStart(generic.TemplateView):
 
 
 class ProposalResearcherFormView(
+    SupervisorCannotEditMixin,
     ProposalMixin,
     UserFormKwargsMixin,
     SupervisorEditingMixin,
@@ -490,6 +492,7 @@ class ProposalResearcherFormView(
 
 
 class ProposalOtherResearchersFormView(
+    SupervisorCannotEditMixin,
     UserFormKwargsMixin,
     AllowErrorsOnBackbuttonMixin,
     ProposalMixin,

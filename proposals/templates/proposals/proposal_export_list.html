@@ -31,7 +31,7 @@
                             <td>
                                 {% if proposal.supervisor %}{{ proposal.supervisor.get_full_name }}{% endif %}
                             </td>
-                            <td>{{ proposal.date_confirmed|date:"d M Y" }}</td>
+                            <td>{{ proposal.date_confirmed|date:"Y-m-d" }}</td>
                             <td>
                                 {# Bad translation hack #}
                                 {% if proposal.reviewing_committee.name == "AK" %}
