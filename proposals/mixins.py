@@ -209,16 +209,19 @@ class SupervisorCannotEditMixin(
 
     supervisor_cannot_edit = True
 
-    def form_valid(
+    def post(
         self,
-        form,
+        request,
+        *args,
+        **kwargs,
     ):
+        self.object = self.get_object()
         if self.current_user_is_supervisor():
-            # Intercept form saving and continue to
-            # wherever we were going.
+            # Intercept POST request and continue as if user
+            # action was successful.
             return HttpResponseRedirect(
                 # This method knows if we were going
                 # forwards or backwards.
                 self.get_success_url(),
             )
-        return super().form_valid(form)
+        return super().post(request, *args, **kwargs)
