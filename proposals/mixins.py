@@ -5,9 +5,10 @@ from xhtml2pdf import pisa
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ImproperlyConfigured
+from django.contrib import messages
 
 from django.views.generic.base import TemplateResponseMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template.loader import get_template
 
 from .models import Proposal
@@ -196,3 +197,25 @@ class PDFTemplateResponseMixin(TemplateResponseMixin):
         response["Content-Disposition"] = self.get_content_disposition()
 
         return self.get_pdf_response(context, **response_kwargs, dest=response)
+
+
+class SupervisorCannotEditMixin(
+    ProposalContextMixin,
+):
+    """
+    Does not allow the supervisor to edit these pages.
+    This mixin must be high up in the inheritance chain.
+    """
+
+    supervisor_cannot_edit = True
+
+    def form_valid(self, form,):
+        if self.current_user_is_supervisor():
+            # Intercept form saving and continue to
+            # wherever we were going.
+            return HttpResponseRedirect(
+                # This method knows if we were going
+                # forwards or backwards.
+                self.get_success_url(),
+            )
+        return super().form_valid(form)
