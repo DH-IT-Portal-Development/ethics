@@ -3,29 +3,31 @@
 
 {% if not create and is_supervisor %}
     <div class="col-12 text-center">
-	{% if view.supervisor_cannot_edit %}
-	    <div class="alert alert-error">
-		{% blocktrans trimmed %}
+        {% if view.supervisor_cannot_edit %}
+            <div class="alert alert-error">
+                {% blocktrans trimmed %}
                     Dit onderdeel kan helaas niet worden aangepast door
                     de eindverantwoordelijke onderzoeker. Wijzigingen worden
                     niet opgeslagen.
-		{% endblocktrans %}
-	    </div>
-	{% else %}
-	    <div class="alert alert-info">
-		{% blocktrans trimmed %}
-		    Je past nu een aanvraag aan van een student/PhD kandidaat onder jouw supervisie. Let er op dat je
-		    het formulier invult alsof jij die student/PhD kandidaat bent.
-		{% endblocktrans %}
-	    </div>
-	{% endif %}
-
+                    <br />
+                    Als er toch wijzigingen vereist zijn op deze pagina, kan je deze aanvraag terugsturen
+                    naar de indiener zodat die ze kan doorvoeren.
+                {% endblocktrans %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">
+                {% blocktrans trimmed %}
+                    Je past nu een aanvraag aan van een student/PhD kandidaat onder jouw supervisie. Let er op dat je
+                    het formulier invult alsof jij die student/PhD kandidaat bent.
+                {% endblocktrans %}
+            </div>
+        {% endif %}
     </div>
 {% endif %}
 {% if is_practice %}
     <div class="col-12 text-center">
-	<div class="alert alert-info">
-	    {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
-	</div>
+        <div class="alert alert-info">
+            {% trans "Je bewerkt op het moment een oefenaanvraag. Deze kan niet ter beoordeling door de FETC-GW worden ingediend." %}
+        </div>
     </div>
 {% endif %}

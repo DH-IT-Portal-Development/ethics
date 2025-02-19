@@ -209,7 +209,10 @@ class SupervisorCannotEditMixin(
 
     supervisor_cannot_edit = True
 
-    def form_valid(self, form,):
+    def form_valid(
+        self,
+        form,
+    ):
         if self.current_user_is_supervisor():
             # Intercept form saving and continue to
             # wherever we were going.
