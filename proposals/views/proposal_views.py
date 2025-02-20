@@ -504,7 +504,9 @@ class ProposalOtherResearchersFormView(
         response = super(ProposalOtherResearchersFormView, self).form_valid(form)
 
         if not self.current_user_is_supervisor():
-            self.ensure_user_in_applicants(form,)
+            self.ensure_user_in_applicants(
+                form,
+            )
 
         return response
 
