@@ -277,9 +277,11 @@ def remind_supervisor_reviewers():
     today = datetime.date.today()
 
     decisions = Decision.objects.filter(
+        go="",
         review__is_committee_review=False,
         review__stage=Review.Stages.SUPERVISOR,
         review__date_should_end__lte=today,
+        review__date_end=None,
     )
 
     for decision in decisions:

@@ -85,7 +85,6 @@ class Review(models.Model):
                 else:
                     # See comment above
                     from reviews.utils import notify_supervisor_nogo
-
                     notify_supervisor_nogo(last_decision)
                     self.proposal.status = Proposal.Statuses.DRAFT
                     self.proposal.save()
