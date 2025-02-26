@@ -277,14 +277,16 @@ def remind_supervisor_reviewers():
     today = datetime.date.today()
 
     decisions = Decision.objects.filter(
+        go="",
         review__is_committee_review=False,
         review__stage=Review.Stages.SUPERVISOR,
         review__date_should_end__lte=today,
+        review__date_end=None,
     )
 
     for decision in decisions:
         proposal = decision.review.proposal
-        subject = "Herinnering: beoordeel aanvraag {}".format(
+        subject = "Herinnering: beoordeel aanvraag {} van de FETC-GW".format(
             proposal.committee_prefixed_refnum(),
         )
         params = {

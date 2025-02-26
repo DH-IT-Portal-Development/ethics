@@ -617,7 +617,6 @@ class DecisionUpdateView(
 
 
 class ReviewClosedDecisionView(
-    ReviewSidebarMixin,
     LoginRequiredMixin,
     UserAllowedToDecisionMixin,
     generic.DetailView,

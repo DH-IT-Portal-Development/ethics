@@ -500,17 +500,14 @@ class ProposalOtherResearchersFormView(
     template_name = "proposals/other_researchers_form.html"
 
     def form_valid(self, form):
-        """
-        Ensure:
-        - if other_applicants is False, only the user is in applicants
-        - if other_applicants is True, always add current user to applicants
-        """
+
         response = super(ProposalOtherResearchersFormView, self).form_valid(form)
-        self.object = form.save()
-        if form.instance.other_applicants == False:
-            self.object.applicants.set([self.request.user])
-        else:
-            self.object.applicants.add(self.request.user)
+
+        if not self.current_user_is_supervisor():
+            self.ensure_user_in_applicants(
+                form,
+            )
+
         return response
 
     def get_next_url(self):
@@ -519,6 +516,18 @@ class ProposalOtherResearchersFormView(
 
     def get_back_url(self):
         return reverse("proposals:researcher", args=(self.object.pk,))
+
+    def ensure_user_in_applicants(self, form):
+        """
+        Ensure:
+        - if other_applicants is False, only the user is in applicants
+        - if other_applicants is True, always add current user to applicants
+        """
+        self.object = form.save()
+        if form.instance.other_applicants == False:
+            self.object.applicants.set([self.request.user])
+        else:
+            self.object.applicants.add(self.request.user)
 
 
 class ProposalFundingFormView(
