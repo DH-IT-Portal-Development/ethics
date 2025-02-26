@@ -791,7 +791,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
             )
             self.save()
         else:
-            logger.warn(
+            logger.info(
                 f"Not saving PDF of {self.reference_number} "
                 "to preserve canonical PDF.",
             )
