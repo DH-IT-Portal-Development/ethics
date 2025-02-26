@@ -61,6 +61,9 @@ class BaseReviewTestCase(TestCase):
             ),
             institution_id=1,
         )
+        self.proposal.applicants.add(
+            self.user,
+        )
         self.proposal.wmo = Wmo.objects.create(
             proposal=self.proposal,
             metc=YesNoDoubt.NO,
@@ -147,7 +150,6 @@ class ReviewTestCase(BaseReviewTestCase):
 
         self.assertEqual(len(mail.outbox), 2)
         self.check_subject_lines(mail.outbox)
-        mail.outbox = []
 
 
 class SupervisorTestCase(BaseReviewTestCase):
@@ -165,6 +167,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         today = timezone.now().date()
         yesterday = today - timezone.timedelta(days=1)
         review.date_should_end = yesterday
+        review.save()
 
         # Reminders should now be sent
         remind_supervisor_reviewers()
@@ -178,11 +181,11 @@ class SupervisorTestCase(BaseReviewTestCase):
         decision.go = Decision.Approval.NEEDS_REVISION
         decision.save()
         # Check notifications
-        self.assertEquals(len(mail.outbox), 2)
+        expected_emails = self.proposal.applicants.count()
+        self.assertEquals(len(mail.outbox), expected_emails)
         remind_supervisor_reviewers()
         # No more reminders after decision is made
-        self.assertEquals(len(mail.outbox), 2)
-        mail.outbox = []
+        self.assertEquals(len(mail.outbox), expected_emails)
         
     def test_negative_supervisor_decision(self):
         review = start_review(self.proposal)
