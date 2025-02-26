@@ -286,7 +286,7 @@ def remind_supervisor_reviewers():
 
     for decision in decisions:
         proposal = decision.review.proposal
-        subject = "Herinnering: beoordeel aanvraag {}".format(
+        subject = "Herinnering: beoordeel aanvraag {} van de FETC-GW".format(
             proposal.committee_prefixed_refnum(),
         )
         params = {
