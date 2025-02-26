@@ -279,7 +279,7 @@ def remind_supervisor_reviewers():
     decisions = Decision.objects.filter(
         review__is_committee_review=False,
         review__stage=Review.Stages.SUPERVISOR,
-        review__date_should_end__lte=today,
+        review__date_should_end__gte=today,
     )
 
     for decision in decisions:

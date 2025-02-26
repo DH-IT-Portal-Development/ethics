@@ -4,7 +4,8 @@ from copy import copy
 from django.conf import settings
 from django.core import mail
 from django.contrib.auth.models import User, Group, AnonymousUser
-from django.test import TestCase, Client, RequestFactory
+from django.test import TestCase
+from django.utils import timezone
 
 from .models import Review, Decision
 from .utils import (
@@ -20,6 +21,7 @@ from proposals.models import Proposal, Relation, Wmo
 from proposals.utils import generate_ref_number
 from studies.models import Study, Compensation, AgeGroup
 from observations.models import Observation
+from reviews.utils.review_utils import remind_supervisor_reviewers
 from interventions.models import Intervention
 from tasks.models import Session, Task, Registration, RegistrationKind
 
@@ -149,21 +151,40 @@ class ReviewTestCase(BaseReviewTestCase):
 
 
 class SupervisorTestCase(BaseReviewTestCase):
+    
     def test_decision_supervisor(self):
         """
         Tests whether a Decision from the supervisor leads to a change in the Review.
         """
         review = start_review(self.proposal)
         self.assertEqual(review.go, None)
+        remind_supervisor_reviewers()
 
+        # Check for supervisor and submitter notifications
+        # No reminders should have been sent yet
         self.assertEqual(len(mail.outbox), 2)
+        today = timezone.now().date()
+        yesterday = today - timezone.timedelta(days=1)
+        review.date_should_end = yesterday
+
+        # Reminders should now be sent
+        remind_supervisor_reviewers()
+        breakpoint()
+        self.assertGreater(len(mail.outbox), 2)
         self.check_subject_lines(mail.outbox)
+
+        # Clear outbox
         mail.outbox = []
 
-        decision = Decision.objects.filter(review=review)[0]
-        decision.go = Decision.Approval.APPROVED
+        decision = Decision.objects.get(review=review)
+        decision.go = Decision.Approval.NEEDS_REVISION
         decision.save()
+        self.assertEquals(len(mail.outbox), 0)
+        remind_supervisor_reviewers()
+        self.assertEquals(len(mail.outbox), 0)
         review.refresh_from_db()
+
+        
         self.assertEqual(review.go, True)
         self.assertEqual(review.is_committee_review, False)
 
