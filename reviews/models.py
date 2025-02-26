@@ -64,23 +64,23 @@ class Review(models.Model):
 
         if all_decisions == closed_decisions:
             self.go = final_go
-            self.date_end = timezone.now()
             self.save()
-
             # For a supervisor review:
-            if self.is_committee_review == False:
+            if self.is_committee_review is False:
                 # Update the status of the Proposal with the end date
                 self.proposal.date_reviewed_supervisor = self.date_end
                 self.proposal.save()
+                # Supervisor reviews have no CLOSING phase,
+                # so they always go straight to CLOSED.
+                self.stage = self.Stages.CLOSED
+                self.date_end = timezone.now()
+                self.save()
                 # On GO and not in course, start the assignment phase
                 if self.go and not self.proposal.in_course:
                     # Use absolute import. Relative works fine everywhere except
                     # in an uWSGI environment, in which it errors.
                     from reviews.utils import start_assignment_phase
-
                     start_assignment_phase(self.proposal)
-                    self.stage = self.Stages.CLOSED
-                    self.save()
                 # On NO-GO, reset the Proposal status
                 else:
                     # See comment above
