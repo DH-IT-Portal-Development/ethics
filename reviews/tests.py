@@ -152,12 +152,11 @@ class ReviewTestCase(BaseReviewTestCase):
 
 class SupervisorTestCase(BaseReviewTestCase):
     
-    def test_decision_supervisor(self):
+    def test_supervisor_review(self):
         """
-        Tests whether a Decision from the supervisor leads to a change in the Review.
+        Tests the creation of supervisor reviews
         """
         review = start_review(self.proposal)
-        self.assertEqual(review.go, None)
         remind_supervisor_reviewers()
 
         # Check for supervisor and submitter notifications
@@ -169,27 +168,46 @@ class SupervisorTestCase(BaseReviewTestCase):
 
         # Reminders should now be sent
         remind_supervisor_reviewers()
-        breakpoint()
-        self.assertGreater(len(mail.outbox), 2)
+        self.assertEqual(len(mail.outbox), 3)
         self.check_subject_lines(mail.outbox)
-
         # Clear outbox
         mail.outbox = []
-
+        
+        # Create a negative decision
         decision = Decision.objects.get(review=review)
         decision.go = Decision.Approval.NEEDS_REVISION
         decision.save()
-        self.assertEquals(len(mail.outbox), 0)
+        # Check notifications
+        self.assertEquals(len(mail.outbox), 2)
         remind_supervisor_reviewers()
-        self.assertEquals(len(mail.outbox), 0)
-        review.refresh_from_db()
-
+        # No more reminders after decision is made
+        self.assertEquals(len(mail.outbox), 2)
+        mail.outbox = []
         
-        self.assertEqual(review.go, True)
-        self.assertEqual(review.is_committee_review, False)
+    def test_negative_supervisor_decision(self):
+        review = start_review(self.proposal)
+        self.assertEqual(review.go, None)
 
-        self.assertEqual(len(mail.outbox), 2)
-        self.check_subject_lines(mail.outbox)
+        # Create a negative decision
+        decision = Decision.objects.get(review=review)
+        decision.go = Decision.Approval.NEEDS_REVISION
+        decision.save()
+        review.refresh_from_db()
+        self.assertEqual(review.go, False)
+
+    def test_positive_supervisor_decision(self):
+        review = start_review(self.proposal)
+        self.assertEqual(review.go, None)
+
+        # Create a negative decision
+        decision = Decision.objects.get(review=review)
+        decision.go = Decision.Approval.APPROVED
+        decision.save()
+        review.refresh_from_db()
+        self.assertEqual(review.go, True)
+
+        review = self.proposal.latest_review()
+        self.assertEqual(review.stage, review.Stages.ASSIGNMENT)        
 
 
 class AssignmentTestCase(BaseReviewTestCase):
