@@ -153,7 +153,7 @@ class ReviewTestCase(BaseReviewTestCase):
 
 
 class SupervisorTestCase(BaseReviewTestCase):
-    
+
     def test_supervisor_review(self):
         """
         Tests the creation of supervisor reviews
@@ -175,7 +175,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.check_subject_lines(mail.outbox)
         # Clear outbox
         mail.outbox = []
-        
+
         # Create a negative decision
         decision = Decision.objects.get(review=review)
         decision.go = Decision.Approval.NEEDS_REVISION
@@ -186,7 +186,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         remind_supervisor_reviewers()
         # No more reminders after decision is made
         self.assertEquals(len(mail.outbox), expected_emails)
-        
+
     def test_negative_supervisor_decision(self):
         review = start_review(self.proposal)
         self.assertEqual(review.go, None)
@@ -210,7 +210,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)
 
         review = self.proposal.latest_review()
-        self.assertEqual(review.stage, review.Stages.ASSIGNMENT)        
+        self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
 
 
 class AssignmentTestCase(BaseReviewTestCase):
