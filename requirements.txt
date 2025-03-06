@@ -71,7 +71,7 @@ defusedxml==0.7.1
     #   pysaml2
 deprecated==1.2.15
     # via cdh-django-core
-django==4.2.17
+django==4.2.20
     # via
     #   -r requirements.in
     #   cdh-django-core
