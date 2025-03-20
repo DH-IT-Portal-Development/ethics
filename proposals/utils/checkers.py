@@ -419,6 +419,11 @@ class StudyChecker(
                 study=self.study,
                 parent=self.current_parent,
             ),
+            RegistrationChecker(
+                self.stepper,
+                study=self.study,
+                parent=self.current_parent,
+            ),
             DesignChecker(
                 self.stepper,
                 study=self.study,
@@ -597,13 +602,13 @@ class StudyAttachmentsChecker(
 
         return []
 
-
-class ParticipantsChecker(
+class BaseStudyFormChecker(
     ModelFormChecker,
 ):
-    title = _("Deelnemers")
-    form_class = study_forms.StudyForm
-
+    """
+    A base checker class for some of the forms handling Studies
+    """
+    
     def __init__(
         self,
         *args,
@@ -617,6 +622,16 @@ class ParticipantsChecker(
     ):
         self.stepper.items.append(self.make_stepper_item())
         return []
+
+    def get_form_object(self):
+        return self.study
+    
+
+class ParticipantsChecker(
+    BaseStudyFormChecker,
+):
+    title = _("Deelnemers")
+    form_class = study_forms.StudyForm
 
     def get_url(
         self,
@@ -628,32 +643,15 @@ class ParticipantsChecker(
             ],
         )
 
-    def get_form_object(self):
-        return self.study
-
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs["proposal"] = self.proposal
         return kwargs
 
 
-class PersonalDataChecker(ModelFormChecker):
+class PersonalDataChecker(BaseStudyFormChecker):
     title = _("Persoonsgegevens")
     form_class = study_forms.PersonalDataForm
-
-    def __init__(
-        self,
-        *args,
-        **kwargs,
-    ):
-        self.study = kwargs.pop("study")
-        return super().__init__(*args, **kwargs)
-
-    def check(
-        self,
-    ):
-        self.stepper.items.append(self.make_stepper_item())
-        return []
 
     def get_url(
         self,
@@ -664,33 +662,28 @@ class PersonalDataChecker(ModelFormChecker):
                 self.study.pk,
             ],
         )
+    
+class RegistrationChecker(
+    BaseStudyFormChecker,
+):
+    title = _("Registratie")
+    form_class = study_forms.RegistrationForm
 
-    def get_form_object(self):
-        return self.study
-
+    def get_url(
+        self,
+    ):
+        return reverse(
+            "studies:registration",
+            args=[
+                self.study.pk,
+            ],
+        )
 
 class DesignChecker(
-    ModelFormChecker,
+    BaseStudyFormChecker,
 ):
     title = _("Ontwerp")
     form_class = study_forms.StudyDesignForm
-
-    def __init__(
-        self,
-        *args,
-        **kwargs,
-    ):
-        self.study = kwargs.pop("study")
-        return super().__init__(*args, **kwargs)
-
-    def check(
-        self,
-    ):
-        self.stepper.items.append(self.make_stepper_item())
-        return []
-
-    def get_form_object(self):
-        return self.study
 
     def get_url(
         self,
@@ -704,24 +697,10 @@ class DesignChecker(
 
 
 class StudyEndChecker(
-    ModelFormChecker,
+    BaseStudyFormChecker,
 ):
     title = _("Traject overzicht")
     form_class = study_forms.StudyEndForm
-
-    def __init__(
-        self,
-        *args,
-        **kwargs,
-    ):
-        self.study = kwargs.pop("study")
-        return super().__init__(*args, **kwargs)
-
-    def check(
-        self,
-    ):
-        self.stepper.items.append(self.make_stepper_item())
-        return []
 
     def get_url(
         self,
@@ -732,10 +711,6 @@ class StudyEndChecker(
                 self.study.pk,
             ],
         )
-
-    def get_form_object(self):
-        return self.study
-
 
 class InterventionChecker(
     UpdateOrCreateChecker,

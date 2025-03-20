@@ -91,10 +91,6 @@ class TaskForm(SoftValidationMixin, ConditionalModelForm):
             "description",
             "repeats",
             "duration",
-            # "registrations",
-            # "registrations_details",
-            # "registration_kinds",
-            # "registration_kinds_details",
             "feedback",
             "feedback_details",
         ]
@@ -110,8 +106,6 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
             ),
         }
         widgets = {
-            # "registrations": BootstrapCheckboxSelectMultiple(),
-            # "registration_kinds": BootstrapCheckboxSelectMultiple(),
             "feedback": BootstrapRadioSelect(choices=YES_NO),
         }
 
@@ -123,9 +117,6 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
         """
         Check for conditional requirements:
         - Check if feedback has been filled out
-        - If a registration which needs a kind has been checked, make sure the kind is selected
-        - If a registration which needs details has been checked, make sure the details are filled
-        - If a registration_kind which needs details has been checked, make sure the details are filled
         - If feedback is set to yes, make sure feedback_details has been filled out
         """
         cleaned_data = super(TaskForm, self).clean()
@@ -135,22 +126,9 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
             "name",
             "description",
             "duration",
-            #'registrations',
         )
 
         self.check_empty(cleaned_data, "feedback")
-        # self.check_dependency_multiple(
-        #     cleaned_data, "registrations", "needs_kind", "registration_kinds"
-        # )
-        # self.check_dependency_multiple(
-        #     cleaned_data, "registrations", "needs_details", "registrations_details"
-        # )
-        # self.check_dependency_multiple(
-        #     cleaned_data,
-        #     "registration_kinds",
-        #     "needs_details",
-        #     "registration_kinds_details",
-        # )
         self.check_dependency(cleaned_data, "feedback", "feedback_details")
 
 

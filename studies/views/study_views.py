@@ -18,6 +18,7 @@ from ..forms import (
     StudyForm,
     StudyDesignForm,
     PersonalDataForm,
+    RegistrationForm,
     StudyEndForm,
     StudyUpdateAttachmentsForm,
 )
@@ -87,6 +88,25 @@ class StudyPersonalData(
 
     def get_next_url(self):
         """Continue to the Study design overview"""
+        return reverse("studies:registration", args=(self.object.pk,))
+
+class StudyRegistration(
+    StudyMixin,
+    AllowErrorsOnBackbuttonMixin,
+    UpdateView,
+):
+    model = Study
+    form_class = RegistrationForm
+    template_name = "studies/study_registration.html"
+
+    def get_back_url(self):
+        """
+        Return to the Study overview
+        """
+        return reverse("studies:personal_data", args=(self.object.pk,))
+
+    def get_next_url(self):
+        """Continue to the Study design overview"""
         return reverse("studies:design", args=(self.object.pk,))
 
 
@@ -133,7 +153,7 @@ class StudyDesign(
         """
         Return to the Study overview
         """
-        return reverse("studies:personal_data", args=(self.kwargs["pk"],))
+        return reverse("studies:registration", args=(self.kwargs["pk"],))
 
 
 class StudyEnd(
