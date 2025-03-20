@@ -7,7 +7,7 @@
         "description_nl": "EEG (electroencephalography)",
         "description_en": "EEG (electroencephalography)"
     },
-    "model": "tasks.registrationkind",
+    "model": "studies.registrationkind",
     "pk": 1
 },
 {
@@ -18,7 +18,7 @@
         "description_nl": "fMRI (functional magnetic resonance imaging)",
         "description_en": "fMRI (functional magnetic resonance imaging)"
     },
-    "model": "tasks.registrationkind",
+    "model": "studies.registrationkind",
     "pk": 2
 },
 {
@@ -29,7 +29,7 @@
         "description_nl": "fNIRS (functional near-infrared spectroscopy)",
         "description_en": "fNIRS (functional near-infrared spectroscopy)"
     },
-    "model": "tasks.registrationkind",
+    "model": "studies.registrationkind",
     "pk": 3
 },
 {
@@ -40,7 +40,7 @@
         "description_nl": "fEMG (facial electromyography)",
         "description_en": "fEMG (facial electromyography)"
     },
-    "model": "tasks.registrationkind",
+    "model": "studies.registrationkind",
     "pk": 4
 },
 {
@@ -51,7 +51,7 @@
         "description_nl": "EMA (electromagnetic articulography)",
         "description_en": "EMA (electromagnetic articulography)"
     },
-    "model": "tasks.registrationkind",
+    "model": "studies.registrationkind",
     "pk": 5
 },
 {
@@ -62,7 +62,7 @@
         "description_nl": "huidgeleiding (SC/GSR)",
         "description_en": "skin conductance (SC/GSR)"
     },
-    "model": "tasks.registrationkind",
+    "model": "studies.registrationkind",
     "pk": 6
 },
 {
@@ -73,7 +73,7 @@
         "description_nl": "ECG (electrocardiography)",
         "description_en": "ECG (electrocardiography)"
     },
-    "model": "tasks.registrationkind",
+    "model": "studies.registrationkind",
     "pk": 7
 },
 {
@@ -84,7 +84,7 @@
         "description_nl": "BVP (blood volume pulse)",
         "description_en": "BVP (blood volume pulse)"
     },
-    "model": "tasks.registrationkind",
+    "model": "studies.registrationkind",
     "pk": 8
 },
 {
@@ -95,7 +95,7 @@
         "description_nl": "ademhaling",
         "description_en": "breathing"
     },
-    "model": "tasks.registrationkind",
+    "model": "studies.registrationkind",
     "pk": 9
 },
 {
@@ -106,7 +106,7 @@
         "description_nl": "vingertemperatuur",
         "description_en": "finger temperature"
     },
-    "model": "tasks.registrationkind",
+    "model": "studies.registrationkind",
     "pk": 10
 },
 {
@@ -117,7 +117,7 @@
         "description_nl": "anders, namelijk",
         "description_en": "otherwise, viz."
     },
-    "model": "tasks.registrationkind",
+    "model": "studies.registrationkind",
     "pk": 11
 }
 ]

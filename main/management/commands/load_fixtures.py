@@ -20,7 +20,6 @@ fixture_dirs = {
     "main": list_fixtures_in_dir("main/fixtures/"),
     "proposals": list_fixtures_in_dir("proposals/fixtures/"),
     "studies": list_fixtures_in_dir("studies/fixtures/"),
-    "tasks": list_fixtures_in_dir("tasks/fixtures/"),
     "observations": list_fixtures_in_dir("observations/fixtures/"),
 }
 

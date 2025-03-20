@@ -6,23 +6,6 @@ from main.models import SettingModel
 from main.validators import validate_pdf_or_doc
 from studies.models import Study
 
-
-class Registration(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-    requires_review = models.BooleanField(default=False)
-    is_recording = models.BooleanField(
-        default=False,
-    )
-
-    class Meta:
-        ordering = ["order"]
-
-    def __str__(self):
-        return self.description
-
-
 class Observation(SettingModel):
     # This is used internally to provide backwards compatibility with the old
     # version of this model. All old fields are still used if this is 1.
@@ -132,20 +115,6 @@ om deze observatie te mogen uitvoeren?"
         blank=True,
         validators=[validate_pdf_or_doc],
     )
-
-    registrations = models.ManyToManyField(
-        Registration,
-        help_text=_(
-            "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop "
-            "bij het gebruik van de term 'anoniem' of 'geanonimiseerd' in "
-            "je documenten voor deelnemers. Voor meer informatie, zie het UU Data Privacy Handbook over "
-            "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/pseudonymisation-anonymisation.html#pseudonymisation-anonymisation' target='_blank'>"
-            "anonimiseren en pseudonimiseren</a>."
-        ),
-        verbose_name=_("Hoe wordt het gedrag geregistreerd?"),
-    )
-
-    registrations_details = models.CharField(_("Namelijk"), max_length=200, blank=True)
 
     # Legacy, only used in v1
     days = models.PositiveIntegerField(

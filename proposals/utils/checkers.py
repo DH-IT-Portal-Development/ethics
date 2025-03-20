@@ -8,9 +8,7 @@ from studies import forms as study_forms
 from studies.models import Study
 from interventions import forms as intervention_forms
 from observations import forms as observation_forms
-from observations.models import Registration as observation_registration
 from tasks import forms as tasks_forms
-from tasks.models import Registration as task_registration
 
 from tasks.views import task_views, session_views
 from tasks.models import Task, Session

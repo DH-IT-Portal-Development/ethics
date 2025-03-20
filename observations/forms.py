@@ -58,9 +58,6 @@ class ObservationForm(SoftValidationMixin, ConditionalModelForm):
             "needs_approval_header",
             "needs_approval",
             "approval_institution",
-            "registrations_header",
-            "registrations",
-            "registrations_details",
         ]
         widgets = {
             "setting": BootstrapCheckboxSelectMultiple(),
@@ -71,7 +68,6 @@ class ObservationForm(SoftValidationMixin, ConditionalModelForm):
             "is_nonpublic_space": BootstrapRadioSelect(choices=YES_NO),
             "has_advanced_consent": BootstrapRadioSelect(choices=YES_NO),
             "needs_approval": BootstrapRadioSelect(choices=YES_NO),
-            "registrations": BootstrapCheckboxSelectMultiple(),
         }
 
     def __init__(self, *args, **kwargs):
@@ -125,9 +121,6 @@ class ObservationForm(SoftValidationMixin, ConditionalModelForm):
                 cleaned_data, "supervision", "leader_has_coc", f1_value=False
             )
         self.check_dependency(cleaned_data, "needs_approval", "approval_institution")
-        self.check_dependency_multiple(
-            cleaned_data, "registrations", "needs_details", "registrations_details"
-        )
 
         self.check_dependency(cleaned_data, "is_anonymous", "is_anonymous_details")
         self.check_dependency(

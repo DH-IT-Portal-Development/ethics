@@ -131,7 +131,38 @@ class Recruitment(models.Model):
 
     def __str__(self):
         return self.description
+    
+class Registration(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    is_local = models.BooleanField(default=False)
+    needs_details = models.BooleanField(default=False)
+    needs_kind = models.BooleanField(default=False)
+    requires_review = models.BooleanField(default=False)
+    age_min = models.PositiveIntegerField(blank=True, null=True)
+    is_recording = models.BooleanField(
+        default=False,
+    )
 
+    class Meta:
+        ordering = ["order"]
+        verbose_name = _("Vastlegging gedrag")
+
+    def __str__(self):
+        return self.description
+
+class RegistrationKind(models.Model):
+    order = models.PositiveIntegerField(unique=True)
+    description = models.CharField(max_length=200)
+    needs_details = models.BooleanField(default=False)
+    requires_review = models.BooleanField(default=False)
+    registration = models.ForeignKey(Registration, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ["order"]
+
+    def __str__(self):
+        return self.description
 
 class Study(models.Model):
     """
@@ -285,6 +316,40 @@ cadeautje."
     hierarchy_details = models.TextField(
         verbose_name=_("Zo ja, wat is de relatie (bijv. docent-student)?"),
         max_length=500,
+        blank=True,
+    )
+
+    # Fields with regards to registration
+
+    registrations = models.ManyToManyField(
+        Registration,
+        verbose_name=_(
+            "Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?"
+        ),
+        help_text=_(
+            "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop "
+            "bij het gebruik van de term 'anoniem' of 'geanonimiseerd' in "
+            "je documenten voor deelnemers. Voor meer informatie, zie het UU Data Privacy Handbook over "
+            "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/pseudonymisation-anonymisation.html#pseudonymisation-anonymisation' target='_blank'>"
+            "anonimiseren en pseudonimiseren</a>."
+        ),
+    )
+
+    registrations_details = models.CharField(
+        _("Namelijk"),
+        max_length=200,
+        blank=True,
+    )
+
+    registration_kinds = models.ManyToManyField(
+        RegistrationKind,
+        verbose_name=_("Kies het soort meting"),
+        blank=True,
+    )
+
+    registration_kinds_details = models.CharField(
+        _("Namelijk"),
+        max_length=200,
         blank=True,
     )
 
@@ -447,40 +512,40 @@ cadeautje."
     def has_no_sessions(self):
         return self.has_sessions and self.sessions_number == 0
 
-    def has_recordings(
-        self,
-    ):
-        """
-        A function that checks whether a study features audio or video
-        registration.
-        """
-        from observations.models import Registration as obs_registration
-        from tasks.models import Registration as task_registration
+    # def has_recordings(
+    #     self,
+    # ):
+    #     """
+    #     A function that checks whether a study features audio or video
+    #     registration.
+    #     """
+    #     from observations.models import Registration as obs_registration
+    #     from tasks.models import Registration as task_registration
 
-        has_recordings = False
-        observation = self.get_observation()
-        if observation:
-            # gather all AV observation_registrations
-            recordings_observation = obs_registration.objects.filter(
-                is_recording=True,
-            )
-            # check if there is an overlap between these two QS's
-            if observation.registrations.all() & recordings_observation:
-                has_recordings = True
-        sessions = self.get_sessions()
-        # Skip the second check if we already have recordings
-        if not has_recordings and sessions:
-            # gather all the tasks
-            all_tasks = Task.objects.filter(
-                session__study=self,
-            )
-            # gather all AV task_registrations
-            recordings_sessions = task_registration.objects.filter(
-                is_recording=True,
-            )
-            if all_tasks.filter(registrations__in=recordings_sessions):
-                has_recordings = True
-        return has_recordings
+    #     has_recordings = False
+    #     observation = self.get_observation()
+    #     if observation:
+    #         # gather all AV observation_registrations
+    #         recordings_observation = obs_registration.objects.filter(
+    #             is_recording=True,
+    #         )
+    #         # check if there is an overlap between these two QS's
+    #         if observation.registrations.all() & recordings_observation:
+    #             has_recordings = True
+    #     sessions = self.get_sessions()
+    #     # Skip the second check if we already have recordings
+    #     if not has_recordings and sessions:
+    #         # gather all the tasks
+    #         all_tasks = Task.objects.filter(
+    #             session__study=self,
+    #         )
+    #         # gather all AV task_registrations
+    #         recordings_sessions = task_registration.objects.filter(
+    #             is_recording=True,
+    #         )
+    #         if all_tasks.filter(registrations__in=recordings_sessions):
+    #             has_recordings = True
+    #     return has_recordings
 
     def research_settings_contains_schools(self):
         """
