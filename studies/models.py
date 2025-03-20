@@ -324,7 +324,7 @@ cadeautje."
     registrations = models.ManyToManyField(
         Registration,
         verbose_name=_(
-            "Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?"
+            "Hoe wordt het gedrag of de toestand van de deelnemer bij deze studie vastgelegd?"
         ),
         help_text=_(
             "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop "
