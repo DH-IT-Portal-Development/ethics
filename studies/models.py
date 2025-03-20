@@ -512,40 +512,12 @@ cadeautje."
     def has_no_sessions(self):
         return self.has_sessions and self.sessions_number == 0
 
-    # def has_recordings(
-    #     self,
-    # ):
-    #     """
-    #     A function that checks whether a study features audio or video
-    #     registration.
-    #     """
-    #     from observations.models import Registration as obs_registration
-    #     from tasks.models import Registration as task_registration
-
-    #     has_recordings = False
-    #     observation = self.get_observation()
-    #     if observation:
-    #         # gather all AV observation_registrations
-    #         recordings_observation = obs_registration.objects.filter(
-    #             is_recording=True,
-    #         )
-    #         # check if there is an overlap between these two QS's
-    #         if observation.registrations.all() & recordings_observation:
-    #             has_recordings = True
-    #     sessions = self.get_sessions()
-    #     # Skip the second check if we already have recordings
-    #     if not has_recordings and sessions:
-    #         # gather all the tasks
-    #         all_tasks = Task.objects.filter(
-    #             session__study=self,
-    #         )
-    #         # gather all AV task_registrations
-    #         recordings_sessions = task_registration.objects.filter(
-    #             is_recording=True,
-    #         )
-    #         if all_tasks.filter(registrations__in=recordings_sessions):
-    #             has_recordings = True
-    #     return has_recordings
+    def has_recordings(
+        self,
+    ):
+        if self.registrations.filter(is_recording = True):
+            return True
+        return False
 
     def research_settings_contains_schools(self):
         """
