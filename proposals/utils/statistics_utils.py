@@ -5,9 +5,8 @@ from django.contrib.auth.models import Group
 from django.db.models import QuerySet
 
 from proposals.models import Proposal, Relation
-from observations.models import Registration as ObsReg
+from studies.models import Registration
 from reviews.models import Review
-from tasks.models import Registration as TasReg
 
 
 #
@@ -182,10 +181,7 @@ def get_average_turnaround_time(review_data: QuerySet) -> float:
 
 def get_registrations_for_proposal(proposal: Proposal) -> dict:
     """Looks at all studies, and returns a dict of studies and the
-    registration kinds of said studies. Observation studies code the
-    registration in the following format: 'obs: {description}, {details}'.
-    Session registrations are coded as 's{session id},t{task id}: description},
-    {details}?'.
+    registration kinds of said studies.
 
     :param proposal: Proposal, the proposal to get the registrations for
     :return: all registrations, properly ordered and coded
@@ -194,38 +190,11 @@ def get_registrations_for_proposal(proposal: Proposal) -> dict:
     registrations = defaultdict(list)
 
     for study in proposal.study_set.all():
-        if study.get_observation():
-            for registration in study.observation.registrations.all():
-                if registration in ObsReg.objects.filter(needs_details=True):
-                    registrations[study.order].append(
-                        "obs: {}: {}".format(
-                            registration.description,
-                            study.observation.registrations_details,
-                        )
-                    )
-                else:
-                    registrations[study.order].append(
-                        "obs: {}".format(registration.description)
-                    )
-        if study.get_sessions():
-            for session in study.session_set.all():
-                for task in session.task_set.all():
-                    for registration in task.registrations.all():
-                        if registration in TasReg.objects.filter(needs_details=True):
-                            registrations[study.order].append(
-                                "s{}t{}: {}: {}".format(
-                                    session.order,
-                                    task.order,
-                                    registration.description,
-                                    task.registrations_details,
-                                )
-                            )
-                        else:
-                            registrations[study.order].append(
-                                "s{}t{}: {}".format(
-                                    session.order, task.order, registration.description
-                                )
-                            )
+        for registration in study.registrations.all():
+            if registration in Registration.objects.filter(needs_details=True):
+                registrations[study.order].append(f"{registration.description}: {study.registration_details}")
+            else:
+                registrations[study.order].append(f"{registration.description}")
 
     return registrations
 
