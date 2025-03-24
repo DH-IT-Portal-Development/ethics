@@ -35,7 +35,6 @@
                     <td>{{ observation.is_nonpublic_space|yesno:_("ja, nee") }}</td>
                     <td>{{ observation.needs_approval|yesno:_("ja, nee") }}</td>
                     {% if observation.needs_approval %}<td>{{ observation.approval_institution }}</td>{% endif %}
-                    <td>{{ observation.registrations.all|create_unordered_html_list }}</td>
                 </tr>
             </tbody>
         </table>
