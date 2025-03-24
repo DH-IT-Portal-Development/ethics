@@ -529,7 +529,7 @@ def auto_review(proposal: Proposal):
                     "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen."
                 )
             )
-        
+
         for registration in study.registrations.all():
             if registration.requires_review:
                 if registration.age_min:

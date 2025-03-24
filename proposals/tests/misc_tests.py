@@ -256,8 +256,6 @@ class ProposalTestCase(MiscProposalTestCase):
             set([r.description for r in registrations]),
         )
 
-        
-
 
 class ProposalsViewTestCase(MiscProposalTestCase):
     def setUp(self):

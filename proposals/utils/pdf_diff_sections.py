@@ -192,7 +192,7 @@ class PersonalDataSection(BaseSection):
             rows.remove("traits_details")
 
         return rows
-    
+
 
 class RegistrationSection(BaseSection):
     """This class receives a proposal.study object

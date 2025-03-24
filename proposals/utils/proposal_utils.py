@@ -277,7 +277,6 @@ def check_local_facilities(proposal):
                     if setting.is_local:
                         add_to_result(setting)
 
-
     return result
 
 

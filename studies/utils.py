@@ -79,8 +79,6 @@ def copy_study_to_proposal(proposal, original_study):
     sessions = original_study.get_sessions()
     registrations = original_study.registrations.all()
     registration_kinds = original_study.registration_kinds.all()
-    
-
 
     s = Study.objects.get(pk=original_study.pk)
     s.pk = None

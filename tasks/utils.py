@@ -9,6 +9,7 @@ def copy_task_to_session(session, original_task):
     t.session = session
     t.save()
 
+
 def copy_session_to_study(study, original_session):
     from tasks.models import Session
 

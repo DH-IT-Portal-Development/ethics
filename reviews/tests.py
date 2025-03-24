@@ -330,7 +330,9 @@ class AutoReviewTests(BaseReviewTestCase):
             Registration.objects.filter(pk=6)
         )  # psychofysiological measurements
 
-        reasons = auto_review(self.proposal,)
+        reasons = auto_review(
+            self.proposal,
+        )
         self.assertEqual(len(reasons), 1)
 
 
