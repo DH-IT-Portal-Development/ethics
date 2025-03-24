@@ -24,6 +24,7 @@
                         <th>{% trans "Referentienummer" %}</th>
                         <th>{% trans "Datum ingediend" %}</th>
                         <th>{% trans "Gewenste einddatum" %}</th>
+                        <th>{% trans "Datum beslissing"%}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,6 +50,7 @@
                             {% else %}
                                 <td data-order="{{ decision.review.date_should_end|date:'c' }}">{{ decision.review.date_should_end|date:"j M Y" }}</td>
                             {% endif %}
+                            <td>{{ decision.date_decision|date:"j M Y"}}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
