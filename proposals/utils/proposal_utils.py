@@ -259,6 +259,10 @@ def check_local_facilities(proposal):
             if recruitment.is_local:
                 add_to_result(recruitment)
 
+        for registration in study.registrations.all():
+            if registration.is_local:
+                add_to_result(registration)
+
         if study.get_intervention():
             for setting in study.intervention.setting.all():
                 if setting.is_local:
@@ -273,10 +277,6 @@ def check_local_facilities(proposal):
                     if setting.is_local:
                         add_to_result(setting)
 
-                for task in session.task_set.all():
-                    for registration in task.registrations.all():
-                        if registration.is_local:
-                            add_to_result(registration)
 
     return result
 
