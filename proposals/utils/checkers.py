@@ -602,13 +602,14 @@ class StudyAttachmentsChecker(
 
         return []
 
+
 class BaseStudyFormChecker(
     ModelFormChecker,
 ):
     """
     A base checker class for some of the forms handling Studies
     """
-    
+
     def __init__(
         self,
         *args,
@@ -625,7 +626,7 @@ class BaseStudyFormChecker(
 
     def get_form_object(self):
         return self.study
-    
+
 
 class ParticipantsChecker(
     BaseStudyFormChecker,
@@ -662,7 +663,8 @@ class PersonalDataChecker(BaseStudyFormChecker):
                 self.study.pk,
             ],
         )
-    
+
+
 class RegistrationChecker(
     BaseStudyFormChecker,
 ):
@@ -678,6 +680,7 @@ class RegistrationChecker(
                 self.study.pk,
             ],
         )
+
 
 class DesignChecker(
     BaseStudyFormChecker,
@@ -711,6 +714,7 @@ class StudyEndChecker(
                 self.study.pk,
             ],
         )
+
 
 class InterventionChecker(
     UpdateOrCreateChecker,

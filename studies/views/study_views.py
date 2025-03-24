@@ -90,6 +90,7 @@ class StudyPersonalData(
         """Continue to the Study design overview"""
         return reverse("studies:registration", args=(self.object.pk,))
 
+
 class StudyRegistration(
     StudyMixin,
     AllowErrorsOnBackbuttonMixin,

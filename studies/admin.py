@@ -1,6 +1,15 @@
 from django.contrib import admin
 
-from .models import Registration, RegistrationKind, AgeGroup, Trait, Compensation, Recruitment, SpecialDetail
+from .models import (
+    Registration,
+    RegistrationKind,
+    AgeGroup,
+    Trait,
+    Compensation,
+    Recruitment,
+    SpecialDetail,
+)
+
 
 @admin.register(Registration)
 class RegistrationAdmin(admin.ModelAdmin):
@@ -29,6 +38,7 @@ class RegistrationKindAdmin(admin.ModelAdmin):
     )
     list_display_links = ("description",)
     ordering = ["registration", "order"]
+
 
 @admin.register(AgeGroup)
 class AgeGroupAdmin(admin.ModelAdmin):

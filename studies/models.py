@@ -131,7 +131,8 @@ class Recruitment(models.Model):
 
     def __str__(self):
         return self.description
-    
+
+
 class Registration(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -151,6 +152,7 @@ class Registration(models.Model):
     def __str__(self):
         return self.description
 
+
 class RegistrationKind(models.Model):
     order = models.PositiveIntegerField(unique=True)
     description = models.CharField(max_length=200)
@@ -163,6 +165,7 @@ class RegistrationKind(models.Model):
 
     def __str__(self):
         return self.description
+
 
 class Study(models.Model):
     """
@@ -515,7 +518,7 @@ cadeautje."
     def has_recordings(
         self,
     ):
-        if self.registrations.filter(is_recording = True):
+        if self.registrations.filter(is_recording=True):
             return True
         return False
 

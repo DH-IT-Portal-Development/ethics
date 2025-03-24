@@ -1,6 +1,15 @@
 from modeltranslation.translator import register, TranslationOptions
 
-from .models import Registration, RegistrationKind, AgeGroup, Compensation, Recruitment, SpecialDetail, Trait
+from .models import (
+    Registration,
+    RegistrationKind,
+    AgeGroup,
+    Compensation,
+    Recruitment,
+    SpecialDetail,
+    Trait,
+)
+
 
 @register(Registration)
 class RegistrationTranslationOptions(TranslationOptions):

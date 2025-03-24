@@ -245,11 +245,12 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
             cleaned_data, "traits", "needs_details", "traits_details"
         )
 
+
 class RegistrationForm(
     SoftValidationMixin,
     ConditionalModelForm,
 ):
-    
+
     class Meta:
         model = Study
         fields = [
@@ -284,6 +285,7 @@ class RegistrationForm(
             "needs_details",
             "registration_kinds_details",
         )
+
 
 class StudyDesignForm(
     SoftValidationMixin,

@@ -6,6 +6,7 @@ from main.models import SettingModel
 from main.validators import validate_pdf_or_doc
 from studies.models import Study
 
+
 class Observation(SettingModel):
     # This is used internally to provide backwards compatibility with the old
     # version of this model. All old fields are still used if this is 1.
