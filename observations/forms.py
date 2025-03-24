@@ -30,10 +30,6 @@ class ObservationForm(SoftValidationMixin, ConditionalModelForm):
         header=_("Toestemming"), header_element="h4"
     )
 
-    registrations_header = TemplatedFormTextField(
-        header=_("Registratie gedrag"), header_element="h4"
-    )
-
     class Meta:
         model = Observation
         fields = [
@@ -97,7 +93,6 @@ class ObservationForm(SoftValidationMixin, ConditionalModelForm):
         """
         Check for conditional requirements:
         - If a setting which needs details or supervision has been checked, make sure the details are filled
-        - If a registration which needs details has been checked, make sure the details are filled
         - For all default anonymity questions, if true, the appropiate explain fields need to be filled
         """
         cleaned_data = super(ObservationForm, self).clean()
