@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from django.urls import reverse
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import gettext_lazy as _
@@ -67,7 +67,10 @@ class WmoCreate(
 
     def get_proposal(self):
         """Retrieves the Proposal from the pk kwarg"""
-        return Proposal.objects.get(pk=self.kwargs["pk"])
+        try:
+            return Proposal.objects.get(pk=self.kwargs["pk"])
+        except Proposal.DoesNotExist:
+            raise Http404
 
 
 class WmoUpdate(

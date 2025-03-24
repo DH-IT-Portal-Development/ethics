@@ -237,7 +237,7 @@ msgstr ""
 "of research data, during and after the research."
 
 #: attachments/kinds.py:256 attachments/models.py:42
-#: proposals/views/attachment_views.py:55
+#: proposals/views/attachment_views.py:56
 msgid "Overig bestand"
 msgstr "Other file type"
 
@@ -1334,7 +1334,6 @@ msgstr "Observational study"
 #: proposals/templates/proposals/proposal_update_dmp.html:26
 #: studies/templates/studies/study_update_attachments.html:7
 #: studies/templates/studies/study_update_attachments.html:11
-#: studies/templates/studies/study_update_attachments.html:24
 msgid "Formulieren aanpassen"
 msgstr "Change forms"
 
@@ -3205,7 +3204,6 @@ msgstr ""
 "applications."
 
 #: proposals/templates/proposals/proposal_update_date_start.html:13
-#: proposals/templates/proposals/proposal_update_date_start.html:29
 msgid "Startdatum aanpassen"
 msgstr "Edit start date"
 
@@ -3223,6 +3221,11 @@ msgstr ""
 "already been concluded, the new start date will not be displayed in the PDF. "
 "If you would like the PDF to be generated with the new start date, please "
 "reach out to "
+
+#: proposals/templates/proposals/proposal_update_date_start.html:29
+#: studies/templates/studies/study_update_attachments.html:24
+msgid "Wijzigingen opslaan"
+msgstr "Save changes"
 
 #: proposals/templates/proposals/proposal_update_dmp.html:15
 #, python-format
@@ -3678,7 +3681,7 @@ msgstr "Session {}, task {}"
 msgid "Sessie {} overzicht"
 msgstr "Session {} overview"
 
-#: proposals/views/attachment_views.py:334
+#: proposals/views/attachment_views.py:338
 #: reviews/templates/reviews/review_attachments.html:94
 msgid "Geen bestanden gevonden"
 msgstr "No documents found"
@@ -3749,15 +3752,15 @@ msgstr "Consent saved"
 msgid "WMO-gegevens opgeslagen"
 msgstr "WMO information saved"
 
-#: proposals/views/wmo_views.py:78
+#: proposals/views/wmo_views.py:81
 msgid "WMO-gegevens bewerkt"
 msgstr "WMO information edited"
 
-#: proposals/views/wmo_views.py:175
+#: proposals/views/wmo_views.py:178
 msgid "Je onderzoek hoeft niet te worden beoordeeld door de METC."
 msgstr "Your application does not require assessment by an METC."
 
-#: proposals/views/wmo_views.py:182
+#: proposals/views/wmo_views.py:185
 msgid ""
 "Neem contact op met <a href=\"mailto:fetc-gw@uu.nl\">de secretaris van de "
 "FETC-GW</a> om de twijfels weg te nemen."
@@ -3765,7 +3768,7 @@ msgstr ""
 "Contact <a href=\"mailto:fetc-gw@uu.nl\">The secretary of FETC-H</a> to make "
 "sure."
 
-#: proposals/views/wmo_views.py:189
+#: proposals/views/wmo_views.py:192
 msgid "Je onderzoek zal moeten worden beoordeeld door de METC."
 msgstr "Your application will require assessment by an METC."
 
@@ -5756,6 +5759,6 @@ msgstr "Session deleted"
 msgid "Taak bewerkt"
 msgstr "Task edited"
 
-#: tasks/views/task_views.py:81
+#: tasks/views/task_views.py:84
 msgid "Taak verwijderd"
 msgstr "Task deleted"
