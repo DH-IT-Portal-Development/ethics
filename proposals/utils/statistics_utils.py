@@ -192,7 +192,9 @@ def get_registrations_for_proposal(proposal: Proposal) -> dict:
     for study in proposal.study_set.all():
         for registration in study.registrations.all():
             if registration in Registration.objects.filter(needs_details=True):
-                registrations[study.order].append(f"{registration.description}: {study.registration_details}")
+                registrations[study.order].append(
+                    f"{registration.description}: {study.registration_details}"
+                )
             else:
                 registrations[study.order].append(f"{registration.description}")
 
