@@ -116,9 +116,9 @@
     "pk": 8,
     "fields": {
         "order": 8,
-        "description": "logdata van digitaal gedrag (bijv. usability tests)",
-        "description_nl": "logdata van digitaal gedrag (bijv. usability tests)",
-        "description_en": "log data of digital behavior (e.g. usability tests)",
+        "description": "logdata",
+        "description_nl": "logdata",
+        "description_en": "log data",
         "is_local": false,
         "needs_details": false,
         "needs_kind": false,
@@ -132,6 +132,22 @@
     "pk": 9,
     "fields": {
         "order": 9,
+        "description": "notities",
+        "description_nl": "notities",
+        "description_en": "notes",
+        "is_local": false,
+        "needs_details": false,
+        "needs_kind": false,
+        "requires_review": false,
+        "age_min": null,
+        "is_recording": false
+    }
+},
+{
+    "model": "studies.registration",
+    "pk": 10,
+    "fields": {
+        "order": 10,
         "description": "anders, namelijk",
         "description_nl": "anders, namelijk",
         "description_en": "otherwise, viz.",
