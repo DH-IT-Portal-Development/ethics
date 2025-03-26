@@ -338,9 +338,9 @@ cadeautje."
         ),
     )
 
-    registrations_details = models.CharField(
+    registrations_details = models.TextField(
         _("Namelijk"),
-        max_length=200,
+        max_length=1500,
         blank=True,
     )
 
@@ -350,9 +350,9 @@ cadeautje."
         blank=True,
     )
 
-    registration_kinds_details = models.CharField(
+    registration_kinds_details = models.TextField(
         _("Namelijk"),
-        max_length=200,
+        max_length=1500,
         blank=True,
     )
 
