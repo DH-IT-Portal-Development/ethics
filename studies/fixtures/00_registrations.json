@@ -148,6 +148,22 @@
     "pk": 10,
     "fields": {
         "order": 10,
+        "description": "geen registratie",
+        "description_nl": "geen registratie",
+        "description_en": "no registration",
+        "is_local": false,
+        "needs_details": false,
+        "needs_kind": false,
+        "requires_review": true,
+        "age_min": null,
+        "is_recording": false
+    }
+},
+{
+    "model": "studies.registration",
+    "pk": 11,
+    "fields": {
+        "order": 11,
         "description": "anders, namelijk",
         "description_nl": "anders, namelijk",
         "description_en": "otherwise, viz.",

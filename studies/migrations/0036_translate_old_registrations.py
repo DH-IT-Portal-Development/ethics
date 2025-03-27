@@ -97,11 +97,12 @@ def migrate_old_registrations(apps, schema_editor):
                     # of the task models, which (almost) correspond
                     task_registrations_pk = [reg.pk for reg in task.registrations.all()]
 
-                    # Since we've added a new "notes" registration to the study 
-                    # registration, the new "other" registration has a pk of 10 
-                    # whereas the task's old "other" registration had a pk of 9, 
-                    # so we'll just update that manually here
-                    task_registrations_pk = [10 if pk == 9 else pk for pk in task_registrations_pk]
+                    # Since we've added a new "notes" and "no registration" 
+                    # registrations to the study registration, the new "other" 
+                    # registration now has a pk of 11 whereas the task's old 
+                    # "other" registration had a pk of 9, so we'll just 
+                    # update that manually here
+                    task_registrations_pk = [11 if pk == 9 else pk for pk in task_registrations_pk]
 
                     task_registration_kinds_pk = [reg_kind.pk for reg_kind in task.registrations.all()]
                     study.registrations.add(*task_registrations_pk)
