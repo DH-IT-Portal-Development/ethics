@@ -1,6 +1,6 @@
 """
-This file contains code for validating a proposal's sessions and tasks by using 
-all the relevant forms and their validation code. The proposal validation is 
+This file contains code for validating a proposal's sessions and tasks by using
+all the relevant forms and their validation code. The proposal validation is
 mostly handled by the Stepper, except for sessions and tasks.
 """
 
