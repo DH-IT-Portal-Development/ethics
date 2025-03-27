@@ -6,8 +6,11 @@ from django.core.management import call_command
 # Custom migration to load new fixtures for Registration model
 
 
-def load_fixtures(apps, schema_editor):
-    call_command("load_fixtures")
+registration_fixtures = '00_registrations', "01_registrationkinds"
+
+def load_registration_fixtures(apps, schema_editor):
+    for fixture in registration_fixtures:
+        call_command('loaddata', fixture, app_label='studies') 
 
 
 class Migration(migrations.Migration):
@@ -17,5 +20,5 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.RunPython(load_fixtures, migrations.RunPython.noop),
+        migrations.RunPython(load_registration_fixtures, migrations.RunPython.noop),
     ]
