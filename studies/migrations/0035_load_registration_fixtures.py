@@ -6,11 +6,12 @@ from django.core.management import call_command
 # Custom migration to load new fixtures for Registration model
 
 
-registration_fixtures = '00_registrations', "01_registrationkinds"
+registration_fixtures = "00_registrations", "01_registrationkinds"
+
 
 def load_registration_fixtures(apps, schema_editor):
     for fixture in registration_fixtures:
-        call_command('loaddata', fixture, app_label='studies') 
+        call_command("loaddata", fixture, app_label="studies")
 
 
 class Migration(migrations.Migration):
