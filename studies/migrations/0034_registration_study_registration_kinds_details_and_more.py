@@ -42,12 +42,16 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="study",
             name="registration_kinds_details",
-            field=models.TextField(blank=True, max_length=1500, verbose_name="Namelijk"),
+            field=models.TextField(
+                blank=True, max_length=1500, verbose_name="Namelijk"
+            ),
         ),
         migrations.AddField(
             model_name="study",
             name="registrations_details",
-            field=models.TextField(blank=True, max_length=1500, verbose_name="Namelijk"),
+            field=models.TextField(
+                blank=True, max_length=1500, verbose_name="Namelijk"
+            ),
         ),
         migrations.CreateModel(
             name="RegistrationKind",

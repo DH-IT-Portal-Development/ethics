@@ -2,7 +2,7 @@
 
 from django.db import migrations
 
-# This custom data_migration attempts to translate the old registration data, 
+# This custom data_migration attempts to translate the old registration data,
 # namely:
 # - Observation.registratons etc.
 # - Intervention.measurement
@@ -10,9 +10,9 @@ from django.db import migrations
 # to the new system. This system is based on how we asked about registrations
 # for tasks.
 
-#this dictionary translates observation registration pk's to the new registration pk's
-#The keys are the pk's of observation registrations and the values of the corresponding
-#new style registrations.
+# this dictionary translates observation registration pk's to the new registration pk's
+# The keys are the pk's of observation registrations and the values of the corresponding
+# new style registrations.
 
 observation_registration_translation = {
     # logdata
@@ -30,6 +30,7 @@ observation_registration_translation = {
 # let's just shorten that funny variable name
 ort = observation_registration_translation
 
+
 def migrate_old_registrations(apps, schema_editor):
     """
     A function to get the info from the old registration models into the new
@@ -37,7 +38,7 @@ def migrate_old_registrations(apps, schema_editor):
 
     - Observations:
       Observation registrations need to be translated, as these registration
-      models were similar but different. Therefore we have the 
+      models were similar but different. Therefore we have the
       observation_registration_translation dict.
     - Interventions:
       Interventions just had a textfield explaining the registration. So we
@@ -45,13 +46,13 @@ def migrate_old_registrations(apps, schema_editor):
       study.registrations_details
     - Tasks:
       The new registrations models are ported from tasks, so these will map
-      (almost) perfectly. However if multiple tasks have "other", we have to 
-      join the registrations_details from different tasks together ... 
+      (almost) perfectly. However if multiple tasks have "other", we have to
+      join the registrations_details from different tasks together ...
     """
     Study = apps.get_model("studies", "Study")
     for study in Study.objects.all():
 
-        # We sadly can't use the get methods here, so we have to 
+        # We sadly can't use the get methods here, so we have to
         # reinvent them
         intervention = None
         if study.has_intervention and hasattr(study, "intervention"):
@@ -65,16 +66,16 @@ def migrate_old_registrations(apps, schema_editor):
         if study.has_sessions:
             sessions = study.session_set.all()
 
-        # Create an empty dict for registrations_details and 
+        # Create an empty dict for registrations_details and
         # registrations_kinds_details, as these can potentially
-        # come from multiple sources, and we possibly have to stitch this 
+        # come from multiple sources, and we possibly have to stitch this
         # together
         reg_details_dict = {}
         reg_kinds_details_dict = {}
 
-        # to translate intervention to the new system, we simply choose 'other' 
-        # as the registration type, and put the contents of the 
-        # Intervention.measurement into registrations_details 
+        # to translate intervention to the new system, we simply choose 'other'
+        # as the registration type, and put the contents of the
+        # Intervention.measurement into registrations_details
         if intervention:
             # 10 is the pk of the 'other' registration
             study.registrations.add(10)
@@ -83,13 +84,13 @@ def migrate_old_registrations(apps, schema_editor):
 
         if observation:
             for reg in observation.registrations.all():
-                #add the translated observation registration to the study
+                # add the translated observation registration to the study
                 study.registrations.add(ort[reg.pk])
-                #if the registration is "other", also add registrations_details
+                # if the registration is "other", also add registrations_details
                 if reg.pk == 5:
                     reg_details_dict["Observation"] = observation.registrations_details
                 study.save()
-        
+
         if sessions:
             for session in sessions:
                 for task in session.task_set.all():
@@ -97,30 +98,38 @@ def migrate_old_registrations(apps, schema_editor):
                     # of the task models, which (almost) correspond
                     task_registrations_pk = [reg.pk for reg in task.registrations.all()]
 
-                    # Since we've added a new "notes" and "no registration" 
-                    # registrations to the study registration, the new "other" 
-                    # registration now has a pk of 11 whereas the task's old 
-                    # "other" registration had a pk of 9, so we'll just 
+                    # Since we've added a new "notes" and "no registration"
+                    # registrations to the study registration, the new "other"
+                    # registration now has a pk of 11 whereas the task's old
+                    # "other" registration had a pk of 9, so we'll just
                     # update that manually here
-                    task_registrations_pk = [11 if pk == 9 else pk for pk in task_registrations_pk]
+                    task_registrations_pk = [
+                        11 if pk == 9 else pk for pk in task_registrations_pk
+                    ]
 
-                    task_registration_kinds_pk = [reg_kind.pk for reg_kind in task.registrations.all()]
+                    task_registration_kinds_pk = [
+                        reg_kind.pk for reg_kind in task.registrations.all()
+                    ]
                     study.registrations.add(*task_registrations_pk)
                     study.registration_kinds.add(*task_registration_kinds_pk)
                     if task.registrations_details:
-                        reg_details_dict[f"Session {session.order}, Task {task.order}"] = task.registrations_details
+                        reg_details_dict[
+                            f"Session {session.order}, Task {task.order}"
+                        ] = task.registrations_details
                     if task.registration_kinds_details:
-                        reg_kinds_details_dict[f"Session {session.order}, Task {task.order}"] = task.registration_kinds_details
+                        reg_kinds_details_dict[
+                            f"Session {session.order}, Task {task.order}"
+                        ] = task.registration_kinds_details
                     study.save()
-        
+
         def process_details_dict(details_dict):
             """
-            Now we just have to manage the two dicts for 
-            registrations_details and registration_kinds_details. If these only 
-            have one source, we can just put the contents into the 
-            study.registrations_details, we also do this if all the values are 
-            the same (let's say from multiple tasks with the same 
-            registrations_details). Otherwise we stitch them together best 
+            Now we just have to manage the two dicts for
+            registrations_details and registration_kinds_details. If these only
+            have one source, we can just put the contents into the
+            study.registrations_details, we also do this if all the values are
+            the same (let's say from multiple tasks with the same
+            registrations_details). Otherwise we stitch them together best
             we can using the dict's keys to make some sense of this long string
             """
             if len(details_dict) == 0:
@@ -135,15 +144,13 @@ def migrate_old_registrations(apps, schema_editor):
             else:
                 details_string = []
                 for marker, details in details_dict.items():
-                    details_string.append(
-                        f"{marker}: {details};"
-                    )
+                    details_string.append(f"{marker}: {details};")
                 return " ".join(details_string)
-        
+
         study_registrations_details = process_details_dict(reg_details_dict)
         if study_registrations_details:
             study.registrations_details = study_registrations_details
-        
+
         study_registration_kinds_details = process_details_dict(reg_kinds_details_dict)
         if study_registration_kinds_details:
             study.registration_kinds_details = study_registration_kinds_details

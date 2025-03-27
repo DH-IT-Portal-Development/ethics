@@ -3,10 +3,12 @@
 from django.db import migrations
 from django.core.management import call_command
 
-#Custom migration to load new fixtures for Registration model
+# Custom migration to load new fixtures for Registration model
+
 
 def load_fixtures(apps, schema_editor):
     call_command("load_fixtures")
+
 
 class Migration(migrations.Migration):
 
