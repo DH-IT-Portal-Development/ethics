@@ -1,5 +1,4 @@
 Django>=4.2,<5.0
-django-auth-ldap
 django-braces
 django-modeltranslation
 django-extensions

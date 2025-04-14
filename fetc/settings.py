@@ -102,7 +102,6 @@ LOGIN_REDIRECT_URL = "/"
 # Determines what login options are displayed on the landing page. NOTE: this
 # does not determine which login screen is actually used as default when using
 # a LoginRequiredMixin or similar.
-# Django login is also used by LDAP auth
 # SHOW_SAML_LOGIN is set to true if saml_settings.py is present and loaded
 SHOW_DJANGO_LOGIN = True
 SHOW_SAML_LOGIN = False
@@ -175,11 +174,6 @@ try:
     from .constants import *
 except ImportError:
     raise ImproperlyConfigured("constants.py is missing!")
-
-try:
-    from .ldap_settings import *
-except ImportError:
-    print("Proceeding without LDAP settings")
 
 try:
     from .saml_settings import *
