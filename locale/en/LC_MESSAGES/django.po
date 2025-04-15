@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-16 16:36+0100\n"
+"POT-Creation-Date: 2025-03-20 11:26+0100\n"
 "PO-Revision-Date: 2025-01-15 12:46+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -2041,8 +2041,8 @@ msgid "Amendement"
 msgstr "Amendment"
 
 #: proposals/models.py:715 reviews/api/views.py:41 reviews/api/views.py:332
-#: reviews/templates/reviews/committee_members_workload.html:35
-#: reviews/templates/reviews/committee_members_workload.html:76
+#: reviews/templates/reviews/committee_members_workload.html:36
+#: reviews/templates/reviews/committee_members_workload.html:78
 #: reviews/templates/reviews/review_detail_sidebar.html:108
 msgid "Revisie"
 msgstr "Revision"
@@ -4062,39 +4062,43 @@ msgid "Lopende reviews"
 msgstr "Ongoing reviews"
 
 #: reviews/templates/reviews/committee_members_workload.html:22
-#: reviews/templates/reviews/committee_members_workload.html:72
+#: reviews/templates/reviews/committee_members_workload.html:74
 #: reviews/templates/reviews/review_table.html:8
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:68
 msgid "Reviewer"
 msgstr "Reviewer"
 
-#: reviews/templates/reviews/committee_members_workload.html:37
-#: reviews/templates/reviews/committee_members_workload.html:74
+#: reviews/templates/reviews/committee_members_workload.html:27
+msgid "Datum beslissing"
+msgstr "Decision date"
+
+#: reviews/templates/reviews/committee_members_workload.html:38
+#: reviews/templates/reviews/committee_members_workload.html:76
 msgid "Korte route"
 msgstr "Short route"
 
-#: reviews/templates/reviews/committee_members_workload.html:39
+#: reviews/templates/reviews/committee_members_workload.html:40
 msgid "Lange route"
 msgstr "Long route"
 
-#: reviews/templates/reviews/committee_members_workload.html:57
+#: reviews/templates/reviews/committee_members_workload.html:59
 msgid "Werkverdeling overzicht van afgelopen periode"
 msgstr "Workload overview of past period"
 
-#: reviews/templates/reviews/committee_members_workload.html:58
+#: reviews/templates/reviews/committee_members_workload.html:60
 msgid ""
 "Vul hieronder een start- en einddatum in voor de periode van dit overzicht."
 msgstr "Select a start- and enddate for the period of the overview below."
 
-#: reviews/templates/reviews/committee_members_workload.html:67
+#: reviews/templates/reviews/committee_members_workload.html:69
 msgid "Periode toepassen"
 msgstr "Apply period"
 
-#: reviews/templates/reviews/committee_members_workload.html:73
+#: reviews/templates/reviews/committee_members_workload.html:75
 msgid "Totaal"
 msgstr "Total"
 
-#: reviews/templates/reviews/committee_members_workload.html:75
+#: reviews/templates/reviews/committee_members_workload.html:77
 msgid "Lange Route"
 msgstr "Long route"
 
