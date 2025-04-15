@@ -1,7 +1,6 @@
 # -*- encoding: utf-8 -*-
 from urllib.parse import urlparse, urlunparse
 
-import ldap
 import os
 
 from braces.views import LoginRequiredMixin, GroupRequiredMixin, UserPassesTestMixin
@@ -36,14 +35,6 @@ from observations.models import Observation
 from proposals.models import Proposal
 from reviews.models import Review
 from tasks.models import Session, Task
-
-try:
-    # This will trigger an exception if LDAP is not configured
-    from fetc.ldap_settings import *
-
-    LDAP_CONFIGURED = True
-except ImportError:
-    LDAP_CONFIGURED = False
 
 
 ################
@@ -239,136 +230,6 @@ def check_requires(request):
     ).values_list("id", flat=True)
     result = bool(set(required_values).intersection(values))
     return JsonResponse({"result": result})
-
-
-def establish_ldap_connection():
-    # We set up a custom LDAP connection here, separate from the Django auth one
-    if not LDAP_CONFIGURED:
-        return None
-    try:
-        # If LDAP is configured, we open a connection and bind our credentials to it.
-        ldap_connection = ldap.initialize(AUTH_LDAP_SERVER_URI)
-        ldap_connection.bind(AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD)
-        return ldap_connection
-    except ldap.LDAPError:
-        # Raised if there was a problem connecting to LDAP
-        return None
-
-
-def user_search(query, page):
-    """
-    This function searches through users for a given query. Page 1 will return registered users, or if there are none,
-    LDAP users. Page 2 will return LDAP users.
-
-    The double behaviour of page 1 has to be this weird because of the way Select2 handles empty pages.
-
-    If a page returns LDAP users, or there is no LDAP connection available, we will mark the page as the last page.
-    """
-    # We begin with an empty list
-    users = []
-
-    # If we have a wildcard or an empty query, we just show all users
-    if query == "*" or query == "":
-        users = format_user_info(User.objects.all())
-    elif page == "1":
-        # Otherwise we search through the users with a given query
-        data = User.objects.filter(
-            Q(username__icontains=query)
-            | Q(first_name__icontains=query)
-            | Q(last_name__icontains=query)
-        )
-        users = format_user_info(data)
-
-    # We need results from the LDAP if either, this is page 2, or page 1 has no results for now
-    # We put this in a variable because we're going to reuse this later on
-    ldap_results_needed = page == "2" or len(users) == 0
-
-    # Attempt to establish LDAP connection
-    ldap_connection = establish_ldap_connection()
-
-    # If we can use the LDAP and we need LDAP results
-    if ldap_connection and ldap_results_needed:
-        # Start the LDAP search
-        ldap_query = escape_ldap_input(query)
-        msgid = ldap_connection.search(
-            "ou=People,dc=uu,dc=nl",
-            ldap.SCOPE_SUBTREE,
-            filterstr="(|(humAchternaam=*{}*)(uid=*{}*)(givenName=*{}*)(displayName=*{}*))".format(
-                ldap_query, ldap_query, ldap_query, ldap_query
-            ),
-        )
-        # Get results and loop over them
-        for _, data in ldap_connection.result(msgid)[1]:
-            # Add them to the users, with a ldap_ prefix in the ID so we can distinguish this when processing the form
-            users.append(
-                {
-                    "id": "ldap_" + data.get("uid")[0].decode("utf-8"),
-                    "text": "{}: {}".format(
-                        data.get("uid")[0].decode("utf-8"),
-                        data.get("displayName")[0].decode("utf-8"),
-                    ),
-                }
-            )
-
-    # Paging-more should be true if there are no LDAP results included in this page, the LDAP is available and
-    # the query is not a wildcard
-    paging_more = not ldap_results_needed and ldap_connection and query != "*"
-
-    # Unbind the ldap connection after we are done with it
-    if ldap_connection:
-        ldap_connection.unbind()
-
-    # Return a formatted dict with the results
-    return {"results": users, "pagination": {"more": paging_more}}
-
-
-def escape_ldap_input(string):
-    """
-    This function escapes the user input such that all values are seen as text, not filter instructions.
-
-    TL;DR: prevents LDAP injection
-
-    :param string string: The to be escaped string
-    :return string: The escaped string
-    """
-    escape_vals = {
-        "\\": r"\5c",
-        r"(": r"\28",
-        r"|": r"\7c",
-        r"<": r"\3c",
-        r"/": r"\2f",
-        r")": r"\29",
-        r"=": r"\3d",
-        r"~": r"\7e",
-        r"&": r"\26",
-        r">": r"\3e",
-        r"*": r"\2a",
-    }
-
-    for x, y in escape_vals.items():
-        string = string.replace(x, y)
-
-    return string.strip(" ")
-
-
-def format_user_info(lst):
-    """This will format a user object into a displayable format"""
-    return [
-        {"id": x.pk, "text": "{}: {}".format(x.username, x.get_full_name())}
-        for x in lst
-    ]
-
-
-class UserSearchView(LoginRequiredMixin, generic.View):
-    def render_to_response(self, context, *args, **kwargs):
-        return JsonResponse(context, *args, **kwargs)
-
-    def get(self, *args, **kwargs):
-        query = self.request.GET.get("q")
-        page = self.request.GET.get("page")
-        context = user_search(query, page)
-
-        return self.render_to_response(context)
 
 
 ################
