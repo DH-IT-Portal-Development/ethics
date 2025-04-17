@@ -1,6 +1,6 @@
 [
 {
-    "model": "tasks.registration",
+    "model": "studies.registration",
     "pk": 1,
     "fields": {
         "order": 1,
@@ -16,7 +16,7 @@
     }
 },
 {
-    "model": "tasks.registration",
+    "model": "studies.registration",
     "pk": 2,
     "fields": {
         "order": 2,
@@ -32,7 +32,7 @@
     }
 },
 {
-    "model": "tasks.registration",
+    "model": "studies.registration",
     "pk": 3,
     "fields": {
         "order": 3,
@@ -48,7 +48,7 @@
     }
 },
 {
-    "model": "tasks.registration",
+    "model": "studies.registration",
     "pk": 4,
     "fields": {
         "order": 4,
@@ -64,7 +64,7 @@
     }
 },
 {
-    "model": "tasks.registration",
+    "model": "studies.registration",
     "pk": 5,
     "fields": {
         "order": 5,
@@ -80,7 +80,7 @@
     }
 },
 {
-    "model": "tasks.registration",
+    "model": "studies.registration",
     "pk": 6,
     "fields": {
         "order": 6,
@@ -96,7 +96,7 @@
     }
 },
 {
-    "model": "tasks.registration",
+    "model": "studies.registration",
     "pk": 7,
     "fields": {
         "order": 7,
@@ -112,13 +112,13 @@
     }
 },
 {
-    "model": "tasks.registration",
+    "model": "studies.registration",
     "pk": 8,
     "fields": {
         "order": 8,
-        "description": "logdata van digitaal gedrag (bijv. usability tests)",
-        "description_nl": "logdata van digitaal gedrag (bijv. usability tests)",
-        "description_en": "log data of digital behavior (e.g. usability tests)",
+        "description": "logdata",
+        "description_nl": "logdata",
+        "description_en": "log data",
         "is_local": false,
         "needs_details": false,
         "needs_kind": false,
@@ -128,10 +128,42 @@
     }
 },
 {
-    "model": "tasks.registration",
+    "model": "studies.registration",
     "pk": 9,
     "fields": {
         "order": 9,
+        "description": "notities",
+        "description_nl": "notities",
+        "description_en": "notes",
+        "is_local": false,
+        "needs_details": false,
+        "needs_kind": false,
+        "requires_review": false,
+        "age_min": null,
+        "is_recording": false
+    }
+},
+{
+    "model": "studies.registration",
+    "pk": 10,
+    "fields": {
+        "order": 10,
+        "description": "geen registratie",
+        "description_nl": "geen registratie",
+        "description_en": "no registration",
+        "is_local": false,
+        "needs_details": false,
+        "needs_kind": false,
+        "requires_review": true,
+        "age_min": null,
+        "is_recording": false
+    }
+},
+{
+    "model": "studies.registration",
+    "pk": 11,
+    "fields": {
+        "order": 11,
         "description": "anders, namelijk",
         "description_nl": "anders, namelijk",
         "description_en": "otherwise, viz.",
