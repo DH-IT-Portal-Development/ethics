@@ -7,6 +7,11 @@ Installation of this Django project is quite straightforward:
 OS Dependencies
 ---------------
 
+It is assumed you have:
+
++ python3 (Server runs on python 3.9)
++ python3-dev (python3.9-dev when using python3.9, relevant when running more then one python version on your computer)
+
 Your host OS needs some packages, below is a list of debian packages:
 
 + libtiff5-dev
@@ -67,6 +72,16 @@ Run the database migrations:
 .. note::
     This will also create a sqlitedb file if it's missing
 
+Setting up the fixtures.
+There are two ways to do this.
+
+.. code:: shell
+
+    python manage.py load_fixtures
+
+If this works you can skip to create a superuser.
+If for some reason the command does not work you can try the old way to load the fixtures
+
 Load all fixtures using ``python manage.py loaddata``.
 
 This command requires you to specify each fixture file, as it doesn't auto detect them.
@@ -116,6 +131,17 @@ You can set this is the admin interface.
    * A regular user, which you should use to create new studies
    * A user to use as a supervisor (some researchers need a supervisor)
    * A user to use as secretary
+
+.. tip::
+   In a non-production enviroment it is advised to change the email in the settings.py file to
+        # E-mail settings
+        EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+        EMAIL_FILE_PATH = "email/"
+        # EMAIL_HOST = "localhost"
+        # EMAIL_PORT = 2525
+        EMAIL_FROM = "T.D.Mees@uu.nl"
+        EMAIL_LOCAL_STAFF = "T.D.Mees@uu.nl"
+   Emails will now be send to a local directory instead of generating an error.
 
 You are ready to roll!
 ----------------------
