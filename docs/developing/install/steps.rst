@@ -77,7 +77,8 @@ Setting up the fixtures
 -----------------------
 There are two ways to do this.
 
-:1. run the load_fixtures commando:
+1. run the load_fixtures commando
+=================================
 
 .. code:: shell
 
@@ -85,7 +86,9 @@ There are two ways to do this.
 
 If this works you can skip step "load fixtures the old way" and go to create a superuser.
 
-:2. load fixtures the old way:
+2. load fixtures the old way
+============================
+
 If for some reason the command load_fixtures does not work you can try the old way to load the fixtures
 
 Load all fixtures using ``python manage.py loaddata``.
