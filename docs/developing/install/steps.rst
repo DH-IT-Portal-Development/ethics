@@ -72,15 +72,21 @@ Run the database migrations:
 .. note::
     This will also create a sqlitedb file if it's missing
 
-Setting up the fixtures.
+
+Setting up the fixtures
+-----------------------
 There are two ways to do this.
+
+:1. run the load_fixtures commando:
 
 .. code:: shell
 
     python manage.py load_fixtures
 
-If this works you can skip to create a superuser.
-If for some reason the command does not work you can try the old way to load the fixtures
+If this works you can skip step "load fixtures the old way" and go to create a superuser.
+
+:2. load fixtures the old way:
+If for some reason the command load_fixtures does not work you can try the old way to load the fixtures
 
 Load all fixtures using ``python manage.py loaddata``.
 
@@ -98,7 +104,7 @@ For example:
 
         find $directory -type f -wholename "*fixtures/*.json" -print0 | xargs -0 python manage.py loaddata
 
-Create a superuser
+:Create a superuser:
 
 .. code:: shell
 
@@ -132,16 +138,25 @@ You can set this is the admin interface.
    * A user to use as a supervisor (some researchers need a supervisor)
    * A user to use as secretary
 
-.. tip::
-   In a non-production enviroment it is advised to change the email in the settings.py file to
-        # E-mail settings
-        EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-        EMAIL_FILE_PATH = "email/"
-        # EMAIL_HOST = "localhost"
-        # EMAIL_PORT = 2525
-        EMAIL_FROM = "T.D.Mees@uu.nl"
-        EMAIL_LOCAL_STAFF = "T.D.Mees@uu.nl"
-   Emails will now be send to a local directory instead of generating an error.
+
+Setting up email
+-----------------
+
+In a non-production enviroment it is advised to change the email settings.
+That can be done by creating an **debug_settings.py** file (if it doesn´t exist yet).
+this file is en extension of settings.py where settings go that are to be included in .gitignore.
+in debug_settings.py you need the following settings
+
+.. note::
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+
+    EMAIL_FILE_PATH = "email/"
+
+    EMAIL_FROM = "T.D.Mees@uu.nl"
+
+    EMAIL_LOCAL_STAFF = "T.D.Mees@uu.nl"
+
+Emails will now be send to a local directory instead of generating an error.
 
 You are ready to roll!
 ----------------------
