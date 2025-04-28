@@ -23,8 +23,13 @@ htmlcov/
 .idea
 
 ### Docs ###
-docs/_build/doctrees/**
-*.doctree
+#docs/_build/
+#docs/_build/html/**
+docs/_build/
+docs/reference/
+#mogelijk docs/reference
+#docs/_build/doctrees/**
+#*.doctree
 
 ### Virtualenv ###
 .python-version
