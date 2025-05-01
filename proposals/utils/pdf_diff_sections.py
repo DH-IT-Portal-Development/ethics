@@ -39,7 +39,7 @@ class GeneralSection(BaseSection):
     """
 
     section_title = _("Algemene informatie over de aanvraag")
-    row_fields = [
+    row_fields = [  # this order is the order in which the pdf generates
         "is_pre_approved",
         "relation",
         "supervisor",
@@ -59,8 +59,8 @@ class GeneralSection(BaseSection):
         "pre_approval_institute",
         "pre_approval_pdf",
         "pre_assessment_pdf",
-        "self_assessment",
         "summary",
+        "self_assessment",
     ]
 
     def get_row_fields(self):
