@@ -5505,7 +5505,7 @@ msgstr ""
 
 #: tasks/models.py:127
 msgid "Hoe vaak wordt deze taak uitgevoerd binnen deze sessie (per deelnemer)?"
-msgstr "How many times will this task be performed within this session?"
+msgstr "How many times will this task be performed within this session? (per participant)"
 
 #: tasks/models.py:129
 msgid ""
