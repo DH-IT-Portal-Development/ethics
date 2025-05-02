@@ -320,15 +320,9 @@ class RowValue:
         self.proposal = proposal
 
     def get_field_value(self):
-        from ..models import Relation
-        from studies.models import Study, Compensation
+        from studies.models import Study
 
-        #het gaat hier goed, values worden gevonden en aan field gelinkt
         value = getattr(self.obj, self.field)
-        OB = self.obj
-        DS = self.field
-        print (OB, DS, value)
-
         User = get_user_model()
 
         if value in ("Y", "N", "?"):
@@ -341,7 +335,7 @@ class RowValue:
             return value
         elif isinstance(value, User):
             return self.handle_user(value)
-        elif isinstance(value, Relation) or isinstance(value, Compensation):
+        elif hasattr(value, "description"):
             return value.description
         elif value.__class__.__name__ == "ManyRelatedManager":
             if value.all().model == User:
@@ -352,8 +346,6 @@ class RowValue:
             return self.handle_field_file(value)
         elif callable(value):
             return value()
-        elif value is not None:
-            return value
         return _("Onbekend")
 
     def handle_user(self, user):
