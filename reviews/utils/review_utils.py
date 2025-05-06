@@ -211,7 +211,7 @@ def start_assignment_phase(proposal):
         # They should be regarded as CC'd, but the currently used mail API
         # doesn't support that. When moving to cdh.core mailing this should
         # be corrected
-        applicants_emails = [applicant.email for applicant in proposal.applicants.all()]
+        applicants_emails = [applicant.email for applicant in proposal.applicants.all()] #ik moet hier wezen
         send_mail(
             subject,
             msg_plain,
