@@ -2827,8 +2827,7 @@ msgstr "Register a new application"
 #: proposals/templates/proposals/proposal_start.html:25
 #: proposals/templates/proposals/proposal_start_practice.html:25
 msgid ""
-"Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
-"fetc-h/\">FEtC-H</a>."
+"Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/\">FETC-GW</a>."
 msgstr ""
 "The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
 "fetc-h/\"  target=\"_blank\">FEtC-H </a>."
@@ -2880,10 +2879,10 @@ msgstr ""
 #: proposals/templates/proposals/proposal_start_practice.html:57
 #: proposals/templates/proposals/study_start.html:72
 msgid ""
-"<u>Bijvoorbeeld</u>: ouders van leerlingen 15 jaar en jonger, docenten, een "
+"Bijvoorbeeld: ouders van leerlingen 15 jaar en jonger, docenten, een "
 "controlegroep en een experimentele groep die verschillende taken krijgen."
 msgstr ""
-"<u>For example</u>: parents of children up to 15 years of age, teachers, or "
+"For example: parents of children up to 15 years of age, teachers, or "
 "an experimental and control group that receive significantly different tasks."
 
 #: proposals/templates/proposals/proposal_start.html:63
