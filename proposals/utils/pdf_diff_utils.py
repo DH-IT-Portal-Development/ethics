@@ -335,7 +335,7 @@ class RowValue:
             return value
         elif isinstance(value, User):
             return self.handle_user(value)
-        elif hasattr(value, "description"):
+        elif hasattr(value, "description"): # Display minor related models eg. Relation, Compensation or StudentContext correctly
             return value.description
         elif value.__class__.__name__ == "ManyRelatedManager":
             if value.all().model == User:
