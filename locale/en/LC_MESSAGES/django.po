@@ -5447,8 +5447,8 @@ msgstr ""
 "sessions have been added yet."
 
 #: tasks/models.py:12
-msgid "Hoe vaak wordt deze sessie uitgevoerd (per deelnemer)?"
-msgstr "How many times will this session be performed? (per participant)"
+msgid "Hoe vaak wordt per deelnemer deze sessie uitgevoerd?"
+msgstr "How many times per participant will this session be performed?"
 
 #: tasks/models.py:14
 msgid ""
@@ -5504,8 +5504,8 @@ msgstr ""
 "plans."
 
 #: tasks/models.py:127
-msgid "Hoe vaak wordt deze taak uitgevoerd binnen deze sessie (per deelnemer)?"
-msgstr "How many times will this task be performed within this session? (per participant)"
+msgid "Hoe vaak voert een deelnemer deze taak uit binnen deze sessie?"
+msgstr "How often will a participant perform this task within this session?"
 
 #: tasks/models.py:129
 msgid ""

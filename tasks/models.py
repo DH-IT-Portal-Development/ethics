@@ -9,7 +9,7 @@ class Session(SettingModel):
     order = models.PositiveIntegerField()
 
     repeats = models.PositiveBigIntegerField(
-        _("Hoe vaak wordt deze sessie uitgevoerd (per deelnemer)?"),
+        _("Hoe vaak wordt per deelnemer deze sessie uitgevoerd?"),
         help_text=_(
             "Het kan zijn dat een zelfde sessie meerdere keren moet worden \
                     uitgevoerd. Als dit het geval is, kun je dat hier \
@@ -124,7 +124,7 @@ class Task(models.Model):
     )
 
     repeats = models.PositiveBigIntegerField(
-        _("Hoe vaak wordt deze taak uitgevoerd binnen deze sessie (per deelnemer)?"),
+        _("Hoe vaak voert een deelnemer deze taak uit binnen deze sessie?"),
         help_text=_(
             "Het kan zijn dat eenzelfde taak meerdere keren moet worden \
                     uitgevoerd binnen een sessie. Als dit het geval is, kun je dat hier \
