@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-20 11:26+0100\n"
+"POT-Creation-Date: 2025-05-01 13:46+0200\n"
 "PO-Revision-Date: 2025-01-15 12:46+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -236,8 +236,8 @@ msgstr ""
 "researchproject taking place. The DMP outlines every aspect of the handling "
 "of research data, during and after the research."
 
-#: attachments/kinds.py:256 attachments/models.py:42
-#: proposals/views/attachment_views.py:56
+#: attachments/kinds.py:256 attachments/models.py:41
+#: proposals/views/attachment_views.py:58
 msgid "Overig bestand"
 msgstr "Other file type"
 
@@ -245,32 +245,32 @@ msgstr "Other file type"
 msgid "Voor alle overige soorten bestanden"
 msgstr "For miscellaneous files"
 
-#: attachments/models.py:24 proposals/utils/pdf_diff_utils.py:271
+#: attachments/models.py:23 proposals/utils/pdf_diff_utils.py:271
 #: reviews/templates/reviews/review_attachments.html:77
 msgid "Bestand"
 msgstr "File"
 
-#: attachments/models.py:25
+#: attachments/models.py:24
 msgid "Selecteer hier het bestand om toe te voegen."
 msgstr "Choose your file to upload"
 
-#: attachments/models.py:43
+#: attachments/models.py:42
 msgid "Type bestand"
 msgstr "File type"
 
-#: attachments/models.py:46
+#: attachments/models.py:45
 msgid "Omschrijving"
 msgstr "Description"
 
-#: attachments/models.py:50
+#: attachments/models.py:49
 msgid "Geef je bestand een omschrijvende naam, het liefst maar enkele woorden."
 msgstr "Use a few words to briefly describe your document"
 
-#: attachments/models.py:54
+#: attachments/models.py:53
 msgid "Opmerkingen"
 msgstr "Comments"
 
-#: attachments/models.py:58
+#: attachments/models.py:57
 msgid ""
 "Geef hier optioneel je motivatie om dit bestand toe te voegen en waar je het "
 "voor gaat gebruiken tijdens je onderzoek. Eventuele opmerkingen voor de FETC "
@@ -282,8 +282,8 @@ msgstr ""
 
 #: attachments/templates/attachments/attachments_list.html:8 faqs/menus.py:17
 #: proposals/templates/proposals/attachments.html:11
-#: proposals/utils/checkers.py:988 proposals/utils/stepper.py:288
-#: proposals/utils/stepper.py:295 proposals/utils/stepper.py:302
+#: proposals/utils/checkers.py:988 proposals/utils/stepper.py:291
+#: proposals/utils/stepper.py:298 proposals/utils/stepper.py:305
 msgid "Documenten"
 msgstr "Documents"
 
@@ -392,11 +392,11 @@ msgstr "FAQ"
 msgid "Frequently Asked Questions"
 msgstr "Frequently Asked Questions"
 
-#: fetc/settings.py:137
+#: fetc/settings.py:136
 msgid "Nederlands"
 msgstr "Dutch"
 
-#: fetc/settings.py:138
+#: fetc/settings.py:137
 msgid "Engels"
 msgstr "English"
 
@@ -505,8 +505,8 @@ msgstr "Intervention saved"
 #: main/forms/conditional_form.py:12 main/forms/conditional_form.py:21
 #: main/forms/conditional_form.py:32 main/forms/conditional_form.py:43
 #: main/forms/conditional_form.py:59 main/forms/mixins.py:87
-#: proposals/forms.py:755 proposals/forms.py:873 studies/forms.py:179
-#: studies/forms.py:225
+#: proposals/forms.py:755 proposals/forms.py:873 studies/forms.py:177
+#: studies/forms.py:223
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
@@ -635,7 +635,7 @@ msgstr "Conclusion"
 msgid "Acties"
 msgstr "Actions"
 
-#: main/templates/auth/user_detail.html:60 reviews/models.py:118
+#: main/templates/auth/user_detail.html:60 reviews/models.py:119
 msgid ", met revisie"
 msgstr ", with revision"
 
@@ -1798,7 +1798,7 @@ msgstr "What is the name of the funded project and what is the project number?"
 
 #: proposals/models.py:295
 msgid ""
-"De titel die je hier opgeeft zal in de formele toestemmingsbrief gebruikt "
+"De titel die je hier opgeeft zal in de formele goedkeuringsbrief gebruikt "
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
@@ -2527,7 +2527,7 @@ msgid "Kopiëren"
 msgstr "Copy"
 
 #: proposals/templates/proposals/proposal_data_management.html:7
-#: proposals/utils/stepper.py:287 proposals/utils/stepper.py:294
+#: proposals/utils/stepper.py:290 proposals/utils/stepper.py:297
 msgid "Datamanagement"
 msgstr "Data management"
 
@@ -3473,8 +3473,8 @@ msgid ""
 msgstr ""
 "Ethical assessment by a Medical Ethical Testing Committee (METC) required?"
 
-#: proposals/utils/checkers.py:69 proposals/utils/stepper.py:284
-#: proposals/utils/stepper.py:293 proposals/utils/stepper.py:300
+#: proposals/utils/checkers.py:69 proposals/utils/stepper.py:287
+#: proposals/utils/stepper.py:296 proposals/utils/stepper.py:303
 msgid "Basisgegevens"
 msgstr "Basic details"
 
@@ -3506,7 +3506,7 @@ msgstr "WMO information missing"
 msgid "WMO applicatie"
 msgstr "WMO application"
 
-#: proposals/utils/checkers.py:320 proposals/utils/stepper.py:286
+#: proposals/utils/checkers.py:320 proposals/utils/stepper.py:289
 msgid "Trajecten"
 msgstr "Trajectories"
 
@@ -3556,8 +3556,8 @@ msgstr "Data management"
 msgid "Vertalingen"
 msgstr "Translations"
 
-#: proposals/utils/checkers.py:1126 proposals/utils/stepper.py:289
-#: proposals/utils/stepper.py:296 proposals/utils/stepper.py:303
+#: proposals/utils/checkers.py:1126 proposals/utils/stepper.py:292
+#: proposals/utils/stepper.py:299 proposals/utils/stepper.py:306
 msgid "Indienen"
 msgstr "Submit"
 
@@ -3624,7 +3624,7 @@ msgstr "Not provided"
 msgid "Uploaddatum"
 msgstr "Date uploaded"
 
-#: proposals/utils/pdf_diff_utils.py:339 reviews/models.py:112
+#: proposals/utils/pdf_diff_utils.py:339 reviews/models.py:113
 msgid "Onbekend"
 msgstr "Unknown"
 
@@ -3657,7 +3657,7 @@ msgstr "FEtC-H: A revised application uses lab facilities"
 msgid "FETC-GW: nieuwe aanvraag gebruikt labfaciliteiten"
 msgstr "FEtC-H: New application uses lab facilities"
 
-#: proposals/utils/stepper.py:285 proposals/utils/stepper.py:301
+#: proposals/utils/stepper.py:288 proposals/utils/stepper.py:304
 msgid "WMO"
 msgstr "WMO"
 
@@ -3681,7 +3681,7 @@ msgstr "Session {}, task {}"
 msgid "Sessie {} overzicht"
 msgstr "Session {} overview"
 
-#: proposals/views/attachment_views.py:338
+#: proposals/views/attachment_views.py:340
 #: reviews/templates/reviews/review_attachments.html:94
 msgid "Geen bestanden gevonden"
 msgstr "No documents found"
@@ -3736,11 +3736,11 @@ msgstr "Application %(title)s created"
 msgid "Aanvraag verwijderd"
 msgstr "Application deleted"
 
-#: proposals/views/proposal_views.py:700
+#: proposals/views/proposal_views.py:709
 msgid "Wijzigingen opgeslagen"
 msgstr "Changes saved"
 
-#: proposals/views/proposal_views.py:812
+#: proposals/views/proposal_views.py:821
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
 
@@ -3922,36 +3922,36 @@ msgstr "Post hoc negative advice by FETC-H"
 msgid "Niet verder in behandeling genomen"
 msgstr "Not to be assessed further"
 
-#: reviews/models.py:32 reviews/models.py:167
+#: reviews/models.py:32 reviews/models.py:168
 #: reviews/templates/reviews/review_table.html:9
 msgid "Beslissing"
 msgstr "Decision"
 
-#: reviews/models.py:124
+#: reviews/models.py:125
 msgid "lange (4-weken) route"
 msgstr "long (4-week) route"
 
-#: reviews/models.py:125
+#: reviews/models.py:126
 msgid "korte (2-weken) route"
 msgstr "short (2-week) route"
 
-#: reviews/models.py:126
+#: reviews/models.py:127
 msgid "nog geen route"
 msgstr "no route assigned"
 
-#: reviews/models.py:162
+#: reviews/models.py:163
 msgid "goedgekeurd"
 msgstr "endorsed"
 
-#: reviews/models.py:163
+#: reviews/models.py:164
 msgid "niet goedgekeurd"
 msgstr "not endorsed"
 
-#: reviews/models.py:164
+#: reviews/models.py:165
 msgid "revisie noodzakelijk"
 msgstr "revision necessary"
 
-#: reviews/models.py:172
+#: reviews/models.py:173
 msgid "Ruimte voor onderbouwing"
 msgstr "Space for substantiation"
 
@@ -4591,49 +4591,49 @@ msgstr "FEtC-H {}: assess as researcher with final responsibility"
 msgid "FETC-GW {}: aanvraag ontvangen"
 msgstr "FEtC-H {}: application received"
 
-#: reviews/utils/review_utils.py:344
+#: reviews/utils/review_utils.py:346
 msgid "FETC-GW {}: nieuwe aanvraag voor voortoetsing"
 msgstr "FEtC-H {}: new application for preliminary assessment"
 
-#: reviews/utils/review_utils.py:365
+#: reviews/utils/review_utils.py:367
 msgid "FETC-GW {}: bevestiging indienen aanvraag voor voortoetsing"
 msgstr ""
 "FEtC-H {}: confirmation of submission of application for preliminary "
 "assessment"
 
-#: reviews/utils/review_utils.py:421
+#: reviews/utils/review_utils.py:423
 msgid "FETC-GW {}: nieuwe aanvraag ingediend"
 msgstr "FEtC-H {}: new application submitted"
 
-#: reviews/utils/review_utils.py:438
+#: reviews/utils/review_utils.py:440
 msgid "FETC-GW {}: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H {}: new decision added"
 
-#: reviews/utils/review_utils.py:483
+#: reviews/utils/review_utils.py:485
 msgid "FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld"
 msgstr "FEtC-H {}: a supervisor has reviewed your application"
 
-#: reviews/utils/review_utils.py:510
+#: reviews/utils/review_utils.py:512
 msgid "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
 msgstr ""
 "The application contains the participation of adults incapable of informed "
 "consent."
 
-#: reviews/utils/review_utils.py:514
+#: reviews/utils/review_utils.py:516
 msgid "De aanvraag bevat het gebruik van misleiding."
 msgstr "The application contains the use of misrepresentation."
 
-#: reviews/utils/review_utils.py:519
+#: reviews/utils/review_utils.py:521
 msgid ""
 "Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)"
 msgstr ""
 "A hierarchal relationship between researcher(s) and participant(s) exists."
 
-#: reviews/utils/review_utils.py:524
+#: reviews/utils/review_utils.py:526
 msgid "Het onderzoek verzamelt bijzondere persoonsgegevens."
 msgstr "This study collects special or sensitive personal details."
 
-#: reviews/utils/review_utils.py:529
+#: reviews/utils/review_utils.py:531
 msgid ""
 "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4641,7 +4641,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils/review_utils.py:539
+#: reviews/utils/review_utils.py:541
 msgid ""
 "De onderzoeker geeft aan dat sommige vragen binnen het onderzoek mogelijk "
 "dermate belastend kunnen zijn dat ze negatieve reacties bij de deelnemers en/"
@@ -4651,7 +4651,7 @@ msgstr ""
 "to the extent that they could result in negative responses from participants "
 "and/or other researchers."
 
-#: reviews/utils/review_utils.py:548
+#: reviews/utils/review_utils.py:550
 msgid ""
 "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid "
 "van de deelnemers tijdens of na het onderzoek."
@@ -4659,7 +4659,7 @@ msgstr ""
 "The applicant notes that there are possible concerns about the safety of "
 "participants during or after the study."
 
-#: reviews/utils/review_utils.py:559
+#: reviews/utils/review_utils.py:561
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4670,7 +4670,7 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:572
+#: reviews/utils/review_utils.py:574
 msgid ""
 "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom "
 "kennisveiligheid."
@@ -4678,7 +4678,7 @@ msgstr ""
 "The applicant notes that there are possible concerns about knowledge "
 "security."
 
-#: reviews/utils/review_utils.py:580
+#: reviews/utils/review_utils.py:582
 msgid ""
 "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid "
 "van de betrokken onderzoekers."
@@ -4686,14 +4686,14 @@ msgstr ""
 "The applicant notes that there are possible concerns about knowledge "
 "security."
 
-#: reviews/utils/review_utils.py:600
+#: reviews/utils/review_utils.py:602
 #, python-brace-format
 msgid "Het onderzoek observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The application contains sessions with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:608
+#: reviews/utils/review_utils.py:610
 msgid ""
 "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met "
 "toestemming na afloop van het onderzoek."
@@ -4701,7 +4701,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective consent."
 
-#: reviews/utils/review_utils.py:614
+#: reviews/utils/review_utils.py:616
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4711,11 +4711,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils/review_utils.py:621
+#: reviews/utils/review_utils.py:623
 msgid "De aanvraag bevat het gebruik van {}"
 msgstr "The application makes use of {}"
 
-#: reviews/utils/review_utils.py:647
+#: reviews/utils/review_utils.py:649
 msgid ""
 "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
 msgstr ""
@@ -4773,23 +4773,23 @@ msgstr ""
 "Does your research make use of (adult) participants <u>incapable</u> of "
 "informed consent?"
 
-#: studies/forms.py:140 studies/forms.py:235
+#: studies/forms.py:138 studies/forms.py:233
 msgid "Je dient minimaal een bijzonder kenmerk te selecteren."
 msgstr "You are required to select at least one special characteristic."
 
-#: studies/forms.py:147 studies/forms.py:242
+#: studies/forms.py:145 studies/forms.py:240
 msgid "Je dient minimaal één type gegevens te selecteren."
 msgstr "You are required to select at least one characteristic."
 
-#: studies/forms.py:163
+#: studies/forms.py:161
 msgid "Leg uit wat de hiërarchische relatie is."
 msgstr "Explain the nature of this hierarchal relationship."
 
-#: studies/forms.py:228
+#: studies/forms.py:226
 msgid "Selecteer een van de opties."
 msgstr "Select on of the available options"
 
-#: studies/forms.py:279
+#: studies/forms.py:277
 msgid "Er is nog geen onderzoekstype geselecteerd."
 msgstr "You have not selected a study type."
 
@@ -5447,8 +5447,8 @@ msgstr ""
 "sessions have been added yet."
 
 #: tasks/models.py:12
-msgid "Hoe vaak wordt deze sessie uitgevoerd?"
-msgstr "How many times will this session be performed?"
+msgid "Hoe vaak wordt per deelnemer deze sessie uitgevoerd?"
+msgstr "How many times per participant will this session be performed?"
 
 #: tasks/models.py:14
 msgid ""
@@ -5504,8 +5504,8 @@ msgstr ""
 "plans."
 
 #: tasks/models.py:127
-msgid "Hoe vaak wordt deze taak uitgevoerd binnen deze sessie?"
-msgstr "How many times will this task be performed within this session?"
+msgid "Hoe vaak voert een deelnemer deze taak uit binnen deze sessie?"
+msgstr "How often will a participant perform this task within this session?"
 
 #: tasks/models.py:129
 msgid ""
