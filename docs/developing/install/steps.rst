@@ -161,6 +161,18 @@ in debug_settings.py you need the following settings
 
 Emails will now be send to a local directory instead of generating an error.
 
+Setting up Translations
+-----------------------
+You only need one command to get the translations working.
+
+.. code:: shell
+
+    python manage.py compilemessages
+
+.. tip::
+
+    If you ever need to work with translations visit the i18n.rst file.
+
 You are ready to roll!
 ----------------------
 
