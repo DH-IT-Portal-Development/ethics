@@ -3343,6 +3343,10 @@ msgstr ""
 "the following pages."
 
 #: proposals/templates/proposals/study_start.html:72
+#, fuzzy
+#| msgid ""
+#| "Bijvoorbeeld: ouders van leerlingen 15 jaar en jonger, docenten, een "
+#| "controlegroep en een experimentele groep die verschillende taken krijgen."
 msgid ""
 "Bijvoorbeeld ouders van leerlingen 15 jaar en jonger, docenten, een "
 "controlegroep en een experimentele groep die verschillende taken krijgen."
