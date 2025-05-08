@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-08 11:38+0200\n"
+"POT-Creation-Date: 2025-05-08 11:53+0200\n"
 "PO-Revision-Date: 2025-01-15 12:46+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -2878,6 +2878,7 @@ msgstr ""
 
 #: proposals/templates/proposals/proposal_start.html:57
 #: proposals/templates/proposals/proposal_start_practice.html:57
+#: proposals/templates/proposals/study_start.html:72
 msgid ""
 "Bijvoorbeeld: ouders van leerlingen 15 jaar en jonger, docenten, een "
 "controlegroep en een experimentele groep die verschillende taken krijgen."
@@ -3341,18 +3342,6 @@ msgid ""
 msgstr ""
 "You can now describe the nature of <em>each trajectory</em> of the study on "
 "the following pages."
-
-#: proposals/templates/proposals/study_start.html:72
-#, fuzzy
-#| msgid ""
-#| "Bijvoorbeeld: ouders van leerlingen 15 jaar en jonger, docenten, een "
-#| "controlegroep en een experimentele groep die verschillende taken krijgen."
-msgid ""
-"Bijvoorbeeld ouders van leerlingen 15 jaar en jonger, docenten, een "
-"controlegroep en een experimentele groep die verschillende taken krijgen."
-msgstr ""
-"For example: parents of children up to 15 years of age, teachers, or an "
-"experimental and control group that receive significantly different tasks."
 
 #: proposals/templates/proposals/table_with_header_diff.html:15
 msgid "Vorige aanvraag"
