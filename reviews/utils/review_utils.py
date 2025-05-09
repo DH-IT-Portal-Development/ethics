@@ -180,7 +180,7 @@ def start_assignment_phase(proposal):
         plain_link = "mail/submitted_shortroute.txt"
         html_link = "mail/submitted_shortroute.html"
     else:
-        plain_link= "mail/submitted_longroute.txt"
+        plain_link = "mail/submitted_longroute.txt"
         html_link = "mail/submitted_longroute.html"
     msg_plain = render_to_string(plain_link, params)
     msg_html = render_to_string(html_link, params)
@@ -213,7 +213,7 @@ def start_assignment_phase(proposal):
         # They should be regarded as CC'd, but the currently used mail API
         # doesn't support that. When moving to cdh.core mailing this should
         # be corrected
-        applicants_emails = [applicant.email for applicant in proposal.applicants.all()] #hier wordt de mail daadwerkelijk verstuurd?
+        applicants_emails = [applicant.email for applicant in proposal.applicants.all()]
         send_mail(
             subject,
             msg_plain,
@@ -428,7 +428,7 @@ def notify_secretary_assignment(review):
     params = {
         "secretary": secretary.get_full_name(),
         "review": review,
-        "was_revised": proposal.is_revision
+        "was_revised": proposal.is_revision,
     }
     msg_plain = render_to_string("mail/submitted.txt", params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
