@@ -92,11 +92,21 @@
 {
     "fields": {
         "needs_details": true,
-        "order": 10,
+        "order": 11,
         "description_nl": "anders, namelijk",
         "description_en": "otherwise, viz."
     },
     "model": "studies.trait",
     "pk": 10
+},
+{
+"fields": {
+    "needs_details": false,
+    "order": 10,
+    "description_nl": "genetische gegevens",
+    "description_en": "genetic data"
+},
+"model": "studies.trait",
+"pk": 11
 }
 ]
