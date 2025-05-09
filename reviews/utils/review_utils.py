@@ -151,7 +151,6 @@ def start_assignment_phase(proposal):
     review = Review.objects.create(proposal=proposal, date_start=timezone.now())
     review.stage = Review.Stages.ASSIGNMENT
     review.short_route = short_route
-
     if short_route:
         review.date_should_end = timezone.now() + timezone.timedelta(
             weeks=settings.SHORT_ROUTE_WEEKS
@@ -175,13 +174,16 @@ def start_assignment_phase(proposal):
         "review_date": review.date_should_end,
         "pdf_url": settings.BASE_URL + proposal.pdf.url,
         "title": proposal.title,
+        "was_revised": proposal.is_revision,
     }
     if review.short_route:
-        msg_plain = render_to_string("mail/submitted_shortroute.txt", params)
-        msg_html = render_to_string("mail/submitted_shortroute.html", params)
+        plain_link = "mail/submitted_shortroute.txt"
+        html_link = "mail/submitted_shortroute.html"
     else:
-        msg_plain = render_to_string("mail/submitted_longroute.txt", params)
-        msg_html = render_to_string("mail/submitted_longroute.html", params)
+        plain_link = "mail/submitted_longroute.txt"
+        html_link = "mail/submitted_longroute.html"
+    msg_plain = render_to_string(plain_link, params)
+    msg_html = render_to_string(html_link, params)
     recipients = [proposal.created_by.email]
     if proposal.relation.needs_supervisor:
         recipients.append(proposal.supervisor.email)
@@ -426,6 +428,7 @@ def notify_secretary_assignment(review):
     params = {
         "secretary": secretary.get_full_name(),
         "review": review,
+        "was_revised": proposal.is_revision,
     }
     msg_plain = render_to_string("mail/submitted.txt", params)
     send_mail(subject, msg_plain, settings.EMAIL_FROM, [secretary.email])
