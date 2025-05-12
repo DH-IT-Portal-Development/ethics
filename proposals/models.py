@@ -446,6 +446,24 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         blank=True,
     )
 
+    data_manager = models.BooleanField(
+        _(
+            "Ik heb mijn datamanagementplan (DMP) besproken met de data manager van de Faculteit Geesteswetenschappen."
+        ),
+        default=None,
+        null=True,
+        blank=True,
+    )
+
+    research_data_management = models.BooleanField(
+        _(
+            "Ik heb mijn datamanagementplan (DMP) besproken met iemand van Research Data Management Support."
+        ),
+        default=None,
+        null=True,
+        blank=True,
+    )
+
     dmp_file = models.FileField(
         _(
             "Als je een Data Management Plan hebt voor deze aanvraag, "

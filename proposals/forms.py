@@ -758,9 +758,11 @@ class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
 class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
-        fields = ["privacy_officer"]
+        fields = ["privacy_officer", "data_manager", "research_data_management"]
         widgets = {
             "privacy_officer": BootstrapRadioSelect(choices=YES_NO),
+            "data_manager": BootstrapRadioSelect(choices=YES_NO),
+            "research_data_management": BootstrapRadioSelect(choices=YES_NO),
         }
 
     def clean(self):
