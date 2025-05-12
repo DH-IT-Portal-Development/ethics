@@ -334,7 +334,8 @@ cadeautje."
         blank=True,
     )
     negativity_details = models.TextField(
-        _("Licht toe"), max_length=1000,
+        _("Licht toe"),
+        max_length=1000,
         help_text=_(
             "Geef concrete voorbeelden van de relevante aspecten van jouw "
             "onderzoek (bijv. voorbeelden van mogelijk zeer kwetsende woorden "
