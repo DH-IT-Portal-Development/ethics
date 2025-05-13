@@ -85,12 +85,10 @@ class GeneralSection(BaseSection):
         if not obj.relation.check_in_course:
             rows.remove("student_program")
             rows.remove("student_context")
-            if obj.student_context is not None:
-                if not obj.student_context.needs_details:
-                    rows.remove("student_context_details")
-            else:
-                rows.remove("student_context_details")
+            rows.remove("student_context_details")
             rows.remove("student_justification")
+        elif not obj.student_context.needs_details:
+            rows.remove("student_context_details")
         if not obj.other_applicants:
             rows.remove("applicants")
         if not obj.other_stakeholders:
