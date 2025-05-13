@@ -54,7 +54,7 @@
         "medical_traits": true,
         "order": 6,
         "description_nl": "gegevens over gezondheid (bijv. dyslexie, trauma, medisch dossier)",
-        "description_en": "medical details (Ex. dyslexia, trauma, medical files)"
+        "description_en": "medical details (e.g. dyslexia, trauma, medical files)"
     },
     "model": "studies.specialdetail",
     "pk": 6
