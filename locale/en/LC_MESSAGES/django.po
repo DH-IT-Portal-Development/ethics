@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-08 11:53+0200\n"
+"POT-Creation-Date: 2025-05-13 11:28+0200\n"
 "PO-Revision-Date: 2025-01-15 12:46+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -484,7 +484,7 @@ msgstr "How many times a week will the intervention session take place?"
 
 #: interventions/templates/interventions/intervention_form.html:7
 #: interventions/templates/interventions/intervention_form.html:42
-#: proposals/utils/pdf_diff_sections.py:245
+#: proposals/utils/pdf_diff_sections.py:246
 msgid "Het interventieonderzoek"
 msgstr "Intervention study"
 
@@ -510,11 +510,11 @@ msgstr "Intervention saved"
 msgid "Dit veld is verplicht."
 msgstr "This field is required."
 
-#: main/models.py:12 main/utils.py:17 proposals/utils/pdf_diff_utils.py:333
+#: main/models.py:12 main/utils.py:17 proposals/utils/pdf_diff_utils.py:331
 msgid "ja"
 msgstr "yes"
 
-#: main/models.py:13 main/utils.py:17 proposals/utils/pdf_diff_utils.py:333
+#: main/models.py:13 main/utils.py:17 proposals/utils/pdf_diff_utils.py:331
 msgid "nee"
 msgstr "no"
 
@@ -921,8 +921,8 @@ msgid ""
 "documenten-ethische-toetsingscommissie-gw\" "
 "target=\"_blank\">voorbeelddocumenten/templates</a>."
 msgstr ""
-"It is possible that during the application process, you are asked to submit "
-"one or more attachments. As an example, please use the most recent <a "
+"It is possible that during the application proces, you are asked to "
+"submitone or more attachments. As an example, please use the most recent <a "
 "href=\"https://intranet.uu.nl/en/documents-ethics-assessment-committee-"
 "humanities\" target=\"_blank\">model documents</a>."
 
@@ -1321,7 +1321,7 @@ msgstr "How many hours of observation will take place on average per day?"
 
 #: observations/templates/observations/observation_form.html:7
 #: observations/templates/observations/observation_form.html:32
-#: proposals/utils/pdf_diff_sections.py:301
+#: proposals/utils/pdf_diff_sections.py:302
 msgid "Het observatieonderzoek"
 msgstr "Observational study"
 
@@ -1798,7 +1798,7 @@ msgstr "What is the name of the funded project and what is the project number?"
 
 #: proposals/models.py:295
 msgid ""
-"De titel die je hier opgeeft zal in de formele toestemmingsbrief gebruikt "
+"De titel die je hier opgeeft zal in de formele goedkeuringsbrief gebruikt "
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
@@ -1897,7 +1897,7 @@ msgstr ""
 "include it here. Supplying a DMP can expedite ethical assessment of "
 "proposals."
 
-#: proposals/models.py:463 proposals/utils/pdf_diff_sections.py:634
+#: proposals/models.py:463 proposals/utils/pdf_diff_sections.py:635
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -2231,8 +2231,8 @@ msgid "Toevoegen"
 msgstr "Add"
 
 #: proposals/templates/proposals/attachments.html:47
-#: proposals/utils/pdf_diff_utils.py:410 proposals/utils/pdf_diff_utils.py:437
-#: proposals/utils/pdf_diff_utils.py:446 proposals/utils/pdf_diff_utils.py:470
+#: proposals/utils/pdf_diff_utils.py:408 proposals/utils/pdf_diff_utils.py:435
+#: proposals/utils/pdf_diff_utils.py:444 proposals/utils/pdf_diff_utils.py:468
 msgid "Traject "
 msgstr "Trajectory "
 
@@ -2859,7 +2859,7 @@ msgstr ""
 #: proposals/templates/proposals/proposal_start.html:52
 #: proposals/templates/proposals/proposal_start_practice.html:52
 #: proposals/templates/proposals/study_start.html:67
-#: proposals/utils/pdf_diff_utils.py:417
+#: proposals/utils/pdf_diff_utils.py:415
 #: reviews/templates/reviews/committee_members_workload.html:23
 #: reviews/templates/reviews/review_attachments.html:42
 msgid "Traject"
@@ -2883,8 +2883,8 @@ msgid ""
 "Bijvoorbeeld: ouders van leerlingen 15 jaar en jonger, docenten, een "
 "controlegroep en een experimentele groep die verschillende taken krijgen."
 msgstr ""
-"For example: parents of children up to 15 years of age, teachers, or an "
-"experimental and control group that receive significantly different tasks."
+"For example: parents of children up to 15 years of age, teachers, or "
+"an experimental and control group that receive significantly different tasks."
 
 #: proposals/templates/proposals/proposal_start.html:63
 #: proposals/templates/proposals/proposal_start_practice.html:63
@@ -2917,7 +2917,7 @@ msgid ""
 "Een taak of onderdeel van je onderzoek. <p> Bijvoorbeeld: het invullen van "
 "een vragenlijst, een interview, of een bepaalde test. </p>"
 msgstr ""
-" A task or procedure within your study. <p> <u>For example</u>: completing "
+" A task or procedure within your study. <p> For example: completing "
 "an interview, questionnaire, or a particular test.</p>"
 
 #: proposals/templates/proposals/proposal_start.html:79
@@ -3159,7 +3159,7 @@ msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
 #: proposals/templates/proposals/proposal_submit.html:155
-#: proposals/utils/pdf_diff_sections.py:617
+#: proposals/utils/pdf_diff_sections.py:618
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -3324,7 +3324,7 @@ msgstr "Additional forms"
 
 #: proposals/templates/proposals/study_start.html:7
 #: proposals/templates/proposals/study_start.html:59
-#: proposals/utils/pdf_diff_sections.py:149
+#: proposals/utils/pdf_diff_sections.py:150
 msgid "Eén of meerdere trajecten?"
 msgstr "One or more trajectories?"
 
@@ -3353,7 +3353,7 @@ msgstr "Current application"
 
 #: proposals/templates/proposals/translated_consent_forms.html:7
 #: proposals/templates/proposals/translated_consent_forms.html:20
-#: proposals/utils/pdf_diff_sections.py:540
+#: proposals/utils/pdf_diff_sections.py:541
 msgid "Vertaling formulieren"
 msgstr "Translation of documents"
 
@@ -3444,7 +3444,7 @@ msgstr "Revision/amendment of"
 
 #: proposals/templates/proposals/wmo_application.html:7
 #: proposals/templates/proposals/wmo_application.html:23
-#: proposals/utils/pdf_diff_sections.py:136
+#: proposals/utils/pdf_diff_sections.py:137
 msgid "Aanmelding bij de METC"
 msgstr "Registration with the METC"
 
@@ -3467,7 +3467,7 @@ msgstr "Start again"
 
 #: proposals/templates/proposals/wmo_form.html:7
 #: proposals/templates/proposals/wmo_form.html:28
-#: proposals/utils/pdf_diff_sections.py:111
+#: proposals/utils/pdf_diff_sections.py:112
 msgid ""
 "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?"
 msgstr ""
@@ -3522,7 +3522,7 @@ msgstr "Conclusion trajectories"
 msgid "Deelnemers"
 msgstr "Participants"
 
-#: proposals/utils/checkers.py:643 proposals/utils/pdf_diff_sections.py:167
+#: proposals/utils/checkers.py:643 proposals/utils/pdf_diff_sections.py:168
 #: studies/templates/studies/study_personal_data.html:7
 #: studies/templates/studies/study_personal_data.html:22
 msgid "Persoonsgegevens"
@@ -3561,38 +3561,38 @@ msgstr "Translations"
 msgid "Indienen"
 msgstr "Submit"
 
-#: proposals/utils/pdf_diff_sections.py:201
+#: proposals/utils/pdf_diff_sections.py:202
 #: studies/templates/studies/study_form.html:7
 #: studies/templates/studies/study_form.html:64
 msgid "De deelnemers"
 msgstr "Participants"
 
-#: proposals/utils/pdf_diff_sections.py:403
+#: proposals/utils/pdf_diff_sections.py:404
 msgid "Het takenonderzoek en interviews"
 msgstr "Task-based research and interviews"
 
-#: proposals/utils/pdf_diff_sections.py:475
+#: proposals/utils/pdf_diff_sections.py:476
 #: studies/templates/studies/study_end.html:8
 msgid "Overzicht en eigen beoordeling van het gehele onderzoek"
 msgstr "Overview and self-assessment of the entire study"
 
-#: proposals/utils/pdf_diff_sections.py:511
+#: proposals/utils/pdf_diff_sections.py:512
 msgid "Kennisveiligheid en risico onderzoekers"
 msgstr "Knowledge security and researcher risk"
 
-#: proposals/utils/pdf_diff_sections.py:609
+#: proposals/utils/pdf_diff_sections.py:610
 msgid "Data Management"
 msgstr "Data Management"
 
-#: proposals/utils/pdf_diff_sections.py:780
+#: proposals/utils/pdf_diff_sections.py:781
 msgid "Documenten - Aanvraag in het geheel"
 msgstr "Documents - Application in general"
 
-#: proposals/utils/pdf_diff_sections.py:782
+#: proposals/utils/pdf_diff_sections.py:783
 msgid "Documenten - Het hoofdtraject"
 msgstr "Documents - The main trajectory"
 
-#: proposals/utils/pdf_diff_sections.py:784
+#: proposals/utils/pdf_diff_sections.py:785
 msgid "Documenten - Traject "
 msgstr "Documents - Trajectory "
 
@@ -3616,7 +3616,7 @@ msgstr ""
 msgid "Aanlevering"
 msgstr "Provided as"
 
-#: proposals/utils/pdf_diff_utils.py:289 proposals/utils/pdf_diff_utils.py:374
+#: proposals/utils/pdf_diff_utils.py:289 proposals/utils/pdf_diff_utils.py:372
 msgid "Niet aangeleverd"
 msgstr "Not provided"
 
@@ -3624,28 +3624,28 @@ msgstr "Not provided"
 msgid "Uploaddatum"
 msgstr "Date uploaded"
 
-#: proposals/utils/pdf_diff_utils.py:339 reviews/models.py:113
+#: proposals/utils/pdf_diff_utils.py:350 reviews/models.py:113
 msgid "Onbekend"
 msgstr "Unknown"
 
-#: proposals/utils/pdf_diff_utils.py:371
+#: proposals/utils/pdf_diff_utils.py:369
 msgid "Download"
 msgstr "Download"
 
-#: proposals/utils/pdf_diff_utils.py:397
+#: proposals/utils/pdf_diff_utils.py:395
 #: tasks/templates/tasks/session_overview.html:7
 msgid "Overzicht van het takenonderzoek"
 msgstr "Overview of task-based research"
 
-#: proposals/utils/pdf_diff_utils.py:440 proposals/utils/pdf_diff_utils.py:473
+#: proposals/utils/pdf_diff_utils.py:438 proposals/utils/pdf_diff_utils.py:471
 msgid "sessie "
 msgstr "session "
 
-#: proposals/utils/pdf_diff_utils.py:453 proposals/utils/pdf_diff_utils.py:481
+#: proposals/utils/pdf_diff_utils.py:451 proposals/utils/pdf_diff_utils.py:479
 msgid "Sessie "
 msgstr "Session "
 
-#: proposals/utils/pdf_diff_utils.py:475 proposals/utils/pdf_diff_utils.py:483
+#: proposals/utils/pdf_diff_utils.py:473 proposals/utils/pdf_diff_utils.py:481
 msgid ", taak "
 msgstr ", task "
 
@@ -5447,8 +5447,8 @@ msgstr ""
 "sessions have been added yet."
 
 #: tasks/models.py:12
-msgid "Hoe vaak wordt deze sessie uitgevoerd?"
-msgstr "How many times will this session be performed?"
+msgid "Hoe vaak wordt per deelnemer deze sessie uitgevoerd?"
+msgstr "How many times per participant will this session be performed?"
 
 #: tasks/models.py:14
 msgid ""
@@ -5504,8 +5504,8 @@ msgstr ""
 "plans."
 
 #: tasks/models.py:127
-msgid "Hoe vaak wordt deze taak uitgevoerd binnen deze sessie?"
-msgstr "How many times will this task be performed within this session?"
+msgid "Hoe vaak voert een deelnemer deze taak uit binnen deze sessie?"
+msgstr "How many times per participant will this task be performed within this session?"
 
 #: tasks/models.py:129
 msgid ""

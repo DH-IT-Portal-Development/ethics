@@ -40,6 +40,7 @@ class GeneralSection(BaseSection):
 
     section_title = _("Algemene informatie over de aanvraag")
     row_fields = [  # this order is the order in which the pdf generates
+        "institution",
         "is_pre_approved",
         "relation",
         "supervisor",
