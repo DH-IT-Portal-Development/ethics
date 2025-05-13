@@ -62,7 +62,7 @@
 {
     "fields": {
         "medical_traits": false,
-        "order": 8,
+        "order": 7,
         "description_nl": "gegevens met betrekking tot iemands seksuele gedrag of seksuele gerichtheid",
         "description_en": "details concerning someone's sexual orientation or behaviour"
     },
@@ -72,18 +72,17 @@
 {
     "fields": {
         "medical_traits": false,
-        "order": 9,
+        "order": 8,
         "description_nl": "strafrechtelijk verleden",
         "description_en": "criminal history"
     },
     "model": "studies.specialdetail",
     "pk": 8
 },
-
 {
     "fields": {
-        "needs_details": false,
-        "order": 7,
+        "medical_traits": false,
+        "order": 9,
         "description_nl": "genetische gegevens",
         "description_en": "genetic data"
     },
