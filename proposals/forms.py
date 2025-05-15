@@ -758,11 +758,17 @@ class StudyStartForm(SoftValidationMixin, ConditionalModelForm):
 class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
-        fields = ["privacy_officer_conversation", "data_manager_conversation", "research_data_management_conversation"]
+        fields = [
+            "privacy_officer_conversation",
+            "data_manager_conversation",
+            "research_data_management_conversation",
+        ]
         widgets = {
             "privacy_officer_conversation": BootstrapRadioSelect(choices=YES_NO),
             "data_manager_conversation": BootstrapRadioSelect(choices=YES_NO),
-            "research_data_management_conversation": BootstrapRadioSelect(choices=YES_NO),
+            "research_data_management_conversation": BootstrapRadioSelect(
+                choices=YES_NO
+            ),
         }
 
     def clean(self):
@@ -770,15 +776,18 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
 
         if cleaned_data["privacy_officer_conversation"] is None:
             self.add_error(
-                "privacy_officer_conversation", _("Dit veld is verplicht om verder te gaan.")
+                "privacy_officer_conversation",
+                _("Dit veld is verplicht om verder te gaan."),
             )
         if cleaned_data["data_manager_conversation"] is None:
             self.add_error(
-                "data_manager_conversation", _("Dit veld is verplicht om verder te gaan.")
+                "data_manager_conversation",
+                _("Dit veld is verplicht om verder te gaan."),
             )
         if cleaned_data["research_data_management_conversation"] is None:
             self.add_error(
-                "research_data_management_conversation", _("Dit veld is verplicht om verder te gaan.")
+                "research_data_management_conversation",
+                _("Dit veld is verplicht om verder te gaan."),
             )
 
 

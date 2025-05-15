@@ -455,7 +455,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         blank=True,
         help_text=_(
             "Als je geen datamanagementplan indient bij deze aanvraag,"
-            " beantwoord deze vraag dan met 'nee'."),
+            " beantwoord deze vraag dan met 'nee'."
+        ),
     )
 
     research_data_management_conversation = models.BooleanField(
@@ -467,7 +468,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         blank=True,
         help_text=_(
             "Als je geen datamanagementplan indient bij deze aanvraag,"
-            " beantwoord deze vraag dan met 'nee'."),
+            " beantwoord deze vraag dan met 'nee'."
+        ),
     )
 
     dmp_file = models.FileField(
