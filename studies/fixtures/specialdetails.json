@@ -53,8 +53,8 @@
     "fields": {
         "medical_traits": true,
         "order": 6,
-        "description_nl": "gegevens over gezondheid (medische gegevens)",
-        "description_en": "medical details"
+        "description_nl": "gegevens over gezondheid (bijv. dyslexie, trauma, medisch dossier)",
+        "description_en": "medical details (e.g. dyslexia, trauma, medical files)"
     },
     "model": "studies.specialdetail",
     "pk": 6
@@ -78,5 +78,15 @@
     },
     "model": "studies.specialdetail",
     "pk": 8
+},
+{
+    "fields": {
+        "medical_traits": false,
+        "order": 9,
+        "description_nl": "genetische gegevens",
+        "description_en": "genetic data"
+    },
+    "model": "studies.specialdetail",
+    "pk": 9
 }
 ]
