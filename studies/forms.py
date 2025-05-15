@@ -244,6 +244,47 @@ class PersonalDataForm(SoftValidationMixin, ConditionalModelForm):
         )
 
 
+class RegistrationForm(
+    SoftValidationMixin,
+    ConditionalModelForm,
+):
+
+    class Meta:
+        model = Study
+        fields = [
+            "registrations",
+            "registrations_details",
+            "registration_kinds",
+            "registration_kinds_details",
+        ]
+        widgets = {
+            "registrations": BootstrapCheckboxSelectMultiple(),
+            "registration_kinds": BootstrapCheckboxSelectMultiple(),
+        }
+
+    def clean(self):
+        """
+        Check for conditional requirements:
+        - If a registration which needs a kind has been checked, make sure the kind is selected
+        - If a registration which needs details has been checked, make sure the details are filled
+        - If a registration_kind which needs details has been checked, make sure the details are filled
+        """
+        cleaned_data = super(RegistrationForm, self).clean()
+
+        self.check_dependency_multiple(
+            cleaned_data, "registrations", "needs_kind", "registration_kinds"
+        )
+        self.check_dependency_multiple(
+            cleaned_data, "registrations", "needs_details", "registrations_details"
+        )
+        self.check_dependency_multiple(
+            cleaned_data,
+            "registration_kinds",
+            "needs_details",
+            "registration_kinds_details",
+        )
+
+
 class StudyDesignForm(
     SoftValidationMixin,
     TemplatedModelForm,

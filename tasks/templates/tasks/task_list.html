@@ -8,7 +8,6 @@
             <tr>
                 <th scope="col">{% trans "Taak" %}</th>
                 <th scope="col">{% trans "Nettoduur (in minuten)" %}</th>
-                <th scope="col">{% trans "Registratie via" %}</th>
                 <th scope="col">{% trans "Feedback?" %}</th>
                 {% if can_edit_tasks %}
                     <th scope="col">{% trans "Aantal keer uit te voeren" %}</th>
@@ -23,7 +22,6 @@
                 <tr>
                     <td>{% trans "Taak" %} {{ task.order }}: {{ task.name }}</td>
                     <td>{{ task.duration }}</td>
-                    <td>{{ task.registrations.all|create_unordered_html_list }}</td>
                     <td class="task_feedback">
                         <span class="label">{{ task.feedback|yesno:_("ja,nee") }}</span>
                         {% if task.feedback %}<span class="help">{{ task.feedback_details }}</span>{% endif %}

@@ -19,7 +19,6 @@ class BaseProposalTestCase(TestCase):
     fixtures = [
         "groups",
         "settings",
-        "registrations",
         "fundings",
         "institutions",
         "relations",
