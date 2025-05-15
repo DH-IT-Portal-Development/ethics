@@ -609,7 +609,10 @@ class DMPSection(PageBreakMixin, BaseSection):
 
     section_title = _("Data Management")
 
-    row_fields = ["privacy_officer_conversation", "data_manager_conversation", "research_data_management_conversation"]
+    row_fields = [
+        "privacy_officer_conversation",
+        "data_manager_conversation",
+        "research_data_management_conversation"]
 
 
 class EmbargoSection(BaseSection):

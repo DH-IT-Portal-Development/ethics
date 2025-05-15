@@ -772,6 +772,14 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
             self.add_error(
                 "privacy_officer_conversation", _("Dit veld is verplicht om verder te gaan.")
             )
+        if cleaned_data["data_manager_conversation"] is None:
+            self.add_error(
+                "data_manager_conversation", _("Dit veld is verplicht om verder te gaan.")
+            )
+        if cleaned_data["research_data_management_conversation"] is None:
+            self.add_error(
+                "research_data_management_conversation", _("Dit veld is verplicht om verder te gaan.")
+            )
 
 
 class ProposalUpdateDataManagementForm(TemplatedModelForm):
