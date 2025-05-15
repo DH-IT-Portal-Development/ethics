@@ -107,7 +107,7 @@ class Attachment(models.Model, renderable):
 
     def get_download_url(self, proposal):
         return reverse(
-            "proposals:download_attachment_original",
+            "proposals:download_attachment",
             kwargs={
                 "proposal_pk": proposal.pk,
                 "attachment_pk": self.pk,
