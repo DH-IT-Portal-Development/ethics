@@ -26,3 +26,4 @@ bpython
 black
 djlint
 sentry-sdk[django]
+django-csp<4.0
