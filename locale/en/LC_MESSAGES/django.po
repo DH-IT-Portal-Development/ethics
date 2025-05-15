@@ -1887,6 +1887,23 @@ msgstr ""
 "I discussed my application and documents for participants with the privacy "
 "officer."
 
+msgid ""
+"Ik heb mijn datamanagementplan (DMP) besproken met de data manager van de Faculteit Geesteswetenschappen."
+msgstr ""
+"I discussed my datamanagementplan (DMP) with the data manager of the Faculty of Humanities"
+
+msgid ""
+"Ik heb mijn datamanagementplan (DMP) besproken met iemand van Research Data Management Support."
+msgstr ""
+"I discussed my datamanagementplan (DMP) with someone of the Research Data Management Support"
+
+msgid ""
+"Als je geen datamanagementplan indient bij deze aanvraag,"
+            " beantwoord deze vraag dan met 'nee'."
+msgstr ""
+"If you do not plan to add a datamanagementplan please answer with no"
+
+
 #: proposals/models.py:451
 msgid ""
 "Als je een Data Management Plan hebt voor deze aanvraag, kan je kiezen om "
