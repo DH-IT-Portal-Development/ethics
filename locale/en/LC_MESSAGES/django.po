@@ -55,7 +55,7 @@ msgstr ""
 "public interest. This is the recommended way to conduct research. Though you "
 "should be careful, for certain aspects of your research it may still be "
 "necessary to collect consent."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34453\" target=\"_blank\">Information letter - legal basis Public interest/a>"
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34453\" target=\"_blank\">Information letter - legal basis Public interest</a>"
 
 #: attachments/kinds.py:61
 msgid "Informatiebrief toestemming"
