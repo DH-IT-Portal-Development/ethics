@@ -23,17 +23,21 @@ msgstr "Information letter for anonymous research"
 
 #: attachments/kinds.py:33
 msgid ""
-"Je verzamelt en verwerkt de gegevens van je deelnemers anoniem. Je moet je "
-"deelnemers dan wél informeren op ethische gronden (zodat ze kunnen beslissen "
-"of ze vrijwillig willen meedoen), maar omdat de AVG niet van toepassing is "
-"op anonieme gegevens, hoef je geen informatie te verstrekken over de "
-"verwerking van persoonsgegevens."
+"Je verzamelt en verwerkt de gegevens van je deelnemers"
+" anoniem. Je moet je deelnemers dan wél informeren op"
+" ethische gronden (zodat ze kunnen beslissen of ze"
+" vrijwillig willen meedoen), maar omdat de AVG niet"
+" van toepassing is op anonieme gegevens, hoef je geen"
+" informatie te verstrekken over de verwerking van"
+" persoonsgegevens."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34426\" target=\"_blank\">Informatiebrief anoniem onderzoek</a>"
 msgstr ""
 "You have indicated that you will collect data anonymously. Because the GDPR "
 "does not regulate the collection of anonymous data, you do not need to "
 "inform or ask for consent relating to personal data. You will however still "
 "need to inform your participants on ethical grounds, so that they can make a "
 "well-informed choice on whether to participate. "
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34450\" target=\"_blank\">Information letter anonymous research</a>"
 
 #: attachments/kinds.py:47
 msgid "Informatiebrief algemeen belang"
@@ -45,11 +49,13 @@ msgid ""
 "algemeen belang. In beginsel is dit de standaardwerkwijze. \n"
 "Let op! Voor bepaalde aspecten van je onderzoek kan het desondanks nodig "
 "zijn om toestemming te vragen."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34425\" target=\"_blank\">Informatiebrief algemeen belang</a>"
 msgstr ""
 "You have indicated to legally base your processing of personal data on the "
 "public interest. This is the recommended way to conduct research. Though you "
 "should be careful, for certain aspects of your research it may still be "
 "necessary to collect consent."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34453\" target=\"_blank\">Information letter - legal basis Public interest/a>"
 
 #: attachments/kinds.py:61
 msgid "Informatiebrief toestemming"
@@ -60,10 +66,12 @@ msgid ""
 "Er zijn redenen om de verwerking van persoonsgegevens te baseren op "
 "toestemming van de deelnemers. Bijvoorbeeld als er gevoelige data wordt "
 "verzameld of er met minderjarigen wordt gewerkt."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34428\" target=\"_blank\">Informatiebrief Toestemming</a>"
 msgstr ""
 "There are reasons to base the processing of personal data on participant "
 "consent, eg. you are collecting sensitive details or you are working with "
 "minors."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34451\" target=\"_blank\">Information letter - legal basis Consent</a>"
 
 #: attachments/kinds.py:86
 msgid "Toestemmingsverklaring 16+"
@@ -74,9 +82,11 @@ msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op de "
 "wettelijke grondslag toestemming. De deelnemers zijn volwassenen (16 jaar en "
 "ouder)."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34434\" target=\"_blank\">Toestemmingsverklaring Toestemming</a>"
 msgstr ""
 "You base the processing of personal data within your research on the legal "
 "basis consent. Participants are adults (16 years and older)."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34447\" target=\"_blank\">Declaration of consent - legal basis Consent</a>"
 
 #: attachments/kinds.py:98
 msgid "Toestemmingsverklaring algemeen belang bijzondere persoonsgegevens"
@@ -89,10 +99,12 @@ msgid ""
 "op de wettelijke grondslag algemeen belang, maar je verzamelt zgn. "
 "bijzondere persoonsgegevens externe link en daarvoor heb je toestemming "
 "nodig."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34431\" target=\"_blank\">Toestemmingsverklaring - grondslag Algemeen belang - bijzondere persoonsgegevens</a>"
 msgstr ""
 "Although you base the processing of personal data within your research on "
 "the legal basis public interest, you collect so-called special categories of "
 "personal data and for that you need consent."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34449\" target=\"_blank\">Declaration of consent - legal basis Public interest - Special categories of data</a>"
 
 #: attachments/kinds.py:111
 msgid "Toestemmingsverklaring kinderen tot 16 jaar, ouders of voogden aanwezig"
@@ -105,10 +117,12 @@ msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op de "
 "wettelijke grondslag toestemming. De deelnemers zijn kinderen jonger dan 16 "
 "jaar en minimaal één van de ouders of voogden is bij het onderzoek aanwezig."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34432\" target=\"_blank\">Toestemmingsverklaring - grondslag Toestemming - kinderen tot 16 jaar - ouders-voogden aanwezig bij onderzoek</a>"
 msgstr ""
 "You base the processing of personal data within your research on the legal "
 "basis consent, your participants are children under the age of 16 and at "
 "least one of the parents or guardians is present during the research."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34446\" target=\"_blank\">Consent - children under 16 yr - parents-caregivers present during research</a>"
 
 #: attachments/kinds.py:124
 msgid "Toestemmingsverklaring kinderen tot 16 jaar, ouders of voogden afwezig"
@@ -121,10 +135,12 @@ msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op de "
 "wettelijke grondslag toestemming. De deelnemers zijn kinderen jonger dan 16 "
 "jaar en er zijn geen ouders of voodgen aanwezig."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34433\" target=\"_blank\">Toestemmingsverklaring - grondslag Toestemming - kinderen tot 16 jr_ouders-voogden niet bij onderzoek</a>"
 msgstr ""
 "You base the processing of personal data within your research on the legal "
 "basis consent, your participants are children under the age of 16 and no "
 "parents or guardians are present during the research."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34445\" target=\"_blank\">Consent - children under 16 yr - parents-caregivers not present during research</a>"
 
 #: attachments/kinds.py:142
 msgid "Akkoordverklaring beeld- en geluidsopnames algemeen belang 16+"
@@ -136,12 +152,14 @@ msgid ""
 "algemeen belang, maar je maakt beeld- en/of geluidsopnames van volwassenen "
 "en daar moeten je deelnemers op ethische gronden mee instemmen. Ook voor het "
 "verdere gebruik van die opnames kun je de afspraken schriftelijk vastleggen."
+"<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20grondslag%20Algemeen%20belang%20-%20beeld-%20en%20geluidsopnames.docx\" target=\"_blank\">Akkoordverklaring - grondslag Algemeen belang - beeld- en geluidsopnames</a>"
 msgstr ""
 "Your legal basis for the processing of personal information is the public "
 "interest, however you will be recording participants up to 16 years of age "
 "with their parents or caregivers present. Said caregivers must consent to "
 "this on ethical grounds. These forms also allow you to agree on future use "
 "of the footage."
+"<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Agreement%20-%20public%20interest%20-%20recordings.docx\" target=\"_blank\">Agreement - legal basis Public interest - video/audio recordings</a>"
 
 #: attachments/kinds.py:157
 msgid ""
@@ -182,10 +200,12 @@ msgid ""
 "toestemming daarvoor, en de eventuele toestemming en afspraken met "
 "betrekking tot andere aspecten van de verwerking van persoonsgegevens, leg "
 "je vast in een aparte opname."
+ "<br>Link: <a href=\"https://intranet.uu.nl/media/34429\" target=\"_blank\">SCRIPT voor mondelinge toestemming opnames</a>"
 msgstr ""
 "You interview participants and make video and/or audio recordings of them. "
 "You record consent for this, and any consent and agreements regarding other "
 "aspects of the processing of personal data, in a separate recording."
+ "<br>Link: <a href=\"https://intranet.uu.nl/media/34454\" target=\"_blank\">SCRIPT requesting permission for recordings</a>"
 
 #: attachments/kinds.py:208
 msgid "Informatiebrief gatekeeper/schoolleiding"
@@ -198,12 +218,14 @@ msgid ""
 "het maken van een geïnformeerde keuze moet de leiding van de instelling op "
 "de hoogte zijn van de opzet van je onderzoek en van allerlei praktische "
 "aspecten."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34427\" target=\"_blank\">Informatiebrief gatekeeper/schoolleiding</a>"
 msgstr ""
 "You want to conduct research within a particular institution (e.g., a "
 "school) and you request the cooperation of the management of that "
 "institution. To make an informed choice, the management of that institution "
 "must be aware of the design of your research and a variety of practical "
 "aspects."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34452\" target=\"_blank\">Information letter - gatekeeper-school management</a>"
 
 #: attachments/kinds.py:222
 msgid "Akkoordverklaring gatekeeper/schoolleiding"
@@ -215,26 +237,31 @@ msgid ""
 "school) en je verzoekt de leiding van die instelling om medewerking. De "
 "schoolleiding moet, na goed geïnformeerd te zijn toestemming geven voor het "
 "onderzoek."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34424\" target=\"_blank\">Akkoordverklaring - gatekeeper-schoolleiding</a>"
 msgstr ""
 "You want to conduct research within a particular institution (e.g., a "
 "school) and you request the cooperation of the management of that "
 "institution. The management, after having been properly informed, has to "
 "sign a statement of agreement."
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34444\" target=\"_blank\">Declaration cooperation - gatekeeper-school management</a>"
 
 #: attachments/kinds.py:240 reviews/templatetags/documents_list.py:222
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
 
 #: attachments/kinds.py:242
+#Data Managepent Plan link is the same, there is no Dutch version
 msgid ""
 "Een Data Management Plan (DMP) is een document, dat voorafgaand aan een "
 "onderzoeksproject wordt opgesteld. Hierin worden alle aspecten omtrent de "
 "omgang met onderzoeksdata, tijdens en na afloop van het onderzoek, "
 "uiteengezet."
+"<br>Link: <a href=\"https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx\" target=\"_blank\">Datamanagementplan</a>"
 msgstr ""
 "A Data Management Plan (DMP) is a document that get drawn up prior to the "
 "researchproject taking place. The DMP outlines every aspect of the handling "
 "of research data, during and after the research."
+"<br>Link: <a href=\"https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx\" target=\"_blank\">Datamanagementplan</a>"
 
 #: attachments/kinds.py:256 attachments/models.py:41
 #: proposals/views/attachment_views.py:58
@@ -5762,65 +5789,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:84
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#Datamanagementplan
-#Datamanagementplan
-#as of right now both dutch and english versions are exactly the same
-msgid "https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx"
-msgstr "https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx"
-
-#requires acces to intranet something every user should have
-#Informatiebrief anoniem onderzoek
-#Information letter anonymous research
-msgid "https://intranet.uu.nl/media/34426"
-msgstr "https://intranet.uu.nl/media/34450"
-
-#informatiebrief algemeen belang
-#Information letter - legal basis Public interest
-msgid "https://intranet.uu.nl/media/34425"
-msgstr "https://intranet.uu.nl/media/34453"
-
-#Informatiebrief Toestemming
-#Information letter - legal basis Consent
-msgid "https://intranet.uu.nl/media/34428"
-msgstr "https://intranet.uu.nl/media/34451"
-
-#Akkoordverklaring - grondslag Algemeen belang - beeld- en geluidsopnames
-#Agreement - legal basis Public interest - video/audio recordings
-msgid "https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20grondslag%20Algemeen%20belang%20-%20beeld-%20en%20geluidsopnames.docx"
-msgstr "https://intranet.uu.nl/system/files/gw_Agreement%20-%20public%20interest%20-%20recordings.docx"
-
-#Toestemmingsverklaring - grondslag Algemeen belang - bijzondere persoonsgegevens
-#Declaration of consent - legal basis Public interest - Special categories of data
-msgid "https://intranet.uu.nl/media/34431"
-msgstr "https://intranet.uu.nl/media/34449"
-
-#Toestemmingsverklaring Toestemming
-#Declaration of consent - legal basis Consent
-msgid "https://intranet.uu.nl/media/34434"
-msgstr "https://intranet.uu.nl/media/34447"
-
-#Toestemmingsverklaring - grondslag Toestemming - kinderen tot 16 jaar - ouders-voogden aanwezig bij onderzoek
-#DoC - consent - children under 16 yr - parents-caregivers present during research
-msgid "https://intranet.uu.nl/media/34432"
-msgstr "https://intranet.uu.nl/media/34446"
-
-#Toestemmingsverklaring - grondslag Toestemming - kinderen tot 16 jr_ouders-voogden niet bij onderzoek
-#DoC - consent - children under 16 yr - parents-caregivers not present during research
-msgid "https://intranet.uu.nl/media/34433"
-msgstr "https://intranet.uu.nl/media/34445"
-
-#SCRIPT voor mondelinge toestemming opnames
-#SCRIPT requesting permission for recordings
-msgid "https://intranet.uu.nl/media/34429"
-msgstr "https://intranet.uu.nl/media/34454"
-
-#Informatiebrief gatekeeper/schoolleiding
-#Information letter - gatekeeper-school management
-msgid "https://intranet.uu.nl/media/34427"
-msgstr "https://intranet.uu.nl/media/34452"
-
-#Akkoordverklaring - gatekeeper-schoolleiding
-#Declaration cooperation - gatekeeper-school management
-msgid "https://intranet.uu.nl/media/34424"
-msgstr "https://intranet.uu.nl/media/34444"
