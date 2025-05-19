@@ -438,6 +438,7 @@ class InRevisionApiView(BaseReviewApiView):
         revision_reviews = Review.objects.filter(
             proposal__is_revision=True,  # Not a copy
             stage__gte=Review.Stages.ASSIGNMENT,  # Not a supervisor review
+            is_committee_review=True,
         )
         # 2. Get candidate reviews:
         # All reviews whose conclusion is "revision necessary"
