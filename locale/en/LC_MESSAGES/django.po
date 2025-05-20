@@ -1889,21 +1889,24 @@ msgstr ""
 
 #: proposals/models.py:451
 msgid ""
-"Ik heb mijn datamanagementplan (DMP) besproken met de data manager van de "
+"Ik heb mijn Data Management Plan (DMP) besproken met de data manager van de "
 "Faculteit Geesteswetenschappen."
 msgstr ""
-
-#: proposals/models.py:457 proposals/models.py:469
-msgid ""
-"Als je geen datamanagementplan indient bij deze aanvraag, beantwoord deze "
-"vraag dan met 'nee'."
-msgstr ""
+"I discussed my application and Data Management Plan (DMP) with the data manager of Faculty of Humanities"
 
 #: proposals/models.py:463
 msgid ""
-"Ik heb mijn datamanagementplan (DMP) besproken met iemand van Research Data "
+"Ik heb mijn Data Management Plan (DMP) besproken met iemand van Research Data "
 "Management Support."
 msgstr ""
+"I discussed my application and Data Management Plan (DMP) with someone of Research Data Management Support"
+
+#: proposals/models.py:457 proposals/models.py:469
+msgid ""
+"Als je geen Data Management Plan indient bij deze aanvraag, beantwoord deze "
+"vraag dan met 'nee'."
+msgstr ""
+"If you do not plan to add a Data Management Plan, answer this question with no"
 
 #: proposals/models.py:475
 msgid ""
