@@ -2939,7 +2939,7 @@ msgid ""
 "een vragenlijst, een interview, of een bepaalde test. </p>"
 msgstr ""
 " A task or procedure within your study. <p> For example: completing "
-"an interview, questionnaire, or a particular test. </p>"
+"an interview, questionnaire, or a particular test.</p>"
 
 #: proposals/templates/proposals/proposal_start.html:77
 #: proposals/templates/proposals/proposal_start_pre_approved.html:37
