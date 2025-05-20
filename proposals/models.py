@@ -448,26 +448,26 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
 
     data_manager_conversation = models.BooleanField(
         _(
-            "Ik heb mijn datamanagementplan (DMP) besproken met de data manager van de Faculteit Geesteswetenschappen."
+            "Ik heb mijn Data Management Plan (DMP) besproken met de data manager van de Faculteit Geesteswetenschappen."
         ),
         default=None,
         null=True,
         blank=True,
         help_text=_(
-            "Als je geen datamanagementplan indient bij deze aanvraag,"
+            "Als je geen Data Management Plan indient bij deze aanvraag,"
             " beantwoord deze vraag dan met 'nee'."
         ),
     )
 
     research_data_management_conversation = models.BooleanField(
         _(
-            "Ik heb mijn datamanagementplan (DMP) besproken met iemand van Research Data Management Support."
+            "Ik heb mijn Data Management Plan (DMP) besproken met iemand van Research Data Management Support."
         ),
         default=None,
         null=True,
         blank=True,
         help_text=_(
-            "Als je geen datamanagementplan indient bij deze aanvraag,"
+            "Als je geen Data Management Plan indient bij deze aanvraag,"
             " beantwoord deze vraag dan met 'nee'."
         ),
     )
