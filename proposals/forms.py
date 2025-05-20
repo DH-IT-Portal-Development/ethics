@@ -774,21 +774,17 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     def clean(self):
         cleaned_data = super(ProposalDataManagementForm, self).clean()
 
-        if cleaned_data["privacy_officer_conversation"] is None:
-            self.add_error(
-                "privacy_officer_conversation",
-                _("Dit veld is verplicht om verder te gaan."),
-            )
-        if cleaned_data["data_manager_conversation"] is None:
-            self.add_error(
-                "data_manager_conversation",
-                _("Dit veld is verplicht om verder te gaan."),
-            )
-        if cleaned_data["research_data_management_conversation"] is None:
-            self.add_error(
-                "research_data_management_conversation",
-                _("Dit veld is verplicht om verder te gaan."),
-            )
+        for field in self.fields:
+            if cleaned_data[field] is None:
+                if (
+                    field is "privacy_officer_conversation"
+                    or field is "data_manager_conversation"
+                    or field is "research_data_management_conversation"
+                ):
+                    self.add_error(
+                        field,
+                        _("Dit veld is verplicht om verder te gaan."),
+                    )
 
 
 class ProposalUpdateDataManagementForm(TemplatedModelForm):
