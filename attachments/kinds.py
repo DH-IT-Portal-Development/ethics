@@ -169,7 +169,6 @@ class AgreementRecordingsChildrenParents(StudyAttachmentKind):
     name = _(
         "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden aanwezig"
     )
-    #Deze mist een document
     description = mark_safe_lazy(_(
         "Je baseert de verwerking van persoonsgegevens op de"
         " wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
@@ -177,6 +176,7 @@ class AgreementRecordingsChildrenParents(StudyAttachmentKind):
         " Daar moeten de ouders of voogden van de deelnemers op ethische gronden"
         " mee instemmen. Ook voor het verdere gebruik van die opnames kun"
         " je de afspraken schriftelijk vastleggen."
+        "<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20WEL%20aanwezig.docx\" target=\"_blank\">Akkoordverklaring – Algemeen belang - Opnames kind - ouders-voogden aanwezig bij onderzoek</a>"
     ))
     desiredness = desiredness.REQUIRED
 
@@ -187,14 +187,14 @@ class AgreementRecordingsChildrenNoParents(StudyAttachmentKind):
     name = _(
         "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden afwezig"
     )
-    # Deze mist een document
     description = mark_safe_lazy(_(
         "Je baseert de verwerking van persoonsgegevens op de"
         " wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
-        " geluidsopnames van kinderen in aanwezigheid van diens ouders of voogden."
+        " geluidsopnames van kinderen in afwezigheid van diens ouders of voogden."
         " Daar moeten de ouders of voogden van de deelnemers op ethische gronden"
         " mee instemmen. Ook voor het verdere gebruik van die opnames kun"
         " je de afspraken schriftelijk vastleggen."
+        "<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20NIET%20aanwezig.docx\" target=\"_blank\">Akkoordverklaring - Algemeen belang - Opnames kind - ouders-voogden NIET aanwezig</a>"
     ))
     desiredness = desiredness.REQUIRED
 
