@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-13 11:28+0200\n"
+"POT-Creation-Date: 2025-05-20 11:02+0200\n"
 "PO-Revision-Date: 2025-01-15 12:46+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -17,151 +17,167 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: attachments/kinds.py:31
+#: attachments/kinds.py:36
 msgid "Informatiebrief anoniem onderzoek"
 msgstr "Information letter for anonymous research"
 
-#: attachments/kinds.py:33
+#: attachments/kinds.py:38
 msgid ""
-"Je verzamelt en verwerkt de gegevens van je deelnemers"
-" anoniem. Je moet je deelnemers dan wél informeren op"
-" ethische gronden (zodat ze kunnen beslissen of ze"
-" vrijwillig willen meedoen), maar omdat de AVG niet"
-" van toepassing is op anonieme gegevens, hoef je geen"
-" informatie te verstrekken over de verwerking van"
-" persoonsgegevens."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34426\" target=\"_blank\">Informatiebrief anoniem onderzoek</a>"
+"Je verzamelt en verwerkt de gegevens van je deelnemers anoniem. Je moet je "
+"deelnemers dan wél informeren op ethische gronden (zodat ze kunnen beslissen "
+"of ze vrijwillig willen meedoen), maar omdat de AVG niet van toepassing is "
+"op anonieme gegevens, hoef je geen informatie te verstrekken over de "
+"verwerking van persoonsgegevens.<br>Link: <a href=\"https://intranet.uu.nl/"
+"media/34426\" target=\"_blank\">Informatiebrief anoniem onderzoek</a>"
 msgstr ""
 "You have indicated that you will collect data anonymously. Because the GDPR "
 "does not regulate the collection of anonymous data, you do not need to "
 "inform or ask for consent relating to personal data. You will however still "
 "need to inform your participants on ethical grounds, so that they can make a "
-"well-informed choice on whether to participate. "
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34450\" target=\"_blank\">Information letter anonymous research</a>"
+"well-informed choice on whether to participate. <br>Link: <a href=\"https://"
+"intranet.uu.nl/media/34450\" target=\"_blank\">Information letter anonymous "
+"research</a>"
 
-#: attachments/kinds.py:47
+#: attachments/kinds.py:53
 msgid "Informatiebrief algemeen belang"
 msgstr "Information letter for research based on public interest"
 
-#: attachments/kinds.py:49
+#: attachments/kinds.py:55
 msgid ""
 "Je kiest ervoor om de verwerking van persoonsgegevens te baseren op het "
 "algemeen belang. In beginsel is dit de standaardwerkwijze. \n"
 "Let op! Voor bepaalde aspecten van je onderzoek kan het desondanks nodig "
-"zijn om toestemming te vragen."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34425\" target=\"_blank\">Informatiebrief algemeen belang</a>"
+"zijn om toestemming te vragen.<br>Link: <a href=\"https://intranet.uu.nl/"
+"media/34425\" target=\"_blank\">Informatiebrief algemeen belang</a>"
 msgstr ""
 "You have indicated to legally base your processing of personal data on the "
 "public interest. This is the recommended way to conduct research. Though you "
 "should be careful, for certain aspects of your research it may still be "
-"necessary to collect consent."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34453\" target=\"_blank\">Information letter - legal basis Public interest</a>"
+"necessary to collect consent.<br>Link: <a href=\"https://intranet.uu.nl/"
+"media/34453\" target=\"_blank\">Information letter - legal basis Public "
+"interest</a>"
 
-#: attachments/kinds.py:61
+#: attachments/kinds.py:68
 msgid "Informatiebrief toestemming"
 msgstr "Information letter for consent-based research"
 
-#: attachments/kinds.py:63
+#: attachments/kinds.py:70
 msgid ""
 "Er zijn redenen om de verwerking van persoonsgegevens te baseren op "
 "toestemming van de deelnemers. Bijvoorbeeld als er gevoelige data wordt "
-"verzameld of er met minderjarigen wordt gewerkt."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34428\" target=\"_blank\">Informatiebrief Toestemming</a>"
+"verzameld of er met minderjarigen wordt gewerkt.<br>Link: <a href=\"https://"
+"intranet.uu.nl/media/34428\" target=\"_blank\">Informatiebrief Toestemming</"
+"a>"
 msgstr ""
 "There are reasons to base the processing of personal data on participant "
 "consent, eg. you are collecting sensitive details or you are working with "
-"minors."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34451\" target=\"_blank\">Information letter - legal basis Consent</a>"
+"minors.<br>Link: <a href=\"https://intranet.uu.nl/media/34451\" "
+"target=\"_blank\">Information letter - legal basis Consent</a>"
 
-#: attachments/kinds.py:86
+#: attachments/kinds.py:94
 msgid "Toestemmingsverklaring 16+"
 msgstr "Consent form 16+"
 
-#: attachments/kinds.py:88
+#: attachments/kinds.py:96
 msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op de "
 "wettelijke grondslag toestemming. De deelnemers zijn volwassenen (16 jaar en "
-"ouder)."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34434\" target=\"_blank\">Toestemmingsverklaring Toestemming</a>"
+"ouder).<br>Link: <a href=\"https://intranet.uu.nl/media/34434\" "
+"target=\"_blank\">Toestemmingsverklaring Toestemming</a>"
 msgstr ""
 "You base the processing of personal data within your research on the legal "
-"basis consent. Participants are adults (16 years and older)."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34447\" target=\"_blank\">Declaration of consent - legal basis Consent</a>"
+"basis consent. Participants are adults (16 years and older).<br>Link: <a "
+"href=\"https://intranet.uu.nl/media/34447\" target=\"_blank\">Declaration of "
+"consent - legal basis Consent</a>"
 
-#: attachments/kinds.py:98
+#: attachments/kinds.py:107
 msgid "Toestemmingsverklaring algemeen belang bijzondere persoonsgegevens"
 msgstr ""
 "Declaration of consent for public interest with special personal details"
 
-#: attachments/kinds.py:100
+#: attachments/kinds.py:109
 msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek weliswaar "
 "op de wettelijke grondslag algemeen belang, maar je verzamelt zgn. "
 "bijzondere persoonsgegevens externe link en daarvoor heb je toestemming "
-"nodig."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34431\" target=\"_blank\">Toestemmingsverklaring - grondslag Algemeen belang - bijzondere persoonsgegevens</a>"
+"nodig.<br>Link: <a href=\"https://intranet.uu.nl/media/34431\" "
+"target=\"_blank\">Toestemmingsverklaring - grondslag Algemeen belang - "
+"bijzondere persoonsgegevens</a>"
 msgstr ""
 "Although you base the processing of personal data within your research on "
 "the legal basis public interest, you collect so-called special categories of "
-"personal data and for that you need consent."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34449\" target=\"_blank\">Declaration of consent - legal basis Public interest - Special categories of data</a>"
+"personal data and for that you need consent.<br>Link: <a href=\"https://"
+"intranet.uu.nl/media/34449\" target=\"_blank\">Declaration of consent - "
+"legal basis Public interest - Special categories of data</a>"
 
-#: attachments/kinds.py:111
+#: attachments/kinds.py:121
 msgid "Toestemmingsverklaring kinderen tot 16 jaar, ouders of voogden aanwezig"
 msgstr ""
 "Declaration of consent children up to 16 years of age, parents or caregivers "
 "present"
 
-#: attachments/kinds.py:113
+#: attachments/kinds.py:123
 msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op de "
 "wettelijke grondslag toestemming. De deelnemers zijn kinderen jonger dan 16 "
 "jaar en minimaal één van de ouders of voogden is bij het onderzoek aanwezig."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34432\" target=\"_blank\">Toestemmingsverklaring - grondslag Toestemming - kinderen tot 16 jaar - ouders-voogden aanwezig bij onderzoek</a>"
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34432\" "
+"target=\"_blank\">Toestemmingsverklaring - grondslag Toestemming - kinderen "
+"tot 16 jaar - ouders-voogden aanwezig bij onderzoek</a>"
 msgstr ""
 "You base the processing of personal data within your research on the legal "
 "basis consent, your participants are children under the age of 16 and at "
 "least one of the parents or guardians is present during the research."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34446\" target=\"_blank\">Consent - children under 16 yr - parents-caregivers present during research</a>"
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34446\" "
+"target=\"_blank\">Consent - children under 16 yr - parents-caregivers "
+"present during research</a>"
 
-#: attachments/kinds.py:124
+#: attachments/kinds.py:135
 msgid "Toestemmingsverklaring kinderen tot 16 jaar, ouders of voogden afwezig"
 msgstr ""
 "Declaration of consent children up to 16 years of age, no parents or "
 "caregivers present"
 
-#: attachments/kinds.py:126
+#: attachments/kinds.py:137
 msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op de "
 "wettelijke grondslag toestemming. De deelnemers zijn kinderen jonger dan 16 "
-"jaar en er zijn geen ouders of voodgen aanwezig."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34433\" target=\"_blank\">Toestemmingsverklaring - grondslag Toestemming - kinderen tot 16 jr_ouders-voogden niet bij onderzoek</a>"
+"jaar en er zijn geen ouders of voodgen aanwezig.<br>Link: <a href=\"https://"
+"intranet.uu.nl/media/34433\" target=\"_blank\">Toestemmingsverklaring - "
+"grondslag Toestemming - kinderen tot 16 jr_ouders-voogden niet bij "
+"onderzoek</a>"
 msgstr ""
 "You base the processing of personal data within your research on the legal "
 "basis consent, your participants are children under the age of 16 and no "
-"parents or guardians are present during the research."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34445\" target=\"_blank\">Consent - children under 16 yr - parents-caregivers not present during research</a>"
+"parents or guardians are present during the research.<br>Link: <a "
+"href=\"https://intranet.uu.nl/media/34445\" target=\"_blank\">Consent - "
+"children under 16 yr - parents-caregivers not present during research</a>"
 
-#: attachments/kinds.py:142
+#: attachments/kinds.py:154
 msgid "Akkoordverklaring beeld- en geluidsopnames algemeen belang 16+"
 msgstr "Agreement video/audio recordings public interest 16+"
 
-#: attachments/kinds.py:144
+#: attachments/kinds.py:156
 msgid ""
 "Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
 "algemeen belang, maar je maakt beeld- en/of geluidsopnames van volwassenen "
 "en daar moeten je deelnemers op ethische gronden mee instemmen. Ook voor het "
 "verdere gebruik van die opnames kun je de afspraken schriftelijk vastleggen."
-"<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20grondslag%20Algemeen%20belang%20-%20beeld-%20en%20geluidsopnames.docx\" target=\"_blank\">Akkoordverklaring - grondslag Algemeen belang - beeld- en geluidsopnames</a>"
+"<br>Link: <a href=\"https://intranet.uu.nl/system/files/"
+"gw_Akkoordverklaring%20-%20grondslag%20Algemeen%20belang%20-%20beeld-"
+"%20en%20geluidsopnames.docx\" target=\"_blank\">Akkoordverklaring - "
+"grondslag Algemeen belang - beeld- en geluidsopnames</a>"
 msgstr ""
 "Your legal basis for the processing of personal information is the public "
 "interest, however you will be recording participants up to 16 years of age "
 "with their parents or caregivers present. Said caregivers must consent to "
 "this on ethical grounds. These forms also allow you to agree on future use "
-"of the footage."
-"<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Agreement%20-%20public%20interest%20-%20recordings.docx\" target=\"_blank\">Agreement - legal basis Public interest - video/audio recordings</a>"
+"of the footage.<br>Link: <a href=\"https://intranet.uu.nl/system/files/"
+"gw_Agreement%20-%20public%20interest%20-%20recordings.docx\" "
+"target=\"_blank\">Agreement - legal basis Public interest - video/audio "
+"recordings</a>"
 
-#: attachments/kinds.py:157
+#: attachments/kinds.py:170
 msgid ""
 "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden "
 "aanwezig"
@@ -169,37 +185,30 @@ msgstr ""
 "Agreement video- or audio-recordings children up to 16 years of age, parents "
 "or caregivers present"
 
-#: attachments/kinds.py:160 attachments/kinds.py:177
+#: attachments/kinds.py:173
 msgid ""
 "Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
 "algemeen belang, maar je maakt beeld- en/of geluidsopnames van kinderen in "
 "aanwezigheid van diens ouders of voogden. Daar moeten de ouders of voogden "
 "van de deelnemers op ethische gronden mee instemmen. Ook voor het verdere "
 "gebruik van die opnames kun je de afspraken schriftelijk vastleggen."
-"<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20WEL%20aanwezig.docx\" target=\"_blank\">Akkoordverklaring – Algemeen belang - Opnames kind - ouders-voogden aanwezig bij onderzoek</a>"
+"<br>Link: <a href=\"https://intranet.uu.nl/system/files/"
+"gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-"
+"%20ouders-voogden%20WEL%20aanwezig.docx\" "
+"target=\"_blank\">Akkoordverklaring – Algemeen belang - Opnames kind - "
+"ouders-voogden aanwezig bij onderzoek</a>"
 msgstr ""
 "Although you base the processing of personal data on the legal basis public "
 "interest, you make video and/or audio recordings with parents and/or "
 "caregivers present and for that you need consent. For the further use of "
-"those recordings, you can also put agreements in writing."
-"<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Agreement%20-%20public%20interest%20-%20recordings%20-%20%20children%20under%2016%20yr%20-%20parents-caregivers%20present%20during%20research.docx\" target=\"_blank\">Agreement – children under 16 yr – parents-caregivers present during research</a>"
+"those recordings, you can also put agreements in writing.<br>Link: <a "
+"href=\"https://intranet.uu.nl/system/files/gw_Agreement%20-"
+"%20public%20interest%20-%20recordings%20-%20%20children%20under%2016%20yr%20-"
+"%20parents-caregivers%20present%20during%20research.docx\" "
+"target=\"_blank\">Agreement – children under 16 yr – parents-caregivers "
+"present during research</a>"
 
-msgid ""
-"Je baseert de verwerking van persoonsgegevens op de"
-" wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
-" geluidsopnames van kinderen in afwezigheid van diens ouders of voogden."
-" Daar moeten de ouders of voogden van de deelnemers op ethische gronden"
-" mee instemmen. Ook voor het verdere gebruik van die opnames kun"
-" je de afspraken schriftelijk vastleggen."
-"<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20NIET%20aanwezig.docx\" target=\"_blank\">Akkoordverklaring - Algemeen belang - Opnames kind - ouders-voogden NIET aanwezig</a>"
-msgstr ""
-"Although you base the processing of personal data on the legal basis public "
-"interest, you make video and/or audio recordings with parents and/or "
-"caregivers absent and for that you need consent. For the further use of "
-"those recordings, you can also put agreements in writing."
-"<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Agreement%20-%20public%20interest%20-%20recordings%20-%20%20children%20under%2016%20yr%20-%20parents-caregivers%20NOT%20present%20during%20research.docx\" target=\"_blank\">Agreement – children under 16 yr – parents-caregivers not present during research</a>"
-
-#: attachments/kinds.py:174
+#: attachments/kinds.py:188
 msgid ""
 "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden "
 "afwezig"
@@ -207,85 +216,111 @@ msgstr ""
 "Agreement video- or audio-recordings children up to 16 years of age, no "
 "parents or caregivers present"
 
-#: attachments/kinds.py:190
+#: attachments/kinds.py:191
+msgid ""
+"Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
+"algemeen belang, maar je maakt beeld- en/of geluidsopnames van kinderen in "
+"afwezigheid van diens ouders of voogden. Daar moeten de ouders of voogden "
+"van de deelnemers op ethische gronden mee instemmen. Ook voor het verdere "
+"gebruik van die opnames kun je de afspraken schriftelijk vastleggen."
+"<br>Link: <a href=\"https://intranet.uu.nl/system/files/"
+"gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-"
+"%20ouders-voogden%20NIET%20aanwezig.docx\" "
+"target=\"_blank\">Akkoordverklaring - Algemeen belang - Opnames kind - "
+"ouders-voogden NIET aanwezig</a>"
+msgstr ""
+"Although you base the processing of personal data on the legal basis public "
+"interest, you make video and/or audio recordings with parents and/or "
+"caregivers absent and for that you need consent. For the further use of "
+"those recordings, you can also put agreements in writing.<br>Link: <a "
+"href=\"https://intranet.uu.nl/system/files/gw_Agreement%20-"
+"%20public%20interest%20-%20recordings%20-%20%20children%20under%2016%20yr%20-"
+"%20parents-caregivers%20NOT%20present%20during%20research.docx\" "
+"target=\"_blank\">Agreement – children under 16 yr – parents-caregivers not "
+"present during research</a>"
+
+#: attachments/kinds.py:205
 msgid "Script voor mondelinge toestemming opnames"
 msgstr "Script for verbal consent recordings"
 
-#: attachments/kinds.py:192
+#: attachments/kinds.py:207
 msgid ""
 "Je interviewt deelnemers en je maakt daarvan beeld- en/of geluidsopnames. De "
 "toestemming daarvoor, en de eventuele toestemming en afspraken met "
 "betrekking tot andere aspecten van de verwerking van persoonsgegevens, leg "
-"je vast in een aparte opname."
- "<br>Link: <a href=\"https://intranet.uu.nl/media/34429\" target=\"_blank\">SCRIPT voor mondelinge toestemming opnames</a>"
+"je vast in een aparte opname.<br>Link: <a href=\"https://intranet.uu.nl/"
+"media/34429\" target=\"_blank\">SCRIPT voor mondelinge toestemming opnames</"
+"a>"
 msgstr ""
 "You interview participants and make video and/or audio recordings of them. "
 "You record consent for this, and any consent and agreements regarding other "
 "aspects of the processing of personal data, in a separate recording."
- "<br>Link: <a href=\"https://intranet.uu.nl/media/34454\" target=\"_blank\">SCRIPT requesting permission for recordings</a>"
+"<br>Link: <a href=\"https://intranet.uu.nl/media/34454\" "
+"target=\"_blank\">SCRIPT requesting permission for recordings</a>"
 
-#: attachments/kinds.py:208
+#: attachments/kinds.py:224
 msgid "Informatiebrief gatekeeper/schoolleiding"
 msgstr "Information letter gatekeeper/school management"
 
-#: attachments/kinds.py:210
+#: attachments/kinds.py:226
 msgid ""
 "Je wilt onderzoek gaan doen binnen een bepaalde instelling (bijv. een "
 "school) en je verzoekt de leiding van die instelling om medewerking. Voor "
 "het maken van een geïnformeerde keuze moet de leiding van de instelling op "
 "de hoogte zijn van de opzet van je onderzoek en van allerlei praktische "
-"aspecten."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34427\" target=\"_blank\">Informatiebrief gatekeeper/schoolleiding</a>"
+"aspecten.<br>Link: <a href=\"https://intranet.uu.nl/media/34427\" "
+"target=\"_blank\">Informatiebrief gatekeeper/schoolleiding</a>"
 msgstr ""
 "You want to conduct research within a particular institution (e.g., a "
 "school) and you request the cooperation of the management of that "
 "institution. To make an informed choice, the management of that institution "
 "must be aware of the design of your research and a variety of practical "
-"aspects."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34452\" target=\"_blank\">Information letter - gatekeeper-school management</a>"
+"aspects.<br>Link: <a href=\"https://intranet.uu.nl/media/34452\" "
+"target=\"_blank\">Information letter - gatekeeper-school management</a>"
 
-#: attachments/kinds.py:222
+#: attachments/kinds.py:239
 msgid "Akkoordverklaring gatekeeper/schoolleiding"
 msgstr "Agreement gatekeeper/school management"
 
-#: attachments/kinds.py:224
+#: attachments/kinds.py:241
 msgid ""
 "Je wilt onderzoek gaan doen binnen een bepaalde instelling (bijv. een "
 "school) en je verzoekt de leiding van die instelling om medewerking. De "
 "schoolleiding moet, na goed geïnformeerd te zijn toestemming geven voor het "
-"onderzoek."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34424\" target=\"_blank\">Akkoordverklaring - gatekeeper-schoolleiding</a>"
+"onderzoek.<br>Link: <a href=\"https://intranet.uu.nl/media/34424\" "
+"target=\"_blank\">Akkoordverklaring - gatekeeper-schoolleiding</a>"
 msgstr ""
 "You want to conduct research within a particular institution (e.g., a "
 "school) and you request the cooperation of the management of that "
 "institution. The management, after having been properly informed, has to "
-"sign a statement of agreement."
-"<br>Link: <a href=\"https://intranet.uu.nl/media/34444\" target=\"_blank\">Declaration cooperation - gatekeeper-school management</a>"
+"sign a statement of agreement.<br>Link: <a href=\"https://intranet.uu.nl/"
+"media/34444\" target=\"_blank\">Declaration cooperation - gatekeeper-school "
+"management</a>"
 
-#: attachments/kinds.py:240 reviews/templatetags/documents_list.py:222
+#: attachments/kinds.py:258 reviews/templatetags/documents_list.py:222
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
 
-#: attachments/kinds.py:242
-#Data Managepent Plan link is the same, there is no Dutch version
+#: attachments/kinds.py:261
 msgid ""
 "Een Data Management Plan (DMP) is een document, dat voorafgaand aan een "
 "onderzoeksproject wordt opgesteld. Hierin worden alle aspecten omtrent de "
 "omgang met onderzoeksdata, tijdens en na afloop van het onderzoek, "
-"uiteengezet."
-"<br>Link: <a href=\"https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx\" target=\"_blank\">Datamanagementplan</a>"
+"uiteengezet.<br>Link: <a href=\"https://intranet.uu.nl/system/files/2025%20-"
+"%20Dataset-list.docx\" target=\"_blank\">Datamanagementplan</a>"
 msgstr ""
 "A Data Management Plan (DMP) is a document that get drawn up prior to the "
 "researchproject taking place. The DMP outlines every aspect of the handling "
-"of research data, during and after the research."
-"<br>Link: <a href=\"https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx\" target=\"_blank\">Datamanagementplan</a>"
+"of research data, during and after the research.<br>Link: <a href=\"https://"
+"intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx\" "
+"target=\"_blank\">Datamanagementplan</a>"
 
-#: attachments/kinds.py:256 attachments/models.py:41
+#: attachments/kinds.py:277 attachments/models.py:41
 #: proposals/views/attachment_views.py:58
 msgid "Overig bestand"
 msgstr "Other file type"
 
-#: attachments/kinds.py:257
+#: attachments/kinds.py:278
 msgid "Voor alle overige soorten bestanden"
 msgstr "For miscellaneous files"
 
@@ -396,6 +431,10 @@ msgstr "Revised"
 #: reviews/templates/reviews/review_attachments.html:69
 msgid "Nieuw bij deze aanvraag"
 msgstr "New with this review"
+
+#: docs/_build/html/_sources/developing/i18n.rst.txt:21
+msgid " "
+msgstr ""
 
 #: faqs/menus.py:7
 msgid "FETC-GW website"
@@ -1284,7 +1323,7 @@ msgstr ""
 #: observations/models.py:74 observations/models.py:84
 #: observations/models.py:99 proposals/models.py:516 proposals/models.py:535
 #: proposals/models.py:831 studies/models.py:174 studies/models.py:258
-#: studies/models.py:337 studies/models.py:367
+#: studies/models.py:337 studies/models.py:368
 msgid "Licht toe"
 msgstr "Explain"
 
@@ -2927,8 +2966,8 @@ msgid ""
 "Bijvoorbeeld: ouders van leerlingen 15 jaar en jonger, docenten, een "
 "controlegroep en een experimentele groep die verschillende taken krijgen."
 msgstr ""
-"For example: parents of children up to 15 years of age, teachers, or "
-"an experimental and control group that receive significantly different tasks."
+"For example: parents of children up to 15 years of age, teachers, or an "
+"experimental and control group that receive significantly different tasks."
 
 #: proposals/templates/proposals/proposal_start.html:63
 #: proposals/templates/proposals/proposal_start_practice.html:63
@@ -2957,14 +2996,18 @@ msgstr "Task"
 #: proposals/templates/proposals/proposal_start.html:70
 #: proposals/templates/proposals/proposal_start_practice.html:70
 #: proposals/templates/proposals/study_start.html:85
+#, fuzzy
+#| msgid ""
+#| "Een taak of onderdeel van je onderzoek. <p> Bijvoorbeeld: het invullen "
+#| "van een vragenlijst, een interview, of een bepaalde test. </p>"
 msgid ""
-"Een taak of onderdeel van je onderzoek. <p> Bijvoorbeeld: het invullen van "
-"een vragenlijst, een interview, of een bepaalde test. </p>"
+"Een taak of onderdeel van je onderzoek. <p>Bijvoorbeeld: het invullen van "
+"een vragenlijst, een interview, of een bepaalde test.</p>"
 msgstr ""
-" A task or procedure within your study. <p> For example: completing "
-"an interview, questionnaire, or a particular test.</p>"
+" A task or procedure within your study. <p> For example: completing an "
+"interview, questionnaire, or a particular test.</p>"
 
-#: proposals/templates/proposals/proposal_start.html:79
+#: proposals/templates/proposals/proposal_start.html:77
 #: proposals/templates/proposals/proposal_start_pre_approved.html:37
 #: proposals/templates/proposals/proposal_start_pre_assessment.html:43
 msgid "Volgende stap >>"
@@ -2975,7 +3018,7 @@ msgstr "Next step >>"
 msgid "Een nieuwe aanvraag aanmelden (oefenportaal)"
 msgstr "Register a new application (practice portal)"
 
-#: proposals/templates/proposals/proposal_start_practice.html:78
+#: proposals/templates/proposals/proposal_start_practice.html:76
 msgid "Houd er rekening mee dat een oefenaanvraag niet ingediend kan worden."
 msgstr ""
 "Please be advised that a practice application cannot be submitted to the "
@@ -4631,53 +4674,53 @@ msgstr "FEtC-H {}: confirmation of draft application submission"
 msgid "FETC-GW {}: beoordelen als eindverantwoordelijke"
 msgstr "FEtC-H {}: assess as researcher with final responsibility"
 
-#: reviews/utils/review_utils.py:171
+#: reviews/utils/review_utils.py:170
 msgid "FETC-GW {}: aanvraag ontvangen"
 msgstr "FEtC-H {}: application received"
 
-#: reviews/utils/review_utils.py:346
+#: reviews/utils/review_utils.py:348
 msgid "FETC-GW {}: nieuwe aanvraag voor voortoetsing"
 msgstr "FEtC-H {}: new application for preliminary assessment"
 
-#: reviews/utils/review_utils.py:367
+#: reviews/utils/review_utils.py:369
 msgid "FETC-GW {}: bevestiging indienen aanvraag voor voortoetsing"
 msgstr ""
 "FEtC-H {}: confirmation of submission of application for preliminary "
 "assessment"
 
-#: reviews/utils/review_utils.py:423
+#: reviews/utils/review_utils.py:425
 msgid "FETC-GW {}: nieuwe aanvraag ingediend"
 msgstr "FEtC-H {}: new application submitted"
 
-#: reviews/utils/review_utils.py:440
+#: reviews/utils/review_utils.py:443
 msgid "FETC-GW {}: nieuwe beoordeling toegevoegd"
 msgstr "FEtC-H {}: new decision added"
 
-#: reviews/utils/review_utils.py:485
+#: reviews/utils/review_utils.py:488
 msgid "FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld"
 msgstr "FEtC-H {}: a supervisor has reviewed your application"
 
-#: reviews/utils/review_utils.py:512
+#: reviews/utils/review_utils.py:515
 msgid "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
 msgstr ""
 "The application contains the participation of adults incapable of informed "
 "consent."
 
-#: reviews/utils/review_utils.py:516
+#: reviews/utils/review_utils.py:519
 msgid "De aanvraag bevat het gebruik van misleiding."
 msgstr "The application contains the use of misrepresentation."
 
-#: reviews/utils/review_utils.py:521
+#: reviews/utils/review_utils.py:524
 msgid ""
 "Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)"
 msgstr ""
 "A hierarchal relationship between researcher(s) and participant(s) exists."
 
-#: reviews/utils/review_utils.py:526
+#: reviews/utils/review_utils.py:529
 msgid "Het onderzoek verzamelt bijzondere persoonsgegevens."
 msgstr "This study collects special or sensitive personal details."
 
-#: reviews/utils/review_utils.py:531
+#: reviews/utils/review_utils.py:534
 msgid ""
 "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4685,7 +4728,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils/review_utils.py:541
+#: reviews/utils/review_utils.py:544
 msgid ""
 "De onderzoeker geeft aan dat sommige vragen binnen het onderzoek mogelijk "
 "dermate belastend kunnen zijn dat ze negatieve reacties bij de deelnemers en/"
@@ -4695,7 +4738,7 @@ msgstr ""
 "to the extent that they could result in negative responses from participants "
 "and/or other researchers."
 
-#: reviews/utils/review_utils.py:550
+#: reviews/utils/review_utils.py:553
 msgid ""
 "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid "
 "van de deelnemers tijdens of na het onderzoek."
@@ -4703,7 +4746,7 @@ msgstr ""
 "The applicant notes that there are possible concerns about the safety of "
 "participants during or after the study."
 
-#: reviews/utils/review_utils.py:561
+#: reviews/utils/review_utils.py:564
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4714,7 +4757,7 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:574
+#: reviews/utils/review_utils.py:577
 msgid ""
 "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom "
 "kennisveiligheid."
@@ -4722,7 +4765,7 @@ msgstr ""
 "The applicant notes that there are possible concerns about knowledge "
 "security."
 
-#: reviews/utils/review_utils.py:582
+#: reviews/utils/review_utils.py:585
 msgid ""
 "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid "
 "van de betrokken onderzoekers."
@@ -4730,14 +4773,14 @@ msgstr ""
 "The applicant notes that there are possible concerns about knowledge "
 "security."
 
-#: reviews/utils/review_utils.py:602
+#: reviews/utils/review_utils.py:605
 #, python-brace-format
 msgid "Het onderzoek observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The application contains sessions with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:610
+#: reviews/utils/review_utils.py:613
 msgid ""
 "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met "
 "toestemming na afloop van het onderzoek."
@@ -4745,7 +4788,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective consent."
 
-#: reviews/utils/review_utils.py:616
+#: reviews/utils/review_utils.py:619
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4755,11 +4798,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils/review_utils.py:623
+#: reviews/utils/review_utils.py:626
 msgid "De aanvraag bevat het gebruik van {}"
 msgstr "The application makes use of {}"
 
-#: reviews/utils/review_utils.py:649
+#: reviews/utils/review_utils.py:652
 msgid ""
 "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
 msgstr ""
@@ -5086,7 +5129,7 @@ msgstr ""
 "consider emotionally probing questions, insulting utterances, negative "
 "feedback, and frustrating, difficult, (very) long and/or (very) boring tasks."
 
-#: studies/models.py:339
+#: studies/models.py:340
 msgid ""
 "Geef concrete voorbeelden van de relevante aspecten van jouw onderzoek "
 "(bijv. voorbeelden van mogelijk zeer kwetsende woorden of uitspraken in de "
@@ -5098,7 +5141,7 @@ msgstr ""
 "questions in a questionnaire; negative feedback), so that the commission has "
 "a clear idea of what is involved."
 
-#: studies/models.py:350
+#: studies/models.py:351
 msgid ""
 "Zijn er kwesties rondom de veiligheid van, of risico's voor de deelnemers "
 "<em>tijdens of na</em> deelname aan het onderzoek?"
@@ -5106,7 +5149,7 @@ msgstr ""
 "Are there concerns relating to the safety of, or risks to, participants "
 "<em>during or after</em> participation in the research?"
 
-#: studies/models.py:355
+#: studies/models.py:356
 msgid ""
 "Houd hierbij niet alleen rekening met mogelijke psychische of fysieke "
 "schadelijke gevolgen, maar ook met andere mogelijke schade, zoals bijv. "
@@ -5118,16 +5161,16 @@ msgstr ""
 "em> minimal? I.e. is the chance of and/or magnitude of potential damage to "
 "participants clearly <em>above</em> that of the \"background risk\"?"
 
-#: studies/models.py:535
+#: studies/models.py:536
 #, python-format
 msgid "Study details for proposal %s"
 msgstr "Study details for proposal %s"
 
-#: studies/models.py:540
+#: studies/models.py:541
 msgid "Maak je gebruik van passieve toestemming?"
 msgstr "Will you use passive consent?"
 
-#: studies/models.py:543
+#: studies/models.py:544
 msgid ""
 "Wanneer je kinderen via een instelling (dus ook school) werft en je de "
 "ouders niet laat ondertekenen, maar in plaats daarvan de leiding van die "
@@ -5142,7 +5185,7 @@ msgstr ""
 "ethics-assessment-committee-humanities\" target=\"_blank\">here</a>."
 
 # studies/models.py:229
-#: studies/models.py:556
+#: studies/models.py:557
 msgid ""
 "Licht je antwoord toe. Wij willen je wijzen op het reglement, sectie 3.1 'd' "
 "en 'e'. Passive consent is slechts in enkele gevallen toegestaan en draagt "
@@ -5152,23 +5195,23 @@ msgstr ""
 "'d' and 'e'. Passive consent is allowed under certain situations but is not "
 "preferred by the committee."
 
-#: studies/models.py:573
+#: studies/models.py:574
 msgid "Upload hier de toestemmingsverklaring (in .pdf of .doc(x)-formaat)"
 msgstr ""
 "Please upload the declaration of consent here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:575
+#: studies/models.py:576
 msgid ""
 "Als je de AVG grondslag 'Algemeen belang' gebruikt, en er helemaal geen "
 "toestemmingsverklaring nodig is (ook niet voor bijzondere persoonsgegevens "
 "of opnames), upload dan een leeg document in dit veld."
 msgstr ""
 
-#: studies/models.py:584
+#: studies/models.py:585
 msgid "Upload hier de informatiebrief (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the information letter here (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:593
+#: studies/models.py:594
 msgid ""
 "Upload hier de toestemmingsverklaring voor de leiding of het management van "
 "de instelling (in .pdf of .doc(x)-format)"
@@ -5176,7 +5219,7 @@ msgstr ""
 "Please upload the declaration of consent for the management of the school or "
 "institution (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:598
+#: studies/models.py:599
 msgid ""
 "Upload indien mogelijk een ondertekende versie van het document. Upload als "
 "deze nog niet bestaat een blanco versie, en stuur de ondertekende versie "
@@ -5187,7 +5230,7 @@ msgstr ""
 "and follow up by sending a signed copy to the secretary of the FEtC-H once "
 "available."
 
-#: studies/models.py:606
+#: studies/models.py:607
 msgid ""
 "Upload hier de informatiebrief voor de leiding of het management van de "
 "instelling (in .pdf of .doc(x)-formaat)"
@@ -5195,7 +5238,7 @@ msgstr ""
 "Please upload the the information letter for the management of the school or "
 "institution (in .pdf or .doc(x)-format)"
 
-#: studies/models.py:616
+#: studies/models.py:617
 msgid ""
 "Upload hier de informatiebrief voor de ouders of verzorgers (in .pdf of ."
 "doc(x)-formaat)"
@@ -5549,7 +5592,9 @@ msgstr ""
 
 #: tasks/models.py:127
 msgid "Hoe vaak voert een deelnemer deze taak uit binnen deze sessie?"
-msgstr "How many times per participant will this task be performed within this session?"
+msgstr ""
+"How many times per participant will this task be performed within this "
+"session?"
 
 #: tasks/models.py:129
 msgid ""
