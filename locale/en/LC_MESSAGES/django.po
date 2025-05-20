@@ -2936,7 +2936,7 @@ msgstr "Task"
 #: proposals/templates/proposals/study_start.html:85
 msgid ""
 "Een taak of onderdeel van je onderzoek. <p> Bijvoorbeeld: het invullen van "
-"een vragenlijst, een interview, of een bepaalde test.</p>"
+"een vragenlijst, een interview, of een bepaalde test. </p>"
 msgstr ""
 " A task or procedure within your study. <p> For example: completing "
 "an interview, questionnaire, or a particular test. </p>"
