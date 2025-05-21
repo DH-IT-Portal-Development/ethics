@@ -403,6 +403,7 @@ cadeautje."
     )
     negativity_details = models.TextField(
         _("Licht toe"),
+        max_length=1000,
         help_text=_(
             "Geef concrete voorbeelden van de relevante aspecten van jouw "
             "onderzoek (bijv. voorbeelden van mogelijk zeer kwetsende woorden "
@@ -432,7 +433,7 @@ cadeautje."
         choices=YesNoDoubt.choices,
         blank=True,
     )
-    risk_details = models.TextField(_("Licht toe"), max_length=200, blank=True)
+    risk_details = models.TextField(_("Licht toe"), max_length=1000, blank=True)
 
     # References
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)

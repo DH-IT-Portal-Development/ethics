@@ -292,7 +292,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         max_length=200,
         blank=True,
         help_text=_(
-            "De titel die je hier opgeeft zal in de formele toestemmingsbrief "
+            "De titel die je hier opgeeft zal in de formele goedkeuringsbrief "
             "gebruikt worden."
         ),
     )
@@ -791,7 +791,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
             )
             self.save()
         else:
-            logger.warn(
+            logger.info(
                 f"Not saving PDF of {self.reference_number} "
                 "to preserve canonical PDF.",
             )

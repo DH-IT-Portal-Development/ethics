@@ -10,7 +10,6 @@ __pycache__/
 media/*
 !media/test_pdf.pdf
 certs/
-fetc/ldap_settings.py
 fetc/saml_settings.py
 *.sqlite3
 cdh_files/
@@ -24,8 +23,8 @@ htmlcov/
 .idea
 
 ### Docs ###
-docs/_build/doctrees/**
-*.doctree
+docs/_build/
+docs/reference/
 
 ### Virtualenv ###
 .python-version

@@ -1,7 +1,7 @@
 {% extends "mail/base-internal.txt" %}
 
 {% block content %}
-Er is een nieuwe aanvraag ingediend (referentienummer: {{ review.proposal.reference_number }}, eindverantwoordelijke: {{ review.accountable_user.get_full_name }}, kamer: {{ review.proposal.reviewing_committee.name }}).
+Er is {% if was_revised %}een revisie{% else %}een nieuwe aanvraag{% endif %} ingediend (referentienummer: {{ review.proposal.reference_number }}, eindverantwoordelijke: {{ review.accountable_user.get_full_name }}, kamer: {{ review.proposal.reviewing_committee.name }}).
 Deze aanvraag zou volgens de automatische screening de {{ review.short_route|yesno:"korte,lange" }} route moeten doorlopen.
 De aanvraag is te vinden onder "{{ review.proposal.reviewing_committee.name }} -> Openstaande besluiten".
 {% endblock %}

@@ -20,7 +20,7 @@ jobs:
       - name: Install OS dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install libldap2-dev libsasl2-dev libssl-dev gettext poppler-utils poppler-data libpoppler-cpp-dev
+          sudo apt-get install libsasl2-dev libssl-dev gettext poppler-utils poppler-data libpoppler-cpp-dev
       - uses: actions/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2

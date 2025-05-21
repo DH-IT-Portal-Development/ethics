@@ -4,7 +4,6 @@ from django.utils.translation import gettext as _
 from django.urls import reverse
 from main.utils import renderable
 
-
 from cdh.files.db import FileField as CDHFileField
 
 # Create your models here.
@@ -108,7 +107,7 @@ class Attachment(models.Model, renderable):
 
     def get_download_url(self, proposal):
         return reverse(
-            "proposals:download_attachment_original",
+            "proposals:download_attachment",
             kwargs={
                 "proposal_pk": proposal.pk,
                 "attachment_pk": self.pk,
@@ -134,10 +133,13 @@ class ProposalAttachment(
         proposal,
     ):
         """
-        This method doesn't do much, it's just here to provide
-        a consistent interface for getting owner objects.
+        Returns the given proposal if this Attachment is attached to it, or
+        None if that is not the case.
         """
-        return proposal
+        owner = None
+        if proposal in self.attached_to.all():
+            owner = proposal
+        return owner
 
 
 class StudyAttachment(
@@ -153,6 +155,11 @@ class StudyAttachment(
         proposal,
     ):
         """
-        Gets the owner study based on given proposal.
+        Gets the owner study based on given proposal, or None
+        if no such study exists.
         """
-        return self.attached_to.get(proposal=proposal)
+        try:
+            owner = self.attached_to.get(proposal=proposal)
+        except self.attached_to.model.DoesNotExist:
+            owner = None
+        return owner

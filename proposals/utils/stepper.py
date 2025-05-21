@@ -262,7 +262,10 @@ class Stepper(renderable):
                 # When using this method on the submit page, we
                 # use the form's own validation, otherwise it gets
                 # validated twice
-                if exclude_submit and item.form_class == ProposalSubmitForm:
+                if (
+                    exclude_submit
+                    and getattr(item, "form_class", None) is ProposalSubmitForm
+                ):
                     continue
                 troublesome_pages.append(
                     {
