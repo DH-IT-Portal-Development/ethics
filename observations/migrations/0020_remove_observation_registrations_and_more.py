@@ -7,7 +7,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ("observations", "0019_alter_observation_details_frequency_and_more"),
-        ("studies", "0036_translate_old_registrations"),
+        ("studies", "0038_translate_old_registrations"),
     ]
 
     operations = [

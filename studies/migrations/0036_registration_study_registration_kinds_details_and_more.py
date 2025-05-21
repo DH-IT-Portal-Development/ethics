@@ -7,7 +7,7 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("studies", "0033_alter_documents_informed_consent"),
+        ("studies", "0035_alter_study_negativity_details"),
     ]
 
     operations = [

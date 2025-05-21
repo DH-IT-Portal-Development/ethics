@@ -6,8 +6,8 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("tasks", "0018_alter_session_tasks_duration_alter_task_description_and_more"),
-        ("studies", "0036_translate_old_registrations"),
+        ("tasks", "0020_alter_session_repeats_alter_task_repeats"),
+        ("studies", "0038_translate_old_registrations"),
     ]
 
     operations = [

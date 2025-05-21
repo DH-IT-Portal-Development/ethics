@@ -161,7 +161,7 @@ def migrate_old_registrations(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("studies", "0035_load_registration_fixtures"),
+        ("studies", "0037_load_registration_fixtures"),
     ]
 
     operations = [

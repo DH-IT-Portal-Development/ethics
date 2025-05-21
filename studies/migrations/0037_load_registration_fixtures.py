@@ -17,7 +17,8 @@ def load_registration_fixtures(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("studies", "0034_registration_study_registration_kinds_details_and_more"),
+        ("studies", "0036"
+        "_registration_study_registration_kinds_details_and_more"),
     ]
 
     operations = [
