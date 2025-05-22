@@ -776,15 +776,10 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
 
         for field in self.fields:
             if cleaned_data[field] is None:
-                if (
-                    field is "privacy_officer_conversation"
-                    or field is "data_manager_conversation"
-                    or field is "research_data_management_conversation"
-                ):
-                    self.add_error(
-                        field,
-                        _("Dit veld is verplicht om verder te gaan."),
-                    )
+                self.add_error(
+                    field,
+                    _("Dit veld is verplicht om verder te gaan."),
+                )
 
 
 class ProposalUpdateDataManagementForm(TemplatedModelForm):
