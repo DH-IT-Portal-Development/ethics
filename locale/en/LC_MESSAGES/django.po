@@ -1890,9 +1890,9 @@ msgstr ""
 #: proposals/models.py:451
 msgid ""
 "Ik heb mijn Data Management Plan (DMP) besproken met de data manager van de "
-"Faculteit Geesteswetenschappen."
+"faculteit Geesteswetenschappen."
 msgstr ""
-"I discussed my application and Data Management Plan (DMP) with the data manager of Faculty of Humanities"
+"I discussed my application and Data Management Plan (DMP) with the data manager of faculty of Humanities"
 
 #: proposals/models.py:463
 msgid ""
