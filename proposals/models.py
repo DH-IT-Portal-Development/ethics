@@ -448,7 +448,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
 
     data_manager_conversation = models.BooleanField(
         _(
-            "Ik heb mijn Data Management Plan (DMP) besproken met de data manager van de Faculteit Geesteswetenschappen."
+            "Ik heb mijn Data Management Plan (DMP) besproken met de data manager van de faculteit Geesteswetenschappen."
         ),
         default=None,
         null=True,
