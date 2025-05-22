@@ -12,18 +12,17 @@ from .utils import (
     start_review,
     auto_review,
     auto_review_observation,
-    auto_review_task,
     notify_secretary,
 )
 from main.tests import BaseViewTestCase
 from main.models import YesNoDoubt
 from proposals.models import Proposal, Relation, Wmo
 from proposals.utils import generate_ref_number
-from studies.models import Study, Compensation, AgeGroup
+from studies.models import Study, Compensation, AgeGroup, Registration
 from observations.models import Observation
 from reviews.utils.review_utils import remind_supervisor_reviewers
 from interventions.models import Intervention
-from tasks.models import Session, Task, Registration, RegistrationKind
+from tasks.models import Session, Task
 
 from .views import ReviewCloseView
 
@@ -362,21 +361,20 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review_observation(o)
         self.assertEqual(len(reasons), 2)
 
-    def test_auto_review_task(self):
-        self.study.has_sessions = True
+    def test_auto_review_registrations(self):
         self.study.age_groups.set(AgeGroup.objects.filter(pk=4))  # adolescents
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
 
-        s1 = Session.objects.create(study=self.study, order=1)
-        s1_t1 = Task.objects.create(session=s1, order=1)
-        s1_t1.registrations.set(
+        self.study.registrations.set(
             Registration.objects.filter(pk=6)
         )  # psychofysiological measurements
 
-        reasons = auto_review_task(self.study, s1_t1)
+        reasons = auto_review(
+            self.proposal,
+        )
         self.assertEqual(len(reasons), 1)
 
 
