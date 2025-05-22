@@ -27,6 +27,8 @@ class AttachmentKind:
     max_num = None
     attached_field = "attachments"
     desiredness = desiredness.OPTIONAL
+    more_info_link = "" #optional
+    more_info_link_name = "" #defaults to name in template unless overridden.
 
     @classmethod
     def get_fn_part(cls):

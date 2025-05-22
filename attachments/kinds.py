@@ -34,7 +34,7 @@ class InformationLetterAnonymous(StudyAttachmentKind):
 
     db_name = "information_letter_anonymous"
     name = _("Informatiebrief anoniem onderzoek")
-    description = mark_safe_lazy(_(
+    description = _(
         "Je verzamelt en verwerkt de gegevens van je deelnemers"
         " anoniem. Je moet je deelnemers dan wél informeren op"
         " ethische gronden (zodat ze kunnen beslissen of ze"
@@ -42,39 +42,38 @@ class InformationLetterAnonymous(StudyAttachmentKind):
         " van toepassing is op anonieme gegevens, hoef je geen"
         " informatie te verstrekken over de verwerking van"
         " persoonsgegevens."
-        "<br>Link: <a href=\"https://intranet.uu.nl/media/34426\" target=\"_blank\">Informatiebrief anoniem onderzoek</a>"
-    ))
+    )
     desiredness = desiredness.REQUIRED
+    more_info_link = _("https://intranet.uu.nl/media/34426")
+
 
 
 class InformationLetterPublicInterest(StudyAttachmentKind):
 
     db_name = "information_letter_public_interest"
     name = _("Informatiebrief algemeen belang")
-    description = mark_safe_lazy(_(
+    description = _(
         "Je kiest ervoor om de verwerking van persoonsgegevens te"
         " baseren op het algemeen belang. In beginsel is dit"
         " de standaardwerkwijze. \n"
         "Let op! Voor bepaalde aspecten van je onderzoek kan het"
         " desondanks nodig zijn om toestemming te vragen."
-        "<br>Link: <a href=\"https://intranet.uu.nl/media/34425\" target=\"_blank\">Informatiebrief algemeen belang</a>"
-    ))
+    )
     desiredness = desiredness.REQUIRED
-
+    more_info_link = _("https://intranet.uu.nl/media/34425")
 
 class InformationLetterConsent(StudyAttachmentKind):
 
     db_name = "information_letter_consent"
     name = _("Informatiebrief toestemming")
-    description = mark_safe_lazy(_(
+    description = _(
         "Er zijn redenen om de verwerking van persoonsgegevens"
         " te baseren op toestemming van de deelnemers."
         " Bijvoorbeeld als er gevoelige data wordt verzameld of"
         " er met minderjarigen wordt gewerkt."
-        "<br>Link: <a href=\"https://intranet.uu.nl/media/34428\" target=\"_blank\">Informatiebrief Toestemming</a>"
-    ))
+    )
     desiredness = desiredness.REQUIRED
-
+    more_info_link = _("https://intranet.uu.nl/media/34428")
 
 LEGAL_BASIS_KIND_DICT = {
     Study.LegalBases.ANONYMOUS: InformationLetterAnonymous,
@@ -92,56 +91,53 @@ class ConsentFormAdults(StudyAttachmentKind):
 
     db_name = "consent_form_adults"
     name = _("Toestemmingsverklaring 16+")
-    description = mark_safe_lazy(_(
+    description = _(
         "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op"
         " de wettelijke grondslag toestemming. De deelnemers zijn volwassenen"
         " (16 jaar en ouder)."
-        "<br>Link: <a href=\"https://intranet.uu.nl/media/34434\" target=\"_blank\">Toestemmingsverklaring Toestemming</a>"
-    ))
+    )
     desiredness = desiredness.REQUIRED
-
+    more_info_link = _("https://intranet.uu.nl/media/34434")
+    more_info_link_name = _("Toestemmingsverklaring Toestemming")
 
 class ConsentPublicInterestSpecialDetails(StudyAttachmentKind):
 
     db_name = "consent_public_interest_special_details"
     name = _("Toestemmingsverklaring algemeen belang bijzondere persoonsgegevens")
-    description = mark_safe_lazy(_(
+    description = _(
         "Je baseert de verwerking van persoonsgegevens binnen je onderzoek"
         " weliswaar op de wettelijke grondslag algemeen belang, maar je"
         " verzamelt zgn. bijzondere persoonsgegevens externe link en daarvoor"
         " heb je toestemming nodig."
-        "<br>Link: <a href=\"https://intranet.uu.nl/media/34431\" target=\"_blank\">Toestemmingsverklaring - grondslag Algemeen belang - bijzondere persoonsgegevens</a>"
-    ))
+    )
     desiredness = desiredness.REQUIRED
-
+    more_info_link = _("https://intranet.uu.nl/media/34431")
 
 class ConsentChildrenParents(StudyAttachmentKind):
 
     db_name = "consent_children_w_parents"
     name = _("Toestemmingsverklaring kinderen tot 16 jaar, ouders of voogden aanwezig")
-    description = mark_safe_lazy(_(
+    description = _(
         "Je baseert de verwerking van persoonsgegevens binnen je"
         " onderzoek op de wettelijke grondslag toestemming. De"
         " deelnemers zijn kinderen jonger dan 16 jaar en minimaal"
         " één van de ouders of voogden is bij het onderzoek aanwezig."
-        "<br>Link: <a href=\"https://intranet.uu.nl/media/34432\" target=\"_blank\">Toestemmingsverklaring - grondslag Toestemming - kinderen tot 16 jaar - ouders-voogden aanwezig bij onderzoek</a>"
-    ))
+    )
     desiredness = desiredness.REQUIRED
-
+    more_info_link = _("https://intranet.uu.nl/media/34432")
 
 class ConsentChildrenNoParents(StudyAttachmentKind):
 
     db_name = "consent_children_no_parents"
     name = _("Toestemmingsverklaring kinderen tot 16 jaar, ouders of voogden afwezig")
-    description = mark_safe_lazy(_(
+    description = _(
         "Je baseert de verwerking van persoonsgegevens binnen je"
         " onderzoek op de wettelijke grondslag toestemming. De"
         " deelnemers zijn kinderen jonger dan 16 jaar en er zijn"
-        " geen ouders of voodgen aanwezig."
-        "<br>Link: <a href=\"https://intranet.uu.nl/media/34433\" target=\"_blank\">Toestemmingsverklaring - grondslag Toestemming - kinderen tot 16 jr_ouders-voogden niet bij onderzoek</a>"
-    ))
+        " geen ouders of voogden aanwezig."
+    )
     desiredness = desiredness.REQUIRED
-
+    more_info_link = _("https://intranet.uu.nl/media/34433")
 
 ####################
 # Recordings consent
@@ -152,16 +148,15 @@ class AgreementRecordingsAdults(StudyAttachmentKind):
 
     db_name = "agreement_av_recordings_adults"
     name = _("Akkoordverklaring beeld- en geluidsopnames algemeen belang 16+")
-    description = mark_safe_lazy(_(
-        "Je baseert de verwerking van persoonsgegevens op de"
-        " wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
-        " geluidsopnames van volwassenen en daar moeten je deelnemers op ethische gronden"
-        " mee instemmen. Ook voor het verdere gebruik van die opnames kun"
-        " je de afspraken schriftelijk vastleggen."
-        "<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20grondslag%20Algemeen%20belang%20-%20beeld-%20en%20geluidsopnames.docx\" target=\"_blank\">Akkoordverklaring - grondslag Algemeen belang - beeld- en geluidsopnames</a>"
-    ))
+    description = _(
+        "Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
+        "algemeen belang, maar je maakt beeld- en/of geluidsopnames van volwassenen "
+        "en daar moeten je deelnemers op ethische gronden mee instemmen. Ook voor het "
+        "verdere gebruik van die opnames kun je de afspraken schriftelijk vastleggen."
+    )
     desiredness = desiredness.REQUIRED
-
+    more_info_link = _("https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20grondslag%20Algemeen%20belang%20-%20beeld-%20en%20geluidsopnames.docx")
+    more_info_link_name = _("Akkoordverklaring - grondslag Algemeen belang - beeld- en geluidsopnames")
 
 class AgreementRecordingsChildrenParents(StudyAttachmentKind):
 
@@ -169,17 +164,17 @@ class AgreementRecordingsChildrenParents(StudyAttachmentKind):
     name = _(
         "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden aanwezig"
     )
-    description = mark_safe_lazy(_(
+    description = _(
         "Je baseert de verwerking van persoonsgegevens op de"
         " wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
         " geluidsopnames van kinderen in aanwezigheid van diens ouders of voogden."
         " Daar moeten de ouders of voogden van de deelnemers op ethische gronden"
         " mee instemmen. Ook voor het verdere gebruik van die opnames kun"
         " je de afspraken schriftelijk vastleggen."
-        "<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20WEL%20aanwezig.docx\" target=\"_blank\">Akkoordverklaring – Algemeen belang - Opnames kind - ouders-voogden aanwezig bij onderzoek</a>"
-    ))
+    )
     desiredness = desiredness.REQUIRED
-
+    more_info_link = _("https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20WEL%20aanwezig.docx")
+    more_info_link_name = _("Akkoordverklaring – Algemeen belang - Opnames kind - ouders-voogden aanwezig bij onderzoek")
 
 class AgreementRecordingsChildrenNoParents(StudyAttachmentKind):
 
@@ -187,31 +182,30 @@ class AgreementRecordingsChildrenNoParents(StudyAttachmentKind):
     name = _(
         "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden afwezig"
     )
-    description = mark_safe_lazy(_(
+    description = _(
         "Je baseert de verwerking van persoonsgegevens op de"
         " wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
         " geluidsopnames van kinderen in afwezigheid van diens ouders of voogden."
         " Daar moeten de ouders of voogden van de deelnemers op ethische gronden"
         " mee instemmen. Ook voor het verdere gebruik van die opnames kun"
         " je de afspraken schriftelijk vastleggen."
-        "<br>Link: <a href=\"https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20NIET%20aanwezig.docx\" target=\"_blank\">Akkoordverklaring - Algemeen belang - Opnames kind - ouders-voogden NIET aanwezig</a>"
-    ))
+    )
     desiredness = desiredness.REQUIRED
-
+    more_info_link = _("https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20NIET%20aanwezig.docx")
+    more_info_link_name = _("Akkoordverklaring - Algemeen belang - Opnames kind - ouders-voogden NIET aanwezig")
 
 class ScriptVerbalConsentRecordings(StudyAttachmentKind):
 
     db_name = "script_verbal_consent_recordings"
     name = _("Script voor mondelinge toestemming opnames")
-    description = mark_safe_lazy(_(
+    description = _(
         "Je interviewt deelnemers en je maakt daarvan beeld- en/of"
         " geluidsopnames. De toestemming daarvoor, en de eventuele"
         " toestemming en afspraken met betrekking tot andere aspecten van"
         " de verwerking van persoonsgegevens, leg je vast in een aparte opname."
-        "<br>Link: <a href=\"https://intranet.uu.nl/media/34429\" target=\"_blank\">SCRIPT voor mondelinge toestemming opnames</a>"
-    ))
+    )
     desiredness = desiredness.REQUIRED
-
+    more_info_link = _("https://intranet.uu.nl/media/34429")
 
 ##############
 # School stuff
@@ -222,30 +216,28 @@ class SchoolInformationLetter(ProposalAttachmentKind):
 
     db_name = "school_information_letter"
     name = _("Informatiebrief gatekeeper/schoolleiding")
-    description = mark_safe_lazy(_(
+    description = _(
         "Je wilt onderzoek gaan doen binnen een bepaalde instelling (bijv."
         " een school) en je verzoekt de leiding van die instelling om"
         " medewerking. Voor het maken van een geïnformeerde keuze moet de"
         " leiding van de instelling op de hoogte zijn van de opzet van je"
         " onderzoek en van allerlei praktische aspecten."
-        "<br>Link: <a href=\"https://intranet.uu.nl/media/34427\" target=\"_blank\">Informatiebrief gatekeeper/schoolleiding</a>"
-    ))
+    )
     desiredness = desiredness.REQUIRED
-
+    more_info_link = _("https://intranet.uu.nl/media/34427")
 
 class SchoolConsentForm(ProposalAttachmentKind):
 
     db_name = "school_consent_form"
     name = _("Akkoordverklaring gatekeeper/schoolleiding")
-    description = mark_safe_lazy(_(
+    description = _(
         "Je wilt onderzoek gaan doen binnen een bepaalde instelling (bijv."
         " een school) en je verzoekt de leiding van die instelling om"
         " medewerking. De schoolleiding moet, na goed geïnformeerd te zijn"
         " toestemming geven voor het onderzoek."
-        "<br>Link: <a href=\"https://intranet.uu.nl/media/34424\" target=\"_blank\">Akkoordverklaring - gatekeeper-schoolleiding</a>"
-    ))
+    )
     desiredness = desiredness.REQUIRED
-
+    more_info_link = _("https://intranet.uu.nl/media/34424")
 
 #############
 # Other stuff
@@ -257,15 +249,15 @@ class DataManagementPlan(ProposalAttachmentKind):
     db_name = "dmp"
     name = _("Data Management Plan")
     #requires acces to intranet something every user should have
-    description = mark_safe_lazy(_(
+    description = _(
         "Een Data Management Plan (DMP) is een document, dat voorafgaand aan een "
         "onderzoeksproject wordt opgesteld. Hierin worden alle aspecten omtrent de "
         "omgang met onderzoeksdata, tijdens en na afloop van het onderzoek, "
         "uiteengezet."
-        "<br>Link: <a href=\"https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx\" target=\"_blank\">Datamanagementplan</a>"
-        ))
+        )
 
     desiredness = desiredness.RECOMMENDED
+    more_info_link = _("https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx")
 
     def num_recommended(self):
         return 1
