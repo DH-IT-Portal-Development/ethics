@@ -86,7 +86,7 @@ def migrate_old_registrations(apps, schema_editor):
             Registration = apps.get_model("studies", "Registration")
             for reg in observation.registrations.all():
                 # add the translated observation registration to the study
-                new_reg = Registration.objects.get(pk = ort[reg.description])
+                new_reg = Registration.objects.get(pk=ort[reg.description])
                 study.registrations.add(new_reg)
                 # if the registration is "other", also add registrations_details
                 if reg.pk == 5:

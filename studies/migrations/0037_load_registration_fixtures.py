@@ -14,7 +14,7 @@ import json
 #   - I changed the 'registration' field of registrationkind to 'registration_id', otherwise an int
 #     does not get accepted.
 
-registration_fixtures = '''
+registration_fixtures = """
 [{"model": "studies.registration","pk": 1,"fields": {"order": 1,"description": "audio-opname","description_nl": "audio-opname","description_en": "audio recording","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": true}},
 {"model": "studies.registration","pk": 2,"fields": {"order": 2,"description": "video-opname","description_nl": "video-opname","description_en": "video recording","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": true,"age_min": null,"is_recording": true}},
 {"model": "studies.registration","pk": 3,"fields": {"order": 3,"description": "een vragenlijst (papier of digitaal, evt via internet)","description_nl": "een vragenlijst (papier of digitaal, evt via internet)","description_en": "a survey (on paper or digitally, possibly using internet)","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}},
@@ -26,9 +26,9 @@ registration_fixtures = '''
 {"model": "studies.registration","pk": 9,"fields": {"order": 9,"description": "notities","description_nl": "notities","description_en": "notes","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}},
 {"model": "studies.registration","pk": 10,"fields": {"order": 10,"description": "geen registratie","description_nl": "geen registratie","description_en": "no registration","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": true,"age_min": null,"is_recording": false}},
 {"model": "studies.registration","pk": 11,"fields": {"order": 11,"description": "anders, namelijk","description_nl": "anders, namelijk","description_en": "otherwise, viz.","is_local": false,"needs_details": true,"needs_kind": false,"requires_review": true,"age_min": null,"is_recording": false}}]
-'''
+"""
 
-registrationkind_fixtures = '''
+registrationkind_fixtures = """
 [{"model": "studies.registrationkind","pk": 1,"fields": {"order": 1,"description": "EEG (electroencephalography)","description_nl": "EEG (electroencephalography)","description_en": "EEG (electroencephalography)","needs_details": false,"requires_review": false,"registration_id": 6}},
 {"model": "studies.registrationkind","pk": 2,"fields": {"order": 2,"description": "fMRI (functional magnetic resonance imaging)","description_nl": "fMRI (functional magnetic resonance imaging)","description_en": "fMRI (functional magnetic resonance imaging)","needs_details": false,"requires_review": false,"registration_id": 6}},
 {"model": "studies.registrationkind","pk": 3,"fields": {"order": 3,"description": "fNIRS (functional near-infrared spectroscopy)","description_nl": "fNIRS (functional near-infrared spectroscopy)","description_en": "fNIRS (functional near-infrared spectroscopy)","needs_details": false,"requires_review": false,"registration_id": 6}},
@@ -40,7 +40,8 @@ registrationkind_fixtures = '''
 {"model": "studies.registrationkind","pk": 9,"fields": {"order": 9,"description": "ademhaling","description_nl": "ademhaling","description_en": "breathing","needs_details": false,"requires_review": false,"registration_id": 6}},
 {"model": "studies.registrationkind","pk": 10,"fields": {"order": 10,"description": "vingertemperatuur","description_nl": "vingertemperatuur","description_en": "finger temperature","needs_details": false,"requires_review": false,"registration_id": 6}},
 {"model": "studies.registrationkind","pk": 11,"fields": {"order": 11,"description": "anders, namelijk","description_nl": "anders, namelijk","description_en": "otherwise, viz.","needs_details": true,"requires_review": false,"registration_id": 6}}]
-'''
+"""
+
 
 def load_registration_fixtures(apps, schema_editor):
     # first load the registrations
@@ -56,11 +57,11 @@ def load_registration_fixtures(apps, schema_editor):
         reg_kind = RegistrationKind(pk=reg_kind_fixt["pk"], **reg_kind_fixt["fields"])
         reg_kind.save()
 
+
 class Migration(migrations.Migration):
 
     dependencies = [
-        ("studies", "0036"
-        "_registration_study_registration_kinds_details_and_more"),
+        ("studies", "0036" "_registration_study_registration_kinds_details_and_more"),
     ]
 
     operations = [
