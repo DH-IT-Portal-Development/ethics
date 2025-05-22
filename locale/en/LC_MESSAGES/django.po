@@ -3022,13 +3022,9 @@ msgstr "Task"
 #: proposals/templates/proposals/proposal_start.html:70
 #: proposals/templates/proposals/proposal_start_practice.html:70
 #: proposals/templates/proposals/study_start.html:85
-#, fuzzy
-#| msgid ""
-#| "Een taak of onderdeel van je onderzoek. <p> Bijvoorbeeld: het invullen "
-#| "van een vragenlijst, een interview, of een bepaalde test. </p>"
 msgid ""
-"Een taak of onderdeel van je onderzoek. <p>Bijvoorbeeld: het invullen van "
-"een vragenlijst, een interview, of een bepaalde test.</p>"
+"Een taak of onderdeel van je onderzoek. <p> Bijvoorbeeld: het invullen van "
+"een vragenlijst, een interview, of een bepaalde test. </p>"
 msgstr ""
 " A task or procedure within your study. <p> For example: completing an "
 "interview, questionnaire, or a particular test.</p>"
