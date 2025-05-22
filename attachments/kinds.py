@@ -7,12 +7,6 @@ from main.utils import renderable
 from attachments.models import ProposalAttachment, StudyAttachment
 from attachments.utils import AttachmentKind, desiredness
 
-from django.utils.functional import lazy
-from django.utils.safestring import mark_safe, SafeString
-
-mark_safe_lazy = lazy(mark_safe, SafeString)
-
-
 class ProposalAttachmentKind(AttachmentKind):
 
     attached_object = Proposal
