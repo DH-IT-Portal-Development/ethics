@@ -2,7 +2,7 @@
 
 from django.db import migrations
 
-# This custom data_migration attempts to translate the old registration data,
+# This custom data_migration translates the old registration data,
 # namely:
 # - Observation.registratons etc.
 # - Intervention.measurement
@@ -10,21 +10,21 @@ from django.db import migrations
 # to the new system. This system is based on how we asked about registrations
 # for tasks.
 
-# this dictionary translates observation registration pk's to the new registration pk's
-# The keys are the pk's of observation registrations and the values of the corresponding
-# new style registrations.
+# this dictionary translates observation registration descriptions to the new
+# registration pk's. The keys are the descriptions of observation registrations
+# and the values the pk's of the corresponding new style registrations.
 
 observation_registration_translation = {
     # logdata
-    1: 8,
+    "logdata": 8,
     # audio-recording
-    2: 1,
+    "audio-opname": 1,
     # video-recording
-    3: 2,
+    "video-opname": 2,
     # notes
-    4: 9,
+    "notities": 9,
     # other
-    5: 10,
+    "anders": 10,
 }
 
 # let's just shorten that funny variable name
@@ -83,9 +83,11 @@ def migrate_old_registrations(apps, schema_editor):
             study.save()
 
         if observation:
+            Registration = apps.get_model("studies", "Registration")
             for reg in observation.registrations.all():
                 # add the translated observation registration to the study
-                study.registrations.add(ort[reg.pk])
+                new_reg = Registration.objects.get(pk = ort[reg.description])
+                study.registrations.add(new_reg)
                 # if the registration is "other", also add registrations_details
                 if reg.pk == 5:
                     reg_details_dict["Observation"] = observation.registrations_details
