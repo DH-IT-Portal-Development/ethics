@@ -17,7 +17,7 @@ from .serializers import DecisionSerializer, ReviewSerializer
 
 
 def return_latest_decisions(objects):
-    #return latest decisions from each proposal
+    # return latest decisions from each proposal
     decisions = OrderedDict()
     for obj in objects:
         proposal = obj.review.proposal
@@ -28,7 +28,8 @@ def return_latest_decisions(objects):
                 decisions[proposal.pk] = obj
     return decisions
 
-#would be the same method as lasted_decisions if we give proposals instead of objects to this method.
+
+# would be the same method as lasted_decisions if we give proposals instead of objects to this method.
 def return_latest_reviews(objects):
     reviews = OrderedDict()
     for obj in objects:
@@ -39,7 +40,6 @@ def return_latest_reviews(objects):
             if reviews[proposal.pk].pk < obj.pk:
                 reviews[proposal.pk] = obj
     return reviews
-
 
 
 class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
@@ -184,7 +184,6 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
 
     def get_queryset_for_committee(self):
         """Returns all open Decisions of the current User"""
-
 
         objects = Decision.objects.filter(
             reviewer=self.request.user,
