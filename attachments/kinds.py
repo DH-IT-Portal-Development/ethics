@@ -38,7 +38,7 @@ class InformationLetterAnonymous(StudyAttachmentKind):
         " persoonsgegevens."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/media/34426")
+    model_document_link = _("https://intranet.uu.nl/media/34426")
 
 
 
@@ -54,7 +54,7 @@ class InformationLetterPublicInterest(StudyAttachmentKind):
         " desondanks nodig zijn om toestemming te vragen."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/media/34425")
+    model_document_link = _("https://intranet.uu.nl/media/34425")
 
 class InformationLetterConsent(StudyAttachmentKind):
 
@@ -67,7 +67,7 @@ class InformationLetterConsent(StudyAttachmentKind):
         " er met minderjarigen wordt gewerkt."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/media/34428")
+    model_document_link = _("https://intranet.uu.nl/media/34428")
 
 LEGAL_BASIS_KIND_DICT = {
     Study.LegalBases.ANONYMOUS: InformationLetterAnonymous,
@@ -91,8 +91,7 @@ class ConsentFormAdults(StudyAttachmentKind):
         " (16 jaar en ouder)."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/media/34434")
-    more_info_link_name = _("Toestemmingsverklaring Toestemming")
+    model_document_link = _("https://intranet.uu.nl/media/34434")
 
 class ConsentPublicInterestSpecialDetails(StudyAttachmentKind):
 
@@ -105,7 +104,7 @@ class ConsentPublicInterestSpecialDetails(StudyAttachmentKind):
         " heb je toestemming nodig."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/media/34431")
+    model_document_link = _("https://intranet.uu.nl/media/34431")
 
 class ConsentChildrenParents(StudyAttachmentKind):
 
@@ -118,7 +117,7 @@ class ConsentChildrenParents(StudyAttachmentKind):
         " één van de ouders of voogden is bij het onderzoek aanwezig."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/media/34432")
+    model_document_link = _("https://intranet.uu.nl/media/34432")
 
 class ConsentChildrenNoParents(StudyAttachmentKind):
 
@@ -131,7 +130,7 @@ class ConsentChildrenNoParents(StudyAttachmentKind):
         " geen ouders of voogden aanwezig."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/media/34433")
+    model_document_link = _("https://intranet.uu.nl/media/34433")
 
 ####################
 # Recordings consent
@@ -149,8 +148,7 @@ class AgreementRecordingsAdults(StudyAttachmentKind):
         "verdere gebruik van die opnames kun je de afspraken schriftelijk vastleggen."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20grondslag%20Algemeen%20belang%20-%20beeld-%20en%20geluidsopnames.docx")
-    more_info_link_name = _("Akkoordverklaring - grondslag Algemeen belang - beeld- en geluidsopnames")
+    model_document_link = _("https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20grondslag%20Algemeen%20belang%20-%20beeld-%20en%20geluidsopnames.docx")
 
 class AgreementRecordingsChildrenParents(StudyAttachmentKind):
 
@@ -167,8 +165,7 @@ class AgreementRecordingsChildrenParents(StudyAttachmentKind):
         " je de afspraken schriftelijk vastleggen."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20WEL%20aanwezig.docx")
-    more_info_link_name = _("Akkoordverklaring – Algemeen belang - Opnames kind - ouders-voogden aanwezig bij onderzoek")
+    model_document_link = _("https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20WEL%20aanwezig.docx")
 
 class AgreementRecordingsChildrenNoParents(StudyAttachmentKind):
 
@@ -185,8 +182,7 @@ class AgreementRecordingsChildrenNoParents(StudyAttachmentKind):
         " je de afspraken schriftelijk vastleggen."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20NIET%20aanwezig.docx")
-    more_info_link_name = _("Akkoordverklaring - Algemeen belang - Opnames kind - ouders-voogden NIET aanwezig")
+    model_document_link = _("https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20NIET%20aanwezig.docx")
 
 class ScriptVerbalConsentRecordings(StudyAttachmentKind):
 
@@ -199,7 +195,7 @@ class ScriptVerbalConsentRecordings(StudyAttachmentKind):
         " de verwerking van persoonsgegevens, leg je vast in een aparte opname."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/media/34429")
+    model_document_link = _("https://intranet.uu.nl/media/34429")
 
 ##############
 # School stuff
@@ -218,7 +214,7 @@ class SchoolInformationLetter(ProposalAttachmentKind):
         " onderzoek en van allerlei praktische aspecten."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/media/34427")
+    model_document_link = _("https://intranet.uu.nl/media/34427")
 
 class SchoolConsentForm(ProposalAttachmentKind):
 
@@ -231,7 +227,7 @@ class SchoolConsentForm(ProposalAttachmentKind):
         " toestemming geven voor het onderzoek."
     )
     desiredness = desiredness.REQUIRED
-    more_info_link = _("https://intranet.uu.nl/media/34424")
+    model_document_link = _("https://intranet.uu.nl/media/34424")
 
 #############
 # Other stuff
@@ -251,7 +247,7 @@ class DataManagementPlan(ProposalAttachmentKind):
         )
 
     desiredness = desiredness.RECOMMENDED
-    more_info_link = _("https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx")
+    model_document_link = _("https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx")
 
     def num_recommended(self):
         return 1

@@ -31,10 +31,8 @@
             <details>
                 <summary class="text-muted">{% trans "Meer info" %}</summary>
                 {{ slot.kind.description }}
-                {% if slot.kind.more_info_link_name == "" %}
-                    <br>{% trans "Link: " %}<a href="{{slot.kind.more_info_link}}" target="_blank">{{ slot.kind.name }}</a>
-                {% else %}
-                    <br>{% trans "Link: " %}<a href="{{slot.kind.more_info_link}}" target="_blank">{{ slot.kind.more_info_link_name }}</a>
+                {% if slot.kind.model_document_link %}
+                    <br>{% trans "Link: " %}<a href="{{slot.kind.model_document_link}}" target="_blank">{{ slot.kind.name }}</a>
                 {% endif %}
             </details>
         </div>
