@@ -20,7 +20,6 @@ def return_latest_decisions(objects):
     decisions = OrderedDict()
     for obj in objects:
         proposal = obj.review.proposal
-
         if proposal.pk not in decisions:
             decisions[proposal.pk] = obj
         else:
@@ -28,6 +27,8 @@ def return_latest_decisions(objects):
                 decisions[proposal.pk] = obj
     return decisions
 
+#almost the same as latest_decisions.
+#would be the same method if we give proposals instead of objects to this method.
 def return_latest_reviews(objects):
     reviews = OrderedDict()
     for obj in objects:
@@ -306,8 +307,7 @@ class OpenSupervisorDecisionApiView(BaseDecisionApiView):
         """Returns all proposals that still need to be reviewed by the supervisor"""
         objects = Decision.objects.filter(
             go="",
-            review__stage=Review.Stages.SUPERVISOR,
-            review__proposal__status=Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
+            review__is_committee_review=False,
             review__proposal__reviewing_committee=self.committee,
         )
 
