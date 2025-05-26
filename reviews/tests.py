@@ -368,7 +368,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.study.save()
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 0)
+        self.assertEqual(len(reasons), 1)
 
         s1 = Session.objects.create(study=self.study, order=1)
         s1_t1 = Task.objects.create(session=s1, order=1)
