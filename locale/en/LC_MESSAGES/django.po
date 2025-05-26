@@ -5775,3 +5775,6 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:84
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+msgid "De aanvraag bevat minderjarigen"
+msgstr "The application has contains minors"
