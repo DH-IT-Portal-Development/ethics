@@ -331,7 +331,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(s1.net_duration(), 40)
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 1) # 1 from toddlers are minors
+        self.assertEqual(len(reasons), 1)  # 1 from toddlers are minors
 
         s1_t2.duration = 30
         s1_t2.save()
@@ -339,7 +339,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(s1.net_duration(), 50)
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 2) #totale duur en minors
+        self.assertEqual(len(reasons), 2)  # totale duur en minors
 
     def test_auto_review_observation(self):
         self.study.has_observation = True
@@ -368,7 +368,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.study.save()
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 1) #1 from adolescents being minors
+        self.assertEqual(len(reasons), 1)  # 1 from adolescents being minors
 
         s1 = Session.objects.create(study=self.study, order=1)
         s1_t1 = Task.objects.create(session=s1, order=1)
