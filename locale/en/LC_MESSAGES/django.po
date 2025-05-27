@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-27 11:36+0200\n"
+"POT-Creation-Date: 2025-05-27 11:44+0200\n"
 "PO-Revision-Date: 2025-01-15 12:46+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -17,11 +17,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: attachments/kinds.py:31
+#: attachments/kinds.py:30
 msgid "Informatiebrief anoniem onderzoek"
 msgstr "Information letter for anonymous research"
 
-#: attachments/kinds.py:33
+#: attachments/kinds.py:32
 msgid ""
 "Je verzamelt en verwerkt de gegevens van je deelnemers anoniem. Je moet je "
 "deelnemers dan wél informeren op ethische gronden (zodat ze kunnen beslissen "
@@ -33,13 +33,17 @@ msgstr ""
 "does not regulate the collection of anonymous data, you do not need to "
 "inform or ask for consent relating to personal data. You will however still "
 "need to inform your participants on ethical grounds, so that they can make a "
-"well-informed choice on whether to participate. "
+"well-informed choice on whether to participate."
 
-#: attachments/kinds.py:47
+#: attachments/kinds.py:41
+msgid "https://intranet.uu.nl/media/34426"
+msgstr "https://intranet.uu.nl/media/34450"
+
+#: attachments/kinds.py:48
 msgid "Informatiebrief algemeen belang"
 msgstr "Information letter for research based on public interest"
 
-#: attachments/kinds.py:49
+#: attachments/kinds.py:50
 msgid ""
 "Je kiest ervoor om de verwerking van persoonsgegevens te baseren op het "
 "algemeen belang. In beginsel is dit de standaardwerkwijze. \n"
@@ -51,11 +55,15 @@ msgstr ""
 "should be careful, for certain aspects of your research it may still be "
 "necessary to collect consent."
 
-#: attachments/kinds.py:61
+#: attachments/kinds.py:57
+msgid "https://intranet.uu.nl/media/34425"
+msgstr "https://intranet.uu.nl/media/34453"
+
+#: attachments/kinds.py:62
 msgid "Informatiebrief toestemming"
 msgstr "Information letter for consent-based research"
 
-#: attachments/kinds.py:63
+#: attachments/kinds.py:64
 msgid ""
 "Er zijn redenen om de verwerking van persoonsgegevens te baseren op "
 "toestemming van de deelnemers. Bijvoorbeeld als er gevoelige data wordt "
@@ -65,11 +73,15 @@ msgstr ""
 "consent, eg. you are collecting sensitive details or you are working with "
 "minors."
 
-#: attachments/kinds.py:86
+#: attachments/kinds.py:70
+msgid "https://intranet.uu.nl/media/34428"
+msgstr "https://intranet.uu.nl/media/34451"
+
+#: attachments/kinds.py:87
 msgid "Toestemmingsverklaring 16+"
 msgstr "Consent form 16+"
 
-#: attachments/kinds.py:88
+#: attachments/kinds.py:89
 msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op de "
 "wettelijke grondslag toestemming. De deelnemers zijn volwassenen (16 jaar en "
@@ -78,12 +90,16 @@ msgstr ""
 "You base the processing of personal data within your research on the legal "
 "basis consent. Participants are adults (16 years and older)."
 
-#: attachments/kinds.py:98
+#: attachments/kinds.py:94
+msgid "https://intranet.uu.nl/media/34434"
+msgstr "https://intranet.uu.nl/media/34447"
+
+#: attachments/kinds.py:99
 msgid "Toestemmingsverklaring algemeen belang bijzondere persoonsgegevens"
 msgstr ""
 "Declaration of consent for public interest with special personal details"
 
-#: attachments/kinds.py:100
+#: attachments/kinds.py:101
 msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek weliswaar "
 "op de wettelijke grondslag algemeen belang, maar je verzamelt zgn. "
@@ -94,13 +110,17 @@ msgstr ""
 "the legal basis public interest, you collect so-called special categories of "
 "personal data and for that you need consent."
 
-#: attachments/kinds.py:111
+#: attachments/kinds.py:107
+msgid "https://intranet.uu.nl/media/34431"
+msgstr "https://intranet.uu.nl/media/34449"
+
+#: attachments/kinds.py:112
 msgid "Toestemmingsverklaring kinderen tot 16 jaar, ouders of voogden aanwezig"
 msgstr ""
 "Declaration of consent children up to 16 years of age, parents or caregivers "
 "present"
 
-#: attachments/kinds.py:113
+#: attachments/kinds.py:114
 msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op de "
 "wettelijke grondslag toestemming. De deelnemers zijn kinderen jonger dan 16 "
@@ -110,27 +130,35 @@ msgstr ""
 "basis consent, your participants are children under the age of 16 and at "
 "least one of the parents or guardians is present during the research."
 
-#: attachments/kinds.py:124
+#: attachments/kinds.py:120
+msgid "https://intranet.uu.nl/media/34432"
+msgstr "https://intranet.uu.nl/media/34446"
+
+#: attachments/kinds.py:125
 msgid "Toestemmingsverklaring kinderen tot 16 jaar, ouders of voogden afwezig"
 msgstr ""
 "Declaration of consent children up to 16 years of age, no parents or "
 "caregivers present"
 
-#: attachments/kinds.py:126
+#: attachments/kinds.py:127
 msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op de "
 "wettelijke grondslag toestemming. De deelnemers zijn kinderen jonger dan 16 "
-"jaar en er zijn geen ouders of voodgen aanwezig."
+"jaar en er zijn geen ouders of voogden aanwezig."
 msgstr ""
 "You base the processing of personal data within your research on the legal "
 "basis consent, your participants are children under the age of 16 and no "
 "parents or guardians are present during the research."
 
-#: attachments/kinds.py:142
+#: attachments/kinds.py:133
+msgid "https://intranet.uu.nl/media/34433"
+msgstr "https://intranet.uu.nl/media/34445"
+
+#: attachments/kinds.py:143
 msgid "Akkoordverklaring beeld- en geluidsopnames algemeen belang 16+"
 msgstr "Agreement video/audio recordings public interest 16+"
 
-#: attachments/kinds.py:144
+#: attachments/kinds.py:145
 msgid ""
 "Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
 "algemeen belang, maar je maakt beeld- en/of geluidsopnames van volwassenen "
@@ -143,6 +171,14 @@ msgstr ""
 "this on ethical grounds. These forms also allow you to agree on future use "
 "of the footage."
 
+#: attachments/kinds.py:151
+msgid ""
+"https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-"
+"%20grondslag%20Algemeen%20belang%20-%20beeld-%20en%20geluidsopnames.docx"
+msgstr ""
+"https://intranet.uu.nl/system/files/gw_Agreement%20-%20public%20interest%20-"
+"%20recordings.docx"
+
 #: attachments/kinds.py:157
 msgid ""
 "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden "
@@ -151,7 +187,7 @@ msgstr ""
 "Agreement video- or audio-recordings children up to 16 years of age, parents "
 "or caregivers present"
 
-#: attachments/kinds.py:160 attachments/kinds.py:177
+#: attachments/kinds.py:160
 msgid ""
 "Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
 "algemeen belang, maar je maakt beeld- en/of geluidsopnames van kinderen in "
@@ -164,6 +200,16 @@ msgstr ""
 "caregivers present and for that you need consent. For the further use of "
 "those recordings, you can also put agreements in writing."
 
+#: attachments/kinds.py:168
+msgid ""
+"https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-"
+"%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-"
+"voogden%20WEL%20aanwezig.docx"
+msgstr ""
+"https://intranet.uu.nl/system/files/gw_Agreement%20-%20public%20interest%20-"
+"%20recordings%20-%20%20children%20under%2016%20yr%20-%20parents-"
+"caregivers%20present%20during%20research.docx"
+
 #: attachments/kinds.py:174
 msgid ""
 "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden "
@@ -171,6 +217,29 @@ msgid ""
 msgstr ""
 "Agreement video- or audio-recordings children up to 16 years of age, no "
 "parents or caregivers present"
+
+#: attachments/kinds.py:177
+msgid ""
+"Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
+"algemeen belang, maar je maakt beeld- en/of geluidsopnames van kinderen in "
+"afwezigheid van diens ouders of voogden. Daar moeten de ouders of voogden "
+"van de deelnemers op ethische gronden mee instemmen. Ook voor het verdere "
+"gebruik van die opnames kun je de afspraken schriftelijk vastleggen."
+msgstr ""
+"Although you base the processing of personal data on the legal basis public "
+"interest, you make video and/or audio recordings with parents and/or "
+"caregivers absent and for that you need consent. For the further use of "
+"those recordings, you can also put agreements in writing."
+
+#: attachments/kinds.py:185
+msgid ""
+"https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-"
+"%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-"
+"voogden%20NIET%20aanwezig.docx"
+msgstr ""
+"https://intranet.uu.nl/system/files/gw_Agreement%20-%20public%20interest%20-"
+"%20recordings%20-%20%20children%20under%2016%20yr%20-%20parents-"
+"caregivers%20NOT%20present%20during%20research.docx"
 
 #: attachments/kinds.py:190
 msgid "Script voor mondelinge toestemming opnames"
@@ -186,6 +255,10 @@ msgstr ""
 "You interview participants and make video and/or audio recordings of them. "
 "You record consent for this, and any consent and agreements regarding other "
 "aspects of the processing of personal data, in a separate recording."
+
+#: attachments/kinds.py:198
+msgid "https://intranet.uu.nl/media/34429"
+msgstr "https://intranet.uu.nl/media/34454"
 
 #: attachments/kinds.py:208
 msgid "Informatiebrief gatekeeper/schoolleiding"
@@ -205,6 +278,10 @@ msgstr ""
 "must be aware of the design of your research and a variety of practical "
 "aspects."
 
+#: attachments/kinds.py:217
+msgid "https://intranet.uu.nl/media/34427"
+msgstr "https://intranet.uu.nl/media/34452"
+
 #: attachments/kinds.py:222
 msgid "Akkoordverklaring gatekeeper/schoolleiding"
 msgstr "Agreement gatekeeper/school management"
@@ -221,11 +298,15 @@ msgstr ""
 "institution. The management, after having been properly informed, has to "
 "sign a statement of agreement."
 
+#: attachments/kinds.py:230
+msgid "https://intranet.uu.nl/media/34424"
+msgstr "https://intranet.uu.nl/media/34444"
+
 #: attachments/kinds.py:240 reviews/templatetags/documents_list.py:222
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
 
-#: attachments/kinds.py:242
+#: attachments/kinds.py:243
 msgid ""
 "Een Data Management Plan (DMP) is een document, dat voorafgaand aan een "
 "onderzoeksproject wordt opgesteld. Hierin worden alle aspecten omtrent de "
@@ -236,12 +317,16 @@ msgstr ""
 "researchproject taking place. The DMP outlines every aspect of the handling "
 "of research data, during and after the research."
 
-#: attachments/kinds.py:256 attachments/models.py:41
+#: attachments/kinds.py:250
+msgid "https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx"
+msgstr "https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx"
+
+#: attachments/kinds.py:259 attachments/models.py:41
 #: proposals/views/attachment_views.py:58
 msgid "Overig bestand"
 msgstr "Other file type"
 
-#: attachments/kinds.py:257
+#: attachments/kinds.py:260
 msgid "Voor alle overige soorten bestanden"
 msgstr "For miscellaneous files"
 
@@ -327,6 +412,10 @@ msgstr "Add"
 msgid "Meer info"
 msgstr "More info"
 
+#: attachments/templates/attachments/slot.html:35
+msgid "Voorbeeld document: "
+msgstr "Model document: "
+
 #: attachments/utils.py:15
 msgid "Verplicht"
 msgstr "Required"
@@ -343,11 +432,11 @@ msgstr "Optional"
 msgid "Extra"
 msgstr "Extra"
 
-#: attachments/utils.py:113
+#: attachments/utils.py:114
 msgid "Gereviseerd"
 msgstr "Revised"
 
-#: attachments/utils.py:115
+#: attachments/utils.py:116
 #: reviews/templates/reviews/review_attachments.html:67
 #: reviews/templates/reviews/review_attachments.html:69
 msgid "Nieuw bij deze aanvraag"
@@ -1897,7 +1986,7 @@ msgid ""
 "faculteit Geesteswetenschappen."
 msgstr ""
 "I discussed my application and Data Management Plan (DMP) with the data "
-"manager of faculty of Humanities"
+"manager of faculty of Humanities."
 
 #: proposals/models.py:457 proposals/models.py:470
 msgid ""
@@ -1905,15 +1994,15 @@ msgid ""
 "vraag dan met 'nee'."
 msgstr ""
 "If you do not plan to add a Data Management Plan, answer this question with "
-"no"
+"'no'."
 
 #: proposals/models.py:464
 msgid ""
 "Ik heb mijn Data Management Plan (DMP) besproken met iemand van Research "
 "Data Management Support."
 msgstr ""
-"I discussed my application and Data Management Plan (DMP) with someone of "
-"Research Data Management Support"
+"I discussed my application and Data Management Plan (DMP) with someone from "
+"Research Data Management Support."
 
 #: proposals/models.py:477
 msgid ""
