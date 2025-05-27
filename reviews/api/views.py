@@ -17,7 +17,10 @@ from .serializers import DecisionSerializer, ReviewSerializer
 
 
 def return_latest_decisions(objects):
-    # return latest decisions from each proposal
+    """
+    Returns:
+        return only the latest decision for each proposal
+    """
     decisions = OrderedDict()
     for obj in objects:
         proposal = obj.review.proposal
@@ -29,7 +32,7 @@ def return_latest_decisions(objects):
     return decisions
 
 
-# would be the same method as lasted_decisions if we give proposals instead of objects to this method.
+# would be the same method as return_lasted_decisions if we give proposals instead of objects to this method.
 def return_latest_reviews(objects):
     reviews = OrderedDict()
     for obj in objects:
