@@ -319,7 +319,7 @@ msgstr ""
 
 #: attachments/kinds.py:250
 msgid "https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx"
-msgstr ""
+msgstr "https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx"
 
 #: attachments/kinds.py:259 attachments/models.py:41
 #: proposals/views/attachment_views.py:58
