@@ -5777,4 +5777,4 @@ msgid "Taak verwijderd"
 msgstr "Task deleted"
 
 msgid "De aanvraag bevat minderjarigen"
-msgstr "The application has contains minors"
+msgstr "The application contains minors"

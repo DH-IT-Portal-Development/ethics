@@ -339,7 +339,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(s1.net_duration(), 50)
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 2)  # totale duur en minors
+        self.assertEqual(len(reasons), 2)  # total time en minors
 
     def test_auto_review_observation(self):
         self.study.has_observation = True
