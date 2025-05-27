@@ -365,8 +365,16 @@ class FilenameFactory:
                 trajectory = "Extra" + str(extra_index)
 
         chamber = proposal.reviewing_committee.name
-        lastname = proposal.created_by.last_name
         refnum = proposal.reference_number
+
+        # We need to make sure that we only use characters that
+        # that are in ISO 8859-1 AKA the first 256 chars of unicode. Otherwise, 
+        # a bug occurs, where the OverwriteStorage filename gets served to the
+        # user. If there are special characters in a user's name, we replace
+        # them with '_'.
+
+        lastname = proposal.created_by.last_name
+        lastname = "".join([char if ord(char) <= 255 else "_" for char in lastname])
 
         extension = (
             "." + original_fn.split(".")[-1][-7:]
