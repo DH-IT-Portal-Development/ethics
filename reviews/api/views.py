@@ -309,8 +309,9 @@ class OpenSupervisorDecisionApiView(BaseDecisionApiView):
         """Returns all proposals that still need to be reviewed by the supervisor"""
         objects = Decision.objects.filter(
             go="",
-            review__is_committee_review=False,
             review__proposal__reviewing_committee=self.committee,
+            review__stage=Review.Stages.SUPERVISOR,
+            review__proposal__status=Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
         )
 
         decisions = return_latest_decisions(objects)
