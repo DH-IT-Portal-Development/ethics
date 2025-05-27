@@ -27,7 +27,7 @@ class AttachmentKind:
     max_num = None
     attached_field = "attachments"
     desiredness = desiredness.OPTIONAL
-    model_document_link = "" #optional
+    model_document_link = ""  # optional
 
     @classmethod
     def get_fn_part(cls):

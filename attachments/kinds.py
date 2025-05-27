@@ -7,6 +7,7 @@ from main.utils import renderable
 from attachments.models import ProposalAttachment, StudyAttachment
 from attachments.utils import AttachmentKind, desiredness
 
+
 class ProposalAttachmentKind(AttachmentKind):
 
     attached_object = Proposal
@@ -41,7 +42,6 @@ class InformationLetterAnonymous(StudyAttachmentKind):
     model_document_link = _("https://intranet.uu.nl/media/34426")
 
 
-
 class InformationLetterPublicInterest(StudyAttachmentKind):
 
     db_name = "information_letter_public_interest"
@@ -56,6 +56,7 @@ class InformationLetterPublicInterest(StudyAttachmentKind):
     desiredness = desiredness.REQUIRED
     model_document_link = _("https://intranet.uu.nl/media/34425")
 
+
 class InformationLetterConsent(StudyAttachmentKind):
 
     db_name = "information_letter_consent"
@@ -68,6 +69,7 @@ class InformationLetterConsent(StudyAttachmentKind):
     )
     desiredness = desiredness.REQUIRED
     model_document_link = _("https://intranet.uu.nl/media/34428")
+
 
 LEGAL_BASIS_KIND_DICT = {
     Study.LegalBases.ANONYMOUS: InformationLetterAnonymous,
@@ -93,6 +95,7 @@ class ConsentFormAdults(StudyAttachmentKind):
     desiredness = desiredness.REQUIRED
     model_document_link = _("https://intranet.uu.nl/media/34434")
 
+
 class ConsentPublicInterestSpecialDetails(StudyAttachmentKind):
 
     db_name = "consent_public_interest_special_details"
@@ -105,6 +108,7 @@ class ConsentPublicInterestSpecialDetails(StudyAttachmentKind):
     )
     desiredness = desiredness.REQUIRED
     model_document_link = _("https://intranet.uu.nl/media/34431")
+
 
 class ConsentChildrenParents(StudyAttachmentKind):
 
@@ -119,6 +123,7 @@ class ConsentChildrenParents(StudyAttachmentKind):
     desiredness = desiredness.REQUIRED
     model_document_link = _("https://intranet.uu.nl/media/34432")
 
+
 class ConsentChildrenNoParents(StudyAttachmentKind):
 
     db_name = "consent_children_no_parents"
@@ -131,6 +136,7 @@ class ConsentChildrenNoParents(StudyAttachmentKind):
     )
     desiredness = desiredness.REQUIRED
     model_document_link = _("https://intranet.uu.nl/media/34433")
+
 
 ####################
 # Recordings consent
@@ -148,7 +154,10 @@ class AgreementRecordingsAdults(StudyAttachmentKind):
         "verdere gebruik van die opnames kun je de afspraken schriftelijk vastleggen."
     )
     desiredness = desiredness.REQUIRED
-    model_document_link = _("https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20grondslag%20Algemeen%20belang%20-%20beeld-%20en%20geluidsopnames.docx")
+    model_document_link = _(
+        "https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20grondslag%20Algemeen%20belang%20-%20beeld-%20en%20geluidsopnames.docx"
+    )
+
 
 class AgreementRecordingsChildrenParents(StudyAttachmentKind):
 
@@ -165,7 +174,10 @@ class AgreementRecordingsChildrenParents(StudyAttachmentKind):
         " je de afspraken schriftelijk vastleggen."
     )
     desiredness = desiredness.REQUIRED
-    model_document_link = _("https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20WEL%20aanwezig.docx")
+    model_document_link = _(
+        "https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20WEL%20aanwezig.docx"
+    )
+
 
 class AgreementRecordingsChildrenNoParents(StudyAttachmentKind):
 
@@ -182,7 +194,10 @@ class AgreementRecordingsChildrenNoParents(StudyAttachmentKind):
         " je de afspraken schriftelijk vastleggen."
     )
     desiredness = desiredness.REQUIRED
-    model_document_link = _("https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20NIET%20aanwezig.docx")
+    model_document_link = _(
+        "https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20NIET%20aanwezig.docx"
+    )
+
 
 class ScriptVerbalConsentRecordings(StudyAttachmentKind):
 
@@ -196,6 +211,7 @@ class ScriptVerbalConsentRecordings(StudyAttachmentKind):
     )
     desiredness = desiredness.REQUIRED
     model_document_link = _("https://intranet.uu.nl/media/34429")
+
 
 ##############
 # School stuff
@@ -216,6 +232,7 @@ class SchoolInformationLetter(ProposalAttachmentKind):
     desiredness = desiredness.REQUIRED
     model_document_link = _("https://intranet.uu.nl/media/34427")
 
+
 class SchoolConsentForm(ProposalAttachmentKind):
 
     db_name = "school_consent_form"
@@ -229,6 +246,7 @@ class SchoolConsentForm(ProposalAttachmentKind):
     desiredness = desiredness.REQUIRED
     model_document_link = _("https://intranet.uu.nl/media/34424")
 
+
 #############
 # Other stuff
 #############
@@ -238,16 +256,18 @@ class DataManagementPlan(ProposalAttachmentKind):
 
     db_name = "dmp"
     name = _("Data Management Plan")
-    #requires acces to intranet something every user should have
+    # requires acces to intranet something every user should have
     description = _(
         "Een Data Management Plan (DMP) is een document, dat voorafgaand aan een "
         "onderzoeksproject wordt opgesteld. Hierin worden alle aspecten omtrent de "
         "omgang met onderzoeksdata, tijdens en na afloop van het onderzoek, "
         "uiteengezet."
-        )
+    )
 
     desiredness = desiredness.RECOMMENDED
-    model_document_link = _("https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx")
+    model_document_link = _(
+        "https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx"
+    )
 
     def num_recommended(self):
         return 1
