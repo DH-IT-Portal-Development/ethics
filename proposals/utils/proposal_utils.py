@@ -367,14 +367,11 @@ class FilenameFactory:
         chamber = proposal.reviewing_committee.name
         refnum = proposal.reference_number
 
-        # We need to make sure that we only use characters that
-        # that are in ISO 8859-1 AKA the first 256 chars of unicode. Otherwise, 
-        # a bug occurs, where the OverwriteStorage filename gets served to the
-        # user. If there are special characters in a user's name, we replace
-        # them with '_'.
+        # We need to make sure that we only use characters for the filename that
+        # that are in ISO 8859-1. Otherwise, a bug occurs, where the 
+        # OverwriteStorage filename gets served to the user.
 
-        lastname = proposal.created_by.last_name
-        lastname = "".join([char if ord(char) <= 255 else "_" for char in lastname])
+        lastname = remove_non_ISO_8859_1_chars(proposal.created_by.last_name)
 
         extension = (
             "." + original_fn.split(".")[-1][-7:]
@@ -415,3 +412,11 @@ class OverwriteStorage(FileSystemStorage):
         if self.exists(name):
             os.remove(os.path.join(settings.MEDIA_ROOT, name))
         return super(OverwriteStorage, self).get_available_name(name, **kwargs)
+    
+def remove_non_ISO_8859_1_chars(string):
+    """
+    We sometimes need to make sure that a string only uses characters that
+    that are in ISO 8859-1 AKA the first 256 chars of unicode. If there are 
+    other special characters in a string, we replace them with '_'.
+    """
+    return "".join([char if ord(char) <= 255 else "_" for char in string])
