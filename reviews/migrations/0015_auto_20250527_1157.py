@@ -15,7 +15,7 @@ def set_date_end_when_missing(apps, schema_editor):
     """
     Review = apps.get_model("reviews", "Review")
 
-    for review in Review.objects.filter(date_end__is_null=True):
+    for review in Review.objects.filter(date_end__isnull=True):
 
         all_decisions = review.decision_set.count()
         closed_decisions = 0
