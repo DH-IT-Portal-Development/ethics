@@ -83,15 +83,15 @@ class GeneralSection(BaseSection):
 
         if not obj.relation.needs_supervisor:
             rows.remove("supervisor")
-        if not obj.relation.check_in_course:
+        if obj.relation.check_in_course:
+            if not obj.student_context.needs_details:
+                rows.remove("student_context_details")
+        else:
             rows.remove("student_program")
             rows.remove("student_context")
-            if obj.student_context is not None:
-                if not obj.student_context.needs_details:
-                    rows.remove("student_context_details")
-            else:
-                rows.remove("student_context_details")
+            rows.remove("student_context_details")
             rows.remove("student_justification")
+
         if not obj.other_applicants:
             rows.remove("applicants")
         if not obj.other_stakeholders:
@@ -609,7 +609,11 @@ class DMPSection(PageBreakMixin, BaseSection):
 
     section_title = _("Data Management")
 
-    row_fields = ["privacy_officer"]
+    row_fields = [
+        "privacy_officer_conversation",
+        "data_manager_conversation",
+        "research_data_management_conversation",
+    ]
 
 
 class EmbargoSection(BaseSection):
