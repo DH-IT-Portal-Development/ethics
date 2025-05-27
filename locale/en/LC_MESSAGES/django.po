@@ -413,8 +413,8 @@ msgid "Meer info"
 msgstr "More info"
 
 #: attachments/templates/attachments/slot.html:35
-msgid "Link: "
-msgstr ""
+msgid "Voorbeeld document: "
+msgstr "Model document: "
 
 #: attachments/utils.py:15
 msgid "Verplicht"
@@ -1986,7 +1986,7 @@ msgid ""
 "faculteit Geesteswetenschappen."
 msgstr ""
 "I discussed my application and Data Management Plan (DMP) with the data "
-"manager of faculty of Humanities"
+"manager of faculty of Humanities."
 
 #: proposals/models.py:457 proposals/models.py:470
 msgid ""
@@ -1994,15 +1994,15 @@ msgid ""
 "vraag dan met 'nee'."
 msgstr ""
 "If you do not plan to add a Data Management Plan, answer this question with "
-"no"
+"'no'."
 
 #: proposals/models.py:464
 msgid ""
 "Ik heb mijn Data Management Plan (DMP) besproken met iemand van Research "
 "Data Management Support."
 msgstr ""
-"I discussed my application and Data Management Plan (DMP) with someone of "
-"Research Data Management Support"
+"I discussed my application and Data Management Plan (DMP) with someone from "
+"Research Data Management Support."
 
 #: proposals/models.py:477
 msgid ""

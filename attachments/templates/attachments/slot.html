@@ -32,7 +32,7 @@
                 <summary class="text-muted">{% trans "Meer info" %}</summary>
                 {{ slot.kind.description }}
                 {% if slot.kind.model_document_link %}
-                    <br>{% trans "Link: " %}<a href="{{slot.kind.model_document_link}}" target="_blank">{{ slot.kind.name }}</a>
+                    <br>{% trans "Voorbeeld document: " %}<a href="{{slot.kind.model_document_link}}" target="_blank">{{ slot.kind.name }}</a>
                 {% endif %}
             </details>
         </div>
