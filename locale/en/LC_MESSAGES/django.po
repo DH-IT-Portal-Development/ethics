@@ -5892,24 +5892,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:84
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-#~ msgid "Toestemmingsverklaring Toestemming"
-#~ msgstr "Declaration of consent - legal basis Consent"
-
-#~ msgid ""
-#~ "Akkoordverklaring - grondslag Algemeen belang - beeld- en geluidsopnames"
-#~ msgstr "Agreement - legal basis Public interest - video/audio recordings"
-
-#~ msgid ""
-#~ "Akkoordverklaring – Algemeen belang - Opnames kind - ouders-voogden "
-#~ "aanwezig bij onderzoek"
-#~ msgstr ""
-#~ "Agreement – children under 16 yr – parents-caregivers present during "
-#~ "research"
-
-#~ msgid ""
-#~ "Akkoordverklaring - Algemeen belang - Opnames kind - ouders-voogden NIET "
-#~ "aanwezig"
-#~ msgstr ""
-#~ "Agreement – children under 16 yr – parents-caregivers not present during "
-#~ "research"
