@@ -41,6 +41,7 @@ registrationkinds_fixtures = """
 
 def load_registration_fixtures(apps, schema_editor):
     from django.core.serializers import deserialize
+
     for obj in deserialize("jsonl", registration_fixtures):
         obj.save()
     for obj in deserialize("jsonl", registrationkinds_fixtures):
