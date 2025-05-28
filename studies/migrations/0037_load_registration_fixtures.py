@@ -8,54 +8,43 @@ import json
 # Custom migration to load new fixtures for Registration model
 # the fixtures here are dumps from the state of the registration from the time
 # of implementation. They were made using from a version of the db that already had these fixtures
-# `python manage.py dumpdata studies.Registration studies.RegistrationKind --format=jsonl`
-# However, I had to make some manual changes to make the strings work:
-#   - I put the objects in an array
-#   - I changed the 'registration' field of registrationkind to 'registration_id', otherwise an int
-#     does not get accepted.
+# The command used to make the dumps:
+# python manage.py dumpdata studies.Registration studies.RegistrationKind --format=jsonl
 
 registration_fixtures = """
-[{"model": "studies.registration","pk": 1,"fields": {"order": 1,"description": "audio-opname","description_nl": "audio-opname","description_en": "audio recording","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": true}},
-{"model": "studies.registration","pk": 2,"fields": {"order": 2,"description": "video-opname","description_nl": "video-opname","description_en": "video recording","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": true,"age_min": null,"is_recording": true}},
-{"model": "studies.registration","pk": 3,"fields": {"order": 3,"description": "een vragenlijst (papier of digitaal, evt via internet)","description_nl": "een vragenlijst (papier of digitaal, evt via internet)","description_en": "a survey (on paper or digitally, possibly using internet)","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}},
-{"model": "studies.registration","pk": 4,"fields": {"order": 4,"description": "gedrags- en/of reactietijd-registratie via Zep, Presentation, JsPsych, etc","description_nl": "gedrags- en/of reactietijd-registratie via Zep, Presentation, JsPsych, etc","description_en": "behavioral- and/or reaction time registration using Zep, Presentation, JsPsych, etc.","is_local": true,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}},
-{"model": "studies.registration","pk": 5,"fields": {"order": 5,"description": "oogbewegingsregistratie via een eye-tracker","description_nl": "oogbewegingsregistratie via een eye-tracker","description_en": "eye movement registration using an eye-tracker","is_local": true,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}},
-{"model": "studies.registration","pk": 6,"fields": {"order": 6,"description": "psychofysiologische meting (bijv. EEG, fMRI, EMA)","description_nl": "psychofysiologische meting (bijv. EEG, fMRI, EMA)","description_en": "psychofysiological measurement (e.g. EEG, fMRI, EMA)","is_local": true,"needs_details": false,"needs_kind": true,"requires_review": true,"age_min": 18,"is_recording": false}},
-{"model": "studies.registration","pk": 7,"fields": {"order": 7,"description": "handmatige gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)","description_nl": "handmatige gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)","description_en": "manual behavioral scoring (e.g. what's pointed at, what's looked at, and for how long)","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}},
-{"model": "studies.registration","pk": 8,"fields": {"order": 8,"description": "logdata","description_nl": "logdata","description_en": "log data","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}},
-{"model": "studies.registration","pk": 9,"fields": {"order": 9,"description": "notities","description_nl": "notities","description_en": "notes","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}},
-{"model": "studies.registration","pk": 10,"fields": {"order": 10,"description": "geen registratie","description_nl": "geen registratie","description_en": "no registration","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": true,"age_min": null,"is_recording": false}},
-{"model": "studies.registration","pk": 11,"fields": {"order": 11,"description": "anders, namelijk","description_nl": "anders, namelijk","description_en": "otherwise, viz.","is_local": false,"needs_details": true,"needs_kind": false,"requires_review": true,"age_min": null,"is_recording": false}}]
+{"model": "studies.registration","pk": 1,"fields": {"order": 1,"description": "audio-opname","description_nl": "audio-opname","description_en": "audio recording","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": true}}
+{"model": "studies.registration","pk": 2,"fields": {"order": 2,"description": "video-opname","description_nl": "video-opname","description_en": "video recording","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": true,"age_min": null,"is_recording": true}}
+{"model": "studies.registration","pk": 3,"fields": {"order": 3,"description": "een vragenlijst (papier of digitaal, evt via internet)","description_nl": "een vragenlijst (papier of digitaal, evt via internet)","description_en": "a survey (on paper or digitally, possibly using internet)","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}}
+{"model": "studies.registration","pk": 4,"fields": {"order": 4,"description": "gedrags- en/of reactietijd-registratie via Zep, Presentation, JsPsych, etc","description_nl": "gedrags- en/of reactietijd-registratie via Zep, Presentation, JsPsych, etc","description_en": "behavioral- and/or reaction time registration using Zep, Presentation, JsPsych, etc.","is_local": true,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}}
+{"model": "studies.registration","pk": 5,"fields": {"order": 5,"description": "oogbewegingsregistratie via een eye-tracker","description_nl": "oogbewegingsregistratie via een eye-tracker","description_en": "eye movement registration using an eye-tracker","is_local": true,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}}
+{"model": "studies.registration","pk": 6,"fields": {"order": 6,"description": "psychofysiologische meting (bijv. EEG, fMRI, EMA)","description_nl": "psychofysiologische meting (bijv. EEG, fMRI, EMA)","description_en": "psychofysiological measurement (e.g. EEG, fMRI, EMA)","is_local": true,"needs_details": false,"needs_kind": true,"requires_review": true,"age_min": 18,"is_recording": false}}
+{"model": "studies.registration","pk": 7,"fields": {"order": 7,"description": "handmatige gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)","description_nl": "handmatige gedragsscoring (bijv. wat wordt aangewezen, waar/hoe lang wordt gekeken)","description_en": "manual behavioral scoring (e.g. what's pointed at, what's looked at, and for how long)","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}}
+{"model": "studies.registration","pk": 8,"fields": {"order": 8,"description": "logdata","description_nl": "logdata","description_en": "log data","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}}
+{"model": "studies.registration","pk": 9,"fields": {"order": 9,"description": "notities","description_nl": "notities","description_en": "notes","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": false,"age_min": null,"is_recording": false}}
+{"model": "studies.registration","pk": 10,"fields": {"order": 10,"description": "geen registratie","description_nl": "geen registratie","description_en": "no registration","is_local": false,"needs_details": false,"needs_kind": false,"requires_review": true,"age_min": null,"is_recording": false}}
+{"model": "studies.registration","pk": 11,"fields": {"order": 11,"description": "anders, namelijk","description_nl": "anders, namelijk","description_en": "otherwise, viz.","is_local": false,"needs_details": true,"needs_kind": false,"requires_review": true,"age_min": null,"is_recording": false}}
 """
-
-registrationkind_fixtures = """
-[{"model": "studies.registrationkind","pk": 1,"fields": {"order": 1,"description": "EEG (electroencephalography)","description_nl": "EEG (electroencephalography)","description_en": "EEG (electroencephalography)","needs_details": false,"requires_review": false,"registration_id": 6}},
-{"model": "studies.registrationkind","pk": 2,"fields": {"order": 2,"description": "fMRI (functional magnetic resonance imaging)","description_nl": "fMRI (functional magnetic resonance imaging)","description_en": "fMRI (functional magnetic resonance imaging)","needs_details": false,"requires_review": false,"registration_id": 6}},
-{"model": "studies.registrationkind","pk": 3,"fields": {"order": 3,"description": "fNIRS (functional near-infrared spectroscopy)","description_nl": "fNIRS (functional near-infrared spectroscopy)","description_en": "fNIRS (functional near-infrared spectroscopy)","needs_details": false,"requires_review": false,"registration_id": 6}},
-{"model": "studies.registrationkind","pk": 4,"fields": {"order": 4,"description": "fEMG (facial electromyography)","description_nl": "fEMG (facial electromyography)","description_en": "fEMG (facial electromyography)","needs_details": false,"requires_review": false,"registration_id": 6}},
-{"model": "studies.registrationkind","pk": 5,"fields": {"order": 5,"description": "EMA (electromagnetic articulography)","description_nl": "EMA (electromagnetic articulography)","description_en": "EMA (electromagnetic articulography)","needs_details": false,"requires_review": false,"registration_id": 6}},
-{"model": "studies.registrationkind","pk": 6,"fields": {"order": 6,"description": "huidgeleiding (SC/GSR)","description_nl": "huidgeleiding (SC/GSR)","description_en": "skin conductance (SC/GSR)","needs_details": false,"requires_review": false,"registration_id": 6}},
-{"model": "studies.registrationkind","pk": 7,"fields": {"order": 7,"description": "ECG (electrocardiography)","description_nl": "ECG (electrocardiography)","description_en": "ECG (electrocardiography)","needs_details": false,"requires_review": false,"registration_id": 6}},
-{"model": "studies.registrationkind","pk": 8,"fields": {"order": 8,"description": "BVP (blood volume pulse)","description_nl": "BVP (blood volume pulse)","description_en": "BVP (blood volume pulse)","needs_details": false,"requires_review": false,"registration_id": 6}},
-{"model": "studies.registrationkind","pk": 9,"fields": {"order": 9,"description": "ademhaling","description_nl": "ademhaling","description_en": "breathing","needs_details": false,"requires_review": false,"registration_id": 6}},
-{"model": "studies.registrationkind","pk": 10,"fields": {"order": 10,"description": "vingertemperatuur","description_nl": "vingertemperatuur","description_en": "finger temperature","needs_details": false,"requires_review": false,"registration_id": 6}},
-{"model": "studies.registrationkind","pk": 11,"fields": {"order": 11,"description": "anders, namelijk","description_nl": "anders, namelijk","description_en": "otherwise, viz.","needs_details": true,"requires_review": false,"registration_id": 6}}]
+registrationkinds_fixtures = """
+{"model": "studies.registrationkind","pk": 1,"fields": {"order": 1,"description": "EEG (electroencephalography)","description_nl": "EEG (electroencephalography)","description_en": "EEG (electroencephalography)","needs_details": false,"requires_review": false,"registration": 6}}
+{"model": "studies.registrationkind","pk": 2,"fields": {"order": 2,"description": "fMRI (functional magnetic resonance imaging)","description_nl": "fMRI (functional magnetic resonance imaging)","description_en": "fMRI (functional magnetic resonance imaging)","needs_details": false,"requires_review": false,"registration": 6}}
+{"model": "studies.registrationkind","pk": 3,"fields": {"order": 3,"description": "fNIRS (functional near-infrared spectroscopy)","description_nl": "fNIRS (functional near-infrared spectroscopy)","description_en": "fNIRS (functional near-infrared spectroscopy)","needs_details": false,"requires_review": false,"registration": 6}}
+{"model": "studies.registrationkind","pk": 4,"fields": {"order": 4,"description": "fEMG (facial electromyography)","description_nl": "fEMG (facial electromyography)","description_en": "fEMG (facial electromyography)","needs_details": false,"requires_review": false,"registration": 6}}
+{"model": "studies.registrationkind","pk": 5,"fields": {"order": 5,"description": "EMA (electromagnetic articulography)","description_nl": "EMA (electromagnetic articulography)","description_en": "EMA (electromagnetic articulography)","needs_details": false,"requires_review": false,"registration": 6}}
+{"model": "studies.registrationkind","pk": 6,"fields": {"order": 6,"description": "huidgeleiding (SC/GSR)","description_nl": "huidgeleiding (SC/GSR)","description_en": "skin conductance (SC/GSR)","needs_details": false,"requires_review": false,"registration": 6}}
+{"model": "studies.registrationkind","pk": 7,"fields": {"order": 7,"description": "ECG (electrocardiography)","description_nl": "ECG (electrocardiography)","description_en": "ECG (electrocardiography)","needs_details": false,"requires_review": false,"registration": 6}}
+{"model": "studies.registrationkind","pk": 8,"fields": {"order": 8,"description": "BVP (blood volume pulse)","description_nl": "BVP (blood volume pulse)","description_en": "BVP (blood volume pulse)","needs_details": false,"requires_review": false,"registration": 6}}
+{"model": "studies.registrationkind","pk": 9,"fields": {"order": 9,"description": "ademhaling","description_nl": "ademhaling","description_en": "breathing","needs_details": false,"requires_review": false,"registration": 6}}
+{"model": "studies.registrationkind","pk": 10,"fields": {"order": 10,"description": "vingertemperatuur","description_nl": "vingertemperatuur","description_en": "finger temperature","needs_details": false,"requires_review": false,"registration": 6}}
+{"model": "studies.registrationkind","pk": 11,"fields": {"order": 11,"description": "anders, namelijk","description_nl": "anders, namelijk","description_en": "otherwise, viz.","needs_details": true,"requires_review": false,"registration": 6}}
 """
 
 
 def load_registration_fixtures(apps, schema_editor):
-    # first load the registrations
-    reg_fixtures = json.loads(registration_fixtures)
-    Registration = apps.get_model("studies", "Registration")
-    for reg_fixt in reg_fixtures:
-        reg = Registration(pk=reg_fixt["pk"], **reg_fixt["fields"])
-        reg.save()
-    # then load the registrationkinds
-    reg_kind_fixtures = json.loads(registrationkind_fixtures)
-    RegistrationKind = apps.get_model("studies", "RegistrationKind")
-    for reg_kind_fixt in reg_kind_fixtures:
-        reg_kind = RegistrationKind(pk=reg_kind_fixt["pk"], **reg_kind_fixt["fields"])
-        reg_kind.save()
+    from django.core.serializers import deserialize
+    for obj in deserialize("jsonl", registration_fixtures):
+        obj.save()
+    for obj in deserialize("jsonl", registrationkinds_fixtures):
+        obj.save()
 
 
 class Migration(migrations.Migration):
