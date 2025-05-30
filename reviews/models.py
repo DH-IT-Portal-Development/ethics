@@ -64,6 +64,7 @@ class Review(models.Model):
 
         if all_decisions == closed_decisions:
             self.go = final_go
+            self.date_end = timezone.now()
             self.save()
             # For a supervisor review:
             if self.is_committee_review is False:
@@ -73,7 +74,6 @@ class Review(models.Model):
                 # Supervisor reviews have no CLOSING phase,
                 # so they always go straight to CLOSED.
                 self.stage = self.Stages.CLOSED
-                self.date_end = timezone.now()
                 self.save()
                 # On GO and not in course, start the assignment phase
                 if self.go and not self.proposal.in_course:
