@@ -512,7 +512,7 @@ def auto_review(proposal: Proposal):
     for study in proposal.study_set.all():
 
         if study.age_groups.filter(is_adult=False).exists():
-            reasons.append(_("De aanvraag bevat minderjarigen"))
+            reasons.append(_("De aanvraag bevat minderjarigen."))
 
         if study.legally_incapable:
             reasons.append(

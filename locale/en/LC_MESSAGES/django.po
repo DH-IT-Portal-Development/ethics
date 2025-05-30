@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-13 15:13+0200\n"
+"POT-Creation-Date: 2025-05-30 11:33+0200\n"
 "PO-Revision-Date: 2025-01-15 12:46+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -353,6 +353,10 @@ msgstr "Revised"
 msgid "Nieuw bij deze aanvraag"
 msgstr "New with this review"
 
+#: docs/_build/html/_sources/developing/i18n.rst.txt:21
+msgid " "
+msgstr ""
+
 #: faqs/menus.py:7
 msgid "FETC-GW website"
 msgstr "FEtC-H website"
@@ -484,7 +488,7 @@ msgstr "How many times a week will the intervention session take place?"
 
 #: interventions/templates/interventions/intervention_form.html:7
 #: interventions/templates/interventions/intervention_form.html:42
-#: proposals/utils/pdf_diff_sections.py:244
+#: proposals/utils/pdf_diff_sections.py:246
 msgid "Het interventieonderzoek"
 msgstr "Intervention study"
 
@@ -1321,7 +1325,7 @@ msgstr "How many hours of observation will take place on average per day?"
 
 #: observations/templates/observations/observation_form.html:7
 #: observations/templates/observations/observation_form.html:32
-#: proposals/utils/pdf_diff_sections.py:300
+#: proposals/utils/pdf_diff_sections.py:302
 msgid "Het observatieonderzoek"
 msgstr "Observational study"
 
@@ -1897,7 +1901,7 @@ msgstr ""
 "include it here. Supplying a DMP can expedite ethical assessment of "
 "proposals."
 
-#: proposals/models.py:463 proposals/utils/pdf_diff_sections.py:633
+#: proposals/models.py:463 proposals/utils/pdf_diff_sections.py:635
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
@@ -2226,30 +2230,30 @@ msgid "Algemeen"
 msgstr "General"
 
 #: proposals/templates/proposals/attachments.html:40
-#: proposals/templates/proposals/attachments.html:59
+#: proposals/templates/proposals/attachments.html:63
 msgid "Toevoegen"
 msgstr "Add"
 
-#: proposals/templates/proposals/attachments.html:41
+#: proposals/templates/proposals/attachments.html:42
 msgid "Voeg optioneel bestand toe aan aanvraag"
 msgstr "Optionally add a file to the application"
 
-#: proposals/templates/proposals/attachments.html:47
+#: proposals/templates/proposals/attachments.html:51
 #: proposals/utils/pdf_diff_utils.py:408 proposals/utils/pdf_diff_utils.py:435
 #: proposals/utils/pdf_diff_utils.py:444 proposals/utils/pdf_diff_utils.py:468
 msgid "Traject "
 msgstr "Trajectory "
 
-#: proposals/templates/proposals/attachments.html:61
+#: proposals/templates/proposals/attachments.html:65
 #, python-format
 msgid "Voeg optioneel bestand toe aan traject %(study.order)s"
 msgstr "Optionally add a file to trajectory %(study.order)s"
 
-#: proposals/templates/proposals/attachments.html:71
+#: proposals/templates/proposals/attachments.html:75
 msgid "Verouderde documenten"
 msgstr "Legacy documents"
 
-#: proposals/templates/proposals/attachments.html:74
+#: proposals/templates/proposals/attachments.html:78
 msgid ""
 "Recent is het systeem voor het toevoegen van documenten vernieuwd. Door de "
 "omvang van de veranderingen is het foutgevoelig om de documenten uit het "
@@ -2264,7 +2268,7 @@ msgstr ""
 "Please download the documents that you need to submit again and re-upload "
 "them, if they are still applicable."
 
-#: proposals/templates/proposals/attachments.html:80
+#: proposals/templates/proposals/attachments.html:84
 msgid ""
 "Wanneer de FETC-GW verzocht heeft om wijzigingen aan te brengen in de "
 "documenten, dan verzoeken we je om deze eerst door te voeren, voordat je de "
@@ -2273,7 +2277,7 @@ msgstr ""
 "If the FEtC-H requested changes to the documents, please revise them before "
 "re-uploading."
 
-#: proposals/templates/proposals/attachments.html:86
+#: proposals/templates/proposals/attachments.html:90
 msgid ""
 "Het opnieuw toevoegen van deze documenten hoeft maar één keer, en is alleen "
 "nodig voor aanvragen die lopen tijdens deze overgangsperiode."
@@ -3168,7 +3172,7 @@ msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
 #: proposals/templates/proposals/proposal_submit.html:155
-#: proposals/utils/pdf_diff_sections.py:616
+#: proposals/utils/pdf_diff_sections.py:618
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -3333,7 +3337,7 @@ msgstr "Additional forms"
 
 #: proposals/templates/proposals/study_start.html:7
 #: proposals/templates/proposals/study_start.html:59
-#: proposals/utils/pdf_diff_sections.py:148
+#: proposals/utils/pdf_diff_sections.py:150
 msgid "Eén of meerdere trajecten?"
 msgstr "One or more trajectories?"
 
@@ -3362,7 +3366,7 @@ msgstr "Current application"
 
 #: proposals/templates/proposals/translated_consent_forms.html:7
 #: proposals/templates/proposals/translated_consent_forms.html:20
-#: proposals/utils/pdf_diff_sections.py:539
+#: proposals/utils/pdf_diff_sections.py:541
 msgid "Vertaling formulieren"
 msgstr "Translation of documents"
 
@@ -3453,7 +3457,7 @@ msgstr "Revision/amendment of"
 
 #: proposals/templates/proposals/wmo_application.html:7
 #: proposals/templates/proposals/wmo_application.html:23
-#: proposals/utils/pdf_diff_sections.py:135
+#: proposals/utils/pdf_diff_sections.py:137
 msgid "Aanmelding bij de METC"
 msgstr "Registration with the METC"
 
@@ -3476,7 +3480,7 @@ msgstr "Start again"
 
 #: proposals/templates/proposals/wmo_form.html:7
 #: proposals/templates/proposals/wmo_form.html:28
-#: proposals/utils/pdf_diff_sections.py:110
+#: proposals/utils/pdf_diff_sections.py:112
 msgid ""
 "Ethische toetsing nodig door een Medische Ethische Toetsingscommissie (METC)?"
 msgstr ""
@@ -3531,7 +3535,7 @@ msgstr "Conclusion trajectories"
 msgid "Deelnemers"
 msgstr "Participants"
 
-#: proposals/utils/checkers.py:643 proposals/utils/pdf_diff_sections.py:166
+#: proposals/utils/checkers.py:643 proposals/utils/pdf_diff_sections.py:168
 #: studies/templates/studies/study_personal_data.html:7
 #: studies/templates/studies/study_personal_data.html:22
 msgid "Persoonsgegevens"
@@ -3570,38 +3574,38 @@ msgstr "Translations"
 msgid "Indienen"
 msgstr "Submit"
 
-#: proposals/utils/pdf_diff_sections.py:200
+#: proposals/utils/pdf_diff_sections.py:202
 #: studies/templates/studies/study_form.html:7
 #: studies/templates/studies/study_form.html:64
 msgid "De deelnemers"
 msgstr "Participants"
 
-#: proposals/utils/pdf_diff_sections.py:402
+#: proposals/utils/pdf_diff_sections.py:404
 msgid "Het takenonderzoek en interviews"
 msgstr "Task-based research and interviews"
 
-#: proposals/utils/pdf_diff_sections.py:474
+#: proposals/utils/pdf_diff_sections.py:476
 #: studies/templates/studies/study_end.html:8
 msgid "Overzicht en eigen beoordeling van het gehele onderzoek"
 msgstr "Overview and self-assessment of the entire study"
 
-#: proposals/utils/pdf_diff_sections.py:510
+#: proposals/utils/pdf_diff_sections.py:512
 msgid "Kennisveiligheid en risico onderzoekers"
 msgstr "Knowledge security and researcher risk"
 
-#: proposals/utils/pdf_diff_sections.py:608
+#: proposals/utils/pdf_diff_sections.py:610
 msgid "Data Management"
 msgstr "Data Management"
 
-#: proposals/utils/pdf_diff_sections.py:779
+#: proposals/utils/pdf_diff_sections.py:781
 msgid "Documenten - Aanvraag in het geheel"
 msgstr "Documents - Application in general"
 
-#: proposals/utils/pdf_diff_sections.py:781
+#: proposals/utils/pdf_diff_sections.py:783
 msgid "Documenten - Het hoofdtraject"
 msgstr "Documents - The main trajectory"
 
-#: proposals/utils/pdf_diff_sections.py:783
+#: proposals/utils/pdf_diff_sections.py:785
 msgid "Documenten - Traject "
 msgstr "Documents - Trajectory "
 
@@ -4623,26 +4627,30 @@ msgid "FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld"
 msgstr "FEtC-H {}: a supervisor has reviewed your application"
 
 #: reviews/utils/review_utils.py:515
+msgid "De aanvraag bevat minderjarigen."
+msgstr "The application contains minors."
+
+#: reviews/utils/review_utils.py:519
 msgid "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
 msgstr ""
 "The application contains the participation of adults incapable of informed "
 "consent."
 
-#: reviews/utils/review_utils.py:519
+#: reviews/utils/review_utils.py:523
 msgid "De aanvraag bevat het gebruik van misleiding."
 msgstr "The application contains the use of misrepresentation."
 
-#: reviews/utils/review_utils.py:524
+#: reviews/utils/review_utils.py:528
 msgid ""
 "Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)"
 msgstr ""
 "A hierarchal relationship between researcher(s) and participant(s) exists."
 
-#: reviews/utils/review_utils.py:529
+#: reviews/utils/review_utils.py:533
 msgid "Het onderzoek verzamelt bijzondere persoonsgegevens."
 msgstr "This study collects special or sensitive personal details."
 
-#: reviews/utils/review_utils.py:534
+#: reviews/utils/review_utils.py:538
 msgid ""
 "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4650,7 +4658,7 @@ msgstr ""
 "The study selects participants based on particular characteristics which "
 "might entail increased vulnerability."
 
-#: reviews/utils/review_utils.py:544
+#: reviews/utils/review_utils.py:548
 msgid ""
 "De onderzoeker geeft aan dat sommige vragen binnen het onderzoek mogelijk "
 "dermate belastend kunnen zijn dat ze negatieve reacties bij de deelnemers en/"
@@ -4660,7 +4668,7 @@ msgstr ""
 "to the extent that they could result in negative responses from participants "
 "and/or other researchers."
 
-#: reviews/utils/review_utils.py:553
+#: reviews/utils/review_utils.py:557
 msgid ""
 "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid "
 "van de deelnemers tijdens of na het onderzoek."
@@ -4668,7 +4676,7 @@ msgstr ""
 "The applicant notes that there are possible concerns about the safety of "
 "participants during or after the study."
 
-#: reviews/utils/review_utils.py:564
+#: reviews/utils/review_utils.py:568
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4679,7 +4687,7 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:577
+#: reviews/utils/review_utils.py:581
 msgid ""
 "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom "
 "kennisveiligheid."
@@ -4687,7 +4695,7 @@ msgstr ""
 "The applicant notes that there are possible concerns about knowledge "
 "security."
 
-#: reviews/utils/review_utils.py:585
+#: reviews/utils/review_utils.py:589
 msgid ""
 "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid "
 "van de betrokken onderzoekers."
@@ -4695,14 +4703,14 @@ msgstr ""
 "The applicant notes that there are possible concerns about knowledge "
 "security."
 
-#: reviews/utils/review_utils.py:605
+#: reviews/utils/review_utils.py:609
 #, python-brace-format
 msgid "Het onderzoek observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The application contains sessions with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:613
+#: reviews/utils/review_utils.py:617
 msgid ""
 "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met "
 "toestemming na afloop van het onderzoek."
@@ -4710,7 +4718,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective consent."
 
-#: reviews/utils/review_utils.py:619
+#: reviews/utils/review_utils.py:623
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4720,11 +4728,11 @@ msgstr ""
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
 
-#: reviews/utils/review_utils.py:626
+#: reviews/utils/review_utils.py:630
 msgid "De aanvraag bevat het gebruik van {}"
 msgstr "The application makes use of {}"
 
-#: reviews/utils/review_utils.py:652
+#: reviews/utils/review_utils.py:656
 msgid ""
 "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
 msgstr ""
@@ -5775,6 +5783,3 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:84
 msgid "Taak verwijderd"
 msgstr "Task deleted"
-
-msgid "De aanvraag bevat minderjarigen"
-msgstr "The application contains minors"
