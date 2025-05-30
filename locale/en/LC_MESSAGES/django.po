@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-27 11:44+0200\n"
+"POT-Creation-Date: 2025-05-30 11:55+0200\n"
 "PO-Revision-Date: 2025-01-15 12:46+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -17,11 +17,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.4.1\n"
 
-#: attachments/kinds.py:30
+#: attachments/kinds.py:31
 msgid "Informatiebrief anoniem onderzoek"
 msgstr "Information letter for anonymous research"
 
-#: attachments/kinds.py:32
+#: attachments/kinds.py:33
 msgid ""
 "Je verzamelt en verwerkt de gegevens van je deelnemers anoniem. Je moet je "
 "deelnemers dan wél informeren op ethische gronden (zodat ze kunnen beslissen "
@@ -35,7 +35,7 @@ msgstr ""
 "need to inform your participants on ethical grounds, so that they can make a "
 "well-informed choice on whether to participate."
 
-#: attachments/kinds.py:41
+#: attachments/kinds.py:42
 msgid "https://intranet.uu.nl/media/34426"
 msgstr "https://intranet.uu.nl/media/34450"
 
@@ -59,11 +59,11 @@ msgstr ""
 msgid "https://intranet.uu.nl/media/34425"
 msgstr "https://intranet.uu.nl/media/34453"
 
-#: attachments/kinds.py:62
+#: attachments/kinds.py:63
 msgid "Informatiebrief toestemming"
 msgstr "Information letter for consent-based research"
 
-#: attachments/kinds.py:64
+#: attachments/kinds.py:65
 msgid ""
 "Er zijn redenen om de verwerking van persoonsgegevens te baseren op "
 "toestemming van de deelnemers. Bijvoorbeeld als er gevoelige data wordt "
@@ -73,15 +73,15 @@ msgstr ""
 "consent, eg. you are collecting sensitive details or you are working with "
 "minors."
 
-#: attachments/kinds.py:70
+#: attachments/kinds.py:71
 msgid "https://intranet.uu.nl/media/34428"
 msgstr "https://intranet.uu.nl/media/34451"
 
-#: attachments/kinds.py:87
+#: attachments/kinds.py:89
 msgid "Toestemmingsverklaring 16+"
 msgstr "Consent form 16+"
 
-#: attachments/kinds.py:89
+#: attachments/kinds.py:91
 msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op de "
 "wettelijke grondslag toestemming. De deelnemers zijn volwassenen (16 jaar en "
@@ -90,16 +90,16 @@ msgstr ""
 "You base the processing of personal data within your research on the legal "
 "basis consent. Participants are adults (16 years and older)."
 
-#: attachments/kinds.py:94
+#: attachments/kinds.py:96
 msgid "https://intranet.uu.nl/media/34434"
 msgstr "https://intranet.uu.nl/media/34447"
 
-#: attachments/kinds.py:99
+#: attachments/kinds.py:102
 msgid "Toestemmingsverklaring algemeen belang bijzondere persoonsgegevens"
 msgstr ""
 "Declaration of consent for public interest with special personal details"
 
-#: attachments/kinds.py:101
+#: attachments/kinds.py:104
 msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek weliswaar "
 "op de wettelijke grondslag algemeen belang, maar je verzamelt zgn. "
@@ -110,17 +110,17 @@ msgstr ""
 "the legal basis public interest, you collect so-called special categories of "
 "personal data and for that you need consent."
 
-#: attachments/kinds.py:107
+#: attachments/kinds.py:110
 msgid "https://intranet.uu.nl/media/34431"
 msgstr "https://intranet.uu.nl/media/34449"
 
-#: attachments/kinds.py:112
+#: attachments/kinds.py:116
 msgid "Toestemmingsverklaring kinderen tot 16 jaar, ouders of voogden aanwezig"
 msgstr ""
 "Declaration of consent children up to 16 years of age, parents or caregivers "
 "present"
 
-#: attachments/kinds.py:114
+#: attachments/kinds.py:118
 msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op de "
 "wettelijke grondslag toestemming. De deelnemers zijn kinderen jonger dan 16 "
@@ -130,17 +130,17 @@ msgstr ""
 "basis consent, your participants are children under the age of 16 and at "
 "least one of the parents or guardians is present during the research."
 
-#: attachments/kinds.py:120
+#: attachments/kinds.py:124
 msgid "https://intranet.uu.nl/media/34432"
 msgstr "https://intranet.uu.nl/media/34446"
 
-#: attachments/kinds.py:125
+#: attachments/kinds.py:130
 msgid "Toestemmingsverklaring kinderen tot 16 jaar, ouders of voogden afwezig"
 msgstr ""
 "Declaration of consent children up to 16 years of age, no parents or "
 "caregivers present"
 
-#: attachments/kinds.py:127
+#: attachments/kinds.py:132
 msgid ""
 "Je baseert de verwerking van persoonsgegevens binnen je onderzoek op de "
 "wettelijke grondslag toestemming. De deelnemers zijn kinderen jonger dan 16 "
@@ -150,15 +150,15 @@ msgstr ""
 "basis consent, your participants are children under the age of 16 and no "
 "parents or guardians are present during the research."
 
-#: attachments/kinds.py:133
+#: attachments/kinds.py:138
 msgid "https://intranet.uu.nl/media/34433"
 msgstr "https://intranet.uu.nl/media/34445"
 
-#: attachments/kinds.py:143
+#: attachments/kinds.py:149
 msgid "Akkoordverklaring beeld- en geluidsopnames algemeen belang 16+"
 msgstr "Agreement video/audio recordings public interest 16+"
 
-#: attachments/kinds.py:145
+#: attachments/kinds.py:151
 msgid ""
 "Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
 "algemeen belang, maar je maakt beeld- en/of geluidsopnames van volwassenen "
@@ -171,7 +171,7 @@ msgstr ""
 "this on ethical grounds. These forms also allow you to agree on future use "
 "of the footage."
 
-#: attachments/kinds.py:151
+#: attachments/kinds.py:158
 msgid ""
 "https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-"
 "%20grondslag%20Algemeen%20belang%20-%20beeld-%20en%20geluidsopnames.docx"
@@ -179,7 +179,7 @@ msgstr ""
 "https://intranet.uu.nl/system/files/gw_Agreement%20-%20public%20interest%20-"
 "%20recordings.docx"
 
-#: attachments/kinds.py:157
+#: attachments/kinds.py:166
 msgid ""
 "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden "
 "aanwezig"
@@ -187,7 +187,7 @@ msgstr ""
 "Agreement video- or audio-recordings children up to 16 years of age, parents "
 "or caregivers present"
 
-#: attachments/kinds.py:160
+#: attachments/kinds.py:169
 msgid ""
 "Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
 "algemeen belang, maar je maakt beeld- en/of geluidsopnames van kinderen in "
@@ -200,7 +200,7 @@ msgstr ""
 "caregivers present and for that you need consent. For the further use of "
 "those recordings, you can also put agreements in writing."
 
-#: attachments/kinds.py:168
+#: attachments/kinds.py:178
 msgid ""
 "https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-"
 "%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-"
@@ -210,7 +210,7 @@ msgstr ""
 "%20recordings%20-%20%20children%20under%2016%20yr%20-%20parents-"
 "caregivers%20present%20during%20research.docx"
 
-#: attachments/kinds.py:174
+#: attachments/kinds.py:186
 msgid ""
 "Akkoordverklaring beeld- en geluidsopnames tot 16 jaar, ouders of voogden "
 "afwezig"
@@ -218,7 +218,7 @@ msgstr ""
 "Agreement video- or audio-recordings children up to 16 years of age, no "
 "parents or caregivers present"
 
-#: attachments/kinds.py:177
+#: attachments/kinds.py:189
 msgid ""
 "Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
 "algemeen belang, maar je maakt beeld- en/of geluidsopnames van kinderen in "
@@ -231,7 +231,7 @@ msgstr ""
 "caregivers absent and for that you need consent. For the further use of "
 "those recordings, you can also put agreements in writing."
 
-#: attachments/kinds.py:185
+#: attachments/kinds.py:198
 msgid ""
 "https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-"
 "%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-"
@@ -241,11 +241,11 @@ msgstr ""
 "%20recordings%20-%20%20children%20under%2016%20yr%20-%20parents-"
 "caregivers%20NOT%20present%20during%20research.docx"
 
-#: attachments/kinds.py:190
+#: attachments/kinds.py:205
 msgid "Script voor mondelinge toestemming opnames"
 msgstr "Script for verbal consent recordings"
 
-#: attachments/kinds.py:192
+#: attachments/kinds.py:207
 msgid ""
 "Je interviewt deelnemers en je maakt daarvan beeld- en/of geluidsopnames. De "
 "toestemming daarvoor, en de eventuele toestemming en afspraken met "
@@ -256,15 +256,15 @@ msgstr ""
 "You record consent for this, and any consent and agreements regarding other "
 "aspects of the processing of personal data, in a separate recording."
 
-#: attachments/kinds.py:198
+#: attachments/kinds.py:213
 msgid "https://intranet.uu.nl/media/34429"
 msgstr "https://intranet.uu.nl/media/34454"
 
-#: attachments/kinds.py:208
+#: attachments/kinds.py:224
 msgid "Informatiebrief gatekeeper/schoolleiding"
 msgstr "Information letter gatekeeper/school management"
 
-#: attachments/kinds.py:210
+#: attachments/kinds.py:226
 msgid ""
 "Je wilt onderzoek gaan doen binnen een bepaalde instelling (bijv. een "
 "school) en je verzoekt de leiding van die instelling om medewerking. Voor "
@@ -278,15 +278,15 @@ msgstr ""
 "must be aware of the design of your research and a variety of practical "
 "aspects."
 
-#: attachments/kinds.py:217
+#: attachments/kinds.py:233
 msgid "https://intranet.uu.nl/media/34427"
 msgstr "https://intranet.uu.nl/media/34452"
 
-#: attachments/kinds.py:222
+#: attachments/kinds.py:239
 msgid "Akkoordverklaring gatekeeper/schoolleiding"
 msgstr "Agreement gatekeeper/school management"
 
-#: attachments/kinds.py:224
+#: attachments/kinds.py:241
 msgid ""
 "Je wilt onderzoek gaan doen binnen een bepaalde instelling (bijv. een "
 "school) en je verzoekt de leiding van die instelling om medewerking. De "
@@ -298,15 +298,15 @@ msgstr ""
 "institution. The management, after having been properly informed, has to "
 "sign a statement of agreement."
 
-#: attachments/kinds.py:230
+#: attachments/kinds.py:247
 msgid "https://intranet.uu.nl/media/34424"
 msgstr "https://intranet.uu.nl/media/34444"
 
-#: attachments/kinds.py:240 reviews/templatetags/documents_list.py:222
+#: attachments/kinds.py:258 reviews/templatetags/documents_list.py:222
 msgid "Data Management Plan"
 msgstr "Data Management Plan"
 
-#: attachments/kinds.py:243
+#: attachments/kinds.py:261
 msgid ""
 "Een Data Management Plan (DMP) is een document, dat voorafgaand aan een "
 "onderzoeksproject wordt opgesteld. Hierin worden alle aspecten omtrent de "
@@ -317,16 +317,16 @@ msgstr ""
 "researchproject taking place. The DMP outlines every aspect of the handling "
 "of research data, during and after the research."
 
-#: attachments/kinds.py:250
+#: attachments/kinds.py:269
 msgid "https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx"
 msgstr "https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx"
 
-#: attachments/kinds.py:259 attachments/models.py:41
+#: attachments/kinds.py:279 attachments/models.py:41
 #: proposals/views/attachment_views.py:58
 msgid "Overig bestand"
 msgstr "Other file type"
 
-#: attachments/kinds.py:260
+#: attachments/kinds.py:280
 msgid "Voor alle overige soorten bestanden"
 msgstr "For miscellaneous files"
 
@@ -412,7 +412,7 @@ msgstr "Add"
 msgid "Meer info"
 msgstr "More info"
 
-#: attachments/templates/attachments/slot.html:35
+#: attachments/templates/attachments/slot.html:36
 msgid "Voorbeeld document: "
 msgstr "Model document: "
 
@@ -619,7 +619,7 @@ msgstr "uncertain"
 msgid "Geef aan waar de dataverzameling plaatsvindt"
 msgstr "Specify where the data collection will take place"
 
-#: main/models.py:80 observations/models.py:148 proposals/models.py:285
+#: main/models.py:80 observations/models.py:148 proposals/models.py:287
 #: studies/models.py:237 studies/models.py:273 tasks/models.py:171
 #: tasks/models.py:183
 msgid "Namelijk"
@@ -668,8 +668,8 @@ msgstr "E-mail"
 msgid "Ingediende aanvragen"
 msgstr "My submitted applications;"
 
-#: main/templates/auth/user_detail.html:36 reviews/api/views.py:47
-#: reviews/api/views.py:281 reviews/api/views.py:342
+#: main/templates/auth/user_detail.html:36 reviews/api/views.py:76
+#: reviews/api/views.py:294 reviews/api/views.py:347
 #: reviews/templates/reviews/committee_members_workload.html:24
 msgid "Referentienummer"
 msgstr "Reference number"
@@ -694,7 +694,7 @@ msgstr "Phase"
 #: proposals/api/views.py:144
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:102
 #: proposals/templates/proposals/vue_templates/proposal_list.html:161
-#: reviews/api/views.py:51 reviews/api/views.py:285 reviews/api/views.py:346
+#: reviews/api/views.py:80 reviews/api/views.py:298 reviews/api/views.py:351
 #: reviews/templates/reviews/committee_members_workload.html:25
 #: reviews/templates/reviews/vue_templates/decision_list.html:153
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:95
@@ -715,7 +715,7 @@ msgstr "Desired end date"
 msgid "Mijn besluit"
 msgstr "My decision"
 
-#: main/templates/auth/user_detail.html:43 reviews/api/views.py:336
+#: main/templates/auth/user_detail.html:43 reviews/api/views.py:341
 #: reviews/models.py:34
 #: reviews/templates/reviews/vue_templates/decision_list.html:133
 #: reviews/templates/reviews/vue_templates/review_list.html:137
@@ -1331,8 +1331,8 @@ msgstr ""
 "(anonymous) or you make video-recordings of how people act (not anonymous)."
 
 #: observations/models.py:74 observations/models.py:84
-#: observations/models.py:99 proposals/models.py:542 proposals/models.py:561
-#: proposals/models.py:857 studies/models.py:174 studies/models.py:258
+#: observations/models.py:99 proposals/models.py:544 proposals/models.py:563
+#: proposals/models.py:859 studies/models.py:174 studies/models.py:258
 #: studies/models.py:337 studies/models.py:368
 msgid "Licht toe"
 msgstr "Explain"
@@ -1540,11 +1540,11 @@ msgstr ""
 msgid "Ik maak een oefenaanvraag aan"
 msgstr "I am creating a practice application"
 
-#: proposals/forms.py:447 proposals/models.py:649
+#: proposals/forms.py:447 proposals/models.py:651
 msgid "Te kopiëren aanvraag"
 msgstr "Application to be copied"
 
-#: proposals/forms.py:449 proposals/models.py:651
+#: proposals/forms.py:449 proposals/models.py:653
 msgid "Dit veld toont enkel aanvragen waar je zelf een medeuitvoerende bent."
 msgstr "This field shows only applications in which you are involved."
 
@@ -1641,7 +1641,7 @@ msgstr ""
 msgid "Nieuwe beoogde startdatum"
 msgstr "New intended start date"
 
-#: proposals/forms.py:811 proposals/models.py:309
+#: proposals/forms.py:811 proposals/models.py:311
 msgid ""
 "<p>Je hebt aangegeven dat je gebruik wilt gaan maken van één van de "
 "faciliteiten van het ILS, namelijk de database, Zep software en/of het ILS "
@@ -1789,7 +1789,11 @@ msgstr "Which chamber should be reviewing this application?"
 msgid "Aan welk onderzoeksinstituut ben je verbonden?"
 msgstr "To which research institute are you affiliated?"
 
-#: proposals/models.py:186
+#: proposals/models.py:182
+msgid "Algemene Kamer: OFR, OGK, ICON <br/>Linguïstiek Kamer: ILS"
+msgstr "General Chamber: OFR, OGK, ICON<br/>Linguistics Chamber: ILS"
+
+#: proposals/models.py:188
 msgid ""
 "Wat is de beoogde startdatum van het onderzoek waarvoor deze aanvraag wordt "
 "ingediend?"
@@ -1797,7 +1801,7 @@ msgstr ""
 "What is the desired starting date of the actual research for which this "
 "application is being submitted?"
 
-#: proposals/models.py:189
+#: proposals/models.py:191
 msgid ""
 "NB: Voor een aanvraag van een onderzoek dat al gestart is voordat de FETC-GW "
 "de aanvraag heeft goedgekeurd kan geen formele goedkeuring meer gegeven "
@@ -1807,7 +1811,7 @@ msgstr ""
 "has approved it cannot receive formal approval; in such cases, the FEtC-H "
 "only provides a post-hoc advice."
 
-#: proposals/models.py:199
+#: proposals/models.py:201
 msgid ""
 "Wat is de titel van je aanvraag? Deze titel zal worden gebruikt in alle "
 "formele correspondentie."
@@ -1815,7 +1819,7 @@ msgstr ""
 "What is the title of your application? This title will be used in all formal "
 "correspondence."
 
-#: proposals/models.py:205
+#: proposals/models.py:207
 msgid ""
 "De titel die je hier opgeeft is zichtbaar voor de FETC-GW-leden en, wanneer "
 "de aanvraag is goedgekeurd, ook voor alle medewerkers die in het archief van "
@@ -1827,7 +1831,7 @@ msgstr ""
 "portal. The title cannot be identical to that of a study you have previously "
 "submitted."
 
-#: proposals/models.py:214
+#: proposals/models.py:216
 msgid ""
 "Geef een duidelijke, bondige beschrijving van de onderzoeksvraag of -vragen. "
 "Gebruik maximaal 200 woorden."
@@ -1835,7 +1839,7 @@ msgstr ""
 "Give a clear, concise description of the research question or questions. Use "
 "a maximum of 200 words."
 
-#: proposals/models.py:222
+#: proposals/models.py:224
 msgid ""
 "Zijn er nog andere onderzoekers bij deze aanvraag betrokken die geaffilieerd "
 "zijn aan één van de onderzoeksinstituten ICON, OFR, OGK of ILS?"
@@ -1843,7 +1847,7 @@ msgstr ""
 "Are there any other researchers involved affiliated with ICON, OFR, OGK or "
 "ILS?"
 
-#: proposals/models.py:231
+#: proposals/models.py:233
 msgid ""
 "Zijn er nog andere onderzoekers bij deze aanvraag betrokken die "
 "<strong>niet</strong> geaffilieerd zijn aan een van de onderzoeksinstituten "
@@ -1853,7 +1857,7 @@ msgstr ""
 "Are there any other researchers involved <strong>outside</strong> the above-"
 "mentioned institutes? If so, please mention their name and affiliation."
 
-#: proposals/models.py:239
+#: proposals/models.py:241
 msgid ""
 "Werk je samen met een onderzoeker of organisatie buiten de UU en is je "
 "onderzoek niet strikt anoniem? Neem dan contact op met de <a href=\"mailto:"
@@ -1865,41 +1869,41 @@ msgstr ""
 "gw@uu.nl\">privacy officer</a>. Agreements may then have to be made about "
 "the processing of personal data."
 
-#: proposals/models.py:255
+#: proposals/models.py:257
 msgid "Naam en affiliatie van andere betrokkenen"
 msgstr "Name and affiliation of other involved people"
 
-#: proposals/models.py:262
+#: proposals/models.py:264
 msgid ""
 "Worden de documenten nog vertaald naar een andere taal dan Nederlands of "
 "Engels?"
 msgstr ""
 "Will the attachments be translated in a language other than Dutch or English?"
 
-#: proposals/models.py:271
+#: proposals/models.py:273
 msgid "Andere talen:"
 msgstr "Other languages:"
 
-#: proposals/models.py:280
+#: proposals/models.py:282
 msgid "Hoe wordt dit onderzoek gefinancierd?"
 msgstr "How is this study funded?"
 
-#: proposals/models.py:291
+#: proposals/models.py:293
 msgid ""
 "Wat is de naam van het gefinancierde project en wat is het projectnummer?"
 msgstr "What is the name of the funded project and what is the project number?"
 
-#: proposals/models.py:295
+#: proposals/models.py:297
 msgid ""
 "De titel die je hier opgeeft zal in de formele goedkeuringsbrief gebruikt "
 "worden."
 msgstr "This title will be used in the formal letter of approval."
 
-#: proposals/models.py:301
+#: proposals/models.py:303
 msgid "Ruimte voor eventuele opmerkingen. Gebruik maximaal 1000 woorden."
 msgstr "Space for possible comments. Use a maximum of a 1000 words."
 
-#: proposals/models.py:333
+#: proposals/models.py:335
 msgid ""
 "Als de deelnemers van je onderzoek moeten worden misleid, kan           je "
 "ervoor kiezen je applicatie pas later op te laten nemen in het           "
@@ -1911,16 +1915,16 @@ msgstr ""
 "for users of this portal. Would you like your application to be placed under "
 "a temporary embargo?"
 
-#: proposals/models.py:345
+#: proposals/models.py:347
 msgid ""
 "Vanaf welke datum mag je onderzoek wel in het archief worden weergegeven?"
 msgstr "From which date may your application be displayed in the archive?"
 
-#: proposals/models.py:355
+#: proposals/models.py:357
 msgid "Upload hier je aanvraag (in .pdf of .doc(x)-formaat)"
 msgstr "Upload your application here (in .pdf or .doc(x)-format)"
 
-#: proposals/models.py:363
+#: proposals/models.py:365
 msgid ""
 "Heb je formele toestemming van een ethische toetsingcommissie, uitgezonderd "
 "deze FETC-GW commissie?"
@@ -1928,11 +1932,11 @@ msgstr ""
 "Do you have formal approval from an ethics committee, other than this FEtC-H "
 "committee?"
 
-#: proposals/models.py:372
+#: proposals/models.py:374
 msgid "Welk instituut heeft de aanvraag goedgekeurd?"
 msgstr "Which institute approved the application?"
 
-#: proposals/models.py:380
+#: proposals/models.py:382
 msgid ""
 "Upload hier je formele toestemmingsbrief van dit instituut (in .pdf of ."
 "doc(x)-formaat)"
@@ -1940,15 +1944,15 @@ msgstr ""
 "Please upload the formal approval letter from this institute here (in .pdf "
 "or .doc(x)-format)"
 
-#: proposals/models.py:389
+#: proposals/models.py:391
 msgid "Ik vul de portal in in het kader van een cursus"
 msgstr "I am using this portal in the context of a course"
 
-#: proposals/models.py:394
+#: proposals/models.py:396
 msgid "Ik vul de portal in om de portal te exploreren"
 msgstr "I am using this portal to explore the portal"
 
-#: proposals/models.py:407
+#: proposals/models.py:409
 msgid ""
 "Doorlopen alle deelnemers hetzelfde onderzoekstraject, zonder "
 "noemenswaardige verschillen in taken en belasting?"
@@ -1956,7 +1960,7 @@ msgstr ""
 "Do all participants follow the same research trajectory, without notable "
 "differences in their tasks or experience?"
 
-#: proposals/models.py:411
+#: proposals/models.py:413
 msgid ""
 "Daar waar de verschillen klein en qua belasting of risico irrelevant zijn is "
 "sprake van in essentie hetzelfde traject. Let op: als verschillende groepen "
@@ -1968,11 +1972,11 @@ msgstr ""
 "same trajectory. Please note: when participants partake in different "
 "<i>kinds</i> of tasks, then these are always separate trajectories."
 
-#: proposals/models.py:423
+#: proposals/models.py:425
 msgid "Hoeveel verschillende trajecten zijn er?"
 msgstr "How many different trajectories are there?"
 
-#: proposals/models.py:442
+#: proposals/models.py:444
 msgid ""
 "Ik heb mijn aanvraag en de documenten voor deelnemers besproken met de "
 "privacy officer."
@@ -1980,7 +1984,7 @@ msgstr ""
 "I discussed my application and documents for participants with the privacy "
 "officer."
 
-#: proposals/models.py:451
+#: proposals/models.py:453
 msgid ""
 "Ik heb mijn Data Management Plan (DMP) besproken met de data manager van de "
 "faculteit Geesteswetenschappen."
@@ -1988,7 +1992,7 @@ msgstr ""
 "I discussed my application and Data Management Plan (DMP) with the data "
 "manager of faculty of Humanities."
 
-#: proposals/models.py:457 proposals/models.py:470
+#: proposals/models.py:459 proposals/models.py:472
 msgid ""
 "Als je geen Data Management Plan indient bij deze aanvraag, beantwoord deze "
 "vraag dan met 'nee'."
@@ -1996,7 +2000,7 @@ msgstr ""
 "If you do not plan to add a Data Management Plan, answer this question with "
 "'no'."
 
-#: proposals/models.py:464
+#: proposals/models.py:466
 msgid ""
 "Ik heb mijn Data Management Plan (DMP) besproken met iemand van Research "
 "Data Management Support."
@@ -2004,7 +2008,7 @@ msgstr ""
 "I discussed my application and Data Management Plan (DMP) with someone from "
 "Research Data Management Support."
 
-#: proposals/models.py:477
+#: proposals/models.py:479
 msgid ""
 "Als je een Data Management Plan hebt voor deze aanvraag, kan je kiezen om "
 "deze hier bij te voegen. Het aanleveren van een DMP vergemakkelijkt het "
@@ -2014,23 +2018,23 @@ msgstr ""
 "include it here. Supplying a DMP can expedite ethical assessment of "
 "proposals."
 
-#: proposals/models.py:489 proposals/utils/pdf_diff_sections.py:639
+#: proposals/models.py:491 proposals/utils/pdf_diff_sections.py:639
 msgid "Ruimte voor eventuele opmerkingen"
 msgstr "Space for possible comments"
 
-#: proposals/models.py:501
+#: proposals/models.py:503
 msgid "Datum bevestigingsbrief verstuurd"
 msgstr "Date confirmation sent"
 
-#: proposals/models.py:506 reviews/forms.py:130
+#: proposals/models.py:508 reviews/forms.py:130
 msgid "Is er een revisie geweest na het indienen van deze aanvraag?"
 msgstr "Has this proposal been amended after it was submitted?"
 
-#: proposals/models.py:511
+#: proposals/models.py:513
 msgid "Leg uit"
 msgstr "Explain why"
 
-#: proposals/models.py:518
+#: proposals/models.py:520
 msgid ""
 "Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf "
 "kort hoe je daarmee omgaat. Gebruik maximaal 1000 woorden."
@@ -2039,11 +2043,11 @@ msgstr ""
 "please describe briefly how you will address them. Use a maximum of a 1000 "
 "words."
 
-#: proposals/models.py:528
+#: proposals/models.py:530
 msgid "Zijn er kwesties rondom kennisveiligheid?"
 msgstr "Are there concerns about knowledge security?"
 
-#: proposals/models.py:531
+#: proposals/models.py:533
 msgid ""
 "Kennisveiligheid gaat over het tijdig signaleren en mitigeren van "
 "veiligheidsrisico's bij wetenschappelijk onderzoek. Klik <a href='https://"
@@ -2053,12 +2057,12 @@ msgstr ""
 "risks in academic research. For more information, click <a href='https://"
 "intranet.uu.nl/en/knowledgebase/knowledge-security'>here</a>. "
 
-#: proposals/models.py:546
+#: proposals/models.py:548
 msgid ""
 "Zijn er kwesties rondom de veiligheid van of risico's voor de onderzoeker(s)?"
 msgstr "Are there concerns about the safety of, or risks to researcher(s)?"
 
-#: proposals/models.py:549
+#: proposals/models.py:551
 msgid ""
 "Houd hierbij niet alleen rekening met mogelijke psychische of fysieke "
 "schade, maar ook met andere mogelijke schade, zoals bijv. hiërarchische "
@@ -2071,23 +2075,23 @@ msgstr ""
 "on self-image, loss of privacy, coincidental findings, and legal prosecution "
 "or liability."
 
-#: proposals/models.py:568
+#: proposals/models.py:570
 msgid "In welke hoedanigheid ben je betrokken bij dit onderzoek?"
 msgstr "In what capacity are you involved in this application?"
 
-#: proposals/models.py:577
+#: proposals/models.py:579
 msgid "Wat is je studierichting?"
 msgstr "What is your course of study?"
 
-#: proposals/models.py:584
+#: proposals/models.py:586
 msgid "In welke context doe je dit onderzoek?"
 msgstr "In what capacity are you involved in this application?"
 
-#: proposals/models.py:591
+#: proposals/models.py:593
 msgid "Namelijk:"
 msgstr "Please specify:"
 
-#: proposals/models.py:599
+#: proposals/models.py:601
 msgid ""
 "Studenten (die mensgebonden onderzoek uitvoeren binnen hun studieprogramma) "
 "hoeven in principe geen aanvraag in te dienen bij de FETC-GW. Bespreek met "
@@ -2101,7 +2105,7 @@ msgstr ""
 "do not not, you can terminate your proposal now. If you do, please explain "
 "what the reason is:"
 
-#: proposals/models.py:618
+#: proposals/models.py:620
 msgid ""
 "Uitvoerenden, inclusief uzelf. Let op! De andere onderzoekers moeten         "
 "ten minste één keer zijn ingelogd op dit portaal om ze te kunnen selecteren."
@@ -2110,13 +2114,13 @@ msgstr ""
 "researchers need to have logged into this portal at least once, in order to "
 "be selectable here."
 
-#: proposals/models.py:626
+#: proposals/models.py:628
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:115
 #: proposals/templates/proposals/vue_templates/proposal_list.html:174
 msgid "Promotor/Begeleider"
 msgstr "Promotor/Supervisor"
 
-#: proposals/models.py:630
+#: proposals/models.py:632
 msgid ""
 "Je aanvraag moet, als je alles hebt ingevuld, via de portal \n"
 "                    naar je promotor of begeleider gestuurd worden. Deze "
@@ -2146,53 +2150,53 @@ msgstr ""
 "you wait for them to do this, but remember to come back and fill in this "
 "field before submitting."
 
-#: proposals/models.py:657
+#: proposals/models.py:659
 msgid ""
 "Is deze aanvraag een revisie van of amendement op een ingediende aanvraag?"
 msgstr ""
 "Is this application a revision or an amendment of a previously submitted "
 "application?"
 
-#: proposals/models.py:741
+#: proposals/models.py:743
 msgid "Amendement"
 msgstr "Amendment"
 
-#: proposals/models.py:741 reviews/api/views.py:41 reviews/api/views.py:332
+#: proposals/models.py:743 reviews/api/views.py:70 reviews/api/views.py:337
 #: reviews/templates/reviews/committee_members_workload.html:36
 #: reviews/templates/reviews/committee_members_workload.html:78
 #: reviews/templates/reviews/review_detail_sidebar.html:108
 msgid "Revisie"
 msgstr "Revision"
 
-#: proposals/models.py:747
+#: proposals/models.py:749
 msgid "Normaal"
 msgstr "Normal"
 
-#: proposals/models.py:752
+#: proposals/models.py:754
 msgid "Voortoetsing"
 msgstr "Preliminary assessment"
 
-#: proposals/models.py:754
+#: proposals/models.py:756
 msgid "Oefening"
 msgstr "Practice"
 
-#: proposals/models.py:756
+#: proposals/models.py:758
 msgid "Extern getoetst"
 msgstr "External approval"
 
-#: proposals/models.py:841
+#: proposals/models.py:843
 msgid "Geen beoordeling door METC noodzakelijk"
 msgstr "Assessment by METC not required"
 
-#: proposals/models.py:842
+#: proposals/models.py:844
 msgid "In afwachting beslissing METC"
 msgstr "Pending decision by METC"
 
-#: proposals/models.py:843
+#: proposals/models.py:845
 msgid "Beslissing METC geüpload"
 msgstr "METC decision uploaded"
 
-#: proposals/models.py:847
+#: proposals/models.py:849
 msgid ""
 "Vindt de dataverzameling plaats binnen het UMC Utrecht of andere instelling "
 "waar toetsing door een METC verplicht is gesteld?"
@@ -2200,11 +2204,11 @@ msgstr ""
 "Will the data collection take place at the UMC Utrecht or another "
 "institution for which an assessment by a METC is required?"
 
-#: proposals/models.py:862
+#: proposals/models.py:864
 msgid "Welke instelling?"
 msgstr "Which institution?"
 
-#: proposals/models.py:869
+#: proposals/models.py:871
 msgid ""
 "Is de onderzoeksvraag medisch-wetenschappelijk van aard (zoals gedefinieerd "
 "door de WMO)?"
@@ -2212,7 +2216,7 @@ msgstr ""
 "Is the nature of the research question medical (as defined by the Medical "
 "Research Involving Human Subjects Act (WMO))?"
 
-#: proposals/models.py:873
+#: proposals/models.py:875
 msgid ""
 "De definitie van medisch-wetenschappelijk onderzoek is: Medisch-"
 "wetenschappelijk onderzoek is onderzoek dat als doel heeft het beantwoorden "
@@ -2233,7 +2237,7 @@ msgstr ""
 "Committee on Research Involving Human Subjects, Definition of medical "
 "research, 2005, ccmo.nl)"
 
-#: proposals/models.py:890
+#: proposals/models.py:892
 msgid ""
 "Je onderzoek moet beoordeeld worden door een METC, maar dient nog wel bij de "
 "FETC-GW te worden geregistreerd. Is dit onderzoek al aangemeld bij een METC?"
@@ -2242,15 +2246,15 @@ msgstr ""
 "registered with the FEtC-H. Has an application for this project already been "
 "submitted to an METC?"
 
-#: proposals/models.py:898
+#: proposals/models.py:900
 msgid "Is de METC al tot een beslissing gekomen?"
 msgstr "Has the METC already come to a decision?"
 
-#: proposals/models.py:904
+#: proposals/models.py:906
 msgid "Upload hier de beslissing van het METC (in .pdf of .doc(x)-formaat)"
 msgstr "Please upload the decision of METC  (in .pdf or .doc(x)-format) here"
 
-#: proposals/models.py:950
+#: proposals/models.py:952
 #, python-brace-format
 msgid "WMO {title}, status {status}"
 msgstr "WMO {title}, status {status}"
@@ -3898,21 +3902,21 @@ msgstr ""
 msgid "Je onderzoek zal moeten worden beoordeeld door de METC."
 msgstr "Your application will require assessment by an METC."
 
-#: reviews/api/views.py:33 reviews/api/views.py:324
+#: reviews/api/views.py:62 reviews/api/views.py:329
 #: reviews/templates/reviews/vue_templates/decision_list.html:111
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:61
 #: reviews/templates/reviews/vue_templates/review_list.html:116
 msgid "Stadium"
 msgstr "Stage"
 
-#: reviews/api/views.py:37 reviews/api/views.py:328 reviews/models.py:31
+#: reviews/api/views.py:66 reviews/api/views.py:333 reviews/models.py:31
 #: reviews/templates/reviews/vue_templates/decision_list.html:178
 #: reviews/templates/reviews/vue_templates/decision_list_reviewer.html:121
 #: reviews/templates/reviews/vue_templates/review_list.html:183
 msgid "Route"
 msgstr "Route"
 
-#: reviews/api/views.py:55 reviews/api/views.py:289 reviews/api/views.py:350
+#: reviews/api/views.py:84 reviews/api/views.py:302 reviews/api/views.py:355
 msgid "Start datum"
 msgstr "Start date review"
 
