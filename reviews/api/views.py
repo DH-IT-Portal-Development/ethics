@@ -1,7 +1,7 @@
 from collections import OrderedDict
 from typing import Tuple
 
-from braces.views import GroupRequiredMixin, LoginRequiredMixin
+from braces.views import GroupRequiredMixin
 from django.conf import settings
 from django.db.models import Q, Exists, OuterRef
 from django.utils.translation import gettext_lazy as _
@@ -14,6 +14,35 @@ from ..mixins import CommitteeMixin
 
 from ..models import Decision, Review
 from .serializers import DecisionSerializer, ReviewSerializer
+
+
+def return_latest_decisions(objects):
+    """
+    Returns:
+        return only the latest decision for each proposal
+    """
+    decisions = OrderedDict()
+    for obj in objects:
+        proposal = obj.review.proposal
+        if proposal.pk not in decisions:
+            decisions[proposal.pk] = obj
+        else:
+            if decisions[proposal.pk].pk < obj.pk:
+                decisions[proposal.pk] = obj
+    return decisions
+
+
+# would be the same method as return_lasted_decisions if we give proposals instead of objects to this method.
+def return_latest_reviews(objects):
+    reviews = OrderedDict()
+    for obj in objects:
+        proposal = obj.proposal
+        if proposal.pk not in reviews:
+            reviews[proposal.pk] = obj
+        else:
+            if reviews[proposal.pk].pk < obj.pk:
+                reviews[proposal.pk] = obj
+    return reviews
 
 
 class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
@@ -92,7 +121,6 @@ class MyDecisionsApiView(BaseDecisionApiView):
 
     def get_queryset_for_committee(self):
         """Returns all open Decisions of the current User"""
-        decisions = OrderedDict()
 
         objects = Decision.objects.filter(
             reviewer=self.request.user,
@@ -101,14 +129,7 @@ class MyDecisionsApiView(BaseDecisionApiView):
             review__is_committee_review=True,
         )
 
-        for obj in objects:
-            proposal = obj.review.proposal
-
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
+        decisions = return_latest_decisions(objects)
 
         return [value for key, value in decisions.items()]
 
@@ -166,7 +187,6 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
 
     def get_queryset_for_committee(self):
         """Returns all open Decisions of the current User"""
-        decisions = OrderedDict()
 
         objects = Decision.objects.filter(
             reviewer=self.request.user,
@@ -176,14 +196,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
             review__is_committee_review=True,
         )
 
-        for obj in objects:
-            proposal = obj.review.proposal
-
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
+        decisions = return_latest_decisions(objects)
 
         return [value for key, value in decisions.items()]
 
@@ -234,7 +247,6 @@ class OpenDecisionsApiView(BaseDecisionApiView):
 
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
-        decisions = OrderedDict()
         # Decision-for-secretary-exists cache.
         dfse_cache = {}
 
@@ -245,6 +257,7 @@ class OpenDecisionsApiView(BaseDecisionApiView):
             review__is_committee_review=True,
         )
 
+        decisions = OrderedDict()
         for obj in objects:
             proposal = obj.review.proposal
 
@@ -296,20 +309,12 @@ class OpenSupervisorDecisionApiView(BaseDecisionApiView):
         """Returns all proposals that still need to be reviewed by the supervisor"""
         objects = Decision.objects.filter(
             go="",
+            review__proposal__reviewing_committee=self.committee,
             review__stage=Review.Stages.SUPERVISOR,
             review__proposal__status=Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
-            review__proposal__reviewing_committee=self.committee,
         )
 
-        decisions = OrderedDict()
-
-        for obj in objects:
-            proposal = obj.review.proposal
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
+        decisions = return_latest_decisions(objects)
 
         return [value for key, value in decisions.items()]
 
@@ -380,7 +385,6 @@ class ToConcludeReviewApiView(BaseReviewApiView):
 
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
-        reviews = {}
         objects = (
             Review.objects.filter(
                 stage__gte=Review.Stages.CLOSING,
@@ -408,14 +412,7 @@ class ToConcludeReviewApiView(BaseReviewApiView):
                 "decision_set__reviewer",
             )
         )
-
-        for obj in objects:
-            proposal = obj.proposal
-            if proposal.pk not in reviews:
-                reviews[proposal.pk] = obj
-            else:
-                if reviews[proposal.pk].pk < obj.pk:
-                    reviews[proposal.pk] = obj
+        reviews = return_latest_reviews(objects)
 
         return [value for key, value in reviews.items()]
 
@@ -484,7 +481,7 @@ class AllOpenReviewsApiView(BaseReviewApiView):
 
     def get_queryset(self):
         """Returns all open Reviews"""
-        reviews = OrderedDict()
+
         objects = (
             Review.objects.filter(
                 stage__gte=Review.Stages.ASSIGNMENT,
@@ -506,14 +503,7 @@ class AllOpenReviewsApiView(BaseReviewApiView):
                 "decision_set__reviewer",
             )
         )
-
-        for obj in objects:
-            proposal = obj.proposal
-            if proposal.pk not in reviews:
-                reviews[proposal.pk] = obj
-            else:
-                if reviews[proposal.pk].pk < obj.pk:
-                    reviews[proposal.pk] = obj
+        reviews = return_latest_reviews(objects)
 
         return [value for key, value in reviews.items()]
 
@@ -539,7 +529,6 @@ class AllReviewsApiView(BaseReviewApiView):
 
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
-        reviews = OrderedDict()
         objects = (
             Review.objects.filter(
                 stage__gte=Review.Stages.ASSIGNMENT,
@@ -561,13 +550,6 @@ class AllReviewsApiView(BaseReviewApiView):
                 "decision_set__reviewer",
             )
         )
-
-        for obj in objects:
-            proposal = obj.proposal
-            if proposal.pk not in reviews:
-                reviews[proposal.pk] = obj
-            else:
-                if reviews[proposal.pk].pk < obj.pk:
-                    reviews[proposal.pk] = obj
+        reviews = return_latest_reviews(objects)
 
         return [value for key, value in reviews.items()]

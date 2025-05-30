@@ -39,6 +39,7 @@ class InformationLetterAnonymous(StudyAttachmentKind):
         " persoonsgegevens."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _("https://intranet.uu.nl/media/34426")
 
 
 class InformationLetterPublicInterest(StudyAttachmentKind):
@@ -53,6 +54,7 @@ class InformationLetterPublicInterest(StudyAttachmentKind):
         " desondanks nodig zijn om toestemming te vragen."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _("https://intranet.uu.nl/media/34425")
 
 
 class InformationLetterConsent(StudyAttachmentKind):
@@ -66,6 +68,7 @@ class InformationLetterConsent(StudyAttachmentKind):
         " er met minderjarigen wordt gewerkt."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _("https://intranet.uu.nl/media/34428")
 
 
 LEGAL_BASIS_KIND_DICT = {
@@ -90,6 +93,7 @@ class ConsentFormAdults(StudyAttachmentKind):
         " (16 jaar en ouder)."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _("https://intranet.uu.nl/media/34434")
 
 
 class ConsentPublicInterestSpecialDetails(StudyAttachmentKind):
@@ -103,6 +107,7 @@ class ConsentPublicInterestSpecialDetails(StudyAttachmentKind):
         " heb je toestemming nodig."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _("https://intranet.uu.nl/media/34431")
 
 
 class ConsentChildrenParents(StudyAttachmentKind):
@@ -116,6 +121,7 @@ class ConsentChildrenParents(StudyAttachmentKind):
         " één van de ouders of voogden is bij het onderzoek aanwezig."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _("https://intranet.uu.nl/media/34432")
 
 
 class ConsentChildrenNoParents(StudyAttachmentKind):
@@ -126,9 +132,10 @@ class ConsentChildrenNoParents(StudyAttachmentKind):
         "Je baseert de verwerking van persoonsgegevens binnen je"
         " onderzoek op de wettelijke grondslag toestemming. De"
         " deelnemers zijn kinderen jonger dan 16 jaar en er zijn"
-        " geen ouders of voodgen aanwezig."
+        " geen ouders of voogden aanwezig."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _("https://intranet.uu.nl/media/34433")
 
 
 ####################
@@ -141,13 +148,15 @@ class AgreementRecordingsAdults(StudyAttachmentKind):
     db_name = "agreement_av_recordings_adults"
     name = _("Akkoordverklaring beeld- en geluidsopnames algemeen belang 16+")
     description = _(
-        "Je baseert de verwerking van persoonsgegevens op de"
-        " wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
-        " geluidsopnames van volwassenen en daar moeten je deelnemers op ethische gronden"
-        " mee instemmen. Ook voor het verdere gebruik van die opnames kun"
-        " je de afspraken schriftelijk vastleggen."
+        "Je baseert de verwerking van persoonsgegevens op de wettelijke grondslag "
+        "algemeen belang, maar je maakt beeld- en/of geluidsopnames van volwassenen "
+        "en daar moeten je deelnemers op ethische gronden mee instemmen. Ook voor het "
+        "verdere gebruik van die opnames kun je de afspraken schriftelijk vastleggen."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _(
+        "https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20grondslag%20Algemeen%20belang%20-%20beeld-%20en%20geluidsopnames.docx"
+    )
 
 
 class AgreementRecordingsChildrenParents(StudyAttachmentKind):
@@ -165,6 +174,9 @@ class AgreementRecordingsChildrenParents(StudyAttachmentKind):
         " je de afspraken schriftelijk vastleggen."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _(
+        "https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20WEL%20aanwezig.docx"
+    )
 
 
 class AgreementRecordingsChildrenNoParents(StudyAttachmentKind):
@@ -176,12 +188,15 @@ class AgreementRecordingsChildrenNoParents(StudyAttachmentKind):
     description = _(
         "Je baseert de verwerking van persoonsgegevens op de"
         " wettelijke grondslag algemeen belang, maar je maakt beeld- en/of"
-        " geluidsopnames van kinderen in aanwezigheid van diens ouders of voogden."
+        " geluidsopnames van kinderen in afwezigheid van diens ouders of voogden."
         " Daar moeten de ouders of voogden van de deelnemers op ethische gronden"
         " mee instemmen. Ook voor het verdere gebruik van die opnames kun"
         " je de afspraken schriftelijk vastleggen."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _(
+        "https://intranet.uu.nl/system/files/gw_Akkoordverklaring%20-%20Algemeen%20belang%20-%20Opnames%20kind%20-%20ouders-voogden%20NIET%20aanwezig.docx"
+    )
 
 
 class ScriptVerbalConsentRecordings(StudyAttachmentKind):
@@ -195,6 +210,7 @@ class ScriptVerbalConsentRecordings(StudyAttachmentKind):
         " de verwerking van persoonsgegevens, leg je vast in een aparte opname."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _("https://intranet.uu.nl/media/34429")
 
 
 ##############
@@ -214,6 +230,7 @@ class SchoolInformationLetter(ProposalAttachmentKind):
         " onderzoek en van allerlei praktische aspecten."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _("https://intranet.uu.nl/media/34427")
 
 
 class SchoolConsentForm(ProposalAttachmentKind):
@@ -227,6 +244,7 @@ class SchoolConsentForm(ProposalAttachmentKind):
         " toestemming geven voor het onderzoek."
     )
     desiredness = desiredness.REQUIRED
+    model_document_link = _("https://intranet.uu.nl/media/34424")
 
 
 #############
@@ -238,13 +256,18 @@ class DataManagementPlan(ProposalAttachmentKind):
 
     db_name = "dmp"
     name = _("Data Management Plan")
+    # requires acces to intranet something every user should have
     description = _(
-        "Een Data Management Plan (DMP) is een document, dat "
-        "voorafgaand aan een onderzoeksproject wordt opgesteld. Hierin "
-        "worden alle aspecten omtrent de omgang met onderzoeksdata, tijdens "
-        "en na afloop van het onderzoek, uiteengezet."
+        "Een Data Management Plan (DMP) is een document, dat voorafgaand aan een "
+        "onderzoeksproject wordt opgesteld. Hierin worden alle aspecten omtrent de "
+        "omgang met onderzoeksdata, tijdens en na afloop van het onderzoek, "
+        "uiteengezet."
     )
+
     desiredness = desiredness.RECOMMENDED
+    model_document_link = _(
+        "https://intranet.uu.nl/system/files/2025%20-%20Dataset-list.docx"
+    )
 
     def num_recommended(self):
         return 1

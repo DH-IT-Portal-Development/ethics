@@ -437,13 +437,39 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         blank=True,
     )
 
-    privacy_officer = models.BooleanField(
+    privacy_officer_conversation = models.BooleanField(
         _(
             "Ik heb mijn aanvraag en de documenten voor deelnemers besproken met de privacy officer."
         ),
         default=None,
         null=True,
         blank=True,
+    )
+
+    data_manager_conversation = models.BooleanField(
+        _(
+            "Ik heb mijn Data Management Plan (DMP) besproken met de data manager van de faculteit Geesteswetenschappen."
+        ),
+        default=None,
+        null=True,
+        blank=True,
+        help_text=_(
+            "Als je geen Data Management Plan indient bij deze aanvraag,"
+            " beantwoord deze vraag dan met 'nee'."
+        ),
+    )
+
+    research_data_management_conversation = models.BooleanField(
+        _(
+            "Ik heb mijn Data Management Plan (DMP) besproken met iemand van Research Data Management Support."
+        ),
+        default=None,
+        null=True,
+        blank=True,
+        help_text=_(
+            "Als je geen Data Management Plan indient bij deze aanvraag,"
+            " beantwoord deze vraag dan met 'nee'."
+        ),
     )
 
     dmp_file = models.FileField(
