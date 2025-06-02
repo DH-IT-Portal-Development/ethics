@@ -11,6 +11,8 @@ from main.templatetags.fetc_filters import (
     is_po_chair_or_secretary,
 )
 
+from main.utils import get_user
+
 
 def create_committee_menu(commitee: str) -> List[MenuItem]:
 
@@ -26,37 +28,37 @@ def create_committee_menu(commitee: str) -> List[MenuItem]:
         MenuItem(
             _("Alle openstaande besluiten commissieleden"),
             reverse("reviews:open", args=[commitee]),
-            check=lambda x: is_po_chair_or_secretary(x.user),
+            check=lambda x: is_po_chair_or_secretary(get_user(x)),
         ),
         MenuItem(
             _("Alle openstaande besluiten eindverantwoordelijken"),
             reverse("reviews:open_supervisors", args=[commitee]),
-            check=lambda x: is_po_chair_or_secretary(x.user),
+            check=lambda x: is_po_chair_or_secretary(get_user(x)),
         ),
         MenuItem(
             _("Nog af te handelen aanvragen"),
             reverse("reviews:to_conclude", args=[commitee]),
-            check=lambda x: is_po_chair_or_secretary(x.user),
+            check=lambda x: is_po_chair_or_secretary(get_user(x)),
         ),
         MenuItem(
             _("Aanvragen in revisie"),
             reverse("reviews:in_revision", args=[commitee]),
-            check=lambda x: is_po_chair_or_secretary(x.user),
+            check=lambda x: is_po_chair_or_secretary(get_user(x)),
         ),
         MenuItem(
             _("Alle lopende aanvragen"),
             reverse("reviews:all_open", args=[commitee]),
-            check=lambda x: is_po_chair_or_secretary(x.user),
+            check=lambda x: is_po_chair_or_secretary(get_user(x)),
         ),
         MenuItem(
             _("Alle ingezonden aanvragen"),
             reverse("reviews:archive", args=[commitee]),
-            check=lambda x: is_po_chair_or_secretary(x.user),
+            check=lambda x: is_po_chair_or_secretary(get_user(x)),
         ),
         MenuItem(
             _("Overzicht werkverdeling commissieleden"),
             reverse("reviews:workload", args=[commitee]),
-            check=lambda x: is_chair_or_secretary(x.user),
+            check=lambda x: is_chair_or_secretary(get_user(x)),
         ),
     ]
 
@@ -67,7 +69,7 @@ Menu.add_item(
         _("Algemene Kamer"),
         "#",
         children=create_committee_menu("AK"),
-        check=lambda x: in_general_chamber(x.user),
+        check=lambda x: in_general_chamber(get_user(x)),
     ),
 )
 
@@ -77,6 +79,6 @@ Menu.add_item(
         _("Linguïstiek Kamer"),
         "#",
         children=create_committee_menu("LK"),
-        check=lambda x: in_linguistics_chamber(x.user),
+        check=lambda x: in_linguistics_chamber(get_user(x)),
     ),
 )
