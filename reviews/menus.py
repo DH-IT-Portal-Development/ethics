@@ -28,37 +28,37 @@ def create_committee_menu(commitee: str) -> List[MenuItem]:
         MenuItem(
             _("Alle openstaande besluiten commissieleden"),
             reverse("reviews:open", args=[commitee]),
-            check=lambda x: is_po_chair_or_secretary(get_user(x)),
+            check=lambda request: is_po_chair_or_secretary(get_user(request)),
         ),
         MenuItem(
             _("Alle openstaande besluiten eindverantwoordelijken"),
             reverse("reviews:open_supervisors", args=[commitee]),
-            check=lambda x: is_po_chair_or_secretary(get_user(x)),
+            check=lambda request: is_po_chair_or_secretary(get_user(request)),
         ),
         MenuItem(
             _("Nog af te handelen aanvragen"),
             reverse("reviews:to_conclude", args=[commitee]),
-            check=lambda x: is_po_chair_or_secretary(get_user(x)),
+            check=lambda request: is_po_chair_or_secretary(get_user(request)),
         ),
         MenuItem(
             _("Aanvragen in revisie"),
             reverse("reviews:in_revision", args=[commitee]),
-            check=lambda x: is_po_chair_or_secretary(get_user(x)),
+            check=lambda request: is_po_chair_or_secretary(get_user(request)),
         ),
         MenuItem(
             _("Alle lopende aanvragen"),
             reverse("reviews:all_open", args=[commitee]),
-            check=lambda x: is_po_chair_or_secretary(get_user(x)),
+            check=lambda request: is_po_chair_or_secretary(get_user(request)),
         ),
         MenuItem(
             _("Alle ingezonden aanvragen"),
             reverse("reviews:archive", args=[commitee]),
-            check=lambda x: is_po_chair_or_secretary(get_user(x)),
+            check=lambda request: is_po_chair_or_secretary(get_user(request)),
         ),
         MenuItem(
             _("Overzicht werkverdeling commissieleden"),
             reverse("reviews:workload", args=[commitee]),
-            check=lambda x: is_chair_or_secretary(get_user(x)),
+            check=lambda request: is_chair_or_secretary(get_user(request)),
         ),
     ]
 
@@ -69,7 +69,7 @@ Menu.add_item(
         _("Algemene Kamer"),
         "#",
         children=create_committee_menu("AK"),
-        check=lambda x: in_general_chamber(get_user(x)),
+        check=lambda request: in_general_chamber(get_user(request)),
     ),
 )
 
@@ -79,6 +79,6 @@ Menu.add_item(
         _("Linguïstiek Kamer"),
         "#",
         children=create_committee_menu("LK"),
-        check=lambda x: in_linguistics_chamber(get_user(x)),
+        check=lambda request: in_linguistics_chamber(get_user(request)),
     ),
 )
