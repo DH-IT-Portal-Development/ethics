@@ -39,6 +39,7 @@ registrationkinds_fixtures = """
 
 def load_registration_fixtures(apps, schema_editor):
     from django.core.serializers import deserialize
+
     # We must patch the apps manager from the Python deserializer
     # module with the historical manager we receive as an argument
     # to this migration action.
