@@ -25,7 +25,7 @@ def set_date_end_when_missing(apps, schema_editor):
             if decision.go != "":
                 closed_decisions += 1
                 if (
-                    not latest_date_decision
+                    latest_date_decision is None
                     or latest_date_decision < decision.date_decision
                 ):
                     latest_date_decision = decision.date_decision
