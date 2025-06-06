@@ -179,6 +179,7 @@ class Proposal(models.Model):
         Institution,
         verbose_name=_("Aan welk onderzoeksinstituut ben je verbonden?"),
         on_delete=models.PROTECT,
+        help_text=_("Algemene Kamer: OFR, OGK, ICON <br/>" "Linguïstiek Kamer: ILS"),
     )
 
     date_start = models.DateField(

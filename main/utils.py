@@ -4,6 +4,7 @@ from django.contrib.auth.models import Group
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
+from django.contrib.auth.models import AnonymousUser
 from django.utils.translation import gettext_lazy as _
 from django.template import loader, Template, Context
 
@@ -163,6 +164,30 @@ def can_view_archive(user):
     # If our tests are inconclusive,
     # check for Humanities affiliation
     return is_member_of_humanities(user)
+
+
+def is_authenticated(request):
+    """
+    Safely checks if a request is authenticated (logged in). Can be used
+    early in the response process when request.user is not guaranteed to
+    be set.
+    """
+    try:
+        return request.user.is_authenticated
+    except AttributeError:
+        return False
+
+
+def get_user(request):
+    """
+    Safely gets the user associated with a request. Can be used
+    early in the response process when request.user is not guaranteed to
+    be set. Returns the authenticated user or AnonymousUser.
+    """
+    try:
+        return request.user
+    except AttributeError:
+        return AnonymousUser()
 
 
 class renderable:
