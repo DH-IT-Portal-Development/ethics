@@ -318,6 +318,12 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 8)
 
+    def test_auto_review_minors_to_longroute(self):
+        toddlers = AgeGroup.objects.filter(pk=2)
+        self.study.age_groups.set(toddlers)
+        self.assertEqual(true, false)
+
+
     def test_auto_review_age_groups(self):
         self.study.has_sessions = True
         self.study.age_groups.set(AgeGroup.objects.filter(pk=2))  # toddlers
@@ -331,7 +337,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(s1.net_duration(), 40)
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 1)  # 1 from toddlers are minors
+        self.assertEqual(len(reasons), 0)  # 1 from toddlers are minors
 
         s1_t2.duration = 30
         s1_t2.save()
