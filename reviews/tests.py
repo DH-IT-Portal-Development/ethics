@@ -398,7 +398,9 @@ class AutoReviewTests(BaseReviewTestCase):
         s1_t1.registrations.set(psychofysiological_measurement)
 
         reasons = auto_review_task(self.study, s1_t1)
-        self.assertEqual(len(reasons), 1) #psychofysiological_measurements for minors detected
+        #psychofysiological_measurements for minors detected
+        self.assertEqual(len(reasons), 1)
+
 
 
 class ReviewCloseTestCase(
