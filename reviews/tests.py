@@ -351,7 +351,7 @@ class AutoReviewTests(BaseReviewTestCase):
 
         self.assertEqual(s1.net_duration(), 40)
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 1) # minors go to longroute.
+        self.assertEqual(len(reasons), 1)  # minors go to longroute.
 
         s1_t2.duration = 30
         s1_t2.save()
@@ -359,8 +359,8 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(s1.net_duration(), 50)
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 2)
-        #minors go to longroute, and session takes longer than 40m for the agegroup toddlers.
-        #Redundancy is because changing requirements over time.
+        # minors go to longroute, and session takes longer than 40m for the agegroup toddlers.
+        # Redundancy is because changing requirements over time.
 
     def test_auto_review_observation(self):
         self.study.has_observation = True
@@ -390,7 +390,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.study.save()
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 1) #adolescents are minors
+        self.assertEqual(len(reasons), 1)  # adolescents are minors
 
         s1 = Session.objects.create(study=self.study, order=1)
         s1_t1 = Task.objects.create(session=s1, order=1)
@@ -398,9 +398,8 @@ class AutoReviewTests(BaseReviewTestCase):
         s1_t1.registrations.set(psychofysiological_measurement)
 
         reasons = auto_review_task(self.study, s1_t1)
-        #psychofysiological_measurements for minors detected
+        # psychofysiological_measurements for minors detected
         self.assertEqual(len(reasons), 1)
-
 
 
 class ReviewCloseTestCase(
