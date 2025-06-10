@@ -273,7 +273,6 @@ class AutoReviewTests(BaseReviewTestCase):
         self.adolescents = AgeGroup.objects.filter(pk=4)
         self.adults = AgeGroup.objects.filter(pk=5)
 
-
     def test_auto_review(self):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
