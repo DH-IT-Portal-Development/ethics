@@ -266,6 +266,10 @@ class CommissionTestCase(BaseReviewTestCase):
 
 
 class AutoReviewTests(BaseReviewTestCase):
+
+    def setup(self):
+        super().setUp()
+
     def test_auto_review(self):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
@@ -319,8 +323,8 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 8)
 
     def test_auto_review_minors_to_longroute(self):
-        toddlers = AgeGroup.objects.filter(pk=2)
-        self.study.age_groups.set(toddlers)
+        self.toddlers = AgeGroup.objects.filter(pk=2)
+        self.study.age_groups.set(self.toddlers)
         self.study.save()
 
         reasons = auto_review(self.proposal)
@@ -379,23 +383,22 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review_observation(o)
         self.assertEqual(len(reasons), 2)
 
-    def test_auto_review_task(self):
+    def test_auto_review_registration_age_min(self):
         self.study.has_sessions = True
-        adults = AgeGroup.objects.filter(pk=5)
-        self.study.age_groups.set(adults)
+        adolescents = AgeGroup.objects.filter(pk=4)
+        self.study.age_groups.set(adolescents)
         self.study.save()
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 0)
+        self.assertEqual(len(reasons), 1) #adolescents are minors
 
         s1 = Session.objects.create(study=self.study, order=1)
         s1_t1 = Task.objects.create(session=s1, order=1)
-        s1_t1.registrations.set(
-            Registration.objects.filter(pk=6)
-        )  # psychofysiological measurements
+        psychofysiological_measurement = Registration.objects.filter(pk=6)
+        s1_t1.registrations.set(psychofysiological_measurement)
 
         reasons = auto_review_task(self.study, s1_t1)
-        self.assertEqual(len(reasons), 1)
+        self.assertEqual(len(reasons), 1) #psychofysiological_measurements for minors detected
 
 
 class ReviewCloseTestCase(
