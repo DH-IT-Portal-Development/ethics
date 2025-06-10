@@ -267,8 +267,12 @@ class CommissionTestCase(BaseReviewTestCase):
 
 class AutoReviewTests(BaseReviewTestCase):
 
-    def setup(self):
+    def setUp(self):
         super().setUp()
+        self.toddlers = AgeGroup.objects.filter(pk=2)
+        self.adolescents = AgeGroup.objects.filter(pk=4)
+        self.adults = AgeGroup.objects.filter(pk=5)
+
 
     def test_auto_review(self):
         reasons = auto_review(self.proposal)
@@ -323,7 +327,6 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 8)
 
     def test_auto_review_minors_to_longroute(self):
-        self.toddlers = AgeGroup.objects.filter(pk=2)
         self.study.age_groups.set(self.toddlers)
         self.study.save()
 
@@ -331,8 +334,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 1)
 
     def test_auto_review_adults_to_shortroute(self):
-        adults = AgeGroup.objects.filter(pk=5)
-        self.study.age_groups.set(adults)
+        self.study.age_groups.set(self.adults)
         self.study.save()
 
         reasons = auto_review(self.proposal)
@@ -340,8 +342,7 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def test_auto_review_session_time(self):
         self.study.has_sessions = True
-        toddlers = AgeGroup.objects.filter(pk=2)
-        self.study.age_groups.set(toddlers)
+        self.study.age_groups.set(self.toddlers)
         self.study.save()
 
         s1 = Session.objects.create(study=self.study, order=1)
@@ -385,8 +386,7 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def test_auto_review_registration_age_min(self):
         self.study.has_sessions = True
-        adolescents = AgeGroup.objects.filter(pk=4)
-        self.study.age_groups.set(adolescents)
+        self.study.age_groups.set(self.adolescents)
         self.study.save()
 
         reasons = auto_review(self.proposal)
