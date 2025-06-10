@@ -326,7 +326,6 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
 
-
     def test_auto_review_adults_to_shortroute(self):
         adults = AgeGroup.objects.filter(pk=5)
         self.study.age_groups.set(adults)
@@ -337,7 +336,7 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def test_auto_review_age_groups(self):
         self.study.has_sessions = True
-        self.study.age_groups.set(AgeGroup.objects.filter(pk=2))  # toddlers
+        self.study.age_groups.set(AgeGroup.objects.filter(pk=5))  # adults
         self.study.save()
 
         s1 = Session.objects.create(study=self.study, order=1)
@@ -348,7 +347,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(s1.net_duration(), 40)
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 1)  # 1 from toddlers are minors
+        self.assertEqual(len(reasons), 0)
 
         s1_t2.duration = 30
         s1_t2.save()
@@ -356,7 +355,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(s1.net_duration(), 50)
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 2)  # total time and minors
+        self.assertEqual(len(reasons), 1)  # total time
 
     def test_auto_review_observation(self):
         self.study.has_observation = True
