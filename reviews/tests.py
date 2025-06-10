@@ -334,9 +334,10 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
 
-    def test_auto_review_age_groups(self):
+    def test_auto_review_session_time(self):
         self.study.has_sessions = True
-        self.study.age_groups.set(AgeGroup.objects.filter(pk=5))  # adults
+        toddlers = AgeGroup.objects.filter(pk=2)
+        self.study.age_groups.set(toddlers)
         self.study.save()
 
         s1 = Session.objects.create(study=self.study, order=1)
@@ -345,17 +346,17 @@ class AutoReviewTests(BaseReviewTestCase):
         self.study.save()
 
         self.assertEqual(s1.net_duration(), 40)
-
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 0)
+        self.assertEqual(len(reasons), 1) # minors go to longroute.
 
         s1_t2.duration = 30
         s1_t2.save()
         self.study.save()
         self.assertEqual(s1.net_duration(), 50)
-
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 1)  # total time
+        self.assertEqual(len(reasons), 2)
+        #minors go to longroute, and session takes longer than 40m for the agegroup toddlers.
+        #Redundancy is because changing requirements over time.
 
     def test_auto_review_observation(self):
         self.study.has_observation = True
@@ -380,11 +381,12 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def test_auto_review_task(self):
         self.study.has_sessions = True
-        self.study.age_groups.set(AgeGroup.objects.filter(pk=4))  # adolescents
+        adults = AgeGroup.objects.filter(pk=5)
+        self.study.age_groups.set(adults)
         self.study.save()
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 1)  # 1 from adolescents being minors
+        self.assertEqual(len(reasons), 0)
 
         s1 = Session.objects.create(study=self.study, order=1)
         s1_t1 = Task.objects.create(session=s1, order=1)
