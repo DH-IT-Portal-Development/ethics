@@ -8,5 +8,4 @@ def copy_observation_to_study(study, original_observation):
     o.save()
 
     o.setting.set(original_observation.setting.all())
-    o.registrations.set(original_observation.registrations.all())
     o.save()

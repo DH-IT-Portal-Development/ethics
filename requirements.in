@@ -9,6 +9,7 @@ djangorestframework
 djangosaml2
 mysqlclient<2
 xhtml2pdf
+mock
 sphinx
 sphinx_rtd_theme
 sphinxcontrib-apidoc
