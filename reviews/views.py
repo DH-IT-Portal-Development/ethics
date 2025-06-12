@@ -482,6 +482,7 @@ class ReviewCloseView(GroupRequiredMixin, ReviewSidebarMixin, generic.UpdateView
             Review.Continuations.GO_POST_HOC,
             Review.Continuations.NO_GO_POST_HOC,
             Review.Continuations.REVISION,
+            Review.Continuations.DISCONTINUED
         ]:
             proposal.mark_reviewed(form.instance.continuation)
         elif form.instance.continuation == Review.Continuations.LONG_ROUTE:
