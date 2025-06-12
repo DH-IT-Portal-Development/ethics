@@ -664,12 +664,11 @@ def discontinue_review(review):
 
     # Set review continuation
     review.continuation = review.Continuations.DISCONTINUED
-    review.proposal.status = review.proposal.Statuses.DECISION_MADE
     review.stage = review.Stages.CLOSED
-    review.date_end = datetime.datetime.now()
+    review.proposal.status = review.proposal.Statuses.DECISION_MADE
+    review.proposal.date_reviewed = timezone.now()
     review.save()
     review.proposal.save()
-
 
 def assign_reviewers(review, list_of_users, route):
     """Assigns or reassigns a list of reviewers to a review"""
