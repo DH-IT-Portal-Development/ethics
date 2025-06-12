@@ -2,7 +2,7 @@ from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 from menu import Menu, MenuItem
 
-from main.utils import is_secretary, can_view_archive
+from main.utils import is_secretary, can_view_archive, is_authenticated, get_user
 
 new_proposal_menu = (
     MenuItem(
@@ -45,7 +45,7 @@ Menu.add_item(
         "#",
         slug="new-studies",  # needed for sub-menu!
         children=new_proposal_menu,
-        check=lambda x: x.user.is_authenticated,
+        check=is_authenticated,
     ),
 )
 
@@ -83,7 +83,7 @@ Menu.add_item(
         reverse("proposals:my_archive"),
         slug="my-studies",  # needed for sub-menu!
         children=my_proposals_menu,
-        check=lambda x: x.user.is_authenticated,
+        check=is_authenticated,
     ),
 )
 
@@ -91,17 +91,17 @@ archive_menu = (
     MenuItem(
         _("Bekijk alle goedgekeurde aanvragen van de Algemene Kamer"),
         reverse("proposals:archive", args=["AK"]),
-        check=lambda x: can_view_archive(x.user),
+        check=lambda request: can_view_archive(get_user(request)),
     ),
     MenuItem(
         _("Bekijk alle goedgekeurde aanvragen van de Linguïstiek Kamer"),
         reverse("proposals:archive", args=["LK"]),
-        check=lambda x: can_view_archive(x.user),
+        check=lambda request: can_view_archive(get_user(request)),
     ),
     MenuItem(
         _("Site-export"),
         reverse("proposals:archive_export"),
-        check=lambda x: is_secretary(x.user),
+        check=lambda request: is_secretary(get_user(request)),
     ),
 )
 
@@ -113,6 +113,6 @@ Menu.add_item(
         "#",
         slug="archive",  # needed for sub-menu!
         children=archive_menu,
-        check=lambda x: can_view_archive(x.user),
+        check=lambda request: can_view_archive(get_user(request)),
     ),
 )

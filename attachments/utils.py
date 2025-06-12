@@ -2,7 +2,7 @@ import mimetypes
 from collections import Counter
 
 from django.template.loader import get_template
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
 
 from main.utils import renderable, is_secretary
@@ -27,6 +27,7 @@ class AttachmentKind:
     max_num = None
     attached_field = "attachments"
     desiredness = desiredness.OPTIONAL
+    model_document_link = ""  # optional
 
     @classmethod
     def get_fn_part(cls):

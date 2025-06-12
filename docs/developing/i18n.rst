@@ -18,7 +18,7 @@ This portal uses translations in a 'dutch in-template/code, translate to english
 Trimming whitespace
 -------------------
 
-In templates, :code:`{% blocktrans %}` tags are often used to translate larger amounts of texts. However, by default this tag preserves (excessive) whitespace naturally present in the templates. (From indentation, mostly).
+In templates, :code:`{% blocktrans %} {% endblocktrans %}` tags are often used to translate larger amounts of texts. However, by default this tag preserves (excessive) whitespace naturally present in the templates. (From indentation, mostly).
 This makes the ``msgid`` in the po files rather hard to read.
 
 Thus, it is preferred to use the trimmed argument: :code:`{% blocktrans trimmed %}`. This will strip out any excessive whitespace.
