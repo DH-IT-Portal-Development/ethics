@@ -670,6 +670,7 @@ def discontinue_review(review):
     review.save()
     review.proposal.save()
 
+
 def assign_reviewers(review, list_of_users, route):
     """Assigns or reassigns a list of reviewers to a review"""
 

@@ -266,20 +266,25 @@ class CommissionTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)  # go
 
     def test_discontinue_review_date_not_empty(self):
-        #Issue #950
         review = start_review(self.proposal)
         discontinue_review(review)
-        self.assertNotEqual(review.proposal.date_reviewed, None)
+        self.assertNotEqual(
+            review.proposal.date_reviewed, None, msg="Issue #950 has reappeared"
+        )
 
-    def test_discontinue_review_correct_date(self):
-        #Issue 677
+    def test_discontinue_review_dates_no_longer_swapped(self):
         review = start_review(self.proposal)
-        review.date_end = datetime.datetime.now() #a review is done
+        review.date_end = datetime.datetime.now()  # a review is done
         discontinue_review(review)
 
         details_continuation_date = review.proposal.date_reviewed
         details_last_decision_received = review.date_end
-        self.assertGreater(details_continuation_date, details_last_decision_received, msg="Issue677")
+        self.assertGreater(
+            details_continuation_date,
+            details_last_decision_received,
+            msg="Issue677 has reappeared",
+        )
+
 
 class AutoReviewTests(BaseReviewTestCase):
     def test_auto_review(self):
