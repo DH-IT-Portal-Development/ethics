@@ -272,7 +272,7 @@ class CommissionTestCase(BaseReviewTestCase):
             review.proposal.date_reviewed, None, msg="Issue #950 has reappeared"
         )
 
-    def test_discontinue_review_dates_no_longer_swapped(self):
+    def test_discontinue_review_dates_no_longer_swopped(self):
         review = start_review(self.proposal)
         review.date_end = datetime.datetime.now()  # a review is done
         discontinue_review(review)
