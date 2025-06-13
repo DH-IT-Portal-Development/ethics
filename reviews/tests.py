@@ -360,7 +360,6 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 2)
         # minors go to longroute, and session takes longer than 40m for the agegroup toddlers.
-        # Redundancy is because changing requirements over time.
 
     def test_auto_review_observation(self):
         self.study.has_observation = True
