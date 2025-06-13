@@ -666,7 +666,7 @@ def discontinue_review(review):
     review.continuation = review.Continuations.DISCONTINUED
     review.stage = review.Stages.CLOSED
     review.proposal.status = review.proposal.Statuses.DECISION_MADE
-    review.proposal.date_reviewed = timezone.now()
+    review.proposal.date_reviewed = datetime.datetime.now()
     review.save()
     review.proposal.save()
 
