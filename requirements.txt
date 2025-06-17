@@ -164,8 +164,6 @@ lxml==5.4.0
     #   svglib
 markupsafe==3.0.2
     # via jinja2
-mock==5.2.0
-    # via -r requirements.in
 mypy-extensions==1.1.0
     # via black
 mysqlclient==1.4.6
