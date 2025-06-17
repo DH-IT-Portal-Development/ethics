@@ -77,6 +77,8 @@ def copy_study_to_proposal(proposal, original_study):
     intervention = original_study.get_intervention()
     observation = original_study.get_observation()
     sessions = original_study.get_sessions()
+    registrations = original_study.registrations.all()
+    registration_kinds = original_study.registration_kinds.all()
 
     s = Study.objects.get(pk=original_study.pk)
     s.pk = None
@@ -88,6 +90,9 @@ def copy_study_to_proposal(proposal, original_study):
     s.compensation = compensation
     s.recruitment.set(recruitment)
     s.special_details.set(special_details)
+    s.registrations.set(registrations)
+    s.registration_kinds.set(registration_kinds)
+
     s.save()
 
     if intervention:
