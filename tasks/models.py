@@ -69,40 +69,6 @@ class Session(SettingModel):
         return _("Sessie {}").format(self.order)
 
 
-class Registration(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    is_local = models.BooleanField(default=False)
-    needs_details = models.BooleanField(default=False)
-    needs_kind = models.BooleanField(default=False)
-    requires_review = models.BooleanField(default=False)
-    age_min = models.PositiveIntegerField(blank=True, null=True)
-    is_recording = models.BooleanField(
-        default=False,
-    )
-
-    class Meta:
-        ordering = ["order"]
-        verbose_name = _("Vastlegging gedrag")
-
-    def __str__(self):
-        return self.description
-
-
-class RegistrationKind(models.Model):
-    order = models.PositiveIntegerField(unique=True)
-    description = models.CharField(max_length=200)
-    needs_details = models.BooleanField(default=False)
-    requires_review = models.BooleanField(default=False)
-    registration = models.ForeignKey(Registration, on_delete=models.CASCADE)
-
-    class Meta:
-        ordering = ["order"]
-
-    def __str__(self):
-        return self.description
-
-
 class Task(models.Model):
     order = models.PositiveIntegerField()
     name = models.CharField(
@@ -150,38 +116,6 @@ geef dan <strong>het redelijkerwijs te verwachten maximum op</strong>."
         ),
         default=0,
         validators=[MinValueValidator(1)],
-        blank=True,
-    )
-
-    registrations = models.ManyToManyField(
-        Registration,
-        verbose_name=_(
-            "Hoe wordt het gedrag of de toestand van de deelnemer bij deze taak vastgelegd?"
-        ),
-        help_text=_(
-            "Opnames zijn nooit anoniem en niet te anonimiseren. Let hierop "
-            "bij het gebruik van de term 'anoniem' of 'geanonimiseerd' in "
-            "je documenten voor deelnemers. Voor meer informatie, zie het UU Data Privacy Handbook over "
-            "<a href='https://utrechtuniversity.github.io/dataprivacyhandbook/pseudonymisation-anonymisation.html#pseudonymisation-anonymisation' target='_blank'>"
-            "anonimiseren en pseudonimiseren</a>."
-        ),
-    )
-
-    registrations_details = models.CharField(
-        _("Namelijk"),
-        max_length=200,
-        blank=True,
-    )
-
-    registration_kinds = models.ManyToManyField(
-        RegistrationKind,
-        verbose_name=_("Kies het soort meting"),
-        blank=True,
-    )
-
-    registration_kinds_details = models.CharField(
-        _("Namelijk"),
-        max_length=200,
         blank=True,
     )
 
