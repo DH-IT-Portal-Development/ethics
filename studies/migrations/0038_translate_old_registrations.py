@@ -75,8 +75,8 @@ def translate_registrations(study, Registration):
     # as the registration type, and put the contents of the
     # Intervention.measurement into registrations_details
     if intervention:
-        # 10 is the pk of the 'other' registration
-        study.registrations.add(10)
+        # 11 is the pk of the 'other' registration
+        study.registrations.add(11)
         reg_details_dict["Intervention"] = intervention.measurement
         study.save()
 
