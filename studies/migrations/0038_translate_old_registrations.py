@@ -24,7 +24,7 @@ observation_registration_translation = {
     # notes
     "notities": 9,
     # other
-    "anders": 10,
+    "anders": 11,
 }
 
 # let's just shorten that funny variable name
