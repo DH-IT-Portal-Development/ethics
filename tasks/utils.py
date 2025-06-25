@@ -9,10 +9,6 @@ def copy_task_to_session(session, original_task):
     t.session = session
     t.save()
 
-    t.registrations.set(original_task.registrations.all())
-    t.registration_kinds.set(original_task.registration_kinds.all())
-    t.save()
-
 
 def copy_session_to_study(study, original_session):
     from tasks.models import Session

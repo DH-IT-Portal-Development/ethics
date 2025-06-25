@@ -14,7 +14,6 @@ $(function() {
     depends_on_value('is_nonpublic_space', 'True', 'has_advanced_consent');
     depends_on_value('needs_approval', 'True', 'approval_institution');
     depends_on_value('needs_approval', 'True', 'approval_document');
-    check_field_required('registrations', 'needs_details', 'registrations_details', 'observations', 'Registration');
 
     check_field_required('setting', 'is_school', 'needs_approval', 'main', 'Setting', true);
 
