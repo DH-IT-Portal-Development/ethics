@@ -1,3 +1,4 @@
+import datetime
 from datetime import date
 from copy import copy
 
@@ -20,7 +21,7 @@ from proposals.models import Proposal, Relation, Wmo
 from proposals.utils import generate_ref_number
 from studies.models import Study, Compensation, AgeGroup, Registration
 from observations.models import Observation
-from reviews.utils.review_utils import remind_supervisor_reviewers
+from reviews.utils.review_utils import remind_supervisor_reviewers, discontinue_review
 from interventions.models import Intervention
 from tasks.models import Session, Task
 
@@ -262,6 +263,26 @@ class CommissionTestCase(BaseReviewTestCase):
         decisions[1].save()
         review.refresh_from_db()
         self.assertEqual(review.go, True)  # go
+
+    def test_discontinue_review_date_not_empty(self):
+        review = start_review(self.proposal)
+        discontinue_review(review)
+        self.assertNotEqual(
+            review.proposal.date_reviewed, None, msg="Issue #950 has reappeared"
+        )
+
+    def test_discontinue_review_dates_no_longer_swopped(self):
+        review = start_review(self.proposal)
+        review.date_end = datetime.datetime.now()  # a review is done
+        discontinue_review(review)
+
+        details_continuation_date = review.proposal.date_reviewed
+        details_last_decision_received = review.date_end
+        self.assertGreater(
+            details_continuation_date,
+            details_last_decision_received,
+            msg="Issue677 has reappeared",
+        )
 
 
 class AutoReviewTests(BaseReviewTestCase):

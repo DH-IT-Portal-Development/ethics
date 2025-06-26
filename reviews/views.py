@@ -484,6 +484,8 @@ class ReviewCloseView(GroupRequiredMixin, ReviewSidebarMixin, generic.UpdateView
             Review.Continuations.REVISION,
         ]:
             proposal.mark_reviewed(form.instance.continuation)
+        elif form.instance.continuation in [Review.Continuations.DISCONTINUED]:
+            discontinue_review(form.instance)
         elif form.instance.continuation == Review.Continuations.LONG_ROUTE:
             # Create a new review
             review = Review.objects.create(
