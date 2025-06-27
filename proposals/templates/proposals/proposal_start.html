@@ -4,77 +4,80 @@
 {% load i18n %}
 
 {% block header_title %}
-    {% trans "Een nieuwe aanvraag aanmelden" %} - {{ block.super }}
+{% trans "Een nieuwe aanvraag aanmelden" %} - {{ block.super }}
 {% endblock %}
 
 {% block content %}
-    <div class="uu-container">
-        <div class="col-12">
-            <h2>{% trans "Een nieuwe aanvraag aanmelden" %}</h2>
-            <ul>
-                <li>
-                    {% trans "Check voor het indienen:" %}
-                    <ul>
-                        <li>
-                            {% blocktrans trimmed %}
-                                De
-                                <a href="https://fetc-gw.wp.hum.uu.nl/" target="_blank">UU-webpagina van de FETC-GW</a> voor nieuws en de agenda.
-                            {% endblocktrans %}
-                        </li>
-                        <li>
-                            {% blocktrans trimmed %}
-                                Het reglement van de <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/">FETC-GW</a>.
-                            {% endblocktrans %}
-                        </li>
-                    </ul>
-                    <li>
-                        {% blocktrans trimmed %}
-                            Tijdens de aanvraagprocedure kan er om een of meer
-                            bijlagen worden gevraagd. Gebruik daarvoor de
-                            juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"
-    target="_blank">voorbeelddocumenten/templates</a>.
-                        {% endblocktrans %}
-                    </li>
-                    <p>
-                        {% blocktrans trimmed %}
-                            Studenten moeten hun begeleider vragen om deze formulieren; dezelfde voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
-                        {% endblocktrans %}
-                    </p>
-                </li>
-            </ul>
-            <p>
+<div class="uu-container">
+    <div class="col-12">
+        <h2>{% trans "Voordat je begint..." %}</h2>
+
+	<p>De volgende termen worden <strong>bekend verondersteld </strong>als je een aanvraag gaat indienen:</p>
+	<ul>
+	    <li><strong><a href="https://utrechtuniversity.github.io/dataprivacyhandbook/personal-data.html">persoonsgegevens</a> </strong>volgens de AVG (niet alleen maar naam en adres!). Zie bijv. <a href="https://youtu.be/egVmd_QFY_o">dit filmpje</a> (&lt;3 min)</li>
+	    <li><a href="https://utrechtuniversity.github.io/dataprivacyhandbook/special-types-personal-data.html"><strong>bijzondere persoonsgegevens</strong></a>: deze mag je niet zomaar mag verwerken!</li>
+	    <li>het verschil tussen <a href="https://utrechtuniversity.github.io/dataprivacyhandbook/definition-anonymisation-pseudonymisation.html#definition-anonymisation-pseudonymisation"><strong>anoniem</strong>, <strong>geanonimiseerd</strong> en <strong>gepseudonimiseerd</strong></a> volgens de AVG</li>
+	    <li>de <strong><a href="https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Futrechtuniversity.github.io%2Fdataprivacyhandbook%2Flegal-basis.html&amp;data=05%7C02%7Cfetc-gw%40uu.nl%7Cfafc47cefab04412b42208ddb31848fd%7Cd72758a0a4464e0fa0aa4bf95a4a10e7%7C0%7C0%7C638863639053668028%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&amp;sdata=T%2B4ame0WK8NJ%2FhYetdzPINzTr8on04KdQm%2BE0v3%2F5R0%3D&amp;reserved=0">AVG-grondslagen</a></strong> ‘algemeen belang’ en ‘toestemming’; zie ook <a href="https://eur03.safelinks.protection.outlook.com/?url=https%3A%2F%2Fintranet.uu.nl%2Fkennisbank%2Falgemeen-belang-in-plaats-van-toestemming-in-onderzoek&amp;data=05%7C02%7Cfetc-gw%40uu.nl%7Cfafc47cefab04412b42208ddb31848fd%7Cd72758a0a4464e0fa0aa4bf95a4a10e7%7C0%7C0%7C638863639053681360%7CUnknown%7CTWFpbGZsb3d8eyJFbXB0eU1hcGkiOnRydWUsIlYiOiIwLjAuMDAwMCIsIlAiOiJXaW4zMiIsIkFOIjoiTWFpbCIsIldUIjoyfQ%3D%3D%7C0%7C%7C%7C&amp;sdata=3G4jAGaeBeImCTp%2BTMRG7E1zfnD8XBACgNazmhIIr14%3D&amp;reserved=0">intranet</a> en <a href="https://utrechtuniversity.github.io/dataprivacyhandbook/choose-legal-basis.html">Beslisboom voor selectie grondslag</a></li>
+	    <li><strong>opnames</strong> zijn nooit of heel moeilijk te anonimiseren zijn en je moet bedenken of je deze na transcriptie wilt vernietigen.</li>
+	</ul>
+	<p>Het opdoen van kennis hierover (zie de linkjes) kost <strong>minder tijd</strong> dan het indienen van een revisie.</p>
+	<p>Bovendien scheelt het behoorlijk wat werk voor de FETC-GW, waardoor we voor iedereen de beoordelingsprocedure kunnen verkorten.</p>
+	<p>En verder:</p>
+	<ul>
+	    <li>Gebruik altijd de juiste en meest recente <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"><strong>voorbeelddocumenten/templates</strong></a>.
+                <p>
+                    {% blocktrans trimmed %}
+                    Studenten moeten hun begeleider vragen om deze formulieren; dezelfde voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
+                    {% endblocktrans %}
+                </p></li>
+	    <li>Check voor het indienen:
+		<ul>
+		    <li>de <a href="https://fetc-gw.wp.hum.uu.nl/">UU-webpagina van de FETC-GW</a> voor nieuws en de agenda;</li>
+		    <li>het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"><strong>reglement van de FETC-GW</strong></a> (zoek op wat op jouw onderzoek van toepassing is) .</li>
+		</ul>
+	    </li>
+	</ul>
+	<p>Voor advies over de AVG en privacy, neem liefst vooraf contact op met <a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>.</p>
+	<p>Voor advies over datamanagement, neem liefst vooraf contact op met <a href="mailto:datamanagement.gw@uu.nl">datamanagement.gw@uu.nl</a>.</p>
+	<p>Zij helpen je graag!</p>
+
+
+
+
+
+        <p>
+            {% blocktrans trimmed %}
+            Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) sessies, (iii) taken.
+            {% endblocktrans %}
+        </p>
+        <ul>
+            <li>
+                <strong>{% trans "Traject" %}</strong>:
                 {% blocktrans trimmed %}
-                    Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) sessies, (iii) taken.
+                Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende documenten nodig zijn.
                 {% endblocktrans %}
-            </p>
-            <ul>
-                <li>
-                    <strong>{% trans "Traject" %}</strong>:
+                <p>
                     {% blocktrans trimmed %}
-                        Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende documenten nodig zijn.
+                    Bijvoorbeeld: ouders van leerlingen 15 jaar en jonger, docenten, een controlegroep en een experimentele groep die verschillende taken krijgen.
                     {% endblocktrans %}
-                    <p>
-                        {% blocktrans trimmed %}
-                            Bijvoorbeeld: ouders van leerlingen 15 jaar en jonger, docenten, een controlegroep en een experimentele groep die verschillende taken krijgen.
-                        {% endblocktrans %}
-                    </p>
-                </li>
-                <li>
-                    <strong>{% trans "Sessie" %}</strong>:
-                    {% blocktrans trimmed %}
-                        Alle taken en procedures die een deelnemer voltooit tijdens een enkel bezoek aan de onderzoekslocatie, of tijdens een enkel bezoek van de onderzoeker.
-                    {% endblocktrans %}
-                </li>
-                <li>
-                    <strong>{% trans "Taak" %}</strong>:
-                    {% blocktrans trimmed %}
-                        Een taak of onderdeel van je onderzoek.
-                        <p>Bijvoorbeeld: het invullen van een vragenlijst, een interview, of een bepaalde test.</p>
-                    {% endblocktrans %}
-                </li>
-            </ul>
-            <a class="btn btn-primary float-end mb-4"
-               href="{% url 'proposals:create' %}">{% trans "Volgende stap >>" %}</a>
-        </div>
+                </p>
+            </li>
+            <li>
+                <strong>{% trans "Sessie" %}</strong>:
+                {% blocktrans trimmed %}
+                Alle taken en procedures die een deelnemer voltooit tijdens een enkel bezoek aan de onderzoekslocatie, of tijdens een enkel bezoek van de onderzoeker.
+                {% endblocktrans %}
+            </li>
+            <li>
+                <strong>{% trans "Taak" %}</strong>:
+                {% blocktrans trimmed %}
+                Een taak of onderdeel van je onderzoek.
+                <p>Bijvoorbeeld: het invullen van een vragenlijst, een interview, of een bepaalde test.</p>
+                {% endblocktrans %}
+            </li>
+        </ul>
+        <a class="btn btn-primary float-end mb-4"
+           href="{% url 'proposals:create' %}">{% trans "Een nieuwe aanvraag aanmelden >>" %}</a>
     </div>
+</div>
 {% endblock %}
