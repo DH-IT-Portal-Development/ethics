@@ -269,10 +269,10 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def setUp(self):
         super().setUp()
-        self.toddlers = AgeGroup.objects.filter(description_nl="Peuter")
-        self.adolescents = AgeGroup.objects.filter(description_nl="Adolescent")
-        self.adults = AgeGroup.objects.filter(description_nl="Volwassene")
-        self.psychofysiological_measurement = Registration.objects.filter(description="psychofysiologische meting (bijv. EEG, fMRI, EMA)")
+        self.toddlers = AgeGroup.objects.get(description_nl="Peuter")
+        self.adolescents = AgeGroup.objects.get(description_nl="Adolescent")
+        self.adults = AgeGroup.objects.get(description_nl="Volwassene")
+        self.psychofysiological_measurement = Registration.objects.get(description="psychofysiologische meting (bijv. EEG, fMRI, EMA)")
 
     def test_auto_review(self):
         reasons = auto_review(self.proposal)
@@ -327,14 +327,14 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 8)
 
     def test_auto_review_minors_to_longroute(self):
-        self.study.age_groups.set(self.toddlers)
+        self.study.age_groups.set([self.toddlers])
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
 
     def test_auto_review_adults_to_shortroute(self):
-        self.study.age_groups.set(self.adults)
+        self.study.age_groups.set([self.adults])
         self.study.save()
 
         reasons = auto_review(self.proposal)
@@ -342,7 +342,7 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def test_auto_review_session_time(self):
         self.study.has_sessions = True
-        self.study.age_groups.set(self.toddlers)
+        self.study.age_groups.set([self.toddlers])
         self.study.save()
 
         s1 = Session.objects.create(study=self.study, order=1)
@@ -385,7 +385,7 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def test_auto_review_registration_age_min(self):
         self.study.has_sessions = True
-        self.study.age_groups.set(self.adolescents)
+        self.study.age_groups.set([self.adolescents])
         self.study.save()
 
         reasons = auto_review(self.proposal)
@@ -393,7 +393,7 @@ class AutoReviewTests(BaseReviewTestCase):
 
         s1 = Session.objects.create(study=self.study, order=1)
         s1_t1 = Task.objects.create(session=s1, order=1)
-        s1_t1.registrations.set(self.psychofysiological_measurement)
+        s1_t1.registrations.set([self.psychofysiological_measurement])
 
         reasons = auto_review_task(self.study, s1_t1)
         # reason: psychofysiological_measurements for minors detected
