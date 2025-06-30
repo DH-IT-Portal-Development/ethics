@@ -21,7 +21,7 @@ babel==2.17.0
     # via sphinx
 black==25.1.0
     # via -r requirements.in
-blessed==1.20.0
+blessed==1.21.0
     # via curtsies
 bpython==0.25
     # via
@@ -29,21 +29,20 @@ bpython==0.25
     #   cdh-django-core
 cdh-django-core[core,federated-auth,files,mail,recommended,rest,vue] @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@v3.2.0-alpha.0
     # via -r requirements.in
-certifi==2025.1.31
+certifi==2025.6.15
     # via
     #   requests
     #   sentry-sdk
 cffi==1.17.1
     # via cryptography
-chardet==5.2.0
-    # via reportlab
-charset-normalizer==3.4.1
-    # via requests
+charset-normalizer==3.4.2
+    # via
+    #   reportlab
+    #   requests
 click==8.1.8
     # via
     #   black
     #   djlint
-    #   pyhanko
 closure==20191111
     # via cdh-django-core
 colorama==0.4.6
@@ -68,11 +67,10 @@ cwcwidth==0.1.10
 defusedxml==0.7.1
     # via
     #   djangosaml2
-    #   pyhanko
     #   pysaml2
 deprecated==1.2.18
     # via cdh-django-core
-django==4.2.20
+django==4.2.23
     # via
     #   -r requirements.in
     #   cdh-django-core
@@ -93,32 +91,34 @@ django-braces==1.17.0
     #   -r requirements.in
     #   cdh-django-core
 django-csp==3.8
-    # via cdh-django-core
-django-debug-toolbar==5.1.0
     # via
     #   -r requirements.in
     #   cdh-django-core
-django-extensions==3.2.3
+django-debug-toolbar==5.2.0
+    # via
+    #   -r requirements.in
+    #   cdh-django-core
+django-extensions==4.1
     # via
     #   -r requirements.in
     #   cdh-django-core
 django-filter==25.1
     # via cdh-django-core
-django-impersonate==1.9.4
+django-impersonate==1.9.5
     # via
     #   -r requirements.in
     #   cdh-django-core
-django-modeltranslation==0.19.13
+django-modeltranslation==0.19.15
     # via
     #   -r requirements.in
     #   cdh-django-core
-django-simple-menu==2.1.3
+django-simple-menu==2.1.4
     # via
     #   -r requirements.in
     #   cdh-django-core
 django-user-agents==0.4.0
     # via -r requirements.in
-djangorestframework==3.15.2
+djangorestframework==3.16.0
     # via
     #   -r requirements.in
     #   cdh-django-core
@@ -132,13 +132,13 @@ docutils==0.21.2
     # via
     #   sphinx
     #   sphinx-rtd-theme
-editorconfig==0.17.0
+editorconfig==0.17.1
     # via
     #   cssbeautifier
     #   jsbeautifier
 elementpath==4.8.0
     # via xmlschema
-greenlet==3.1.1
+greenlet==3.2.3
     # via bpython
 html5lib==1.1
     # via
@@ -148,7 +148,7 @@ idna==3.10
     # via requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==8.6.1
+importlib-metadata==8.7.0
     # via sphinx
 jinja2==3.1.6
     # via sphinx
@@ -156,21 +156,23 @@ jsbeautifier==1.15.4
     # via
     #   cssbeautifier
     #   djlint
-json5==0.10.0
+json5==0.12.0
     # via djlint
 lesscpy==0.15.1
     # via cdh-django-core
-lxml==5.3.1
-    # via svglib
+lxml==5.4.0
+    # via
+    #   pyhanko
+    #   svglib
 markupsafe==3.0.2
     # via jinja2
-mypy-extensions==1.0.0
+mypy-extensions==1.1.0
     # via black
 mysqlclient==1.4.6
     # via -r requirements.in
 oscrypto==1.3.0
     # via pyhanko-certvalidator
-packaging==24.2
+packaging==25.0
     # via
     #   black
     #   sphinx
@@ -182,12 +184,12 @@ pbr==6.1.1
     # via sphinxcontrib-apidoc
 pdftotext==3.0.0
     # via -r requirements.in
-pillow==11.1.0
+pillow==11.2.1
     # via
     #   -r requirements.in
     #   reportlab
     #   xhtml2pdf
-platformdirs==4.3.7
+platformdirs==4.3.8
     # via black
 ply==3.11
     # via lesscpy
@@ -202,9 +204,9 @@ pygments==2.19.1
     #   -r requirements.in
     #   bpython
     #   sphinx
-pyhanko==0.26.0
+pyhanko==0.29.0
     # via xhtml2pdf
-pyhanko-certvalidator==0.26.8
+pyhanko-certvalidator==0.27.0
     # via
     #   pyhanko
     #   xhtml2pdf
@@ -212,7 +214,7 @@ pyjwt==2.10.1
     # via cdh-django-core
 pyopenssl==24.2.1
     # via pysaml2
-pypdf==5.4.0
+pypdf==5.6.0
     # via xhtml2pdf
 pysaml2==7.5.2
     # via djangosaml2
@@ -234,15 +236,13 @@ pyyaml==6.0.2
     # via
     #   djlint
     #   pyhanko
-qrcode==8.0
-    # via pyhanko
 regex==2024.11.6
     # via djlint
-reportlab==4.3.1
+reportlab==4.4.2
     # via
     #   svglib
     #   xhtml2pdf
-requests==2.32.3
+requests==2.32.4
     # via
     #   -r requirements.in
     #   bpython
@@ -251,17 +251,16 @@ requests==2.32.3
     #   pyhanko-certvalidator
     #   pysaml2
     #   sphinx
-sentry-sdk[django]==2.24.1
+sentry-sdk[django]==2.30.0
     # via -r requirements.in
 six==1.17.0
     # via
-    #   blessed
     #   cssbeautifier
     #   html5lib
     #   jsbeautifier
     #   pyscss
     #   python-dateutil
-snowballstemmer==2.2.0
+snowballstemmer==3.0.1
     # via sphinx
 sphinx==7.4.7
     # via
@@ -272,7 +271,7 @@ sphinx==7.4.7
     #   sphinxcontrib-jquery
 sphinx-rtd-theme==3.0.2
     # via -r requirements.in
-sphinxcontrib-apidoc==0.5.0
+sphinxcontrib-apidoc==0.6.0
     # via -r requirements.in
 sphinxcontrib-applehelp==2.0.0
     # via sphinx
@@ -307,7 +306,7 @@ tomli==2.2.1
     #   sphinx
 tqdm==4.67.1
     # via djlint
-typing-extensions==4.13.0
+typing-extensions==4.14.0
     # via
     #   asgiref
     #   black
@@ -321,9 +320,9 @@ ua-parser==1.0.1
     # via user-agents
 ua-parser-builtins==0.18.0.post1
     # via ua-parser
-uritools==4.0.3
+uritools==5.0.0
     # via pyhanko-certvalidator
-urllib3==2.3.0
+urllib3==2.5.0
     # via
     #   requests
     #   sentry-sdk
@@ -344,7 +343,7 @@ xhtml2pdf==0.2.17
     # via -r requirements.in
 xmlschema==2.5.1
     # via pysaml2
-zipp==3.21.0
+zipp==3.23.0
     # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:

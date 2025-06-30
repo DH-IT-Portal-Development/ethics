@@ -195,6 +195,39 @@ class PersonalDataSection(BaseSection):
         return rows
 
 
+class RegistrationSection(BaseSection):
+    """This class receives a proposal.study object
+    Note the overwritten __init__ method for adding a sub_title."""
+
+    section_title = _("Registratie")
+    row_fields = [
+        "registrations",
+        "registrations_details",
+        "registration_kinds",
+        "registration_kinds_details",
+    ]
+
+    def __init__(self, obj):
+        super().__init__(obj)
+        self.sub_title = self.get_sub_title(self.obj, "study")
+
+    def get_row_fields(self):
+        rows = copy(self.row_fields)
+        obj = self.obj
+
+        if not needs_details(obj.registrations.all()):
+            rows.remove("registrations_details")
+        if not needs_details(
+            obj.registrations.all(), "needs_kind"
+        ) or not needs_details(obj.registration_kinds.all()):
+            rows.remove("registration_kinds")
+            rows.remove("registration_kinds_details")
+        elif not needs_details(obj.registration_kinds.all()):
+            rows.remove("registration_kinds_details")
+
+        return rows
+
+
 class StudySection(PageBreakMixin, BaseSection):
     """This class receives a proposal.study object
     Note the overwritten __init__ method for adding a sub_title."""
@@ -321,8 +354,6 @@ class ObservationSection(BaseSection):
         "needs_approval",
         "approval_institution",
         "approval_document",
-        "registrations",
-        "registrations_details",
     ]
 
     def __init__(self, obj):
@@ -381,8 +412,6 @@ class ObservationSection(BaseSection):
             rows.remove("leader_has_coc")
         elif obj.supervision:
             rows.remove("leader_has_coc")
-        if not needs_details(obj.registrations.all()):
-            rows.remove("registrations_details")
 
         return rows
 
@@ -428,10 +457,6 @@ class TaskSection(BaseSection):
         "name",
         "repeats",
         "duration",
-        "registrations",
-        "registrations_details",
-        "registration_kinds",
-        "registration_kinds_details",
         "feedback",
         "feedback_details",
         "description",
@@ -445,15 +470,6 @@ class TaskSection(BaseSection):
         rows = copy(self.row_fields)
         obj = self.obj
 
-        if not needs_details(obj.registrations.all()):
-            rows.remove("registrations_details")
-        if not needs_details(
-            obj.registrations.all(), "needs_kind"
-        ) or not needs_details(obj.registration_kinds.all()):
-            rows.remove("registration_kinds")
-            rows.remove("registration_kinds_details")
-        elif not needs_details(obj.registration_kinds.all()):
-            rows.remove("registration_kinds_details")
         if not obj.feedback:
             rows.remove("feedback_details")
 
@@ -668,6 +684,7 @@ def create_context_pdf(context, proposal):
                     for study in proposal.study_set.all():
                         sections.append(StudySection(study))
                         sections.append(PersonalDataSection(study))
+                        sections.append(RegistrationSection(study))
                         if study.get_intervention():
                             sections.append(InterventionSection(study.intervention))
                         if study.get_observation():
@@ -856,6 +873,12 @@ def create_context_diff(context, old_proposal, new_proposal):
                         sections.append(
                             DiffSection(
                                 *multi_sections(PersonalDataSection, both_studies)
+                            )
+                        )
+
+                        sections.append(
+                            DiffSection(
+                                *multi_sections(RegistrationSection, both_studies)
                             )
                         )
 

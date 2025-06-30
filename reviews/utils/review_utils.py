@@ -539,8 +539,20 @@ def auto_review(proposal: Proposal):
                 )
             )
 
-        for task in Task.objects.filter(session__study=study):
-            reasons.extend(auto_review_task(study, task))
+        for registration in study.registrations.all():
+            if registration.requires_review:
+                if registration.age_min:
+                    for age_group in study.age_groups.all():
+                        if (
+                            age_group.age_max is not None
+                            and age_group.age_max < registration.age_min
+                        ):
+                            reasons.append(
+                                _(
+                                    "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
+                                ).format(registration.age_min)
+                            )
+                            break
 
         if study.negativity in [YesNoDoubt.YES, YesNoDoubt.DOUBT]:
             reasons.append(
@@ -623,40 +635,6 @@ def auto_review_observation(observation):
                     'De onderzoeker begeeft zich "under cover" in een beheerde niet-publieke ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie deel en/of verzamelt data die te herleiden zijn tot individuele personen.'
                 )
             )
-
-    for registration in observation.registrations.all():
-        if registration.requires_review:
-            reasons.append(
-                _("De aanvraag bevat het gebruik van {}").format(
-                    registration.description
-                )
-            )
-
-    return reasons
-
-
-def auto_review_task(study, task):
-    """
-    Reviews a Task machine-wise.
-    Based on the regulations on
-    https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/.
-    """
-    reasons = []
-
-    for registration in task.registrations.all():
-        if registration.requires_review:
-            if registration.age_min:
-                for age_group in study.age_groups.all():
-                    if (
-                        age_group.age_max is not None
-                        and age_group.age_max < registration.age_min
-                    ):
-                        reasons.append(
-                            _(
-                                "De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
-                            ).format(registration.age_min)
-                        )
-                        break
 
     return reasons
 
