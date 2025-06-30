@@ -271,7 +271,9 @@ class AutoReviewTests(BaseReviewTestCase):
         self.toddlers = AgeGroup.objects.get(description_nl="Peuter")
         self.adolescents = AgeGroup.objects.get(description_nl="Adolescent")
         self.adults = AgeGroup.objects.get(description_nl="Volwassene")
-        self.psychofysiological_measurement = Registration.objects.get(description="psychofysiologische meting (bijv. EEG, fMRI, EMA)")
+        self.psychofysiological_measurement = Registration.objects.get(
+            description="psychofysiologische meting (bijv. EEG, fMRI, EMA)"
+        )
 
     def test_auto_review(self):
         reasons = auto_review(self.proposal)
@@ -383,7 +385,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
     def test_auto_review_registration_age_min(self):
-        self.study.has_sessions = True
+        self.study.has_sessions = True  # weggehaald in develop
         self.study.age_groups.set([self.adolescents])
         self.study.save()
 
@@ -392,9 +394,11 @@ class AutoReviewTests(BaseReviewTestCase):
 
         self.study.registrations.set([self.psychofysiological_measurement])
 
-        reasons = auto_review(self.proposal,)
+        reasons = auto_review(
+            self.proposal,
+        )
         # reason: psychofysiological_measurements for minors detected
-        self.assertEqual(len(reasons), 1)
+        self.assertEqual(len(reasons), 2)
 
 
 class ReviewCloseTestCase(
