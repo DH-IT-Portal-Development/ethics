@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-25 11:55+0200\n"
+"POT-Creation-Date: 2025-05-30 11:33+0200\n"
 "PO-Revision-Date: 2025-01-15 12:46+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -3260,7 +3260,7 @@ msgid "Concept-aanmelding versturen"
 msgstr "Submit draft application"
 
 #: proposals/templates/proposals/proposal_submit.html:155
-#: proposals/utils/pdf_diff_sections.py:638
+#: proposals/utils/pdf_diff_sections.py:622
 msgid "Aanmelding versturen"
 msgstr "Submit application"
 
@@ -3691,15 +3691,15 @@ msgstr "Knowledge security and researcher risk"
 msgid "Data Management"
 msgstr "Data Management"
 
-#: proposals/utils/pdf_diff_sections.py:802
+#: proposals/utils/pdf_diff_sections.py:785
 msgid "Documenten - Aanvraag in het geheel"
 msgstr "Documents - Application in general"
 
-#: proposals/utils/pdf_diff_sections.py:804
+#: proposals/utils/pdf_diff_sections.py:787
 msgid "Documenten - Het hoofdtraject"
 msgstr "Documents - The main trajectory"
 
-#: proposals/utils/pdf_diff_sections.py:806
+#: proposals/utils/pdf_diff_sections.py:789
 msgid "Documenten - Traject "
 msgstr "Documents - Trajectory "
 
@@ -4721,26 +4721,30 @@ msgid "FETC-GW {}: eindverantwoordelijke heeft je aanvraag beoordeeld"
 msgstr "FEtC-H {}: a supervisor has reviewed your application"
 
 #: reviews/utils/review_utils.py:515
+msgid "De aanvraag bevat minderjarigen."
+msgstr "The application contains minors."
+
+#: reviews/utils/review_utils.py:519
 msgid "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
 msgstr ""
 "The application contains the participation of adults incapable of informed "
 "consent."
 
-#: reviews/utils/review_utils.py:519
+#: reviews/utils/review_utils.py:523
 msgid "De aanvraag bevat het gebruik van misleiding."
 msgstr "The application contains the use of misrepresentation."
 
-#: reviews/utils/review_utils.py:524
+#: reviews/utils/review_utils.py:528
 msgid ""
 "Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)"
 msgstr ""
 "A hierarchal relationship between researcher(s) and participant(s) exists."
 
-#: reviews/utils/review_utils.py:529
+#: reviews/utils/review_utils.py:533
 msgid "Het onderzoek verzamelt bijzondere persoonsgegevens."
 msgstr "This study collects special or sensitive personal details."
 
-#: reviews/utils/review_utils.py:534
+#: reviews/utils/review_utils.py:538
 msgid ""
 "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht "
 "verhoogde kwetsbaarheid met zich meebrengen."
@@ -4765,7 +4769,7 @@ msgstr ""
 "to the extent that they could result in negative responses from participants "
 "and/or other researchers."
 
-#: reviews/utils/review_utils.py:565
+#: reviews/utils/review_utils.py:557
 msgid ""
 "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid "
 "van de deelnemers tijdens of na het onderzoek."
@@ -4773,7 +4777,7 @@ msgstr ""
 "The applicant notes that there are possible concerns about the safety of "
 "participants during or after the study."
 
-#: reviews/utils/review_utils.py:576
+#: reviews/utils/review_utils.py:568
 #, python-brace-format
 msgid ""
 "De totale duur van de taken in sessie {s}, exclusief pauzes en andere niet-"
@@ -4784,7 +4788,7 @@ msgstr ""
 "non-task elements ({d} minutes) is greater than the task duration limit "
 "({max_d} minutes) for the age group {ag}."
 
-#: reviews/utils/review_utils.py:589
+#: reviews/utils/review_utils.py:581
 msgid ""
 "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom "
 "kennisveiligheid."
@@ -4792,7 +4796,7 @@ msgstr ""
 "The applicant notes that there are possible concerns about knowledge "
 "security."
 
-#: reviews/utils/review_utils.py:597
+#: reviews/utils/review_utils.py:589
 msgid ""
 "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid "
 "van de betrokken onderzoekers."
@@ -4800,14 +4804,14 @@ msgstr ""
 "The applicant notes that there are possible concerns about knowledge "
 "security."
 
-#: reviews/utils/review_utils.py:617
+#: reviews/utils/review_utils.py:609
 #, python-brace-format
 msgid "Het onderzoek observeert deelnemers in de volgende setting: {s}"
 msgstr ""
 "The application contains sessions with participants in the following "
 "setting: {s}"
 
-#: reviews/utils/review_utils.py:625
+#: reviews/utils/review_utils.py:617
 msgid ""
 "Het onderzoek observeert deelnemers in een niet-publieke ruimte en werkt met "
 "toestemming na afloop van het onderzoek."
@@ -4815,7 +4819,7 @@ msgstr ""
 "The study observes participants in a non-public space and works with "
 "retrospective consent."
 
-#: reviews/utils/review_utils.py:631
+#: reviews/utils/review_utils.py:623
 msgid ""
 "De onderzoeker begeeft zich \"under cover\" in een beheerde niet-publieke "
 "ruimte (bijv. een digitale gespreksgroep), en neemt actief aan de discussie "
@@ -4824,6 +4828,17 @@ msgstr ""
 "The researcher acts under cover in a non-public space with an administrator "
 "(e.g. a digital discussion group), and takes part actively in the discussion "
 "and/or collects data which can be traced back to individuals."
+
+#: reviews/utils/review_utils.py:630
+msgid "De aanvraag bevat het gebruik van {}"
+msgstr "The application makes use of {}"
+
+#: reviews/utils/review_utils.py:656
+msgid ""
+"De aanvraag bevat psychofysiologische metingen bij kinderen onder de {} jaar."
+msgstr ""
+"The application contains psychophysiological measurements on children under "
+"{} year(s) old."
 
 #: reviews/views.py:66
 msgid "Mijn besluiten"
