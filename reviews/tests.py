@@ -266,25 +266,21 @@ class CommissionTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)  # go
 
     def test_discontinue_review_date_not_empty(self):
-        #Issue 950
+        # Issue 950
         review = start_review(self.proposal)
         discontinue_review(review)
-        self.assertNotEqual(
-            review.proposal.date_reviewed, None
-        )
+        self.assertNotEqual(review.proposal.date_reviewed, None)
 
     def test_discontinue_review_dates_no_longer_swopped(self):
-        #Issue677
+        # Issue677
         review = start_review(self.proposal)
         review.date_end = datetime.datetime.now()  # a review is done
         discontinue_review(review)
 
         details_continuation_date = review.proposal.date_reviewed
         details_last_decision_received = review.date_end
-        self.assertGreater(
-            details_continuation_date,
-            details_last_decision_received
-        )
+        self.assertGreater(details_continuation_date, details_last_decision_received)
+
 
 class AutoReviewTests(BaseReviewTestCase):
     def test_auto_review(self):
