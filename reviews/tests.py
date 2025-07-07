@@ -271,7 +271,7 @@ class CommissionTestCase(BaseReviewTestCase):
         discontinue_review(review)
         self.assertNotEqual(review.proposal.date_reviewed, None)
 
-    def test_discontinue_review_dates_no_longer_swopped(self):
+    def test_discontinue_review_correct_end_date(self):
         # Issue677
         review = start_review(self.proposal)
         review.date_end = datetime.datetime.now()  # a review is done
