@@ -265,6 +265,7 @@ class CommissionTestCase(BaseReviewTestCase):
         review.refresh_from_db()
         self.assertEqual(review.go, True)  # go
 
+
 class AutoReviewTests(BaseReviewTestCase):
     def test_auto_review(self):
         reasons = auto_review(self.proposal)
