@@ -657,7 +657,7 @@ def auto_review_task(study, task):
     return reasons
 
 
-def discontinue_review(review):
+def discontinue_review(review : Review):
     """
     Set continuation to discontinued on the given review,
     and set DECISION_MADE on its proposal."""
@@ -666,7 +666,7 @@ def discontinue_review(review):
     review.continuation = review.Continuations.DISCONTINUED
     review.stage = review.Stages.CLOSED
     review.proposal.status = review.proposal.Statuses.DECISION_MADE
-    review.proposal.date_reviewed = datetime.datetime.now()
+    review.proposal.date_reviewed = timezone.now()
     review.save()
     review.proposal.save()
 
