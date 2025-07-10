@@ -50,10 +50,12 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
         fields = [
             "title",
             "date_start",
+            "expected_end_date",
             "institution",
         ]
         widgets = {
             "date_start": DateInput(),
+            "expected_end_date": DateInput(),
             "institution": BootstrapRadioSelect(),
         }
         error_messages = {
