@@ -81,6 +81,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
         cleaned_data = super(ProposalForm, self).clean()
 
         self.mark_soft_required(cleaned_data, "date_start")
+        self.mark_soft_required(cleaned_data, "expected_end_date")
 
 
 class ResearcherForm(
