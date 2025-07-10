@@ -197,7 +197,7 @@ gegeven worden; de FETC-GW geeft in die gevallen een post-hoc advies."
 
     expected_end_date = models.DateField(
         _(
-             "Wat is de beoogde einddatum waarop het onderzoek, waarvoor deze aanvraag wordt ingediend, verwacht wordt te zijn voltooid?"
+            "Wat is de beoogde einddatum waarop het onderzoek, waarvoor deze aanvraag wordt ingediend, verwacht wordt te zijn voltooid?"
         ),
         blank=True,
         null=True,
