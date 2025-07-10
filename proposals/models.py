@@ -195,6 +195,14 @@ gegeven worden; de FETC-GW geeft in die gevallen een post-hoc advies."
         null=True,
     )
 
+    expected_end_date = models.DateField(
+        _(
+            "Wat is de beoogde einddatum waarop het onderzoek, waarvoor deze aanvraag wordt ingediend, verwacht wordt te zijn voltooid?"
+        ),
+        blank=True,
+        null=True,
+    )
+
     title = models.CharField(
         _(
             "Wat is de titel van je aanvraag? Deze titel zal worden gebruikt in "
