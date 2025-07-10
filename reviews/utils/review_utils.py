@@ -657,7 +657,7 @@ def auto_review_task(study, task):
     return reasons
 
 
-def discontinue_review(review : Review):
+def discontinue_review(review: Review):
     """
     Set continuation to discontinued on the given review,
     and set DECISION_MADE on its proposal."""
