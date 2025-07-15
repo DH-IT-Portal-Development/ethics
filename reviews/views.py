@@ -422,7 +422,7 @@ class ReviewDiscontinueView(ReviewSidebarMixin, GroupRequiredMixin, generic.Upda
     def form_valid(self, form):
         "Sets the discontinued continuation on the review"
         review = form.instance
-        #mark_reviewed should already have been done at this point.
+        # mark_reviewed should already have been done at this point.
         discontinue_review(review)
 
         return super().form_valid(form)

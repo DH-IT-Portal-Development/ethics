@@ -57,9 +57,6 @@ class ReviewAssignForm(ConditionalModelForm):
         """
         super(ReviewAssignForm, self).__init__(*args, **kwargs)
 
-        # reviewers = get_reviewers_from_group(
-        #     self.instance.proposal.reviewing_committee
-        # )
         reviewers = get_reviewers_from_groups(
             [
                 settings.GROUP_GENERAL_CHAMBER,
@@ -116,7 +113,11 @@ class ReviewCloseForm(ConditionalModelForm):
             "allow_long_route_continuation", False
         )
         super(ReviewCloseForm, self).__init__(*args, **kwargs)
-        self.fields["continuation"].choices = [x for x in Review.Continuations.choices if x[0] != Review.Continuations.DISCONTINUED]
+        self.fields["continuation"].choices = [
+            x
+            for x in Review.Continuations.choices
+            if x[0] != Review.Continuations.DISCONTINUED
+        ]
 
         if not allow_long_route_continuation:
             self.fields["continuation"].choices = [
