@@ -1001,6 +1001,7 @@ class ProposalStartPractice(generic.FormView):
         context["secretary"] = get_secretary()
         context["is_practice"] = True
         context["no_back"] = True
+        context["next_text"] = _("Begin een oefenaanvraag >>")
         return context
 
     def get_success_url(self):
