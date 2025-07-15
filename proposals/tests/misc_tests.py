@@ -9,8 +9,8 @@ from main.models import Setting, YesNoDoubt
 from interventions.models import Intervention
 from observations.models import Observation
 from studies.utils import create_documents_for_study
-from tasks.models import Session, Task, Registration
-from studies.models import Study, Recruitment
+from tasks.models import Session, Task
+from studies.models import Study, Recruitment, Registration
 from proposals.api.views import MyProposalsApiView
 from proposals.copy import copy_proposal
 from proposals.models import Proposal, Relation, Wmo, Institution
@@ -244,18 +244,10 @@ class ProposalTestCase(MiscProposalTestCase):
             facs[Setting._meta.verbose_name], set([st.description for st in settings])
         )
 
-        # If we add a Sessions part, we should return facilities when we add local Registrations
-        s.has_sessions = True
-        s.save()
-        s1 = Session.objects.create(study=s, order=1)
-
-        s1.save()
-
-        s1_t1 = Task.objects.create(session=s1, order=1, name="t1")
-
+        # If we add a local Registration, we should return facilities
         registrations = Registration.objects.filter(is_local=True)
-        s1_t1.registrations.set(registrations)
-        s1_t1.save()
+        s.registrations.set(registrations)
+        s.save()
 
         facs = check_local_facilities(self.p1)
         self.assertEqual(len(facs), 2)

@@ -13,18 +13,17 @@ from .utils import (
     start_review,
     auto_review,
     auto_review_observation,
-    auto_review_task,
     notify_secretary,
 )
 from main.tests import BaseViewTestCase
 from main.models import YesNoDoubt
 from proposals.models import Proposal, Relation, Wmo
 from proposals.utils import generate_ref_number
-from studies.models import Study, Compensation, AgeGroup
+from studies.models import Study, Compensation, AgeGroup, Registration
 from observations.models import Observation
 from reviews.utils.review_utils import remind_supervisor_reviewers, discontinue_review
 from interventions.models import Intervention
-from tasks.models import Session, Task, Registration, RegistrationKind
+from tasks.models import Session, Task
 
 from .views import ReviewCloseView
 
@@ -267,6 +266,16 @@ class CommissionTestCase(BaseReviewTestCase):
 
 
 class AutoReviewTests(BaseReviewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.toddlers = AgeGroup.objects.get(description_nl="Peuter")
+        self.adolescents = AgeGroup.objects.get(description_nl="Adolescent")
+        self.adults = AgeGroup.objects.get(description_nl="Volwassene")
+        self.psychofysiological_measurement = Registration.objects.get(
+            description="psychofysiologische meting (bijv. EEG, fMRI, EMA)"
+        )
+
     def test_auto_review(self):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
@@ -319,9 +328,23 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 8)
 
-    def test_auto_review_age_groups(self):
+    def test_auto_review_minors_to_longroute(self):
+        self.study.age_groups.set([self.toddlers])
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 1)
+
+    def test_auto_review_adults_to_shortroute(self):
+        self.study.age_groups.set([self.adults])
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 0)
+
+    def test_auto_review_session_time(self):
         self.study.has_sessions = True
-        self.study.age_groups.set(AgeGroup.objects.filter(pk=2))  # toddlers
+        self.study.age_groups.set([self.toddlers])
         self.study.save()
 
         s1 = Session.objects.create(study=self.study, order=1)
@@ -330,17 +353,16 @@ class AutoReviewTests(BaseReviewTestCase):
         self.study.save()
 
         self.assertEqual(s1.net_duration(), 40)
-
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 0)
+        self.assertEqual(len(reasons), 1)  # minors go to longroute.
 
         s1_t2.duration = 30
         s1_t2.save()
         self.study.save()
         self.assertEqual(s1.net_duration(), 50)
-
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 1)
+        self.assertEqual(len(reasons), 2)
+        # reason: minors go to longroute, and session takes longer than 40m for the agegroup toddlers.
 
     def test_auto_review_observation(self):
         self.study.has_observation = True
@@ -363,22 +385,21 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review_observation(o)
         self.assertEqual(len(reasons), 2)
 
-    def test_auto_review_task(self):
-        self.study.has_sessions = True
-        self.study.age_groups.set(AgeGroup.objects.filter(pk=4))  # adolescents
+    def test_auto_review_registration_age_min(self):
+        self.study.has_sessions = True  # weggehaald in develop
+        self.study.age_groups.set([self.adolescents])
         self.study.save()
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 0)
+        self.assertEqual(len(reasons), 1)  # adolescents are minors
 
-        s1 = Session.objects.create(study=self.study, order=1)
-        s1_t1 = Task.objects.create(session=s1, order=1)
-        s1_t1.registrations.set(
-            Registration.objects.filter(pk=6)
-        )  # psychofysiological measurements
+        self.study.registrations.set([self.psychofysiological_measurement])
 
-        reasons = auto_review_task(self.study, s1_t1)
-        self.assertEqual(len(reasons), 1)
+        reasons = auto_review(
+            self.proposal,
+        )
+        # reason: psychofysiological_measurements for minors detected
+        self.assertEqual(len(reasons), 2)
 
 
 class ReviewCloseTestCase(

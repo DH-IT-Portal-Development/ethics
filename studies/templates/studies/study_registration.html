@@ -1,0 +1,24 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Registratie" %} - {{ block.super }}
+{% endblock %}
+
+{% block html_head %}
+    {{ block.super }}
+    <script>
+$(function() {
+    check_field_required('registrations', 'needs_kind', 'registration_kinds', 'studies', 'Registration');
+    check_field_required('registrations', 'needs_details', 'registrations_details', 'studies', 'Registration');
+    check_field_required('registration_kinds', 'needs_details', 'registration_kinds_details', 'studies', 'RegistrationKind');
+});
+    </script>
+{% endblock %}
+
+{% block pre-form %}
+    <h2>{% trans "Registratie" %}</h2>
+    {% include "studies/study_title.html" %}
+{% endblock %}
