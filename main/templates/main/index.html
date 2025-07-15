@@ -60,128 +60,128 @@
                                 <a href="https://fetc-gw.wp.hum.uu.nl/voordat-je-een-aanvraag-indient/">FETC-GW - Voordat je een aanvraag indient</a>
                             {% endblocktrans %}
                         </strong>
-		    </p>
-                    </li>
-                    <li>
+                    </p>
+                </li>
+                <li>
+                    {% blocktrans trimmed %}
+                        Gebruik altijd de juiste en meest recente <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"><strong>voorbeelddocumenten/templates</strong></a>.
+                    {% endblocktrans %}
+                    <p>
                         {% blocktrans trimmed %}
-                            Gebruik altijd de juiste en meest recente <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"><strong>voorbeelddocumenten/templates</strong></a>.
-                        {% endblocktrans %}
-                        <p>
-                            {% blocktrans trimmed %}
                             Studenten moeten hun begeleider vragen om deze formulieren; voor onofficiële voorbeelddocumenten om mee te oefenen, zie <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
-                            {% endblocktrans %}
-                        </p>
-                    </li>
-                    <li>
-                        {% trans "Check voor het indienen:" %}
-                        <ul>
-                            <li>
-                                {% blocktrans trimmed %}
-                                    de <a href="https://fetc-gw.wp.hum.uu.nl/">UU-webpagina van de FETC-GW</a> voor nieuws en de agenda;
-                                {% endblocktrans %}
-                            </li>
-                            <li>
-                                {% blocktrans trimmed %}
-                                    het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"><strong>reglement van de FETC-GW</strong></a> (zoek op wat op jouw onderzoek van toepassing is) .
-                                {% endblocktrans %}
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-                <p>
-                    {% blocktrans trimmed %}
-                        Voor advies over de AVG en privacy, neem liefst vooraf contact op met <a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>.
-                    {% endblocktrans %}
-                </p>
-                <p>
-                    {% blocktrans trimmed %}
-                        Voor advies over datamanagement, neem liefst vooraf contact op met <a href="mailto:datamanagement.gw@uu.nl">datamanagement.gw@uu.nl</a>.
-                    {% endblocktrans %}
-                </p>
-                <p>{% trans "Zij helpen je graag!" %}</p>
-            </div>
-        </div>
-        <div class="uu-hero text-bg-light justify-content-md-between justify-content-center flex-wrap gap-3">
-            <a class="btn btn-outline-secondary"
-               href="{% url 'proposals:my_archive' %}">{% trans "Bekijk mijn aanvragen" %}</a>
-            <a class="btn btn-outline-secondary" href="{% url 'proposals:start' %}">{% trans "Nieuwe aanvraag starten" %}</a>
-            <a class="btn btn-outline-secondary"
-               href="{% url 'proposals:copy_revision' %}">{% trans "Nieuwe revisie starten" %}</a>
-            <a class="btn btn-outline-secondary"
-               href="{% url 'proposals:copy_amendment' %}">{% trans "Nieuw amendement starten" %}</a>
-            {% if can_view_archive %}
-                <a class="btn btn-outline-secondary"
-                   href="{% url 'proposals:archive' 'LK' %}">{% trans "Archief" %}</a>
-            {% endif %}
-        </div>
-        <div class="uu-container">
-            <div class="row gx-3 gy-4">
-                <div class="col-12 col-md-4">
-                    <h3>{% trans 'Ondersteuning' %}</h3>
-                    <p class="mb-2">
-                        {% blocktrans trimmed %}
-                            <strong>FETC-GW secretaris</strong>
-                            <br />
-                            Desiree Capel (fetc.gw@uu.nl)
                         {% endblocktrans %}
                     </p>
-                    <p class="mb-2">
-                        {% blocktrans trimmed %}
-                            <strong>Data Management advies</strong>
-                            <br />
-                            datamanagement.gw@uu.nl
-                        {% endblocktrans %}
-                    </p>
-                    <p class="mb-2">
-                        {% blocktrans trimmed %}
-                            <strong>Privacy kwesties/vragen</strong>
-                            <br />
-                            privacy.gw@uu.nl
-                        {% endblocktrans %}
-                    </p>
-                    <p class="mb-2">
-                        {% blocktrans trimmed %}
-                            <strong>Technical support</strong>
-                            <br />
-                            portalsupport.gw@uu.nl
-                        {% endblocktrans %}
-                    </p>
-                </div>
-                <div class="col-12 col-md-4">
-                <h3>{% trans 'Links' %}</h3>
+                </li>
+                <li>
+                    {% trans "Check voor het indienen:" %}
                     <ul>
                         <li>
                             {% blocktrans trimmed %}
-                                <a href='http://fetc-gw.wp.hum.uu.nl/' target='_blank'>FETC-GW website</a>
+                                de <a href="https://fetc-gw.wp.hum.uu.nl/">UU-webpagina van de FETC-GW</a> voor nieuws en de agenda;
                             {% endblocktrans %}
                         </li>
                         <li>
                             {% blocktrans trimmed %}
-                                <a href='https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/'
-                                   target='_blank'>Reglement van de FETC-GW</a>
+                                het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"><strong>reglement van de FETC-GW</strong></a> (zoek op wat op jouw onderzoek van toepassing is).
                             {% endblocktrans %}
-                        </li>
-                        <li>
-                            {% blocktrans trimmed %}
-                                <a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw'
-                                   target='_blank'>Voorbeelddocumenten</a>
-                            {% endblocktrans %}
-                        </li>
-                        <li>
-                            <a href="{% url 'faqs:list' %}">{% trans "Veelgestelde vragen m.b.t. dit portal" %}</a>
                         </li>
                     </ul>
-                </div>
-                <div class="col-12 col-md-4">
-                    <h3>{% trans 'Feedback' %}</h3>
-                    <p>
+                </li>
+            </ul>
+            <p>
+                {% blocktrans trimmed %}
+                    Voor advies over de AVG en privacy, neem liefst vooraf contact op met <a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    Voor advies over datamanagement, neem liefst vooraf contact op met <a href="mailto:datamanagement.gw@uu.nl">datamanagement.gw@uu.nl</a>.
+                {% endblocktrans %}
+            </p>
+            <p>{% trans "Zij helpen je graag!" %}</p>
+        </div>
+    </div>
+    <div class="uu-hero text-bg-light justify-content-md-between justify-content-center flex-wrap gap-3">
+        <a class="btn btn-outline-secondary"
+           href="{% url 'proposals:my_archive' %}">{% trans "Bekijk mijn aanvragen" %}</a>
+        <a class="btn btn-outline-secondary" href="{% url 'proposals:start' %}">{% trans "Nieuwe aanvraag starten" %}</a>
+        <a class="btn btn-outline-secondary"
+           href="{% url 'proposals:copy_revision' %}">{% trans "Nieuwe revisie starten" %}</a>
+        <a class="btn btn-outline-secondary"
+           href="{% url 'proposals:copy_amendment' %}">{% trans "Nieuw amendement starten" %}</a>
+        {% if can_view_archive %}
+            <a class="btn btn-outline-secondary"
+               href="{% url 'proposals:archive' 'LK' %}">{% trans "Archief" %}</a>
+        {% endif %}
+    </div>
+    <div class="uu-container">
+        <div class="row gx-3 gy-4">
+            <div class="col-12 col-md-4">
+                <h3>{% trans 'Ondersteuning' %}</h3>
+                <p class="mb-2">
+                    {% blocktrans trimmed %}
+                        <strong>FETC-GW secretaris</strong>
+                        <br />
+                        Desiree Capel (fetc.gw@uu.nl)
+                    {% endblocktrans %}
+                </p>
+                <p class="mb-2">
+                    {% blocktrans trimmed %}
+                        <strong>Data Management advies</strong>
+                        <br />
+                        datamanagement.gw@uu.nl
+                    {% endblocktrans %}
+                </p>
+                <p class="mb-2">
+                    {% blocktrans trimmed %}
+                        <strong>Privacy kwesties/vragen</strong>
+                        <br />
+                        privacy.gw@uu.nl
+                    {% endblocktrans %}
+                </p>
+                <p class="mb-2">
+                    {% blocktrans trimmed %}
+                        <strong>Technical support</strong>
+                        <br />
+                        portalsupport.gw@uu.nl
+                    {% endblocktrans %}
+                </p>
+            </div>
+            <div class="col-12 col-md-4">
+                <h3>{% trans 'Links' %}</h3>
+                <ul>
+                    <li>
                         {% blocktrans trimmed %}
-                            Heb je een vraag over de werking van de portal, ontdek je een foutje, missende functionaliteit,
-                            of verkeerde vertaling? Neem dan contact op met
-                            <a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>.
+                            <a href='http://fetc-gw.wp.hum.uu.nl/' target='_blank'>FETC-GW website</a>
                         {% endblocktrans %}
-                    </p>
-                </div>
+                    </li>
+                    <li>
+                        {% blocktrans trimmed %}
+                            <a href='https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/'
+                               target='_blank'>Reglement van de FETC-GW</a>
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        {% blocktrans trimmed %}
+                            <a href='https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw'
+                               target='_blank'>Voorbeelddocumenten</a>
+                        {% endblocktrans %}
+                    </li>
+                    <li>
+                        <a href="{% url 'faqs:list' %}">{% trans "Veelgestelde vragen m.b.t. dit portal" %}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-12 col-md-4">
+                <h3>{% trans 'Feedback' %}</h3>
+                <p>
+                    {% blocktrans trimmed %}
+                        Heb je een vraag over de werking van de portal, ontdek je een foutje, missende functionaliteit,
+                        of verkeerde vertaling? Neem dan contact op met
+                        <a href="mailto:portaldev.gw@uu.nl">portaldev.gw@uu.nl</a>.
+                    {% endblocktrans %}
+                </p>
             </div>
         </div>
-    {% endblock %}
+    </div>
+{% endblock %}

@@ -992,7 +992,7 @@ class ProposalSubmittedPreApproved(ProposalSubmitted):
 # Practice
 ##########
 class ProposalStartPractice(generic.FormView):
-    template_name = "proposals/proposal_start_practice.html"
+    template_name = "proposals/proposal_start.html"
     form_class = ProposalStartPracticeForm
 
     def get_context_data(self, **kwargs):

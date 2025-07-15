@@ -13,7 +13,7 @@
             <h2>{% trans "Voordat je begint..." %}</h2>
             <p>
                 {% blocktrans trimmed %}
-                    De termen op de volgende pagina worden <strong>bekend verondersteld</strong>als je een aanvraag gaat indienen:
+                    De termen op de volgende pagina worden <strong>bekend verondersteld</strong> als je een aanvraag gaat indienen:
                 {% endblocktrans %}
             </p>
             <p>
@@ -50,7 +50,7 @@
                         </li>
                         <li>
                             {% blocktrans trimmed %}
-                                het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"><strong>reglement van de FETC-GW</strong></a> (zoek op wat op jouw onderzoek van toepassing is) .
+                                het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"><strong>reglement van de FETC-GW</strong></a> (zoek op wat op jouw onderzoek van toepassing is).
                             {% endblocktrans %}
                         </li>
                     </ul>
@@ -67,8 +67,18 @@
                 {% endblocktrans %}
             </p>
             <p>{% trans "Zij helpen je graag!" %}</p>
-            <a class="btn btn-primary float-end mb-4"
-               href="{% url 'proposals:create' %}">{% trans "Een nieuwe aanvraag aanmelden >>" %}</a>
+            {% if is_practice %}
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table class="mt-3 mb-3">
+                        {{ form.as_table }}
+                    </table>
+                    {% include "base/form_buttons.html" %}
+                </form>
+            {% else %}
+                <a class="btn btn-primary float-end mb-4"
+                   href="{% url 'proposals:create' %}">{% trans "Een nieuwe aanvraag aanmelden >>" %}</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
