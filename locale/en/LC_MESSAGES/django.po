@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-30 12:39+0200\n"
-"PO-Revision-Date: 2025-06-30 13:08+0200\n"
+"POT-Creation-Date: 2025-07-15 18:40+0200\n"
+"PO-Revision-Date: 2025-07-15 18:42+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
 "Language: en\n"
@@ -976,123 +976,134 @@ msgstr "All my applications"
 msgid "Voordat je begint"
 msgstr "Before you begin"
 
-#: main/templates/main/index.html:56
-msgid "Maak jezelf bekend met de termen op de volgende pagina:"
+#: main/templates/main/index.html:57
+msgid "Maak jezelf vertrouwd met de termen op de volgende pagina:"
 msgstr "Please familiarize yourself with the terms on the following page:"
 
-#: main/templates/main/index.html:58
-#: proposals/templates/proposals/proposal_start.html:21
+#: main/templates/main/index.html:59
+#: proposals/templates/proposals/proposal_start.html:24
 msgid ""
 "<a href=\"https://fetc-gw.wp.hum.uu.nl/voordat-je-een-aanvraag-indient/"
 "\">FETC-GW - Voordat je een aanvraag indient</a>"
-msgstr "<a href=\"https://fetc-gw.wp.hum.uu.nl/en/before-you-submit-an-application/\">FETC-H - Before you submit an application</a>"
+msgstr ""
+"<a href=\"https://fetc-gw.wp.hum.uu.nl/en/before-you-submit-an-application/"
+"\">FETC-H - Before you submit an application</a>"
 
-#: main/templates/main/index.html:63
-#: proposals/templates/proposals/proposal_start.html:32
+#: main/templates/main/index.html:66
+#: proposals/templates/proposals/proposal_start.html:37
 msgid ""
 "Gebruik altijd de juiste en meest recente <a href=\"https://intranet.uu.nl/"
 "documenten-ethische-toetsingscommissie-gw\"><strong>voorbeelddocumenten/"
 "templates</strong></a>."
-msgstr "Make sure to use the correct (most recent) <strong><a href=\"https://intranet.uu.nl/en/documents-ethics-assessment-committee-humanities\" target=\"_blank\">model documents</a></strong>."
+msgstr ""
+"Make sure to use the correct (most recent) <strong><a href=\"https://"
+"intranet.uu.nl/en/documents-ethics-assessment-committee-humanities\" "
+"target=\"_blank\">model documents</a></strong>."
 
-#: main/templates/main/index.html:67
-#: proposals/templates/proposals/proposal_start.html:36
-#: proposals/templates/proposals/proposal_start_practice.html:39
-#: proposals/templates/proposals/study_consent.html:88
+#: main/templates/main/index.html:70
+#: proposals/templates/proposals/proposal_start.html:41
 msgid ""
-"Studenten moeten hun begeleider vragen om deze formulieren; dezelfde "
-"voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a "
-"href=\"https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\">deze pagina</a>."
+"Studenten moeten hun begeleider vragen om deze formulieren; voor onofficiële "
+"voorbeelddocumenten om mee te oefenen, zie <a href=\"https://fetc-gw.wp.hum."
+"uu.nl/voorbeelddocumenten/\">deze pagina</a>."
 msgstr ""
 "Students who cannot access intranet should receive these documents from "
-"their supervisor. The same example texts can be found on <a href=\"https://"
-"fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\">this page</a>, though on non-"
-"official documents."
+"their supervisor. Unofficial documents for practicing can be found on <a "
+"href='https://fetc-gw.wp.hum.uu.nl/en/model-documents-students-if-no-fetc-h-"
+"assessment-is-required'>this page</a>"
 
-#: main/templates/main/index.html:71
-#: proposals/templates/proposals/proposal_start.html:40
-#: proposals/templates/proposals/proposal_start_practice.html:16
+#: main/templates/main/index.html:76
+#: proposals/templates/proposals/proposal_start.html:47
 msgid "Check voor het indienen:"
 msgstr "Before submitting an application, please consult:"
 
-#: main/templates/main/index.html:74
-#: proposals/templates/proposals/proposal_start.html:43
+#: main/templates/main/index.html:79
+#: proposals/templates/proposals/proposal_start.html:50
 msgid ""
 "de <a href=\"https://fetc-gw.wp.hum.uu.nl/\">UU-webpagina van de FETC-GW</a> "
 "voor nieuws en de agenda;"
-msgstr "The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/\"  target=\"_blank\">UU-webpage of the FEtC-H</a> for news and upcoming dates;"
+msgstr ""
+"the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/\"  target=\"_blank\">UU-"
+"webpage of the FEtC-H</a> for news and upcoming dates;"
 
-#: main/templates/main/index.html:79
-#: proposals/templates/proposals/proposal_start.html:47
+#: main/templates/main/index.html:84
+#: proposals/templates/proposals/proposal_start.html:55
 msgid ""
 "het <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"
 "\"><strong>reglement van de FETC-GW</strong></a> (zoek op wat op jouw "
-"onderzoek van toepassing is) ."
-msgstr "The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\" target=\"_blank\"><strong>regulations of the FEtC-H</strong></a> relating to your type(s) of research."
+"onderzoek van toepassing is)."
+msgstr ""
+"the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-fetc-h/\" "
+"target=\"_blank\"><strong>regulations of the FEtC-H</strong></a> relating to "
+"your type(s) of research."
 
-#: main/templates/main/index.html:86
-#: proposals/templates/proposals/proposal_start.html:55
+#: main/templates/main/index.html:92
+#: proposals/templates/proposals/proposal_start.html:63
 msgid ""
 "Voor advies over de AVG en privacy, neem liefst vooraf contact op met <a "
 "href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>."
-msgstr "For advice relating to the AVG/GDPR and privacy, please contact <a href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>."
+msgstr ""
+"For advice relating to the AVG/GDPR and privacy, please contact <a "
+"href=\"mailto:privacy.gw@uu.nl\">privacy.gw@uu.nl</a>."
 
-#: main/templates/main/index.html:91
-#: proposals/templates/proposals/proposal_start.html:60
+#: main/templates/main/index.html:97
+#: proposals/templates/proposals/proposal_start.html:68
 msgid ""
 "Voor advies over datamanagement, neem liefst vooraf contact op met <a "
 "href=\"mailto:datamanagement.gw@uu.nl\">datamanagement.gw@uu.nl</a>."
-msgstr "For advice on data management, please contact <a href=\"mailto:datamanagement.gw@uu.nl\">datamanagement.gw@uu.nl</a>."
+msgstr ""
+"For advice on data management, please contact <a href=\"mailto:"
+"datamanagement.gw@uu.nl\">datamanagement.gw@uu.nl</a>."
 
-#: main/templates/main/index.html:95
-#: proposals/templates/proposals/proposal_start.html:64
+#: main/templates/main/index.html:101
+#: proposals/templates/proposals/proposal_start.html:72
 msgid "Zij helpen je graag!"
 msgstr "They are happy to help!"
 
-#: main/templates/main/index.html:105
+#: main/templates/main/index.html:106
 msgid "Bekijk mijn aanvragen"
 msgstr "View my applications"
 
-#: main/templates/main/index.html:106 proposals/menus.py:9
+#: main/templates/main/index.html:107 proposals/menus.py:9
 msgid "Nieuwe aanvraag starten"
 msgstr "Start a new application"
 
-#: main/templates/main/index.html:108
+#: main/templates/main/index.html:109
 msgid "Nieuwe revisie starten"
 msgstr "Create new revision"
 
-#: main/templates/main/index.html:110
+#: main/templates/main/index.html:111
 msgid "Nieuw amendement starten"
 msgstr "Create new amendment"
 
-#: main/templates/main/index.html:113 proposals/menus.py:112
+#: main/templates/main/index.html:114 proposals/menus.py:112
 #: proposals/views/proposal_views.py:192
 msgid "Archief"
 msgstr "Archive"
 
-#: main/templates/main/index.html:119
+#: main/templates/main/index.html:120
 msgid "Ondersteuning"
 msgstr "Support"
 
-#: main/templates/main/index.html:121
+#: main/templates/main/index.html:122
 msgid ""
 "<strong>FETC-GW secretaris</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
 msgstr "<strong>FEtC-H secretary</strong> <br /> Desiree Capel (fetc.gw@uu.nl)"
 
-#: main/templates/main/index.html:128
+#: main/templates/main/index.html:129
 msgid "<strong>Data Management advies</strong> <br /> datamanagement.gw@uu.nl"
 msgstr "<strong>Data Management advice</strong> <br /> datamanagement.gw@uu.nl"
 
-#: main/templates/main/index.html:135
+#: main/templates/main/index.html:136
 msgid "<strong>Privacy kwesties/vragen</strong> <br /> privacy.gw@uu.nl"
 msgstr "<strong>Privacy issues/questions</strong> <br /> privacy.gw@uu.nl"
 
-#: main/templates/main/index.html:142
+#: main/templates/main/index.html:143
 msgid "<strong>Technical support</strong> <br /> portalsupport.gw@uu.nl"
 msgstr "<strong>Technical support</strong> <br /> portalsupport.gw@uu.nl"
 
-#: main/templates/main/index.html:150
-msgid "Resources"
+#: main/templates/main/index.html:151
+msgid "Links"
 msgstr "Resources"
 
 #: main/templates/main/index.html:154
@@ -2959,136 +2970,41 @@ msgstr "LC"
 msgid "Een nieuwe aanvraag aanmelden"
 msgstr "Register a new application"
 
-#: proposals/templates/proposals/proposal_start.html:13
+#: proposals/templates/proposals/proposal_start.html:14
 msgid "Voordat je begint..."
 msgstr "Before you begin..."
 
-#: proposals/templates/proposals/proposal_start.html:15
+#: proposals/templates/proposals/proposal_start.html:18
 msgid ""
-"De termen op de volgende pagina worden <strong>bekend verondersteld </"
-"strong>als je een aanvraag gaat indienen:"
-msgstr "When submitting an application, the FETC-H assumes that you are <strong>fully familiar</strong> with the terms described on the following page:"
+"De termen op de volgende pagina worden <strong>bekend verondersteld</strong> "
+"als je een aanvraag gaat indienen:"
+msgstr ""
+"When filling in your application, the FETC-H assumes that you are "
+"<strong>fully familiar</strong> with the terms described on the following "
+"page:"
 
-#: proposals/templates/proposals/proposal_start.html:26
+#: proposals/templates/proposals/proposal_start.html:30
 msgid ""
 "Het opdoen van kennis over deze termen kost <strong>minder tijd</strong> dan "
 "het indienen van een revisie. Bovendien scheelt het behoorlijk wat werk voor "
 "de FETC-GW, waardoor we voor iedereen de beoordelingsprocedure kunnen "
 "verkorten."
-msgstr "Getting to know these terms will always <strong>save you time</strong> compared to submitting a revision. This goes double for the time of the committee members that review your application."
+msgstr ""
+"Getting to know these terms will always <strong>save you time</strong> "
+"compared to submitting a revision. This goes double for the time of the "
+"committee members that review your application."
 
-#: proposals/templates/proposals/proposal_start.html:29
+#: proposals/templates/proposals/proposal_start.html:34
 msgid "En verder:"
 msgstr "Furthermore:"
 
-#: proposals/templates/proposals/proposal_start.html:68
+#: proposals/templates/proposals/proposal_start.html:80
+msgid "Houd er rekening mee dat een oefenaanvraag niet ingediend kan worden!"
+msgstr "Please keep in mind that a practice application cannot be submitted to the FETC-H!"
+
+#: proposals/templates/proposals/proposal_start.html:88
 msgid "Een nieuwe aanvraag aanmelden >>"
 msgstr "Register a new application >>"
-
-#: proposals/templates/proposals/proposal_start_practice.html:7
-#: proposals/templates/proposals/proposal_start_practice.html:13
-msgid "Een nieuwe aanvraag aanmelden (oefenportaal)"
-msgstr "Register a new application (practice portal)"
-
-#: proposals/templates/proposals/proposal_start_practice.html:19
-msgid ""
-"De <a href=\"https://fetc-gw.wp.hum.uu.nl/\" target=\"_blank\">UU-webpagina "
-"van de FETC-GW</a> voor nieuws en de agenda."
-msgstr ""
-"The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/\"  target=\"_blank\">UU-"
-"webpage of the FEtC-H</a> for news and upcoming dates."
-
-#: proposals/templates/proposals/proposal_start_practice.html:25
-msgid ""
-"Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-fetc-"
-"gw/\">FETC-GW</a>."
-msgstr ""
-"The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/regulations-"
-"fetc-h/\"  target=\"_blank\">FEtC-H </a>."
-
-#: proposals/templates/proposals/proposal_start_practice.html:31
-msgid ""
-"Tijdens de aanvraagprocedure kan er om een of meer bijlagen worden gevraagd. "
-"Gebruik daarvoor de juiste (meest recente) <a href=\"https://intranet.uu.nl/"
-"documenten-ethische-toetsingscommissie-gw\" "
-"target=\"_blank\">voorbeelddocumenten/templates</a>."
-msgstr ""
-"It is possible that during the application proces, you are asked to "
-"submitone or more attachments. As an example, please use the most recent <a "
-"href=\"https://intranet.uu.nl/en/documents-ethics-assessment-committee-"
-"humanities\" target=\"_blank\">model documents</a>."
-
-#: proposals/templates/proposals/proposal_start_practice.html:46
-#: proposals/templates/proposals/study_start.html:61
-msgid ""
-"Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) "
-"sessies, (iii) taken."
-msgstr ""
-"An application consists of (i) trajectories, (ii) sessions, and (iii) tasks, "
-"in descending order of subdivision. "
-
-#: proposals/templates/proposals/proposal_start_practice.html:52
-#: proposals/templates/proposals/study_start.html:67
-#: proposals/utils/pdf_diff_utils.py:415
-#: reviews/templates/reviews/committee_members_workload.html:23
-#: reviews/templates/reviews/review_attachments.html:42
-msgid "Traject"
-msgstr "Trajectory"
-
-#: proposals/templates/proposals/proposal_start_practice.html:53
-#: proposals/templates/proposals/study_start.html:68
-msgid ""
-"Als je met verschillende deelnemersgroepen werkt die een verschillend "
-"onderzoekstraject doorlopen waarvoor verschillende documenten nodig zijn."
-msgstr ""
-"When different groups of participants do not complete the same tasks or do "
-"not follow the same instructions during your research, they traverse "
-"different trajectories, and require separate documents. "
-
-#: proposals/templates/proposals/proposal_start_practice.html:57
-#: proposals/templates/proposals/study_start.html:72
-msgid ""
-"Bijvoorbeeld: ouders van leerlingen 15 jaar en jonger, docenten, een "
-"controlegroep en een experimentele groep die verschillende taken krijgen."
-msgstr ""
-"For example: parents of children up to 15 years of age, teachers, or an "
-"experimental and control group that receive significantly different tasks."
-
-#: proposals/templates/proposals/proposal_start_practice.html:63
-#: proposals/templates/proposals/study_start.html:78
-msgid "Sessie"
-msgstr "Session"
-
-#: proposals/templates/proposals/proposal_start_practice.html:64
-#: proposals/templates/proposals/study_start.html:79
-msgid ""
-"Alle taken en procedures die een deelnemer voltooit tijdens een enkel bezoek "
-"aan de onderzoekslocatie, of tijdens een enkel bezoek van de onderzoeker."
-msgstr ""
-"All tasks and procedures that a participant completes during a single visit "
-"to the research location, or during a single visit of the researcher."
-
-#: proposals/templates/proposals/proposal_start_practice.html:69
-#: proposals/templates/proposals/study_start.html:84
-#: tasks/templates/tasks/task_list.html:9
-#: tasks/templates/tasks/task_list.html:23
-msgid "Taak"
-msgstr "Task"
-
-#: proposals/templates/proposals/proposal_start_practice.html:70
-#: proposals/templates/proposals/study_start.html:85
-msgid ""
-"Een taak of onderdeel van je onderzoek. <p>Bijvoorbeeld: het invullen van "
-"een vragenlijst, een interview, of een bepaalde test.</p>"
-msgstr ""
-" A task or procedure within your study. <p> For example: completing an "
-"interview, questionnaire, or a particular test.</p>"
-
-#: proposals/templates/proposals/proposal_start_practice.html:76
-msgid "Houd er rekening mee dat een oefenaanvraag niet ingediend kan worden."
-msgstr ""
-"Please be advised that a practice application cannot be submitted to the "
-"FETC-H."
 
 #: proposals/templates/proposals/proposal_start_pre_approved.html:7
 #: proposals/templates/proposals/proposal_start_pre_approved.html:14
@@ -3439,6 +3355,17 @@ msgstr ""
 "en/documents-ethics-assessment-committee-humanities\" "
 "target=\"_blank\">model documents</a> for <em>informed consent</em>."
 
+#: proposals/templates/proposals/study_consent.html:88
+msgid ""
+"Studenten moeten hun begeleider vragen om deze formulieren; dezelfde "
+"voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a "
+"href=\"https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\">deze pagina</a>."
+msgstr ""
+"Students who cannot access intranet should receive these documents from "
+"their supervisor. The same example texts can be found on <a href=\"https://"
+"fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/\">this page</a>, though on non-"
+"official documents."
+
 #: proposals/templates/proposals/study_consent.html:93
 msgid ""
 "Let op dat je documenten geen redactionele fouten en/of taalfouten bevatten: "
@@ -3500,6 +3427,64 @@ msgid ""
 msgstr ""
 "You can now describe the nature of <em>each trajectory</em> of the study on "
 "the following pages."
+
+#: proposals/templates/proposals/study_start.html:61
+msgid ""
+"Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) "
+"sessies, (iii) taken."
+msgstr ""
+"An application consists of (i) trajectories, (ii) sessions, and (iii) tasks, "
+"in descending order of subdivision. "
+
+#: proposals/templates/proposals/study_start.html:67
+#: proposals/utils/pdf_diff_utils.py:415
+#: reviews/templates/reviews/committee_members_workload.html:23
+#: reviews/templates/reviews/review_attachments.html:42
+msgid "Traject"
+msgstr "Trajectory"
+
+#: proposals/templates/proposals/study_start.html:68
+msgid ""
+"Als je met verschillende deelnemersgroepen werkt die een verschillend "
+"onderzoekstraject doorlopen waarvoor verschillende documenten nodig zijn."
+msgstr ""
+"When different groups of participants do not complete the same tasks or do "
+"not follow the same instructions during your research, they traverse "
+"different trajectories, and require separate documents. "
+
+#: proposals/templates/proposals/study_start.html:72
+msgid ""
+"Bijvoorbeeld: ouders van leerlingen 15 jaar en jonger, docenten, een "
+"controlegroep en een experimentele groep die verschillende taken krijgen."
+msgstr ""
+"For example: parents of children up to 15 years of age, teachers, or an "
+"experimental and control group that receive significantly different tasks."
+
+#: proposals/templates/proposals/study_start.html:78
+msgid "Sessie"
+msgstr "Session"
+
+#: proposals/templates/proposals/study_start.html:79
+msgid ""
+"Alle taken en procedures die een deelnemer voltooit tijdens een enkel bezoek "
+"aan de onderzoekslocatie, of tijdens een enkel bezoek van de onderzoeker."
+msgstr ""
+"All tasks and procedures that a participant completes during a single visit "
+"to the research location, or during a single visit of the researcher."
+
+#: proposals/templates/proposals/study_start.html:84
+#: tasks/templates/tasks/task_list.html:9
+#: tasks/templates/tasks/task_list.html:23
+msgid "Taak"
+msgstr "Task"
+
+#: proposals/templates/proposals/study_start.html:85
+msgid ""
+"Een taak of onderdeel van je onderzoek. <p>Bijvoorbeeld: het invullen van "
+"een vragenlijst, een interview, of een bepaalde test.</p>"
+msgstr ""
+" A task or procedure within your study. <p> For example: completing an "
+"interview, questionnaire, or a particular test.</p>"
 
 #: proposals/templates/proposals/table_with_header_diff.html:15
 msgid "Vorige aanvraag"
@@ -3907,6 +3892,10 @@ msgstr "Changes saved"
 #: proposals/views/proposal_views.py:821
 msgid "Aanvraag gekopieerd"
 msgstr "Application copied"
+
+#: proposals/views/proposal_views.py:1004
+msgid "Begin een oefenaanvraag >>"
+msgstr "Create a practice application >>"
 
 #: proposals/views/study_views.py:67
 msgid "Consent opgeslagen"
@@ -5941,6 +5930,37 @@ msgstr "Task edited"
 #: tasks/views/task_views.py:84
 msgid "Taak verwijderd"
 msgstr "Task deleted"
+
+#~ msgid "Resources"
+#~ msgstr "Resources"
+
+#~ msgid "Een nieuwe aanvraag aanmelden (oefenportaal)"
+#~ msgstr "Register a new application (practice portal)"
+
+#~ msgid ""
+#~ "De <a href=\"https://fetc-gw.wp.hum.uu.nl/\" target=\"_blank\">UU-"
+#~ "webpagina van de FETC-GW</a> voor nieuws en de agenda."
+#~ msgstr ""
+#~ "The <a href=\"https://fetc-gw.wp.hum.uu.nl/en/\"  target=\"_blank\">UU-"
+#~ "webpage of the FEtC-H</a> for news and upcoming dates."
+
+#~ msgid ""
+#~ "Het reglement van de <a href=\"https://fetc-gw.wp.hum.uu.nl/reglement-"
+#~ "fetc-gw/\">FETC-GW</a>."
+#~ msgstr ""
+#~ "The regulations of the <a href=\"https://fetc-gw.wp.hum.uu.nl/en/"
+#~ "regulations-fetc-h/\"  target=\"_blank\">FEtC-H </a>."
+
+#~ msgid ""
+#~ "Tijdens de aanvraagprocedure kan er om een of meer bijlagen worden "
+#~ "gevraagd. Gebruik daarvoor de juiste (meest recente) <a href=\"https://"
+#~ "intranet.uu.nl/documenten-ethische-toetsingscommissie-gw\" "
+#~ "target=\"_blank\">voorbeelddocumenten/templates</a>."
+#~ msgstr ""
+#~ "It is possible that during the application proces, you are asked to "
+#~ "submitone or more attachments. As an example, please use the most recent "
+#~ "<a href=\"https://intranet.uu.nl/en/documents-ethics-assessment-committee-"
+#~ "humanities\" target=\"_blank\">model documents</a>."
 
 #~ msgid "Registratie gedrag"
 #~ msgstr "Recording behaviour"
