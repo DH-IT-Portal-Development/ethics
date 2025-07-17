@@ -1857,10 +1857,10 @@ msgid ""
 "onderzoeker(s) een affiliatie buiten de EU heeft/hebben."
 msgstr ""
 "Please fill in the name and affiliation (ex. name of university and  "
-"country) from the not-UU researcher(s). See above: it is important to check "
+"country) from the non-UU researcher(s). See above: it is important to check "
 "if personal data is shared with these researcher(s); in that case contact "
 "with the privacy officer is required, especially if these researcher(s) have "
-"an affiliation outside the EU"
+"an affiliation outside the EU."
 
 #: proposals/models.py:269
 msgid ""
