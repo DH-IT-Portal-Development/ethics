@@ -105,25 +105,12 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
             css_classes="fw-bold text-danger",
         ),
     ]
-    title = _("Mijn aanvraag")
-    body = _("Dit overzicht toont al je aanvragen.")
-    is_modifiable = True
-    is_submitted = True
-    contains_supervised = True
+    title = _("Mijn aanvragen")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # TODO: WHAAAA
         context["title"] = self.title
-        context["body"] = self.body
-        context["modifiable"] = self.is_modifiable
-        context["submitted"] = self.is_submitted
-        context["supervised"] = self.contains_supervised
-        context["data_url"] = reverse(
-            "proposals:api:my_proposals",
-        )
         return context
-
 
 class MyConceptsView(BaseProposalsView):
     title = _("Mijn conceptaanvragen")
