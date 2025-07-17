@@ -8,10 +8,12 @@ from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django.http import FileResponse, HttpResponseRedirect
+
+from cdh.vue3.components.uu_list import DDVListView, DDVString
 
 # from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
@@ -31,6 +33,7 @@ from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
 from studies.models import Documents
 from attachments.models import Attachment, StudyAttachment, ProposalAttachment
+from ..api.views import ProposalApiView
 from ..copy import copy_proposal
 from ..forms import (
     ProposalConfirmationForm,
@@ -86,7 +89,22 @@ class BaseProposalsView(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
-class MyProposalsView(BaseProposalsView):
+class MyProposalsView(LoginRequiredMixin, DDVListView):
+    template_name = "proposals/proposal_list.html"
+    model = Proposal
+    data_uri = reverse_lazy("proposals:api:my_proposals")
+    data_view = ProposalApiView
+    columns = [
+        DDVString(
+            field="title",
+            label="Project",
+        ),
+        DDVString(
+            field="reference_number",
+            label="Ref.Num",
+            css_classes="fw-bold text-danger",
+        ),
+    ]
     title = _("Mijn aanvraag")
     body = _("Dit overzicht toont al je aanvragen.")
     is_modifiable = True
@@ -95,8 +113,14 @@ class MyProposalsView(BaseProposalsView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # TODO: WHAAAA
+        context["title"] = self.title
+        context["body"] = self.body
+        context["modifiable"] = self.is_modifiable
+        context["submitted"] = self.is_submitted
+        context["supervised"] = self.contains_supervised
         context["data_url"] = reverse(
-            "proposals:api:my_archive",
+            "proposals:api:my_proposals",
         )
         return context
 
