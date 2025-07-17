@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-10 12:52+0200\n"
+"POT-Creation-Date: 2025-05-30 11:33+0200\n"
 "PO-Revision-Date: 2025-01-15 12:46+0100\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -409,8 +409,8 @@ msgid "Voeg toe"
 msgstr "Add"
 
 #: attachments/templates/attachments/slot.html:32
-msgid "Meer info"
-msgstr "More info"
+msgid "Meer info & voorbeelddocument"
+msgstr "More info & model document"
 
 #: attachments/templates/attachments/slot.html:36
 msgid "Voorbeeld document: "
@@ -5901,11 +5901,11 @@ msgstr "Task edited"
 msgid "Taak verwijderd"
 msgstr "Task deleted"
 
-#~ msgid "De aanvraag bevat het gebruik van {}"
-#~ msgstr "The application makes use of {}"
-
 #~ msgid "Registratie gedrag"
 #~ msgstr "Recording behaviour"
 
 #~ msgid "Hoe wordt het gedrag geregistreerd?"
 #~ msgstr "How will the behaviour be recorded?"
+
+#~ msgid "De aanvraag bevat het gebruik van {}"
+#~ msgstr "The application makes use of {}"
