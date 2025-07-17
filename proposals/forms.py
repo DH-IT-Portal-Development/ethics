@@ -50,10 +50,12 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
         fields = [
             "title",
             "date_start",
+            "expected_end_date",
             "institution",
         ]
         widgets = {
             "date_start": DateInput(),
+            "expected_end_date": DateInput(),
             "institution": BootstrapRadioSelect(),
         }
         error_messages = {
@@ -79,6 +81,7 @@ class ProposalForm(UserKwargModelFormMixin, SoftValidationMixin, ConditionalMode
         cleaned_data = super(ProposalForm, self).clean()
 
         self.mark_soft_required(cleaned_data, "date_start")
+        self.mark_soft_required(cleaned_data, "expected_end_date")
 
 
 class ResearcherForm(
