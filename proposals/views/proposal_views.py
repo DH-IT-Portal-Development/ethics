@@ -13,7 +13,14 @@ from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django.http import FileResponse, HttpResponseRedirect
 
-from cdh.vue3.components.uu_list import DDVListView, DDVString
+from cdh.vue3.components.uu_list import (
+    DDVListView,
+    DDVString,
+    DDVDate,
+    DDVButton,
+    DDVLink,
+    DDVActions,
+)
 
 # from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
@@ -92,18 +99,58 @@ class BaseProposalsView(LoginRequiredMixin, generic.TemplateView):
 class MyProposalsView(LoginRequiredMixin, DDVListView):
     template_name = "proposals/proposal_list.html"
     model = Proposal
-    data_uri = reverse_lazy("proposals:api:my_proposals")
+    data_uri = reverse_lazy("proposals:api:my_proposals")  # deze nog beter bekijken
     data_view = ProposalApiView
     columns = [
-        DDVString(
-            field="title",
-            label="Project",
-        ),
+        # starts up at server setup
+        # columns give no error with wrong data in field, just empty
         DDVString(
             field="reference_number",
             label="Ref.Num",
             css_classes="fw-bold text-danger",
         ),
+        DDVString(
+            field="Titel",
+            label="Project",
+        ),
+        DDVString(
+            field="type",
+            label="type of application",
+        ),
+        DDVString(
+            field="applicants",
+            label="applicants",
+        ),  # applicants__firstname doesnt work
+        DDVString(
+            field="state",  # may need to be shown in different forma
+            label="state",
+        ),
+        DDVDate(
+            # incoming format: 2025-04-24T11:59:45.583305+02:00
+            field="date_submitted",  # may need to be shown in different format, time is now gone
+            # compared to original data shown.
+            label="date submitted",
+        ),
+        DDVDate(  # DDVDate is an option, however the default for their empty dat is 1970 instead of empty.
+            field="date_reviewed",
+            label="last edited/concluded on?",
+        ),
+        DDVButton(
+            field="action_view_pdf",
+            label="Inzien",
+        ),
+        DDVLink(
+            field="action_go_to_next_step",
+            label="Inzien",
+        ),
+        DDVLink(
+            field="action_show_difference",
+            label="Inzien",
+        ),
+        # DDVActions( #field doesn´t load without an error, hard to see what data is wrong
+        #    field="actions",
+        #    label="",
+        # ),
     ]
     title = _("Mijn aanvragen")
 
@@ -111,6 +158,7 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
         context = super().get_context_data(**kwargs)
         context["title"] = self.title
         return context
+
 
 class MyConceptsView(BaseProposalsView):
     title = _("Mijn conceptaanvragen")

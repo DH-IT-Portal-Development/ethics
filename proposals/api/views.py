@@ -11,8 +11,12 @@ from cdh.vue.rest import FancyListApiView
 
 from main.utils import is_secretary
 from reviews.models import Review
-from .serializers import ProposalSerializer
+from .serializers import (
+    ProposalSerializer,
+    MyArchiveSerializer,
+)
 from ..models import Proposal
+
 
 class ProposalFilterSet(filters.FilterSet):
     # TODO: my supervisod, my practice
@@ -24,14 +28,14 @@ class ProposalFilterSet(filters.FilterSet):
 
 
 class ProposalApiView(LoginRequiredMixin, UUListAPIView):
-    serializer_class = ProposalSerializer
+    serializer_class = MyArchiveSerializer
     filter_backends = [OrderingFilter, SearchFilter, filters.DjangoFilterBackend]
     filterset_class = ProposalFilterSet
     search_fields = [
         "title",
         "reference_number",
         "supervisor__first_name",
-        "supervisor__last_name",
+        "supervisor__last_name",  # not in serializer, so where?
         "applicants__first_name",
         "applicants__last_name",
     ]
@@ -47,6 +51,8 @@ class ProposalApiView(LoginRequiredMixin, UUListAPIView):
         return Proposal.objects.filter(
             Q(applicants=self.request.user) | Q(supervisor=self.request.user)
         )
+
+
 class BaseProposalsApiView(LoginRequiredMixin, FancyListApiView):
     authentication_classes = (SessionAuthentication,)
     serializer_class = ProposalSerializer
