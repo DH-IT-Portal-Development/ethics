@@ -2,9 +2,12 @@ from rest_framework import serializers
 
 from main.serializers import UserSerializer, UserMinimalSerializer
 from proposals.models import Proposal
-from proposals.utils.proposal_actions import ProposalActions, NextStepProposalAction
+from proposals.utils.proposal_actions import ProposalActions
 from reviews.api.serializers import InlineReviewSerializer, InlineDecisionSerializer
 from cdh.rest.server.serializers import ModelDisplaySerializer
+from rest_framework import (
+    serializers,
+)  # am I allowed to do this or should this go through cdh?
 from cdh.vue3.components.uu_list import (
     DDVLinkField,
     DDVActionsField,
@@ -125,13 +128,14 @@ class MyArchiveSerializer(ProposalInlineSerializer):
             "type",
             "date_submitted",
             "date_reviewed",
-            "applicants",
+            # "applicants",
+            "usernames",
             "state",
             "action_view_pdf",
             "action_delete",
-            "action_create_revision",
+            "action_make_revision",
             "actions_edit",
-            "actions_decide",
+            "actions_make_decision",
             "actions_hide",
             "actions_show",
             "action_go_to_next_step",
@@ -140,57 +144,72 @@ class MyArchiveSerializer(ProposalInlineSerializer):
         ]
 
     state = serializers.SerializerMethodField()
+    usernames = serializers.SerializerMethodField()
 
-    action_go_to_next_step = DDVLinkField(
-        text="pdf",
-        link="http://127.0.0.1:8000/proposals/pdf/",
-        link_attr="pk",
-        check=lambda o: o.status != Proposal.Statuses.DRAFT,
-    )
+    # A small DDV explanation:
+    # link_attr= variable in the model. For example proposal.pk is used in action_view_pdf.
+    # Not the pdf pk. They do happen to be the same though.
+    # the lambda function which we give also uses the model object parameter which is otherwise not available, I think
     action_view_pdf = DDVLinkField(
         text="pdf",
-        link="http://127.0.0.1:8000/proposals/pdf/",
-        link_attr="pk",
-        check=lambda o: o.status != Proposal.Statuses.DRAFT,
+        link="proposals:pdf",
+        link_attr="pk",  # there is always a pdf, but should it always be shown?
     )
 
-    action_show_difference = DDVLinkField(
-        text="Maak revisie",
-        link="http://127.0.0.1:8000/proposals/copy/",
-        check=lambda o: o.status == Proposal.Statuses.DECISION_MADE,
+    action_go_to_next_step = DDVLinkField(  # different then edit?
+        text="next step",
+        link="proposals:update",  # this is correct, so what is the edit option?
+        link_attr="pk",
+        check=lambda proposal: ProposalActions.action_allowed_go_to_next_step(proposal),
     )
 
     action_delete = DDVLinkField(
-        text="Maak revisie",
-        link="http://127.0.0.1:8000/proposals/copy/",
-        check=lambda o: o.status == Proposal.Statuses.DRAFT,
+        text="delete",
+        link="proposals:delete",
+        link_attr="pk",
+        check=lambda proposal: ProposalActions.action_allowed_delete(proposal),
     )
 
-    action_create_revision = DDVLinkField(
+    action_show_difference = DDVLinkField(
+        text="show difference",
+        link="proposals:diff",
+        link_attr="pk",  # needs more then one pk, not sure how to do this
+        check=lambda proposal: ProposalActions.action_allowed_show_difference(proposal),
+    )
+
+    action_make_revision = DDVLinkField(
         text="Maak revisie",
-        link="http://127.0.0.1:8000/proposals/copy/",
-        check=lambda o: o.status == Proposal.Statuses.DECISION_MADE,
+        link="proposals:copy",  # there is also a copy revison and copy amendment,
+        # not sure when they are supposed to be shown
+        check=lambda proposal: ProposalActions.action_allowed_make_revision(proposal),
     )
 
     actions_edit = DDVLinkField(
-        text="Maak revisie",
-        link="http://127.0.0.1:8000/proposals/copy/",
+        text="edit",
+        link="proposals:update",  # I have no idea what this is used for or where edit comes from, likely wil be deleted
+        link_attr="pk",
         check=lambda o: o.status == Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
     )
-    actions_decide = DDVLinkField(
-        text="Maak revisie",
-        link="http://127.0.0.1:8000/proposals/copy/",
-        check=lambda o: o.status == Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
+
+    actions_make_decision = DDVLinkField(
+        text="decide",
+        link="reviews:decide",
+        link_attr="latest_review_pk",  # This shows a review pk but an incorrect one.
+        check=lambda proposal: ProposalActions.action_allowed_make_decision(proposal),
     )
-    actions_hide = DDVLinkField(
-        text="Maak revisie",
+
+    # Hide and show action may need to be moved to another view and serializer entirely
+    # Still the orginal code had actions about this so i do not dare to remove this without feedback
+    # what exactly these actions are supposed to do
+    actions_hide = DDVLinkField(  # secretary
+        text="hide",
         link="http://127.0.0.1:8000/proposals/copy/",
-        check=lambda o: o.status == Proposal.Statuses.SUBMITTED,
+        check=lambda proposal: ProposalActions.action_allowed_hide(proposal),
     )
-    actions_show = DDVLinkField(
-        text="Maak revisie",
+    actions_show = DDVLinkField(  # secretary, not needed in this view
+        text="show",
         link="http://127.0.0.1:8000/proposals/copy/",
-        check=lambda o: o.status == Proposal.Statuses.SUBMITTED,
+        check=lambda proposal: ProposalActions.action_allowed_add(proposal),
     )
 
     actions = DDVActionsField(
@@ -209,15 +228,23 @@ class MyArchiveSerializer(ProposalInlineSerializer):
     )
 
     @staticmethod
-    # overrides method from ProposalInlineSerializer
-    def get_applicants(proposal: Proposal):
-        return UserMinimalSerializer(proposal.applicants.all(), many=True).data
+    def get_usernames(proposal: Proposal):
+        # haven´t found out how to do this differently. get_applicants is the orignal but
+        # I just needs the username here while get_applicants returns a user json.
+        # ideally the fullname from userserializer is called with the many option but i have not found out how to do so
+        # any suggestions are welcome, for now this gives the desired result, it's just very ugly
+        users = ""
+        for user in proposal.applicants.all():
+            if users != "":
+                users += ", "
+            users += user.first_name + " " + user.last_name
+        return users
 
     @staticmethod
     def get_state(proposal: Proposal):
         # state = status with decisions added so this is still lacking
         return proposal.get_status_display()
-        # get_status_display() does not exist in proposal, still works:
+        # get_status_display() does not exist in proposal, why this still works:
         # https://docs.djangoproject.com/en/4.2/ref/models/instances/#django.db.models.Model.get_FOO_display
 
 

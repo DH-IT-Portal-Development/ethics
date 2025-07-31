@@ -778,10 +778,16 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
 
             return self.supervisor_decision()
 
+    @property
     def latest_review(self):
         from reviews.models import Review
 
         return Review.objects.filter(proposal=self).last()
+
+    @property
+    def latest_review_pk(self):
+        from reviews.models import Review
+        return Review.objects.filter(proposal=self).last().pk
 
     def enforce_wmo(self):
         """Send proposal back to draft phase with WMO enforced."""

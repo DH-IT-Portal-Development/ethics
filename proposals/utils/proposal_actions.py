@@ -1,44 +1,3 @@
-# actions allowed in list view, may be moved to utils later
-def action_allowed_next_step(self):
-    # if_modifiable return true
-    return True
-
-
-def action_allowed_show_difference(self):
-    # if_modifiable return true
-    return True
-
-
-def action_allowed_delete(self):
-    # if_modifiable return true
-    return True
-
-
-def action_allowed_view(self):
-    # if_submitted return true
-    return True
-
-
-def action_allowed_make_revision(self):
-    # if_submitted return true
-    return True
-
-
-def action_allowed_make_decision(self):
-    # if_supervised return true
-    return True
-
-
-def action_allowed_hide(self):
-    # if_secretary return true
-    return True
-
-
-def action_allowed_add(self):
-    # if_secretary return true
-    return True
-
-
 from django.utils.translation import gettext as _
 from django.urls import reverse
 from django.conf import settings
@@ -50,103 +9,56 @@ from reviews.models import Review, Decision
 import datetime
 
 
-class ProposalActions:  # Base Class also overlapw with ReviwActions, except the detail_actions itself.
-    def __init__(self, proposal, user):
-        self.proposal = proposal
-        self.user = user
+class ProposalActions:
+    # Needs to give a callable function to serializers. Either with a function or a __call__. Not sure what
+    # works best yet
+    # Base Class also overlapw with ReviwActions, except the detail_actions itself.
 
-        # Create and initialize actions
-        self.detail_actions = [
-            NextStepProposalAction(proposal, user),
-            #  ShowDifference(proposal, user),
-            # Delete(proposal, user),
-            # View(proposal, user),
-            # MakeRevision(proposal, user),
-            # MakeDecision(proposal, user),
-            # Hide(proposal, user),
-            # Add(proposal, user),
-        ]
-        self.ufl_actions = []
+    @staticmethod
+    def action_allowed_go_to_next_step(proposal: Proposal):
+        # if_modifiable return true
+        return proposal.status == Proposal.Statuses.DRAFT
 
-        # Does not check for uniqueness
-        self.all_actions = self.ufl_actions + self.detail_actions
+    # to do
+    @staticmethod
+    def action_allowed_show_difference(proposal: Proposal):
+        # if_modifiable return true
+        check = lambda o: o.status == Proposal.Statuses.DRAFT
+        return check(proposal)
 
-    def __call__(self):
-        return self.get_all_actions()
+    @staticmethod
+    def action_allowed_delete(proposal: Proposal):
+        # if_modifiable return true
+        return proposal.status == Proposal.Statuses.DRAFT
+        # as of now should be same check as action_allowed_go_to_next_step
 
-    def get_all_actions(self):
-        return [a for a in self.all_actions if a.is_available()]
+    @staticmethod
+    def action_allowed_make_revision(proposal: Proposal):
+        # if_submitted return true
+        check = lambda o: o.status == Proposal.Statuses.SUBMITTED
+        return check(proposal)
 
-    def get_ufl_actions(self):
-        return [a for a in self.ufl_actions if a.is_available()]
-
-    def get_detail_actions(self):
-        return [a for a in self.detail_actions if a.is_available()]
-
-
-class ProposalAction:  # Heavily overlaps with ReviewAction, perhaps these two can be fused.
-    def __init__(self, proposal, user):
-        self.proposal = proposal
-        self.user = user
-
-    def is_available(self, user=None):
-        """Returns true if this action is available to the specified
-        user given the current object."""
-
-        if not user:
-            user = self.user
-
-        # Defaults to always available
+    @staticmethod
+    def action_allowed_view(proposal: Proposal):
+        # if_submitted return true
         return True
 
-    def action_url(self, user=None):
-        """Returns a URL for the action"""
+    # This should be moved to Review Actions later on. The decision is about a Review
+    # though it has a proposal parameter right now.
+    @staticmethod
+    def action_allowed_make_decision(proposal: Proposal):
+        # if_supervised return true
+        check = lambda o: o.status == Proposal.Statuses.SUBMITTED_TO_SUPERVISOR
+        return check(proposal)
 
-        if not user:
-            user = self.user
+    @staticmethod
+    def action_allowed_hide(proposal: Proposal):
+        # if_secretary return true
+        check = lambda o: o.status == Proposal.Statuses.SUBMITTED
+        return check(proposal)
 
-        return "#"
-
-    def text_with_link(self, user=None):
-        return '<a href="{}">{}</a>'.format(
-            self.action_url(),
-            self.description(),
-        )
-
-    def description(self):
-        return "description or name for {} not defined".format(self.__name__)
-
-    def __str__(self):
-        return mark_safe(self.text_with_link())
-
-
-class NextStepProposalAction(ProposalAction):
-    def is_available(self):
-        """User needs to be the owner of the proposal or the superviser.
-        The proposal needs to be in the right state. Draft?"""
-        return True
-
-    def action_url(self, user=None):
-        return reverse("proposals:next_action", args=(self.proposal.pk,))
-
-    def description(self):
-        return _("nextactiondescription")
-
-
-class HideProposalAction(ProposalAction):
-    def is_available(self):
-        """Only allow secretaries"""
-
-        user = self.user
-
-        user_groups = user.groups.values_list("name", flat=True)
-        if not settings.GROUP_SECRETARY in user_groups:
-            return False
-
-        return True
-
-    def action_url(self, user=None):
-        return reverse("proposals:hide", args=(self.proposal.pk,))
-
-    def description(self):
-        return _("hideactiondescription")
+    @staticmethod
+    def action_allowed_add(proposal: Proposal):
+        # if_secretary return true
+        check = lambda o: o.status == Proposal.Statuses.SUBMITTED
+        return check(proposal)

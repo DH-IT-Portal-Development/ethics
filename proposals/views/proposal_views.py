@@ -110,7 +110,7 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
             css_classes="fw-bold text-danger",
         ),
         DDVString(
-            field="Titel",
+            field="title",
             label="Project",
         ),
         DDVString(
@@ -118,7 +118,7 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
             label="type of application",
         ),
         DDVString(
-            field="applicants",
+            field="usernames",
             label="applicants",
         ),  # applicants__firstname doesnt work
         DDVString(
@@ -141,11 +141,27 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
         ),
         DDVLink(
             field="action_go_to_next_step",
-            label="Inzien",
+            label="go to next step",
         ),
         DDVLink(
             field="action_show_difference",
-            label="Inzien",
+            label="verschil met oude revisie",
+        ),
+        DDVLink(
+            field="action_make_revision",
+            label="create revisie",
+        ),
+        DDVLink(
+            field="actions_edit",
+            label="edit",
+        ),
+        DDVLink(
+            field="action_delete",
+            label="delete",
+        ),
+        DDVLink(
+            field="actions_make_decision",
+            label="decide",
         ),
         # DDVActions( #field doesn´t load without an error, hard to see what data is wrong
         #    field="actions",
@@ -364,7 +380,7 @@ class ProposalDelete(DeleteView):
 
     def get_success_url(self):
         """After deletion, return to the concepts overview"""
-        return reverse("proposals:my_concepts")
+        return reverse("proposals:my_archive")
 
 
 class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
@@ -841,7 +857,7 @@ class ProposalSubmit(
             decision = review.decision_set.get(reviewer=self.request.user)
             return reverse("reviews:decide", args=(decision.pk,))
 
-        return reverse("proposals:submitted", args=(self.object.pk,))
+        return reverse("proposals:my_archive", args=(self.object.pk,))
 
     def get_back_url(self):
         """Return to the data management view"""
