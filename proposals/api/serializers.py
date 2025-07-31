@@ -119,7 +119,7 @@ class ProposalSerializer(ProposalInlineSerializer):
         return None
 
 
-class MyArchiveSerializer(ProposalInlineSerializer):
+class MyArchiveSerializer(ModelDisplaySerializer):
     class Meta:
         model = Proposal
         fields = [
@@ -128,18 +128,13 @@ class MyArchiveSerializer(ProposalInlineSerializer):
             "type",
             "date_submitted",
             "date_reviewed",
-            # "applicants",
             "usernames",
             "state",
             "action_view_pdf",
+            "action_show_difference",
+            "action_go_to_next_step",
             "action_delete",
             "action_make_revision",
-            "actions_edit",
-            "actions_make_decision",
-            "actions_hide",
-            "actions_show",
-            "action_go_to_next_step",
-            "action_show_difference",
             "actions",
         ]
 
@@ -153,7 +148,15 @@ class MyArchiveSerializer(ProposalInlineSerializer):
     action_view_pdf = DDVLinkField(
         text="pdf",
         link="proposals:pdf",
-        link_attr="pk",  # there is always a pdf, but should it always be shown?
+        link_attr="pk",
+        check=lambda proposal: ProposalActions.action_allowed_view_pdf(proposal),
+    )
+
+    action_show_difference = DDVLinkField(
+        text="show difference",
+        link="proposals:diff",
+        link_attr="pk",  # needs more then one pk, not sure how to do this
+        check=lambda proposal: ProposalActions.action_allowed_show_difference(proposal),
     )
 
     action_go_to_next_step = DDVLinkField(  # different then edit?
@@ -170,13 +173,6 @@ class MyArchiveSerializer(ProposalInlineSerializer):
         check=lambda proposal: ProposalActions.action_allowed_delete(proposal),
     )
 
-    action_show_difference = DDVLinkField(
-        text="show difference",
-        link="proposals:diff",
-        link_attr="pk",  # needs more then one pk, not sure how to do this
-        check=lambda proposal: ProposalActions.action_allowed_show_difference(proposal),
-    )
-
     action_make_revision = DDVLinkField(
         text="Maak revisie",
         link="proposals:copy",  # there is also a copy revison and copy amendment,
@@ -184,45 +180,14 @@ class MyArchiveSerializer(ProposalInlineSerializer):
         check=lambda proposal: ProposalActions.action_allowed_make_revision(proposal),
     )
 
-    actions_edit = DDVLinkField(
-        text="edit",
-        link="proposals:update",  # I have no idea what this is used for or where edit comes from, likely wil be deleted
-        link_attr="pk",
-        check=lambda o: o.status == Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
-    )
-
-    actions_make_decision = DDVLinkField(
-        text="decide",
-        link="reviews:decide",
-        link_attr="latest_review_pk",  # This shows a review pk but an incorrect one.
-        check=lambda proposal: ProposalActions.action_allowed_make_decision(proposal),
-    )
-
-    # Hide and show action may need to be moved to another view and serializer entirely
-    # Still the orginal code had actions about this so i do not dare to remove this without feedback
-    # what exactly these actions are supposed to do
-    actions_hide = DDVLinkField(  # secretary
-        text="hide",
-        link="http://127.0.0.1:8000/proposals/copy/",
-        check=lambda proposal: ProposalActions.action_allowed_hide(proposal),
-    )
-    actions_show = DDVLinkField(  # secretary, not needed in this view
-        text="show",
-        link="http://127.0.0.1:8000/proposals/copy/",
-        check=lambda proposal: ProposalActions.action_allowed_add(proposal),
-    )
-
     actions = DDVActionsField(
         [
+            action_go_to_next_step,
             DDVLinkField(
-                text="Maak revisie",
-                link="http://127.0.0.1:8000/proposals/copy/",
-                check=lambda o: o.status == Proposal.Statuses.DECISION_MADE,
-            ),
-            DDVLinkField(
-                text="Edit",
-                link="http://127.0.0.1:8000/proposals/copy/",
-                check=lambda o: o.status == Proposal.Statuses.DRAFT,
+                text="delete",
+                link="proposals:delete",
+                link_attr="pk",
+                check=lambda proposal: ProposalActions.action_allowed_delete(proposal),
             ),
         ]
     )
@@ -246,21 +211,3 @@ class MyArchiveSerializer(ProposalInlineSerializer):
         return proposal.get_status_display()
         # get_status_display() does not exist in proposal, why this still works:
         # https://docs.djangoproject.com/en/4.2/ref/models/instances/#django.db.models.Model.get_FOO_display
-
-
-# actiontree, implementation in proosal_actions.py
-"""
-    {% if modifiable %}
-        <img src="{{ img_next }}" title="Naar volgende stap">
-        <img src="{{ img_diff }}" title="Toon verschillen">
-        <img src="{{ img_delete }}" title="Verwijderen">
-     {% if submitted %} #this also somehow shows the state, not status, and submitted is a status
-        <img src="{{ img_pdf }}" title="Inzien">
-        <img src="{{ img_revise }}" title="Maak revisie">
-      {% if supervised %}
-          <img src="{{ img_decide }}" title="Beslissen">
-       {% if is_secretary %}
-             <img src="{{ img_hide }}" title="Verbergen">
-               <img src="{{ img_add }}" title="Toevoegen">
-
-"""

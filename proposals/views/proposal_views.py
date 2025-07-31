@@ -97,9 +97,10 @@ class BaseProposalsView(LoginRequiredMixin, generic.TemplateView):
 
 
 class MyProposalsView(LoginRequiredMixin, DDVListView):
+    title = _("Mijn aanvragen")
     template_name = "proposals/proposal_list.html"
     model = Proposal
-    data_uri = reverse_lazy("proposals:api:my_proposals")  # deze nog beter bekijken
+    data_uri = reverse_lazy("proposals:api:my_proposals")
     data_view = ProposalApiView
     columns = [
         # starts up at server setup
@@ -138,6 +139,7 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
         DDVButton(
             field="action_view_pdf",
             label="Inzien",
+            size="small",
         ),
         DDVLink(
             field="action_go_to_next_step",
@@ -152,23 +154,14 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
             label="create revisie",
         ),
         DDVLink(
-            field="actions_edit",
-            label="edit",
-        ),
-        DDVLink(
             field="action_delete",
             label="delete",
         ),
-        DDVLink(
-            field="actions_make_decision",
-            label="decide",
+        DDVActions(  # field doesn´t load and without an error, currently hard to see what is wrong
+            field="actions",
+            label="",
         ),
-        # DDVActions( #field doesn´t load without an error, hard to see what data is wrong
-        #    field="actions",
-        #    label="",
-        # ),
     ]
-    title = _("Mijn aanvragen")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
