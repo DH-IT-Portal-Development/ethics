@@ -129,12 +129,11 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
             field="state_or_decision",
             label=_("Status"),
         ),
-        DDVDate(
-            # incoming format: 2025-04-24T11:59:45.583305+02:00
+        DDVString(
             field="date_submitted",
             label=_("Datum ingediend"),
         ),
-        DDVDate(
+        DDVString(
             field="date_reviewed",  # still wrong I think
             label=_("Laatst bijgewerkt"),
         ),

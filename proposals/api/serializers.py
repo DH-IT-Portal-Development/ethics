@@ -141,9 +141,6 @@ class MyArchiveSerializer(ModelDisplaySerializer):
             "actions",
         ]
 
-    state_or_decision = serializers.SerializerMethodField()
-    usernames = serializers.SerializerMethodField()
-
     # A small DDV explanation:
     # link_attr= variable in the model. For example proposal.pk is used in action_view_pdf.
     # the lambda function which we give also uses the model object parameter
@@ -202,10 +199,32 @@ class MyArchiveSerializer(ModelDisplaySerializer):
         ]
     )
 
+    date_submitted = serializers.SerializerMethodField()
+    date_reviewed = serializers.SerializerMethodField()
+
+    state_or_decision = serializers.SerializerMethodField()
+    usernames = serializers.SerializerMethodField()
+
+    # DDVDate returns 1970 by default so we have to use a DDVString and format the date ourselves
+    # incoming format: 2025-04-24T11:59:45.583305+02:00
+    @staticmethod
+    def get_date_submitted(proposal: Proposal):
+        if proposal.date_submitted is not None:
+            return proposal.date_submitted.date()
+        return ""
+
+    @staticmethod
+    def get_date_reviewed(proposal: Proposal):
+        if proposal.date_reviewed is not None:
+            return proposal.date_reviewed.date()
+        return ""
+
     @staticmethod
     def get_usernames(proposal: Proposal):
         return proposal.get_applicants_names()
 
+    # I have no idea where the old logic is, so I had to make it anew. It does not seem to be in proposal.
+    # This logic should not stay in the serialiser but for now it works.
     @staticmethod
     def get_state_or_decision(proposal: Proposal):
         # should proposal.supervisor_decision be here?
