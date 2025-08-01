@@ -89,23 +89,23 @@ class ProposalSerializer(ProposalInlineSerializer):
         model = Proposal
         fields = [
             "pk",
-            "reference_number",  # used in MyProposalsView
-            "title",  # used in MyProposalsView
+            "reference_number",
+            "title",
             "is_revision",
-            "type",  # used in MyProposalsView
+            "type",
             "date_confirmed",
-            "date_submitted",  # used in MyProposalsView
+            "date_submitted",
             "date_submitted_supervisor",
-            "date_reviewed",  # used in MyProposalsView
+            "date_reviewed",
             "date_modified",
             "parent",
             "latest_review",
             "supervisor_decision",
-            "applicants",  # used in MyProposalsView
-            "status",  # used in MyProposalsView
+            "applicants",
+            "status",
             "supervisor",
             "continue_url",
-            "pdf",  # used in MyProposalsView
+            "pdf",
             "in_archive",
             "is_revisable",
         ]
@@ -120,7 +120,7 @@ class ProposalSerializer(ProposalInlineSerializer):
         return None
 
 
-class MyArchiveSerializer(ModelDisplaySerializer):
+class ProposalApiSerializer(ModelDisplaySerializer):
     class Meta:
         model = Proposal
         fields = [

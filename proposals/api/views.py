@@ -13,22 +13,28 @@ from main.utils import is_secretary
 from reviews.models import Review
 from .serializers import (
     ProposalSerializer,
-    MyArchiveSerializer,
+    ProposalApiSerializer,
 )
 from ..models import Proposal
 
 
 class ProposalFilterSet(filters.FilterSet):
     # TODO: my supervisod, my practice
+
+    # can this be rewritten in lambda? If so how?
+    status_choices = Proposal.Statuses.choices
+    for choice in status_choices:
+        if choice[0] == 60:
+            status_choices.remove(choice)
     status = filters.MultipleChoiceFilter(
         label="Status",
         field_name="status",
-        choices=Proposal.Statuses.choices,
+        choices=status_choices,
     )
 
 
 class ProposalApiView(LoginRequiredMixin, UUListAPIView):
-    serializer_class = MyArchiveSerializer
+    serializer_class = ProposalApiSerializer
     filter_backends = [OrderingFilter, SearchFilter, filters.DjangoFilterBackend]
     filterset_class = ProposalFilterSet
     search_fields = [
