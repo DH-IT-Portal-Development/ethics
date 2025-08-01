@@ -58,8 +58,9 @@ class ProposalActions:
     @staticmethod
     def action_allowed_make_revision(proposal: Proposal):
         # if_submitted return true
-        check = lambda o: o.status == Proposal.Statuses.SUBMITTED
-        return check(proposal)
+        # check = lambda o: o.status == Proposal.Statuses.DECISION_MADE
+        # return check(proposal)
+        return proposal.is_revisable
 
     @staticmethod
     def action_allowed_view_pdf(proposal: Proposal):

@@ -125,7 +125,7 @@ class MyArchiveSerializer(ModelDisplaySerializer):
         model = Proposal
         fields = [
             "reference_number",
-            "pk",
+            "pk",  # pk is temp, easier to implement right now, not needed otherwise.
             "title",
             "type",
             "date_submitted",
@@ -146,8 +146,8 @@ class MyArchiveSerializer(ModelDisplaySerializer):
 
     # A small DDV explanation:
     # link_attr= variable in the model. For example proposal.pk is used in action_view_pdf.
-    # Not the pdf pk. They do happen to be the same though.
-    # the lambda function which we give also uses the model object parameter which is otherwise not available, I think
+    # the lambda function which we give also uses the model object parameter
+    # which is otherwise not available as far as I can see. That is why we have function inside a lambda function
     action_view_pdf = DDVLinkField(
         text=_("Inzien"),
         link="proposals:pdf",
@@ -170,7 +170,7 @@ class MyArchiveSerializer(ModelDisplaySerializer):
         check=lambda proposal: ProposalActions.action_allowed_show_difference(proposal),
     )
 
-    action_go_to_next_step = DDVLinkField(  # different then edit?
+    action_go_to_next_step = DDVLinkField(
         text=_("Naar Volgende Stap"),
         link="proposals:update",
         link_attr="pk",
@@ -187,7 +187,7 @@ class MyArchiveSerializer(ModelDisplaySerializer):
     action_make_revision = DDVLinkField(
         text=_("Maak revisie"),
         link="proposals:copy",  # there is also a copy revison and copy amendment,
-        # not sure when they are supposed to be shown
+        # not sure when those two are supposed to be shown
         check=lambda proposal: ProposalActions.action_allowed_make_revision(proposal),
     )
 
