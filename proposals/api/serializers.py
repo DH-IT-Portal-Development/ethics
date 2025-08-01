@@ -130,7 +130,7 @@ class MyArchiveSerializer(ModelDisplaySerializer):
             "type",
             "date_submitted",
             "date_reviewed",
-            "state",
+            "state_or_decision",
             "usernames",
             "action_view_pdf",
             "action_view_pdf_always_available",
@@ -141,7 +141,7 @@ class MyArchiveSerializer(ModelDisplaySerializer):
             "actions",
         ]
 
-    state = serializers.SerializerMethodField()
+    state_or_decision = serializers.SerializerMethodField()
     usernames = serializers.SerializerMethodField()
 
     # A small DDV explanation:
@@ -171,7 +171,7 @@ class MyArchiveSerializer(ModelDisplaySerializer):
     )
 
     action_go_to_next_step = DDVLinkField(
-        text=_("Naar Volgende Stap"),
+        text=_("Naar volgende stap"),
         link="proposals:update",
         link_attr="pk",
         check=lambda proposal: ProposalActions.action_allowed_go_to_next_step(proposal),
@@ -207,7 +207,15 @@ class MyArchiveSerializer(ModelDisplaySerializer):
         return proposal.get_applicants_names()
 
     @staticmethod
-    def get_state(proposal: Proposal):
-        return proposal.get_status_display()
-        # get_status_display() does not exist in proposal, why this still works:
-        # https://docs.djangoproject.com/en/4.2/ref/models/instances/#django.db.models.Model.get_FOO_display
+    def get_state_or_decision(proposal: Proposal):
+        # should proposal.supervisor_decision be here?
+
+        # how do I test the WMO_decison made?
+        if proposal.status == (
+            Proposal.Statuses.DECISION_MADE or Proposal.Statuses.WMO_DECISION_MADE
+        ):
+            return proposal.latest_review.get_continuation_display()
+        else:
+            return proposal.get_status_display()
+            # get_status_display() does not exist in proposal, why this still works:
+            # https://docs.djangoproject.com/en/4.2/ref/models/instances/#django.db.models.Model.get_FOO_display

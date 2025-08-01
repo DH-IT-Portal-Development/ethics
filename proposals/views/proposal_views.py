@@ -103,11 +103,11 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
     data_uri = reverse_lazy("proposals:api:my_proposals")
     data_view = ProposalApiView
     columns = [
-        DDVString(
-            field="pk",
-            label="pk",
-            css_classes="fw-bold text-danger",
-        ),
+        # DDVString(
+        #    field="pk",
+        #    label="pk",
+        #    css_classes="fw-bold text-danger",
+        # ),
         DDVString(
             field="reference_number",
             label="Ref.Num",
@@ -126,7 +126,7 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
             label=_("Indieners"),
         ),
         DDVString(
-            field="state",
+            field="state_or_decision",
             label=_("Status"),
         ),
         DDVDate(
@@ -135,25 +135,25 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
             label=_("Datum ingediend"),
         ),
         DDVDate(
-            field="date_reviewed",
-            label="last edited/concluded on?",
+            field="date_reviewed",  # still wrong I think
+            label=_("Laatst bijgewerkt"),
         ),
-        DDVLink(
-            field="action_go_to_next_step",
-            label="",
-        ),
-        DDVLink(
-            field="action_show_difference",
-            label="",
-        ),
-        DDVLink(
-            field="action_make_revision",
-            label="",
-        ),
-        DDVLink(
-            field="action_delete",
-            label="",
-        ),
+        # DDVLink(
+        #    field="action_go_to_next_step",
+        #    label="",
+        # ),
+        # DDVLink(
+        #    field="action_show_difference",
+        #    label="",
+        # ),
+        # DDVLink(
+        #    field="action_make_revision",
+        #    label="",
+        # ),
+        # DDVLink(
+        #    field="action_delete",
+        #    label="",
+        # ),
         DDVActions(
             field="actions",
             label=_("Acties"),
