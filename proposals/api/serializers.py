@@ -1,5 +1,5 @@
 from rest_framework import serializers
-
+from django.utils.translation import gettext_lazy as _
 from main.serializers import UserSerializer, UserMinimalSerializer
 from proposals.models import Proposal
 from proposals.utils.proposal_actions import ProposalActions
@@ -52,7 +52,8 @@ class ProposalInlineSerializer(ModelDisplaySerializer):
 
         return None
 
-    def get_supervisor(self, proposal):
+    @staticmethod
+    def get_supervisor(proposal):
         supervisor = proposal.supervisor
 
         if supervisor:
@@ -124,13 +125,15 @@ class MyArchiveSerializer(ModelDisplaySerializer):
         model = Proposal
         fields = [
             "reference_number",
+            "pk",
             "title",
             "type",
             "date_submitted",
             "date_reviewed",
-            "usernames",
             "state",
+            "usernames",
             "action_view_pdf",
+            "action_view_pdf_always_available",
             "action_show_difference",
             "action_go_to_next_step",
             "action_delete",
@@ -146,68 +149,65 @@ class MyArchiveSerializer(ModelDisplaySerializer):
     # Not the pdf pk. They do happen to be the same though.
     # the lambda function which we give also uses the model object parameter which is otherwise not available, I think
     action_view_pdf = DDVLinkField(
-        text="pdf",
+        text=_("Inzien"),
         link="proposals:pdf",
         link_attr="pk",
+        new_tab=True,
         check=lambda proposal: ProposalActions.action_allowed_view_pdf(proposal),
     )
 
+    action_view_pdf_always_available = DDVLinkField(
+        text=_("Inzien"),
+        link="proposals:pdf",
+        link_attr="pk",
+        new_tab=True,
+    )
+
     action_show_difference = DDVLinkField(
-        text="show difference",
+        text=_("Toon Verschillen"),
         link="proposals:diff",
-        link_attr="pk",  # needs more then one pk, not sure how to do this
+        link_attr="pk",
         check=lambda proposal: ProposalActions.action_allowed_show_difference(proposal),
     )
 
     action_go_to_next_step = DDVLinkField(  # different then edit?
-        text="next step",
-        link="proposals:update",  # this is correct, so what is the edit option?
+        text=_("Naar Volgende Stap"),
+        link="proposals:update",
         link_attr="pk",
         check=lambda proposal: ProposalActions.action_allowed_go_to_next_step(proposal),
     )
 
     action_delete = DDVLinkField(
-        text="delete",
+        text=_("Verwijderen"),
         link="proposals:delete",
         link_attr="pk",
         check=lambda proposal: ProposalActions.action_allowed_delete(proposal),
     )
 
     action_make_revision = DDVLinkField(
-        text="Maak revisie",
+        text=_("Maak revisie"),
         link="proposals:copy",  # there is also a copy revison and copy amendment,
         # not sure when they are supposed to be shown
         check=lambda proposal: ProposalActions.action_allowed_make_revision(proposal),
     )
 
+    # DDVActionsField description is inaccurate, there always need to be at least one option.
     actions = DDVActionsField(
         [
+            action_view_pdf_always_available,  # placeholder until solution found, so likely a permanent solution.
+            action_show_difference,
             action_go_to_next_step,
-            DDVLinkField(
-                text="delete",
-                link="proposals:delete",
-                link_attr="pk",
-                check=lambda proposal: ProposalActions.action_allowed_delete(proposal),
-            ),
+            action_delete,
+            action_make_revision,
         ]
     )
 
     @staticmethod
     def get_usernames(proposal: Proposal):
-        # haven´t found out how to do this differently. get_applicants is the orignal but
-        # I just needs the username here while get_applicants returns a user json.
-        # ideally the fullname from userserializer is called with the many option but i have not found out how to do so
-        # any suggestions are welcome, for now this gives the desired result, it's just very ugly
-        users = ""
-        for user in proposal.applicants.all():
-            if users != "":
-                users += ", "
-            users += user.first_name + " " + user.last_name
-        return users
+        return proposal.get_applicants_names()
 
     @staticmethod
     def get_state(proposal: Proposal):
-        # state = status with decisions added so this is still lacking
         return proposal.get_status_display()
         # get_status_display() does not exist in proposal, why this still works:
         # https://docs.djangoproject.com/en/4.2/ref/models/instances/#django.db.models.Model.get_FOO_display

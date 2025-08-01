@@ -103,8 +103,11 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
     data_uri = reverse_lazy("proposals:api:my_proposals")
     data_view = ProposalApiView
     columns = [
-        # starts up at server setup
-        # columns give no error with wrong data in field, just empty
+        DDVString(
+            field="pk",
+            label="pk",
+            css_classes="fw-bold text-danger",
+        ),
         DDVString(
             field="reference_number",
             label="Ref.Num",
@@ -112,54 +115,48 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
         ),
         DDVString(
             field="title",
-            label="Project",
+            label="",
         ),
         DDVString(
             field="type",
-            label="type of application",
+            label=_("Soort aanvraag"),
         ),
         DDVString(
             field="usernames",
-            label="applicants",
-        ),  # applicants__firstname doesnt work
+            label=_("Indieners"),
+        ),
         DDVString(
-            field="state",  # may need to be shown in different forma
-            label="state",
+            field="state",
+            label=_("Status"),
         ),
         DDVDate(
             # incoming format: 2025-04-24T11:59:45.583305+02:00
-            field="date_submitted",  # may need to be shown in different format, time is now gone
-            # compared to original data shown.
-            label="date submitted",
+            field="date_submitted",
+            label=_("Datum ingediend"),
         ),
-        DDVDate(  # DDVDate is an option, however the default for their empty dat is 1970 instead of empty.
+        DDVDate(
             field="date_reviewed",
             label="last edited/concluded on?",
         ),
-        DDVButton(
-            field="action_view_pdf",
-            label="Inzien",
-            size="small",
-        ),
         DDVLink(
             field="action_go_to_next_step",
-            label="go to next step",
+            label="",
         ),
         DDVLink(
             field="action_show_difference",
-            label="verschil met oude revisie",
+            label="",
         ),
         DDVLink(
             field="action_make_revision",
-            label="create revisie",
+            label="",
         ),
         DDVLink(
             field="action_delete",
-            label="delete",
-        ),
-        DDVActions(  # field doesn´t load and without an error, currently hard to see what is wrong
-            field="actions",
             label="",
+        ),
+        DDVActions(
+            field="actions",
+            label=_("Acties"),
         ),
     ]
 

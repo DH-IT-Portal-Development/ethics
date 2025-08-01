@@ -23,11 +23,12 @@ import datetime
        {% if is_secretary %}
              <img src="{{ img_hide }}" title="Verbergen">
                <img src="{{ img_add }}" title="Toevoegen">
-
 """
 
 
 class ProposalActions:
+    is_modifiable = False  # should be true when DRAFT OR (supervised & submitted), no access to supervision from serializer.
+
     # Needs to give a callable function to serializers. Either with a function or a __call__. Not sure what
     # works best yet
 
@@ -43,9 +44,10 @@ class ProposalActions:
     # to do
     @staticmethod
     def action_allowed_show_difference(proposal: Proposal):
-        # if_modifiable return true
-        check = lambda o: o.status == Proposal.Statuses.DRAFT
-        return check(proposal)
+        # if_modifiable return true, just modifiable doesn´t sound correct
+        if proposal.is_revision:  # amendment_or_revision is also an option?
+            return True  # we still do not know the pk of the proposal that this proposal ia s revision off.
+        return False
 
     @staticmethod
     def action_allowed_delete(proposal: Proposal):

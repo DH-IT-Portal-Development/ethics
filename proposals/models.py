@@ -622,6 +622,15 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         related_name="applicants",
     )
 
+    def get_applicants_names(self):
+        users = ""
+        for user in self.applicants.all(): #all() has a yellow unresolved attribute
+            #it however still works, any idea how to solve this error?
+            if users != "":
+                users += ", "
+            users += user.first_name + " " + user.last_name
+        return users
+
     supervisor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_("Promotor/Begeleider"),
