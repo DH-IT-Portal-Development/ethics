@@ -2,14 +2,61 @@ from braces.views import LoginRequiredMixin
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from rest_framework.authentication import SessionAuthentication
+from rest_framework.filters import OrderingFilter, SearchFilter
+from django_filters import rest_framework as filters
 
+from cdh.vue3.components.uu_list import UUListAPIView
 from reviews.mixins import CommitteeMixin
 from cdh.vue.rest import FancyListApiView
 
 from main.utils import is_secretary
 from reviews.models import Review
-from .serializers import ProposalSerializer
+from .serializers import (
+    ProposalSerializer,
+    ProposalApiSerializer,
+)
 from ..models import Proposal
+
+
+class ProposalFilterSet(filters.FilterSet):
+    # TODO: my supervisod, my practice
+
+    # can this be rewritten in lambda? If so how?
+    status_choices = Proposal.Statuses.choices
+    for choice in status_choices:
+        if choice[0] == 60:
+            status_choices.remove(choice)
+    status = filters.MultipleChoiceFilter(
+        label="Status",
+        field_name="status",
+        choices=status_choices,
+    )
+
+
+class ProposalApiView(LoginRequiredMixin, UUListAPIView):
+    serializer_class = ProposalApiSerializer
+    filter_backends = [OrderingFilter, SearchFilter, filters.DjangoFilterBackend]
+    filterset_class = ProposalFilterSet
+    search_fields = [
+        "title",
+        "reference_number",
+        "supervisor__first_name",
+        "supervisor__last_name",  # not in serializer, so where?
+        "applicants__first_name",
+        "applicants__last_name",
+    ]
+    ordering_fields = [
+        "reference_number",
+        "title",
+        "date_submitted",
+        "date_modified",
+    ]
+    ordering = ["-date_modified"]
+
+    def get_queryset(self):
+        return Proposal.objects.filter(
+            Q(applicants=self.request.user) | Q(supervisor=self.request.user)
+        )
 
 
 class BaseProposalsApiView(LoginRequiredMixin, FancyListApiView):

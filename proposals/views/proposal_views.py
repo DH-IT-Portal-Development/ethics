@@ -8,10 +8,19 @@ from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django.http import FileResponse, HttpResponseRedirect
+
+from cdh.vue3.components.uu_list import (
+    DDVListView,
+    DDVString,
+    DDVDate,
+    DDVButton,
+    DDVLink,
+    DDVActions,
+)
 
 # from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
@@ -31,6 +40,7 @@ from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
 from studies.models import Documents
 from attachments.models import Attachment, StudyAttachment, ProposalAttachment
+from ..api.views import ProposalApiView
 from ..copy import copy_proposal
 from ..forms import (
     ProposalConfirmationForm,
@@ -86,18 +96,72 @@ class BaseProposalsView(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
-class MyProposalsView(BaseProposalsView):
-    title = _("Mijn aanvraag")
-    body = _("Dit overzicht toont al je aanvragen.")
-    is_modifiable = True
-    is_submitted = True
-    contains_supervised = True
+class MyProposalsView(LoginRequiredMixin, DDVListView):
+    title = _("Mijn aanvragen")
+    template_name = "proposals/proposal_list.html"
+    model = Proposal
+    data_uri = reverse_lazy("proposals:api:my_proposals")
+    data_view = ProposalApiView
+    columns = [
+        # DDVString(
+        #    field="pk",
+        #    label="pk",
+        #    css_classes="fw-bold text-danger",
+        # ),
+        DDVString(
+            field="reference_number",
+            label="Ref.Num",
+            css_classes="fw-bold text-danger",
+        ),
+        DDVString(
+            field="title",
+            label="",
+        ),
+        DDVString(
+            field="type",
+            label=_("Soort aanvraag"),
+        ),
+        DDVString(
+            field="usernames",
+            label=_("Indieners"),
+        ),
+        DDVString(
+            field="state_or_decision",
+            label=_("Status"),
+        ),
+        DDVString(
+            field="date_submitted",
+            label=_("Datum ingediend"),
+        ),
+        DDVString(
+            field="date_reviewed",  # still wrong I think
+            label=_("Laatst bijgewerkt"),
+        ),
+        # DDVLink(
+        #    field="action_go_to_next_step",
+        #    label="",
+        # ),
+        # DDVLink(
+        #    field="action_show_difference",
+        #    label="",
+        # ),
+        # DDVLink(
+        #    field="action_make_revision",
+        #    label="",
+        # ),
+        # DDVLink(
+        #    field="action_delete",
+        #    label="",
+        # ),
+        DDVActions(
+            field="actions",
+            label=_("Acties"),
+        ),
+    ]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["data_url"] = reverse(
-            "proposals:api:my_archive",
-        )
+        context["title"] = self.title
         return context
 
 
@@ -305,7 +369,7 @@ class ProposalDelete(DeleteView):
 
     def get_success_url(self):
         """After deletion, return to the concepts overview"""
-        return reverse("proposals:my_concepts")
+        return reverse("proposals:my_archive")
 
 
 class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):
@@ -782,7 +846,7 @@ class ProposalSubmit(
             decision = review.decision_set.get(reviewer=self.request.user)
             return reverse("reviews:decide", args=(decision.pk,))
 
-        return reverse("proposals:submitted", args=(self.object.pk,))
+        return reverse("proposals:my_archive", args=(self.object.pk,))
 
     def get_back_url(self):
         """Return to the data management view"""

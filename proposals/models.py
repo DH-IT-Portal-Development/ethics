@@ -638,6 +638,15 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         related_name="applicants",
     )
 
+    def get_applicants_names(self):
+        users = ""
+        for user in self.applicants.all(): #all() has a yellow unresolved attribute
+            #it however still works, any idea how to solve this error?
+            if users != "":
+                users += ", "
+            users += user.first_name + " " + user.last_name
+        return users
+
     supervisor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_("Promotor/Begeleider"),
@@ -706,6 +715,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
             self._stepper = Stepper(self)
         return self._stepper
 
+    #@property removes yellow error, but not sure if this is a property or not
     def continue_url(self):
         stepper = self.stepper
         for item in stepper.items:
@@ -757,6 +767,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         if self.is_revision and self.parent:
             return _("Amendement") if self.parent.status_review else _("Revisie")
 
+    @property
     def type(self):
         """
         Returns the type of a Study: either normal, revision, amendment, preliminary assessment or practice
@@ -792,10 +803,16 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
 
             return self.supervisor_decision()
 
+    @property
     def latest_review(self):
         from reviews.models import Review
 
         return Review.objects.filter(proposal=self).last()
+
+    @property
+    def latest_review_pk(self):
+        from reviews.models import Review
+        return Review.objects.filter(proposal=self).last().pk
 
     def enforce_wmo(self):
         """Send proposal back to draft phase with WMO enforced."""
