@@ -120,27 +120,7 @@ class ProposalSerializer(ProposalInlineSerializer):
         return None
 
 
-class ProposalApiSerializer(ModelDisplaySerializer):
-    class Meta:
-        model = Proposal
-        fields = [
-            "reference_number",
-            "pk",  # pk is temp, easier to implement right now, not needed otherwise.
-            "title",
-            "type",
-            "date_modified",
-            "date_submitted",
-            "state_or_decision",
-            "usernames",
-            "action_view_pdf",
-            "action_view_pdf_always_available",
-            "action_show_difference",
-            "action_go_to_next_step",
-            "action_delete",
-            "action_make_revision",
-            "actions",
-        ]
-
+class ProposalActionsSerializer(ModelDisplaySerializer):
     # A small DDV explanation:
     # link_attr= variable in the model. For example proposal.pk is used in action_view_pdf.
     # the lambda function which we give also uses the model object parameter
@@ -188,8 +168,15 @@ class ProposalApiSerializer(ModelDisplaySerializer):
         check=lambda proposal: ProposalActions.action_allowed_make_revision(proposal),
     )
 
+    action_make_decision = DDVLinkField(
+        text=_("Maak revisie"),
+        link="reviews:decide",  # there is also a decide new in urls, what is the differnce?
+        link_attr="pk",  # probably wrong pk
+        check=lambda proposal: ProposalActions.action_allowed_make_decision(proposal),
+    )
+
     # DDVActionsField description is inaccurate, there always need to be at least one option.
-    actions = DDVActionsField(
+    my_proposal_actions = DDVActionsField(
         [
             action_view_pdf_always_available,  # placeholder until solution found, so likely a permanent solution.
             action_show_difference,
@@ -198,6 +185,31 @@ class ProposalApiSerializer(ModelDisplaySerializer):
             action_make_revision,
         ]
     )
+
+    my_supervised_actions = DDVActionsField(
+        [
+            action_view_pdf_always_available,
+            action_show_difference,
+            action_go_to_next_step,
+            action_make_decision,
+        ]
+    )
+
+
+class ProposalApiSerializer(ProposalActionsSerializer):
+    class Meta:
+        model = Proposal
+        fields = [
+            "reference_number",
+            "pk",  # pk is temp, easier to implement right now, not needed otherwise.
+            "title",
+            "type",
+            "date_modified",
+            "date_submitted",
+            "state_or_decision",
+            "usernames",
+            "my_proposal_actions",
+        ]
 
     date_modified = serializers.SerializerMethodField()
     date_submitted = serializers.SerializerMethodField()
@@ -238,3 +250,18 @@ class ProposalApiSerializer(ModelDisplaySerializer):
             return proposal.get_status_display()
             # get_status_display() does not exist in proposal, why this still works:
             # https://docs.djangoproject.com/en/4.2/ref/models/instances/#django.db.models.Model.get_FOO_display
+
+
+class SupervisedApiSerializer(ProposalApiSerializer):
+    class Meta:
+        model = Proposal
+        fields = [
+            "reference_number",
+            "title",
+            "type",
+            "date_modified",
+            "date_submitted",
+            "state_or_decision",
+            "usernames",
+            "my_supervised_actions",
+        ]

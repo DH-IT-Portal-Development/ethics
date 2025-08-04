@@ -40,7 +40,7 @@ from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
 from studies.models import Documents
 from attachments.models import Attachment, StudyAttachment, ProposalAttachment
-from ..api.views import ProposalApiView
+from ..api.views import ProposalApiView, MySupervisedApiView
 from ..copy import copy_proposal
 from ..forms import (
     ProposalConfirmationForm,
@@ -156,7 +156,7 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
         #    label="",
         # ),
         DDVActions(
-            field="actions",
+            field="my_proposal_actions",
             label=_("Acties"),
         ),
     ]
@@ -165,6 +165,62 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
         context = super().get_context_data(**kwargs)
         context["title"] = self.title
         return context
+
+
+class MySupervisedView(LoginRequiredMixin, DDVListView):
+
+    title = _("Mijn aanvragen als eindverantwoordelijke")
+    template_name = "proposals/proposal_list.html"
+    model = Proposal
+    data_uri = reverse_lazy("proposals:api:my_supervised")
+    data_view = MySupervisedApiView
+    columns = [
+        DDVString(
+            field="reference_number",
+            label="Ref.Num",
+            css_classes="fw-bold text-danger",
+        ),
+        DDVString(
+            field="title",
+            label="",
+        ),
+        DDVString(
+            field="type",
+            label=_("Soort aanvraag"),
+        ),
+        DDVString(
+            field="usernames",
+            label=_("Indieners"),
+        ),
+        DDVString(
+            field="state_or_decision",
+            label=_("Status"),
+        ),
+        DDVString(
+            field="date_modified",
+            label=_("Laatst bijgewerkt"),
+        ),
+        DDVString(
+            field="date_submitted",
+            label=_("Datum ingediend"),
+        ),
+        DDVActions(
+            field="my_supervised_actions",
+            label=_("Acties"),
+        ),
+    ]
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["title"] = self.title
+        return context
+
+    # def get_context_data(self, **kwargs):
+    #    context = super().get_context_data(**kwargs)
+    #    context["data_url"] = reverse(
+    #        "proposals:api:my_supervised",
+    #    )
+    #    return context
 
 
 class MyConceptsView(BaseProposalsView):
@@ -205,23 +261,6 @@ class MyCompletedView(BaseProposalsView):
         context = super().get_context_data(**kwargs)
         context["data_url"] = reverse(
             "proposals:api:my_completed",
-        )
-        return context
-
-
-class MySupervisedView(BaseProposalsView):
-    title = _("Mijn aanvragen als eindverantwoordelijke")
-    body = _(
-        "Dit overzicht toont alle aanvragen waarvan je eindverantwoordelijke " "bent."
-    )
-    is_modifiable = True
-    is_submitted = True
-    contains_supervised = True
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["data_url"] = reverse(
-            "proposals:api:my_supervised",
         )
         return context
 
