@@ -699,7 +699,6 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
             self._stepper = Stepper(self)
         return self._stepper
 
-    #@property removes yellow error, but not sure if this is a property or not
     def continue_url(self):
         stepper = self.stepper
         for item in stepper.items:
@@ -794,7 +793,8 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         return Review.objects.filter(proposal=self).last()
 
     @property
-    def latest_review_pk(self):
+    def latest_review_pk(self): #needed for serializer as you can not use last_review.pk there.
+        # It looks ugly though as it clutters the proposal model.
         from reviews.models import Review
         return Review.objects.filter(proposal=self).last().pk
 

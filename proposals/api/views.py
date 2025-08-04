@@ -41,13 +41,12 @@ class ProposalApiView(LoginRequiredMixin, UUListAPIView):
         "title",
         "reference_number",
         "supervisor__first_name",
-        "supervisor__last_name",  # not in serializer, so where?
+        "supervisor__last_name",
         "applicants__first_name",
         "applicants__last_name",
     ]
     ordering_fields = [
         "reference_number",
-        "title",
         "date_submitted",
         "date_modified",
     ]

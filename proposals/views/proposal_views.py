@@ -130,13 +130,15 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
             label=_("Status"),
         ),
         DDVString(
+            field="date_modified",  # in the old version this is either laatst bijgewerkt or besloten op.
+            # That last interface part is now lost.
+            label=_("Laatst bijgewerkt"),
+        ),
+        DDVString(
             field="date_submitted",
             label=_("Datum ingediend"),
         ),
-        DDVString(
-            field="date_reviewed",  # still wrong I think
-            label=_("Laatst bijgewerkt"),
-        ),
+        # for those reviewing this pr, using this will make it easier.
         # DDVLink(
         #    field="action_go_to_next_step",
         #    label="",

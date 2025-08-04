@@ -128,8 +128,8 @@ class ProposalApiSerializer(ModelDisplaySerializer):
             "pk",  # pk is temp, easier to implement right now, not needed otherwise.
             "title",
             "type",
+            "date_modified",
             "date_submitted",
-            "date_reviewed",
             "state_or_decision",
             "usernames",
             "action_view_pdf",
@@ -199,8 +199,8 @@ class ProposalApiSerializer(ModelDisplaySerializer):
         ]
     )
 
+    date_modified = serializers.SerializerMethodField()
     date_submitted = serializers.SerializerMethodField()
-    date_reviewed = serializers.SerializerMethodField()
 
     state_or_decision = serializers.SerializerMethodField()
     usernames = serializers.SerializerMethodField()
@@ -208,15 +208,15 @@ class ProposalApiSerializer(ModelDisplaySerializer):
     # DDVDate returns 1970 by default so we have to use a DDVString and format the date ourselves
     # incoming format: 2025-04-24T11:59:45.583305+02:00
     @staticmethod
-    def get_date_submitted(proposal: Proposal):
-        if proposal.date_submitted is not None:
-            return proposal.date_submitted.date()
+    def get_date_modified(proposal: Proposal):
+        if proposal.date_modified is not None:
+            return proposal.date_modified.date()
         return ""
 
     @staticmethod
-    def get_date_reviewed(proposal: Proposal):
-        if proposal.date_reviewed is not None:
-            return proposal.date_reviewed.date()
+    def get_date_submitted(proposal: Proposal):
+        if proposal.date_submitted is not None:
+            return proposal.date_submitted.date()
         return ""
 
     @staticmethod
