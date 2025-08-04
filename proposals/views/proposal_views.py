@@ -204,6 +204,14 @@ class MySupervisedView(LoginRequiredMixin, DDVListView):
             field="date_submitted",
             label=_("Datum ingediend"),
         ),
+        DDVString(
+            field="date_submitted_supervised",
+            label=_("date_submitted_supervised"),
+        ),
+        DDVString(
+            field="date_reviewed_supervised",
+            label=_("reviewed supervised"),
+        ),
         DDVActions(
             field="my_supervised_actions",
             label=_("Acties"),

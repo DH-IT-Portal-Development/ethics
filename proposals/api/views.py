@@ -60,7 +60,7 @@ class ProposalApiView(LoginRequiredMixin, UUListAPIView):
 class MySupervisedApiView(LoginRequiredMixin, UUListAPIView):
     serializer_class = SupervisedApiSerializer
     filter_backends = [OrderingFilter, SearchFilter, filters.DjangoFilterBackend]
-    filterset_class = ProposalFilterSet
+    filterset_class = filters.FilterSet
     search_fields = [
         "title",
         "reference_number",
@@ -73,6 +73,7 @@ class MySupervisedApiView(LoginRequiredMixin, UUListAPIView):
         "reference_number",
         "date_submitted",
         "date_modified",
+        "date_submitted_supervisor",
     ]
     ordering = "date_submitted_supervisor"  # desc is removed compared to old UI, does not seem to be a thing
 

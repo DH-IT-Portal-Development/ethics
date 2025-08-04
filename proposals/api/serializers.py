@@ -169,10 +169,12 @@ class ProposalActionsSerializer(ModelDisplaySerializer):
     )
 
     action_make_decision = DDVLinkField(
-        text=_("Maak revisie"),
+        text=_("Aanvraag beoordelen"),
         link="reviews:decide",  # there is also a decide new in urls, what is the differnce?
-        link_attr="pk",  # probably wrong pk
-        check=lambda proposal: ProposalActions.action_allowed_make_decision(proposal),
+        link_attr="pk",  # wrong pk, I need the pk of the review that is linke to the proposal
+        check=lambda proposal: ProposalActions.action_allowed_make_supervise_decision(
+            proposal
+        ),
     )
 
     # DDVActionsField description is inaccurate, there always need to be at least one option.
@@ -263,5 +265,7 @@ class SupervisedApiSerializer(ProposalApiSerializer):
             "date_submitted",
             "state_or_decision",
             "usernames",
+            "date_submitted_supervisor",
+            "date_reviewed_supervisor",
             "my_supervised_actions",
         ]

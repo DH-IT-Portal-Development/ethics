@@ -26,6 +26,7 @@ import datetime
 """
 
 
+# Does not check user permissions as of now
 class ProposalActions:
     is_modifiable = False  # should be true when DRAFT OR (supervised & submitted), no access to supervision from serializer.
 
@@ -70,17 +71,10 @@ class ProposalActions:
 
     # This should be moved to Review Actions later on. The decision is about a Review
     # though it has a proposal parameter right now so still unsure.
-    # also there already seems to a methid in review actions but not sure how to convert that to something the serializer can read yet
+    # also there already seems to a method in review actions but not sure how to convert that to something the serializer can read yet
 
-    # for supervizedview later
-    # actions_make_decision = DDVLinkField(
-    # text="decide",
-    # link="reviews:decide",
-    #  link_attr="latest_review_pk",  # This shows a review pk but an incorrect one.
-    #   check=lambda proposal: ProposalActions.action_allowed_make_decision(proposal),
-    # )
     @staticmethod
-    def action_allowed_make_decision(proposal: Proposal):
+    def action_allowed_make_supervise_decision(proposal: Proposal):
         # if_supervised return true
         check = lambda o: o.status == Proposal.Statuses.SUBMITTED_TO_SUPERVISOR
         return check(proposal)
