@@ -15,7 +15,7 @@ import datetime
         <img src="{{ img_next }}" title="Naar volgende stap">
         <img src="{{ img_diff }}" title="Toon verschillen">
         <img src="{{ img_delete }}" title="Verwijderen">
-     {% if submitted %} #this also somehow shows the state, not status, and submitted is a status
+     {% if submitted %} 
         <img src="{{ img_pdf }}" title="Inzien">
         <img src="{{ img_revise }}" title="Maak revisie">
       {% if supervised %}
@@ -38,16 +38,15 @@ class ProposalActions:
     # still need to be separate.
 
     @staticmethod
-    def action_allowed_go_to_next_step(proposal: Proposal):
+    def action_allowed_edit(proposal: Proposal):
         # if_modifiable return true
         return proposal.status == Proposal.Statuses.DRAFT
 
-    # to do
     @staticmethod
     def action_allowed_show_difference(proposal: Proposal):
-        # if_modifiable return true, just modifiable doesn´t sound correct
+        # if_modifiable return true
         if proposal.is_revision:  # amendment_or_revision is also an option?
-            return True  # we still do not know the pk of the proposal that this proposal ia s revision off.
+            return True
         return False
 
     @staticmethod
@@ -59,8 +58,6 @@ class ProposalActions:
     @staticmethod
     def action_allowed_make_revision(proposal: Proposal):
         # if_submitted return true
-        # check = lambda o: o.status == Proposal.Statuses.DECISION_MADE
-        # return check(proposal)
         return proposal.is_revisable
 
     @staticmethod

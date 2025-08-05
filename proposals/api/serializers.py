@@ -120,7 +120,7 @@ class ProposalSerializer(ProposalInlineSerializer):
         return None
 
 
-class ProposalActionsSerializer(ModelDisplaySerializer):
+class DDVProposalSerializer(ModelDisplaySerializer):
     # A small DDV explanation:
     # link_attr= variable in the model. For example proposal.pk is used in action_view_pdf.
     # the lambda function which we give also uses the model object parameter
@@ -147,11 +147,11 @@ class ProposalActionsSerializer(ModelDisplaySerializer):
         check=lambda proposal: ProposalActions.action_allowed_show_difference(proposal),
     )
 
-    action_go_to_next_step = DDVLinkField(
+    action_edit = DDVLinkField(
         text=_("Naar volgende stap"),
         link="proposals:update",
         link_attr="pk",
-        check=lambda proposal: ProposalActions.action_allowed_go_to_next_step(proposal),
+        check=lambda proposal: ProposalActions.action_allowed_edit(proposal),
     )
 
     action_delete = DDVLinkField(
@@ -168,21 +168,26 @@ class ProposalActionsSerializer(ModelDisplaySerializer):
         check=lambda proposal: ProposalActions.action_allowed_make_revision(proposal),
     )
 
+    @property
+    def get_action(self) -> DDVActionsField:
+        return DDVProposalSerializer.my_proposal_actions
+
     action_make_decision = DDVLinkField(
         text=_("Aanvraag beoordelen"),
         link="reviews:decide",  # there is also a decide new in urls, what is the differnce?
-        link_attr="pk",  # wrong pk, I need the pk of the review that is linke to the proposal
+        link_attr="pk",  # wrong pk as of now, I need the pk of the review that is linke to the proposal
         check=lambda proposal: ProposalActions.action_allowed_make_supervise_decision(
             proposal
         ),
     )
 
     # DDVActionsField description is inaccurate, there always need to be at least one option.
+    # action_view_pdf_always_available can be used as placeholder until solution found, so likely a permanet solution.
     my_proposal_actions = DDVActionsField(
         [
-            action_view_pdf_always_available,  # placeholder until solution found, so likely a permanent solution.
+            action_view_pdf_always_available,
             action_show_difference,
-            action_go_to_next_step,
+            action_edit,
             action_delete,
             action_make_revision,
         ]
@@ -192,13 +197,13 @@ class ProposalActionsSerializer(ModelDisplaySerializer):
         [
             action_view_pdf_always_available,
             action_show_difference,
-            action_go_to_next_step,
+            action_edit,
             action_make_decision,
         ]
     )
 
 
-class ProposalApiSerializer(ProposalActionsSerializer):
+class ProposalApiSerializer(DDVProposalSerializer):
     class Meta:
         model = Proposal
         fields = [
@@ -265,7 +270,6 @@ class SupervisedApiSerializer(ProposalApiSerializer):
             "date_submitted",
             "state_or_decision",
             "usernames",
-            "date_submitted_supervisor",
-            "date_reviewed_supervisor",
+            "get_latest_review_info",
             "my_supervised_actions",
         ]

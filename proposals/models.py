@@ -20,6 +20,8 @@ from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .utils import FilenameFactory, OverwriteStorage
 from datetime import date, timedelta
 
+from typing import Optional
+
 logger = logging.getLogger(__name__)
 
 SUMMARY_MAX_WORDS = 200
@@ -789,7 +791,6 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
     @property
     def latest_review(self):
         from reviews.models import Review
-
         return Review.objects.filter(proposal=self).last()
 
     @property
@@ -797,6 +798,18 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         # It looks ugly though as it clutters the proposal model.
         from reviews.models import Review
         return Review.objects.filter(proposal=self).last().pk
+
+
+    #I am having trouble finding out what the best way to display info to the supervisor is
+    def get_latest_review_info(self) -> str:
+        from reviews.models import Review
+        review = Review.objects.filter(proposal=self).last()
+        if review is not None:
+            print(f"proposal.get_latest_review_status_display: "+str(review.get_stage_display()))
+            print(f"proposal.get_latest_review_continuations: " + str(review.get_continuation_display()))
+            return review.get_stage_display()
+        print("REVIEW IS NONE")
+        return ""
 
     def enforce_wmo(self):
         """Send proposal back to draft phase with WMO enforced."""

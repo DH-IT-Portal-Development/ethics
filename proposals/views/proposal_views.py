@@ -103,11 +103,6 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
     data_uri = reverse_lazy("proposals:api:my_proposals")
     data_view = ProposalApiView
     columns = [
-        # DDVString(
-        #    field="pk",
-        #    label="pk",
-        #    css_classes="fw-bold text-danger",
-        # ),
         DDVString(
             field="reference_number",
             label="Ref.Num",
@@ -138,23 +133,6 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
             field="date_submitted",
             label=_("Datum ingediend"),
         ),
-        # for those reviewing this pr, using this will make it easier.
-        # DDVLink(
-        #    field="action_go_to_next_step",
-        #    label="",
-        # ),
-        # DDVLink(
-        #    field="action_show_difference",
-        #    label="",
-        # ),
-        # DDVLink(
-        #    field="action_make_revision",
-        #    label="",
-        # ),
-        # DDVLink(
-        #    field="action_delete",
-        #    label="",
-        # ),
         DDVActions(
             field="my_proposal_actions",
             label=_("Acties"),
@@ -205,12 +183,8 @@ class MySupervisedView(LoginRequiredMixin, DDVListView):
             label=_("Datum ingediend"),
         ),
         DDVString(
-            field="date_submitted_supervised",
-            label=_("date_submitted_supervised"),
-        ),
-        DDVString(
-            field="date_reviewed_supervised",
-            label=_("reviewed supervised"),
+            field="get_latest_review_info",
+            label=_("info"),
         ),
         DDVActions(
             field="my_supervised_actions",
@@ -222,13 +196,6 @@ class MySupervisedView(LoginRequiredMixin, DDVListView):
         context = super().get_context_data(**kwargs)
         context["title"] = self.title
         return context
-
-    # def get_context_data(self, **kwargs):
-    #    context = super().get_context_data(**kwargs)
-    #    context["data_url"] = reverse(
-    #        "proposals:api:my_supervised",
-    #    )
-    #    return context
 
 
 class MyConceptsView(BaseProposalsView):
