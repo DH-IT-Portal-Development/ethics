@@ -154,11 +154,6 @@ class MySupervisedView(LoginRequiredMixin, DDVListView):
     data_view = MySupervisedApiView
     columns = [
         DDVString(
-            field="pk",
-            label="Ref.Num",
-            css_classes="fw-bold text-danger",
-        ),
-        DDVString(
             field="reference_number",
             label="Ref.Num",
             css_classes="fw-bold text-danger",
