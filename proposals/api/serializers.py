@@ -121,6 +121,25 @@ class ProposalSerializer(ProposalInlineSerializer):
 
 
 class DDVProposalSerializer(ModelDisplaySerializer):
+    # decision_pk = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_decision_pk(
+        proposal: Proposal,
+    ):  # needed for serializer as you can not use x.pk there.
+        # It looks ugly though as it clutters the proposal model.
+        from reviews.models import Review
+
+        review = Review.objects.filter(proposal=proposal).last()
+        if review is not None:
+            print(f"proposal.get_latest_pk: review: " + str(review))
+            return proposal.pk
+            decision = review.get_available_decision()
+            print(f"proposal.get_latest_pk: decision: " + str(decision))
+            return decision.pk
+        print(f"proposal.get_latest_pk: Review: " + "none")
+        return proposal.pk  # proposal pk placeholder
+
     # A small DDV explanation:
     # link_attr= variable in the model. For example proposal.pk is used in action_view_pdf.
     # the lambda function which we give also uses the model object parameter
@@ -175,7 +194,7 @@ class DDVProposalSerializer(ModelDisplaySerializer):
     action_make_decision = DDVLinkField(
         text=_("Aanvraag beoordelen"),
         link="reviews:decide",  # there is also a decide new in urls, what is the differnce?
-        link_attr="pk",  # wrong pk as of now, I need the pk of the review that is linke to the proposal
+        link_attr="supervisor_decision_pk",  # "latest_review_pk",  # "supervisor_decision_pk",    # "get_decision_pk(this)",  #
         check=lambda proposal: ProposalActions.action_allowed_make_supervise_decision(
             proposal
         ),
@@ -220,7 +239,6 @@ class ProposalApiSerializer(DDVProposalSerializer):
 
     date_modified = serializers.SerializerMethodField()
     date_submitted = serializers.SerializerMethodField()
-
     state_or_decision = serializers.SerializerMethodField()
     usernames = serializers.SerializerMethodField()
 
@@ -252,7 +270,7 @@ class ProposalApiSerializer(DDVProposalSerializer):
         if proposal.status == (
             Proposal.Statuses.DECISION_MADE or Proposal.Statuses.WMO_DECISION_MADE
         ):
-            return proposal.latest_review.get_continuation_display()
+            return proposal.latest_review().get_continuation_display()
         else:
             return proposal.get_status_display()
             # get_status_display() does not exist in proposal, why this still works:
@@ -263,6 +281,7 @@ class SupervisedApiSerializer(ProposalApiSerializer):
     class Meta:
         model = Proposal
         fields = [
+            "pk",
             "reference_number",
             "title",
             "type",
@@ -270,6 +289,21 @@ class SupervisedApiSerializer(ProposalApiSerializer):
             "date_submitted",
             "state_or_decision",
             "usernames",
-            "get_latest_review_info",
+            "info",
             "my_supervised_actions",
         ]
+
+    info = serializers.SerializerMethodField()  # what info though, naming isn´t ideal
+
+    # I am having trouble finding out what the best way to display info to the supervisor is
+    @staticmethod
+    def get_info(proposal: Proposal) -> str:
+        from reviews.models import Review
+
+        review = Review.objects.filter(proposal=proposal).last()
+        if review is not None:
+            # print(f"proposal.get_latest_review_info: status_display: "+ str(review.get_stage_display()))
+            # print(f"proposal.get_latest_review_info: continuations: "+ str(review.get_continuation_display()))
+            return review.get_stage_display()
+        # print("proposal.get_latest_review_info: REVIEW IS NONE")
+        return ""

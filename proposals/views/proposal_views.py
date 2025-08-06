@@ -154,6 +154,11 @@ class MySupervisedView(LoginRequiredMixin, DDVListView):
     data_view = MySupervisedApiView
     columns = [
         DDVString(
+            field="pk",
+            label="Ref.Num",
+            css_classes="fw-bold text-danger",
+        ),
+        DDVString(
             field="reference_number",
             label="Ref.Num",
             css_classes="fw-bold text-danger",
@@ -183,7 +188,7 @@ class MySupervisedView(LoginRequiredMixin, DDVListView):
             label=_("Datum ingediend"),
         ),
         DDVString(
-            field="get_latest_review_info",
+            field="info",
             label=_("info"),
         ),
         DDVActions(
@@ -859,6 +864,7 @@ class ProposalSubmit(
         decide page"""
         if self.is_supervisor_edit_phase() and self.current_user_is_supervisor():
             review = self.object.latest_review()
+            # where does the decision_set come from, query?
             decision = review.decision_set.get(reviewer=self.request.user)
             return reverse("reviews:decide", args=(decision.pk,))
 

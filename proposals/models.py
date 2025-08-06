@@ -788,28 +788,22 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
 
             return self.supervisor_decision()
 
-    @property
     def latest_review(self):
         from reviews.models import Review
         return Review.objects.filter(proposal=self).last()
 
+    """DDV link_attr required a field in the given model, in this case proposal."""
     @property
-    def latest_review_pk(self): #needed for serializer as you can not use last_review.pk there.
-        # It looks ugly though as it clutters the proposal model.
-        from reviews.models import Review
-        return Review.objects.filter(proposal=self).last().pk
-
-
-    #I am having trouble finding out what the best way to display info to the supervisor is
-    def get_latest_review_info(self) -> str:
-        from reviews.models import Review
-        review = Review.objects.filter(proposal=self).last()
+    def supervisor_decision_pk(self):
+        from reviews.models import Decision
+        review = self.latest_review()
         if review is not None:
-            print(f"proposal.get_latest_review_status_display: "+str(review.get_stage_display()))
-            print(f"proposal.get_latest_review_continuations: " + str(review.get_continuation_display()))
-            return review.get_stage_display()
-        print("REVIEW IS NONE")
-        return ""
+            decisions = Decision.objects.filter(review=review)
+            for decision in decisions:
+                if decision.reviewer == self.supervisor:
+                    return decision.pk
+                    #if everything is correct the supervisor has only one decision to make about a review.
+        return None
 
     def enforce_wmo(self):
         """Send proposal back to draft phase with WMO enforced."""
