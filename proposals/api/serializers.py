@@ -157,6 +157,10 @@ class DDVProposalSerializer(ModelDisplaySerializer):
         check=lambda proposal: ProposalActions.action_allowed_edit(proposal),
     )
 
+    action_delete_separator = DDVActionDividerField(
+        check=lambda proposal: ProposalActions.action_allowed_delete(proposal),
+    )
+
     action_delete = DDVLinkField(
         text=_("Verwijderen"),
         link="proposals:delete",
@@ -187,8 +191,9 @@ class DDVProposalSerializer(ModelDisplaySerializer):
             action_view_pdf_always_available,
             action_show_difference,
             action_edit,
-            action_delete,
             action_make_revision,
+            action_delete_separator,
+            action_delete,
         ]
     )
 
@@ -197,8 +202,9 @@ class DDVProposalSerializer(ModelDisplaySerializer):
             action_view_pdf_always_available,
             action_show_difference,
             action_edit,
-            action_delete,
             action_make_decision,
+            action_delete_separator,
+            action_delete,
         ]
     )
 
