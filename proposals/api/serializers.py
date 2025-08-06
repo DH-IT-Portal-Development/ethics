@@ -197,6 +197,7 @@ class DDVProposalSerializer(ModelDisplaySerializer):
             action_view_pdf_always_available,
             action_show_difference,
             action_edit,
+            action_delete,
             action_make_decision,
         ]
     )
