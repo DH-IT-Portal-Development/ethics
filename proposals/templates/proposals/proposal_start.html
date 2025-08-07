@@ -68,16 +68,18 @@
             </p>
             <p>{% trans "Zij helpen je graag!" %}</p>
             {% if is_practice %}
+                <p class="mt-3 mb-3">
+                    <strong>
+                        {% blocktrans trimmed %}
+                            Houd er rekening mee dat een oefenaanvraag niet ingediend kan worden!
+                        {% endblocktrans %}
+                    </strong>
+                </p>
                 <form action="" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <table class="mt-3 mb-3">
                         {{ form.as_table }}
                     </table>
-                    <h4 class="mt-3 mb-3">
-                        {% blocktrans trimmed %}
-                            Houd er rekening mee dat een oefenaanvraag niet ingediend kan worden!
-                        {% endblocktrans %}
-                    </h4>
                     {% include "base/form_buttons.html" %}
                 </form>
             {% else %}
