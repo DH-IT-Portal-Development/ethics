@@ -626,8 +626,8 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
 
     def get_applicants_names(self):
         users = ""
-        for user in self.applicants.all(): #all() has a yellow unresolved attribute
-            #it however still works, any idea how to solve this error?
+        for user in self.applicants.all():  # all() has a yellow unresolved attribute
+            # it however still works, any idea how to solve this error?
             if users != "":
                 users += ", "
             users += user.first_name + " " + user.last_name
@@ -790,19 +790,22 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
 
     def latest_review(self):
         from reviews.models import Review
+
         return Review.objects.filter(proposal=self).last()
 
     """DDV link_attr required a field in the given model, in this case proposal."""
+
     @property
     def supervisor_decision_pk(self):
         from reviews.models import Decision
+
         review = self.latest_review()
         if review is not None:
             decisions = Decision.objects.filter(review=review)
             for decision in decisions:
                 if decision.reviewer == self.supervisor:
                     return decision.pk
-                    #if everything is correct the supervisor has only one decision to make about a review.
+                    # if everything is correct the supervisor has only one decision to make about a review.
         return None
 
     def enforce_wmo(self):
