@@ -21,7 +21,6 @@ from ..models import Proposal
 
 class ProposalFilterSet(filters.FilterSet):
 
-    # can this be rewritten in lambda? If so how?
     status_choices = Proposal.Statuses.choices
     for choice in status_choices:
         if choice[0] == 60:
@@ -62,8 +61,6 @@ class ProposalApiView(LoginRequiredMixin, UUListAPIView):
 class MyPracticeApiView(ProposalApiView):
     """Gets all practise applications including supervisor."""
 
-    # action buttons for supervisor practise applications are wrong.
-    # Decide button is not there as base proposal is taken, not sure what to do yet.
     def get_queryset(self):
         """Returns all practice Proposals for the current User"""
         return Proposal.objects.filter(

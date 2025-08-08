@@ -170,8 +170,7 @@ class DDVProposalSerializer(ModelDisplaySerializer):
 
     action_make_revision = DDVLinkField(
         text=_("Maak revisie"),
-        link="proposals:copy",  # there is also a copy revison and copy amendment,
-        # not sure when those two are supposed to be shown
+        link="proposals:copy",
         check=lambda proposal: ProposalActions.action_allowed_make_revision(proposal),
     )
 
@@ -185,7 +184,7 @@ class DDVProposalSerializer(ModelDisplaySerializer):
     )
 
     # DDVActionsField description is inaccurate, there always need to be at least one option.
-    # action_view_pdf_always_available can be used as placeholder until solution found, so likely a permanet solution.
+    # action_view_pdf_always_available can be used as placeholder until solution found, so likely a permanent solution.
     my_proposal_actions = DDVActionsField(
         [
             action_view_pdf_always_available,
@@ -227,7 +226,6 @@ class DDVProposalSerializer(ModelDisplaySerializer):
             return proposal.date_submitted.date()
         return ""
 
-    # logic works but unsure if it should be in the serializer
     @staticmethod
     def get_state_or_decision(proposal: Proposal):
         if proposal.status == (
@@ -276,7 +274,6 @@ class SupervisedApiSerializer(DDVProposalSerializer):
 
     info = serializers.SerializerMethodField()
 
-    # I am having trouble finding out what info best to display to the supervisor
     @staticmethod
     def get_info(proposal: Proposal) -> str:
         review = proposal.latest_review()

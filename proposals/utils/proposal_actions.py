@@ -9,33 +9,8 @@ from reviews.models import Review, Decision
 
 import datetime
 
-# actiontree, implementation in proosal_actions.py
-"""
-    {% if modifiable %}
-        <img src="{{ img_next }}" title="Naar volgende stap">
-        <img src="{{ img_diff }}" title="Toon verschillen">
-        <img src="{{ img_delete }}" title="Verwijderen">
-     {% if submitted %} 
-        <img src="{{ img_pdf }}" title="Inzien">
-        <img src="{{ img_revise }}" title="Maak revisie">
-      {% if supervised %}
-          <img src="{{ img_decide }}" title="Beslissen">
-       {% if is_secretary %}
-             <img src="{{ img_hide }}" title="Verbergen">
-               <img src="{{ img_add }}" title="Toevoegen">
-"""
 
-
-# Does not check user permissions as of now
 class ProposalActions:
-    is_modifiable = False  # should be true when DRAFT OR (supervised & submitted), no access to supervision from serializer.
-
-    # Needs to give a callable function to serializers. Either with a function or a __call__. Not sure what
-    # works best yet
-
-    # the serializer does not have acces to user, but these functions without a user variable are weird as well.
-    # user validation may also not be the responsibility of a serializer, in that case supervised and normal view
-    # still need to be separate.
 
     @staticmethod
     def action_allowed_edit(proposal: Proposal):

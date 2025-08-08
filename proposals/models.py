@@ -19,9 +19,6 @@ from main.models import YesNoDoubt
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .utils import FilenameFactory, OverwriteStorage
 from datetime import date, timedelta
-
-from typing import Optional
-
 logger = logging.getLogger(__name__)
 
 SUMMARY_MAX_WORDS = 200
@@ -626,8 +623,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
 
     def get_applicants_names(self):
         users = ""
-        for user in self.applicants.all():  # all() has a yellow unresolved attribute
-            # it however still works, any idea how to solve this error?
+        for user in self.applicants.all():
             if users != "":
                 users += ", "
             users += user.first_name + " " + user.last_name
@@ -805,7 +801,6 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
             for decision in decisions:
                 if decision.reviewer == self.supervisor:
                     return decision.pk
-                    # if everything is correct the supervisor has only one decision to make about a review.
         return None
 
     def enforce_wmo(self):
