@@ -40,7 +40,7 @@ from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
 from studies.models import Documents
 from attachments.models import Attachment, StudyAttachment, ProposalAttachment
-from ..api.views import ProposalApiView, MySupervisedApiView
+from ..api.views import ProposalApiView, MySupervisedApiView, MyPracticeApiView
 from ..copy import copy_proposal
 from ..forms import (
     ProposalConfirmationForm,
@@ -145,13 +145,25 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
         return context
 
 
-class MySupervisedView(LoginRequiredMixin, DDVListView):
+class MyPracticeView(MyProposalsView):
+    title = _("Mijn oefenaanvragen")
+    data_uri = reverse_lazy("proposals:api:my_practice")
+    data_view = MyPracticeApiView
 
+
+class MySupervisedView(MyProposalsView):
     title = _("Mijn aanvragen als eindverantwoordelijke")
-    template_name = "proposals/proposal_list.html"
-    model = Proposal
     data_uri = reverse_lazy("proposals:api:my_supervised")
     data_view = MySupervisedApiView
+    # I do want to do something like below to avoid duplicate DDVcolumns but I can not get it to work
+    # the subclass does not seem to know the superclass variable if they are class variables.
+    # I have a simular problem in the serializer, if there is someone who might know a solution please say so.
+    # columns.append(
+    #    DDVActions(
+    #        field="my_supervised_actions",
+    #        label=_("Acties"),
+    #    ),
+    # )
     columns = [
         DDVString(
             field="reference_number",
@@ -192,11 +204,6 @@ class MySupervisedView(LoginRequiredMixin, DDVListView):
         ),
     ]
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["title"] = self.title
-        return context
-
 
 class MyConceptsView(BaseProposalsView):
     title = _("Mijn conceptaanvragen")
@@ -236,23 +243,6 @@ class MyCompletedView(BaseProposalsView):
         context = super().get_context_data(**kwargs)
         context["data_url"] = reverse(
             "proposals:api:my_completed",
-        )
-        return context
-
-
-class MyPracticeView(BaseProposalsView):
-    title = _("Mijn oefenaanvragen")
-    body = _(
-        "Dit overzicht toont alle oefenaanvragen waar je als student, \
-onderzoeker of eindverantwoordelijke bij betrokken bent."
-    )
-    is_modifiable = True
-    is_submitted = False
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["data_url"] = reverse(
-            "proposals:api:my_practice",
         )
         return context
 

@@ -20,7 +20,6 @@ from ..models import Proposal
 
 
 class ProposalFilterSet(filters.FilterSet):
-    # TODO: my supervisod, my practice
 
     # can this be rewritten in lambda? If so how?
     status_choices = Proposal.Statuses.choices
@@ -54,28 +53,34 @@ class ProposalApiView(LoginRequiredMixin, UUListAPIView):
     ordering = ["-date_modified"]
 
     def get_queryset(self):
-        return Proposal.objects.filter(applicants=self.request.user)
+        return Proposal.objects.filter(
+            Q(applicants=self.request.user),
+            Q(in_course=False) & Q(is_exploration=False),
+        )
 
 
-class MySupervisedApiView(LoginRequiredMixin, UUListAPIView):
+class MyPracticeApiView(ProposalApiView):
+    """Gets all practise applications including supervisor."""
+
+    # action buttons for supervisor practise applications are wrong.
+    # Decide button is not there as base proposal is taken, not sure what to do yet.
+    def get_queryset(self):
+        """Returns all practice Proposals for the current User"""
+        return Proposal.objects.filter(
+            Q(in_course=True) | Q(is_exploration=True),
+            Q(applicants=self.request.user) | Q(supervisor=self.request.user),
+        )
+
+
+class MySupervisedApiView(ProposalApiView):
     serializer_class = SupervisedApiSerializer
-    filter_backends = [OrderingFilter, SearchFilter, filters.DjangoFilterBackend]
-    filterset_class = filters.FilterSet
-    search_fields = [
-        "title",
-        "reference_number",
-        "supervisor__first_name",
-        "supervisor__last_name",
-        "applicants__first_name",
-        "applicants__last_name",
-    ]
     ordering_fields = [
         "reference_number",
         "date_submitted",
         "date_modified",
         "date_submitted_supervisor",
     ]
-    ordering = "date_submitted_supervisor"  # desc is removed compared to old UI, does not seem to be a thing
+    ordering = "date_submitted_supervisor"
 
     def get_queryset(self):
         """Returns all Proposals supervised by the current User"""
@@ -172,19 +177,6 @@ class MyCompletedApiView(BaseProposalsApiView):
         """Returns all completed Proposals for the current User"""
         return self.get_my_proposals().filter(
             status__gte=Proposal.Statuses.DECISION_MADE
-        )
-
-
-class MyPracticeApiView(BaseProposalsApiView):
-    sort_definitions = [
-        FancyListApiView.SortDefinition("date_modified", _("Laatst bijgewerkt")),
-    ]
-
-    def get_queryset(self):
-        """Returns all practice Proposals for the current User"""
-        return Proposal.objects.filter(
-            Q(in_course=True) | Q(is_exploration=True),
-            Q(applicants=self.request.user) | Q(supervisor=self.request.user),
         )
 
 
