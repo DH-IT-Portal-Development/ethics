@@ -125,8 +125,7 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
             label=_("Status"),
         ),
         DDVString(
-            field="date_modified",  # in the old version this is either laatst bijgewerkt or besloten op.
-            # That last interface part is now lost.
+            field="date_modified",
             label=_("Laatst bijgewerkt"),
         ),
         DDVString(
@@ -155,15 +154,6 @@ class MySupervisedView(MyProposalsView):
     title = _("Mijn aanvragen als eindverantwoordelijke")
     data_uri = reverse_lazy("proposals:api:my_supervised")
     data_view = MySupervisedApiView
-    # I do want to do something like below to avoid duplicate DDVcolumns but I can not get it to work
-    # the subclass does not seem to know the superclass variable if they are class variables.
-    # I have a simular problem in the serializer, if there is someone who might know a solution please say so.
-    # columns.append(
-    #    DDVActions(
-    #        field="my_supervised_actions",
-    #        label=_("Acties"),
-    #    ),
-    # )
     columns = [
         DDVString(
             field="reference_number",
@@ -849,7 +839,6 @@ class ProposalSubmit(
         decide page"""
         if self.is_supervisor_edit_phase() and self.current_user_is_supervisor():
             review = self.object.latest_review()
-            # where does the decision_set come from, query?
             decision = review.decision_set.get(reviewer=self.request.user)
             return reverse("reviews:decide", args=(decision.pk,))
 
