@@ -1,13 +1,13 @@
 from rest_framework import serializers
 from django.utils.translation import gettext_lazy as _
-from main.serializers import UserSerializer, UserMinimalSerializer
+from main.serializers import UserSerializer
 from proposals.models import Proposal
 from proposals.utils.proposal_actions import ProposalActions
 from reviews.api.serializers import InlineReviewSerializer, InlineDecisionSerializer
 from cdh.rest.server.serializers import ModelDisplaySerializer
 from rest_framework import (
     serializers,
-)  # am I allowed to do this or should this go through cdh?
+)
 from cdh.vue3.components.uu_list import (
     DDVLinkField,
     DDVActionsField,

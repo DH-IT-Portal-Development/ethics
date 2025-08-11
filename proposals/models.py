@@ -621,7 +621,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         related_name="applicants",
     )
 
-    def get_applicants_names(self):
+    def get_applicants_names(self) -> str:
         users = ""
         for user in self.applicants.all():
             if users != "":
