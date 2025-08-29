@@ -3484,8 +3484,8 @@ msgstr ""
 
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:43
 #: proposals/templates/proposals/vue_templates/proposal_list.html:75
-msgid "Inzien"
-msgstr "Show"
+msgid "PDF Inzien"
+msgstr "Show PDF"
 
 #: proposals/templates/proposals/vue_templates/proposal_archive_list.html:50
 #: proposals/templates/proposals/vue_templates/proposal_list.html:95
@@ -3529,8 +3529,8 @@ msgid "Beslissen"
 msgstr "Decide"
 
 #: proposals/templates/proposals/vue_templates/proposal_list.html:62
-msgid "Naar volgende stap"
-msgstr "To next step"
+msgid "Ga verder"
+msgstr "Continue"
 
 #: proposals/templates/proposals/vue_templates/proposal_list.html:82
 msgid "Verberg"

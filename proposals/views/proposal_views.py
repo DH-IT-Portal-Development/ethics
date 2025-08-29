@@ -121,7 +121,7 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
             label=_("Indieners"),
         ),
         DDVString(
-            field="state_or_decision",
+            field="detailed_state",
             label=_("Status"),
         ),
         DDVString(
@@ -173,7 +173,7 @@ class MySupervisedView(MyProposalsView):
             label=_("Indieners"),
         ),
         DDVString(
-            field="state_or_decision",
+            field="detailed_state",
             label=_("Status"),
         ),
         DDVString(
@@ -185,8 +185,8 @@ class MySupervisedView(MyProposalsView):
             label=_("Datum ingediend"),
         ),
         DDVString(
-            field="info",
-            label=_("info"),
+            field="stage_display",
+            label=_("Stadium"),
         ),
         DDVActions(
             field="my_supervised_actions",

@@ -18,9 +18,7 @@ class ProposalActions:
 
     @staticmethod
     def action_allowed_show_difference(proposal: Proposal):
-        if proposal.is_revision:
-            return True
-        return False
+        return proposal.is_revision
 
     @staticmethod
     def action_allowed_delete(proposal: Proposal):

@@ -129,7 +129,7 @@ class DDVProposalSerializer(ModelDisplaySerializer):
     # the lambda function which we give also uses the model object parameter
     # which is otherwise not available as far as I can see.
     action_view_pdf = DDVLinkField(
-        text=_("Inzien"),
+        text=_("PDF Inzien"),
         link="proposals:pdf",
         link_attr="pk",
         new_tab=True,
@@ -137,7 +137,7 @@ class DDVProposalSerializer(ModelDisplaySerializer):
     )
 
     action_view_pdf_always_available = DDVLinkField(
-        text=_("Inzien"),
+        text=_("PDF Inzien"),
         link="proposals:pdf",
         link_attr="pk",
         new_tab=True,
@@ -151,7 +151,7 @@ class DDVProposalSerializer(ModelDisplaySerializer):
     )
 
     action_edit = DDVLinkField(
-        text=_("Naar volgende stap"),
+        text=_("Ga verder"),
         link="proposals:update",
         link_attr="pk",
         check=lambda proposal: ProposalActions.action_allowed_edit(proposal),
@@ -209,7 +209,7 @@ class DDVProposalSerializer(ModelDisplaySerializer):
 
     date_modified = serializers.SerializerMethodField()
     date_submitted = serializers.SerializerMethodField()
-    state_or_decision = serializers.SerializerMethodField()
+    detailed_state = serializers.SerializerMethodField()
     usernames = serializers.SerializerMethodField()
 
     # DDVDate returns 1970 by default so we have to use a DDVString and format the date ourselves
@@ -227,15 +227,8 @@ class DDVProposalSerializer(ModelDisplaySerializer):
         return ""
 
     @staticmethod
-    def get_state_or_decision(proposal: Proposal):
-        if proposal.status == (
-            Proposal.Statuses.DECISION_MADE or Proposal.Statuses.WMO_DECISION_MADE
-        ):
-            return proposal.latest_review().get_continuation_display()
-        else:
-            return proposal.get_status_display()
-            # get_status_display() does not exist in proposal, why this still works:
-            # https://docs.djangoproject.com/en/4.2/ref/models/instances/#django.db.models.Model.get_FOO_display
+    def get_detailed_state(proposal: Proposal):
+        return proposal.get_detailed_state()
 
     @staticmethod
     def get_usernames(proposal: Proposal) -> str:
@@ -251,7 +244,7 @@ class ProposalApiSerializer(DDVProposalSerializer):
             "type",
             "date_modified",
             "date_submitted",
-            "state_or_decision",
+            "detailed_state",
             "usernames",
             "my_proposal_actions",
         ]
@@ -266,16 +259,16 @@ class SupervisedApiSerializer(DDVProposalSerializer):
             "type",
             "date_modified",
             "date_submitted",
-            "state_or_decision",
+            "detailed_state",
             "usernames",
-            "info",
+            "stage_display",
             "my_supervised_actions",
         ]
 
-    info = serializers.SerializerMethodField()
+    stage_display = serializers.SerializerMethodField()
 
     @staticmethod
-    def get_info(proposal: Proposal) -> str:
+    def get_stage_display(proposal: Proposal) -> str:
         review = proposal.latest_review()
         if review is not None:
             return review.get_stage_display()

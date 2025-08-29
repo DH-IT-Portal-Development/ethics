@@ -431,6 +431,17 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         default=Statuses.DRAFT,
     )
 
+    def get_detailed_state(self) -> str:
+        # state == status, we just have the dutch version of state in proposal for some reason.
+        if self.status == (
+            Proposal.Statuses.DECISION_MADE or Proposal.Statuses.WMO_DECISION_MADE
+        ):
+            return self.latest_review().get_continuation_display()
+        else:
+            return self.get_status_display()
+            # get_status_display() does not exist in proposal, why this still works:
+            # https://docs.djangoproject.com/en/4.2/ref/models/instances/#django.db.models.Model.get_FOO_display
+
     status_review = models.BooleanField(
         default=None,
         null=True,
@@ -784,24 +795,16 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
 
             return self.supervisor_decision()
 
+    """DDV link_attr required a field in the given model, in this case proposal."""
+    @property
+    def supervisor_decision_pk(self):
+        supervisor_decision = self.supervisor_decision()
+        return supervisor_decision.pk
+
     def latest_review(self):
         from reviews.models import Review
 
         return Review.objects.filter(proposal=self).last()
-
-    """DDV link_attr required a field in the given model, in this case proposal."""
-
-    @property
-    def supervisor_decision_pk(self):
-        from reviews.models import Decision
-
-        review = self.latest_review()
-        if review is not None:
-            decisions = Decision.objects.filter(review=review)
-            for decision in decisions:
-                if decision.reviewer == self.supervisor:
-                    return decision.pk
-        return None
 
     def enforce_wmo(self):
         """Send proposal back to draft phase with WMO enforced."""
