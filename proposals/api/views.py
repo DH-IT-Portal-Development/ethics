@@ -21,14 +21,15 @@ from ..models import Proposal
 
 class ProposalFilterSet(filters.FilterSet):
 
-    status_choices = Proposal.Statuses.choices
-    for choice in status_choices:
-        if choice[0] == 60:
-            status_choices.remove(choice)
+    # WMO_Decision_made is no longer in use.
     status = filters.MultipleChoiceFilter(
         label="Status",
         field_name="status",
-        choices=status_choices,
+        choices=[
+            choice
+            for choice in Proposal.Statuses.choices
+            if choice[0] != Proposal.Statuses.WMO_DECISION_MADE.value
+        ],
     )
 
 
@@ -61,6 +62,7 @@ class ProposalApiView(LoginRequiredMixin, UUListAPIView):
 class MyPracticeApiView(ProposalApiView):
     """Gets all practise applications including supervisor."""
 
+    # practicse proposals for supervisor currently do appear in MySupervised.
     def get_queryset(self):
         """Returns all practice Proposals for the current User"""
         return Proposal.objects.filter(

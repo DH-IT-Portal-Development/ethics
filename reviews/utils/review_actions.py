@@ -9,7 +9,6 @@ from reviews.models import Review, Decision
 import datetime
 
 
-# revviewactions are here
 class ReviewActions:
     def __init__(self, review, user):
         self.review = review

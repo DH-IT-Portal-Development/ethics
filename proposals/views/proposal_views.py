@@ -842,7 +842,7 @@ class ProposalSubmit(
             decision = review.decision_set.get(reviewer=self.request.user)
             return reverse("reviews:decide", args=(decision.pk,))
 
-        return reverse("proposals:my_archive", args=(self.object.pk,))
+        return reverse("proposals:submitted", args=(self.object.pk,))
 
     def get_back_url(self):
         """Return to the data management view"""

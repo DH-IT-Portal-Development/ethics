@@ -637,7 +637,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         for user in self.applicants.all():
             if users != "":
                 users += ", "
-            users += user.first_name + " " + user.last_name
+            users += user.get_full_name()
         return users
 
     supervisor = models.ForeignKey(
