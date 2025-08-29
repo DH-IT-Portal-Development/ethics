@@ -136,13 +136,6 @@ class DDVProposalSerializer(ModelDisplaySerializer):
         check=lambda proposal: ProposalActions.action_allowed_view_pdf(proposal),
     )
 
-    action_view_pdf_always_available = DDVLinkField(
-        text=_("PDF Inzien"),
-        link="proposals:pdf",
-        link_attr="pk",
-        new_tab=True,
-    )
-
     action_show_difference = DDVLinkField(
         text=_("Toon Verschillen"),
         link="proposals:diff",
@@ -187,7 +180,7 @@ class DDVProposalSerializer(ModelDisplaySerializer):
     # action_view_pdf_always_available can be used as placeholder until solution found, so likely a permanent solution.
     my_proposal_actions = DDVActionsField(
         [
-            action_view_pdf_always_available,
+            action_view_pdf,
             action_show_difference,
             action_edit,
             action_make_revision,
@@ -198,7 +191,7 @@ class DDVProposalSerializer(ModelDisplaySerializer):
 
     my_supervised_actions = DDVActionsField(
         [
-            action_view_pdf_always_available,
+            action_view_pdf,
             action_show_difference,
             action_edit,
             action_make_decision,

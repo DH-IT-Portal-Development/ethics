@@ -30,7 +30,7 @@ class ProposalActions:
 
     @staticmethod
     def action_allowed_view_pdf(proposal: Proposal):
-        return proposal.status == Proposal.Statuses.SUBMITTED
+        return proposal.status != Proposal.Statuses.DRAFT
 
     @staticmethod
     def action_allowed_make_supervise_decision(proposal: Proposal):
