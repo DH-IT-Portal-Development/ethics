@@ -19,6 +19,8 @@ from main.models import YesNoDoubt
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .utils import FilenameFactory, OverwriteStorage
 from datetime import date, timedelta
+from typing import Optional
+
 logger = logging.getLogger(__name__)
 
 SUMMARY_MAX_WORDS = 200
@@ -148,6 +150,7 @@ class ProposalQuerySet(models.QuerySet):
 class Proposal(models.Model):
     objects = ProposalQuerySet.as_manager()
 
+    #Integers are used in >= expressions. Changing the integers also changes their behaviour.
     class Statuses(models.IntegerChoices):
         DRAFT = 1, _("Concept")
         SUBMITTED_TO_SUPERVISOR = 40, _(
@@ -433,9 +436,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
 
     def get_detailed_state(self) -> str:
         # state == status, we just have the dutch version of state in proposal for some reason.
-        if self.status == (
-            Proposal.Statuses.DECISION_MADE or Proposal.Statuses.WMO_DECISION_MADE
-        ):
+        if self.status >= Proposal.Statuses.DECISION_MADE:
             return self.latest_review().get_continuation_display()
         else:
             return self.get_status_display()
@@ -506,7 +507,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
     date_modified = models.DateTimeField(auto_now=True)
     date_submitted_supervisor = models.DateTimeField(null=True)
     date_reviewed_supervisor = models.DateTimeField(null=True)
-    date_submitted = models.DateTimeField(null=True)
+    date_submitted = models.DateTimeField(null=True) #to committee, supervisor is separate.
     date_reviewed = models.DateTimeField(null=True)
     date_confirmed = models.DateField(
         _("Datum bevestigingsbrief verstuurd"),

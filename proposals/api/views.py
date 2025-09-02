@@ -62,7 +62,7 @@ class ProposalApiView(LoginRequiredMixin, UUListAPIView):
 class MyPracticeApiView(ProposalApiView):
     """Gets all practise applications including supervisor."""
 
-    # practicse proposals for supervisor currently do appear in MySupervised.
+    # practise proposals for supervisor currently do appear in MySupervised instead of in practise.
     def get_queryset(self):
         """Returns all practice Proposals for the current User"""
         return Proposal.objects.filter(
