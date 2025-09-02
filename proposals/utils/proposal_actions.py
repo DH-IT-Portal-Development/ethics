@@ -74,7 +74,7 @@ class ProposalActions:
         else:
             return "Laatst bijgewerkt: " + str(proposal.date_modified.date())
 
-    # original info but not sure where to fit this yet.
+    # this is original info but not sure where to fit this yet and if I want to add this at all.
     @staticmethod
     def route_info(proposal: Proposal):
         if (
