@@ -176,8 +176,8 @@ class DDVProposalSerializer(ModelDisplaySerializer):
         ),
     )
 
-    # DDVActionsField description is inaccurate, there always need to be at least one option.
-    # action_view_pdf_always_available can be used as placeholder until solution found, so likely a permanent solution.
+    # DDVActionsField description is inaccurate, there always need to be at least one option available.
+    # At least one action needs to pass the check for every proposal.
     my_proposal_actions = DDVActionsField(
         [
             action_view_pdf,

@@ -96,6 +96,42 @@ class BaseProposalsView(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
+class PrelabeledDDVColumn:
+    reference_number = DDVString(
+        field="reference_number",
+        label="Ref.Num",
+        css_classes="fw-bold text-danger",
+    )
+    title = DDVString(
+        field="title",
+        label="",
+    )
+    type = DDVString(
+        field="type",
+        label=_("Soort aanvraag"),
+    )
+    usernames = DDVString(
+        field="usernames",
+        label=_("Indieners"),
+    )
+    detailed_state = DDVString(
+        field="detailed_state",
+        label=_("Status"),
+    )
+    date_modified = DDVString(
+        field="date_modified",
+        label=_("Laatst bijgewerkt"),
+    )
+    date_submitted = DDVString(
+        field="date_submitted",
+        label=_("Datum ingediend"),
+    )
+    stage_display = DDVString(
+        field="stage_display",
+        label=_("Stadium"),
+    )
+
+
 class MyProposalsView(LoginRequiredMixin, DDVListView):
     title = _("Mijn aanvragen")
     template_name = "proposals/proposal_list.html"
@@ -103,35 +139,13 @@ class MyProposalsView(LoginRequiredMixin, DDVListView):
     data_uri = reverse_lazy("proposals:api:my_proposals")
     data_view = ProposalApiView
     columns = [
-        DDVString(
-            field="reference_number",
-            label="Ref.Num",
-            css_classes="fw-bold text-danger",
-        ),
-        DDVString(
-            field="title",
-            label="",
-        ),
-        DDVString(
-            field="type",
-            label=_("Soort aanvraag"),
-        ),
-        DDVString(
-            field="usernames",
-            label=_("Indieners"),
-        ),
-        DDVString(
-            field="detailed_state",
-            label=_("Status"),
-        ),
-        DDVString(
-            field="date_modified",
-            label=_("Laatst bijgewerkt"),
-        ),
-        DDVString(
-            field="date_submitted",
-            label=_("Datum ingediend"),
-        ),
+        PrelabeledDDVColumn.reference_number,
+        PrelabeledDDVColumn.title,
+        PrelabeledDDVColumn.type,
+        PrelabeledDDVColumn.usernames,
+        PrelabeledDDVColumn.detailed_state,
+        PrelabeledDDVColumn.date_modified,
+        PrelabeledDDVColumn.date_submitted,
         DDVActions(
             field="my_proposal_actions",
             label=_("Acties"),
@@ -155,39 +169,14 @@ class MySupervisedView(MyProposalsView):
     data_uri = reverse_lazy("proposals:api:my_supervised")
     data_view = MySupervisedApiView
     columns = [
-        DDVString(
-            field="reference_number",
-            label="Ref.Num",
-            css_classes="fw-bold text-danger",
-        ),
-        DDVString(
-            field="title",
-            label="",
-        ),
-        DDVString(
-            field="type",
-            label=_("Soort aanvraag"),
-        ),
-        DDVString(
-            field="usernames",
-            label=_("Indieners"),
-        ),
-        DDVString(
-            field="detailed_state",
-            label=_("Status"),
-        ),
-        DDVString(
-            field="date_modified",
-            label=_("Laatst bijgewerkt"),
-        ),
-        DDVString(
-            field="date_submitted",
-            label=_("Datum ingediend"),
-        ),
-        DDVString(
-            field="stage_display",
-            label=_("Stadium"),
-        ),
+        PrelabeledDDVColumn.reference_number,
+        PrelabeledDDVColumn.title,
+        PrelabeledDDVColumn.type,
+        PrelabeledDDVColumn.usernames,
+        PrelabeledDDVColumn.detailed_state,
+        PrelabeledDDVColumn.date_modified,
+        PrelabeledDDVColumn.date_submitted,
+        PrelabeledDDVColumn.stage_display,
         DDVActions(
             field="my_supervised_actions",
             label=_("Acties"),
