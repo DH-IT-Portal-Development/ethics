@@ -200,6 +200,12 @@ class DDVProposalSerializer(ModelDisplaySerializer):
         ]
     )
 
+    my_secretary_actions = DDVActionsField(
+        [
+            action_view_pdf,
+        ]
+    )
+
     date_modified = serializers.SerializerMethodField()
     date_submitted = serializers.SerializerMethodField()
     detailed_state = serializers.SerializerMethodField()
@@ -267,4 +273,29 @@ class SupervisedApiSerializer(DDVProposalSerializer):
         review = proposal.latest_review()
         if review is not None:
             return review.get_stage_display()
+        return ""
+
+
+class SecretaryApiSerializer(DDVProposalSerializer):
+    class Meta:
+        model = Proposal
+        field = [
+            "reference_number",
+            "title",
+            "type",
+            "date_modified",
+            "date_submitted",
+            "detailed_state",
+            "usernames",
+            "supervisor_name",
+            "my_secretary_actions",
+        ]
+
+    # own user and supervisor view do not need supervisor displayed
+    supervisor_name = serializers.SerializerMethodField()
+
+    @staticmethod
+    def get_supervisor_name(proposal: Proposal) -> str:
+        if proposal.supervisor:
+            return "Promotor/Begeleider" + proposal.supervisor.fullname
         return ""
