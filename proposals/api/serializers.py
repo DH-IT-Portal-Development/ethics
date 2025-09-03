@@ -122,7 +122,8 @@ class ProposalSerializer(ProposalInlineSerializer):
 
 class DDVProposalSerializer(ModelDisplaySerializer):
     """DDVProposalSerializer does not implement the Meta class,
-    a requirement since this class inherits ModelDisplaySerializer"""
+    a requirement since this class inherits ModelDisplaySerializer, a subclass should implement it
+    """
 
     # A small DDV explanation:
     # link_attr= variable in the model. For example proposal.pk is used in action_view_pdf.
