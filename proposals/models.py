@@ -150,7 +150,7 @@ class ProposalQuerySet(models.QuerySet):
 class Proposal(models.Model):
     objects = ProposalQuerySet.as_manager()
 
-    #Integers are used in >= expressions. Changing the integers also changes their behaviour.
+    # Integers are used in >= expressions. Changing the integers also changes their behaviour.
     class Statuses(models.IntegerChoices):
         DRAFT = 1, _("Concept")
         SUBMITTED_TO_SUPERVISOR = 40, _(
@@ -507,7 +507,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
     date_modified = models.DateTimeField(auto_now=True)
     date_submitted_supervisor = models.DateTimeField(null=True)
     date_reviewed_supervisor = models.DateTimeField(null=True)
-    date_submitted = models.DateTimeField(null=True) #to committee, supervisor is separate.
+    date_submitted = models.DateTimeField(null=True)
+    # date_submitted to committee
     date_reviewed = models.DateTimeField(null=True)
     date_confirmed = models.DateField(
         _("Datum bevestigingsbrief verstuurd"),
@@ -797,6 +798,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
             return self.supervisor_decision()
 
     """DDV link_attr required a field in the given model, in this case proposal."""
+
     @property
     def supervisor_decision_pk(self):
         supervisor_decision = self.supervisor_decision()
