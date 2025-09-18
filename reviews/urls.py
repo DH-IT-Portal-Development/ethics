@@ -27,7 +27,9 @@ app_name = "reviews"
 urlpatterns = [
     path("api/", include("reviews.api.urls", namespace="api")),
     path("<str:committee>/", DecisionListView.as_view(), name="my_archive"),
-    path("<str:committee>/all/", AllProposalReviewsView.as_view(), name="archive"),
+    path(
+        "<str:committee>/all/", AllProposalReviewsView.as_view(), name="archive"
+    ),  # MySecretaryView should be here
     path("<str:committee>/my_open/", DecisionMyOpenView.as_view(), name="my_open"),
     path("<str:committee>/open_decisions/", DecisionOpenView.as_view(), name="open"),
     path(

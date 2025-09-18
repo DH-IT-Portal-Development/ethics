@@ -3,11 +3,8 @@ from django.urls import path, include
 from proposals.views.proposal_views import (
     CompareDocumentsView,
     MyConceptsView,
-    MyPracticeView,
     MySubmittedView,
     MyCompletedView,
-    MySupervisedView,
-    MyProposalsView,
     ProposalCreate,
     ProposalUpdate,
     ProposalDelete,
@@ -44,6 +41,11 @@ from proposals.views.proposal_views import (
     TranslatedConsentView,
     ProposalUpdateDateStart,
     ProposalKnowledgeSecurity,
+)
+from proposals.views.ddv_proposal_views import (
+    MyProposalsView,
+    MyPracticeView,
+    MySupervisedView,
 )
 
 from proposals.views.study_views import StudyStart, StudyConsent

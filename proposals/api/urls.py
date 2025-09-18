@@ -5,11 +5,9 @@ from .views import (
     MyConceptsApiView,
     MySubmittedApiView,
     MyCompletedApiView,
-    MySupervisedApiView,
-    MyPracticeApiView,
     MyProposalsApiView,
-    ProposalApiView,
 )
+from .ddv_views import ProposalApiView, MyPracticeApiView, MySupervisedApiView
 
 app_name = "api"
 
