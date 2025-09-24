@@ -2788,7 +2788,7 @@ msgstr "General information about the application"
 msgid ""
 "De beoogde startdatum moet ten minste twee weken na de indieningsdatum van de aanvraag liggen. Is het onderzoek al gestart voordat de FETC-GW formele goedkeuring heeft kunnen afgegeven, dan is alleen een post-hoc advies mogelijk."
 msgstr ""
-"The intended startdate needs to be at least two weeks after the day of submission. If the research has already started before official FETC-GW has been given then only post-hoc approval is possible."
+"The intended start date needs to be at least two weeks after the day of submission. If the research begins before formal FEtC-H approval is granted, only post-hoc approval can be given."
 
 #: proposals/templates/proposals/proposal_list.html:37
 #: proposals/templates/proposals/proposal_private_archive.html:36
