@@ -531,7 +531,7 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
         )
 
     def _get_parent_queryset(self):
-        # Select non-pre-assessments that have been reviewed and approved and
+        # Select proposals that have been reviewed and approved and
         # haven't been parented yet.
         # Those are eligible for amendments
         return (
