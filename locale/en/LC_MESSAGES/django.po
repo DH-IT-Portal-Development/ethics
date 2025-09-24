@@ -2786,13 +2786,9 @@ msgstr "General information about the application"
 
 #: proposals/templates/proposals/proposal_form.html:20
 msgid ""
-"Om officiële goedkeuring van de FETC-GW te ontvangen, moet de beoogde "
-"startdatum ten minste twee weken na de indieningsdatum van de aanvraag "
-"liggen. In andere gevallen is alleen een post-hoc advies mogelijk."
+"De beoogde startdatum moet ten minste twee weken na de indieningsdatum van de aanvraag liggen. Is het onderzoek al gestart voordat de FETC-GW formele goedkeuring heeft kunnen afgegeven, dan is alleen een post-hoc advies mogelijk."
 msgstr ""
-"In order to receive official approval from the FETC-H, the intended start "
-"date must be within two weeks of the day of submission. In other cases, a "
-"post-hoc approval is possible."
+"The intended start date needs to be at least two weeks after the day of submission. If the research begins before formal FEtC-H approval is granted, only post-hoc approval can be given."
 
 #: proposals/templates/proposals/proposal_list.html:37
 #: proposals/templates/proposals/proposal_private_archive.html:36
