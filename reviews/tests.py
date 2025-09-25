@@ -1,4 +1,3 @@
-import datetime
 from datetime import date
 from copy import copy
 
@@ -21,7 +20,7 @@ from proposals.models import Proposal, Relation, Wmo
 from proposals.utils import generate_ref_number
 from studies.models import Study, Compensation, AgeGroup, Registration
 from observations.models import Observation
-from reviews.utils.review_utils import remind_supervisor_reviewers, discontinue_review
+from reviews.utils.review_utils import remind_supervisor_reviewers
 from interventions.models import Intervention
 from tasks.models import Session, Task
 
