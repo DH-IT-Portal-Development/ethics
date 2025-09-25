@@ -167,6 +167,8 @@ class ProposalSubmitTestCase(
         self.refresh()
         # Post-submission tests
         self.assertNotEqual(
+            # if you fail this test then it's a possibility that you have added a new field
+            # ,and you have yet to add proposal test data
             self.proposal.status,
             self.proposal.Statuses.DRAFT,
         )

@@ -195,6 +195,14 @@ gegeven worden; de FETC-GW geeft in die gevallen een post-hoc advies."
         null=True,
     )
 
+    expected_end_date = models.DateField(
+        _(
+            "Wat is de beoogde einddatum waarop het onderzoek, waarvoor deze aanvraag wordt ingediend, verwacht wordt te zijn voltooid?"
+        ),
+        blank=True,
+        null=True,
+    )
+
     title = models.CharField(
         _(
             "Wat is de titel van je aanvraag? Deze titel zal worden gebruikt in "
@@ -254,6 +262,14 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
 
     stakeholders = models.TextField(
         _("Naam en affiliatie van andere betrokkenen"),
+        help_text=_(
+            "Vul s.v.p. de naam en affiliatie (bijv. naam universiteit en "
+            "land) van de niet-UU onderzoeker(s) in. Zie hierboven: het is "
+            "van belang om na te gaan of met deze onderzoeker(s) persoonsgegevens "
+            "van deelnemers gedeeld worden; in dat geval moet je contact opnemen met "
+            "de privacy officer, zeker als deze onderzoeker(s) een "
+            "affiliatie buiten de EU heeft/hebben."
+        ),
         blank=True,
     )
 
