@@ -2992,8 +2992,7 @@ msgstr "Trajectory"
 #: proposals/templates/proposals/proposal_start_practice.html:53
 #: proposals/templates/proposals/study_start.html:68
 msgid ""
-"Als je met verschillende deelnemersgroepen werkt die een verschillend "
-"onderzoekstraject doorlopen waarvoor verschillende documenten nodig zijn."
+"Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende instructies nodig zijn. Dan volgen ze verschillende trajecten en zijn er afzonderlijke documenten nodig."
 msgstr ""
 "When different groups of participants do not complete the same tasks or do "
 "not follow the same instructions during your research, they traverse "
