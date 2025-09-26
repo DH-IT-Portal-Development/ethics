@@ -103,6 +103,60 @@ class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
 
         return context
 
+    def method_name(self, objects):
+        decisions = OrderedDict()
+        dfse_cache = {}  # Decision-for-secretary-exists cache.
+
+        for obj in objects:
+            proposal = obj.review.proposal
+
+            if proposal.pk not in dfse_cache:
+                dfse_cache[proposal.pk] = Decision.objects.filter(
+                    review__proposal=proposal, reviewer=self.request.user
+                ).exists()
+
+            # If there is a decision for this user, but this decision isn't
+            # for this user, skip!
+            # The template handles adding a different button for creating
+            # a new decision for a secretary that doesn't have one yet.
+            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
+                continue
+
+            if proposal.pk not in decisions:
+                decisions[proposal.pk] = obj
+            else:
+                if decisions[proposal.pk].pk < obj.pk:
+                    decisions[proposal.pk] = obj
+
+        return [value for key, value in decisions.items()]
+
+    def method_name2(self, objects):
+        decisions = OrderedDict()
+        dfse_cache = {}  # Decision-for-secretary-exists cache.
+
+        for obj in objects:
+            proposal = obj.review.proposal
+
+            if proposal.pk not in dfse_cache:
+                dfse_cache[proposal.pk] = Decision.objects.filter(
+                    review__proposal=proposal, reviewer=self.request.user
+                ).exists()
+
+            # If there is a decision for this user, but this decision *is*
+            # for this user, skip!
+            # The template handles adding a different button for creating
+            # a new decision for a secretary that doesn't have one yet.
+            if dfse_cache[proposal.pk] and obj.reviewer == self.request.user:
+                continue
+
+            if proposal.pk not in decisions:
+                decisions[proposal.pk] = obj
+            else:
+                if decisions[proposal.pk].pk < obj.pk:
+                    decisions[proposal.pk] = obj
+
+        return [value for key, value in decisions.items()]
+
 
 class MyDecisionsApiView(BaseDecisionApiView):
     def get_default_sort(self) -> Tuple[str, str]:
@@ -135,9 +189,6 @@ class MyDecisionsApiView(BaseDecisionApiView):
 
     def get_queryset_for_secretary(self):
         """Returns all open Decisions of the current User"""
-        decisions = OrderedDict()
-        # Decision-for-secretary-exists cache.
-        dfse_cache = {}
 
         objects = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
@@ -146,28 +197,7 @@ class MyDecisionsApiView(BaseDecisionApiView):
             review__is_committee_review=True,
         )
 
-        for obj in objects:
-            proposal = obj.review.proposal
-
-            if proposal.pk not in dfse_cache:
-                dfse_cache[proposal.pk] = Decision.objects.filter(
-                    review__proposal=proposal, reviewer=self.request.user
-                ).exists()
-
-            # If there is a decision for this user, but this decision isn't
-            # for this user, skip!
-            # The template handles adding a different button for creating
-            # a new decision for a secretary that doesn't have one yet.
-            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
-                continue
-
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
-
-        return [value for key, value in decisions.items()]
+        return self.method_name(objects)
 
 
 class MyOpenDecisionsApiView(BaseDecisionApiView):
@@ -202,9 +232,6 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
 
     def get_queryset_for_secretary(self):
         """Returns all open Decisions of the current User"""
-        decisions = OrderedDict()
-        # Decision-for-secretary-exists cache.
-        dfse_cache = {}
 
         objects = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
@@ -214,28 +241,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
             review__is_committee_review=True,
         )
 
-        for obj in objects:
-            proposal = obj.review.proposal
-
-            if proposal.pk not in dfse_cache:
-                dfse_cache[proposal.pk] = Decision.objects.filter(
-                    review__proposal=proposal, reviewer=self.request.user
-                ).exists()
-
-            # If there is a decision for this user, but this decision isn't
-            # for this user, skip!
-            # The template handles adding a different button for creating
-            # a new decision for a secretary that doesn't have one yet.
-            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
-                continue
-
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
-
-        return [value for key, value in decisions.items()]
+        return self.method_name(objects)
 
 
 class OpenDecisionsApiView(BaseDecisionApiView):
@@ -247,8 +253,6 @@ class OpenDecisionsApiView(BaseDecisionApiView):
 
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
-        # Decision-for-secretary-exists cache.
-        dfse_cache = {}
 
         objects = Decision.objects.filter(
             go="",
@@ -257,29 +261,7 @@ class OpenDecisionsApiView(BaseDecisionApiView):
             review__is_committee_review=True,
         )
 
-        decisions = OrderedDict()
-        for obj in objects:
-            proposal = obj.review.proposal
-
-            if proposal.pk not in dfse_cache:
-                dfse_cache[proposal.pk] = Decision.objects.filter(
-                    review__proposal=proposal, reviewer=self.request.user
-                ).exists()
-
-            # If there is a decision for this user, but this decision *is*
-            # for this user, skip!
-            # The template handles adding a different button for creating
-            # a new decision for a secretary that doesn't have one yet.
-            if dfse_cache[proposal.pk] and obj.reviewer == self.request.user:
-                continue
-
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
-            else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
-
-        return [value for key, value in decisions.items()]
+        return self.method_name2(objects)
 
 
 class OpenSupervisorDecisionApiView(BaseDecisionApiView):
