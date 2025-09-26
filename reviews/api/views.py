@@ -1,3 +1,4 @@
+import collections
 from collections import OrderedDict
 from typing import Tuple
 
@@ -103,59 +104,44 @@ class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
 
         return context
 
-    def method_name(self, objects):
-        decisions = OrderedDict()
+    def method_name(
+        self,
+        decision_queryset: collections.Iterable[Decision],
+        reviewer_is_request_user: bool,
+    ):
+        decisions_dict = OrderedDict()
         dfse_cache = {}  # Decision-for-secretary-exists cache.
 
-        for obj in objects:
-            proposal = obj.review.proposal
+        for decision in decision_queryset:
+            proposal = decision.review.proposal
 
             if proposal.pk not in dfse_cache:
                 dfse_cache[proposal.pk] = Decision.objects.filter(
                     review__proposal=proposal, reviewer=self.request.user
                 ).exists()
 
-            # If there is a decision for this user, but this decision isn't
-            # for this user, skip!
-            # The template handles adding a different button for creating
-            # a new decision for a secretary that doesn't have one yet.
-            if dfse_cache[proposal.pk] and obj.reviewer != self.request.user:
-                continue
-
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
+            if reviewer_is_request_user:
+                # If there is a decision for this user, but this decision *is*
+                # for this user, skip!
+                # The template handles adding a different button for creating
+                # a new decision for a secretary that doesn't have one yet.
+                if dfse_cache[proposal.pk] and decision.reviewer == self.request.user:
+                    continue
             else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
+                # If there is a decision for this user, but this decision isn't
+                # for this user, skip!
+                # The template handles adding a different button for creating
+                # a new decision for a secretary that doesn't have one yet.
+                if dfse_cache[proposal.pk] and decision.reviewer != self.request.user:
+                    continue
 
-        return [value for key, value in decisions.items()]
-
-    def method_name2(self, objects):
-        decisions = OrderedDict()
-        dfse_cache = {}  # Decision-for-secretary-exists cache.
-
-        for obj in objects:
-            proposal = obj.review.proposal
-
-            if proposal.pk not in dfse_cache:
-                dfse_cache[proposal.pk] = Decision.objects.filter(
-                    review__proposal=proposal, reviewer=self.request.user
-                ).exists()
-
-            # If there is a decision for this user, but this decision *is*
-            # for this user, skip!
-            # The template handles adding a different button for creating
-            # a new decision for a secretary that doesn't have one yet.
-            if dfse_cache[proposal.pk] and obj.reviewer == self.request.user:
-                continue
-
-            if proposal.pk not in decisions:
-                decisions[proposal.pk] = obj
+            if proposal.pk not in decisions_dict:
+                decisions_dict[proposal.pk] = decision
             else:
-                if decisions[proposal.pk].pk < obj.pk:
-                    decisions[proposal.pk] = obj
+                if decisions_dict[proposal.pk].pk < decision.pk:
+                    decisions_dict[proposal.pk] = decision
 
-        return [value for key, value in decisions.items()]
+        return [value for key, value in decisions_dict.items()]
 
 
 class MyDecisionsApiView(BaseDecisionApiView):
@@ -176,14 +162,14 @@ class MyDecisionsApiView(BaseDecisionApiView):
     def get_queryset_for_committee(self):
         """Returns all open Decisions of the current User"""
 
-        objects = Decision.objects.filter(
+        decision_queryset = Decision.objects.filter(
             reviewer=self.request.user,
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
             review__is_committee_review=True,
         )
 
-        decisions = return_latest_decisions(objects)
+        decisions = return_latest_decisions(decision_queryset)
 
         return [value for key, value in decisions.items()]
 
@@ -197,7 +183,7 @@ class MyDecisionsApiView(BaseDecisionApiView):
             review__is_committee_review=True,
         )
 
-        return self.method_name(objects)
+        return self.method_name(objects, False)
 
 
 class MyOpenDecisionsApiView(BaseDecisionApiView):
@@ -233,7 +219,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
     def get_queryset_for_secretary(self):
         """Returns all open Decisions of the current User"""
 
-        objects = Decision.objects.filter(
+        decision_queryset = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
             go="",
             review__proposal__reviewing_committee=self.committee,
@@ -241,7 +227,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
             review__is_committee_review=True,
         )
 
-        return self.method_name(objects)
+        return self.method_name(decision_queryset, False)
 
 
 class OpenDecisionsApiView(BaseDecisionApiView):
@@ -254,14 +240,14 @@ class OpenDecisionsApiView(BaseDecisionApiView):
     def get_queryset(self):
         """Returns all open Committee Decisions of all Users"""
 
-        objects = Decision.objects.filter(
+        decision_queryset = Decision.objects.filter(
             go="",
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
             review__is_committee_review=True,
         )
 
-        return self.method_name2(objects)
+        return self.method_name(decision_queryset, True)
 
 
 class OpenSupervisorDecisionApiView(BaseDecisionApiView):
