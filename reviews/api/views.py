@@ -4,7 +4,7 @@ from typing import Tuple
 
 from braces.views import GroupRequiredMixin
 from django.conf import settings
-from django.db.models import Q, Exists, OuterRef
+from django.db.models import Q, Exists, OuterRef, QuerySet
 from django.utils.translation import gettext_lazy as _
 from rest_framework.authentication import SessionAuthentication
 
@@ -17,20 +17,21 @@ from ..models import Decision, Review
 from .serializers import DecisionSerializer, ReviewSerializer
 
 
-def return_latest_decisions(objects):
+def return_latest_decisions(decisions: QuerySet[Decision]) -> list[Decision]:
     """
-    Returns:
-        return only the latest decision for each proposal
+        filters decisions with duplicate proposals to only give back the most recent decision for each proposal
     """
-    decisions = OrderedDict()
-    for obj in objects:
-        proposal = obj.review.proposal
-        if proposal.pk not in decisions:
-            decisions[proposal.pk] = obj
+    filtered_decisions: OrderedDict[int, Decision] = (
+        OrderedDict()
+    )  # proposal.pk, decision
+    for decision in decisions:
+        proposal = decision.review.proposal
+        if proposal.pk not in filtered_decisions:
+            filtered_decisions[proposal.pk] = decision
         else:
-            if decisions[proposal.pk].pk < obj.pk:
-                decisions[proposal.pk] = obj
-    return decisions
+            if filtered_decisions[proposal.pk].pk < decision.pk:
+                filtered_decisions[proposal.pk] = decision
+    return [value for key, value in filtered_decisions.items()]
 
 
 # would be the same method as return_lasted_decisions if we give proposals instead of objects to this method.
@@ -104,44 +105,40 @@ class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
 
         return context
 
-    def method_name(
-        self,
-        decision_queryset: collections.Iterable[Decision],
-        reviewer_is_request_user: bool,
-    ):
-        decisions_dict = OrderedDict()
-        dfse_cache = {}  # Decision-for-secretary-exists cache.
+    # filters decisions with duplicate proposals to only give back the most recent decision for any given proposal
+    def filter_decisions(self, decision_queryset: QuerySet[Decision]) -> list[Decision]:
+        filtered_decisions: OrderedDict[int, Decision] = (
+            OrderedDict()
+        )  # proposal.pk, decision
+        # Decision-for-secretary-exists cache.
+        dfse_cache: dict[int, bool] = (
+            {}
+        )  # proposal.pk, decision for reviewer exists on current proposal
 
         for decision in decision_queryset:
             proposal = decision.review.proposal
 
+            # add proposal to dfse if not yet in it
             if proposal.pk not in dfse_cache:
                 dfse_cache[proposal.pk] = Decision.objects.filter(
                     review__proposal=proposal, reviewer=self.request.user
                 ).exists()
 
-            if reviewer_is_request_user:
-                # If there is a decision for this user, but this decision *is*
-                # for this user, skip!
-                # The template handles adding a different button for creating
-                # a new decision for a secretary that doesn't have one yet.
-                if dfse_cache[proposal.pk] and decision.reviewer == self.request.user:
-                    continue
-            else:
-                # If there is a decision for this user, but this decision isn't
-                # for this user, skip!
-                # The template handles adding a different button for creating
-                # a new decision for a secretary that doesn't have one yet.
-                if dfse_cache[proposal.pk] and decision.reviewer != self.request.user:
-                    continue
+            # If there is a decision for this user, but this decision isn't
+            # for this user, skip!
+            # The template handles adding a different button for creating
+            # a new decision for a secretary that doesn't have one yet.
+            if dfse_cache[proposal.pk] and decision.reviewer != self.request.user:
+                continue
 
-            if proposal.pk not in decisions_dict:
-                decisions_dict[proposal.pk] = decision
+            if proposal.pk not in filtered_decisions:
+                filtered_decisions[proposal.pk] = decision
             else:
-                if decisions_dict[proposal.pk].pk < decision.pk:
-                    decisions_dict[proposal.pk] = decision
+                if filtered_decisions[proposal.pk].pk < decision.pk:
+                    filtered_decisions[proposal.pk] = decision
 
-        return [value for key, value in decisions_dict.items()]
+        hello: list[Decision] = [value for key, value in filtered_decisions.items()]
+        return hello
 
 
 class MyDecisionsApiView(BaseDecisionApiView):
@@ -169,21 +166,21 @@ class MyDecisionsApiView(BaseDecisionApiView):
             review__is_committee_review=True,
         )
 
-        decisions = return_latest_decisions(decision_queryset)
+        decisions: list[Decision] = return_latest_decisions(decision_queryset)
 
         return [value for key, value in decisions.items()]
 
     def get_queryset_for_secretary(self):
         """Returns all open Decisions of the current User"""
 
-        objects = Decision.objects.filter(
+        decision_queryset = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
             review__is_committee_review=True,
         )
 
-        return self.method_name(objects, False)
+        return self.filter_decisions(decision_queryset)
 
 
 class MyOpenDecisionsApiView(BaseDecisionApiView):
@@ -212,22 +209,21 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
             review__is_committee_review=True,
         )
 
-        decisions = return_latest_decisions(objects)
-
-        return [value for key, value in decisions.items()]
+        decisions: list[Decision] = return_latest_decisions(objects)
+        return decisions
 
     def get_queryset_for_secretary(self):
         """Returns all open Decisions of the current User"""
 
-        decision_queryset = Decision.objects.filter(
+        decision_queryset: QuerySet[Decision] = Decision.objects.filter(
             reviewer__groups__name=settings.GROUP_SECRETARY,
             go="",
             review__proposal__reviewing_committee=self.committee,
             review__continuation__lt=Review.Continuations.DISCONTINUED,
             review__is_committee_review=True,
         )
-
-        return self.method_name(decision_queryset, False)
+        hello = self.filter_decisions(decision_queryset)
+        return hello
 
 
 class OpenDecisionsApiView(BaseDecisionApiView):
@@ -247,7 +243,36 @@ class OpenDecisionsApiView(BaseDecisionApiView):
             review__is_committee_review=True,
         )
 
-        return self.method_name(decision_queryset, True)
+        filtered_decisions: OrderedDict[int, Decision] = (
+            OrderedDict()
+        )  # proposal.pk, decision
+        # Decision-for-secretary-exists cache.
+        dfse_cache: dict[int, bool] = {}  # proposal.pk, proposal exists
+
+        for decision in decision_queryset:
+            proposal = decision.review.proposal
+
+            # add proposal to dfse if not yet in it
+            if proposal.pk not in dfse_cache:
+                dfse_cache[proposal.pk] = Decision.objects.filter(
+                    review__proposal=proposal, reviewer=self.request.user
+                ).exists()
+
+            # If there is a decision for this user, but this decision *is*
+            # for this user, skip!
+            # The template handles adding a different button for creating
+            # a new decision for a secretary that doesn't have one yet.
+            if dfse_cache[proposal.pk] and decision.reviewer == self.request.user:
+                continue
+
+            if proposal.pk not in filtered_decisions:
+                filtered_decisions[proposal.pk] = decision
+            else:
+                if filtered_decisions[proposal.pk].pk < decision.pk:
+                    filtered_decisions[proposal.pk] = decision
+
+        hello: list[Decision] = [value for key, value in filtered_decisions.items()]
+        return hello
 
 
 class OpenSupervisorDecisionApiView(BaseDecisionApiView):
@@ -282,9 +307,8 @@ class OpenSupervisorDecisionApiView(BaseDecisionApiView):
             review__proposal__status=Proposal.Statuses.SUBMITTED_TO_SUPERVISOR,
         )
 
-        decisions = return_latest_decisions(objects)
-
-        return [value for key, value in decisions.items()]
+        decisions: list[Decision] = return_latest_decisions(objects)
+        return decisions
 
 
 class BaseReviewApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
