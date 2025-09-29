@@ -19,7 +19,7 @@ from .serializers import DecisionSerializer, ReviewSerializer
 
 def return_latest_decisions(decisions: QuerySet[Decision]) -> list[Decision]:
     """
-        filters decisions with duplicate proposals to only give back the most recent decision for each proposal
+    filters decisions with duplicate proposals to only give back the most recent decision for each proposal
     """
     filtered_decisions: OrderedDict[int, Decision] = (
         OrderedDict()
@@ -128,8 +128,9 @@ class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
             # for this user, skip!
             # The template handles adding a different button for creating
             # a new decision for a secretary that doesn't have one yet.
-            if dfse_cache[proposal.pk] and decision.reviewer != self.request.user:
-                continue
+            if dfse_cache[proposal.pk]:
+                if decision.reviewer != self.request.user:
+                    continue
 
             if proposal.pk not in filtered_decisions:
                 filtered_decisions[proposal.pk] = decision
@@ -137,8 +138,8 @@ class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
                 if filtered_decisions[proposal.pk].pk < decision.pk:
                     filtered_decisions[proposal.pk] = decision
 
-        hello: list[Decision] = [value for key, value in filtered_decisions.items()]
-        return hello
+        decisions: list[Decision] = [value for key, value in filtered_decisions.items()]
+        return decisions
 
 
 class MyDecisionsApiView(BaseDecisionApiView):
