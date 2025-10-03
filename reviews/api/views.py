@@ -105,8 +105,11 @@ class BaseDecisionApiView(GroupRequiredMixin, CommitteeMixin, FancyListApiView):
 
         return context
 
-    # filters decisions with duplicate proposals to only give back the most recent decision for any given proposal
     def filter_decisions(self, decision_queryset: QuerySet[Decision]) -> list[Decision]:
+        """
+        filters decisions with duplicate proposals to only give back the most recent decision for each proposal
+        also makes sure the decisions are for this user.
+        """
         filtered_decisions: OrderedDict[int, Decision] = (
             OrderedDict()
         )  # proposal.pk, decision
@@ -223,8 +226,7 @@ class MyOpenDecisionsApiView(BaseDecisionApiView):
             review__continuation__lt=Review.Continuations.DISCONTINUED,
             review__is_committee_review=True,
         )
-        hello = self.filter_decisions(decision_queryset)
-        return hello
+        return self.filter_decisions(decision_queryset)
 
 
 class OpenDecisionsApiView(BaseDecisionApiView):
@@ -272,8 +274,8 @@ class OpenDecisionsApiView(BaseDecisionApiView):
                 if filtered_decisions[proposal.pk].pk < decision.pk:
                     filtered_decisions[proposal.pk] = decision
 
-        hello: list[Decision] = [value for key, value in filtered_decisions.items()]
-        return hello
+        decisions: list[Decision] = [value for key, value in filtered_decisions.items()]
+        return decisions
 
 
 class OpenSupervisorDecisionApiView(BaseDecisionApiView):
