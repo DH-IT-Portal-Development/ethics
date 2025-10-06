@@ -57,9 +57,6 @@ class ReviewAssignForm(ConditionalModelForm):
         """
         super(ReviewAssignForm, self).__init__(*args, **kwargs)
 
-        # reviewers = get_reviewers_from_group(
-        #     self.instance.proposal.reviewing_committee
-        # )
         reviewers = get_reviewers_from_groups(
             [
                 settings.GROUP_GENERAL_CHAMBER,
@@ -116,12 +113,21 @@ class ReviewCloseForm(ConditionalModelForm):
             "allow_long_route_continuation", False
         )
         super(ReviewCloseForm, self).__init__(*args, **kwargs)
+
+        self.fields["continuation"].choices = Review.Continuations.choices
+        # Reviews should only be discontinued at ReviewDiscontinueView
+        discontinued_tuple: tuple = (
+            Review.Continuations.DISCONTINUED.value,
+            Review.Continuations.DISCONTINUED.label,
+        )
+        self.fields["continuation"].choices.remove(discontinued_tuple)
+
         if not allow_long_route_continuation:
-            self.fields["continuation"].choices = [
-                x
-                for x in Review.Continuations.choices
-                if x[0] != Review.Continuations.LONG_ROUTE
-            ]
+            longroute_tuple: tuple = (
+                Review.Continuations.LONG_ROUTE.value,
+                Review.Continuations.LONG_ROUTE.label,
+            )
+            self.fields["continuation"].choices.remove(longroute_tuple)
 
         self.fields["in_archive"].label = _("Voeg deze aanvraag toe aan het archief")
         self.fields["in_archive"].widget = BootstrapRadioSelect(choices=YES_NO)
