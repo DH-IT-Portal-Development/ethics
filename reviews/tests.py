@@ -108,7 +108,7 @@ class BaseReviewTestCase(TestCase):
         self.review.refresh_from_db()
         self.proposal.refresh_from_db()
 
-    def check_subject_lines(self, outbox):
+    def check_subject_lines(self, proposal: Proposal, outbox):
         """
         Make sure every outgoing email contains a reference number and the
         text FETC-GW
@@ -116,49 +116,15 @@ class BaseReviewTestCase(TestCase):
         for message in outbox:
             subject = message.subject
             self.assertTrue("FETC-GW" in subject)
-            self.assertTrue(self.proposal.reference_number in subject)
+            self.assertTrue(proposal.reference_number in subject)
 
 
-class ReviewTestCase(BaseReviewTestCase):
-    def test_start_supervisor_review(self):
-        """
-        Tests starting of a Review from a submitted Proposal.
-        """
-        # If the Relation on a Proposal requires a supervisor, a Review for the supervisor should be started.
-        review = start_review(self.proposal)
-        self.assertEqual(review.stage, Review.Stages.SUPERVISOR)
-        self.assertEqual(review.is_committee_review, False)
-        self.assertEqual(Decision.objects.filter(reviewer=self.supervisor).count(), 1)
-        self.assertEqual(Decision.objects.filter(review=review).count(), 1)
-        self.assertEqual(review.decision_set.count(), 1)
-
-        self.assertEqual(len(mail.outbox), 2)  # check we sent 2 emails
-        self.check_subject_lines(mail.outbox)
-        mail.outbox = []
-
-    def test_start_review(self):
-        # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
-        self.proposal.relation = Relation.objects.get(pk=5)
-        self.proposal.save()
-
-        review = start_review(self.proposal)
-        self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
-        self.assertEqual(review.is_committee_review, True)
-        self.assertEqual(Decision.objects.filter(reviewer=self.secretary).count(), 1)
-        self.assertEqual(Decision.objects.filter(review=review).count(), 1)
-        self.assertEqual(review.decision_set.count(), 1)
-
-        self.assertEqual(len(mail.outbox), 2)
-        self.check_subject_lines(mail.outbox)
-
-
-class ReviewPreAssessmentTestCase(BaseReviewTestCase):
-
+class BasePreAssessmentTestCase(BaseReviewTestCase):
     def setUp(self):
         super().setUp()
         self.student: Relation = Relation.objects.get(pk=4)
         self.language_sciences_pk = 1
-        self.direct_funding = Funding.objects.get(pk=2)
+        self.direct_funding: Funding = Funding.objects.get(pk=2)
         print("ReviewPreAssessmentTestCase: Creating pre-assessment proposal")
         self.setup_pre_assessment()
 
@@ -211,28 +177,58 @@ class ReviewPreAssessmentTestCase(BaseReviewTestCase):
         # 4. Submit
         # Space for possible comments. Use a maximum of 1000 words.
         self.pre_assessment.comments = "Space for possible comments"
-        self.pre_assessment.generate_pdf()
+        self.pre_assessment.generate_pdf()  # this also generates with start_review, possible redundancy
 
     def refresh(self):
         super().refresh()
         self.pre_assessment.refresh_from_db()
 
-    def test_class(self):
-        print("test class")
-        self.assertEqual(True, True)
 
-    def test_pre_review(self):
-        review = start_review(self.pre_assessment)
-        print(self.pre_assessment.title)
+class ReviewTestCase(BaseReviewTestCase):
+    def test_start_supervisor_review(self):
+        """
+        Tests starting of a Review from a submitted Proposal.
+        """
+        # If the Relation on a Proposal requires a supervisor, a Review for the supervisor should be started.
+        review = start_review(self.proposal)
+        self.assertEqual(review.stage, Review.Stages.SUPERVISOR)
+        self.assertEqual(review.is_committee_review, False)
+        self.assertEqual(Decision.objects.filter(reviewer=self.supervisor).count(), 1)
+        self.assertEqual(Decision.objects.filter(review=review).count(), 1)
+        self.assertEqual(review.decision_set.count(), 1)
+
+        self.assertEqual(len(mail.outbox), 2)  # check we sent 2 emails
+        self.check_subject_lines(self.proposal, mail.outbox)
+        mail.outbox = []
+
+    def test_start_review(self):
+        # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
+        self.proposal.relation = Relation.objects.get(pk=5)
+        self.proposal.save()
+
+        review = start_review(self.proposal)
+        self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
+        self.assertEqual(review.is_committee_review, True)
+        self.assertEqual(Decision.objects.filter(reviewer=self.secretary).count(), 1)
+        self.assertEqual(Decision.objects.filter(review=review).count(), 1)
+        self.assertEqual(review.decision_set.count(), 1)
+
+        self.assertEqual(len(mail.outbox), 2)
+        self.check_subject_lines(self.proposal, mail.outbox)
 
 
-class SupervisorTestCase(BaseReviewTestCase):
+class SupervisorTestCase(BasePreAssessmentTestCase):
+    def test_supervisor_review_proposal(self):
+        self._test_supervisor_review(self.proposal)
 
-    def test_supervisor_review(self):
+    def test_supervisor_review_pre_assessment(self):
+        self._test_supervisor_review(self.pre_assessment)
+
+    def _test_supervisor_review(self, proposal: Proposal):
         """
         Tests the creation of supervisor reviews
         """
-        review = start_review(self.proposal)
+        review = start_review(proposal)
         remind_supervisor_reviewers()
 
         # Check for supervisor and submitter notifications
@@ -246,7 +242,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         # Reminders should now be sent
         remind_supervisor_reviewers()
         self.assertEqual(len(mail.outbox), 3)
-        self.check_subject_lines(mail.outbox)
+        self.check_subject_lines(proposal, mail.outbox)
         # Clear outbox
         mail.outbox = []
 
@@ -255,7 +251,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         decision.go = Decision.Approval.NEEDS_REVISION
         decision.save()
         # Check notifications
-        expected_emails = self.proposal.applicants.count()
+        expected_emails = proposal.applicants.count()
         self.assertEquals(len(mail.outbox), expected_emails)
         remind_supervisor_reviewers()
         # No more reminders after decision is made
