@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from copy import copy
 
 from django.conf import settings
@@ -16,7 +16,7 @@ from .utils import (
 )
 from main.tests import BaseViewTestCase
 from main.models import YesNoDoubt
-from proposals.models import Proposal, Relation, Wmo
+from proposals.models import Proposal, Relation, Wmo, Funding
 from proposals.utils import generate_ref_number
 from studies.models import Study, Compensation, AgeGroup, Registration
 from observations.models import Observation
@@ -36,6 +36,7 @@ class BaseReviewTestCase(TestCase):
         "agegroups",
         "groups",
         "institutions",
+        "fundings",
     ]
     relation_pk = 1
 
@@ -149,6 +150,80 @@ class ReviewTestCase(BaseReviewTestCase):
 
         self.assertEqual(len(mail.outbox), 2)
         self.check_subject_lines(mail.outbox)
+
+
+class ReviewPreAssessmentTestCase(BaseReviewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.student: Relation = Relation.objects.get(pk=4)
+        self.language_sciences_pk = 1
+        self.direct_funding = Funding.objects.get(pk=2)
+        print("ReviewPreAssessmentTestCase: Creating pre-assessment proposal")
+        self.setup_pre_assessment()
+
+    def setup_pre_assessment(self):
+        """Create pre-assessment data. also called Preliminary assessment.
+        Data is only needed for this class"""
+        self.pre_assessment = Proposal.objects.create(
+            is_pre_assessment=True,
+            created_by=self.user,
+            reference_number=generate_ref_number(),
+            # 1. basic details
+            # What is the title of your application? This title will be used in all formal correspondence.
+            title="pre_proposal",
+            # What is the desired starting date of the actual research for which this application is being submitted?
+            date_start=date.today(),
+            # What is the expected end date of the research for which this application is being submitted?
+            expected_end_date=date.today() + timedelta(days=1),
+            # To which research institute are you affiliated?
+            institution_id=self.language_sciences_pk,
+            reviewing_committee=Group.objects.get(
+                name=settings.GROUP_LINGUISTICS_CHAMBER
+            ),
+            # In what capacity are you involved in this application?
+            relation=self.student,
+            # Promotor/Supervisor
+            supervisor=self.supervisor,  # requirement: relation needs a supervisor
+        )
+        # Are there any other researchers involved affiliated with ICON, OFR, OGK or ILS?
+        self.pre_assessment.applicants.add(
+            self.user,
+        )
+        # Are there any other researchers involved outside the above-mentioned institutes?
+        self.pre_assessment.other_stakeholders = False
+        # How is this study funded?
+        self.pre_assessment.funding.add(self.direct_funding)
+        # Upload your application here (in .pdf or .doc(x)-format)
+        self.pre_assessment.pre_assessment_pdf = None
+        # What are the most important ethical considerations in this research?
+        self.pre_assessment.self_assessment = "Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf kort hoe je daarmee omgaat."
+        # 2. WMO
+        # Will the data collection take place at the UMC Utrecht or another institution for which an assessment by a METC is required?
+        # Is the nature of the research question medical (as defined by the Medical Research Involving Human Subjects Act (WMO))?
+        self.pre_assessment.wmo = Wmo.objects.create(
+            proposal=self.pre_assessment,
+            metc=YesNoDoubt.NO,
+        )
+        # 3. Documents
+        # Optional File
+        # No Data yet added
+        # 4. Submit
+        # Space for possible comments. Use a maximum of 1000 words.
+        self.pre_assessment.comments = "Space for possible comments"
+        self.pre_assessment.generate_pdf()
+
+    def refresh(self):
+        super().refresh()
+        self.pre_assessment.refresh_from_db()
+
+    def test_class(self):
+        print("test class")
+        self.assertEqual(True, True)
+
+    def test_pre_review(self):
+        review = start_review(self.pre_assessment)
+        print(self.pre_assessment.title)
 
 
 class SupervisorTestCase(BaseReviewTestCase):
