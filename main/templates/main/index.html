@@ -50,33 +50,55 @@
     </div>
     <div class="uu-container">
         <div class="col-12">
-            <h2>{% trans "Voordat je begint" %}</h2>
+            <h2 class="mb-3">{% trans "Voordat je begint" %}</h2>
             <ul>
+                <li>
+                    <p>
+                        {% trans "Maak jezelf vertrouwd met de termen op de volgende pagina:" %}
+                        <strong>
+                            {% blocktrans trimmed %}
+                                <a href="https://fetc-gw.wp.hum.uu.nl/voordat-je-een-aanvraag-indient/">FETC-GW - Voordat je een aanvraag indient</a>
+                            {% endblocktrans %}
+                        </strong>
+                    </p>
+                </li>
+                <li>
+                    {% blocktrans trimmed %}
+                        Gebruik altijd de juiste en meest recente <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"><strong>voorbeelddocumenten/templates</strong></a>.
+                    {% endblocktrans %}
+                    <p>
+                        {% blocktrans trimmed %}
+                            Studenten moeten hun begeleider vragen om deze formulieren; voor onofficiële voorbeelddocumenten om mee te oefenen, zie <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
+                        {% endblocktrans %}
+                    </p>
+                </li>
                 <li>
                     {% trans "Check voor het indienen:" %}
                     <ul>
                         <li>
                             {% blocktrans trimmed %}
-                                De
-                                <a href="https://fetc-gw.wp.hum.uu.nl/" target="_blank">UU-webpagina van de FETC-GW</a> voor nieuws en de agenda.
+                                de <a href="https://fetc-gw.wp.hum.uu.nl/">UU-webpagina van de FETC-GW</a> voor nieuws en de agenda;
                             {% endblocktrans %}
                         </li>
                         <li>
                             {% blocktrans trimmed %}
-                                Het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/" target="blank">reglement van de FETC-GW</a>.
+                                het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"><strong>reglement van de FETC-GW</strong></a> (zoek op wat op jouw onderzoek van toepassing is).
                             {% endblocktrans %}
                         </li>
                     </ul>
-                    <li>
-                        {% blocktrans trimmed %}
-                            Tijdens de aanvraagprocedure kan er om een of meer
-                            bijlagen worden gevraagd. Gebruik daarvoor de
-                            juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"
-    target="_blank">voorbeelddocumenten/templates</a>.
-                        {% endblocktrans %}
-                    </li>
                 </li>
             </ul>
+            <p>
+                {% blocktrans trimmed %}
+                    Voor advies over de AVG en privacy, neem liefst vooraf contact op met <a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>.
+                {% endblocktrans %}
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    Voor advies over datamanagement, neem liefst vooraf contact op met <a href="mailto:datamanagement.gw@uu.nl">datamanagement.gw@uu.nl</a>.
+                {% endblocktrans %}
+            </p>
+            <p>{% trans "Zij helpen je graag!" %}</p>
         </div>
     </div>
     <div class="uu-hero text-bg-light justify-content-md-between justify-content-center flex-wrap gap-3">
@@ -126,8 +148,7 @@
                 </p>
             </div>
             <div class="col-12 col-md-4">
-                <h3>{% trans 'Resources' %}</h3>
-                {# What should this be in dutch tho? #}
+                <h3>{% trans 'Links' %}</h3>
                 <ul>
                     <li>
                         {% blocktrans trimmed %}

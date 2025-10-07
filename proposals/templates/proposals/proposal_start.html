@@ -10,71 +10,82 @@
 {% block content %}
     <div class="uu-container">
         <div class="col-12">
-            <h2>{% trans "Een nieuwe aanvraag aanmelden" %}</h2>
+            <h2>{% trans "Voordat je begint..." %}</h2>
+            <p>
+                {% blocktrans trimmed %}
+                    De termen op de volgende pagina worden <strong>bekend verondersteld</strong> als je een aanvraag gaat indienen:
+                {% endblocktrans %}
+            </p>
+            <p>
+                <h5 class="ms-3">
+                    {% blocktrans trimmed %}
+                        <a href="https://fetc-gw.wp.hum.uu.nl/voordat-je-een-aanvraag-indient/">FETC-GW - Voordat je een aanvraag indient</a>
+                    {% endblocktrans %}
+                </h5>
+            </p>
+            <p>
+                {% blocktrans trimmed %}
+                    Het opdoen van kennis over deze termen kost <strong>minder tijd</strong> dan het indienen van een revisie. Bovendien scheelt het behoorlijk wat werk voor de FETC-GW, waardoor we voor iedereen de beoordelingsprocedure kunnen verkorten.
+                {% endblocktrans %}
+            </p>
+            <p>{% trans "En verder:" %}</p>
             <ul>
+                <li>
+                    {% blocktrans trimmed %}
+                        Gebruik altijd de juiste en meest recente <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"><strong>voorbeelddocumenten/templates</strong></a>.
+                    {% endblocktrans %}
+                    <p>
+                        {% blocktrans trimmed %}
+                            Studenten moeten hun begeleider vragen om deze formulieren; voor onofficiële voorbeelddocumenten om mee te oefenen, zie <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
+                        {% endblocktrans %}
+                    </p>
+                </li>
                 <li>
                     {% trans "Check voor het indienen:" %}
                     <ul>
                         <li>
                             {% blocktrans trimmed %}
-                                De
-                                <a href="https://fetc-gw.wp.hum.uu.nl/" target="_blank">UU-webpagina van de FETC-GW</a> voor nieuws en de agenda.
+                                de <a href="https://fetc-gw.wp.hum.uu.nl/">UU-webpagina van de FETC-GW</a> voor nieuws en de agenda;
                             {% endblocktrans %}
                         </li>
                         <li>
                             {% blocktrans trimmed %}
-                                Het reglement van de <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/">FETC-GW</a>.
+                                het <a href="https://fetc-gw.wp.hum.uu.nl/reglement-fetc-gw/"><strong>reglement van de FETC-GW</strong></a> (zoek op wat op jouw onderzoek van toepassing is).
                             {% endblocktrans %}
                         </li>
                     </ul>
-                    <li>
-                        {% blocktrans trimmed %}
-                            Tijdens de aanvraagprocedure kan er om een of meer
-                            bijlagen worden gevraagd. Gebruik daarvoor de
-                            juiste (meest recente) <a href="https://intranet.uu.nl/documenten-ethische-toetsingscommissie-gw"
-    target="_blank">voorbeelddocumenten/templates</a>.
-                        {% endblocktrans %}
-                    </li>
-                    <p>
-                        {% blocktrans trimmed %}
-                            Studenten moeten hun begeleider vragen om deze formulieren; dezelfde voorbeeldteksten, maar op niet-officiële formulieren, zijn te vinden op <a href="https://fetc-gw.wp.hum.uu.nl/voorbeelddocumenten/">deze pagina</a>.
-                        {% endblocktrans %}
-                    </p>
                 </li>
             </ul>
             <p>
                 {% blocktrans trimmed %}
-                    Een voorstel is opgebouwd uit (van groot naar klein) (i) trajecten, (ii) sessies, (iii) taken.
+                    Voor advies over de AVG en privacy, neem liefst vooraf contact op met <a href="mailto:privacy.gw@uu.nl">privacy.gw@uu.nl</a>.
                 {% endblocktrans %}
             </p>
-            <ul>
-                <li>
-                    <strong>{% trans "Traject" %}</strong>:
-                    {% blocktrans trimmed %}
-                        Als je met verschillende deelnemersgroepen werkt die een verschillend onderzoekstraject doorlopen waarvoor verschillende documenten nodig zijn.
-                    {% endblocktrans %}
-                    <p>
+            <p>
+                {% blocktrans trimmed %}
+                    Voor advies over datamanagement, neem liefst vooraf contact op met <a href="mailto:datamanagement.gw@uu.nl">datamanagement.gw@uu.nl</a>.
+                {% endblocktrans %}
+            </p>
+            <p>{% trans "Zij helpen je graag!" %}</p>
+            {% if is_practice %}
+                <p class="mt-3 mb-3">
+                    <strong>
                         {% blocktrans trimmed %}
-                            Bijvoorbeeld: ouders van leerlingen 15 jaar en jonger, docenten, een controlegroep en een experimentele groep die verschillende taken krijgen.
+                            Houd er rekening mee dat een oefenaanvraag niet ingediend kan worden!
                         {% endblocktrans %}
-                    </p>
-                </li>
-                <li>
-                    <strong>{% trans "Sessie" %}</strong>:
-                    {% blocktrans trimmed %}
-                        Alle taken en procedures die een deelnemer voltooit tijdens een enkel bezoek aan de onderzoekslocatie, of tijdens een enkel bezoek van de onderzoeker.
-                    {% endblocktrans %}
-                </li>
-                <li>
-                    <strong>{% trans "Taak" %}</strong>:
-                    {% blocktrans trimmed %}
-                        Een taak of onderdeel van je onderzoek.
-                        <p>Bijvoorbeeld: het invullen van een vragenlijst, een interview, of een bepaalde test.</p>
-                    {% endblocktrans %}
-                </li>
-            </ul>
-            <a class="btn btn-primary float-end mb-4"
-               href="{% url 'proposals:create' %}">{% trans "Volgende stap >>" %}</a>
+                    </strong>
+                </p>
+                <form action="" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <table class="mt-3 mb-3">
+                        {{ form.as_table }}
+                    </table>
+                    {% include "base/form_buttons.html" %}
+                </form>
+            {% else %}
+                <a class="btn btn-primary float-end mb-4"
+                   href="{% url 'proposals:create' %}">{% trans "Een nieuwe aanvraag aanmelden >>" %}</a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
