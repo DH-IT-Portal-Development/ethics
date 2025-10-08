@@ -125,12 +125,10 @@ class BasePreAssessmentTestCase(BaseReviewTestCase):
         self.student: Relation = Relation.objects.get(pk=4)
         self.language_sciences_pk = 1
         self.direct_funding: Funding = Funding.objects.get(pk=2)
-        print("ReviewPreAssessmentTestCase: Creating pre-assessment proposal")
         self.setup_pre_assessment()
 
     def setup_pre_assessment(self):
-        """Create pre-assessment data. also called Preliminary assessment.
-        Data is only needed for this class"""
+        """Create pre-assessment data. also called Preliminary assessment."""
         self.pre_assessment = Proposal.objects.create(
             is_pre_assessment=True,
             created_by=self.user,
@@ -257,8 +255,14 @@ class SupervisorTestCase(BasePreAssessmentTestCase):
         # No more reminders after decision is made
         self.assertEquals(len(mail.outbox), expected_emails)
 
-    def test_negative_supervisor_decision(self):
-        review = start_review(self.proposal)
+    def test_negative_supervisor_decision_pre_assessment(self):
+        self._test_negative_supervisor_decision(self.pre_assessment)
+
+    def test_negative_supervisor_decision_proposal(self):
+        self._test_negative_supervisor_decision(self.proposal)
+
+    def _test_negative_supervisor_decision(self, proposal: Proposal):
+        review = start_review(proposal)
         self.assertEqual(review.go, None)
 
         # Create a negative decision
@@ -268,8 +272,14 @@ class SupervisorTestCase(BasePreAssessmentTestCase):
         review.refresh_from_db()
         self.assertEqual(review.go, False)
 
-    def test_positive_supervisor_decision(self):
-        review = start_review(self.proposal)
+    def test_positive_supervisor_decision_pre_assessment(self):
+        self._test_positive_supervisor_decision(self.pre_assessment)
+
+    def test_positive_supervisor_decision_proposal(self):
+        self._test_positive_supervisor_decision(self.proposal)
+
+    def _test_positive_supervisor_decision(self, proposal: Proposal):
+        review = start_review(proposal)
         self.assertEqual(review.go, None)
 
         # Create a negative decision
@@ -279,7 +289,7 @@ class SupervisorTestCase(BasePreAssessmentTestCase):
         review.refresh_from_db()
         self.assertEqual(review.go, True)
 
-        review = self.proposal.latest_review()
+        review = proposal.latest_review()
         self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
 
 
