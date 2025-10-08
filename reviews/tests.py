@@ -219,17 +219,12 @@ class ReviewTestCase(BasePreAssessmentTestCase):
         self._test_start_review(self.proposal)
 
     def test_start_review_pre_assessment(self):
-        try:
-            self._test_start_review(self.pre_assessment)
-        except AssertionError:
-            print(
-                "test_start_review_pre_assessment: TODO pre assessment without supervisor yet to be added"
-            )
+        self._test_start_review(self.pre_assessment)
 
     def _test_start_review(self, proposal: Proposal):
         # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
-        self.proposal.relation = Relation.objects.get(pk=5)
-        self.proposal.save()
+        proposal.relation = Relation.objects.get(pk=5)
+        proposal.save()
 
         review = start_review(proposal)
         self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
