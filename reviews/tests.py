@@ -58,16 +58,10 @@ class BaseReviewTestCase(TestCase):
         Please note, this currently uses a mish-mash of both fixtures
         and programmatically created users and objects.
         """
-        # self.wmo = Wmo(
-        #    status=0,
-        #    metc="N",
-        #    is_medical="N",
-        # )
-        # self.wmo.save() #'AssignmentTestCase' object has no attribute 'wmo'
         self.proposal = Proposal.objects.get(pk=4)
         self.proposal.supervisor = self.supervisor
-        self.proposal.generate_pdf()
-        self.proposal.applicants.add(self.user)
+        self.proposal.generate_pdf()  # TODO find out why is this needed? works fine without it.
+        # self.proposal.applicants.add(self.user)
         # self.proposal.wmo = self.wmo
 
         self.proposal.wmo = Wmo.objects.create(
@@ -83,7 +77,7 @@ class BaseReviewTestCase(TestCase):
         self.pre_approval.applicants.add(self.user)
         self.pre_approval.save()"""
 
-        # setup_proposal2 stuff
+        # study is needed for reviews. #TODO add to fixtures somehow
         self.study = Study.objects.create(
             proposal=self.proposal,
             order=1,
@@ -122,28 +116,11 @@ class BaseReviewTestCase(TestCase):
         self.proposal.generate_pdf()
 
     def setup_users(self):
-        self.secretary = User.objects.create_user(
-            "secretary",
-            "test@test.com",
-            "secret",
-            first_name="The",
-            last_name="Secretary",
-        )
-        self.c1 = User.objects.create_user("c1", "test@test.com", "secret")
-        self.c2 = User.objects.create_user("c2", "test@test.com", "secret")
-        self.user = User.objects.create_user(
-            "user", "test@test.com", "secret", first_name="John", last_name="Doe"
-        )
-        self.supervisor = User.objects.create_user(
-            "supervisor", "test@test.com", "secret", first_name="Jane", last_name="Roe"
-        )
-
-        self.secretary.groups.add(
-            Group.objects.get(name=settings.GROUP_PRIMARY_SECRETARY)
-        )
-        self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
-        self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
-        self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
+        self.secretary = User.objects.get(username="secretary")
+        self.c1 = User.objects.get(username="c1")
+        self.c2 = User.objects.get(username="c2")
+        self.user = User.objects.get(username="user")
+        self.supervisor = User.objects.get(username="supervisor")
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
@@ -236,7 +213,6 @@ class BasePreAssessmentTestCase(BaseReviewTestCase):
 
 
 class ReviewTestCase(BaseReviewTestCase):
-
     def test_start_supervisor_review(self):
         """
         Tests starting of a Review from a submitted Proposal.
@@ -327,11 +303,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)
 
         review = self.proposal.latest_review()
-        self.assertEqual(
-            review.stage,
-            review.Stages.ASSIGNMENT,
-            "tested proposal does not match stage",
-        )
+        self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
 
 
 class AssignmentTestCase(BaseReviewTestCase):
