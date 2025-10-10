@@ -195,18 +195,12 @@ class BasePreAssessmentTestCase(BaseReviewTestCase):
 
 class ReviewTestCase(BasePreAssessmentTestCase):
 
-    def test_start_supervisor_review_proposal(self):
-        self._test_start_supervisor_review(self.proposal)
-
-    def test_start_supervisor_review_pre_assessment(self):
-        self._test_start_supervisor_review(self.pre_assessment)
-
-    def _test_start_supervisor_review(self, proposal: Proposal):
+    def test_start_supervisor_review(self):
         """
         Tests starting of a Review from a submitted Proposal.
         """
         # If the Relation on a Proposal requires a supervisor, a Review for the supervisor should be started.
-        review = start_review(proposal)
+        review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.SUPERVISOR)
         self.assertEqual(review.is_committee_review, False)
         self.assertEqual(Decision.objects.filter(reviewer=self.supervisor).count(), 1)
@@ -214,21 +208,15 @@ class ReviewTestCase(BasePreAssessmentTestCase):
         self.assertEqual(review.decision_set.count(), 1)
 
         self.assertEqual(len(mail.outbox), 2)  # check we sent 2 emails
-        self.check_subject_lines(proposal, mail.outbox)
+        self.check_subject_lines(self.proposal, mail.outbox)
         mail.outbox = []
 
-    def test_start_review_proposal(self):
-        self._test_start_review(self.proposal)
-
-    def test_start_review_pre_assessment(self):
-        self._test_start_review(self.pre_assessment)
-
-    def _test_start_review(self, proposal: Proposal):
+    def test_start_review(self):
         # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
-        proposal.relation = Relation.objects.get(pk=5)
-        proposal.save()
+        self.proposal.relation = Relation.objects.get(pk=5)
+        self.proposal.save()
 
-        review = start_review(proposal)
+        review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
         self.assertEqual(review.is_committee_review, True)
         self.assertEqual(Decision.objects.filter(reviewer=self.secretary).count(), 1)
@@ -236,23 +224,16 @@ class ReviewTestCase(BasePreAssessmentTestCase):
         self.assertEqual(review.decision_set.count(), 1)
 
         self.assertEqual(len(mail.outbox), 2)
-        self.check_subject_lines(proposal, mail.outbox)
+        self.check_subject_lines(self.proposal, mail.outbox)
 
 
 class SupervisorTestCase(BasePreAssessmentTestCase):
-    def test_supervisor_review_proposal(self):
-        self._test_supervisor_review(self.proposal)
 
-    def test_supervisor_review_pre_assessment(self):
-        self._test_supervisor_review(self.pre_assessment)
-
-    # I am treating pre_assessment and proposal as if they are different objects here,
-    # different objects with the overlapping interface _test_supervisor_review for combined logic.
-    def _test_supervisor_review(self, proposal: Proposal):
+    def test_supervisor_review(self):
         """
         Tests the creation of supervisor reviews
         """
-        review = start_review(proposal)
+        review = start_review(self.proposal)
         remind_supervisor_reviewers()
 
         # Check for supervisor and submitter notifications
@@ -266,7 +247,7 @@ class SupervisorTestCase(BasePreAssessmentTestCase):
         # Reminders should now be sent
         remind_supervisor_reviewers()
         self.assertEqual(len(mail.outbox), 3)
-        self.check_subject_lines(proposal, mail.outbox)
+        self.check_subject_lines(self.proposal, mail.outbox)
         # Clear outbox
         mail.outbox = []
 
@@ -275,20 +256,14 @@ class SupervisorTestCase(BasePreAssessmentTestCase):
         decision.go = Decision.Approval.NEEDS_REVISION
         decision.save()
         # Check notifications
-        expected_emails = proposal.applicants.count()
+        expected_emails = self.proposal.applicants.count()
         self.assertEquals(len(mail.outbox), expected_emails)
         remind_supervisor_reviewers()
         # No more reminders after decision is made
         self.assertEquals(len(mail.outbox), expected_emails)
 
-    def test_negative_supervisor_decision_pre_assessment(self):
-        self._test_negative_supervisor_decision(self.pre_assessment)
-
-    def test_negative_supervisor_decision_proposal(self):
-        self._test_negative_supervisor_decision(self.proposal)
-
-    def _test_negative_supervisor_decision(self, proposal: Proposal):
-        review = start_review(proposal)
+    def test_negative_supervisor_decision(self):
+        review = start_review(self.proposal)
         self.assertEqual(review.go, None)
 
         # Create a negative decision
@@ -298,14 +273,8 @@ class SupervisorTestCase(BasePreAssessmentTestCase):
         review.refresh_from_db()
         self.assertEqual(review.go, False)
 
-    def test_positive_supervisor_decision_pre_assessment(self):
-        self._test_positive_supervisor_decision(self.pre_assessment)
-
-    def test_positive_supervisor_decision_proposal(self):
-        self._test_positive_supervisor_decision(self.proposal)
-
-    def _test_positive_supervisor_decision(self, proposal: Proposal):
-        review = start_review(proposal)
+    def _test_positive_supervisor_decision(self):
+        review = start_review(self.proposal)
         self.assertEqual(review.go, None)
 
         # Create a negative decision
@@ -315,7 +284,7 @@ class SupervisorTestCase(BasePreAssessmentTestCase):
         review.refresh_from_db()
         self.assertEqual(review.go, True)
 
-        review = proposal.latest_review()
+        review = self.proposal.latest_review()
         self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
 
 
