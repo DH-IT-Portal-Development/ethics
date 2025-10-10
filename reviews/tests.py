@@ -51,17 +51,59 @@ class BaseReviewTestCase(TestCase):
         super().setUp()
 
     def setup_proposal(self):
+        """
+        Load our test proposals from a fixture, then add our user as
+        an applicant to each of them.
+
+        Please note, this currently uses a mish-mash of both fixtures
+        and programmatically created users and objects.
+        """
+        # self.wmo = Wmo(
+        #    status=0,
+        #    metc="N",
+        #    is_medical="N",
+        # )
+        # self.wmo.save() #'AssignmentTestCase' object has no attribute 'wmo'
+        self.proposal = Proposal.objects.get(pk=4)
+        self.proposal.supervisor = self.supervisor
+        self.proposal.generate_pdf()
+        self.proposal.applicants.add(self.user)
+        # self.proposal.wmo = self.wmo
+
+        self.proposal.wmo = Wmo.objects.create(
+            proposal=self.proposal,
+            metc=YesNoDoubt.NO,
+        )
+
+        self.proposal.save()
+        """self.pre_assessment = Proposal.objects.get(pk=2)
+        self.pre_assessment.applicants.add(self.user)
+        self.pre_assessment.save()
+        self.pre_approval = Proposal.objects.get(pk=3)
+        self.pre_approval.applicants.add(self.user)
+        self.pre_approval.save()"""
+
+        # setup_proposal2 stuff
+        self.study = Study.objects.create(
+            proposal=self.proposal,
+            order=1,
+            compensation=Compensation.objects.get(
+                pk=2,
+            ),
+        )
+
+    def setup_proposal2(self):
         self.proposal = Proposal.objects.create(
             title="p1",
             reference_number=generate_ref_number(),
             date_start=date.today(),
-            created_by=self.user,
-            supervisor=self.supervisor,
+            created_by=self.user,  #
+            supervisor=self.supervisor,  #
             relation=Relation.objects.get(pk=4),
-            reviewing_committee=Group.objects.get(
+            reviewing_committee=Group.objects.get(  # ?
                 name=settings.GROUP_LINGUISTICS_CHAMBER
             ),
-            institution_id=1,
+            institution_id=1,  # ?
         )
         self.proposal.applicants.add(
             self.user,
@@ -285,7 +327,11 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)
 
         review = self.proposal.latest_review()
-        self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
+        self.assertEqual(
+            review.stage,
+            review.Stages.ASSIGNMENT,
+            "tested proposal does not match stage",
+        )
 
 
 class AssignmentTestCase(BaseReviewTestCase):
