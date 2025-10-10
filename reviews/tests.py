@@ -37,6 +37,8 @@ class BaseReviewTestCase(TestCase):
         "groups",
         "institutions",
         "fundings",
+        "testing/test_users",  # test user with pk=5 has the test proposals,
+        "testing/test_proposals",
     ]
     relation_pk = 1
 
@@ -44,7 +46,6 @@ class BaseReviewTestCase(TestCase):
         """
         Sets up the Users and a default Proposal to use in the tests below.
         """
-        self.studentRelation: Relation = Relation.objects.get(pk=4)
         self.setup_users()
         self.setup_proposal()
         super().setUp()
@@ -56,7 +57,7 @@ class BaseReviewTestCase(TestCase):
             date_start=date.today(),
             created_by=self.user,
             supervisor=self.supervisor,
-            relation=self.studentRelation,
+            relation=Relation.objects.get(pk=4),
             reviewing_committee=Group.objects.get(
                 name=settings.GROUP_LINGUISTICS_CHAMBER
             ),
@@ -129,6 +130,7 @@ class BasePreAssessmentTestCase(BaseReviewTestCase):
 
     def setup_pre_assessment(self):
         """Create pre-assessment data. also called Preliminary assessment."""
+        self.studentRelation: Relation = Relation.objects.get(pk=4)
         self.pre_assessment = Proposal.objects.create(
             is_pre_assessment=True,
             created_by=self.user,
