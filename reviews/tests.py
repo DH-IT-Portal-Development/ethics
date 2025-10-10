@@ -110,7 +110,7 @@ class BaseReviewTestCase(TestCase):
         self.review.refresh_from_db()
         self.proposal.refresh_from_db()
 
-    def check_subject_lines(self, proposal: Proposal, outbox):
+    def check_subject_lines(self, outbox):
         """
         Make sure every outgoing email contains a reference number and the
         text FETC-GW
@@ -118,7 +118,7 @@ class BaseReviewTestCase(TestCase):
         for message in outbox:
             subject = message.subject
             self.assertTrue("FETC-GW" in subject)
-            self.assertTrue(proposal.reference_number in subject)
+            self.assertTrue(self.proposal.reference_number in subject)
 
 
 class BasePreAssessmentTestCase(BaseReviewTestCase):
@@ -193,7 +193,7 @@ class BasePreAssessmentTestCase(BaseReviewTestCase):
         self.pre_assessment.refresh_from_db()
 
 
-class ReviewTestCase(BasePreAssessmentTestCase):
+class ReviewTestCase(BaseReviewTestCase):
 
     def test_start_supervisor_review(self):
         """
@@ -208,7 +208,7 @@ class ReviewTestCase(BasePreAssessmentTestCase):
         self.assertEqual(review.decision_set.count(), 1)
 
         self.assertEqual(len(mail.outbox), 2)  # check we sent 2 emails
-        self.check_subject_lines(self.proposal, mail.outbox)
+        self.check_subject_lines(mail.outbox)
         mail.outbox = []
 
     def test_start_review(self):
@@ -224,10 +224,10 @@ class ReviewTestCase(BasePreAssessmentTestCase):
         self.assertEqual(review.decision_set.count(), 1)
 
         self.assertEqual(len(mail.outbox), 2)
-        self.check_subject_lines(self.proposal, mail.outbox)
+        self.check_subject_lines(mail.outbox)
 
 
-class SupervisorTestCase(BasePreAssessmentTestCase):
+class SupervisorTestCase(BaseReviewTestCase):
 
     def test_supervisor_review(self):
         """
@@ -247,7 +247,7 @@ class SupervisorTestCase(BasePreAssessmentTestCase):
         # Reminders should now be sent
         remind_supervisor_reviewers()
         self.assertEqual(len(mail.outbox), 3)
-        self.check_subject_lines(self.proposal, mail.outbox)
+        self.check_subject_lines(mail.outbox)
         # Clear outbox
         mail.outbox = []
 
@@ -273,7 +273,7 @@ class SupervisorTestCase(BasePreAssessmentTestCase):
         review.refresh_from_db()
         self.assertEqual(review.go, False)
 
-    def _test_positive_supervisor_decision(self):
+    def test_positive_supervisor_decision(self):
         review = start_review(self.proposal)
         self.assertEqual(review.go, None)
 
