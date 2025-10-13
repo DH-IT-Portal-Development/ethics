@@ -411,10 +411,10 @@ class PreAssessmentAutoReviewTestCase(AutoReviewTests):
         pass
 
     def test_auto_review_registration_age_min(self):
-        pass
+        pass  # pre assessement does not have age groups
 
     def test_auto_review_minors_to_longroute(self):
-        pass
+        pass  # pre assessement does not have age groups
 
 
 class ReviewCloseTestCase(
