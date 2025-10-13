@@ -66,7 +66,7 @@
             3
         ],
         "applicants": [
-            5
+            1,5
         ]
     }
 },
@@ -137,7 +137,7 @@
             2
         ],
         "applicants": [
-            5
+            1,5
         ]
     }
 },
@@ -208,7 +208,7 @@
             1
         ],
         "applicants": [
-            5
+            1,5
         ]
     }
 },
@@ -272,7 +272,7 @@
       "student_context_details": null,
       "student_justification": "",
       "created_by": 5,
-      "supervisor": null,
+      "supervisor": 2,
       "parent": null,
       "is_revision": false,
       "funding": [
@@ -282,5 +282,76 @@
           5
       ]
   }
+},
+{
+"model": "proposals.proposal",
+"pk": 5,
+"fields": {
+    "reference_number": "25-012-01",
+    "reviewing_committee": 3,
+    "institution": 4,
+    "date_start": "2042-12-25",
+    "expected_end_date": "2044-12-27",
+    "title": "Preassessment test proposal with supervisor",
+    "summary": "",
+    "other_applicants": false,
+    "other_stakeholders": false,
+    "stakeholders": "",
+    "translated_forms": null,
+    "translated_forms_languages": null,
+    "funding_details": "",
+    "funding_name": "aaaaa",
+    "comments": "asdfda",
+    "inform_local_staff": null,
+    "embargo": null,
+    "embargo_end_date": null,
+    "in_archive": false,
+    "is_pre_assessment": true,
+    "pre_assessment_pdf": "test_pdf.pdf",
+    "is_pre_approved": null,
+    "pre_approval_institute": null,
+    "pre_approval_pdf": "",
+    "in_course": false,
+    "is_exploration": false,
+    "pdf": "",
+    "studies_similar": null,
+    "studies_number": 1,
+    "status": 1,
+    "status_review": null,
+    "privacy_officer_conversation": null,
+    "data_manager_conversation": true,
+    "research_data_management_conversation": true,
+    "dmp_file": "",
+    "confirmation_comments": "",
+    "date_created": "2024-12-23T10:30:40.272Z",
+    "date_modified": "2024-12-23T10:35:22.000Z",
+    "date_submitted_supervisor": null,
+    "date_reviewed_supervisor": null,
+    "date_submitted": null,
+    "date_reviewed": null,
+    "date_confirmed": null,
+    "has_minor_revision": false,
+    "minor_revision_description": null,
+    "self_assessment": "asdf",
+    "knowledge_security": "",
+    "knowledge_security_details": "",
+    "researcher_risk": "",
+    "researcher_risk_details": "",
+    "relation": 4,
+    "student_program": "",
+    "student_context": null,
+    "student_context_details": null,
+    "student_justification": "",
+    "created_by": 4,
+    "supervisor": 2,
+    "parent": null,
+    "is_revision": false,
+    "funding": [
+        2
+    ],
+    "applicants": [
+        5
+    ]
+    }
 }
 ]

@@ -1,4 +1,3 @@
-from datetime import date, timedelta
 from copy import copy
 
 from django.conf import settings
@@ -7,6 +6,7 @@ from django.contrib.auth.models import User, Group, AnonymousUser
 from django.test import TestCase
 from django.utils import timezone
 
+from proposals.tests import BaseProposalTestCase
 from .models import Review, Decision
 from .utils import (
     start_review,
@@ -16,118 +16,55 @@ from .utils import (
 )
 from main.tests import BaseViewTestCase
 from main.models import YesNoDoubt
-from proposals.models import Proposal, Relation, Wmo, Funding
-from proposals.utils import generate_ref_number
+from proposals.models import Proposal, Relation, Wmo
 from studies.models import Study, Compensation, AgeGroup, Registration
 from observations.models import Observation
 from reviews.utils.review_utils import remind_supervisor_reviewers
-from interventions.models import Intervention
 from tasks.models import Session, Task
 
 from .views import ReviewCloseView
 
 
-class BaseReviewTestCase(TestCase):
-    fixtures = [
-        "relations",
-        "compensations",
-        "00_registrations",
-        "01_registrationkinds",
-        "agegroups",
-        "groups",
-        "institutions",
-        "fundings",
-        "testing/test_users",  # test user with pk=5 has the test proposals,
-        "testing/test_proposals",
-    ]
+class BaseReviewTestCase(BaseProposalTestCase):
     relation_pk = 1
+    review = None
 
     def setUp(self):
-        """
-        Sets up the Users and a default Proposal to use in the tests below.
-        """
-        self.setup_users()
-        self.setup_proposal()
         super().setUp()
 
     def setup_proposal(self):
-        """
-        Load our test proposals from a fixture, then add our user as
-        an applicant to each of them.
-
-        Please note, this currently uses a mish-mash of both fixtures
-        and programmatically created users and objects.
-        """
-        self.proposal = Proposal.objects.get(pk=4)
-        self.proposal.supervisor = self.supervisor
-        self.proposal.generate_pdf()  # TODO find out why is this needed? works fine without it.
-        # self.proposal.applicants.add(self.user)
-        # self.proposal.wmo = self.wmo
-
-        self.proposal.wmo = Wmo.objects.create(
-            proposal=self.proposal,
-            metc=YesNoDoubt.NO,
-        )
-
-        self.proposal.save()
-        """self.pre_assessment = Proposal.objects.get(pk=2)
-        self.pre_assessment.applicants.add(self.user)
-        self.pre_assessment.save()
-        self.pre_approval = Proposal.objects.get(pk=3)
-        self.pre_approval.applicants.add(self.user)
-        self.pre_approval.save()"""
-
-        # study is needed for reviews. #TODO add to fixtures somehow
-        self.study = Study.objects.create(
-            proposal=self.proposal,
-            order=1,
-            compensation=Compensation.objects.get(
-                pk=2,
-            ),
-        )
-
-    def setup_proposal2(self):
-        self.proposal = Proposal.objects.create(
-            title="p1",
-            reference_number=generate_ref_number(),
-            date_start=date.today(),
-            created_by=self.user,  #
-            supervisor=self.supervisor,  #
-            relation=Relation.objects.get(pk=4),
-            reviewing_committee=Group.objects.get(  # ?
-                name=settings.GROUP_LINGUISTICS_CHAMBER
-            ),
-            institution_id=1,  # ?
-        )
-        self.proposal.applicants.add(
-            self.user,
-        )
-        self.proposal.wmo = Wmo.objects.create(
-            proposal=self.proposal,
-            metc=YesNoDoubt.NO,
-        )
-        self.study = Study.objects.create(
-            proposal=self.proposal,
-            order=1,
-            compensation=Compensation.objects.get(
-                pk=2,
-            ),
+        # Overrides parent
+        self.proposal = Proposal.objects.get(
+            reference_number="25-009-01", title="Normal test proposal with supervisor"
         )
         self.proposal.generate_pdf()
 
-    def setup_users(self):
-        self.secretary = User.objects.get(username="secretary")
-        self.c1 = User.objects.get(username="c1")
-        self.c2 = User.objects.get(username="c2")
-        self.user = User.objects.get(username="user")
-        self.supervisor = User.objects.get(username="supervisor")
+        self.proposal.wmo = Wmo.objects.create(
+            proposal=self.proposal,
+            metc=YesNoDoubt.NO,
+        )
+        self.proposal.save()
+
+        self.study = Study.objects.create(
+            proposal=self.proposal,
+            order=1,
+            compensation=Compensation.objects.get(
+                pk=2,
+            ),
+        )
+        self.pre_assessment = Proposal.objects.get(
+            reference_number="25-012-01",
+            title="Preassessment test proposal with supervisor",
+        )
+        self.pre_assessment.wmo = Wmo.objects.create(
+            proposal=self.pre_assessment,
+            metc=YesNoDoubt.NO,
+        )
+        self.pre_assessment.save()
 
     def refresh(self):
-        """Refresh objects from DB. This is sometimes necessary if you access
-        attributes you previously read during the test and don't want to
-        receive a cached value."""
+        super().refresh()
         self.review.refresh_from_db()
-        self.proposal.refresh_from_db()
 
     def check_subject_lines(self, outbox):
         """
@@ -139,77 +76,33 @@ class BaseReviewTestCase(TestCase):
             self.assertTrue("FETC-GW" in subject)
             self.assertTrue(self.proposal.reference_number in subject)
 
-
-class BasePreAssessmentTestCase(BaseReviewTestCase):
-    def setUp(self):
-        super().setUp()
-        self.language_sciences_pk = 1
-        self.direct_funding: Funding = Funding.objects.get(pk=2)
-        self.setup_pre_assessment()
-
-    def setup_pre_assessment(self):
-        """Create pre-assessment data. also called Preliminary assessment."""
-        self.studentRelation: Relation = Relation.objects.get(pk=4)
-        self.pre_assessment = Proposal.objects.create(
-            is_pre_assessment=True,
-            created_by=self.user,
-            reference_number=generate_ref_number(),
-            # 1. basic details
-            # What is the title of your application? This title will be used in all formal correspondence.
-            title="pre_proposal",
-            # What is the desired starting date of the actual research for which this application is being submitted?
-            date_start=date.today(),
-            # What is the expected end date of the research for which this application is being submitted?
-            expected_end_date=date.today() + timedelta(days=1),
-            # To which research institute are you affiliated?
-            institution_id=self.language_sciences_pk,
-            reviewing_committee=Group.objects.get(
-                name=settings.GROUP_LINGUISTICS_CHAMBER
-            ),
-            # In what capacity are you involved in this application?
-            relation=self.studentRelation,
-            # Promotor/Supervisor
-            supervisor=self.supervisor,  # requirement: relation needs a supervisor
+    def remove_supervisor_from_proposal(self):
+        self.proposal.relation = Relation.objects.get(
+            description_nl="als postdoc, UD, UHD, of HL"
         )
-        # Are there any other researchers involved affiliated with ICON, OFR, OGK or ILS?
-        self.pre_assessment.applicants.add(
-            self.user,
-        )
-        # Are there any other researchers involved outside the above-mentioned institutes?
-        self.pre_assessment.other_stakeholders = False
-        # How is this study funded?
-        self.pre_assessment.funding.add(self.direct_funding)
-        # Upload your application here (in .pdf or .doc(x)-format)
-        self.pre_assessment.pre_assessment_pdf = None
-        # What are the most important ethical considerations in this research?
-        self.pre_assessment.self_assessment = "Wat zijn de belangrijkste ethische kwesties in dit onderzoek en beschrijf kort hoe je daarmee omgaat."
-        # 2. WMO
-        # Will the data collection take place at the UMC Utrecht or another institution for which an assessment by a METC is required?
-        # Is the nature of the research question medical (as defined by the Medical Research Involving Human Subjects Act (WMO))?
-        self.pre_assessment.wmo = Wmo.objects.create(
-            proposal=self.pre_assessment,
-            metc=YesNoDoubt.NO,
-        )
-        # 3. Documents
-        # Optional File
-        # No Data yet added
-        # 4. Submit
-        # Space for possible comments. Use a maximum of 1000 words.
-        self.pre_assessment.comments = "Space for possible comments"
+        self.proposal.supervisor = None
+        self.proposal.save()
 
-        self.study = Study.objects.create(
-            proposal=self.pre_assessment,
-            order=1,
-            compensation=Compensation.objects.get(
-                pk=2,
-            ),
+
+class InterferenceTestCase(BaseReviewTestCase):
+    """Checks if tests interact with each other. More specifically, if the fixtures remain correct,
+    most likely temp tests to prove they don't"""
+
+    def test_create_interference(self):
+        self.proposal.title = "This title is changed between tests"
+        self.proposal.save()
+        self.changed_proposal = Proposal.objects.get(pk=4)
+        self.assertEqual(
+            self.changed_proposal.title, "This title is changed between tests"
         )
 
-        self.pre_assessment.generate_pdf()  # this also generates with start_review, possible redundancy
-
-    def refresh(self):
-        super().refresh()
-        self.pre_assessment.refresh_from_db()
+    def test_interference(self):
+        self.changed_proposal = Proposal.objects.get(pk=4)
+        self.assertNotEqual(
+            self.changed_proposal.title,
+            "This title is changed between tests",
+            "If this test goes wrong then that means the DB has changed between tests. Somthing that should not happen.",
+        )
 
 
 class ReviewTestCase(BaseReviewTestCase):
@@ -231,8 +124,7 @@ class ReviewTestCase(BaseReviewTestCase):
 
     def test_start_review(self):
         # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
-        self.proposal.relation = Relation.objects.get(pk=5)
-        self.proposal.save()
+        self.remove_supervisor_from_proposal()
 
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
@@ -243,6 +135,13 @@ class ReviewTestCase(BaseReviewTestCase):
 
         self.assertEqual(len(mail.outbox), 2)
         self.check_subject_lines(mail.outbox)
+
+
+class PreAssessmentReviewTestCase(ReviewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
 
 
 class SupervisorTestCase(BaseReviewTestCase):
@@ -306,12 +205,11 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
 
 
-class AssignmentTestCase(BaseReviewTestCase):
-    def test_assignment(self):
-        """
-        Tests whether the assignment works correctly.
-        """
-        pass
+class PreAssessmentSupervisorTestCase(SupervisorTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
 
 
 class CommissionTestCase(BaseReviewTestCase):
@@ -319,9 +217,7 @@ class CommissionTestCase(BaseReviewTestCase):
         """
         Tests whether the commission phase in a Review works correctly.
         """
-        # Set the relation to a supervisor so we can skip the first phase
-        self.proposal.relation = Relation.objects.get(pk=5)
-        self.proposal.save()
+        self.remove_supervisor_from_proposal()
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
         self.assertEqual(review.go, None)
@@ -356,6 +252,13 @@ class CommissionTestCase(BaseReviewTestCase):
         decisions[1].save()
         review.refresh_from_db()
         self.assertEqual(review.go, True)  # go
+
+
+class PreAssessmentCommissionTestCase(CommissionTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
 
 
 class AutoReviewTests(BaseReviewTestCase):
@@ -495,6 +398,25 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
 
+class PreAssessmentAutoReviewTestCase(AutoReviewTests):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+    def test_auto_review(self):
+        pass
+
+    def test_auto_review_session_time(self):
+        pass
+
+    def test_auto_review_registration_age_min(self):
+        pass
+
+    def test_auto_review_minors_to_longroute(self):
+        pass
+
+
 class ReviewCloseTestCase(
     BaseViewTestCase,
     BaseReviewTestCase,
@@ -620,3 +542,19 @@ class ReviewCloseTestCase(
             self.proposal.wmo.enforced_by_commission,
             True,
         )
+
+
+class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+    def test_open_review(self):
+        pass
+
+    def test_metc(self):
+        pass
+
+    def test_decision(self):
+        pass

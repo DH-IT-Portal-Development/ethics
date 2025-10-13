@@ -52,11 +52,7 @@ class BaseProposalTestCase(TestCase):
 
     def setup_proposal(self):
         """
-        Load our test proposals from a fixture, then add our user as
-        an applicant to each of them.
-
-        Please note, this currently uses a mish-mash of both fixtures
-        and programmatically created users and objects.
+        Load our test proposals from a fixture
         """
         self.wmo = Wmo(
             status=0,
@@ -64,16 +60,17 @@ class BaseProposalTestCase(TestCase):
             is_medical="N",
         )
         self.wmo.save()
-        self.proposal = Proposal.objects.get(pk=1)
-        self.proposal.applicants.add(self.user)
+        self.proposal = Proposal.objects.get(
+            reference_number="24-009-01", title="Normal test proposal"
+        )
         self.proposal.wmo = self.wmo
         self.proposal.save()
-        self.pre_assessment = Proposal.objects.get(pk=2)
-        self.pre_assessment.applicants.add(self.user)
-        self.pre_assessment.save()
-        self.pre_approval = Proposal.objects.get(pk=3)
-        self.pre_approval.applicants.add(self.user)
-        self.pre_approval.save()
+        self.pre_assessment = Proposal.objects.get(
+            reference_number="24-010-01", title="Preassessment test proposal"
+        )
+        self.pre_approval = Proposal.objects.get(
+            reference_number="24-011-01", title="Preapproved test pdf"
+        )
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
