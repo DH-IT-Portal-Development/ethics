@@ -1,0 +1,13 @@
+[
+    {
+        "model": "studies.study",
+        "pk": 5,
+        "fields": {
+          "name" : "study with adults",
+          "proposal": 5,
+          "order": 1,
+          "compensation": 2,
+          "age_groups" : [3,5]
+        }
+    }
+]

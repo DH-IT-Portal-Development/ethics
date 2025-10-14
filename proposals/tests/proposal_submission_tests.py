@@ -32,6 +32,7 @@ class BaseProposalTestCase(TestCase):
         "01_registrationkinds",
         "testing/test_users",
         "testing/test_proposals",
+        "testing/test_studies",
     ]
 
     def setUp(self):

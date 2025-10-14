@@ -45,17 +45,21 @@ class BaseReviewTestCase(BaseProposalTestCase):
         )
         self.proposal.save()
 
-        self.study = Study.objects.create(
+        self.proposal.study = Study.objects.create(
             proposal=self.proposal,
-            order=1,
+            order=2,
             compensation=Compensation.objects.get(
                 pk=2,
             ),
         )
+        self.proposal.study = Study.objects.get(pk=5)
+        # self.study2 = Study.objects.get(pk=5)
         self.pre_assessment = Proposal.objects.get(
             reference_number="25-012-01",
             title="Preassessment test proposal with supervisor",
         )
+        # self.pre_assessment.study = Study.objects.get(pk=1)
+
         self.pre_assessment.wmo = Wmo.objects.create(
             proposal=self.pre_assessment,
             metc=YesNoDoubt.NO,
@@ -271,6 +275,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.psychofysiological_measurement = Registration.objects.get(
             description="psychofysiologische meting (bijv. EEG, fMRI, EMA)"
         )
+        self.study = self.proposal.study
 
     def test_auto_review(self):
         reasons = auto_review(self.proposal)
@@ -280,42 +285,66 @@ class AutoReviewTests(BaseReviewTestCase):
         self.study.save()
 
         reasons = auto_review(self.proposal)
+        self.assertEqual(
+            reasons[-1], "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
+        )
         self.assertEqual(len(reasons), 1)
 
         self.study.deception = YesNoDoubt.DOUBT
         self.study.save()
 
         reasons = auto_review(self.proposal)
+        self.assertEqual(reasons[-1], "De aanvraag bevat het gebruik van misleiding.")
         self.assertEqual(len(reasons), 2)
 
         self.study.hierarchy = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
+        self.assertEqual(
+            reasons[-1],
+            "Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)",
+        )
         self.assertEqual(len(reasons), 3)
 
         self.study.has_special_details = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
+        self.assertEqual(
+            reasons[-1],
+            "Het onderzoek verzamelt bijzondere persoonsgegevens.",
+        )
         self.assertEqual(len(reasons), 4)
 
         self.study.has_traits = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
+        self.assertEqual(
+            reasons[-1],
+            "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.",
+        )
         self.assertEqual(len(reasons), 5)
 
         self.study.risk = YesNoDoubt.YES
         self.study.save()
 
         reasons = auto_review(self.proposal)
+        self.assertEqual(
+            reasons[-1],
+            "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid van de deelnemers tijdens of na het onderzoek.",
+        )
         self.assertEqual(len(reasons), 6)
 
         self.study.proposal.researcher_risk = YesNoDoubt.YES
         self.study.proposal.save()
 
         reasons = auto_review(self.proposal)
+        self.assertEqual(
+            reasons[-1],
+            "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid van de betrokken onderzoekers.",
+        )
         self.assertEqual(len(reasons), 7)
 
         self.study.negativity = YesNoDoubt.YES
@@ -366,7 +395,7 @@ class AutoReviewTests(BaseReviewTestCase):
         o = Observation.objects.create(study=self.study, days=1, mean_hours=1)
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 0)
+        self.assertEqual(len(reasons), 0, f"Reason ({reasons[0]}) should not be here")
 
         self.study.observation.is_nonpublic_space = True
         self.study.observation.has_advanced_consent = False
