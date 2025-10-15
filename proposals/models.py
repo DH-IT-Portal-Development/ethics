@@ -681,8 +681,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         keep in mind to also check if the user is one of the applicants
         or the supervisor."""
         if (
-            not self.is_pre_assessment
-            and not self.status_review
+            not self.status_review
             and self.status == self.Statuses.DECISION_MADE
             and not self.children.all()
         ):
