@@ -54,12 +54,11 @@ class BaseReviewTestCase(BaseProposalTestCase):
         )
         # self.proposal.study = Study.objects.get(pk=5)
         # self.study2 = Study.objects.get(pk=5)
+
         self.pre_assessment = Proposal.objects.get(
             reference_number="25-012-01",
             title="Preassessment test proposal with supervisor",
         )
-        # self.pre_assessment.study = Study.objects.get(pk=1)
-
         self.pre_assessment.wmo = Wmo.objects.create(
             proposal=self.pre_assessment,
             metc=YesNoDoubt.NO,
@@ -269,12 +268,6 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def setUp(self):
         super().setUp()
-        self.toddlers = AgeGroup.objects.get(description_nl="Peuter")
-        self.adolescents = AgeGroup.objects.get(description_nl="Adolescent")
-        self.adults = AgeGroup.objects.get(description_nl="Volwassene")
-        self.psychofysiological_measurement = Registration.objects.get(
-            description="psychofysiologische meting (bijv. EEG, fMRI, EMA)"
-        )
         self.study = self.proposal.study
 
     def test_auto_review(self):
@@ -355,14 +348,14 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 8)
 
     def test_auto_review_minors_to_longroute(self):
-        self.study.age_groups.set([self.toddlers])
+        self.study.age_groups.set([AgeGroup.objects.get(description_nl="Peuter")])
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
 
     def test_auto_review_adults_to_shortroute(self):
-        self.study.age_groups.set([self.adults])
+        self.study.age_groups.set([AgeGroup.objects.get(description_nl="Volwassene")])
         self.study.save()
 
         reasons = auto_review(self.proposal)
@@ -370,7 +363,7 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def test_auto_review_session_time(self):
         self.study.has_sessions = True
-        self.study.age_groups.set([self.toddlers])
+        self.study.age_groups.set([AgeGroup.objects.get(description_nl="Peuter")])
         self.study.save()
 
         s1 = Session.objects.create(study=self.study, order=1)
@@ -412,14 +405,20 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
     def test_auto_review_registration_age_min(self):
-        self.study.has_sessions = True  # weggehaald in develop
-        self.study.age_groups.set([self.adolescents])
+        self.study.has_sessions = True
+        self.study.age_groups.set([AgeGroup.objects.get(description_nl="Adolescent")])
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)  # adolescents are minors
 
-        self.study.registrations.set([self.psychofysiological_measurement])
+        self.study.registrations.set(
+            [
+                Registration.objects.get(
+                    description="psychofysiologische meting (bijv. EEG, fMRI, EMA)"
+                )
+            ]
+        )
 
         reasons = auto_review(
             self.proposal,
@@ -431,20 +430,9 @@ class AutoReviewTests(BaseReviewTestCase):
 class PreAssessmentAutoReviewTestCase(AutoReviewTests):
 
     def setUp(self):
-        super().setUp()
-        self.proposal = self.pre_assessment
-
-    def test_auto_review(self):
-        pass
-
-    def test_auto_review_session_time(self):
-        pass
-
-    def test_auto_review_registration_age_min(self):
-        pass  # pre assessement does not have age groups
-
-    def test_auto_review_minors_to_longroute(self):
-        pass  # pre assessement does not have age groups
+        super().setUp()  # should be to short route
+        # self.proposal = self.pre_assessment
+        # self.study = None
 
 
 class ReviewCloseTestCase(
@@ -578,13 +566,5 @@ class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
 
     def setUp(self):
         super().setUp()
-        self.proposal = self.pre_assessment
 
-    def test_open_review(self):
-        pass
-
-    def test_metc(self):
-        pass
-
-    def test_decision(self):
-        pass
+    # self.proposal = self.pre_assessment
