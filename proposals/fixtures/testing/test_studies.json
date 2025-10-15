@@ -7,7 +7,7 @@
           "proposal": 5,
           "order": 1,
           "compensation": 2,
-          "age_groups" : [3,5]
+          "age_groups" : []
         }
     }
 ]
