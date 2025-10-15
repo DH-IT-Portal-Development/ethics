@@ -547,4 +547,4 @@ def success_url(self):
     if "save_back" in self.request.POST:
         return self.get_back_url()
     else:
-        return reverse("proposals:my_concepts")
+        return reverse("proposals:my_archive")

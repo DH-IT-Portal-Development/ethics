@@ -116,7 +116,7 @@ def start_supervisor_phase(proposal):
         + reverse("reviews:decide", args=(decision.pk,)),
         "secretary": get_secretary().get_full_name(),
         "revision": proposal.is_revision,
-        "revision_type": proposal.type(),
+        "revision_type": proposal.type,
         "my_supervised": settings.BASE_URL + reverse("proposals:my_supervised"),
     }
     msg_plain = render_to_string("mail/concept_supervisor.txt", params)

@@ -19,6 +19,7 @@ from main.models import YesNoDoubt
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
 from .utils import FilenameFactory, OverwriteStorage
 from datetime import date, timedelta
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -149,6 +150,7 @@ class ProposalQuerySet(models.QuerySet):
 class Proposal(models.Model):
     objects = ProposalQuerySet.as_manager()
 
+    # Integers are used in >= expressions. Changing the integers also changes their behaviour.
     class Statuses(models.IntegerChoices):
         DRAFT = 1, _("Concept")
         SUBMITTED_TO_SUPERVISOR = 40, _(
@@ -448,6 +450,15 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         default=Statuses.DRAFT,
     )
 
+    def get_detailed_state(self) -> str:
+        # state == status, we just have the dutch version of state in proposal for some reason.
+        if self.status >= Proposal.Statuses.DECISION_MADE:
+            return self.latest_review().get_continuation_display()
+        else:
+            return self.get_status_display()
+            # get_status_display() does not exist in proposal, why this still works:
+            # https://docs.djangoproject.com/en/4.2/ref/models/instances/#django.db.models.Model.get_FOO_display
+
     status_review = models.BooleanField(
         default=None,
         null=True,
@@ -513,6 +524,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
     date_submitted_supervisor = models.DateTimeField(null=True)
     date_reviewed_supervisor = models.DateTimeField(null=True)
     date_submitted = models.DateTimeField(null=True)
+    # date_submitted to committee
     date_reviewed = models.DateTimeField(null=True)
     date_confirmed = models.DateField(
         _("Datum bevestigingsbrief verstuurd"),
@@ -638,6 +650,14 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         related_name="applicants",
     )
 
+    def get_applicants_names(self) -> str:
+        users = ""
+        for user in self.applicants.all():
+            if users != "":
+                users += ", "
+            users += user.get_full_name()
+        return users
+
     supervisor = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         verbose_name=_("Promotor/Begeleider"),
@@ -757,6 +777,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         if self.is_revision and self.parent:
             return _("Amendement") if self.parent.status_review else _("Revisie")
 
+    @property
     def type(self):
         """
         Returns the type of a Study: either normal, revision, amendment, preliminary assessment or practice
@@ -791,6 +812,13 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
             start_supervisor_phase(self)
 
             return self.supervisor_decision()
+
+    """DDV link_attr required a field in the given model, in this case proposal."""
+
+    @property
+    def supervisor_decision_pk(self):
+        supervisor_decision = self.supervisor_decision()
+        return supervisor_decision.pk
 
     def latest_review(self):
         from reviews.models import Review

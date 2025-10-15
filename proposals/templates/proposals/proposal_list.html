@@ -3,111 +3,16 @@
 {% load vue_tags %}
 {% load static %}
 {% load i18n %}
-
-{% get_current_language as LANGUAGE_CODE %}
-{% block header_title %}{{ title }} - {{ block.super }}{% endblock %}
+{% load vue3 %}
 
 {% block html_head %}
-    {# This template loads in either the dev or prod Vue library, depending on settings.DEBUG #}
-    {% include 'cdh.vue/vueloader.html' %}
-    {# Load in the base component FancyList #}
-    {% load_vue_component 'FancyList' %}
-    {% include 'proposals/vue_templates/proposal_list.html' %}
-    <script>
-        // Needs to be wrapped into an onload to ensure all dependencies are loaded
-        window.onload = _ => {
-            Vue.createFancyList("#list", "#proposalsUFLList", '{{ LANGUAGE_CODE }}', '{{ data_url }}');
-        }
-    </script>
+    {% load_vue_libs %}
+    <script src="{% static 'cdh.vue3/components/uu-list/UUList.iife.js' %}"></script>
 {% endblock %}
 
 {% block content %}
-    <div class="uu-container">
-        <div class="col-12">
-            <h2>{{ title }}</h2>
-            {% static "proposals/images/page_white_go.png" as img_next %}
-            {% static "proposals/images/arrow_divide.png" as img_diff %}
-            {% static "proposals/images/delete.png" as img_delete %}
-            {% static "main/images/page_white_acrobat.png" as img_pdf %}
-            {% static "proposals/images/folder_delete.png" as img_hide %}
-            {% static "proposals/images/folder_add.png" as img_add %}
-            {% static 'reviews/images/scale.png' as img_decide %}
-            {% static 'proposals/images/edit-undo.png' as img_revise %}
-            <p>{{ body }}</p>
-            <h3>{% trans "Uitleg" %}</h3>
-            <ul>
-                {% if modifiable %}
-                    <li>
-                        {% blocktrans trimmed %}
-                            Klik op
-                            <img src="{{ img_next }}" title="Naar volgende stap">
-                            om naar de volgende stap in
-                            het proces
-                            te gaan.
-                        {% endblocktrans %}
-                    </li>
-                    <li>
-                        {% blocktrans trimmed %}
-                            Klik op
-                            <img src="{{ img_diff }}" title="Toon verschillen">
-                            om de verschillen met de
-                            voorgaande
-                            versie te zien (alleen beschikbaar voor revisies/amendementen).
-                        {% endblocktrans %}
-                    </li>
-                    <li>
-                        {% blocktrans trimmed %}
-                            Klik op
-                            <img src="{{ img_delete }}" title="Verwijderen">
-                            om je aanvraag te verwijderen.
-                        {% endblocktrans %}
-                    </li>
-                {% endif %}
-                {% if submitted %}
-                    <li>
-                        {% blocktrans trimmed %}
-                            Klik op
-                            <img src="{{ img_pdf }}" title="Inzien">
-                            om een ingediende aanvraag in te zien.
-                        {% endblocktrans %}
-                    </li>
-                    <li>
-                        {% blocktrans trimmed %}
-                            Klik op
-                            <img src="{{ img_revise }}" title="Maak revisie">
-                            om een revisie aan te maken van je aanvraag.
-                        {% endblocktrans %}
-                    </li>
-                {% endif %}
-                {% if supervised %}
-                    <li>
-                        {% blocktrans trimmed %}
-                            Klik op
-                            <img src="{{ img_decide }}" title="Beslissen">
-                            om je beslissing door te geven (als eindverantwoordelijke).
-                        {% endblocktrans %}
-                    </li>
-                {% endif %}
-                {% if is_secretary %}
-                    <li>
-                        {% blocktrans trimmed %}
-                            Klik op
-                            <img src="{{ img_hide }}" title="Verbergen">
-                            om een ingediende aanvraag te verbergen
-                            uit het archief.
-                        {% endblocktrans %}
-                    </li>
-                    <li>
-                        {% blocktrans trimmed %}
-                            Klik op
-                            <img src="{{ img_add }}" title="Toevoegen">
-                            om een ingediende aanvraag toe te voegen
-                            aan het archief.
-                        {% endblocktrans %}
-                    </li>
-                {% endif %}
-            </ul>
-            <div id="list"></div>
-        </div>
+    <div class="uu-hero">
+        <h2>{{ title }}</h2>
     </div>
+    {% vue UUList :config=uu_list_config %}
 {% endblock %}

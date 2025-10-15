@@ -51,24 +51,12 @@ Menu.add_item(
 
 my_proposals_menu = (
     MenuItem(
-        _("Al mijn aanvragen"),
+        _("Mijn aanvragen"),
         reverse("proposals:my_archive"),
-    ),
-    MenuItem(
-        _("Mijn conceptaanvragen"),
-        reverse("proposals:my_concepts"),
     ),
     MenuItem(
         _("Mijn oefenaanvragen"),
         reverse("proposals:my_practice"),
-    ),
-    MenuItem(
-        _("Mijn ingediende aanvragen"),
-        reverse("proposals:my_submitted"),
-    ),
-    MenuItem(
-        _("Mijn afgehandelde aanvragen"),
-        reverse("proposals:my_completed"),
     ),
     MenuItem(
         _("Mijn aanvragen als eindverantwoordelijke"),

@@ -2,14 +2,88 @@ from braces.views import LoginRequiredMixin
 from django.db.models import Q
 from django.utils.translation import gettext_lazy as _
 from rest_framework.authentication import SessionAuthentication
+from rest_framework.filters import OrderingFilter, SearchFilter
+from django_filters import rest_framework as filters
 
+from cdh.vue3.components.uu_list import UUListAPIView
 from reviews.mixins import CommitteeMixin
 from cdh.vue.rest import FancyListApiView
 
 from main.utils import is_secretary
 from reviews.models import Review
-from .serializers import ProposalSerializer
+from .serializers import (
+    ProposalSerializer,
+    ProposalApiSerializer,
+    SupervisedApiSerializer,
+)
 from ..models import Proposal
+
+
+class ProposalFilterSet(filters.FilterSet):
+
+    # WMO_Decision_made is no longer in use.
+    status = filters.MultipleChoiceFilter(
+        label="Status",
+        field_name="status",
+        choices=[
+            choice
+            for choice in Proposal.Statuses.choices
+            if choice[0] != Proposal.Statuses.WMO_DECISION_MADE.value
+        ],
+    )
+
+
+class ProposalApiView(LoginRequiredMixin, UUListAPIView):
+    serializer_class = ProposalApiSerializer
+    filter_backends = [OrderingFilter, SearchFilter, filters.DjangoFilterBackend]
+    filterset_class = ProposalFilterSet
+    search_fields = [
+        "title",
+        "reference_number",
+        "supervisor__first_name",
+        "supervisor__last_name",
+        "applicants__first_name",
+        "applicants__last_name",
+    ]
+    ordering_fields = [
+        "reference_number",
+        "date_submitted",
+        "date_modified",
+    ]
+    ordering = ["-date_modified"]
+
+    def get_queryset(self):
+        return Proposal.objects.filter(
+            Q(applicants=self.request.user),
+            Q(in_course=False) & Q(is_exploration=False),
+        )
+
+
+class MyPracticeApiView(ProposalApiView):
+    """Gets all practise applications including supervisor."""
+
+    # practise proposals for supervisor currently do appear in MySupervised instead of in practise.
+    def get_queryset(self):
+        """Returns all practice Proposals for the current User"""
+        return Proposal.objects.filter(
+            Q(in_course=True) | Q(is_exploration=True),
+            Q(applicants=self.request.user) | Q(supervisor=self.request.user),
+        )
+
+
+class MySupervisedApiView(ProposalApiView):
+    serializer_class = SupervisedApiSerializer
+    ordering_fields = [
+        "reference_number",
+        "date_submitted",
+        "date_modified",
+        "date_submitted_supervisor",
+    ]
+    ordering = "date_submitted_supervisor"
+
+    def get_queryset(self):
+        """Returns all Proposals supervised by the current User"""
+        return Proposal.objects.filter(supervisor=self.request.user)
 
 
 class BaseProposalsApiView(LoginRequiredMixin, FancyListApiView):
@@ -102,40 +176,6 @@ class MyCompletedApiView(BaseProposalsApiView):
         """Returns all completed Proposals for the current User"""
         return self.get_my_proposals().filter(
             status__gte=Proposal.Statuses.DECISION_MADE
-        )
-
-
-class MySupervisedApiView(BaseProposalsApiView):
-    sort_definitions = [
-        FancyListApiView.SortDefinition("date_submitted", _("Datum ingediend")),
-        FancyListApiView.SortDefinition(
-            "date_submitted_supervisor", _("Datum ingediend bij eindverantwoordelijke")
-        ),
-        FancyListApiView.SortDefinition("date_reviewed", _("Datum afgerond")),
-        FancyListApiView.SortDefinition("date_modified", _("Laatst bijgewerkt")),
-    ]
-    default_sort = ("date_submitted_supervisor", "desc")
-
-    def get_context(self):
-        context = super().get_context()
-        context["wants_route_info"] = True
-        return context
-
-    def get_queryset(self):
-        """Returns all Proposals supervised by the current User"""
-        return Proposal.objects.filter(supervisor=self.request.user)
-
-
-class MyPracticeApiView(BaseProposalsApiView):
-    sort_definitions = [
-        FancyListApiView.SortDefinition("date_modified", _("Laatst bijgewerkt")),
-    ]
-
-    def get_queryset(self):
-        """Returns all practice Proposals for the current User"""
-        return Proposal.objects.filter(
-            Q(in_course=True) | Q(is_exploration=True),
-            Q(applicants=self.request.user) | Q(supervisor=self.request.user),
         )
 
 

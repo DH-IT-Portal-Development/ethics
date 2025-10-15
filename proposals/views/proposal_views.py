@@ -8,10 +8,19 @@ from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.db.models.fields.files import FieldFile
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import gettext_lazy as _
 from django.views import generic
 from django.http import FileResponse, HttpResponseRedirect
+
+from cdh.vue3.components.uu_list import (
+    DDVListView,
+    DDVString,
+    DDVDate,
+    DDVButton,
+    DDVLink,
+    DDVActions,
+)
 
 # from easy_pdf.views import PDFTemplateResponseMixin, PDFTemplateView
 from typing import Tuple, Union
@@ -31,6 +40,7 @@ from reviews.mixins import CommitteeMixin, UsersOrGroupsAllowedMixin
 from reviews.utils.review_utils import start_review, start_review_pre_assessment
 from studies.models import Documents
 from attachments.models import Attachment, StudyAttachment, ProposalAttachment
+from ..api.views import ProposalApiView, MySupervisedApiView, MyPracticeApiView
 from ..copy import copy_proposal
 from ..forms import (
     ProposalConfirmationForm,
@@ -86,19 +96,92 @@ class BaseProposalsView(LoginRequiredMixin, generic.TemplateView):
         return context
 
 
-class MyProposalsView(BaseProposalsView):
-    title = _("Mijn aanvraag")
-    body = _("Dit overzicht toont al je aanvragen.")
-    is_modifiable = True
-    is_submitted = True
-    contains_supervised = True
+class PrelabeledDDVColumn:
+    reference_number = DDVString(
+        field="reference_number",
+        label="Ref.Num",
+        css_classes="fw-bold text-danger",
+    )
+    title = DDVString(
+        field="title",
+        label="",
+    )
+    type = DDVString(
+        field="type",
+        label=_("Soort aanvraag"),
+    )
+    usernames = DDVString(
+        field="usernames",
+        label=_("Indieners"),
+    )
+    detailed_state = DDVString(
+        field="detailed_state",
+        label=_("Status"),
+    )
+    date_modified = DDVString(
+        field="date_modified",
+        label=_("Laatst bijgewerkt"),
+    )
+    date_submitted = DDVString(
+        field="date_submitted",
+        label=_("Datum ingediend"),
+    )
+    stage_display = DDVString(
+        field="stage_display",
+        label=_("Stadium"),
+    )
+
+
+class MyProposalsView(LoginRequiredMixin, DDVListView):
+    title = _("Mijn aanvragen")
+    template_name = "proposals/proposal_list.html"
+    model = Proposal
+    data_uri = reverse_lazy("proposals:api:my_proposals")
+    data_view = ProposalApiView
+    columns = [
+        PrelabeledDDVColumn.reference_number,
+        PrelabeledDDVColumn.title,
+        PrelabeledDDVColumn.type,
+        PrelabeledDDVColumn.usernames,
+        PrelabeledDDVColumn.detailed_state,
+        PrelabeledDDVColumn.date_modified,
+        PrelabeledDDVColumn.date_submitted,
+        DDVActions(
+            field="my_proposal_actions",
+            label=_("Acties"),
+        ),
+    ]
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["data_url"] = reverse(
-            "proposals:api:my_archive",
-        )
+        context["title"] = self.title
         return context
+
+
+class MyPracticeView(MyProposalsView):
+    title = _("Mijn oefenaanvragen")
+    data_uri = reverse_lazy("proposals:api:my_practice")
+    data_view = MyPracticeApiView
+
+
+class MySupervisedView(MyProposalsView):
+    title = _("Mijn aanvragen als eindverantwoordelijke")
+    data_uri = reverse_lazy("proposals:api:my_supervised")
+    data_view = MySupervisedApiView
+    columns = [
+        PrelabeledDDVColumn.reference_number,
+        PrelabeledDDVColumn.title,
+        PrelabeledDDVColumn.type,
+        PrelabeledDDVColumn.usernames,
+        PrelabeledDDVColumn.detailed_state,
+        PrelabeledDDVColumn.date_modified,
+        PrelabeledDDVColumn.date_submitted,
+        PrelabeledDDVColumn.stage_display,
+        DDVActions(
+            field="my_supervised_actions",
+            label=_("Acties"),
+        ),
+    ]
 
 
 class MyConceptsView(BaseProposalsView):
@@ -139,40 +222,6 @@ class MyCompletedView(BaseProposalsView):
         context = super().get_context_data(**kwargs)
         context["data_url"] = reverse(
             "proposals:api:my_completed",
-        )
-        return context
-
-
-class MySupervisedView(BaseProposalsView):
-    title = _("Mijn aanvragen als eindverantwoordelijke")
-    body = _(
-        "Dit overzicht toont alle aanvragen waarvan je eindverantwoordelijke " "bent."
-    )
-    is_modifiable = True
-    is_submitted = True
-    contains_supervised = True
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["data_url"] = reverse(
-            "proposals:api:my_supervised",
-        )
-        return context
-
-
-class MyPracticeView(BaseProposalsView):
-    title = _("Mijn oefenaanvragen")
-    body = _(
-        "Dit overzicht toont alle oefenaanvragen waar je als student, \
-onderzoeker of eindverantwoordelijke bij betrokken bent."
-    )
-    is_modifiable = True
-    is_submitted = False
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["data_url"] = reverse(
-            "proposals:api:my_practice",
         )
         return context
 
@@ -305,7 +354,7 @@ class ProposalDelete(DeleteView):
 
     def get_success_url(self):
         """After deletion, return to the concepts overview"""
-        return reverse("proposals:my_concepts")
+        return reverse("proposals:my_archive")
 
 
 class CompareDocumentsView(UsersOrGroupsAllowedMixin, generic.TemplateView):

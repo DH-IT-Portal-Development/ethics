@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     # CDH Core libraries
     "cdh.core",
     "cdh.vue",
+    "cdh.vue3",
     "cdh.rest",
     "cdh.files",
     # Django supplied apps
