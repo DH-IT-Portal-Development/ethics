@@ -47,7 +47,7 @@ class BaseReviewTestCase(BaseProposalTestCase):
 
         self.proposal.study = Study.objects.create(
             proposal=self.proposal,
-            order=2,
+            order=1,
             compensation=Compensation.objects.get(
                 pk=2,
             ),
@@ -62,6 +62,13 @@ class BaseReviewTestCase(BaseProposalTestCase):
         self.pre_assessment.wmo = Wmo.objects.create(
             proposal=self.pre_assessment,
             metc=YesNoDoubt.NO,
+        )
+        self.pre_assessment.study = Study.objects.create(
+            proposal=self.pre_assessment,
+            order=1,
+            compensation=Compensation.objects.get(
+                pk=2,
+            ),
         )
         self.pre_assessment.save()
 
@@ -104,7 +111,7 @@ class InterferenceTestCase(BaseReviewTestCase):
         self.assertNotEqual(
             self.changed_proposal.title,
             "This title is changed between tests",
-            "If this test goes wrong then that means the DB has changed between tests. Somthing that should not happen.",
+            "If this test goes wrong then that means the DB has changed between tests. Something that should not happen.",
         )
 
 
@@ -268,6 +275,9 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def setUp(self):
         super().setUp()
+        self.studyShortCut()
+
+    def studyShortCut(self):
         self.study = self.proposal.study
 
     def test_auto_review(self):
@@ -430,9 +440,11 @@ class AutoReviewTests(BaseReviewTestCase):
 class PreAssessmentAutoReviewTestCase(AutoReviewTests):
 
     def setUp(self):
-        super().setUp()  # should be to short route
-        # self.proposal = self.pre_assessment
-        # self.study = None
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+    def studyShortCut(self):
+        self.study = self.pre_assessment.study
 
 
 class ReviewCloseTestCase(
@@ -443,6 +455,9 @@ class ReviewCloseTestCase(
 
     def setUp(self):
         super().setUp()
+        self.startReview()
+
+    def startReview(self):
         self.review = start_review(self.proposal)
 
     def get_view_path(self):
@@ -527,6 +542,7 @@ class ReviewCloseTestCase(
         self.assertEqual(
             self.review.stage,
             self.review.Stages.CLOSED,
+            f"'{self.review.get_stage_display()}' does not match",
         )
         # A new review should have been created
         # with a decision
@@ -566,5 +582,11 @@ class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
 
     def setUp(self):
         super().setUp()
+        self.proposal = self.pre_assessment
 
-    # self.proposal = self.pre_assessment
+    def startReview(self):
+        # super().startReview()
+        self.review = start_review(self.pre_assessment)
+
+    def test_long_route(self):
+        pass
