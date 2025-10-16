@@ -53,6 +53,7 @@ class GeneralSection(BaseSection):
         "other_stakeholders",
         "stakeholders",
         "date_start",
+        "expected_end_date",
         "title",
         "funding",
         "funding_details",

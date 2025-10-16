@@ -510,6 +510,10 @@ def auto_review(proposal: Proposal):
     reasons = []
 
     for study in proposal.study_set.all():
+
+        if study.age_groups.filter(is_adult=False).exists():
+            reasons.append(_("De aanvraag bevat minderjarigen."))
+
         if study.legally_incapable:
             reasons.append(
                 _("De aanvraag bevat het gebruik van wilsonbekwame volwassenen.")
@@ -635,16 +639,16 @@ def auto_review_observation(observation):
     return reasons
 
 
-def discontinue_review(review):
+def discontinue_review(review: Review):
     """
     Set continuation to discontinued on the given review,
     and set DECISION_MADE on its proposal."""
 
     # Set review continuation
     review.continuation = review.Continuations.DISCONTINUED
-    review.proposal.status = review.proposal.Statuses.DECISION_MADE
     review.stage = review.Stages.CLOSED
-    review.date_end = datetime.datetime.now()
+    review.proposal.status = review.proposal.Statuses.DECISION_MADE
+    review.proposal.date_reviewed = timezone.now()
     review.save()
     review.proposal.save()
 

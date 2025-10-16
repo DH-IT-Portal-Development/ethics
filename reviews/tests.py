@@ -265,6 +265,16 @@ class CommissionTestCase(BaseReviewTestCase):
 
 
 class AutoReviewTests(BaseReviewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.toddlers = AgeGroup.objects.get(description_nl="Peuter")
+        self.adolescents = AgeGroup.objects.get(description_nl="Adolescent")
+        self.adults = AgeGroup.objects.get(description_nl="Volwassene")
+        self.psychofysiological_measurement = Registration.objects.get(
+            description="psychofysiologische meting (bijv. EEG, fMRI, EMA)"
+        )
+
     def test_auto_review(self):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
@@ -317,9 +327,23 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 8)
 
-    def test_auto_review_age_groups(self):
+    def test_auto_review_minors_to_longroute(self):
+        self.study.age_groups.set([self.toddlers])
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 1)
+
+    def test_auto_review_adults_to_shortroute(self):
+        self.study.age_groups.set([self.adults])
+        self.study.save()
+
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 0)
+
+    def test_auto_review_session_time(self):
         self.study.has_sessions = True
-        self.study.age_groups.set(AgeGroup.objects.filter(pk=2))  # toddlers
+        self.study.age_groups.set([self.toddlers])
         self.study.save()
 
         s1 = Session.objects.create(study=self.study, order=1)
@@ -328,17 +352,16 @@ class AutoReviewTests(BaseReviewTestCase):
         self.study.save()
 
         self.assertEqual(s1.net_duration(), 40)
-
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 0)
+        self.assertEqual(len(reasons), 1)  # minors go to longroute.
 
         s1_t2.duration = 30
         s1_t2.save()
         self.study.save()
         self.assertEqual(s1.net_duration(), 50)
-
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 1)
+        self.assertEqual(len(reasons), 2)
+        # reason: minors go to longroute, and session takes longer than 40m for the agegroup toddlers.
 
     def test_auto_review_observation(self):
         self.study.has_observation = True
@@ -361,21 +384,21 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review_observation(o)
         self.assertEqual(len(reasons), 2)
 
-    def test_auto_review_registrations(self):
-        self.study.age_groups.set(AgeGroup.objects.filter(pk=4))  # adolescents
+    def test_auto_review_registration_age_min(self):
+        self.study.has_sessions = True  # weggehaald in develop
+        self.study.age_groups.set([self.adolescents])
         self.study.save()
 
         reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 0)
+        self.assertEqual(len(reasons), 1)  # adolescents are minors
 
-        self.study.registrations.set(
-            Registration.objects.filter(pk=6)
-        )  # psychofysiological measurements
+        self.study.registrations.set([self.psychofysiological_measurement])
 
         reasons = auto_review(
             self.proposal,
         )
-        self.assertEqual(len(reasons), 1)
+        # reason: psychofysiological_measurements for minors detected
+        self.assertEqual(len(reasons), 2)
 
 
 class ReviewCloseTestCase(
