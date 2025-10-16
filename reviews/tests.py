@@ -37,14 +37,6 @@ class BaseReviewTestCase(BaseProposalTestCase):
         self.proposal = Proposal.objects.get(
             reference_number="25-009-01", title="Normal test proposal with supervisor"
         )
-        self.proposal.generate_pdf()
-
-        self.proposal.wmo = Wmo.objects.create(
-            proposal=self.proposal,
-            metc=YesNoDoubt.NO,
-        )
-        self.proposal.study = Study.objects.get(name="study with adults")
-        self.proposal.save()
 
         self.pre_assessment = Proposal.objects.get(
             reference_number="25-012-01",
@@ -54,7 +46,6 @@ class BaseReviewTestCase(BaseProposalTestCase):
             proposal=self.pre_assessment,
             metc=YesNoDoubt.NO,
         )
-        self.pre_assessment.study = Study.objects.get(pk=6)
         self.pre_assessment.save()
 
     def refresh(self):
@@ -76,6 +67,13 @@ class BaseReviewTestCase(BaseProposalTestCase):
             description_nl="als postdoc, UD, UHD, of HL"
         )
         self.proposal.supervisor = None
+        self.proposal.save()
+
+    def add_supervisor_to_proposal(self):
+        self.proposal.relation = Relation.objects.get(
+            description_nl="als AIO / promovendus verbonden"
+        )
+        self.proposal.supervisor = self.supervisor
         self.proposal.save()
 
 
@@ -260,12 +258,16 @@ class AutoReviewTests(BaseReviewTestCase):
 
     def setUp(self):
         super().setUp()
-        self.studyShortCut()
+        self.study = Study.objects.get(proposal=f"{self.proposal.pk}")
 
-    def studyShortCut(self):
-        self.study = self.proposal.study
+    def test_auto_review_pre_assessment_short_route(self):
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 0)
 
     def test_auto_review(self):
+        if self.proposal.is_pre_assessment:
+            return
+
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
 
@@ -343,6 +345,8 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 8)
 
     def test_auto_review_minors_to_longroute(self):
+        if self.proposal.is_pre_assessment:
+            return
         self.study.age_groups.set([AgeGroup.objects.get(description_nl="Peuter")])
         self.study.save()
 
@@ -350,6 +354,8 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 1)
 
     def test_auto_review_adults_to_shortroute(self):
+        if self.proposal.is_pre_assessment:
+            return
         self.study.age_groups.set([AgeGroup.objects.get(description_nl="Volwassene")])
         self.study.save()
 
@@ -357,6 +363,8 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 0)
 
     def test_auto_review_session_time(self):
+        if self.proposal.is_pre_assessment:
+            return
         self.study.has_sessions = True
         self.study.age_groups.set([AgeGroup.objects.get(description_nl="Peuter")])
         self.study.save()
@@ -379,6 +387,8 @@ class AutoReviewTests(BaseReviewTestCase):
         # reason: minors go to longroute, and session takes longer than 40m for the agegroup toddlers.
 
     def test_auto_review_observation(self):
+        if self.proposal.is_pre_assessment:
+            return
         self.study.has_observation = True
         self.study.save()
         o = Observation.objects.create(study=self.study, days=1, mean_hours=1)
@@ -400,6 +410,8 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
     def test_auto_review_registration_age_min(self):
+        if self.proposal.is_pre_assessment:
+            return
         self.study.has_sessions = True
         self.study.age_groups.set([AgeGroup.objects.get(description_nl="Adolescent")])
         self.study.save()
@@ -427,9 +439,7 @@ class PreAssessmentAutoReviewTestCase(AutoReviewTests):
     def setUp(self):
         super().setUp()
         self.proposal = self.pre_assessment
-
-    def studyShortCut(self):
-        self.study = self.pre_assessment.study
+        self.study = None  # overrides old study in setUp above.
 
 
 class ReviewCloseTestCase(
@@ -570,7 +580,6 @@ class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
         self.proposal = self.pre_assessment
 
     def startReview(self):
-        # super().startReview()
         self.review = start_review(self.pre_assessment)
 
     def test_long_route(self):

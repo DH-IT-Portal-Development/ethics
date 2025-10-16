@@ -33,6 +33,7 @@ class BaseProposalTestCase(TestCase):
         "testing/test_users",
         "testing/test_proposals",
         "testing/test_studies",
+        "testing/test_wmos",
     ]
 
     def setUp(self):
@@ -55,17 +56,9 @@ class BaseProposalTestCase(TestCase):
         """
         Load our test proposals from a fixture
         """
-        self.wmo = Wmo(
-            status=0,
-            metc="N",
-            is_medical="N",
-        )
-        self.wmo.save()
         self.proposal = Proposal.objects.get(
             reference_number="24-009-01", title="Normal test proposal"
         )
-        self.proposal.wmo = self.wmo
-        self.proposal.save()
         self.pre_assessment = Proposal.objects.get(
             reference_number="24-010-01", title="Preassessment test proposal"
         )
@@ -151,6 +144,7 @@ class ProposalSubmitTestCase(
             # ,and you have yet to add proposal test data
             self.proposal.status,
             self.proposal.Statuses.DRAFT,
+            f"{self.proposal.get_status_display()} does not match",
         )
         self.assertNotEqual(
             self.proposal.latest_review(),
@@ -195,6 +189,7 @@ class ProposalSubmitTestCase(
         self.assertNotEqual(
             self.proposal.status,
             self.proposal.Statuses.DRAFT,
+            f"{self.proposal.get_status_display()} does not match",
         )
         self.assertNotEqual(
             self.proposal.latest_review(),
