@@ -520,6 +520,8 @@ class ReviewCloseTestCase(
         )
 
     def test_long_route(self):
+        if self.proposal.is_pre_assessment:
+            return
         # If the review uses the long route already, the form
         # won't accept this choice. So we force set it to short.
         self.review.short_route = True
@@ -581,6 +583,3 @@ class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
 
     def startReview(self):
         self.review = start_review(self.pre_assessment)
-
-    def test_long_route(self):
-        pass
