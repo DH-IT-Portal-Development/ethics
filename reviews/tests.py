@@ -1,9 +1,7 @@
 from copy import copy
 
-from django.conf import settings
 from django.core import mail
-from django.contrib.auth.models import User, Group, AnonymousUser
-from django.test import TestCase
+from django.contrib.auth.models import AnonymousUser
 from django.utils import timezone
 
 from proposals.tests import BaseProposalTestCase
@@ -16,8 +14,8 @@ from .utils import (
 )
 from main.tests import BaseViewTestCase
 from main.models import YesNoDoubt
-from proposals.models import Proposal, Relation, Wmo
-from studies.models import Study, Compensation, AgeGroup, Registration
+from proposals.models import Proposal, Relation
+from studies.models import Study, AgeGroup, Registration
 from observations.models import Observation
 from reviews.utils.review_utils import remind_supervisor_reviewers
 from tasks.models import Session, Task
@@ -26,27 +24,16 @@ from .views import ReviewCloseView
 
 
 class BaseReviewTestCase(BaseProposalTestCase):
-    relation_pk = 1
     review = None
 
     def setUp(self):
         super().setUp()
 
-    def setup_proposal(self):
-        # Overrides parent
+    def setup_proposal2(self):
+        super().setup_proposal()
         self.proposal = Proposal.objects.get(
             reference_number="25-009-01", title="Normal test proposal with supervisor"
         )
-
-        self.pre_assessment = Proposal.objects.get(
-            reference_number="25-012-01",
-            title="Preassessment test proposal with supervisor",
-        )
-        self.pre_assessment.wmo = Wmo.objects.create(
-            proposal=self.pre_assessment,
-            metc=YesNoDoubt.NO,
-        )
-        self.pre_assessment.save()
 
     def refresh(self):
         super().refresh()
@@ -69,13 +56,6 @@ class BaseReviewTestCase(BaseProposalTestCase):
         self.proposal.supervisor = None
         self.proposal.save()
 
-    def add_supervisor_to_proposal(self):
-        self.proposal.relation = Relation.objects.get(
-            description_nl="als AIO / promovendus verbonden"
-        )
-        self.proposal.supervisor = self.supervisor
-        self.proposal.save()
-
 
 class InterferenceTestCase(BaseReviewTestCase):
     """Checks if tests interact with each other. More specifically, if the fixtures remain correct,
@@ -84,13 +64,13 @@ class InterferenceTestCase(BaseReviewTestCase):
     def test_create_interference(self):
         self.proposal.title = "This title is changed between tests"
         self.proposal.save()
-        self.changed_proposal = Proposal.objects.get(pk=4)
+        self.changed_proposal = Proposal.objects.get(pk=self.proposal.pk)
         self.assertEqual(
             self.changed_proposal.title, "This title is changed between tests"
         )
 
     def test_interference(self):
-        self.changed_proposal = Proposal.objects.get(pk=4)
+        self.changed_proposal = Proposal.objects.get(pk=self.proposal.pk)
         self.assertNotEqual(
             self.changed_proposal.title,
             "This title is changed between tests",
@@ -104,6 +84,7 @@ class ReviewTestCase(BaseReviewTestCase):
         Tests starting of a Review from a submitted Proposal.
         """
         # If the Relation on a Proposal requires a supervisor, a Review for the supervisor should be started.
+        self.add_supervisor_to_proposal()
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.SUPERVISOR)
         self.assertEqual(review.is_committee_review, False)
@@ -138,6 +119,10 @@ class PreAssessmentReviewTestCase(ReviewTestCase):
 
 
 class SupervisorTestCase(BaseReviewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.add_supervisor_to_proposal()
 
     def test_supervisor_review(self):
         """
@@ -195,7 +180,11 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)
 
         review = self.proposal.latest_review()
-        self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
+        self.assertEqual(
+            review.stage,
+            review.Stages.ASSIGNMENT,
+            f"{review.get_stage_display()} does not match",
+        )
 
 
 class PreAssessmentSupervisorTestCase(SupervisorTestCase):
@@ -203,6 +192,7 @@ class PreAssessmentSupervisorTestCase(SupervisorTestCase):
     def setUp(self):
         super().setUp()
         self.proposal = self.pre_assessment
+        self.add_supervisor_to_proposal()  # needs to override once again.
 
 
 class CommissionTestCase(BaseReviewTestCase):

@@ -20,16 +20,6 @@
           }
     },
     {
-      "model": "proposals.wmo",
-      "pk": 3,
-      "fields": {
-          "proposal": 3,
-          "metc": "N",
-          "is_medical": "N",
-          "status": 0
-          }
-      },
-    {
     "model": "proposals.wmo",
     "pk": 4,
     "fields": {

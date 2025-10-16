@@ -71,6 +71,15 @@ class BaseProposalTestCase(TestCase):
         attributes you previously read during the test and don't want to
         receive a cached value."""
         self.proposal.refresh_from_db()
+        self.pre_assessment.refresh_from_db()
+        self.pre_approval.refresh_from_db()
+
+    def add_supervisor_to_proposal(self):
+        self.proposal.relation = Relation.objects.get(
+            description_nl="als AIO / promovendus verbonden"
+        )
+        self.proposal.supervisor = self.supervisor
+        self.proposal.save()
 
 
 class ProposalSubmitTestCase(
@@ -144,7 +153,7 @@ class ProposalSubmitTestCase(
             # ,and you have yet to add proposal test data
             self.proposal.status,
             self.proposal.Statuses.DRAFT,
-            f"{self.proposal.get_status_display()} does not match",
+            f"{self.proposal.get_status_display()} does match",
         )
         self.assertNotEqual(
             self.proposal.latest_review(),
@@ -165,9 +174,8 @@ class ProposalSubmitTestCase(
         """
         # Select the PHD relation, which needs a supervisor
         # but doesn't check for a study/course
-        self.proposal.relation = Relation.objects.get(pk=4)
-        self.proposal.supervisor = self.supervisor
-        self.proposal.save()
+
+        self.add_supervisor_to_proposal()
         # Sanity checks to start
         self.assertEqual(
             self.proposal.status,
@@ -189,7 +197,7 @@ class ProposalSubmitTestCase(
         self.assertNotEqual(
             self.proposal.status,
             self.proposal.Statuses.DRAFT,
-            f"{self.proposal.get_status_display()} does not match",
+            f"{self.proposal.get_status_display()} does match",
         )
         self.assertNotEqual(
             self.proposal.latest_review(),

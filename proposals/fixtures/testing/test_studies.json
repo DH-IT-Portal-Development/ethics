@@ -1,13 +1,24 @@
 [
+      {
+          "model": "studies.study",
+          "pk": 1,
+          "fields": {
+            "name" : "study with adults",
+            "proposal": 1,
+            "order": 1,
+            "compensation": 2,
+            "age_groups": [5]
+          }
+    },
     {
-        "model": "studies.study",
-        "pk": 4,
-        "fields": {
-          "name" : "study with adults",
-          "proposal": 4,
-          "order": 1,
-          "compensation": 2,
-          "age_groups": [5]
-        }
+          "model": "studies.study",
+          "pk": 4,
+          "fields": {
+            "name" : "study with adults2",
+            "proposal": 4,
+            "order": 1,
+            "compensation": 2,
+            "age_groups": [5]
+          }
     }
 ]
