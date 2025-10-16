@@ -13,6 +13,7 @@ from proposals.views.proposal_views import (
     ProposalSubmitPreApproved,
     ProposalSubmitPreAssessment,
 )
+from studies.models import Study
 
 
 class BaseProposalTestCase(TestCase):
@@ -81,6 +82,9 @@ class BaseProposalTestCase(TestCase):
         self.proposal.supervisor = self.supervisor
         self.proposal.save()
 
+    def remove_study(self):
+        Study.objects.filter(proposal=f"{self.proposal.pk}").delete()
+
 
 class ProposalSubmitTestCase(
     BaseViewTestCase,
@@ -129,6 +133,7 @@ class ProposalSubmitTestCase(
         - Because there is no supervisor, a new review is created
           in the assignment stage.
         """
+        self.remove_study()
         # Sanity checks to start
         self.assertEqual(
             self.proposal.status,
@@ -176,6 +181,8 @@ class ProposalSubmitTestCase(
         # but doesn't check for a study/course
 
         self.add_supervisor_to_proposal()
+        if not self.proposal.is_pre_assessment and not self.proposal.is_pre_approved:
+            self.remove_study()
         # Sanity checks to start
         self.assertEqual(
             self.proposal.status,
