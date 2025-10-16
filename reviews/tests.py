@@ -43,17 +43,8 @@ class BaseReviewTestCase(BaseProposalTestCase):
             proposal=self.proposal,
             metc=YesNoDoubt.NO,
         )
+        self.proposal.study = Study.objects.get(name="study with adults")
         self.proposal.save()
-
-        self.proposal.study = Study.objects.create(
-            proposal=self.proposal,
-            order=1,
-            compensation=Compensation.objects.get(
-                pk=2,
-            ),
-        )
-        # self.proposal.study = Study.objects.get(pk=5)
-        # self.study2 = Study.objects.get(pk=5)
 
         self.pre_assessment = Proposal.objects.get(
             reference_number="25-012-01",
@@ -63,13 +54,7 @@ class BaseReviewTestCase(BaseProposalTestCase):
             proposal=self.pre_assessment,
             metc=YesNoDoubt.NO,
         )
-        self.pre_assessment.study = Study.objects.create(
-            proposal=self.pre_assessment,
-            order=1,
-            compensation=Compensation.objects.get(
-                pk=2,
-            ),
-        )
+        self.pre_assessment.study = Study.objects.get(pk=6)
         self.pre_assessment.save()
 
     def refresh(self):
@@ -341,8 +326,8 @@ class AutoReviewTests(BaseReviewTestCase):
             "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid van de deelnemers tijdens of na het onderzoek.",
         )
 
-        self.study.proposal.researcher_risk = YesNoDoubt.YES
-        self.study.proposal.save()
+        self.proposal.researcher_risk = YesNoDoubt.YES
+        self.proposal.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 7)

@@ -9,5 +9,16 @@
           "compensation": 2,
           "age_groups": [5]
         }
+    },
+    {
+        "model": "studies.study",
+        "pk": 6,
+        "fields": {
+          "name" : "more then one study can be handled by auto review",
+          "proposal": 5,
+          "order": 1,
+          "compensation": 2,
+          "age_groups": []
+        }
     }
 ]
