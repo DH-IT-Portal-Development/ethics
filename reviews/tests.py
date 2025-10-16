@@ -26,56 +26,9 @@ from .views import ReviewCloseView
 class BaseReviewTestCase(BaseProposalTestCase):
     review = None
 
-    def setUp(self):
-        super().setUp()
-
-    def setup_proposal2(self):
-        super().setup_proposal()
-        self.proposal = Proposal.objects.get(
-            reference_number="25-009-01", title="Normal test proposal with supervisor"
-        )
-
     def refresh(self):
         super().refresh()
         self.review.refresh_from_db()
-
-    def check_subject_lines(self, outbox):
-        """
-        Make sure every outgoing email contains a reference number and the
-        text FETC-GW
-        """
-        for message in outbox:
-            subject = message.subject
-            self.assertTrue("FETC-GW" in subject)
-            self.assertTrue(self.proposal.reference_number in subject)
-
-    def remove_supervisor_from_proposal(self):
-        self.proposal.relation = Relation.objects.get(
-            description_nl="als postdoc, UD, UHD, of HL"
-        )
-        self.proposal.supervisor = None
-        self.proposal.save()
-
-
-class InterferenceTestCase(BaseReviewTestCase):
-    """Checks if tests interact with each other. More specifically, if the fixtures remain correct,
-    most likely temp tests to prove they don't"""
-
-    def test_create_interference(self):
-        self.proposal.title = "This title is changed between tests"
-        self.proposal.save()
-        self.changed_proposal = Proposal.objects.get(pk=self.proposal.pk)
-        self.assertEqual(
-            self.changed_proposal.title, "This title is changed between tests"
-        )
-
-    def test_interference(self):
-        self.changed_proposal = Proposal.objects.get(pk=self.proposal.pk)
-        self.assertNotEqual(
-            self.changed_proposal.title,
-            "This title is changed between tests",
-            "If this test goes wrong then that means the DB has changed between tests. Something that should not happen.",
-        )
 
 
 class ReviewTestCase(BaseReviewTestCase):
@@ -98,7 +51,6 @@ class ReviewTestCase(BaseReviewTestCase):
 
     def test_start_review(self):
         # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
-        self.remove_supervisor_from_proposal()
 
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
@@ -200,7 +152,6 @@ class CommissionTestCase(BaseReviewTestCase):
         """
         Tests whether the commission phase in a Review works correctly.
         """
-        self.remove_supervisor_from_proposal()
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
         self.assertEqual(review.go, None)

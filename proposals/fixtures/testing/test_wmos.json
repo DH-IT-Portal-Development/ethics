@@ -18,15 +18,5 @@
           "is_medical": "N",
           "status": 0
           }
-    },
-    {
-    "model": "proposals.wmo",
-    "pk": 4,
-    "fields": {
-        "proposal": 4,
-        "metc": "N",
-        "is_medical": "N",
-        "status": 0
-        }
     }
 ]

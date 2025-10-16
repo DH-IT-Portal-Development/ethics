@@ -85,6 +85,16 @@ class BaseProposalTestCase(TestCase):
     def remove_study(self):
         Study.objects.filter(proposal=f"{self.proposal.pk}").delete()
 
+    def check_subject_lines(self, outbox):
+        """
+        Make sure every outgoing email contains a reference number and the
+        text FETC-GW
+        """
+        for message in outbox:
+            subject = message.subject
+            self.assertTrue("FETC-GW" in subject)
+            self.assertTrue(self.proposal.reference_number in subject)
+
 
 class ProposalSubmitTestCase(
     BaseViewTestCase,
