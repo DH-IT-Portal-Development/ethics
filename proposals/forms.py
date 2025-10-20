@@ -3,7 +3,7 @@
 from braces.forms import UserKwargModelFormMixin
 from django import forms
 from django.contrib.auth import get_user_model
-from django.db.models import Q
+from django.db.models import Q, QuerySet
 
 from django.utils.translation import gettext_lazy as _
 from django.utils.functional import lazy
@@ -16,7 +16,7 @@ from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.models import YesNoDoubt
 from main.utils import YES_NO, get_users_as_list
 from .field import ParentChoiceModelField
-from .models import Proposal, Relation, Wmo
+from .models import Proposal, Relation, Wmo, ProposalQuerySet
 from .utils import check_local_facilities
 from .validators import UniqueTitleValidator
 
@@ -460,20 +460,12 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, TemplatedModelForm):
 
     def _get_parent_queryset(self):
         # Return all proposals, that are not currently in review
-        return (
-            Proposal.objects.filter()
-            .filter(
+        return Proposal.objects.all_proposals_not_in_review().filter(
                 Q(
                     applicants=self.user,
                 )
                 | Q(supervisor=self.user)
             )
-            .filter(
-                Q(status=Proposal.Statuses.DRAFT)
-                | Q(status__gte=Proposal.Statuses.DECISION_MADE)
-            )
-            .distinct()
-        )
 
 
 class ProposalCopyForm(BaseProposalCopyForm):
