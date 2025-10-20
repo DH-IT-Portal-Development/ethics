@@ -3,7 +3,7 @@
 from braces.forms import UserKwargModelFormMixin
 from django import forms
 from django.contrib.auth import get_user_model
-from django.db.models import Q, QuerySet
+from django.db.models import Q
 
 from django.utils.translation import gettext_lazy as _
 from django.utils.functional import lazy
@@ -16,7 +16,7 @@ from main.forms import ConditionalModelForm, SoftValidationMixin
 from main.models import YesNoDoubt
 from main.utils import YES_NO, get_users_as_list
 from .field import ParentChoiceModelField
-from .models import Proposal, Relation, Wmo, ProposalQuerySet
+from .models import Proposal, Relation, Wmo
 from .utils import check_local_facilities
 from .validators import UniqueTitleValidator
 
