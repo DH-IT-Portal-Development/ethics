@@ -461,11 +461,11 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, TemplatedModelForm):
     def _get_parent_queryset(self):
         # Return all proposals, that are not currently in review
         return Proposal.objects.all_proposals_not_in_review().filter(
-                Q(
-                    applicants=self.user,
-                )
-                | Q(supervisor=self.user)
+            Q(
+                applicants=self.user,
             )
+            | Q(supervisor=self.user)
+        )
 
 
 class ProposalCopyForm(BaseProposalCopyForm):

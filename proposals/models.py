@@ -92,9 +92,9 @@ class ProposalQuerySet(models.QuerySet):
 
     def all_proposals_not_in_review(self):
         return self.filter(
-                models.Q(status=Proposal.Statuses.DRAFT)
-                | models.Q(status__gte=Proposal.Statuses.DECISION_MADE)
-            ).distinct()
+            models.Q(status=Proposal.Statuses.DRAFT)
+            | models.Q(status__gte=Proposal.Statuses.DECISION_MADE)
+        ).distinct()
 
     def archive_pre_filter(self):
         return self.filter(
