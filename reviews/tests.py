@@ -31,12 +31,14 @@ class BaseReviewTestCase(TestCase):
     fixtures = [
         "relations",
         "compensations",
+        "fundings",
         "00_registrations",
         "01_registrationkinds",
         "agegroups",
         "groups",
         "institutions",
         "testing/test_users",
+        "testing/test_proposals",
     ]
     relation_pk = 1
 
@@ -49,21 +51,7 @@ class BaseReviewTestCase(TestCase):
         super().setUp()
 
     def setup_proposal(self):
-        self.proposal = Proposal.objects.create(
-            title="p1",
-            reference_number=generate_ref_number(),
-            date_start=date.today(),
-            created_by=self.user,
-            supervisor=self.supervisor,
-            relation=Relation.objects.get(pk=4),
-            reviewing_committee=Group.objects.get(
-                name=settings.GROUP_LINGUISTICS_CHAMBER
-            ),
-            institution_id=1,
-        )
-        self.proposal.applicants.add(
-            self.user,
-        )
+        self.proposal = Proposal.objects.get(pk=4)
         self.proposal.wmo = Wmo.objects.create(
             proposal=self.proposal,
             metc=YesNoDoubt.NO,
