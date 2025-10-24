@@ -459,18 +459,14 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, TemplatedModelForm):
         self.fields["parent"].queryset = self._get_parent_queryset()
 
     def _get_parent_queryset(self):
-        # Return all non-pre-assessments, that are not currently in review
+        # Return all proposals, that are not currently in review
         return (
-            Proposal.objects.filter(is_pre_assessment=False)
+            Proposal.objects.copyable_proposals()
             .filter(
                 Q(
                     applicants=self.user,
                 )
                 | Q(supervisor=self.user)
-            )
-            .filter(
-                Q(status=Proposal.Statuses.DRAFT)
-                | Q(status__gte=Proposal.Statuses.DECISION_MADE)
             )
             .distinct()
         )
@@ -500,12 +496,11 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
         )
 
     def _get_parent_queryset(self):
-        # Select non-pre-assessments that have been reviewed and rejected and
+        # Select proposals that have been reviewed and rejected and
         # haven't been parented yet.
         # Those are eligible for revisions
         return (
             Proposal.objects.filter(
-                is_pre_assessment=False,
                 status=Proposal.Statuses.DECISION_MADE,
                 status_review=False,
                 children__isnull=True,
@@ -532,12 +527,11 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
         )
 
     def _get_parent_queryset(self):
-        # Select non-pre-assessments that have been reviewed and approved and
+        # Select proposals that have been reviewed and approved and
         # haven't been parented yet.
         # Those are eligible for amendments
         return (
             Proposal.objects.filter(
-                is_pre_assessment=False,
                 status_review=True,
                 children__isnull=True,
             )

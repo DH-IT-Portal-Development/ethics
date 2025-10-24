@@ -90,6 +90,12 @@ class Institution(models.Model):
 class ProposalQuerySet(models.QuerySet):
     DECISION_MADE = 55
 
+    def copyable_proposals(self):
+        return self.filter(
+            models.Q(status=Proposal.Statuses.DRAFT)
+            | models.Q(status__gte=Proposal.Statuses.DECISION_MADE)
+        )
+
     def archive_pre_filter(self):
         return self.filter(
             status__gte=self.DECISION_MADE,
@@ -681,8 +687,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         keep in mind to also check if the user is one of the applicants
         or the supervisor."""
         if (
-            not self.is_pre_assessment
-            and not self.status_review
+            not self.status_review
             and self.status == self.Statuses.DECISION_MADE
             and not self.children.all()
         ):

@@ -14,6 +14,10 @@
     <br />
     Je kunt al je aanvragen als eindverantwoordelijke onderzoeker en hun status <a href="{{ my_supervised }}">hier</a> bekijken.
     <br />
+    {% if is_pre_assessment %}
+        <br />
+        Let op: het gaat hierbij om een pre-assessment.
+    {% endif %}
     <br />
     {% if revision %}
         <strong>Let op:</strong> het gaat hierbij om een {{ revision_type|lower }} van een eerdere aanvraag.
@@ -37,6 +41,10 @@
     <br />
     You can view all applications and their statuses, for which you are the researcher with final responsibility, <a href="{{ my_supervised }}">here</a>.
     <br />
+    {% if is_pre_assessment %}
+        <br />
+        Please note that this involves a pre-assessment
+    {% endif %}
     <br />
     {% if revision %}
         <strong>Please note</strong> that this involves a {{ revision_type | lower }} of a previous application.
