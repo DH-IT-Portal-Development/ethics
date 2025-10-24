@@ -31,11 +31,14 @@ class BaseReviewTestCase(TestCase):
     fixtures = [
         "relations",
         "compensations",
+        "fundings",
         "00_registrations",
         "01_registrationkinds",
         "agegroups",
         "groups",
         "institutions",
+        "testing/test_users",
+        "testing/test_proposals",
     ]
     relation_pk = 1
 
@@ -48,21 +51,7 @@ class BaseReviewTestCase(TestCase):
         super().setUp()
 
     def setup_proposal(self):
-        self.proposal = Proposal.objects.create(
-            title="p1",
-            reference_number=generate_ref_number(),
-            date_start=date.today(),
-            created_by=self.user,
-            supervisor=self.supervisor,
-            relation=Relation.objects.get(pk=4),
-            reviewing_committee=Group.objects.get(
-                name=settings.GROUP_LINGUISTICS_CHAMBER
-            ),
-            institution_id=1,
-        )
-        self.proposal.applicants.add(
-            self.user,
-        )
+        self.proposal = Proposal.objects.get(pk=4)
         self.proposal.wmo = Wmo.objects.create(
             proposal=self.proposal,
             metc=YesNoDoubt.NO,
@@ -77,28 +66,11 @@ class BaseReviewTestCase(TestCase):
         self.proposal.generate_pdf()
 
     def setup_users(self):
-        self.secretary = User.objects.create_user(
-            "secretary",
-            "test@test.com",
-            "secret",
-            first_name="The",
-            last_name="Secretary",
-        )
-        self.c1 = User.objects.create_user("c1", "test@test.com", "secret")
-        self.c2 = User.objects.create_user("c2", "test@test.com", "secret")
-        self.user = User.objects.create_user(
-            "user", "test@test.com", "secret", first_name="John", last_name="Doe"
-        )
-        self.supervisor = User.objects.create_user(
-            "supervisor", "test@test.com", "secret", first_name="Jane", last_name="Roe"
-        )
-
-        self.secretary.groups.add(
-            Group.objects.get(name=settings.GROUP_PRIMARY_SECRETARY)
-        )
-        self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
-        self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
-        self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
+        self.secretary = User.objects.get(username="secretary")
+        self.c1 = User.objects.get(username="c1")
+        self.c2 = User.objects.get(username="c2")
+        self.user = User.objects.get(username="user")
+        self.supervisor = User.objects.get(username="supervisor")
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
