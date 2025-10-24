@@ -13,6 +13,7 @@ from proposals.views.proposal_views import (
     ProposalSubmitPreApproved,
     ProposalSubmitPreAssessment,
 )
+from studies.models import Study
 
 
 class BaseProposalTestCase(TestCase):
@@ -32,6 +33,8 @@ class BaseProposalTestCase(TestCase):
         "01_registrationkinds",
         "testing/test_users",
         "testing/test_proposals",
+        "testing/test_studies",
+        "testing/test_wmos",
     ]
 
     def setUp(self):
@@ -44,60 +47,53 @@ class BaseProposalTestCase(TestCase):
         logging.disable(logging.WARN)
 
     def setup_users(self):
-        self.secretary = User.objects.create_user(
-            "secretary",
-            "test@test.com",
-            "secret",
-            first_name="The",
-            last_name="Secretary",
-        )
-        self.c1 = User.objects.create_user("c1", "test@test.com", "secret")
-        self.c2 = User.objects.create_user("c2", "test@test.com", "secret")
-        self.user = User.objects.create_user(
-            "user", "test@test.com", "secret", first_name="John", last_name="Doe"
-        )
-        self.supervisor = User.objects.create_user(
-            "supervisor", "test@test.com", "secret", first_name="Jane", last_name="Roe"
-        )
-
-        self.secretary.groups.add(
-            Group.objects.get(name=settings.GROUP_PRIMARY_SECRETARY)
-        )
-        self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
-
-        self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
-        self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
+        self.secretary = User.objects.get(username="secretary")
+        self.c1 = User.objects.get(username="c1")
+        self.c2 = User.objects.get(username="c2")
+        self.user = User.objects.get(username="user")
+        self.supervisor = User.objects.get(username="supervisor")
 
     def setup_proposal(self):
         """
-        Load our test proposals from a fixture, then add our user as
-        an applicant to each of them.
-
-        Please note, this currently uses a mish-mash of both fixtures
-        and programmatically created users and objects.
+        Load our test proposals from a fixture
         """
-        self.wmo = Wmo(
-            status=0,
-            metc="N",
-            is_medical="N",
+        self.proposal = Proposal.objects.get(
+            reference_number="24-009-01", title="Normal test proposal"
         )
-        self.wmo.save()
-        self.proposal = Proposal.objects.get(pk=1)
-        self.proposal.applicants.add(self.user)
-        self.proposal.wmo = self.wmo
-        self.proposal.save()
-        self.pre_assessment = Proposal.objects.get(pk=2)
-        self.pre_assessment.applicants.add(self.user)
-        self.pre_assessment.save()
-        self.pre_approval = Proposal.objects.get(pk=3)
-        self.pre_approval.applicants.add(self.user)
-        self.pre_approval.save()
+        self.pre_assessment = Proposal.objects.get(
+            reference_number="24-010-01", title="Preassessment test proposal"
+        )
+        self.pre_approval = Proposal.objects.get(
+            reference_number="24-011-01", title="Preapproved test pdf"
+        )
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
         attributes you previously read during the test and don't want to
         receive a cached value."""
         self.proposal.refresh_from_db()
+        self.pre_assessment.refresh_from_db()
+        self.pre_approval.refresh_from_db()
+
+    def add_supervisor_to_proposal(self):
+        self.proposal.relation = Relation.objects.get(
+            description_nl="als AIO / promovendus verbonden"
+        )
+        self.proposal.supervisor = self.supervisor
+        self.proposal.save()
+
+    def remove_study(self):
+        Study.objects.filter(proposal=f"{self.proposal.pk}").delete()
+
+    def check_subject_lines(self, outbox):
+        """
+        Make sure every outgoing email contains a reference number and the
+        text FETC-GW
+        """
+        for message in outbox:
+            subject = message.subject
+            self.assertTrue("FETC-GW" in subject)
+            self.assertTrue(self.proposal.reference_number in subject)
 
 
 class ProposalSubmitTestCase(
@@ -147,6 +143,7 @@ class ProposalSubmitTestCase(
         - Because there is no supervisor, a new review is created
           in the assignment stage.
         """
+        self.remove_study()
         # Sanity checks to start
         self.assertEqual(
             self.proposal.status,
@@ -171,6 +168,7 @@ class ProposalSubmitTestCase(
             # ,and you have yet to add proposal test data
             self.proposal.status,
             self.proposal.Statuses.DRAFT,
+            f"{self.proposal.get_status_display()} does match",
         )
         self.assertNotEqual(
             self.proposal.latest_review(),
@@ -191,9 +189,10 @@ class ProposalSubmitTestCase(
         """
         # Select the PHD relation, which needs a supervisor
         # but doesn't check for a study/course
-        self.proposal.relation = Relation.objects.get(pk=4)
-        self.proposal.supervisor = self.supervisor
-        self.proposal.save()
+
+        self.add_supervisor_to_proposal()
+        if not self.proposal.is_pre_assessment and not self.proposal.is_pre_approved:
+            self.remove_study()
         # Sanity checks to start
         self.assertEqual(
             self.proposal.status,
@@ -215,6 +214,7 @@ class ProposalSubmitTestCase(
         self.assertNotEqual(
             self.proposal.status,
             self.proposal.Statuses.DRAFT,
+            f"{self.proposal.get_status_display()} does match",
         )
         self.assertNotEqual(
             self.proposal.latest_review(),
