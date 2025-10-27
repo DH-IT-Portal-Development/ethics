@@ -34,6 +34,7 @@ class BaseProposalTestCase(TestCase):
         "testing/test_users",
         "testing/test_proposals",
         "testing/test_wmos",
+        "testing/test_studies",
     ]
 
     def setUp(self):
@@ -114,6 +115,7 @@ class ProposalSubmitTestCase(
         - Because there is no supervisor, a new review is created
           in the assignment stage.
         """
+        self.proposal.study_set.all().delete()
         # Sanity checks to start
         self.assertEqual(
             self.proposal.status,
@@ -161,6 +163,8 @@ class ProposalSubmitTestCase(
         self.proposal.relation = Relation.objects.get(pk=4)
         self.proposal.supervisor = self.supervisor
         self.proposal.save()
+
+        self.proposal.study_set.all().delete()
         # Sanity checks to start
         self.assertEqual(
             self.proposal.status,

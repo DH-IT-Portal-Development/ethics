@@ -29,25 +29,10 @@ from .views import ReviewCloseView
 
 
 class BaseReviewTestCase(BaseProposalTestCase):
-    fixtures = [
-        "relations",
-        "compensations",
-        "fundings",
-        "00_registrations",
-        "01_registrationkinds",
-        "agegroups",
-        "groups",
-        "institutions",
-        "testing/test_users",
-        "testing/test_proposals",
-        "testing/test_studies",
-        "testing/test_wmos",
-    ]
     relation_pk = 1
 
     def setup_proposal(self):
         super().setup_proposal()
-        self.study = Study.objects.get(proposal=f"{self.proposal.pk}")
         self.proposal.generate_pdf()
 
     def refresh(self):
@@ -229,6 +214,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.psychofysiological_measurement = Registration.objects.get(
             description="psychofysiologische meting (bijv. EEG, fMRI, EMA)"
         )
+        self.study = Study.objects.get(proposal=f"{self.proposal.pk}")
 
     def test_auto_review(self):
         reasons = auto_review(self.proposal)
