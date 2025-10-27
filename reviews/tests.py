@@ -7,6 +7,7 @@ from django.contrib.auth.models import User, Group, AnonymousUser
 from django.test import TestCase
 from django.utils import timezone
 
+from proposals.tests import BaseProposalTestCase
 from .models import Review, Decision
 from .utils import (
     start_review,
@@ -27,7 +28,7 @@ from tasks.models import Session, Task
 from .views import ReviewCloseView
 
 
-class BaseReviewTestCase(TestCase):
+class BaseReviewTestCase(BaseProposalTestCase):
     fixtures = [
         "relations",
         "compensations",
@@ -37,21 +38,13 @@ class BaseReviewTestCase(TestCase):
         "agegroups",
         "groups",
         "institutions",
-        "testing/test_users",
         "testing/test_proposals",
         "testing/test_studies",
     ]
     relation_pk = 1
 
-    def setUp(self):
-        """
-        Sets up the Users and a default Proposal to use in the tests below.
-        """
-        self.setup_users()
-        self.setup_proposal()
-        super().setUp()
-
     def setup_proposal(self):
+        super().setup_proposal()
         self.proposal = Proposal.objects.get(pk=4)
         self.proposal.wmo = Wmo.objects.create(
             proposal=self.proposal,
@@ -60,17 +53,11 @@ class BaseReviewTestCase(TestCase):
         self.study = Study.objects.get(proposal=f"{self.proposal.pk}")
         self.proposal.generate_pdf()
 
-    def setup_users(self):
-        self.secretary = User.objects.get(username="secretary")
-        self.c1 = User.objects.get(username="c1")
-        self.c2 = User.objects.get(username="c2")
-        self.user = User.objects.get(username="user")
-        self.supervisor = User.objects.get(username="supervisor")
-
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
         attributes you previously read during the test and don't want to
         receive a cached value."""
+        super().refresh()
         self.review.refresh_from_db()
         self.proposal.refresh_from_db()
 
