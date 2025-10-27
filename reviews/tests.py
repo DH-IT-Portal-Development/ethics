@@ -46,11 +46,12 @@ class BaseReviewTestCase(BaseProposalTestCase):
 
     def setup_proposal(self):
         super().setup_proposal()
-        self.proposal = Proposal.objects.get(pk=4)
+        # self.proposal = Proposal.objects.get(pk=4)
         self.proposal.wmo = Wmo.objects.create(
             proposal=self.proposal,
             metc=YesNoDoubt.NO,
         )
+        # self.proposal.wmo = Wmo.objects.get(proposal=f"{self.proposal.pk}")
         self.study = Study.objects.get(proposal=f"{self.proposal.pk}")
         self.proposal.generate_pdf()
 
