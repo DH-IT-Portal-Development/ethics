@@ -13,6 +13,7 @@ from proposals.views.proposal_views import (
     ProposalSubmitPreApproved,
     ProposalSubmitPreAssessment,
 )
+from studies.models import Study
 
 
 class BaseProposalTestCase(TestCase):

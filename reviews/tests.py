@@ -41,17 +41,12 @@ class BaseReviewTestCase(BaseProposalTestCase):
         "testing/test_users",
         "testing/test_proposals",
         "testing/test_studies",
+        "testing/test_wmos",
     ]
     relation_pk = 1
 
     def setup_proposal(self):
         super().setup_proposal()
-        # self.proposal = Proposal.objects.get(pk=4)
-        self.proposal.wmo = Wmo.objects.create(
-            proposal=self.proposal,
-            metc=YesNoDoubt.NO,
-        )
-        # self.proposal.wmo = Wmo.objects.get(proposal=f"{self.proposal.pk}")
         self.study = Study.objects.get(proposal=f"{self.proposal.pk}")
         self.proposal.generate_pdf()
 
