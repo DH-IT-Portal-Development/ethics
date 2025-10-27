@@ -38,6 +38,7 @@ class BaseReviewTestCase(BaseProposalTestCase):
         "agegroups",
         "groups",
         "institutions",
+        "testing/test_users",
         "testing/test_proposals",
         "testing/test_studies",
     ]
