@@ -57,7 +57,7 @@ class BaseReviewTestCase(TestCase):
             proposal=self.proposal,
             metc=YesNoDoubt.NO,
         )
-        self.study = Study.objects.get(pk=1)
+        self.study = Study.objects.get(proposal=f"{self.proposal.pk}")
         self.proposal.generate_pdf()
 
     def setup_users(self):
