@@ -60,7 +60,6 @@ class BaseReviewTestCase(BaseProposalTestCase):
         receive a cached value."""
         super().refresh()
         self.review.refresh_from_db()
-        self.proposal.refresh_from_db()
 
     def check_subject_lines(self, outbox):
         """
@@ -72,6 +71,15 @@ class BaseReviewTestCase(BaseProposalTestCase):
             self.assertTrue("FETC-GW" in subject)
             self.assertTrue(self.proposal.reference_number in subject)
 
+    def set_relation_to_phd_student(self, supervisor: User):
+        """Phd student status means a supervisor is needed.
+        While the previous postdoc relation does not need a supervisor"""
+        self.proposal.relation = Relation.objects.get(
+            description_nl="als AIO / promovendus verbonden"
+        )
+        self.proposal.supervisor = supervisor
+        self.proposal.save()
+
 
 class ReviewTestCase(BaseReviewTestCase):
     def test_start_supervisor_review(self):
@@ -79,6 +87,7 @@ class ReviewTestCase(BaseReviewTestCase):
         Tests starting of a Review from a submitted Proposal.
         """
         # If the Relation on a Proposal requires a supervisor, a Review for the supervisor should be started.
+        self.set_relation_to_phd_student(self.supervisor)
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.SUPERVISOR)
         self.assertEqual(review.is_committee_review, False)
@@ -91,10 +100,6 @@ class ReviewTestCase(BaseReviewTestCase):
         mail.outbox = []
 
     def test_start_review(self):
-        # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
-        self.proposal.relation = Relation.objects.get(pk=5)
-        self.proposal.save()
-
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
         self.assertEqual(review.is_committee_review, True)
@@ -112,6 +117,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         """
         Tests the creation of supervisor reviews
         """
+        self.set_relation_to_phd_student(self.supervisor)
         review = start_review(self.proposal)
         remind_supervisor_reviewers()
 
@@ -153,6 +159,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, False)
 
     def test_positive_supervisor_decision(self):
+        self.set_relation_to_phd_student(self.supervisor)
         review = start_review(self.proposal)
         self.assertEqual(review.go, None)
 
@@ -180,9 +187,6 @@ class CommissionTestCase(BaseReviewTestCase):
         """
         Tests whether the commission phase in a Review works correctly.
         """
-        # Set the relation to a supervisor so we can skip the first phase
-        self.proposal.relation = Relation.objects.get(pk=5)
-        self.proposal.save()
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
         self.assertEqual(review.go, None)
