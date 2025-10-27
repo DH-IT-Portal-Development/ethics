@@ -58,6 +58,7 @@ class BaseProposalTestCase(TestCase):
         self.proposal = Proposal.objects.get(pk=1)
         self.pre_assessment = Proposal.objects.get(pk=2)
         self.pre_approval = Proposal.objects.get(pk=3)
+        #
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
