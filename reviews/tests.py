@@ -23,11 +23,7 @@ from .views import ReviewCloseView
 
 
 class BaseReviewTestCase(BaseProposalTestCase):
-    relation_pk = 1
-
-    def setup_proposal(self):
-        super().setup_proposal()
-        self.proposal.generate_pdf()
+    review = None
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
@@ -128,14 +124,6 @@ class SupervisorTestCase(BaseReviewTestCase):
 
         review = self.proposal.latest_review()
         self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
-
-
-class AssignmentTestCase(BaseReviewTestCase):
-    def test_assignment(self):
-        """
-        Tests whether the assignment works correctly.
-        """
-        pass
 
 
 class CommissionTestCase(BaseReviewTestCase):
