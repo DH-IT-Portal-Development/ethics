@@ -126,14 +126,6 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
 
 
-class AssignmentTestCase(BaseReviewTestCase):
-    def test_assignment(self):
-        """
-        Tests whether the assignment works correctly.
-        """
-        pass
-
-
 class CommissionTestCase(BaseReviewTestCase):
     def test_decision_commission(self):
         """
