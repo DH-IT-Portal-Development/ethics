@@ -65,6 +65,8 @@ class BaseProposalTestCase(TestCase):
         attributes you previously read during the test and don't want to
         receive a cached value."""
         self.proposal.refresh_from_db()
+        self.pre_assessment.refresh_from_db()
+        self.pre_approval.refresh_from_db()
 
     def check_subject_lines(self, outbox):
         """
