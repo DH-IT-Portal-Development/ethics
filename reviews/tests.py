@@ -1,10 +1,7 @@
-from datetime import date
 from copy import copy
 
-from django.conf import settings
 from django.core import mail
-from django.contrib.auth.models import User, Group, AnonymousUser
-from django.test import TestCase
+from django.contrib.auth.models import AnonymousUser
 from django.utils import timezone
 
 from proposals.tests import BaseProposalTestCase
@@ -17,12 +14,9 @@ from .utils import (
 )
 from main.tests import BaseViewTestCase
 from main.models import YesNoDoubt
-from proposals.models import Proposal, Relation, Wmo
-from proposals.utils import generate_ref_number
-from studies.models import Study, Compensation, AgeGroup, Registration
+from studies.models import Study, AgeGroup, Registration
 from observations.models import Observation
 from reviews.utils.review_utils import remind_supervisor_reviewers
-from interventions.models import Intervention
 from tasks.models import Session, Task
 
 from .views import ReviewCloseView
@@ -41,25 +35,6 @@ class BaseReviewTestCase(BaseProposalTestCase):
         receive a cached value."""
         super().refresh()
         self.review.refresh_from_db()
-
-    def check_subject_lines(self, outbox):
-        """
-        Make sure every outgoing email contains a reference number and the
-        text FETC-GW
-        """
-        for message in outbox:
-            subject = message.subject
-            self.assertTrue("FETC-GW" in subject)
-            self.assertTrue(self.proposal.reference_number in subject)
-
-    def set_relation_to_phd_student(self, supervisor: User):
-        """Phd student status means a supervisor is needed.
-        While the previous postdoc relation does not need a supervisor"""
-        self.proposal.relation = Relation.objects.get(
-            description_nl="als AIO / promovendus verbonden"
-        )
-        self.proposal.supervisor = supervisor
-        self.proposal.save()
 
 
 class ReviewTestCase(BaseReviewTestCase):
