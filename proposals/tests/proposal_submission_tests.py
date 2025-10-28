@@ -33,6 +33,7 @@ class BaseProposalTestCase(TestCase):
         "testing/test_users",
         "testing/test_proposals",
         "testing/test_wmos",
+        "testing/test_studies",
     ]
 
     def setUp(self):
@@ -64,6 +65,25 @@ class BaseProposalTestCase(TestCase):
         attributes you previously read during the test and don't want to
         receive a cached value."""
         self.proposal.refresh_from_db()
+
+    def check_subject_lines(self, outbox):
+        """
+        Make sure every outgoing email contains a reference number and the
+        text FETC-GW
+        """
+        for message in outbox:
+            subject = message.subject
+            self.assertTrue("FETC-GW" in subject)
+            self.assertTrue(self.proposal.reference_number in subject)
+
+    def set_relation_to_phd_student(self, supervisor: User):
+        """Phd student status means a supervisor is needed.
+        While the previous postdoc relation does not need a supervisor"""
+        self.proposal.relation = Relation.objects.get(
+            description_nl="als AIO / promovendus verbonden"
+        )
+        self.proposal.supervisor = supervisor
+        self.proposal.save()
 
 
 class ProposalSubmitTestCase(
@@ -113,6 +133,7 @@ class ProposalSubmitTestCase(
         - Because there is no supervisor, a new review is created
           in the assignment stage.
         """
+        self.proposal.study_set.all().delete()
         # Sanity checks to start
         self.assertEqual(
             self.proposal.status,
@@ -157,9 +178,9 @@ class ProposalSubmitTestCase(
         """
         # Select the PHD relation, which needs a supervisor
         # but doesn't check for a study/course
-        self.proposal.relation = Relation.objects.get(pk=4)
-        self.proposal.supervisor = self.supervisor
-        self.proposal.save()
+        self.set_relation_to_phd_student(self.supervisor)
+
+        self.proposal.study_set.all().delete()
         # Sanity checks to start
         self.assertEqual(
             self.proposal.status,

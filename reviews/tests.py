@@ -1,12 +1,10 @@
-from datetime import date
 from copy import copy
 
-from django.conf import settings
 from django.core import mail
-from django.contrib.auth.models import User, Group, AnonymousUser
-from django.test import TestCase
+from django.contrib.auth.models import AnonymousUser
 from django.utils import timezone
 
+from proposals.tests import BaseProposalTestCase
 from .models import Review, Decision
 from .utils import (
     start_review,
@@ -16,73 +14,27 @@ from .utils import (
 )
 from main.tests import BaseViewTestCase
 from main.models import YesNoDoubt
-from proposals.models import Proposal, Relation, Wmo
-from proposals.utils import generate_ref_number
-from studies.models import Study, Compensation, AgeGroup, Registration
+from studies.models import Study, AgeGroup, Registration
 from observations.models import Observation
 from reviews.utils.review_utils import remind_supervisor_reviewers
-from interventions.models import Intervention
 from tasks.models import Session, Task
 
 from .views import ReviewCloseView
 
 
-class BaseReviewTestCase(TestCase):
-    fixtures = [
-        "relations",
-        "compensations",
-        "fundings",
-        "00_registrations",
-        "01_registrationkinds",
-        "agegroups",
-        "groups",
-        "institutions",
-        "testing/test_users",
-        "testing/test_proposals",
-        "testing/test_studies",
-    ]
+class BaseReviewTestCase(BaseProposalTestCase):
     relation_pk = 1
 
-    def setUp(self):
-        """
-        Sets up the Users and a default Proposal to use in the tests below.
-        """
-        self.setup_users()
-        self.setup_proposal()
-        super().setUp()
-
     def setup_proposal(self):
-        self.proposal = Proposal.objects.get(pk=4)
-        self.proposal.wmo = Wmo.objects.create(
-            proposal=self.proposal,
-            metc=YesNoDoubt.NO,
-        )
-        self.study = Study.objects.get(proposal=f"{self.proposal.pk}")
+        super().setup_proposal()
         self.proposal.generate_pdf()
-
-    def setup_users(self):
-        self.secretary = User.objects.get(username="secretary")
-        self.c1 = User.objects.get(username="c1")
-        self.c2 = User.objects.get(username="c2")
-        self.user = User.objects.get(username="user")
-        self.supervisor = User.objects.get(username="supervisor")
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
         attributes you previously read during the test and don't want to
         receive a cached value."""
+        super().refresh()
         self.review.refresh_from_db()
-        self.proposal.refresh_from_db()
-
-    def check_subject_lines(self, outbox):
-        """
-        Make sure every outgoing email contains a reference number and the
-        text FETC-GW
-        """
-        for message in outbox:
-            subject = message.subject
-            self.assertTrue("FETC-GW" in subject)
-            self.assertTrue(self.proposal.reference_number in subject)
 
 
 class ReviewTestCase(BaseReviewTestCase):
@@ -91,6 +43,7 @@ class ReviewTestCase(BaseReviewTestCase):
         Tests starting of a Review from a submitted Proposal.
         """
         # If the Relation on a Proposal requires a supervisor, a Review for the supervisor should be started.
+        self.set_relation_to_phd_student(self.supervisor)
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.SUPERVISOR)
         self.assertEqual(review.is_committee_review, False)
@@ -103,10 +56,6 @@ class ReviewTestCase(BaseReviewTestCase):
         mail.outbox = []
 
     def test_start_review(self):
-        # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
-        self.proposal.relation = Relation.objects.get(pk=5)
-        self.proposal.save()
-
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
         self.assertEqual(review.is_committee_review, True)
@@ -124,6 +73,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         """
         Tests the creation of supervisor reviews
         """
+        self.set_relation_to_phd_student(self.supervisor)
         review = start_review(self.proposal)
         remind_supervisor_reviewers()
 
@@ -165,6 +115,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, False)
 
     def test_positive_supervisor_decision(self):
+        self.set_relation_to_phd_student(self.supervisor)
         review = start_review(self.proposal)
         self.assertEqual(review.go, None)
 
@@ -192,9 +143,6 @@ class CommissionTestCase(BaseReviewTestCase):
         """
         Tests whether the commission phase in a Review works correctly.
         """
-        # Set the relation to a supervisor so we can skip the first phase
-        self.proposal.relation = Relation.objects.get(pk=5)
-        self.proposal.save()
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
         self.assertEqual(review.go, None)
@@ -241,6 +189,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.psychofysiological_measurement = Registration.objects.get(
             description="psychofysiologische meting (bijv. EEG, fMRI, EMA)"
         )
+        self.study = Study.objects.get(proposal=f"{self.proposal.pk}")
 
     def test_auto_review(self):
         reasons = auto_review(self.proposal)
