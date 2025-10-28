@@ -1,12 +1,10 @@
-from datetime import date
 from copy import copy
 
-from django.conf import settings
 from django.core import mail
-from django.contrib.auth.models import User, Group, AnonymousUser
-from django.test import TestCase
+from django.contrib.auth.models import AnonymousUser
 from django.utils import timezone
 
+from proposals.tests import BaseProposalTestCase
 from .models import Review, Decision
 from .utils import (
     start_review,
@@ -16,106 +14,21 @@ from .utils import (
 )
 from main.tests import BaseViewTestCase
 from main.models import YesNoDoubt
-from proposals.models import Proposal, Relation, Wmo
-from proposals.utils import generate_ref_number
-from studies.models import Study, Compensation, AgeGroup, Registration
+from proposals.models import Proposal, Relation
+from studies.models import Study, AgeGroup, Registration
 from observations.models import Observation
 from reviews.utils.review_utils import remind_supervisor_reviewers
-from interventions.models import Intervention
 from tasks.models import Session, Task
 
 from .views import ReviewCloseView
 
 
-class BaseReviewTestCase(TestCase):
-    fixtures = [
-        "relations",
-        "compensations",
-        "00_registrations",
-        "01_registrationkinds",
-        "agegroups",
-        "groups",
-        "institutions",
-    ]
-    relation_pk = 1
-
-    def setUp(self):
-        """
-        Sets up the Users and a default Proposal to use in the tests below.
-        """
-        self.setup_users()
-        self.setup_proposal()
-        super().setUp()
-
-    def setup_proposal(self):
-        self.proposal = Proposal.objects.create(
-            title="p1",
-            reference_number=generate_ref_number(),
-            date_start=date.today(),
-            created_by=self.user,
-            supervisor=self.supervisor,
-            relation=Relation.objects.get(pk=4),
-            reviewing_committee=Group.objects.get(
-                name=settings.GROUP_LINGUISTICS_CHAMBER
-            ),
-            institution_id=1,
-        )
-        self.proposal.applicants.add(
-            self.user,
-        )
-        self.proposal.wmo = Wmo.objects.create(
-            proposal=self.proposal,
-            metc=YesNoDoubt.NO,
-        )
-        self.study = Study.objects.create(
-            proposal=self.proposal,
-            order=1,
-            compensation=Compensation.objects.get(
-                pk=2,
-            ),
-        )
-        self.proposal.generate_pdf()
-
-    def setup_users(self):
-        self.secretary = User.objects.create_user(
-            "secretary",
-            "test@test.com",
-            "secret",
-            first_name="The",
-            last_name="Secretary",
-        )
-        self.c1 = User.objects.create_user("c1", "test@test.com", "secret")
-        self.c2 = User.objects.create_user("c2", "test@test.com", "secret")
-        self.user = User.objects.create_user(
-            "user", "test@test.com", "secret", first_name="John", last_name="Doe"
-        )
-        self.supervisor = User.objects.create_user(
-            "supervisor", "test@test.com", "secret", first_name="Jane", last_name="Roe"
-        )
-
-        self.secretary.groups.add(
-            Group.objects.get(name=settings.GROUP_PRIMARY_SECRETARY)
-        )
-        self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
-        self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
-        self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
+class BaseReviewTestCase(BaseProposalTestCase):
+    review = None
 
     def refresh(self):
-        """Refresh objects from DB. This is sometimes necessary if you access
-        attributes you previously read during the test and don't want to
-        receive a cached value."""
+        super().refresh()
         self.review.refresh_from_db()
-        self.proposal.refresh_from_db()
-
-    def check_subject_lines(self, outbox):
-        """
-        Make sure every outgoing email contains a reference number and the
-        text FETC-GW
-        """
-        for message in outbox:
-            subject = message.subject
-            self.assertTrue("FETC-GW" in subject)
-            self.assertTrue(self.proposal.reference_number in subject)
 
 
 class ReviewTestCase(BaseReviewTestCase):
@@ -124,6 +37,7 @@ class ReviewTestCase(BaseReviewTestCase):
         Tests starting of a Review from a submitted Proposal.
         """
         # If the Relation on a Proposal requires a supervisor, a Review for the supervisor should be started.
+        self.add_supervisor_to_proposal()
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.SUPERVISOR)
         self.assertEqual(review.is_committee_review, False)
@@ -137,8 +51,6 @@ class ReviewTestCase(BaseReviewTestCase):
 
     def test_start_review(self):
         # If the Relation on a Proposal does not require a supervisor, a assignment review should be started.
-        self.proposal.relation = Relation.objects.get(pk=5)
-        self.proposal.save()
 
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
@@ -151,7 +63,18 @@ class ReviewTestCase(BaseReviewTestCase):
         self.check_subject_lines(mail.outbox)
 
 
+class PreAssessmentReviewTestCase(ReviewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+
 class SupervisorTestCase(BaseReviewTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.add_supervisor_to_proposal()
 
     def test_supervisor_review(self):
         """
@@ -209,15 +132,19 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)
 
         review = self.proposal.latest_review()
-        self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
+        self.assertEqual(
+            review.stage,
+            review.Stages.ASSIGNMENT,
+            f"{review.get_stage_display()} does not match",
+        )
 
 
-class AssignmentTestCase(BaseReviewTestCase):
-    def test_assignment(self):
-        """
-        Tests whether the assignment works correctly.
-        """
-        pass
+class PreAssessmentSupervisorTestCase(SupervisorTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+        self.add_supervisor_to_proposal()  # needs to override once again.
 
 
 class CommissionTestCase(BaseReviewTestCase):
@@ -225,9 +152,6 @@ class CommissionTestCase(BaseReviewTestCase):
         """
         Tests whether the commission phase in a Review works correctly.
         """
-        # Set the relation to a supervisor so we can skip the first phase
-        self.proposal.relation = Relation.objects.get(pk=5)
-        self.proposal.save()
         review = start_review(self.proposal)
         self.assertEqual(review.stage, Review.Stages.ASSIGNMENT)
         self.assertEqual(review.go, None)
@@ -264,18 +188,27 @@ class CommissionTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)  # go
 
 
+class PreAssessmentCommissionTestCase(CommissionTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+
 class AutoReviewTests(BaseReviewTestCase):
 
     def setUp(self):
         super().setUp()
-        self.toddlers = AgeGroup.objects.get(description_nl="Peuter")
-        self.adolescents = AgeGroup.objects.get(description_nl="Adolescent")
-        self.adults = AgeGroup.objects.get(description_nl="Volwassene")
-        self.psychofysiological_measurement = Registration.objects.get(
-            description="psychofysiologische meting (bijv. EEG, fMRI, EMA)"
-        )
+        self.study = Study.objects.get(proposal=f"{self.proposal.pk}")
+
+    def test_auto_review_pre_assessment_short_route(self):
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 0)
 
     def test_auto_review(self):
+        if self.proposal.is_pre_assessment:
+            return
+
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
 
@@ -283,43 +216,68 @@ class AutoReviewTests(BaseReviewTestCase):
         self.study.save()
 
         reasons = auto_review(self.proposal)
+
         self.assertEqual(len(reasons), 1)
+        self.assertEqual(
+            reasons[-1], "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
+        )
 
         self.study.deception = YesNoDoubt.DOUBT
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 2)
+        self.assertEqual(reasons[-1], "De aanvraag bevat het gebruik van misleiding.")
 
         self.study.hierarchy = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 3)
+        self.assertEqual(
+            reasons[-1],
+            "Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)",
+        )
 
         self.study.has_special_details = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 4)
+        self.assertEqual(
+            reasons[-1],
+            "Het onderzoek verzamelt bijzondere persoonsgegevens.",
+        )
 
         self.study.has_traits = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 5)
+        self.assertEqual(
+            reasons[-1],
+            "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.",
+        )
 
         self.study.risk = YesNoDoubt.YES
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 6)
+        self.assertEqual(
+            reasons[-1],
+            "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid van de deelnemers tijdens of na het onderzoek.",
+        )
 
-        self.study.proposal.researcher_risk = YesNoDoubt.YES
-        self.study.proposal.save()
+        self.proposal.researcher_risk = YesNoDoubt.YES
+        self.proposal.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 7)
+        self.assertEqual(
+            reasons[-1],
+            "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid van de betrokken onderzoekers.",
+        )
 
         self.study.negativity = YesNoDoubt.YES
         self.study.save()
@@ -328,22 +286,28 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 8)
 
     def test_auto_review_minors_to_longroute(self):
-        self.study.age_groups.set([self.toddlers])
+        if self.proposal.is_pre_assessment:
+            return
+        self.study.age_groups.set([AgeGroup.objects.get(description_nl="Peuter")])
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
 
     def test_auto_review_adults_to_shortroute(self):
-        self.study.age_groups.set([self.adults])
+        if self.proposal.is_pre_assessment:
+            return
+        self.study.age_groups.set([AgeGroup.objects.get(description_nl="Volwassene")])
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
 
     def test_auto_review_session_time(self):
+        if self.proposal.is_pre_assessment:
+            return
         self.study.has_sessions = True
-        self.study.age_groups.set([self.toddlers])
+        self.study.age_groups.set([AgeGroup.objects.get(description_nl="Peuter")])
         self.study.save()
 
         s1 = Session.objects.create(study=self.study, order=1)
@@ -364,6 +328,8 @@ class AutoReviewTests(BaseReviewTestCase):
         # reason: minors go to longroute, and session takes longer than 40m for the agegroup toddlers.
 
     def test_auto_review_observation(self):
+        if self.proposal.is_pre_assessment:
+            return
         self.study.has_observation = True
         self.study.save()
         o = Observation.objects.create(study=self.study, days=1, mean_hours=1)
@@ -385,20 +351,36 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
     def test_auto_review_registration_age_min(self):
-        self.study.has_sessions = True  # weggehaald in develop
-        self.study.age_groups.set([self.adolescents])
+        if self.proposal.is_pre_assessment:
+            return
+        self.study.has_sessions = True
+        self.study.age_groups.set([AgeGroup.objects.get(description_nl="Adolescent")])
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)  # adolescents are minors
 
-        self.study.registrations.set([self.psychofysiological_measurement])
+        self.study.registrations.set(
+            [
+                Registration.objects.get(
+                    description="psychofysiologische meting (bijv. EEG, fMRI, EMA)"
+                )
+            ]
+        )
 
         reasons = auto_review(
             self.proposal,
         )
         # reason: psychofysiological_measurements for minors detected
         self.assertEqual(len(reasons), 2)
+
+
+class PreAssessmentAutoReviewTestCase(AutoReviewTests):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+        self.study = None  # overrides old study in setUp above.
 
 
 class ReviewCloseTestCase(
@@ -409,6 +391,9 @@ class ReviewCloseTestCase(
 
     def setUp(self):
         super().setUp()
+        self.startReview()
+
+    def startReview(self):
         self.review = start_review(self.proposal)
 
     def get_view_path(self):
@@ -476,6 +461,8 @@ class ReviewCloseTestCase(
         )
 
     def test_long_route(self):
+        if self.proposal.is_pre_assessment:
+            return
         # If the review uses the long route already, the form
         # won't accept this choice. So we force set it to short.
         self.review.short_route = True
@@ -493,6 +480,7 @@ class ReviewCloseTestCase(
         self.assertEqual(
             self.review.stage,
             self.review.Stages.CLOSED,
+            f"'{self.review.get_stage_display()}' does not match",
         )
         # A new review should have been created
         # with a decision
@@ -526,3 +514,13 @@ class ReviewCloseTestCase(
             self.proposal.wmo.enforced_by_commission,
             True,
         )
+
+
+class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+    def startReview(self):
+        self.review = start_review(self.pre_assessment)

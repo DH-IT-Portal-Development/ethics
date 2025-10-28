@@ -1,0 +1,22 @@
+[
+    {
+        "model": "proposals.wmo",
+        "pk": 1,
+        "fields": {
+            "proposal": 1,
+            "metc": "N",
+            "is_medical": "N",
+            "status": 0
+        }
+    },
+    {
+      "model": "proposals.wmo",
+      "pk": 2,
+      "fields": {
+          "proposal": 2,
+          "metc": "N",
+          "is_medical": "N",
+          "status": 0
+          }
+    }
+]
