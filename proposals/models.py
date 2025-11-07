@@ -479,7 +479,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
 
     data_manager_conversation = models.BooleanField(
         _(
-            "Het Data Management Plan (DMP) dat ik in de volgende stap indien is besproken met en gezien door de datamanager van de faculteit Geesteswetenschappen."
+            "Het Data Management Plan (DMP) dat ik in de volgende stap indien is besproken met en gezien door de datamanager van de Faculteit Geesteswetenschappen."
         ),
         default=None,
         null=True,
@@ -488,6 +488,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
             "Als je geen Data Management Plan indient bij deze aanvraag,"
             " beantwoord deze vraag dan met 'nee'."
         )
+        + "<br />"
         + _(
             "Contact: <a href='mailto:datamanagement.gw@uu.nl'>datamanager</a>"
         )
