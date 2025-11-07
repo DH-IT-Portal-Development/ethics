@@ -16,6 +16,9 @@ class ConditionalModelForm(TemplatedModelForm):
         return is_required
 
     def check_dependency(self, cleaned_data, f1, f2, f1_value=True, error_message=""):
+        """@input cleaned_data
+        @f1 The file
+        """
         is_required = False
         if not error_message:
             error_message = _("Dit veld is verplicht.")

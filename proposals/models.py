@@ -455,17 +455,56 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
     )
 
     privacy_officer_conversation = models.BooleanField(
-        _(
-            "Ik heb mijn aanvraag en de documenten voor deelnemers besproken met de privacy officer."
+        mark_safe_lazy(
+            _(
+                "De documenten voor deelnemers die ik in de volgende stap indien zijn besproken met en gezien door de privacy officer van de faculteit Geesteswetenschappen."
+            )
         ),
         default=None,
         null=True,
         blank=True,
+        help_text=_(
+            "Contact: <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>"
+        ),
+    )
+
+    privacy_officer_conversation_details = models.TextField(
+        _(
+            "Als dat niet gebeurd is, zou je dan willen toelichten waarom niet? Bijv. omdat vergelijkbare documenten van een eerdere aanvraag al zijn besproken met de privacy officer (vermeld in dat geval s.v.p. het referentienummer)."
+        ),
+        blank=True,
+        default=None,
+        null=True,
     )
 
     data_manager_conversation = models.BooleanField(
         _(
-            "Ik heb mijn Data Management Plan (DMP) besproken met de data manager van de faculteit Geesteswetenschappen."
+            "Het Data Management Plan (DMP) dat ik in de volgende stap indien is besproken met en gezien door de datamanager van de faculteit Geesteswetenschappen."
+        ),
+        default=None,
+        null=True,
+        blank=True,
+        help_text=_(
+            "Als je geen Data Management Plan indient bij deze aanvraag,"
+            " beantwoord deze vraag dan met 'nee'."
+        )
+        + _(
+            "Contact: <a href='mailto:datamanagement.gw@uu.nl'>datamanager</a>"
+        )
+    )
+
+    data_manager_conversation_details = models.TextField(
+        _(
+            "Als dat niet gebeurd is, zou je dan willen toelichten waarom niet? Bijv. omdat vergelijkbare documenten van een eerdere aanvraag al zijn besproken met de datamanager (vermeld in dat geval s.v.p. het referentienummer)."
+        ),
+        blank=True,
+        default=None,
+        null=True,
+    )
+
+    research_data_management_conversation = models.BooleanField(
+        _(
+            "Het Data Management Plan (DMP) dat ik hieronder indien is besproken met en gezien door iemand van Research Data Management Support."
         ),
         default=None,
         null=True,
@@ -476,17 +515,13 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         ),
     )
 
-    research_data_management_conversation = models.BooleanField(
+    research_data_management_conversation_details = models.TextField(
         _(
-            "Ik heb mijn Data Management Plan (DMP) besproken met iemand van Research Data Management Support."
+            "Als dat niet gebeurd is, zou je dan willen toelichten waarom niet? Bijv. omdat (vergelijkbare) documenten van een eerdere aanvraag al zijn besproken met Research Data Management Support of de datamanager (vermeld in dat geval s.v.p. het referentienummer)."
         ),
+        blank=True,
         default=None,
         null=True,
-        blank=True,
-        help_text=_(
-            "Als je geen Data Management Plan indient bij deze aanvraag,"
-            " beantwoord deze vraag dan met 'nee'."
-        ),
     )
 
     dmp_file = models.FileField(

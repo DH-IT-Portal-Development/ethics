@@ -2015,22 +2015,30 @@ msgstr ""
 #: proposals/models.py:440
 msgid "Hoeveel verschillende trajecten zijn er?"
 msgstr "How many different trajectories are there?"
-
 #: proposals/models.py:459
 msgid ""
-"Ik heb mijn aanvraag en de documenten voor deelnemers besproken met de "
-"privacy officer."
+"De documenten voor deelnemers die ik in de volgende stap indien zijn besproken met en gezien door de privacy officer van de faculteit Geesteswetenschappen."
 msgstr ""
 "I discussed my application and documents for participants with the privacy "
 "officer."
 
 #: proposals/models.py:468
 msgid ""
-"Ik heb mijn Data Management Plan (DMP) besproken met de data manager van de "
-"faculteit Geesteswetenschappen."
+"Het Data Management Plan (DMP) dat ik in de volgende stap indien is besproken met en gezien door de datamanager van de faculteit Geesteswetenschappen."
 msgstr ""
 "I discussed my application and Data Management Plan (DMP) with the data "
 "manager of faculty of Humanities."
+
+
+#: proposals/models.py:481
+msgid ""
+"Het Data Management Plan (DMP) dat ik hieronder indien is besproken met en gezien door iemand van Research Data Management Support."
+msgstr ""
+"I discussed my application and Data Management Plan (DMP) with someone from "
+"Research Data Management Support."
+
+msgid "Als dat niet gebeurd is, zou je dan willen toelichten waarom niet? Bijv. omdat (vergelijkbare) documenten van een eerdere aanvraag al zijn besproken met Research Data Management Support of de datamanager (vermeld in dat geval s.v.p. het referentienummer)."
+msgstr "TODO: translation"
 
 #: proposals/models.py:474 proposals/models.py:487
 msgid ""
@@ -2039,14 +2047,6 @@ msgid ""
 msgstr ""
 "If you do not plan to add a Data Management Plan, answer this question with "
 "'no'."
-
-#: proposals/models.py:481
-msgid ""
-"Ik heb mijn Data Management Plan (DMP) besproken met iemand van Research "
-"Data Management Support."
-msgstr ""
-"I discussed my application and Data Management Plan (DMP) with someone from "
-"Research Data Management Support."
 
 #: proposals/models.py:494
 msgid ""
