@@ -781,13 +781,6 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     def clean(self):
         cleaned_data = super(ProposalDataManagementForm, self).clean()
 
-        _soft_validation_fields = ["privacy_officer_conversation_details"]
-
-        self.check_dependency(
-            cleaned_data, "privacy_officer_conversation", "privacy_officer_conversation_details", f1_value=YesNoDoubt.NO
-        )
-
-
         for field in self.fields:
             if cleaned_data[field] is None:
                 self.add_error(
