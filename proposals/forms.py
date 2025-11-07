@@ -768,7 +768,6 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
             "data_manager_conversation_details",
             "research_data_management_conversation",
             "research_data_management_conversation_details",
-
         ]
         widgets = {
             "privacy_officer_conversation": BootstrapRadioSelect(choices=YES_NO),

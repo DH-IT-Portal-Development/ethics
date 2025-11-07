@@ -463,9 +463,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         default=None,
         null=True,
         blank=True,
-        help_text=_(
-            "Contact: <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>"
-        ),
+        help_text=_("Contact: <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>"),
     )
 
     privacy_officer_conversation_details = models.TextField(
@@ -489,9 +487,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
             " beantwoord deze vraag dan met 'nee'."
         )
         + "<br />"
-        + _(
-            "Contact: <a href='mailto:datamanagement.gw@uu.nl'>datamanager</a>"
-        )
+        + _("Contact: <a href='mailto:datamanagement.gw@uu.nl'>datamanager</a>"),
     )
 
     data_manager_conversation_details = models.TextField(
