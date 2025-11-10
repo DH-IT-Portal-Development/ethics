@@ -72,3 +72,14 @@
     {% endblocktrans %}
 </p>
 {% endblock %}
+
+{% block html_head %}
+    {{ block.super }}
+    <script>
+    $(function() {
+        depends_on_value('privacy_officer_conversation', 'False', 'privacy_officer_conversation_details');
+        depends_on_value('data_manager_conversation', 'False', 'data_manager_conversation_details');
+        depends_on_value('research_data_management_conversation', 'False', 'research_data_management_conversation_details');
+    });
+    </script>
+{% endblock %}
