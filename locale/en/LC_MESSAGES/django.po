@@ -3503,10 +3503,6 @@ msgid "Traject"
 msgstr "Trajectory"
 
 #: proposals/templates/proposals/study_start.html:68
-#, fuzzy
-#| msgid ""
-#| "Als je met verschillende deelnemersgroepen werkt die een verschillend "
-#| "onderzoekstraject doorlopen waarvoor verschillende documenten nodig zijn."
 msgid ""
 "Als je met verschillende deelnemersgroepen werkt die een verschillend "
 "onderzoekstraject doorlopen waarvoor verschillende instructies nodig zijn. "

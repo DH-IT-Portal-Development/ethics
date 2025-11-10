@@ -455,8 +455,8 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
     )
 
     privacy_officer_conversation = models.BooleanField(
-            _(
-                "De documenten voor deelnemers die ik in de volgende stap indien zijn besproken met en gezien door de privacy officer van de Faculteit Geesteswetenschappen."
+        _(
+            "De documenten voor deelnemers die ik in de volgende stap indien zijn besproken met en gezien door de privacy officer van de Faculteit Geesteswetenschappen."
         ),
         default=None,
         null=True,
