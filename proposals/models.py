@@ -473,7 +473,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         blank=True,
         default=None,
         null=True,
-        max_length = 500
+        max_length=500,
     )
 
     data_manager_conversation = models.BooleanField(
@@ -487,7 +487,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
             "Als je geen Data Management Plan indient bij deze aanvraag,"
             " beantwoord deze vraag dan met 'nee'.<br />"
             "Contact: <a href='mailto:datamanagement.gw@uu.nl'>datamanager</a>"
-        )
+        ),
     )
 
     data_manager_conversation_details = models.TextField(
@@ -497,7 +497,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         blank=True,
         default=None,
         null=True,
-        max_length=500
+        max_length=500,
     )
 
     research_data_management_conversation = models.BooleanField(
@@ -520,7 +520,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         blank=True,
         default=None,
         null=True,
-        max_length=500
+        max_length=500,
     )
 
     dmp_file = models.FileField(
