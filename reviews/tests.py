@@ -371,7 +371,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 8)
 
     def test_auto_review_minors_to_longroute(self):
-        if self.proposal.is_pre_assessment:
+        if self.proposal.is_pre_assessment:  # pre-assessment has no age
             return
         self.study.age_groups.set([self.toddlers])
         self.study.save()
@@ -380,7 +380,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 1)
 
     def test_auto_review_adults_to_shortroute(self):
-        if self.proposal.is_pre_assessment:
+        if self.proposal.is_pre_assessment:  # pre-assessment has no age
             return
         self.study.age_groups.set([self.adults])
         self.study.save()
@@ -434,7 +434,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
     def test_auto_review_registration_age_min(self):
-        if self.proposal.is_pre_assessment:
+        if self.proposal.is_pre_assessment:  # pre-assessment has no age
             return
         self.study.has_sessions = True
         self.study.age_groups.set([self.adolescents])
@@ -544,7 +544,7 @@ class ReviewCloseTestCase(
         )
 
     def test_long_route(self):
-        if self.proposal.is_pre_assessment:
+        if self.proposal.is_pre_assessment:  # pre-assessment has no long route
             return
         # If the review uses the long route already, the form
         # won't accept this choice. So we force set it to short.
