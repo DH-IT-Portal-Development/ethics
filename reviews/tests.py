@@ -33,9 +33,12 @@ class BaseReviewTestCase(TestCase):
         "compensations",
         "00_registrations",
         "01_registrationkinds",
+        "fundings",
         "agegroups",
         "groups",
         "institutions",
+        "testing/test_proposals",
+        "testing/test_users",
     ]
     relation_pk = 1
 
@@ -75,6 +78,16 @@ class BaseReviewTestCase(TestCase):
             ),
         )
         self.proposal.generate_pdf()
+
+        self.pre_assessment = Proposal.objects.get(pk=2)
+        self.pre_assessment.applicants.add(self.user)
+        self.pre_assessment.wmo = Wmo.objects.create(
+            proposal=self.pre_assessment,
+            metc=YesNoDoubt.NO,
+        )
+        self.pre_assessment.supervisor = self.supervisor
+        self.pre_assessment.relation = Relation.objects.get(pk=4)
+        self.pre_assessment.save()
 
     def setup_users(self):
         self.secretary = User.objects.create_user(
@@ -151,6 +164,12 @@ class ReviewTestCase(BaseReviewTestCase):
         self.check_subject_lines(mail.outbox)
 
 
+class PreAssessmentReviewTestCase(ReviewTestCase):
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+
 class SupervisorTestCase(BaseReviewTestCase):
 
     def test_supervisor_review(self):
@@ -209,7 +228,18 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)
 
         review = self.proposal.latest_review()
-        self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
+        self.assertEqual(
+            review.stage,
+            review.Stages.ASSIGNMENT,
+            f"{review.get_stage_display()} does not match",
+        )
+
+
+class PreAssessmentSupervisorTestCase(SupervisorTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
 
 
 class AssignmentTestCase(BaseReviewTestCase):
@@ -264,6 +294,13 @@ class CommissionTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)  # go
 
 
+class PreAssessmentCommissionTestCase(CommissionTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+
 class AutoReviewTests(BaseReviewTestCase):
 
     def setUp(self):
@@ -275,7 +312,13 @@ class AutoReviewTests(BaseReviewTestCase):
             description="psychofysiologische meting (bijv. EEG, fMRI, EMA)"
         )
 
+    def test_auto_review_pre_assessment_short_route(self):
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 0)
+
     def test_auto_review(self):
+        if self.proposal.is_pre_assessment:
+            return
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
 
@@ -328,6 +371,8 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 8)
 
     def test_auto_review_minors_to_longroute(self):
+        if self.proposal.is_pre_assessment:
+            return
         self.study.age_groups.set([self.toddlers])
         self.study.save()
 
@@ -335,6 +380,8 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 1)
 
     def test_auto_review_adults_to_shortroute(self):
+        if self.proposal.is_pre_assessment:
+            return
         self.study.age_groups.set([self.adults])
         self.study.save()
 
@@ -364,6 +411,8 @@ class AutoReviewTests(BaseReviewTestCase):
         # reason: minors go to longroute, and session takes longer than 40m for the agegroup toddlers.
 
     def test_auto_review_observation(self):
+        if self.proposal.is_pre_assessment:
+            return
         self.study.has_observation = True
         self.study.save()
         o = Observation.objects.create(study=self.study, days=1, mean_hours=1)
@@ -385,7 +434,9 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
     def test_auto_review_registration_age_min(self):
-        self.study.has_sessions = True  # weggehaald in develop
+        if self.proposal.is_pre_assessment:
+            return
+        self.study.has_sessions = True
         self.study.age_groups.set([self.adolescents])
         self.study.save()
 
@@ -401,6 +452,20 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
 
+class PreAssessmentAutoReviewTestCase(AutoReviewTests):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+        self.study = Study.objects.create(
+            proposal=self.pre_assessment,
+            order=1,
+            compensation=Compensation.objects.get(
+                pk=2,
+            ),
+        )
+
+
 class ReviewCloseTestCase(
     BaseViewTestCase,
     BaseReviewTestCase,
@@ -409,6 +474,9 @@ class ReviewCloseTestCase(
 
     def setUp(self):
         super().setUp()
+        self.startReview()
+
+    def startReview(self):
         self.review = start_review(self.proposal)
 
     def get_view_path(self):
@@ -476,6 +544,8 @@ class ReviewCloseTestCase(
         )
 
     def test_long_route(self):
+        if self.proposal.is_pre_assessment:
+            return
         # If the review uses the long route already, the form
         # won't accept this choice. So we force set it to short.
         self.review.short_route = True
@@ -493,6 +563,7 @@ class ReviewCloseTestCase(
         self.assertEqual(
             self.review.stage,
             self.review.Stages.CLOSED,
+            f"'{self.review.get_stage_display()}' does not match",
         )
         # A new review should have been created
         # with a decision
@@ -526,3 +597,13 @@ class ReviewCloseTestCase(
             self.proposal.wmo.enforced_by_commission,
             True,
         )
+
+
+class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+    def startReview(self):
+        self.review = start_review(self.pre_assessment)
