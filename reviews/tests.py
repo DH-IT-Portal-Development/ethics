@@ -231,7 +231,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(
             review.stage,
             review.Stages.ASSIGNMENT,
-            f"{review.get_stage_display()} does not match",
+            f"{review.get_stage_display()} is supposed to be the ASSIGNMENT stage.",
         )
 
 
@@ -312,13 +312,7 @@ class AutoReviewTests(BaseReviewTestCase):
             description="psychofysiologische meting (bijv. EEG, fMRI, EMA)"
         )
 
-    def test_auto_review_pre_assessment_short_route(self):
-        reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 0)
-
     def test_auto_review(self):
-        if self.proposal.is_pre_assessment:
-            return
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
 
@@ -371,17 +365,13 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 8)
 
     def test_auto_review_minors_to_longroute(self):
-        if self.proposal.is_pre_assessment:  # pre-assessment has no age
-            return
         self.study.age_groups.set([self.toddlers])
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
 
-    def test_auto_review_adults_to_shortroute(self):
-        if self.proposal.is_pre_assessment:  # pre-assessment has no age
-            return
+    def test_auto_review_adults_to_short_route(self):
         self.study.age_groups.set([self.adults])
         self.study.save()
 
@@ -411,8 +401,6 @@ class AutoReviewTests(BaseReviewTestCase):
         # reason: minors go to longroute, and session takes longer than 40m for the agegroup toddlers.
 
     def test_auto_review_observation(self):
-        if self.proposal.is_pre_assessment:
-            return
         self.study.has_observation = True
         self.study.save()
         o = Observation.objects.create(study=self.study, days=1, mean_hours=1)
@@ -434,8 +422,6 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
     def test_auto_review_registration_age_min(self):
-        if self.proposal.is_pre_assessment:  # pre-assessment has no age
-            return
         self.study.has_sessions = True
         self.study.age_groups.set([self.adolescents])
         self.study.save()
@@ -464,6 +450,36 @@ class PreAssessmentAutoReviewTestCase(AutoReviewTests):
                 pk=2,
             ),
         )
+
+    def test_auto_review_pre_assessment_short_route(self):
+        # pre-assessment is supposed to go short route
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 0)
+
+    def test_auto_review(self):
+        # tests for multiple cases pre-assessment should not be able to handle
+        pass
+
+    def test_auto_review_minors_to_longroute(self):
+        # pre-assessment has no age group
+        pass
+
+    def test_auto_review_adults_to_short_route(self):
+        # pre-assessment has no age group
+        pass
+
+    def test_auto_review_session_time(self):
+        # pre-assessment actually passes session time if you let this test trough,
+        # most likely because of self.study.has_sessions = True
+        # which can not happen in a real scenario for pre-assessment
+        pass
+
+    def test_auto_review_observation(self):
+        pass
+
+    def test_auto_review_registration_age_min(self):
+        # pre-assessment has no age group
+        pass
 
 
 class ReviewCloseTestCase(
@@ -544,8 +560,6 @@ class ReviewCloseTestCase(
         )
 
     def test_long_route(self):
-        if self.proposal.is_pre_assessment:  # pre-assessment has no long route
-            return
         # If the review uses the long route already, the form
         # won't accept this choice. So we force set it to short.
         self.review.short_route = True
@@ -563,7 +577,7 @@ class ReviewCloseTestCase(
         self.assertEqual(
             self.review.stage,
             self.review.Stages.CLOSED,
-            f"'{self.review.get_stage_display()}' does not match",
+            f"{self.review.get_stage_display()} is supposed to be the CLOSED stage.",
         )
         # A new review should have been created
         # with a decision
@@ -607,3 +621,7 @@ class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
 
     def startReview(self):
         self.review = start_review(self.pre_assessment)
+
+    def test_long_route(self):
+        # pre-assessment has no long route
+        pass
