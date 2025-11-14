@@ -38,8 +38,6 @@ class BaseReviewTestCase(TestCase):
         "agegroups",
         "groups",
         "institutions",
-        "testing/test_proposals",
-        "testing/test_users",
     ]
     relation_pk = 1
 
@@ -80,7 +78,17 @@ class BaseReviewTestCase(TestCase):
         )
         self.proposal.generate_pdf()
 
-        self.pre_assessment = Proposal.objects.get(pk=2)
+        self.pre_assessment = Proposal.objects.create(
+            title="p2",
+            reference_number=generate_ref_number(),
+            date_start=date.today(),
+            created_by=self.user,
+            reviewing_committee=Group.objects.get(
+                name=settings.GROUP_LINGUISTICS_CHAMBER
+            ),
+            institution_id=1,
+        )
+        self.pre_assessment.is_pre_assessment = True
         self.pre_assessment.applicants.add(self.user)
         self.pre_assessment.wmo = Wmo.objects.create(
             proposal=self.pre_assessment,
