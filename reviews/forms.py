@@ -174,3 +174,12 @@ class DecisionForm(TemplatedModelForm):
 class StartEndDateForm(TemplatedForm):
     start_date = DateField(label=_("Start datum periode:"))
     end_date = DateField(label=_("Eind datum periode:"))
+
+
+class ReviewUpdateEmailCheckboxForm(TemplatedModelForm):
+    class Meta:
+        model = Review
+        fields = ["email_checkbox"]
+        widgets = {
+            "email_checkbox": BootstrapRadioSelect(choices=YES_NO),
+        }

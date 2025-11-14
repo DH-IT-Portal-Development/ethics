@@ -13,6 +13,7 @@ from .views import (
     ReviewAssignView,
     ReviewCloseView,
     ReviewDiscontinueView,
+    ReviewUpdateEmailCheckboxView,
     DecisionUpdateView,
     ToConcludeProposalView,
     ChangeChamberView,
@@ -57,6 +58,11 @@ urlpatterns = [
     ),
     path(
         "change_chamber/<int:pk>/", ChangeChamberView.as_view(), name="change_chamber"
+    ),
+    path(
+        "update_email_checkbox/<int:pk>/",
+        ReviewUpdateEmailCheckboxView.as_view(),
+        name="update_email_checkbox",
     ),
     path("close/<int:pk>/", ReviewCloseView.as_view(), name="close"),
     path("discontinue/<int:pk>/", ReviewDiscontinueView.as_view(), name="discontinue"),

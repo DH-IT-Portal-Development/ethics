@@ -23,6 +23,7 @@ class ReviewActions:
             SendConfirmation(review, user),
             ChangeArchiveStatus(review, user),
             ChangeDateStart(review, user),
+            SetEmailCheckbox(review, user),
         ]
         self.ufl_actions = []
 
@@ -76,6 +77,20 @@ class ReviewAction:
 
     def __str__(self):
         return mark_safe(self.text_with_link())
+
+
+class SetEmailCheckbox(ReviewAction):
+    def is_available(self):
+        user_groups = self.user.groups.values_list("name", flat=True)
+        if not settings.GROUP_SECRETARY in user_groups:
+            return False
+        return True
+
+    def action_url(self):
+        return reverse("reviews:update_email_checkbox", args=(self.review.pk,))
+
+    def description(self):
+        return "Set email warning"
 
 
 class DecideAction(ReviewAction):
