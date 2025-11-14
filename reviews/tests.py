@@ -7,6 +7,7 @@ from django.contrib.auth.models import User, Group, AnonymousUser
 from django.test import TestCase
 from django.utils import timezone
 
+from proposals.tests.test_constants import PHD_STUDENT
 from .models import Review, Decision
 from .utils import (
     start_review,
@@ -86,7 +87,7 @@ class BaseReviewTestCase(TestCase):
             metc=YesNoDoubt.NO,
         )
         self.pre_assessment.supervisor = self.supervisor
-        self.pre_assessment.relation = Relation.objects.get(pk=4)
+        self.pre_assessment.relation = Relation.objects.get(description_en=PHD_STUDENT)
         self.pre_assessment.save()
 
     def setup_users(self):
