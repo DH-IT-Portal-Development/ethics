@@ -32,12 +32,16 @@ class BaseReviewTestCase(TestCase):
     fixtures = [
         "relations",
         "compensations",
+        "fundings",
         "00_registrations",
         "01_registrationkinds",
         "fundings",
         "agegroups",
         "groups",
         "institutions",
+        "testing/test_users",
+        "testing/test_proposals",
+        "testing/test_studies",
     ]
     relation_pk = 1
 
@@ -50,32 +54,12 @@ class BaseReviewTestCase(TestCase):
         super().setUp()
 
     def setup_proposal(self):
-        self.proposal = Proposal.objects.create(
-            title="p1",
-            reference_number=generate_ref_number(),
-            date_start=date.today(),
-            created_by=self.user,
-            supervisor=self.supervisor,
-            relation=Relation.objects.get(pk=4),
-            reviewing_committee=Group.objects.get(
-                name=settings.GROUP_LINGUISTICS_CHAMBER
-            ),
-            institution_id=1,
-        )
-        self.proposal.applicants.add(
-            self.user,
-        )
+        self.proposal = Proposal.objects.get(pk=4)
         self.proposal.wmo = Wmo.objects.create(
             proposal=self.proposal,
             metc=YesNoDoubt.NO,
         )
-        self.study = Study.objects.create(
-            proposal=self.proposal,
-            order=1,
-            compensation=Compensation.objects.get(
-                pk=2,
-            ),
-        )
+        self.study = Study.objects.get(proposal=f"{self.proposal.pk}")
         self.proposal.generate_pdf()
 
         self.pre_assessment = Proposal.objects.create(
@@ -99,28 +83,11 @@ class BaseReviewTestCase(TestCase):
         self.pre_assessment.save()
 
     def setup_users(self):
-        self.secretary = User.objects.create_user(
-            "secretary",
-            "test@test.com",
-            "secret",
-            first_name="The",
-            last_name="Secretary",
-        )
-        self.c1 = User.objects.create_user("c1", "test@test.com", "secret")
-        self.c2 = User.objects.create_user("c2", "test@test.com", "secret")
-        self.user = User.objects.create_user(
-            "user", "test@test.com", "secret", first_name="John", last_name="Doe"
-        )
-        self.supervisor = User.objects.create_user(
-            "supervisor", "test@test.com", "secret", first_name="Jane", last_name="Roe"
-        )
-
-        self.secretary.groups.add(
-            Group.objects.get(name=settings.GROUP_PRIMARY_SECRETARY)
-        )
-        self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
-        self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
-        self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
+        self.secretary = User.objects.get(username="secretary")
+        self.c1 = User.objects.get(username="c1")
+        self.c2 = User.objects.get(username="c2")
+        self.user = User.objects.get(username="user")
+        self.supervisor = User.objects.get(username="supervisor")
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
@@ -330,42 +297,66 @@ class AutoReviewTests(BaseReviewTestCase):
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
+        self.assertEqual(
+            reasons[-1], "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
+        )
 
         self.study.deception = YesNoDoubt.DOUBT
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 2)
+        self.assertEqual(reasons[-1], "De aanvraag bevat het gebruik van misleiding.")
 
         self.study.hierarchy = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 3)
+        self.assertEqual(
+            reasons[-1],
+            "Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)",
+        )
 
         self.study.has_special_details = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 4)
+        self.assertEqual(
+            reasons[-1],
+            "Het onderzoek verzamelt bijzondere persoonsgegevens.",
+        )
 
         self.study.has_traits = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 5)
+        self.assertEqual(
+            reasons[-1],
+            "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.",
+        )
 
         self.study.risk = YesNoDoubt.YES
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 6)
+        self.assertEqual(
+            reasons[-1],
+            "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid van de deelnemers tijdens of na het onderzoek.",
+        )
 
-        self.study.proposal.researcher_risk = YesNoDoubt.YES
-        self.study.proposal.save()
+        self.proposal.researcher_risk = YesNoDoubt.YES
+        self.proposal.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 7)
+        self.assertEqual(
+            reasons[-1],
+            "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid van de betrokken onderzoekers.",
+        )
 
         self.study.negativity = YesNoDoubt.YES
         self.study.save()
