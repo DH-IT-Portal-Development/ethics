@@ -5,7 +5,8 @@ from django.conf import settings
 from django.test import TestCase
 
 from main.tests import BaseViewTestCase
-from proposals.models import Proposal, Relation, Wmo
+from proposals.models import Proposal, Relation, Wmo, PRE_APPROVAL_FILENAME
+from proposals.tests.test_constants import *
 from reviews.models import Review
 
 from proposals.views.proposal_views import (
@@ -32,6 +33,7 @@ class BaseProposalTestCase(TestCase):
         "01_registrationkinds",
         "testing/test_users",
         "testing/test_proposals",
+        "testing/test_wmos",
     ]
 
     def setUp(self):
@@ -44,54 +46,25 @@ class BaseProposalTestCase(TestCase):
         logging.disable(logging.WARN)
 
     def setup_users(self):
-        self.secretary = User.objects.create_user(
-            "secretary",
-            "test@test.com",
-            "secret",
-            first_name="The",
-            last_name="Secretary",
-        )
-        self.c1 = User.objects.create_user("c1", "test@test.com", "secret")
-        self.c2 = User.objects.create_user("c2", "test@test.com", "secret")
-        self.user = User.objects.create_user(
-            "user", "test@test.com", "secret", first_name="John", last_name="Doe"
-        )
-        self.supervisor = User.objects.create_user(
-            "supervisor", "test@test.com", "secret", first_name="Jane", last_name="Roe"
-        )
-
-        self.secretary.groups.add(
-            Group.objects.get(name=settings.GROUP_PRIMARY_SECRETARY)
-        )
-        self.secretary.groups.add(Group.objects.get(name=settings.GROUP_SECRETARY))
-
-        self.c1.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
-        self.c2.groups.add(Group.objects.get(name=settings.GROUP_LINGUISTICS_CHAMBER))
+        self.secretary = User.objects.get(username=SECRETARY)
+        self.c1 = User.objects.get(username=C1)
+        self.c2 = User.objects.get(username=C2)
+        self.user = User.objects.get(username=USER)
+        self.supervisor = User.objects.get(username=SUPERVISOR)
 
     def setup_proposal(self):
         """
-        Load our test proposals from a fixture, then add our user as
-        an applicant to each of them.
-
-        Please note, this currently uses a mish-mash of both fixtures
-        and programmatically created users and objects.
+        Load our test proposals from a fixture.
         """
-        self.wmo = Wmo(
-            status=0,
-            metc="N",
-            is_medical="N",
+        self.proposal = Proposal.objects.get(
+            reference_number=PROPOSAL_REF_NUMBER, title=PROPOSAL_TITLE
         )
-        self.wmo.save()
-        self.proposal = Proposal.objects.get(pk=1)
-        self.proposal.applicants.add(self.user)
-        self.proposal.wmo = self.wmo
-        self.proposal.save()
-        self.pre_assessment = Proposal.objects.get(pk=2)
-        self.pre_assessment.applicants.add(self.user)
-        self.pre_assessment.save()
-        self.pre_approval = Proposal.objects.get(pk=3)
-        self.pre_approval.applicants.add(self.user)
-        self.pre_approval.save()
+        self.pre_assessment = Proposal.objects.get(
+            reference_number=PRE_ASSESSMENT_REF_NUMBER, title=PRE_ASSESSMENT_TITLE
+        )
+        self.pre_approval = Proposal.objects.get(
+            reference_number=PRE_APPROVAL_REF_NUMBER, title=PRE_APPROVAL_TITLE
+        )
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
