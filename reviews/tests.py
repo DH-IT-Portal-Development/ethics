@@ -7,6 +7,7 @@ from django.contrib.auth.models import User, Group, AnonymousUser
 from django.test import TestCase
 from django.utils import timezone
 
+from proposals.tests.test_constants import PHD_STUDENT
 from .models import Review, Decision
 from .utils import (
     start_review,
@@ -33,9 +34,12 @@ class BaseReviewTestCase(TestCase):
         "compensations",
         "00_registrations",
         "01_registrationkinds",
+        "fundings",
         "agegroups",
         "groups",
         "institutions",
+        "testing/test_proposals",
+        "testing/test_users",
     ]
     relation_pk = 1
 
@@ -75,6 +79,16 @@ class BaseReviewTestCase(TestCase):
             ),
         )
         self.proposal.generate_pdf()
+
+        self.pre_assessment = Proposal.objects.get(pk=2)
+        self.pre_assessment.applicants.add(self.user)
+        self.pre_assessment.wmo = Wmo.objects.create(
+            proposal=self.pre_assessment,
+            metc=YesNoDoubt.NO,
+        )
+        self.pre_assessment.supervisor = self.supervisor
+        self.pre_assessment.relation = Relation.objects.get(description_en=PHD_STUDENT)
+        self.pre_assessment.save()
 
     def setup_users(self):
         self.secretary = User.objects.create_user(
@@ -151,6 +165,12 @@ class ReviewTestCase(BaseReviewTestCase):
         self.check_subject_lines(mail.outbox)
 
 
+class PreAssessmentReviewTestCase(ReviewTestCase):
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+
 class SupervisorTestCase(BaseReviewTestCase):
 
     def test_supervisor_review(self):
@@ -209,7 +229,18 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)
 
         review = self.proposal.latest_review()
-        self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
+        self.assertEqual(
+            review.stage,
+            review.Stages.ASSIGNMENT,
+            f"{review.get_stage_display()} is supposed to be the ASSIGNMENT stage.",
+        )
+
+
+class PreAssessmentSupervisorTestCase(SupervisorTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
 
 
 class AssignmentTestCase(BaseReviewTestCase):
@@ -262,6 +293,13 @@ class CommissionTestCase(BaseReviewTestCase):
         decisions[1].save()
         review.refresh_from_db()
         self.assertEqual(review.go, True)  # go
+
+
+class PreAssessmentCommissionTestCase(CommissionTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
 
 
 class AutoReviewTests(BaseReviewTestCase):
@@ -334,7 +372,7 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
 
-    def test_auto_review_adults_to_shortroute(self):
+    def test_auto_review_adults_to_short_route(self):
         self.study.age_groups.set([self.adults])
         self.study.save()
 
@@ -385,7 +423,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
     def test_auto_review_registration_age_min(self):
-        self.study.has_sessions = True  # weggehaald in develop
+        self.study.has_sessions = True
         self.study.age_groups.set([self.adolescents])
         self.study.save()
 
@@ -401,6 +439,50 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
 
+class PreAssessmentAutoReviewTestCase(AutoReviewTests):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+        self.study = Study.objects.create(
+            proposal=self.pre_assessment,
+            order=1,
+            compensation=Compensation.objects.get(
+                pk=2,
+            ),
+        )
+
+    def test_auto_review_pre_assessment_short_route(self):
+        # pre-assessment is supposed to go short route
+        reasons = auto_review(self.proposal)
+        self.assertEqual(len(reasons), 0)
+
+    def test_auto_review(self):
+        # tests for multiple cases pre-assessment should not be able to handle
+        pass
+
+    def test_auto_review_minors_to_longroute(self):
+        # pre-assessment has no age group
+        pass
+
+    def test_auto_review_adults_to_short_route(self):
+        # pre-assessment has no age group
+        pass
+
+    def test_auto_review_session_time(self):
+        # pre-assessment actually passes session time if you let this test trough,
+        # most likely because of self.study.has_sessions = True
+        # which can not happen in a real scenario for pre-assessment
+        pass
+
+    def test_auto_review_observation(self):
+        pass
+
+    def test_auto_review_registration_age_min(self):
+        # pre-assessment has no age group
+        pass
+
+
 class ReviewCloseTestCase(
     BaseViewTestCase,
     BaseReviewTestCase,
@@ -409,6 +491,9 @@ class ReviewCloseTestCase(
 
     def setUp(self):
         super().setUp()
+        self.startReview()
+
+    def startReview(self):
         self.review = start_review(self.proposal)
 
     def get_view_path(self):
@@ -493,6 +578,7 @@ class ReviewCloseTestCase(
         self.assertEqual(
             self.review.stage,
             self.review.Stages.CLOSED,
+            f"{self.review.get_stage_display()} is supposed to be the CLOSED stage.",
         )
         # A new review should have been created
         # with a decision
@@ -526,3 +612,17 @@ class ReviewCloseTestCase(
             self.proposal.wmo.enforced_by_commission,
             True,
         )
+
+
+class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+    def startReview(self):
+        self.review = start_review(self.pre_assessment)
+
+    def test_long_route(self):
+        # pre-assessment has no long route
+        pass
