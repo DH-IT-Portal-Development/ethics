@@ -56,12 +56,14 @@ class BaseProposalTestCase(TestCase):
         """
         Load our test proposals from a fixture.
         """
-        self.proposal = Proposal.objects.get(reference_number=PROPOSAL_REF_NUMBER)
+        self.proposal = Proposal.objects.get(
+            reference_number=PROPOSAL_REF_NUMBER, title=PROPOSAL_TITLE
+        )
         self.pre_assessment = Proposal.objects.get(
-            reference_number=PRE_ASSESSMENT_REF_NUMBER
+            reference_number=PRE_ASSESSMENT_REF_NUMBER, title=PRE_ASSESSMENT_TITLE
         )
         self.pre_approval = Proposal.objects.get(
-            reference_number=PRE_APPROVAL_REF_NUMBER
+            reference_number=PRE_APPROVAL_REF_NUMBER, title=PRE_APPROVAL_TITLE
         )
 
     def refresh(self):

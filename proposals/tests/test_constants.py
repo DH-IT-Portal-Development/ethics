@@ -13,6 +13,9 @@ USER = "user"
 SUPERVISOR = "supervisor"
 
 # proposals/fixtures/testing/test_proposals.json
+PROPOSAL_TITLE = "Normal test proposal"
+PRE_ASSESSMENT_TITLE = "Preassessment test proposal"
+PRE_APPROVAL_TITLE = "Preapproved test pdf"
 PROPOSAL_REF_NUMBER = "24-009-01"
 PRE_ASSESSMENT_REF_NUMBER = "24-010-01"
 PRE_APPROVAL_REF_NUMBER = "24-011-01"
