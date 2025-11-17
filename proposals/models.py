@@ -708,7 +708,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
 
     def continue_url(self):
         stepper = self.stepper
-        if self.is_revision: # if revision always start on the first item.
+        if self.is_revision:  # if revision always start on the first item.
             return stepper.items[0].get_url()
         for item in stepper.items:
             if item.get_errors():
