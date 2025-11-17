@@ -697,7 +697,7 @@ class ReviewAttachmentsView(
         return context
 
 
-class ReviewUpdateEmailCheckboxView(generic.TemplateView):
+class ReviewUpdateEmailCheckboxView(GroupRequiredMixin, generic.UpdateView):
     """
     Allows the secretary to change the email_checkbox on the Review level
     """
@@ -709,14 +709,8 @@ class ReviewUpdateEmailCheckboxView(generic.TemplateView):
 
     def form_valid(self, form):
         ret = super().form_valid(form)
-        # Always regenerate the PDF after updating the DMP
-        # This is necessary, as the canonical PDF protection might already
-        # have kicked in if the secretary changes the documents later than
-        # we initially expected.
-        self.object.generate_pdf(force_overwrite=True)
-
         return ret
 
     def get_success_url(self):
         """Continue to the URL specified in the 'next' POST parameter"""
-        return reverse("reviews:detail", args=[self.object.latest_review().pk])
+        return reverse("reviews:detail", args=[self.object.pk])

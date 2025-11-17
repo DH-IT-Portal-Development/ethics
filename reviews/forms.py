@@ -180,6 +180,7 @@ class ReviewUpdateEmailCheckboxForm(TemplatedModelForm):
     class Meta:
         model = Review
         fields = ["email_checkbox"]
+        labels = {"email_checkbox": _("Email waarschuwing weergeven")}
         widgets = {
             "email_checkbox": BootstrapRadioSelect(choices=YES_NO),
         }
