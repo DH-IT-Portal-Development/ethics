@@ -315,7 +315,6 @@ class ReviewDetailView(
     UsersOrGroupsAllowedMixin,
     generic.DetailView,
 ):
-    # the view voor deze issue
     """
     Shows the Decisions for a Review
     """
