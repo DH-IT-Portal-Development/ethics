@@ -992,7 +992,7 @@ class ProposalSubmittedPreApproved(ProposalSubmitted):
 # Practice
 ##########
 class ProposalStartPractice(generic.FormView):
-    template_name = "proposals/proposal_start_practice.html"
+    template_name = "proposals/proposal_start.html"
     form_class = ProposalStartPracticeForm
 
     def get_context_data(self, **kwargs):
@@ -1001,6 +1001,7 @@ class ProposalStartPractice(generic.FormView):
         context["secretary"] = get_secretary()
         context["is_practice"] = True
         context["no_back"] = True
+        context["next_text"] = _("Begin een oefenaanvraag >>")
         return context
 
     def get_success_url(self):
