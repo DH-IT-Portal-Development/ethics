@@ -240,7 +240,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(
             review.stage,
             review.Stages.ASSIGNMENT,
-            f"{review.get_stage_display()} is supposed to be the ASSIGNMENT stage.",
+            f"Pre-assessment proposal stage is incorrect. We expect {Review.Stages.ASSIGNMENT.name}, but instead we got {Review.Stages(review.stage).name}",
         )
 
 
@@ -460,14 +460,10 @@ class PreAssessmentAutoReviewTestCase(AutoReviewTests):
             ),
         )
 
-    def test_auto_review_pre_assessment_short_route(self):
+    def test_auto_review(self):
         # pre-assessment is supposed to go short route
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 0)
-
-    def test_auto_review(self):
-        # tests for multiple cases pre-assessment should not be able to handle
-        pass
 
     def test_auto_review_minors_to_longroute(self):
         # pre-assessment has no age group
@@ -478,9 +474,7 @@ class PreAssessmentAutoReviewTestCase(AutoReviewTests):
         pass
 
     def test_auto_review_session_time(self):
-        # pre-assessment actually passes session time if you let this test trough,
-        # most likely because of self.study.has_sessions = True
-        # which can not happen in a real scenario for pre-assessment
+        # pre-assessment has no session time.
         pass
 
     def test_auto_review_observation(self):
@@ -586,7 +580,7 @@ class ReviewCloseTestCase(
         self.assertEqual(
             self.review.stage,
             self.review.Stages.CLOSED,
-            f"{self.review.get_stage_display()} is supposed to be the CLOSED stage.",
+            f"Pre-assessment proposal stage is incorrect. We expect {Review.Stages.CLOSED.name}, but instead we got {Review.Stages(self.review.stage).name}",
         )
         # A new review should have been created
         # with a decision
