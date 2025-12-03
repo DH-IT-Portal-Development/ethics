@@ -195,6 +195,12 @@ gegeven worden; de FETC-GW geeft in die gevallen een post-hoc advies."
         null=True,
     )
 
+    def date_start_within_two_weeks(self):
+        if not self.date_start:
+            return False
+        return date.today()+timedelta(days=14) >= self.date_start
+
+
     expected_end_date = models.DateField(
         _(
             "Wat is de beoogde einddatum waarop het onderzoek, waarvoor deze aanvraag wordt ingediend, verwacht wordt te zijn voltooid?"
@@ -708,7 +714,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
 
     def continue_url(self):
         stepper = self.stepper
-        if self.is_revision:  # revision has to start on the start date page.
+        if self.is_revision or self.date_start_within_two_weeks():  # revision has to start on the start date page.
             return stepper.items[0].get_url()
         for item in stepper.items:
             if item.get_errors():
