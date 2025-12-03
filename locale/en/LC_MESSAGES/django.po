@@ -2025,7 +2025,7 @@ msgid ""
 "besproken met en gezien door de privacy officer van de Faculteit "
 "Geesteswetenschappen."
 msgstr ""
-"The documents for participants that will be submitted in the next step has "
+"The documents for participants that will be submitted in the next step have "
 "been discussed with and shown to the privacy officer of the Faculty of "
 "Humanities."
 
