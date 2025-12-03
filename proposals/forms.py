@@ -780,7 +780,8 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     def clean(self):
         cleaned_data = super(ProposalDataManagementForm, self).clean()
 
-        for field in self.fields:
+        for field in ["privacy_officer_conversation", "data_manager_conversation",
+                      "research_data_management_conversation"]:
             if cleaned_data[field] is None:
                 self.add_error(
                     field,
