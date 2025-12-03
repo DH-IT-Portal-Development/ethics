@@ -2042,7 +2042,7 @@ msgid ""
 msgstr ""
 "Would you like to explain why not? For example because (simular) documents "
 "from an earlier application have already been discussed with the Research "
-"Data Management Support or the Datamanager. In that case please write down "
+"Data Management Support or the Datamanager. In that case please mention "
 "the reference number."
 
 #: proposals/models.py:481
