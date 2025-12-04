@@ -466,7 +466,9 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
 
     privacy_officer_conversation_details = models.TextField(
         _(
-            "Zou je dan willen toelichten waarom niet? Bijv. omdat (vergelijkbare) documenten van een eerdere aanvraag al zijn besproken met Research Data Management Support of de datamanager (vermeld in dat geval s.v.p. het referentienummer)."
+            "Zou je dan willen toelichten waarom niet? Bijv. omdat (vergelijkbare) "
+            "documenten van een eerdere aanvraag al zijn besproken met de Privacy Officier (vermeld in dat geval s.v.p. het "
+            "referentienummer)."
         ),
         blank=True,
         default=None,
@@ -490,7 +492,9 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
 
     data_manager_conversation_details = models.TextField(
         _(
-            "Zou je dan willen toelichten waarom niet? Bijv. omdat (vergelijkbare) documenten van een eerdere aanvraag al zijn besproken met Research Data Management Support of de datamanager (vermeld in dat geval s.v.p. het referentienummer)."
+            "Zou je dan willen toelichten waarom niet? Bijv. omdat (vergelijkbare) "
+            "documenten van een eerdere aanvraag al zijn besproken met de datamanager (vermeld in dat geval s.v.p. het "
+            "referentienummer)."
         ),
         blank=True,
         default=None,
