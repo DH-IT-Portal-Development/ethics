@@ -24,6 +24,7 @@ from proposals.utils.pdf_diff_utils import (
     AttachmentRow,
     UploadDateRow,
     ProvisionRow,
+    RowValue,
 )
 
 ##############
@@ -628,9 +629,25 @@ class DMPSection(PageBreakMixin, BaseSection):
 
     row_fields = [
         "privacy_officer_conversation",
+        "privacy_officer_conversation_details",
         "data_manager_conversation",
+        "data_manager_conversation_details",
         "research_data_management_conversation",
+        "research_data_management_conversation_details",
     ]
+
+    def get_row_fields(self):
+        return self.remove_empty_row_fields(self.obj, self.row_fields)
+
+    @staticmethod
+    def remove_empty_row_fields(obj, row_fields: list[str]) -> list[str]:
+        """removes empty string fields and returns the list"""
+        for field in row_fields:
+            value = getattr(obj, field)
+            if isinstance(value, str):
+                if len(value) == 0:
+                    row_fields.remove(field)
+        return row_fields
 
 
 class EmbargoSection(BaseSection):
