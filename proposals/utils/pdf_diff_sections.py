@@ -24,7 +24,6 @@ from proposals.utils.pdf_diff_utils import (
     AttachmentRow,
     UploadDateRow,
     ProvisionRow,
-    RowValue,
 )
 
 ##############
