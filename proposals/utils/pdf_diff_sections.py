@@ -635,6 +635,10 @@ class DMPSection(PageBreakMixin, BaseSection):
         "research_data_management_conversation_details",
     ]
 
+    conditional_fields: list[str] = [
+        field for field in row_fields if field.endswith("_details")
+    ]
+
     def get_row_fields(self):
         # if boolean field is true remove conditional field in DMP
         return self.remove_unused_conditional_fields(True)
