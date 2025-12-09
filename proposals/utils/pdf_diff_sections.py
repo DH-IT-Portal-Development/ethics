@@ -626,18 +626,13 @@ class DMPSection(PageBreakMixin, BaseSection):
 
     section_title = _("Data Management")
 
-    # conditional fields need to start in row_fields to determine the PDF ordering
-    row_fields: list[str] = [
+    row_fields = [
         "privacy_officer_conversation",
         "privacy_officer_conversation_details",
         "data_manager_conversation",
         "data_manager_conversation_details",
         "research_data_management_conversation",
         "research_data_management_conversation_details",
-    ]
-
-    conditional_fields: list[str] = [
-        field for field in row_fields if field.endswith("_details")
     ]
 
     def get_row_fields(self):
