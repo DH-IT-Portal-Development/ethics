@@ -626,7 +626,8 @@ class DMPSection(PageBreakMixin, BaseSection):
 
     section_title = _("Data Management")
 
-    row_fields = [
+    # conditional fields need to start in row_fields to determine the PDF ordering
+    row_fields: list[str] = [
         "privacy_officer_conversation",
         "privacy_officer_conversation_details",
         "data_manager_conversation",
@@ -635,18 +636,26 @@ class DMPSection(PageBreakMixin, BaseSection):
         "research_data_management_conversation_details",
     ]
 
-    def get_row_fields(self):
-        return self.remove_empty_row_fields(self.obj, self.row_fields)
+    conditional_fields: list[str] = [
+        field for field in row_fields if field.endswith("_details")
+    ]
 
-    @staticmethod
-    def remove_empty_row_fields(obj, row_fields: list[str]) -> list[str]:
-        """removes empty string fields and returns the list"""
-        for field in row_fields:
-            value = getattr(obj, field)
-            if isinstance(value, str):
-                if len(value) == 0:
-                    row_fields.remove(field)
-        return row_fields
+    def get_row_fields(self):
+        # if boolean field is true remove conditional field in DMP
+        return self.remove_unused_conditional_fields(True)
+
+    def remove_unused_conditional_fields(self, condition=False) -> list[str]:
+        """assumes all conditional fields end with '_details'.
+        @condition: removes details when non _details field is condition value
+        """
+        rows_to_remove: list[str] = []
+        for conditional_field in self.conditional_fields:
+            row_field: str = conditional_field.removesuffix("_details")
+            value = getattr(self.obj, row_field)
+            if isinstance(value, bool):
+                if value == condition:
+                    rows_to_remove.append(conditional_field)
+        return [x for x in self.row_fields if x not in rows_to_remove]
 
 
 class EmbargoSection(BaseSection):
