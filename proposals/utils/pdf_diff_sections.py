@@ -635,30 +635,16 @@ class DMPSection(PageBreakMixin, BaseSection):
         "research_data_management_conversation_details",
     ]
 
-    # if no conditional fields is provided the row_fields
-    # with "_details" at the end is assumed to be the conditional fields
-    conditional_fields: list[str] = [
-        field for field in row_fields if field.endswith("_details")
-    ]
-
-    # right now all boolean conditions are true in DMP
-    conditions: list = [True for field in conditional_fields]
-
     def get_row_fields(self):
-        return self.remove_unused_conditional_fields(self.conditions)
+        return self.remove_unused_details_fields()
 
-    def remove_unused_conditional_fields(self, conditions: list) -> list[str]:
-        """assumes all conditional fields end with '_details'.
-        @condition: removes details when non _details field is condition value
-        """
+    def remove_unused_details_fields(self) -> list[str]:
+        """assumes all conditional fields end with '_details'."""
         rows_to_remove: list[str] = []
-        for index, conditional_field in enumerate(self.conditional_fields):
-            row_field: str = conditional_field.removesuffix("_details")
-            value = getattr(self.obj, row_field)
-            if isinstance(value, bool):
-                if value == conditions[index]:
-                    rows_to_remove.append(conditional_field)
-        # get_row_fields wants a copy of row_fields returned.
+        for row_field in self.row_fields:
+            # getattr always needs to be a bool that is True to be removed in DMP.
+            if getattr(self.obj, row_field):
+                rows_to_remove.append(f"{row_field}_details")
         return [x for x in self.row_fields if x not in rows_to_remove]
 
 
