@@ -658,6 +658,7 @@ class DMPSection(PageBreakMixin, BaseSection):
             if isinstance(value, bool):
                 if value == conditions[index]:
                     rows_to_remove.append(conditional_field)
+        #get_row_fields wants a copy of row_fields returned.
         return [x for x in self.row_fields if x not in rows_to_remove]
 
 
