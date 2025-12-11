@@ -66,6 +66,19 @@ class BaseSection:
     def get_sub_title(self, obj, sub_title_type):
         return SubTitle(obj, sub_title_type).sub_title
 
+    def remove_unused_details_fields(
+        self, row_fields: list[str], condition
+    ) -> list[str]:
+        """
+        assumes all conditional fields end with '_details'.
+        @condition: when True remove the details field
+        """
+        rows_to_remove: list[str] = []
+        for row_field in row_fields:
+            if getattr(self.obj, row_field) == condition:
+                rows_to_remove.append(f"{row_field}_details")
+        return [x for x in row_fields if x not in rows_to_remove]
+
 
 class DiffSection:
     """For the diff page, sections are constructed by comparing two section objects.

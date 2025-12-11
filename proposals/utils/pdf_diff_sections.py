@@ -1,4 +1,3 @@
-from datetime import date
 from copy import copy
 
 from django.utils.translation import gettext as _
@@ -18,7 +17,6 @@ from proposals.utils.pdf_diff_utils import (
     get_all_related,
     get_all_related_set,
     get_all_sessions,
-    get_extra_documents,
     multi_sections,
     KindRow,
     AttachmentRow,
@@ -535,16 +533,7 @@ class KnowledgeSecuritySection(BaseSection):
     ]
 
     def get_row_fields(self):
-        rows = copy(self.row_fields)
-        obj = self.obj
-
-        rows_to_remove = []
-        for x in range(0, len(self.row_fields), 2):
-            if getattr(obj, rows[x]) == "N":
-                rows_to_remove.append(rows[x + 1])
-        rows = [row for row in rows if row not in rows_to_remove]
-
-        return rows
+        return self.remove_unused_details_fields(self.row_fields, "N")
 
 
 ######################
@@ -626,7 +615,7 @@ class DMPSection(PageBreakMixin, BaseSection):
 
     section_title = _("Data Management")
 
-    row_fields = [
+    row_fields: list[str] = [
         "privacy_officer_conversation",
         "privacy_officer_conversation_details",
         "data_manager_conversation",
@@ -636,16 +625,7 @@ class DMPSection(PageBreakMixin, BaseSection):
     ]
 
     def get_row_fields(self):
-        return self.remove_unused_details_fields()
-
-    def remove_unused_details_fields(self) -> list[str]:
-        """assumes all conditional fields end with '_details'."""
-        rows_to_remove: list[str] = []
-        for row_field in self.row_fields:
-            # getattr always needs to be a bool that is True to be removed in DMP.
-            if getattr(self.obj, row_field):
-                rows_to_remove.append(f"{row_field}_details")
-        return [x for x in self.row_fields if x not in rows_to_remove]
+        return self.remove_unused_details_fields(self.row_fields, True)
 
 
 class EmbargoSection(BaseSection):
