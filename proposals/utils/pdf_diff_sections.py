@@ -503,15 +503,9 @@ class StudyOverviewSection(BaseSection):
         self.sub_title = self.get_sub_title(self.obj, "study")
 
     def get_row_fields(self):
-        rows = copy(self.row_fields)
+        rows = self.remove_unused_details_fields(self.row_fields, "N")
+
         obj = self.obj
-
-        rows_to_remove = []
-        for x in range(0, len(self.row_fields), 2):
-            if getattr(obj, rows[x]) == "N":
-                rows_to_remove.append(rows[x + 1])
-        rows = [row for row in rows if row not in rows_to_remove]
-
         if not obj.has_sessions and not obj.deception == "N":
             rows.remove("deception")
             rows.remove("deception_details")
