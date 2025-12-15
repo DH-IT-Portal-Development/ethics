@@ -83,18 +83,18 @@ class BaseReviewTestCase(TestCase):
             reference_number=generate_ref_number(),
             date_start=date.today(),
             created_by=self.user,
+            supervisor=self.supervisor,
             reviewing_committee=Group.objects.get(
                 name=settings.GROUP_LINGUISTICS_CHAMBER
             ),
             institution_id=1,
+            is_pre_assessment=True,
         )
-        self.pre_assessment.is_pre_assessment = True
         self.pre_assessment.applicants.add(self.user)
         self.pre_assessment.wmo = Wmo.objects.create(
             proposal=self.pre_assessment,
             metc=YesNoDoubt.NO,
         )
-        self.pre_assessment.supervisor = self.supervisor
         self.pre_assessment.relation = Relation.objects.get(description_en=PHD_STUDENT)
         self.pre_assessment.save()
 
@@ -240,7 +240,7 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(
             review.stage,
             review.Stages.ASSIGNMENT,
-            f"Pre-assessment proposal stage is incorrect. We expect {Review.Stages.ASSIGNMENT.name}, but instead we got {Review.Stages(review.stage).name}",
+            f"Review stage is incorrect. We expect {Review.Stages.ASSIGNMENT.name}, but instead we got {Review.Stages(review.stage).name}",
         )
 
 
@@ -447,42 +447,7 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
 
-class PreAssessmentAutoReviewTestCase(AutoReviewTests):
-
-    def setUp(self):
-        super().setUp()
-        self.proposal = self.pre_assessment
-        self.study = Study.objects.create(
-            proposal=self.pre_assessment,
-            order=1,
-            compensation=Compensation.objects.get(
-                pk=2,
-            ),
-        )
-
-    def test_auto_review(self):
-        # pre-assessment is supposed to go short route
-        reasons = auto_review(self.proposal)
-        self.assertEqual(len(reasons), 0)
-
-    def test_auto_review_minors_to_longroute(self):
-        # pre-assessment has no age group
-        pass
-
-    def test_auto_review_adults_to_short_route(self):
-        # pre-assessment has no age group
-        pass
-
-    def test_auto_review_session_time(self):
-        # pre-assessment has no session time.
-        pass
-
-    def test_auto_review_observation(self):
-        pass
-
-    def test_auto_review_registration_age_min(self):
-        # pre-assessment has no age group
-        pass
+# pre-assessment does not have a study so PreAssessmentAutoReviewTestCase should and not be added.
 
 
 class ReviewCloseTestCase(
@@ -493,9 +458,9 @@ class ReviewCloseTestCase(
 
     def setUp(self):
         super().setUp()
-        self.startReview()
+        self.start_review()
 
-    def startReview(self):
+    def start_review(self):
         self.review = start_review(self.proposal)
 
     def get_view_path(self):
@@ -580,7 +545,7 @@ class ReviewCloseTestCase(
         self.assertEqual(
             self.review.stage,
             self.review.Stages.CLOSED,
-            f"Pre-assessment proposal stage is incorrect. We expect {Review.Stages.CLOSED.name}, but instead we got {Review.Stages(self.review.stage).name}",
+            f"Review stage is incorrect. We expect {Review.Stages.CLOSED.name}, but instead we got {Review.Stages(self.review.stage).name}",
         )
         # A new review should have been created
         # with a decision
@@ -622,7 +587,7 @@ class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
         super().setUp()
         self.proposal = self.pre_assessment
 
-    def startReview(self):
+    def start_review(self):
         self.review = start_review(self.pre_assessment)
 
     def test_long_route(self):
