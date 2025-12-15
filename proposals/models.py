@@ -96,6 +96,14 @@ class ProposalQuerySet(models.QuerySet):
             | models.Q(status__gte=Proposal.Statuses.DECISION_MADE)
         )
 
+    def can_be_copied_by(self, user):
+        return self.filter(
+            models.Q(
+                applicants=user,
+            )
+            | models.Q(supervisor=user)
+        )
+
     def archive_pre_filter(self):
         return self.filter(
             status__gte=self.DECISION_MADE,
