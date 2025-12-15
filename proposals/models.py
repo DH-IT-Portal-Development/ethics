@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models import QuerySet
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -90,13 +91,13 @@ class Institution(models.Model):
 class ProposalQuerySet(models.QuerySet):
     DECISION_MADE = 55
 
-    def copyable_proposals(self):
+    def copyable_proposals(self) -> QuerySet:
         return self.filter(
             models.Q(status=Proposal.Statuses.DRAFT)
             | models.Q(status__gte=Proposal.Statuses.DECISION_MADE)
         )
 
-    def can_be_copied_by(self, user):
+    def can_be_copied_by(self, user) -> QuerySet:
         return self.filter(
             models.Q(
                 applicants=user,
