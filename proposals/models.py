@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models import QuerySet
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -89,6 +90,20 @@ class Institution(models.Model):
 
 class ProposalQuerySet(models.QuerySet):
     DECISION_MADE = 55
+
+    def copyable_proposals(self) -> QuerySet:
+        return self.filter(
+            models.Q(status=Proposal.Statuses.DRAFT)
+            | models.Q(status__gte=Proposal.Statuses.DECISION_MADE)
+        )
+
+    def can_be_copied_by(self, user) -> QuerySet:
+        return self.filter(
+            models.Q(
+                applicants=user,
+            )
+            | models.Q(supervisor=user)
+        )
 
     def archive_pre_filter(self):
         return self.filter(
@@ -686,8 +701,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         keep in mind to also check if the user is one of the applicants
         or the supervisor."""
         if (
-            not self.is_pre_assessment
-            and not self.status_review
+            not self.status_review
             and self.status == self.Statuses.DECISION_MADE
             and not self.children.all()
         ):
