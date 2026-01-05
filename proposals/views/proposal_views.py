@@ -729,24 +729,12 @@ class ProposalSubmit(
 
         context["pagenr"] = self._get_page_number()
         context["is_supervisor_edit_phase"] = self.is_supervisor_edit_phase()
-        context["start_date_warning"] = self.check_start_date()
+        context["start_date_warning"] = self.object.date_start_within_two_weeks()
         context["stepper_errors"] = self.get_stepper().get_form_errors(
             exclude_submit=True
         )
 
         return context
-
-    def check_start_date(self):
-        """
-        Return true if the proposal's intended start date lies within
-        two weeks of today.
-        """
-        start_date = self.object.date_start
-        if not start_date:
-            return False
-        two_weeks = datetime.timedelta(days=14)
-        two_weeks_from_now = datetime.date.today() + two_weeks
-        return start_date <= two_weeks_from_now
 
     def is_supervisor_edit_phase(self):
         if self.object.status == self.object.Statuses.SUBMITTED_TO_SUPERVISOR:
@@ -992,7 +980,7 @@ class ProposalSubmittedPreApproved(ProposalSubmitted):
 # Practice
 ##########
 class ProposalStartPractice(generic.FormView):
-    template_name = "proposals/proposal_start_practice.html"
+    template_name = "proposals/proposal_start.html"
     form_class = ProposalStartPracticeForm
 
     def get_context_data(self, **kwargs):
@@ -1001,6 +989,7 @@ class ProposalStartPractice(generic.FormView):
         context["secretary"] = get_secretary()
         context["is_practice"] = True
         context["no_back"] = True
+        context["next_text"] = _("Begin een oefenaanvraag >>")
         return context
 
     def get_success_url(self):

@@ -7,6 +7,7 @@ from django.contrib.auth.models import User, Group, AnonymousUser
 from django.test import TestCase
 from django.utils import timezone
 
+from proposals.tests.test_constants import PHD_STUDENT
 from .models import Review, Decision
 from .utils import (
     start_review,
@@ -34,6 +35,7 @@ class BaseReviewTestCase(TestCase):
         "fundings",
         "00_registrations",
         "01_registrationkinds",
+        "fundings",
         "agegroups",
         "groups",
         "institutions",
@@ -59,6 +61,26 @@ class BaseReviewTestCase(TestCase):
         )
         self.study = Study.objects.get(proposal=f"{self.proposal.pk}")
         self.proposal.generate_pdf()
+
+        self.pre_assessment = Proposal.objects.create(
+            title="p2",
+            reference_number=generate_ref_number(),
+            date_start=date.today(),
+            created_by=self.user,
+            supervisor=self.supervisor,
+            reviewing_committee=Group.objects.get(
+                name=settings.GROUP_LINGUISTICS_CHAMBER
+            ),
+            institution_id=1,
+            is_pre_assessment=True,
+        )
+        self.pre_assessment.applicants.add(self.user)
+        self.pre_assessment.wmo = Wmo.objects.create(
+            proposal=self.pre_assessment,
+            metc=YesNoDoubt.NO,
+        )
+        self.pre_assessment.relation = Relation.objects.get(description_en=PHD_STUDENT)
+        self.pre_assessment.save()
 
     def setup_users(self):
         self.secretary = User.objects.get(username="secretary")
@@ -116,6 +138,12 @@ class ReviewTestCase(BaseReviewTestCase):
 
         self.assertEqual(len(mail.outbox), 2)
         self.check_subject_lines(mail.outbox)
+
+
+class PreAssessmentReviewTestCase(ReviewTestCase):
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
 
 
 class SupervisorTestCase(BaseReviewTestCase):
@@ -176,7 +204,18 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)
 
         review = self.proposal.latest_review()
-        self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
+        self.assertEqual(
+            review.stage,
+            review.Stages.ASSIGNMENT,
+            f"Review stage is incorrect. We expect {Review.Stages.ASSIGNMENT.name}, but instead we got {Review.Stages(review.stage).name}",
+        )
+
+
+class PreAssessmentSupervisorTestCase(SupervisorTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
 
 
 class AssignmentTestCase(BaseReviewTestCase):
@@ -229,6 +268,13 @@ class CommissionTestCase(BaseReviewTestCase):
         decisions[1].save()
         review.refresh_from_db()
         self.assertEqual(review.go, True)  # go
+
+
+class PreAssessmentCommissionTestCase(CommissionTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
 
 
 class AutoReviewTests(BaseReviewTestCase):
@@ -325,7 +371,7 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
 
-    def test_auto_review_adults_to_shortroute(self):
+    def test_auto_review_adults_to_short_route(self):
         self.study.age_groups.set([self.adults])
         self.study.save()
 
@@ -392,6 +438,9 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
 
+# pre-assessment does not have a study so PreAssessmentAutoReviewTestCase should and not be added.
+
+
 class ReviewCloseTestCase(
     BaseViewTestCase,
     BaseReviewTestCase,
@@ -400,6 +449,9 @@ class ReviewCloseTestCase(
 
     def setUp(self):
         super().setUp()
+        self.start_review()
+
+    def start_review(self):
         self.review = start_review(self.proposal)
 
     def get_view_path(self):
@@ -484,6 +536,7 @@ class ReviewCloseTestCase(
         self.assertEqual(
             self.review.stage,
             self.review.Stages.CLOSED,
+            f"Review stage is incorrect. We expect {Review.Stages.CLOSED.name}, but instead we got {Review.Stages(self.review.stage).name}",
         )
         # A new review should have been created
         # with a decision
@@ -517,3 +570,17 @@ class ReviewCloseTestCase(
             self.proposal.wmo.enforced_by_commission,
             True,
         )
+
+
+class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+    def start_review(self):
+        self.review = start_review(self.pre_assessment)
+
+    def test_long_route(self):
+        # pre-assessment has no long route
+        pass
