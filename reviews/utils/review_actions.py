@@ -90,7 +90,7 @@ class SetEmailCheckbox(ReviewAction):
         return reverse("reviews:update_email_checkbox", args=(self.review.pk,))
 
     def description(self):
-        return _("Zet email waarschuwing")
+        return _("'Extra info via e-mail' waarschuwing toevoegen")
 
 
 class DecideAction(ReviewAction):
