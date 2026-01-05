@@ -706,10 +706,6 @@ class ReviewUpdateEmailCheckboxView(GroupRequiredMixin, generic.UpdateView):
     form_class = ReviewUpdateEmailCheckboxForm
     group_required = settings.GROUP_SECRETARY
 
-    def form_valid(self, form):
-        ret = super().form_valid(form)
-        return ret
-
     def get_success_url(self):
         """Continue to the URL specified in the 'next' POST parameter"""
         return reverse("reviews:detail", args=[self.object.pk])

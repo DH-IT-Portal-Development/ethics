@@ -6,16 +6,18 @@
 {% block header_title %}
     {% trans "Formulieren aanpassen" %}
 {% endblock %}
+
 {% block pre-form-text %}
     <h2>{% trans "E-mail waarschuwing toevoegen" %}</h2>
     <p>
         {% blocktrans trimmed %}
-            Op deze pagina kan een waarschuwing worden toegevoegd aan de detailpagina van 
-            een aanvraag, om reviewers duidelijk te maken dat er aanvullende informatie 
+            Op deze pagina kan een waarschuwing worden toegevoegd aan de detailpagina van
+            een aanvraag, om reviewers duidelijk te maken dat er aanvullende informatie
             is verstuurd via e-mail.
         {% endblocktrans %}
     </p>
 {% endblock %}
+
 {% block sidebar %}<!--Empty to override stepper-->{% endblock %}
 
 {% block form-buttons %}

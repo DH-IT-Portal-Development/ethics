@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-17 14:13+0100\n"
+"POT-Creation-Date: 2026-01-05 13:12+0100\n"
 "PO-Revision-Date: 2025-07-15 18:47+0200\n"
 "Last-Translator: Anna Asbury <anna.asbury@annaasbury.com>\n"
 "Language-Team: \n"
@@ -1472,7 +1472,7 @@ msgstr ""
 #: reviews/templates/reviews/review_assign_form.html:42
 #: reviews/templates/reviews/review_close_form.html:40
 #: reviews/templates/reviews/review_discontinue_form.html:65
-#: reviews/templates/reviews/review_update_email_checkbox.html:13
+#: reviews/templates/reviews/review_update_email_checkbox.html:22
 #: studies/templates/studies/study_update_attachments.html:21
 msgid "Terug naar de vorige pagina"
 msgstr "Back to the previous page"
@@ -2209,7 +2209,7 @@ msgstr "Amendment"
 #: proposals/models.py:758 reviews/api/views.py:70 reviews/api/views.py:337
 #: reviews/templates/reviews/committee_members_workload.html:36
 #: reviews/templates/reviews/committee_members_workload.html:78
-#: reviews/templates/reviews/review_detail_sidebar.html:111
+#: reviews/templates/reviews/review_detail_sidebar.html:113
 msgid "Revisie"
 msgstr "Revision"
 
@@ -3328,7 +3328,7 @@ msgstr ""
 "reach out to "
 
 #: proposals/templates/proposals/proposal_update_date_start.html:29
-#: reviews/templates/reviews/review_update_email_checkbox.html:16
+#: reviews/templates/reviews/review_update_email_checkbox.html:25
 #: studies/templates/studies/study_update_attachments.html:24
 msgid "Wijzigingen opslaan"
 msgstr "Save changes"
@@ -4581,16 +4581,20 @@ msgstr "This is an application for preliminary assessment"
 msgid "Dit is een beslissing van een eindverantwoordelijke"
 msgstr "This is a supervisor review"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:113
+#: reviews/templates/reviews/review_detail_sidebar.html:108
+msgid "Extra info via e-mail!"
+msgstr "Extra info via e-mail"
+
+#: reviews/templates/reviews/review_detail_sidebar.html:115
 msgid "Deze aanvraag heeft een revisie gehad tijdens het beslisproces."
 msgstr ""
 "A revision was made to this application after it was submitted to the FEtC-H"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:119
+#: reviews/templates/reviews/review_detail_sidebar.html:121
 msgid "Er zijn de volgende opmerkingen bijgevoegd: <br />"
 msgstr "The following comments have been provided: <br />"
 
-#: reviews/templates/reviews/review_detail_sidebar.html:133
+#: reviews/templates/reviews/review_detail_sidebar.html:135
 msgid "Documenten (oude systeem)"
 msgstr "Documents (legacy)"
 
@@ -4656,6 +4660,18 @@ msgstr "Decision made on"
 #: reviews/templates/reviews/review_table.html:18
 msgid "open"
 msgstr "open"
+
+#: reviews/templates/reviews/review_update_email_checkbox.html:10
+msgid "E-mail waarschuwing toevoegen"
+msgstr "Show email warning"
+
+#: reviews/templates/reviews/review_update_email_checkbox.html:12
+msgid ""
+"Op deze pagina kan een waarschuwing worden toegevoegd aan de detailpagina "
+"van een aanvraag, om reviewers duidelijk te maken dat er aanvullende "
+"informatie is verstuurd via e-mail."
+msgstr ""
+"On this page, you can add a warning to the detail page of a application, to indicate to reviewers that additional information has been sent via e-mail."
 
 #: reviews/templates/reviews/vue_templates/decision_list.html:63
 #: reviews/templates/reviews/vue_templates/review_list.html:64
@@ -4739,8 +4755,8 @@ msgid "Aanvraag in PDF-vorm"
 msgstr "Application in PDF format"
 
 #: reviews/utils/review_actions.py:93
-msgid "Zet email waarschuwing"
-msgstr "Set email warning"
+msgid "'Extra info via e-mail' waarschuwing toevoegen"
+msgstr "Add 'Extra info via e-mail' warning"
 
 #: reviews/utils/review_actions.py:133
 msgid "Pas jouw beslissing en/of commentaar aan"
@@ -4929,7 +4945,7 @@ msgstr "Pending decisions committee members"
 msgid "Openstaande besluiten eindverantwoordelijken"
 msgstr "Pending decisions supervisors"
 
-#: reviews/views.py:612
+#: reviews/views.py:611
 msgid ""
 "Deze aanvraag is al beoordeeld, dus je kan je beoordeling niet meer "
 "toevoegen/aanpassen"
