@@ -762,28 +762,22 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = [
-            "privacy_officer_conversation",
-            "privacy_officer_conversation_details",
-            "data_manager_conversation",
-            "data_manager_conversation_details",
-            "research_data_management_conversation",
-            "research_data_management_conversation_details",
+            # "privacy_choice",
+            "privacy_choice_details",
+            "DMPChoice",
+            "DMPChoice_details",
         ]
-        widgets = {
-            "privacy_officer_conversation": BootstrapRadioSelect(choices=YES_NO),
-            "data_manager_conversation": BootstrapRadioSelect(choices=YES_NO),
-            "research_data_management_conversation": BootstrapRadioSelect(
-                choices=YES_NO
-            ),
-        }
+        # widgets = {
+        #     "privacy_choice": BootstrapRadioSelect(),
+        #     "DMPChoice": BootstrapRadioSelect(),
+        # }
 
     def clean(self):
         cleaned_data = super(ProposalDataManagementForm, self).clean()
 
         for field in [
-            "privacy_officer_conversation",
-            "data_manager_conversation",
-            "research_data_management_conversation",
+            "privacy_choice",
+            "DMPChoice",
         ]:
             if cleaned_data[field] is None:
                 self.add_error(

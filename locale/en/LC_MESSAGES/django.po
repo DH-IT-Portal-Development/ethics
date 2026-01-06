@@ -2019,6 +2019,10 @@ msgstr ""
 msgid "Hoeveel verschillende trajecten zijn er?"
 msgstr "How many different trajectories are there?"
 
+msgid "De documenten voor deelnemers die ik in de volgende stap zal indienen zijn besproken met en gezien door de privacy officer van de faculteit Geesteswetenschappen."
+msgstr ""
+
+
 #: proposals/models.py:459
 msgid ""
 "De documenten voor deelnemers die ik in de volgende stap indien zijn "

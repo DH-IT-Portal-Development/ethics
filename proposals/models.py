@@ -17,7 +17,7 @@ mark_safe_lazy = lazy(mark_safe, SafeString)
 
 from main.models import YesNoDoubt
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
-from .utils import FilenameFactory, OverwriteStorage
+from .utils import FilenameFactory, OverwriteStorage, DMPSection
 from datetime import date, timedelta
 
 logger = logging.getLogger(__name__)
@@ -454,21 +454,23 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         blank=True,
     )
 
-    privacy_officer_conversation = models.BooleanField(
+    class PrivacyChoices(models.IntegerChoices):
+        PRIVACY_CONVERSATION = 0, _("De documenten voor deelnemers die ik in de volgende stap zal indienen zijn besproken met en gezien door de privacy officer van de faculteit Geesteswetenschappen.")
+        AVG_KNOWLEDGE = 1, _("Op grond van kennis over privacy/de AVG en/of mijn ervaring kan ik bevestigen dat de documenten voor deelnemers die ik in de volgende stap zal indienen in orde zijn qua privacy/AVG.")
+        OTHERWISE = 2, _("Anders (licht s.v.p. toe)")
+
+    privacy_choice = models.PositiveIntegerField(
         _(
-            "De documenten voor deelnemers die ik in de volgende stap indien zijn besproken met en gezien door de privacy officer van de Faculteit Geesteswetenschappen."
+            "Privacy/AVG"
         ),
-        default=None,
         null=True,
-        blank=True,
+        choices=PrivacyChoices.choices,
         help_text=_("Contact: <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>"),
     )
 
-    privacy_officer_conversation_details = models.TextField(
+    privacy_choice_details = models.TextField(
         _(
-            "Zou je dan willen toelichten waarom niet? Bijv. omdat (vergelijkbare) "
-            "documenten van een eerdere aanvraag al zijn besproken met de Privacy Officier (vermeld in dat geval s.v.p. het "
-            "referentienummer)."
+            "Toelichting"
         ),
         blank=True,
         default=None,
@@ -476,48 +478,23 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         max_length=500,
     )
 
-    data_manager_conversation = models.BooleanField(
+    class DMPChoices(models.IntegerChoices):
+        HUMANITIES_CONVERSATION = 0, _("Het Data Management Plan (DMP) dat ik in de volgende stap zal indienen is besproken met en gezien door de datamanager van de faculteit Geesteswetenschappen.")
+        RESEARCH_DATA_MANAGEMENT_CONVERSATION = 1, _("Het Data Management Plan (DMP) dat ik in de volgende stap zal indienen is besproken met en gezien door iemand van Research Data Management Support.")
+        OTHERWISE = 2, _("Anders (licht s.v.p. toe)")
+
+    DMPChoice = models.PositiveIntegerField(
         _(
-            "Het Data Management Plan (DMP) dat ik in de volgende stap indien is besproken met en gezien door de datamanager van de Faculteit Geesteswetenschappen."
+            "Data Management Plan"
         ),
-        default=None,
         null=True,
-        blank=True,
-        help_text=_(
-            "Als je geen Data Management Plan indient bij deze aanvraag,"
-            " beantwoord deze vraag dan met 'nee'.<br />"
-            "Contact: <a href='mailto:datamanagement.gw@uu.nl'>datamanager</a>"
-        ),
+        choices=DMPChoices.choices,
+        help_text=_("Contact: <a href='mailto:datamanagement.gw@uu.nl'>datamanager</a>"),
     )
 
-    data_manager_conversation_details = models.TextField(
+    DMPChoice_details = models.TextField(
         _(
-            "Zou je dan willen toelichten waarom niet? Bijv. omdat (vergelijkbare) "
-            "documenten van een eerdere aanvraag al zijn besproken met de datamanager (vermeld in dat geval s.v.p. het "
-            "referentienummer)."
-        ),
-        blank=True,
-        default=None,
-        null=True,
-        max_length=500,
-    )
-
-    research_data_management_conversation = models.BooleanField(
-        _(
-            "Het Data Management Plan (DMP) dat ik in de volgende stap indien is besproken met en gezien door de datamanager van Research Data Management Support."
-        ),
-        default=None,
-        null=True,
-        blank=True,
-        help_text=_(
-            "Als je geen Data Management Plan indient bij deze aanvraag,"
-            " beantwoord deze vraag dan met 'nee'."
-        ),
-    )
-
-    research_data_management_conversation_details = models.TextField(
-        _(
-            "Zou je dan willen toelichten waarom niet? Bijv. omdat (vergelijkbare) documenten van een eerdere aanvraag al zijn besproken met Research Data Management Support of de datamanager (vermeld in dat geval s.v.p. het referentienummer)."
+            "Toelichting"
         ),
         blank=True,
         default=None,
