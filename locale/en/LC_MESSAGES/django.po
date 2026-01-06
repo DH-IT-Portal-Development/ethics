@@ -4583,7 +4583,7 @@ msgstr "This is a supervisor review"
 
 #: reviews/templates/reviews/review_detail_sidebar.html:108
 msgid "Extra info via e-mail!"
-msgstr "Extra info via e-mail"
+msgstr "Extra info via e-mail!"
 
 #: reviews/templates/reviews/review_detail_sidebar.html:115
 msgid "Deze aanvraag heeft een revisie gehad tijdens het beslisproces."
