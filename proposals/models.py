@@ -475,23 +475,23 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
     )
 
     class PrivacyChoices(models.IntegerChoices):
-        PRIVACY_CONVERSATION = 0, _("De documenten voor deelnemers die ik in de volgende stap zal indienen zijn besproken met en gezien door de privacy officer van de faculteit Geesteswetenschappen.")
-        AVG_KNOWLEDGE = 1, _("Op grond van kennis over privacy/de AVG en/of mijn ervaring kan ik bevestigen dat de documenten voor deelnemers die ik in de volgende stap zal indienen in orde zijn qua privacy/AVG.")
+        PRIVACY_CONVERSATION = 0, _(
+            "De documenten voor deelnemers die ik in de volgende stap zal indienen zijn besproken met en gezien door de privacy officer van de faculteit Geesteswetenschappen."
+        )
+        AVG_KNOWLEDGE = 1, _(
+            "Op grond van kennis over privacy/de AVG en/of mijn ervaring kan ik bevestigen dat de documenten voor deelnemers die ik in de volgende stap zal indienen in orde zijn qua privacy/AVG."
+        )
         OTHERWISE = 2, _("Anders (licht s.v.p. toe)")
 
     privacy_choice = models.PositiveIntegerField(
-        _(
-            "Privacy/AVG"
-        ),
+        _("Privacy/AVG"),
         null=True,
         choices=PrivacyChoices.choices,
         help_text=_("Contact: <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>"),
     )
 
     privacy_choice_details = models.TextField(
-        _(
-            "Toelichting"
-        ),
+        _("Toelichting"),
         blank=True,
         default=None,
         null=True,
@@ -499,23 +499,25 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
     )
 
     class DMPChoices(models.IntegerChoices):
-        HUMANITIES_CONVERSATION = 0, _("Het Data Management Plan (DMP) dat ik in de volgende stap zal indienen is besproken met en gezien door de datamanager van de faculteit Geesteswetenschappen.")
-        RESEARCH_DATA_MANAGEMENT_CONVERSATION = 1, _("Het Data Management Plan (DMP) dat ik in de volgende stap zal indienen is besproken met en gezien door iemand van Research Data Management Support.")
+        HUMANITIES_CONVERSATION = 0, _(
+            "Het Data Management Plan (DMP) dat ik in de volgende stap zal indienen is besproken met en gezien door de datamanager van de faculteit Geesteswetenschappen."
+        )
+        RESEARCH_DATA_MANAGEMENT_CONVERSATION = 1, _(
+            "Het Data Management Plan (DMP) dat ik in de volgende stap zal indienen is besproken met en gezien door iemand van Research Data Management Support."
+        )
         OTHERWISE = 2, _("Anders (licht s.v.p. toe)")
 
     DMPChoice = models.PositiveIntegerField(
-        _(
-            "Data Management Plan"
-        ),
+        _("Data Management Plan"),
         null=True,
         choices=DMPChoices.choices,
-        help_text=_("Contact: <a href='mailto:datamanagement.gw@uu.nl'>datamanager</a>"),
+        help_text=_(
+            "Contact: <a href='mailto:datamanagement.gw@uu.nl'>datamanager</a>"
+        ),
     )
 
     DMPChoice_details = models.TextField(
-        _(
-            "Toelichting"
-        ),
+        _("Toelichting"),
         blank=True,
         default=None,
         null=True,
