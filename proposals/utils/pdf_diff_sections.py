@@ -610,16 +610,15 @@ class DMPSection(PageBreakMixin, BaseSection):
     section_title = _("Data Management")
 
     row_fields: list[str] = [
-        "privacy_officer_conversation",
-        "privacy_officer_conversation_details",
-        "data_manager_conversation",
-        "data_manager_conversation_details",
-        "research_data_management_conversation",
-        "research_data_management_conversation_details",
+        "privacy_choice",
+        "privacy_choice_details",
+        "DMPChoice",
+        "DMPChoice_details",
     ]
 
     def get_row_fields(self):
-        return self.remove_unused_details_fields(self.row_fields, True)
+        rows = self.remove_unused_details_fields(self.row_fields, 0)
+        return self.remove_unused_details_fields(rows, 1)
 
 
 class EmbargoSection(BaseSection):

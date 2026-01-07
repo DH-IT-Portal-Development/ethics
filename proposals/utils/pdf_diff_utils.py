@@ -334,6 +334,7 @@ class RowValue:
 
     def get_field_value(self):
         from studies.models import Study
+        from proposals.models import Proposal
 
         value = getattr(self.obj, self.field)
         User = get_user_model()
@@ -342,8 +343,13 @@ class RowValue:
             return self.yes_no_doubt(value)
         elif isinstance(value, bool):
             return _("ja") if value else _("nee")
-        elif isinstance(value, int) and self.field == "legal_basis":
-            return Study.LegalBases(value).label
+        elif isinstance(value, int):
+            if self.field == "legal_basis":
+                return Study.LegalBases(value).label
+            elif self.field == "privacy_choice":
+                return Proposal.PrivacyChoices(value).label
+            elif self.field == "DMPChoice":
+                return Proposal.DMPChoices(value).label
         elif isinstance(value, (str, int, date)):
             return value
         elif isinstance(value, User):
