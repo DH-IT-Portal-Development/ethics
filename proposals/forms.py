@@ -781,13 +781,13 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     def clean(self):
         cleaned_data = super(ProposalDataManagementForm, self).clean()
 
-        for field in [
-        ]:
-            if cleaned_data[field] is None:
-                self.add_error(
-                    field,
-                    _("Dit veld is verplicht om verder te gaan."),
-                )
+        for field in self.base_fields:
+            self.check_dependency_list(
+                cleaned_data,
+                f"{field}",
+                f"{field}_details",
+                f1_value_list=[2],
+            )
 
 
 class ProposalUpdateDataManagementForm(TemplatedModelForm):
