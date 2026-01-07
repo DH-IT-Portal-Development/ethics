@@ -616,8 +616,8 @@ class DMPSection(PageBreakMixin, BaseSection):
         "DMPChoice_details",
     ]
 
-    def get_row_fields(self):
-        rows = self.remove_unused_details_fields(self.row_fields, 0)
+    def get_row_fields(self) -> list[str]:
+        rows: list[str] = self.remove_unused_details_fields(self.row_fields, 0)
         return self.remove_unused_details_fields(rows, 1)
 
 
