@@ -71,11 +71,16 @@ class BaseSection:
     ) -> list[str]:
         """
         assumes all conditional fields end with '_details'.
-        @condition: when True remove the details field
+        @condition: when the condition or one of the conditions in case of a list is True remove the details field
         """
         rows_to_remove: list[str] = []
         for row_field in row_fields:
-            if getattr(self.obj, row_field) == condition:
+            if (
+                isinstance(condition, list)
+                and getattr(self.obj, row_field) in condition
+            ):
+                rows_to_remove.append(f"{row_field}_details")
+            elif getattr(self.obj, row_field) == condition:
                 rows_to_remove.append(f"{row_field}_details")
         return [x for x in row_fields if x not in rows_to_remove]
 

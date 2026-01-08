@@ -617,8 +617,7 @@ class DMPSection(PageBreakMixin, BaseSection):
     ]
 
     def get_row_fields(self) -> list[str]:
-        rows: list[str] = self.remove_unused_details_fields(self.row_fields, 0)
-        return self.remove_unused_details_fields(rows, 1)
+        return self.remove_unused_details_fields(self.row_fields, [0, 1])
 
 
 class EmbargoSection(BaseSection):
