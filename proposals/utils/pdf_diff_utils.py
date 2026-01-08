@@ -349,7 +349,7 @@ class RowValue:
             elif self.field == "privacy_choice":
                 return Proposal.PrivacyChoices(value).label
             elif self.field == "DMPChoice":
-                return Proposal.DMPChoices(value).label
+                return Proposal.DmpChoices(value).label
         elif isinstance(value, (str, int, date)):
             return value
         elif isinstance(value, User):
