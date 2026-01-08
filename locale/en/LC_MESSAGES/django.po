@@ -2062,7 +2062,7 @@ msgid ""
 "Geesteswetenschappen."
 msgstr ""
 "The Data Management Plan (DMP) that will be submitted in the next step has "
-"been discussed with and shown to the manager of Faculty of Humanities."
+"been discussed with and shown to the datamanager of Faculty of Humanities."
 
 #: proposals/models.py:483
 msgid ""
