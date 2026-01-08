@@ -75,12 +75,10 @@ class BaseSection:
         """
         rows_to_remove: list[str] = []
         for row_field in row_fields:
-            if (
+            if getattr(self.obj, row_field) == condition or (
                 isinstance(condition, list)
                 and getattr(self.obj, row_field) in condition
             ):
-                rows_to_remove.append(f"{row_field}_details")
-            elif getattr(self.obj, row_field) == condition:
                 rows_to_remove.append(f"{row_field}_details")
         return [x for x in row_fields if x not in rows_to_remove]
 
