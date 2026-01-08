@@ -348,7 +348,7 @@ class RowValue:
                 return Study.LegalBases(value).label
             elif self.field == "privacy_choice":
                 return Proposal.PrivacyChoices(value).label
-            elif self.field == "DMPChoice":
+            elif self.field == "dmp_choice":
                 return Proposal.DmpChoices(value).label
         elif isinstance(value, (str, int, date)):
             return value
