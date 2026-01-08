@@ -746,19 +746,19 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
         fields = [
             "privacy_choice",
             "privacy_choice_details",
-            "DMPChoice",
-            "DMPChoice_details",
+            "dmp_choice",
+            "dmp_choice_details",
         ]
         widgets = {
             "privacy_choice": BootstrapRadioSelect(),
-            "DMPChoice": BootstrapRadioSelect(),
+            "dmp_choice": BootstrapRadioSelect(),
         }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # Remove the empty string option.
         self.fields["privacy_choice"].choices = Proposal.PrivacyChoices.choices
-        self.fields["DMPChoice"].choices = Proposal.DMPChoices.choices
+        self.fields["dmp_choice"].choices = Proposal.DmpChoices.choices
 
     def clean(self):
         cleaned_data = super(ProposalDataManagementForm, self).clean()

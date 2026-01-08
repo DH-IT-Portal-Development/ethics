@@ -498,7 +498,7 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         max_length=500,
     )
 
-    class DMPChoices(models.IntegerChoices):
+    class DmpChoices(models.IntegerChoices):
         HUMANITIES_CONVERSATION = 0, _(
             "Het Data Management Plan (DMP) dat ik in de volgende stap zal indienen is besproken met en gezien door de datamanager van de faculteit Geesteswetenschappen."
         )
@@ -507,16 +507,16 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         )
         OTHERWISE = 2, _("Anders (licht s.v.p. toe)")
 
-    DMPChoice = models.PositiveIntegerField(
+    dmp_choice = models.PositiveIntegerField(
         _("Data Management Plan"),
         null=True,
-        choices=DMPChoices.choices,
+        choices=DmpChoices.choices,
         help_text=_(
             "Contact: <a href='mailto:datamanagement.gw@uu.nl'>datamanager</a>"
         ),
     )
 
-    DMPChoice_details = models.TextField(
+    dmp_choice_details = models.TextField(
         _("Toelichting"),
         blank=True,
         default=None,

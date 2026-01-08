@@ -612,8 +612,8 @@ class DMPSection(PageBreakMixin, BaseSection):
     row_fields: list[str] = [
         "privacy_choice",
         "privacy_choice_details",
-        "DMPChoice",
-        "DMPChoice_details",
+        "dmp_choice",
+        "dmp_choice_details",
     ]
 
     def get_row_fields(self) -> list[str]:
