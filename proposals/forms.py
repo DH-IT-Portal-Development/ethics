@@ -459,16 +459,9 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, TemplatedModelForm):
         self.fields["parent"].queryset = self._get_parent_queryset()
 
     def _get_parent_queryset(self):
-        # Return all proposals, that are not currently in review
+        # Return all proposals, that are not currently in review, and self.user is allowed to copy
         return (
-            Proposal.objects.copyable_proposals()
-            .filter(
-                Q(
-                    applicants=self.user,
-                )
-                | Q(supervisor=self.user)
-            )
-            .distinct()
+            Proposal.objects.copyable_proposals().can_be_copied_by(self.user).distinct()
         )
 
 
@@ -505,12 +498,7 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
                 status_review=False,
                 children__isnull=True,
             )
-            .filter(
-                Q(
-                    applicants=self.user,
-                )
-                | Q(supervisor=self.user)
-            )
+            .can_be_copied_by(self.user)
             .distinct()
         )
 

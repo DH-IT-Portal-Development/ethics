@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models import QuerySet
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -90,10 +91,18 @@ class Institution(models.Model):
 class ProposalQuerySet(models.QuerySet):
     DECISION_MADE = 55
 
-    def copyable_proposals(self):
+    def copyable_proposals(self) -> QuerySet:
         return self.filter(
             models.Q(status=Proposal.Statuses.DRAFT)
             | models.Q(status__gte=Proposal.Statuses.DECISION_MADE)
+        )
+
+    def can_be_copied_by(self, user) -> QuerySet:
+        return self.filter(
+            models.Q(
+                applicants=user,
+            )
+            | models.Q(supervisor=user)
         )
 
     def archive_pre_filter(self):
@@ -200,6 +209,11 @@ gegeven worden; de FETC-GW geeft in die gevallen een post-hoc advies."
         blank=True,
         null=True,
     )
+
+    def date_start_within_two_weeks(self):
+        if not self.date_start:
+            return False
+        return date.today() + timedelta(days=14) >= self.date_start
 
     expected_end_date = models.DateField(
         _(
@@ -713,6 +727,10 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
 
     def continue_url(self):
         stepper = self.stepper
+        if (
+            self.is_revision or self.date_start_within_two_weeks()
+        ):  # revision has to start on the start date page.
+            return stepper.items[0].get_url()
         for item in stepper.items:
             if item.get_errors():
                 return item.get_url()
