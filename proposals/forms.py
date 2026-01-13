@@ -744,27 +744,32 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = [
-            "privacy_officer_conversation",
-            "data_manager_conversation",
-            "research_data_management_conversation",
+            "privacy_choice",
+            "privacy_choice_details",
+            "dmp_choice",
+            "dmp_choice_details",
         ]
         widgets = {
-            "privacy_officer_conversation": BootstrapRadioSelect(choices=YES_NO),
-            "data_manager_conversation": BootstrapRadioSelect(choices=YES_NO),
-            "research_data_management_conversation": BootstrapRadioSelect(
-                choices=YES_NO
-            ),
+            "privacy_choice": BootstrapRadioSelect(),
+            "dmp_choice": BootstrapRadioSelect(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Remove the empty string option.
+        self.fields["privacy_choice"].choices = Proposal.PrivacyChoices.choices
+        self.fields["dmp_choice"].choices = Proposal.DmpChoices.choices
 
     def clean(self):
         cleaned_data = super(ProposalDataManagementForm, self).clean()
 
-        for field in self.fields:
-            if cleaned_data[field] is None:
-                self.add_error(
-                    field,
-                    _("Dit veld is verplicht om verder te gaan."),
-                )
+        for field in self.base_fields:
+            self.check_dependency_list(
+                cleaned_data,
+                f"{field}",
+                f"{field}_details",
+                f1_value_list=[2],
+            )
 
 
 class ProposalUpdateDataManagementForm(TemplatedModelForm):

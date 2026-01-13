@@ -18,7 +18,7 @@ mark_safe_lazy = lazy(mark_safe, SafeString)
 
 from main.models import YesNoDoubt
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
-from .utils import FilenameFactory, OverwriteStorage
+from .utils import FilenameFactory, OverwriteStorage, DMPSection
 from datetime import date, timedelta
 
 logger = logging.getLogger(__name__)
@@ -474,39 +474,54 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         blank=True,
     )
 
-    privacy_officer_conversation = models.BooleanField(
-        _(
-            "Ik heb mijn aanvraag en de documenten voor deelnemers besproken met de privacy officer."
-        ),
-        default=None,
+    class PrivacyChoices(models.IntegerChoices):
+        PRIVACY_CONVERSATION = 0, _(
+            "De documenten voor deelnemers die ik in de volgende stap zal indienen zijn besproken met en gezien door de privacy officer van de faculteit Geesteswetenschappen."
+        )
+        AVG_KNOWLEDGE = 1, _(
+            "Op grond van kennis over privacy/de AVG en/of mijn ervaring kan ik bevestigen dat de documenten voor deelnemers die ik in de volgende stap zal indienen in orde zijn qua privacy/AVG."
+        )
+        OTHERWISE = 2, _("Anders (licht s.v.p. toe)")
+
+    privacy_choice = models.PositiveIntegerField(
+        _("Privacy/AVG"),
         null=True,
-        blank=True,
+        choices=PrivacyChoices.choices,
+        help_text=_("Contact: <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>"),
     )
 
-    data_manager_conversation = models.BooleanField(
-        _(
-            "Ik heb mijn Data Management Plan (DMP) besproken met de data manager van de faculteit Geesteswetenschappen."
-        ),
+    privacy_choice_details = models.TextField(
+        _("Toelichting"),
+        blank=True,
         default=None,
         null=True,
-        blank=True,
+        max_length=500,
+    )
+
+    class DmpChoices(models.IntegerChoices):
+        HUMANITIES_CONVERSATION = 0, _(
+            "Het Data Management Plan (DMP) dat ik in de volgende stap zal indienen is besproken met en gezien door de datamanager van de faculteit Geesteswetenschappen."
+        )
+        RESEARCH_DATA_MANAGEMENT_CONVERSATION = 1, _(
+            "Het Data Management Plan (DMP) dat ik in de volgende stap zal indienen is besproken met en gezien door iemand van Research Data Management Support."
+        )
+        OTHERWISE = 2, _("Anders (licht s.v.p. toe)")
+
+    dmp_choice = models.PositiveIntegerField(
+        _("Data Management Plan"),
+        null=True,
+        choices=DmpChoices.choices,
         help_text=_(
-            "Als je geen Data Management Plan indient bij deze aanvraag,"
-            " beantwoord deze vraag dan met 'nee'."
+            "Contact: <a href='mailto:datamanagement.gw@uu.nl'>datamanager</a>"
         ),
     )
 
-    research_data_management_conversation = models.BooleanField(
-        _(
-            "Ik heb mijn Data Management Plan (DMP) besproken met iemand van Research Data Management Support."
-        ),
+    dmp_choice_details = models.TextField(
+        _("Toelichting"),
+        blank=True,
         default=None,
         null=True,
-        blank=True,
-        help_text=_(
-            "Als je geen Data Management Plan indient bij deze aanvraag,"
-            " beantwoord deze vraag dan met 'nee'."
-        ),
+        max_length=500,
     )
 
     dmp_file = models.FileField(

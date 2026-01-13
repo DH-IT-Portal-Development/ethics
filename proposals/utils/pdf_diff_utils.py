@@ -66,6 +66,19 @@ class BaseSection:
     def get_sub_title(self, obj, sub_title_type):
         return SubTitle(obj, sub_title_type).sub_title
 
+    def remove_unused_details_fields(
+        self, row_fields: list[str], conditions
+    ) -> list[str]:
+        """
+        assumes all conditional fields end with '_details'.
+        @condition: when one of the conditions is True remove the details field
+        """
+        rows_to_remove: list[str] = []
+        for row_field in row_fields:
+            if getattr(self.obj, row_field) in conditions:
+                rows_to_remove.append(f"{row_field}_details")
+        return [x for x in row_fields if x not in rows_to_remove]
+
 
 class DiffSection:
     """For the diff page, sections are constructed by comparing two section objects.
@@ -321,6 +334,7 @@ class RowValue:
 
     def get_field_value(self):
         from studies.models import Study
+        from proposals.models import Proposal
 
         value = getattr(self.obj, self.field)
         User = get_user_model()
@@ -329,8 +343,13 @@ class RowValue:
             return self.yes_no_doubt(value)
         elif isinstance(value, bool):
             return _("ja") if value else _("nee")
-        elif isinstance(value, int) and self.field == "legal_basis":
-            return Study.LegalBases(value).label
+        elif isinstance(value, int):
+            if self.field == "legal_basis":
+                return Study.LegalBases(value).label
+            elif self.field == "privacy_choice":
+                return Proposal.PrivacyChoices(value).label
+            elif self.field == "dmp_choice":
+                return Proposal.DmpChoices(value).label
         elif isinstance(value, (str, int, date)):
             return value
         elif isinstance(value, User):
