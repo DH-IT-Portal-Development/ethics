@@ -5,7 +5,8 @@ from django.conf import settings
 from django.test import TestCase
 
 from main.tests import BaseViewTestCase
-from proposals.models import Proposal, Relation, Wmo
+from proposals.models import Proposal, Relation, Wmo, PRE_APPROVAL_FILENAME
+from proposals.tests.test_constants import *
 from reviews.models import Review
 
 from proposals.views.proposal_views import (
@@ -46,19 +47,25 @@ class BaseProposalTestCase(TestCase):
         logging.disable(logging.WARN)
 
     def setup_users(self):
-        self.secretary = User.objects.get(username="secretary")
-        self.c1 = User.objects.get(username="c1")
-        self.c2 = User.objects.get(username="c2")
-        self.user = User.objects.get(username="user")
-        self.supervisor = User.objects.get(username="supervisor")
+        self.secretary = User.objects.get(username=SECRETARY)
+        self.c1 = User.objects.get(username=C1)
+        self.c2 = User.objects.get(username=C2)
+        self.user = User.objects.get(username=USER)
+        self.supervisor = User.objects.get(username=SUPERVISOR)
 
     def setup_proposal(self):
         """
         Load our test proposals from a fixture.
         """
-        self.proposal = Proposal.objects.get(pk=1)
-        self.pre_assessment = Proposal.objects.get(pk=2)
-        self.pre_approval = Proposal.objects.get(pk=3)
+        self.proposal = Proposal.objects.get(
+            reference_number=PROPOSAL_REF_NUMBER, title=PROPOSAL_TITLE
+        )
+        self.pre_assessment = Proposal.objects.get(
+            reference_number=PRE_ASSESSMENT_REF_NUMBER, title=PRE_ASSESSMENT_TITLE
+        )
+        self.pre_approval = Proposal.objects.get(
+            reference_number=PRE_APPROVAL_REF_NUMBER, title=PRE_APPROVAL_TITLE
+        )
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
@@ -135,6 +142,8 @@ class ProposalSubmitTestCase(
         - Because there is no supervisor, a new review is created
           in the assignment stage.
         """
+        # This test can handle studies but only complete studies and the test_studies.json fixture is incomplete.
+        # self.proposal.study_set.all().delete() is the temp solution
         self.proposal.study_set.all().delete()
         # Sanity checks to start
         self.assertEqual(

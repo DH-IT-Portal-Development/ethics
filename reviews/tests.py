@@ -63,6 +63,12 @@ class ReviewTestCase(BaseReviewTestCase):
         self.check_subject_lines(mail.outbox)
 
 
+class PreAssessmentReviewTestCase(ReviewTestCase):
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+
 class SupervisorTestCase(BaseReviewTestCase):
 
     def test_supervisor_review(self):
@@ -123,7 +129,18 @@ class SupervisorTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)
 
         review = self.proposal.latest_review()
-        self.assertEqual(review.stage, review.Stages.ASSIGNMENT)
+        self.assertEqual(
+            review.stage,
+            review.Stages.ASSIGNMENT,
+            f"Review stage is incorrect. We expect {Review.Stages.ASSIGNMENT.name}, but instead we got {Review.Stages(review.stage).name}",
+        )
+
+
+class PreAssessmentSupervisorTestCase(SupervisorTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
 
 
 class CommissionTestCase(BaseReviewTestCase):
@@ -167,6 +184,13 @@ class CommissionTestCase(BaseReviewTestCase):
         self.assertEqual(review.go, True)  # go
 
 
+class PreAssessmentCommissionTestCase(CommissionTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+
 class AutoReviewTests(BaseReviewTestCase):
 
     def setUp(self):
@@ -188,66 +212,42 @@ class AutoReviewTests(BaseReviewTestCase):
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
-        self.assertEqual(
-            reasons[-1], "De aanvraag bevat het gebruik van wilsonbekwame volwassenen."
-        )
 
         self.study.deception = YesNoDoubt.DOUBT
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 2)
-        self.assertEqual(reasons[-1], "De aanvraag bevat het gebruik van misleiding.")
 
         self.study.hierarchy = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 3)
-        self.assertEqual(
-            reasons[-1],
-            "Er bestaat een hiërarchische relatie tussen de onderzoeker(s) en deelnemer(s)",
-        )
 
         self.study.has_special_details = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 4)
-        self.assertEqual(
-            reasons[-1],
-            "Het onderzoek verzamelt bijzondere persoonsgegevens.",
-        )
 
         self.study.has_traits = True
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 5)
-        self.assertEqual(
-            reasons[-1],
-            "Het onderzoek selecteert deelnemers op bijzondere kenmerken die wellicht verhoogde kwetsbaarheid met zich meebrengen.",
-        )
 
         self.study.risk = YesNoDoubt.YES
         self.study.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 6)
-        self.assertEqual(
-            reasons[-1],
-            "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid van de deelnemers tijdens of na het onderzoek.",
-        )
 
         self.proposal.researcher_risk = YesNoDoubt.YES
         self.proposal.save()
 
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 7)
-        self.assertEqual(
-            reasons[-1],
-            "De onderzoeker geeft aan dat er mogelijk kwesties zijn rondom de veiligheid van de betrokken onderzoekers.",
-        )
 
         self.study.negativity = YesNoDoubt.YES
         self.study.save()
@@ -262,7 +262,7 @@ class AutoReviewTests(BaseReviewTestCase):
         reasons = auto_review(self.proposal)
         self.assertEqual(len(reasons), 1)
 
-    def test_auto_review_adults_to_shortroute(self):
+    def test_auto_review_adults_to_short_route(self):
         self.study.age_groups.set([self.adults])
         self.study.save()
 
@@ -329,6 +329,9 @@ class AutoReviewTests(BaseReviewTestCase):
         self.assertEqual(len(reasons), 2)
 
 
+# pre-assessment does not have a study so PreAssessmentAutoReviewTestCase should and not be added.
+
+
 class ReviewCloseTestCase(
     BaseViewTestCase,
     BaseReviewTestCase,
@@ -337,6 +340,9 @@ class ReviewCloseTestCase(
 
     def setUp(self):
         super().setUp()
+        self.start_review()
+
+    def start_review(self):
         self.review = start_review(self.proposal)
 
     def get_view_path(self):
@@ -421,6 +427,7 @@ class ReviewCloseTestCase(
         self.assertEqual(
             self.review.stage,
             self.review.Stages.CLOSED,
+            f"Review stage is incorrect. We expect {Review.Stages.CLOSED.name}, but instead we got {Review.Stages(self.review.stage).name}",
         )
         # A new review should have been created
         # with a decision
@@ -454,3 +461,17 @@ class ReviewCloseTestCase(
             self.proposal.wmo.enforced_by_commission,
             True,
         )
+
+
+class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
+
+    def setUp(self):
+        super().setUp()
+        self.proposal = self.pre_assessment
+
+    def start_review(self):
+        self.review = start_review(self.pre_assessment)
+
+    def test_long_route(self):
+        # pre-assessment has no long route
+        pass

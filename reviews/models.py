@@ -43,6 +43,7 @@ class Review(models.Model):
     is_committee_review = models.BooleanField(default=True)
 
     proposal = models.ForeignKey(Proposal, on_delete=models.CASCADE)
+    email_checkbox = models.BooleanField(default=False)
 
     def update_go(self, last_decision=None):
         """

@@ -1,0 +1,28 @@
+{% extends "base/fetc_form_base.html" %}
+
+{% load static %}
+{% load i18n %}
+
+{% block header_title %}
+    {% trans "Formulieren aanpassen" %}
+{% endblock %}
+
+{% block pre-form-text %}
+    <h2>{% trans "E-mail waarschuwing toevoegen" %}</h2>
+    <p>
+        {% blocktrans trimmed %}
+            Op deze pagina kan een waarschuwing worden toegevoegd aan de detailpagina van
+            een aanvraag, om reviewers duidelijk te maken dat er aanvullende informatie
+            is verstuurd via e-mail.
+        {% endblocktrans %}
+    </p>
+{% endblock %}
+
+{% block sidebar %}<!--Empty to override stepper-->{% endblock %}
+
+{% block form-buttons %}
+    <a class="btn btn-secondary" href="javascript:history.go(-1);">{% trans "Terug naar de vorige pagina" %}</a>
+    <input class="btn btn-primary ms-auto"
+           type="submit"
+           value="{% trans 'Wijzigingen opslaan' %}" />
+{% endblock %}
