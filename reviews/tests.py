@@ -487,7 +487,3 @@ class PreAssessmentReviewCloseTestCase(ReviewCloseTestCase):
     def test_long_route(self):
         # pre-assessment has no long route
         pass
-
-    def test_metc(self):
-        # pre-assessment has no METC
-        pass
