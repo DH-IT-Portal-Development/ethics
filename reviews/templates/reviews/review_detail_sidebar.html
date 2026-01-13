@@ -103,6 +103,11 @@
                 </strong>
             </li>
         {% endif %}
+        {% if review.email_checkbox %}
+            <li>
+                <strong class="text-danger">{% trans "Extra info via e-mail!" %}</strong>
+            </li>
+        {% endif %}
     </ul>
     {% if review.proposal.has_minor_revision %}
         <h4>{% trans 'Revisie' %}</h4>
