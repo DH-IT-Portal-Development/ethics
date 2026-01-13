@@ -140,6 +140,8 @@ class ProposalSubmitTestCase(
         - Because there is no supervisor, a new review is created
           in the assignment stage.
         """
+        # This test can handle studies but only complete studies and the test_studies.json fixture is incomplete.
+        # self.proposal.study_set.all().delete() is the temp solution
         self.proposal.study_set.all().delete()
         # Sanity checks to start
         self.assertEqual(
