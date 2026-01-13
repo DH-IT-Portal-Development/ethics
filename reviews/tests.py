@@ -23,11 +23,6 @@ from .views import ReviewCloseView
 
 
 class BaseReviewTestCase(BaseProposalTestCase):
-    relation_pk = 1
-
-    def setup_proposal(self):
-        super().setup_proposal()
-        self.proposal.generate_pdf()
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
@@ -35,6 +30,13 @@ class BaseReviewTestCase(BaseProposalTestCase):
         receive a cached value."""
         super().refresh()
         self.review.refresh_from_db()
+
+
+class PdfTestCase(BaseReviewTestCase):
+    def test_pdf_generation(self):
+        """test if the PDF generates without a crash.
+        Does not test PDF contents."""
+        self.proposal.generate_pdf()
 
 
 class ReviewTestCase(BaseReviewTestCase):
@@ -145,14 +147,6 @@ class PreAssessmentSupervisorTestCase(SupervisorTestCase):
     def setUp(self):
         super().setUp()
         self.proposal = self.pre_assessment
-
-
-class AssignmentTestCase(BaseReviewTestCase):
-    def test_assignment(self):
-        """
-        Tests whether the assignment works correctly.
-        """
-        pass
 
 
 class CommissionTestCase(BaseReviewTestCase):
