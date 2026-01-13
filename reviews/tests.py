@@ -23,7 +23,6 @@ from .views import ReviewCloseView
 
 
 class BaseReviewTestCase(BaseProposalTestCase):
-    review = None
 
     def refresh(self):
         """Refresh objects from DB. This is sometimes necessary if you access
@@ -31,6 +30,13 @@ class BaseReviewTestCase(BaseProposalTestCase):
         receive a cached value."""
         super().refresh()
         self.review.refresh_from_db()
+
+
+class PdfTestCase(BaseReviewTestCase):
+    def test_pdf_generation(self):
+        """test if the PDF generates without a crash.
+        Does not test PDF contents."""
+        self.proposal.generate_pdf()
 
 
 class ReviewTestCase(BaseReviewTestCase):
