@@ -67,18 +67,15 @@ class BaseSection:
         return SubTitle(obj, sub_title_type).sub_title
 
     def remove_unused_details_fields(
-        self, row_fields: list[str], condition
+        self, row_fields: list[str], conditions
     ) -> list[str]:
         """
         assumes all conditional fields end with '_details'.
-        @condition: when the condition or one of the conditions in case of a list is True remove the details field
+        @condition: when one of the conditions is True remove the details field
         """
         rows_to_remove: list[str] = []
         for row_field in row_fields:
-            if getattr(self.obj, row_field) == condition or (
-                isinstance(condition, list)
-                and getattr(self.obj, row_field) in condition
-            ):
+            if getattr(self.obj, row_field) in conditions:
                 rows_to_remove.append(f"{row_field}_details")
         return [x for x in row_fields if x not in rows_to_remove]
 

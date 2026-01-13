@@ -503,7 +503,7 @@ class StudyOverviewSection(BaseSection):
         self.sub_title = self.get_sub_title(self.obj, "study")
 
     def get_row_fields(self):
-        rows = self.remove_unused_details_fields(self.row_fields, "N")
+        rows = self.remove_unused_details_fields(self.row_fields, ["N"])
 
         obj = self.obj
         if not obj.has_sessions and not obj.deception == "N":
@@ -527,7 +527,7 @@ class KnowledgeSecuritySection(BaseSection):
     ]
 
     def get_row_fields(self):
-        return self.remove_unused_details_fields(self.row_fields, "N")
+        return self.remove_unused_details_fields(self.row_fields, ["N"])
 
 
 ######################
