@@ -118,6 +118,7 @@ def start_supervisor_phase(proposal):
         "revision": proposal.is_revision,
         "revision_type": proposal.type(),
         "my_supervised": settings.BASE_URL + reverse("proposals:my_supervised"),
+        "is_pre_assessment": proposal.is_pre_assessment,
     }
     msg_plain = render_to_string("mail/concept_supervisor.txt", params)
     msg_html = render_to_string("mail/concept_supervisor.html", params)

@@ -459,20 +459,9 @@ class BaseProposalCopyForm(UserKwargModelFormMixin, TemplatedModelForm):
         self.fields["parent"].queryset = self._get_parent_queryset()
 
     def _get_parent_queryset(self):
-        # Return all non-pre-assessments, that are not currently in review
+        # Return all proposals, that are not currently in review, and self.user is allowed to copy
         return (
-            Proposal.objects.filter(is_pre_assessment=False)
-            .filter(
-                Q(
-                    applicants=self.user,
-                )
-                | Q(supervisor=self.user)
-            )
-            .filter(
-                Q(status=Proposal.Statuses.DRAFT)
-                | Q(status__gte=Proposal.Statuses.DECISION_MADE)
-            )
-            .distinct()
+            Proposal.objects.copyable_proposals().can_be_copied_by(self.user).distinct()
         )
 
 
@@ -500,22 +489,16 @@ class RevisionProposalCopyForm(BaseProposalCopyForm):
         )
 
     def _get_parent_queryset(self):
-        # Select non-pre-assessments that have been reviewed and rejected and
+        # Select proposals that have been reviewed and rejected and
         # haven't been parented yet.
         # Those are eligible for revisions
         return (
             Proposal.objects.filter(
-                is_pre_assessment=False,
                 status=Proposal.Statuses.DECISION_MADE,
                 status_review=False,
                 children__isnull=True,
             )
-            .filter(
-                Q(
-                    applicants=self.user,
-                )
-                | Q(supervisor=self.user)
-            )
+            .can_be_copied_by(self.user)
             .distinct()
         )
 
@@ -532,12 +515,11 @@ class AmendmentProposalCopyForm(BaseProposalCopyForm):
         )
 
     def _get_parent_queryset(self):
-        # Select non-pre-assessments that have been reviewed and approved and
+        # Select proposals that have been reviewed and approved and
         # haven't been parented yet.
         # Those are eligible for amendments
         return (
             Proposal.objects.filter(
-                is_pre_assessment=False,
                 status_review=True,
                 children__isnull=True,
             )
@@ -762,27 +744,32 @@ class ProposalDataManagementForm(SoftValidationMixin, ConditionalModelForm):
     class Meta:
         model = Proposal
         fields = [
-            "privacy_officer_conversation",
-            "data_manager_conversation",
-            "research_data_management_conversation",
+            "privacy_choice",
+            "privacy_choice_details",
+            "dmp_choice",
+            "dmp_choice_details",
         ]
         widgets = {
-            "privacy_officer_conversation": BootstrapRadioSelect(choices=YES_NO),
-            "data_manager_conversation": BootstrapRadioSelect(choices=YES_NO),
-            "research_data_management_conversation": BootstrapRadioSelect(
-                choices=YES_NO
-            ),
+            "privacy_choice": BootstrapRadioSelect(),
+            "dmp_choice": BootstrapRadioSelect(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Remove the empty string option.
+        self.fields["privacy_choice"].choices = Proposal.PrivacyChoices.choices
+        self.fields["dmp_choice"].choices = Proposal.DmpChoices.choices
 
     def clean(self):
         cleaned_data = super(ProposalDataManagementForm, self).clean()
 
-        for field in self.fields:
-            if cleaned_data[field] is None:
-                self.add_error(
-                    field,
-                    _("Dit veld is verplicht om verder te gaan."),
-                )
+        for field in self.base_fields:
+            self.check_dependency_list(
+                cleaned_data,
+                f"{field}",
+                f"{field}_details",
+                f1_value_list=[2],
+            )
 
 
 class ProposalUpdateDataManagementForm(TemplatedModelForm):
