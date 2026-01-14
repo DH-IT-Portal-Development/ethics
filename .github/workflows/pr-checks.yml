@@ -11,6 +11,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install libsasl2-dev libssl-dev gettext poppler-utils poppler-data libpoppler-cpp-dev
+          sudo apt install libcairo2-dev pkg-config python3-dev
       - uses: actions/checkout@v2
       - name: Set up Python
         uses: actions/setup-python@v2
