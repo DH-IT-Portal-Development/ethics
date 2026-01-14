@@ -6,6 +6,7 @@ from django.conf import settings
 from django.contrib.auth.models import Group
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models import QuerySet
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse
@@ -17,7 +18,7 @@ mark_safe_lazy = lazy(mark_safe, SafeString)
 
 from main.models import YesNoDoubt
 from main.validators import MaxWordsValidator, validate_pdf_or_doc
-from .utils import FilenameFactory, OverwriteStorage
+from .utils import FilenameFactory, OverwriteStorage, DMPSection
 from datetime import date, timedelta
 
 logger = logging.getLogger(__name__)
@@ -89,6 +90,20 @@ class Institution(models.Model):
 
 class ProposalQuerySet(models.QuerySet):
     DECISION_MADE = 55
+
+    def copyable_proposals(self) -> QuerySet:
+        return self.filter(
+            models.Q(status=Proposal.Statuses.DRAFT)
+            | models.Q(status__gte=Proposal.Statuses.DECISION_MADE)
+        )
+
+    def can_be_copied_by(self, user) -> QuerySet:
+        return self.filter(
+            models.Q(
+                applicants=user,
+            )
+            | models.Q(supervisor=user)
+        )
 
     def archive_pre_filter(self):
         return self.filter(
@@ -194,6 +209,11 @@ gegeven worden; de FETC-GW geeft in die gevallen een post-hoc advies."
         blank=True,
         null=True,
     )
+
+    def date_start_within_two_weeks(self):
+        if not self.date_start:
+            return False
+        return date.today() + timedelta(days=14) >= self.date_start
 
     expected_end_date = models.DateField(
         _(
@@ -454,39 +474,54 @@ identiek zijn aan een vorige titel van een aanvraag die je hebt ingediend."
         blank=True,
     )
 
-    privacy_officer_conversation = models.BooleanField(
-        _(
-            "Ik heb mijn aanvraag en de documenten voor deelnemers besproken met de privacy officer."
-        ),
-        default=None,
+    class PrivacyChoices(models.IntegerChoices):
+        PRIVACY_CONVERSATION = 0, _(
+            "De documenten voor deelnemers die ik in de volgende stap zal indienen zijn besproken met en gezien door de privacy officer van de faculteit Geesteswetenschappen."
+        )
+        AVG_KNOWLEDGE = 1, _(
+            "Op grond van kennis over privacy/de AVG en/of mijn ervaring kan ik bevestigen dat de documenten voor deelnemers die ik in de volgende stap zal indienen in orde zijn qua privacy/AVG."
+        )
+        OTHERWISE = 2, _("Anders (licht s.v.p. toe)")
+
+    privacy_choice = models.PositiveIntegerField(
+        _("Privacy/AVG"),
         null=True,
-        blank=True,
+        choices=PrivacyChoices.choices,
+        help_text=_("Contact: <a href='mailto:privacy.gw@uu.nl'>privacy officer</a>"),
     )
 
-    data_manager_conversation = models.BooleanField(
-        _(
-            "Ik heb mijn Data Management Plan (DMP) besproken met de data manager van de faculteit Geesteswetenschappen."
-        ),
+    privacy_choice_details = models.TextField(
+        _("Toelichting"),
+        blank=True,
         default=None,
         null=True,
-        blank=True,
+        max_length=500,
+    )
+
+    class DmpChoices(models.IntegerChoices):
+        HUMANITIES_CONVERSATION = 0, _(
+            "Het Data Management Plan (DMP) dat ik in de volgende stap zal indienen is besproken met en gezien door de datamanager van de faculteit Geesteswetenschappen."
+        )
+        RESEARCH_DATA_MANAGEMENT_CONVERSATION = 1, _(
+            "Het Data Management Plan (DMP) dat ik in de volgende stap zal indienen is besproken met en gezien door iemand van Research Data Management Support."
+        )
+        OTHERWISE = 2, _("Anders (licht s.v.p. toe)")
+
+    dmp_choice = models.PositiveIntegerField(
+        _("Data Management Plan"),
+        null=True,
+        choices=DmpChoices.choices,
         help_text=_(
-            "Als je geen Data Management Plan indient bij deze aanvraag,"
-            " beantwoord deze vraag dan met 'nee'."
+            "Contact: <a href='mailto:datamanagement.gw@uu.nl'>datamanager</a>"
         ),
     )
 
-    research_data_management_conversation = models.BooleanField(
-        _(
-            "Ik heb mijn Data Management Plan (DMP) besproken met iemand van Research Data Management Support."
-        ),
+    dmp_choice_details = models.TextField(
+        _("Toelichting"),
+        blank=True,
         default=None,
         null=True,
-        blank=True,
-        help_text=_(
-            "Als je geen Data Management Plan indient bij deze aanvraag,"
-            " beantwoord deze vraag dan met 'nee'."
-        ),
+        max_length=500,
     )
 
     dmp_file = models.FileField(
@@ -681,8 +716,7 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
         keep in mind to also check if the user is one of the applicants
         or the supervisor."""
         if (
-            not self.is_pre_assessment
-            and not self.status_review
+            not self.status_review
             and self.status == self.Statuses.DECISION_MADE
             and not self.children.all()
         ):
@@ -708,6 +742,10 @@ Als dat wel moet, geef dan hier aan wat de reden is:"
 
     def continue_url(self):
         stepper = self.stepper
+        if (
+            self.is_revision or self.date_start_within_two_weeks()
+        ):  # revision has to start on the start date page.
+            return stepper.items[0].get_url()
         for item in stepper.items:
             if item.get_errors():
                 return item.get_url()

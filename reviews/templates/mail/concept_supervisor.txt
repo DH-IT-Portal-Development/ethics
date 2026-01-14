@@ -11,7 +11,9 @@ Je kunt deze concept-aanvraag bekijken via {{ proposal_url }}. Je kunt deze, eve
 Als {{ creator }} de aanpassingen moet maken, dan moet je de aanvraag formeel afkeuren en zelf {{ creator }} hiervan op de hoogte stellen.
 
 Je kunt al je aanvragen als eindverantwoordelijke onderzoeker en hun status via {{ my_supervised }} bekijken.
-
+{% if is_pre_assessment %}
+Let op: het gaat hierbij om een pre-assessment.
+{% endif %}
 {% if revision %}
 Let op: het gaat hierbij om een {{ revision_type|lower }} van een eerdere aanvraag.
 In de portal kun je de wijzigingen ten opzichte van de vorige aanvraag inzien.
@@ -30,6 +32,9 @@ In case the application needs to be revised more substantially by {{ creator }},
 
 You can view all applications and their statuses, for which you are the researcher with final responsibility, here: {{ my_supervised }}.
 
+{% if is_pre_assessment %}
+Please note that this involves a pre-assessment
+{% endif %}
 {% if revision %}
 Please note that this involves a {{ revision_type | lower }} of a previous application.
 In the portal, you can check the differences between the current and previous application.

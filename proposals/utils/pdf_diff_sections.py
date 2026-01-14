@@ -1,4 +1,3 @@
-from datetime import date
 from copy import copy
 
 from django.utils.translation import gettext as _
@@ -18,7 +17,6 @@ from proposals.utils.pdf_diff_utils import (
     get_all_related,
     get_all_related_set,
     get_all_sessions,
-    get_extra_documents,
     multi_sections,
     KindRow,
     AttachmentRow,
@@ -505,15 +503,9 @@ class StudyOverviewSection(BaseSection):
         self.sub_title = self.get_sub_title(self.obj, "study")
 
     def get_row_fields(self):
-        rows = copy(self.row_fields)
+        rows = self.remove_unused_details_fields(self.row_fields, ["N"])
+
         obj = self.obj
-
-        rows_to_remove = []
-        for x in range(0, len(self.row_fields), 2):
-            if getattr(obj, rows[x]) == "N":
-                rows_to_remove.append(rows[x + 1])
-        rows = [row for row in rows if row not in rows_to_remove]
-
         if not obj.has_sessions and not obj.deception == "N":
             rows.remove("deception")
             rows.remove("deception_details")
@@ -535,16 +527,7 @@ class KnowledgeSecuritySection(BaseSection):
     ]
 
     def get_row_fields(self):
-        rows = copy(self.row_fields)
-        obj = self.obj
-
-        rows_to_remove = []
-        for x in range(0, len(self.row_fields), 2):
-            if getattr(obj, rows[x]) == "N":
-                rows_to_remove.append(rows[x + 1])
-        rows = [row for row in rows if row not in rows_to_remove]
-
-        return rows
+        return self.remove_unused_details_fields(self.row_fields, ["N"])
 
 
 ######################
@@ -626,11 +609,15 @@ class DMPSection(PageBreakMixin, BaseSection):
 
     section_title = _("Data Management")
 
-    row_fields = [
-        "privacy_officer_conversation",
-        "data_manager_conversation",
-        "research_data_management_conversation",
+    row_fields: list[str] = [
+        "privacy_choice",
+        "privacy_choice_details",
+        "dmp_choice",
+        "dmp_choice_details",
     ]
+
+    def get_row_fields(self) -> list[str]:
+        return self.remove_unused_details_fields(self.row_fields, [0, 1])
 
 
 class EmbargoSection(BaseSection):

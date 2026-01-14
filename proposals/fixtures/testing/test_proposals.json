@@ -34,9 +34,8 @@
         "studies_number": 1,
         "status": 1,
         "status_review": null,
-        "privacy_officer_conversation": false,
-        "data_manager_conversation": true,
-        "research_data_management_conversation": true,
+        "privacy_choice": 0,
+        "dmp_choice": 0,
         "dmp_file": "",
         "confirmation_comments": "",
         "date_created": "2024-12-19T14:52:13.624Z",
@@ -66,7 +65,7 @@
             3
         ],
         "applicants": [
-            5
+            1, 5
         ]
     }
 },
@@ -105,9 +104,8 @@
         "studies_number": 1,
         "status": 1,
         "status_review": null,
-        "privacy_officer_conversation": null,
-        "data_manager_conversation": true,
-        "research_data_management_conversation": true,
+        "privacy_choice": null,
+        "dmp_choice": null,
         "dmp_file": "",
         "confirmation_comments": "",
         "date_created": "2024-12-23T10:30:40.272Z",
@@ -137,7 +135,7 @@
             2
         ],
         "applicants": [
-            5
+            1, 5
         ]
     }
 },
@@ -176,9 +174,8 @@
         "studies_number": 1,
         "status": 1,
         "status_review": null,
-        "privacy_officer_conversation": true,
-        "data_manager_conversation": true,
-        "research_data_management_conversation": true,
+        "privacy_choice": 1,
+        "dmp_choice": 1,
         "dmp_file": "",
         "confirmation_comments": "",
         "date_created": "2024-12-23T11:15:55.495Z",
@@ -208,7 +205,7 @@
             1
         ],
         "applicants": [
-            5
+            1, 5
         ]
     }
 }
