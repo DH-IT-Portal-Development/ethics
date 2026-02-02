@@ -341,30 +341,30 @@ class RowValue:
 
         if value in ("Y", "N", "?"):
             return self.yes_no_doubt(value)
-        elif isinstance(value, bool):
+        if isinstance(value, bool):
             return _("ja") if value else _("nee")
-        elif isinstance(value, int):
+        if isinstance(value, int):
             if self.field == "legal_basis":
                 return Study.LegalBases(value).label
-            elif self.field == "privacy_choice":
+            if self.field == "privacy_choice":
                 return Proposal.PrivacyChoices(value).label
-            elif self.field == "dmp_choice":
+            if self.field == "dmp_choice":
                 return Proposal.DmpChoices(value).label
-        elif isinstance(value, (str, int, date)):
+        if isinstance(value, (str, int, date)):
             return value
-        elif isinstance(value, User):
+        if isinstance(value, User):
             return self.handle_user(value)
-        elif hasattr(value, "description"):
+        if hasattr(value, "description"):
             # Display minor related models eg. Relation,Compensation or StudentContext correctly
             return value.description
-        elif value.__class__.__name__ == "ManyRelatedManager":
+        if value.__class__.__name__ == "ManyRelatedManager":
             if value.all().model == User:
                 return self.get_applicants_names(value)
             else:
                 return self.get_object_list(value)
-        elif value.__class__.__name__ == "FieldFile":
+        if value.__class__.__name__ == "FieldFile":
             return self.handle_field_file(value)
-        elif callable(value):
+        if callable(value):
             return value()
         return _("Onbekend")
 
