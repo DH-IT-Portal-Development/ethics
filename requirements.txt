@@ -218,7 +218,7 @@ pyjwt==2.10.1
     # via cdh-django-core
 pyopenssl==24.2.1
     # via pysaml2
-pypdf==6.6.0
+pypdf==6.7.3
     # via xhtml2pdf
 pysaml2==7.5.4
     # via djangosaml2
