@@ -20,7 +20,7 @@ new_proposal_menu = (
     MenuItem(
         _(
             "Nieuwe aanvraag starten (die al goedgekeurd is door een andere "
-            "ethische toetsingscomissie)"
+            "ethische toetsingscommissie)"
         ),
         reverse("proposals:start_pre_approved"),
     ),

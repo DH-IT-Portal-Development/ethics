@@ -185,7 +185,7 @@ class Proposal(models.Model):
 
     reviewing_committee = models.ForeignKey(
         Group,
-        verbose_name=_("Door welke comissie dient deze aanvraag te worden beoordeeld?"),
+        verbose_name=_("Door welke commissie dient deze aanvraag te worden beoordeeld?"),
         help_text="",
         on_delete=models.PROTECT,
     )
