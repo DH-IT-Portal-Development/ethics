@@ -214,7 +214,7 @@ pyhanko-certvalidator==0.29.1
     # via
     #   pyhanko
     #   xhtml2pdf
-pyjwt==2.11.0
+pyjwt==2.12.0
     # via cdh-django-core
 pyopenssl==24.2.1
     # via pysaml2
