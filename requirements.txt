@@ -162,7 +162,7 @@ json5==0.13.0
     # via djlint
 lesscpy==0.15.1
     # via cdh-django-core
-lxml==6.0.2
+lxml==6.1.0
     # via
     #   pyhanko
     #   svglib
