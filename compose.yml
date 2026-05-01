@@ -1,0 +1,52 @@
+name: ethics
+services:
+  db:
+    hostname: mariadb
+    image: mariadb
+    environment:
+      MARIADB_ROOT_PASSWORD: dev-example
+    healthcheck:
+      test: ["CMD", "mariadb-admin", "ping", "-h", "localhost", "-u", "root", "-pdev-example"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 30s
+    volumes:
+      - dbdata:/var/lib/mysql:rw
+
+  django:
+    hostname: django
+    build:
+      dockerfile_inline: |
+        FROM python:3.11-bookworm
+        WORKDIR /build/
+        COPY ./requirements.in /build/
+        # apt cache
+        RUN --mount=type=cache,target=/var/cache/apt \
+            apt-get update && apt-get install -y \
+            libmariadb-dev gcc zlib1g-dev tcl8.6-dev tk8.6-dev python3-tk python3-dev \
+            libldap2-dev libsasl2-dev libssl-dev gettext uwsgi-plugin-python3 \
+            libpoppler-cpp-dev xmlsec1 libcairo2-dev
+        # pip cache
+        RUN --mount=type=cache,target=/root/.cache/pip \
+            pip install --upgrade pip && \
+            pip install -r requirements.in
+        WORKDIR /app/
+        EXPOSE 8000
+        CMD cp -r /build/src ./src && \
+            python manage.py migrate && \
+            python manage.py compilemessages && \
+            python manage.py runserver 0.0.0.0:8000
+    image: python:3.11-bookworm
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app/:rw
+    environment:
+      DJANGO_SETTINGS_MODULE: fetc.settings-docker
+
+volumes:
+  dbdata:
