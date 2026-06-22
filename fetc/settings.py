@@ -127,6 +127,9 @@ DATABASES = {
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
+# Compatibility setting for MySQL when migrating to Django 5.2
+# Required for cdh.files
+USE_CHAR32_UUIDS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
