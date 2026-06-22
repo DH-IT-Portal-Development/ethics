@@ -27,3 +27,5 @@ black
 djlint
 sentry-sdk[django]
 django-csp<4.0
+# This is not a direct dependency, but a pin to avoid a weird dependency regression
+pyopenssl>24
