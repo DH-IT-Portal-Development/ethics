@@ -18,9 +18,8 @@ services:
     hostname: django
     build:
       dockerfile_inline: |
-        FROM python:3.11-bookworm
-        WORKDIR /build/
-        COPY ./requirements.in /build/
+        FROM python:3.13-trixie
+        WORKDIR /app/
         # apt cache
         RUN --mount=type=cache,target=/var/cache/apt \
             apt-get update && apt-get install -y \
@@ -31,9 +30,8 @@ services:
         RUN --mount=type=cache,target=/root/.cache/pip \
             pip install --upgrade pip && \
             pip install -r requirements.in
-        WORKDIR /app/
         EXPOSE 8000
-        CMD cp -r /build/src ./src && \
+        CMD pip install /dsc/ pdbpp && \
             python manage.py migrate && \
             python manage.py compilemessages && \
             python manage.py runserver 0.0.0.0:8000
@@ -45,8 +43,12 @@ services:
       - "8000:8000"
     volumes:
       - ./:/app/:rw
+      - ${DSC_LOCATION}:/dsc/:rw
     environment:
       DJANGO_SETTINGS_MODULE: fetc.settings-docker
+    # Below allows for debugging with pdb etc.
+    stdin_open: true
+    tty: true
 
 volumes:
   dbdata:
