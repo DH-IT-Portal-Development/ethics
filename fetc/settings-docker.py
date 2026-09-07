@@ -127,6 +127,9 @@ DATABASES = {
     },
 }
 
+USE_CHAR32_UUIDS=True
+
+
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 
