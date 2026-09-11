@@ -19,7 +19,7 @@ pillow>=6.0
 pygments
 requests
 -e git+https://github.com/UiL-OTS-labs/python-docx2txt#egg=docx2txt
-cdh-django-core[core,federated-auth,vue,mail,files,rest,recommended] @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@v3.2.0-alpha.0
+cdh-django-core[core,federated-auth,vue,mail,files,rest,recommended] @ git+https://github.com/CentreForDigitalHumanities/django-shared-core.git@v3.4.0-pre3
 python-magic
 pdftotext
 bpython
