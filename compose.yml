@@ -13,8 +13,8 @@ services:
       start_period: 30s
     volumes:
       - dbdata:/var/lib/mysql:rw
-
-  django:
+  
+  django: &django
     hostname: django
     build:
       dockerfile_inline: |
@@ -35,9 +35,8 @@ services:
         EXPOSE 8000
         CMD cp -r /build/src ./src && \
             pip install /dsc/ pdbpp && \
-            python manage.py migrate && \
             python manage.py compilemessages && \
-            python -m pdb manage.py runserver 0.0.0.0:8000 --nothreading --noreload
+            python -m pdb -c continue manage.py runserver 0.0.0.0:8000 --nothreading --noreload
     image: python:3.13-trixie
     depends_on:
       db:
@@ -52,6 +51,23 @@ services:
     # Below allows for debugging with pdb etc.
     stdin_open: true
     tty: true
+    profiles: ["default"]
+
+  django-first-run:
+    <<: *django
+    profiles: ["first-run"]
+    command:
+      - bash
+      - -c
+      - |
+        cp -r /build/src ./src                                 &&
+        pip install /dsc/ pdbpp                                 &&
+        mariadb -h mariadb -P 3306 -u root --password=dev-example \
+        --execute="CREATE DATABASE ethics CHARACTER SET utf8mb4    \
+        COLLATE utf8mb4_unicode_ci;"                               && 
+        python manage.py migrate                                    && 
+        python manage.py load_fixtures
 
 volumes:
   dbdata:
+
