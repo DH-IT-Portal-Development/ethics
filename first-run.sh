@@ -17,4 +17,4 @@ echo "manually via django-admin at http://localhost:8000/admin "
 echo
 echo "Press enter to start container, or ctrl-C to exit."
 read enter
-sudo -p "local root password for docker: " docker compose --profile default up --remove-orphans --force-recreate
+sudo -p "local sudo password for docker: " docker compose --profile default up --remove-orphans --force-recreate
