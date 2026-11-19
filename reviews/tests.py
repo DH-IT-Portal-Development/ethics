@@ -106,10 +106,10 @@ class SupervisorTestCase(BaseReviewTestCase):
         decision.save()
         # Check notifications
         expected_emails = self.proposal.applicants.count()
-        self.assertEquals(len(mail.outbox), expected_emails)
+        self.assertEqual(len(mail.outbox), expected_emails)
         remind_supervisor_reviewers()
         # No more reminders after decision is made
-        self.assertEquals(len(mail.outbox), expected_emails)
+        self.assertEqual(len(mail.outbox), expected_emails)
 
     def test_negative_supervisor_decision(self):
         review = start_review(self.proposal)
